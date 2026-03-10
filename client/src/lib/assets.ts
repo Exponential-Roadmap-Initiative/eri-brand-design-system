@@ -7,10 +7,11 @@
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ";
 
 export const logos = {
-  eriLogoFullColor:  `${CDN}/eri-logo-full-color_100fc0a3.svg`,
-  eriIconMark:       `${CDN}/eri-icon-mark_f486f537.webp`,
-  exponentialLogo:   `${CDN}/exponential-logo_ae763158.webp`,
-  favicon:           `${CDN}/favicon_3635ea53.webp`,
+  eriLogoFullColor:  `${CDN}/eri-logo-full-color_f5763508.png`,
+  eriLogoFullColorSvg: `${CDN}/eri-logo-full-color_775a0122.svg`,
+  eriIconMark:       `${CDN}/eri-icon-mark_08cd328f.webp`,
+  exponentialLogo:   `${CDN}/exponential-logo_0cda439e.webp`,
+  favicon:           `${CDN}/favicon_28cbda94.webp`,
 };
 
 export const pillarBottomIcons = {
