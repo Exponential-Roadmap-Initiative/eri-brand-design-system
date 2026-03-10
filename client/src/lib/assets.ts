@@ -12,6 +12,7 @@ export const logos = {
   eriIconMark:       `${CDN}/eri-icon-mark_08cd328f.webp`,
   exponentialLogo:   `${CDN}/exponential-logo_0cda439e.webp`,
   favicon:           `${CDN}/favicon_28cbda94.webp`,
+  faviconIco:        `${CDN}/favicon_46e834ad.ico`,
 };
 
 export const pillarBottomIcons = {

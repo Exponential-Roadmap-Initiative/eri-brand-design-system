@@ -127,7 +127,13 @@ const logoVariants = [
     when: "Space-constrained UI elements where the full wordmark would be illegible (< 40px height), and as the browser tab favicon.",
     minWidth: "32px",
     clearSpace: "4px on all sides minimum.",
-    faviconNote: "Also served as favicon — referenced in index.html as the browser tab icon.",
+    faviconVariant: {
+      file: logos.faviconIco,
+      filePath: "favicon.ico",
+      label: "Favicon (.ico)",
+      sizes: "16×16, 32×32, 48×48, 64×64",
+      note: "Multi-size .ico bundle. Referenced in index.html as the browser tab icon.",
+    },
   },
   {
     id: "eri-icon",
@@ -368,14 +374,32 @@ export default function BrandDesignSystem() {
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             {logoVariants.map((v) => (
               <Card key={v.id} className="shadow-sm overflow-hidden">
-                <div className={`flex items-center justify-center h-32 ${v.bg} ${v.border} rounded-t-lg`}>
-                  <img
-                    src={v.file}
-                    alt={v.name}
-                    className="max-h-16 max-w-[200px] object-contain"
-                    style={v.filter ? { filter: v.filter } : undefined}
-                  />
-                </div>
+                {(v as { faviconVariant?: { file: string; filePath: string; label: string; sizes: string; note: string } }).faviconVariant ? (
+                  <div className={`flex items-stretch h-32 ${v.bg} ${v.border} rounded-t-lg divide-x divide-gray-200`}>
+                    <div className="flex-1 flex flex-col items-center justify-center gap-1 px-4">
+                      <img src={v.file} alt={v.name} className="max-h-12 max-w-[80px] object-contain" />
+                      <span className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">Icon Mark</span>
+                    </div>
+                    <div className="flex-1 flex flex-col items-center justify-center gap-1 px-4 bg-gray-50">
+                      <img
+                        src={(v as { faviconVariant?: { file: string } }).faviconVariant!.file}
+                        alt="Favicon"
+                        className="w-8 h-8 object-contain"
+                        style={{ imageRendering: "pixelated" }}
+                      />
+                      <span className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">Favicon .ico</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={`flex items-center justify-center h-32 ${v.bg} ${v.border} rounded-t-lg`}>
+                    <img
+                      src={v.file}
+                      alt={v.name}
+                      className="max-h-16 max-w-[200px] object-contain"
+                      style={v.filter ? { filter: v.filter } : undefined}
+                    />
+                  </div>
+                )}
                 <CardContent className="p-5 space-y-3">
                   <h3 className="font-bold text-[#232323] text-base">{v.name}</h3>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
@@ -402,10 +426,25 @@ export default function BrandDesignSystem() {
                       <code className="text-xs text-gray-300 font-mono">filter: {v.filter}</code>
                     </div>
                   )}
-                  {(v as { faviconNote?: string }).faviconNote && (
-                    <div className="bg-blue-50 border border-blue-200 rounded p-2 flex items-start gap-2">
-                      <span className="text-blue-500 text-xs mt-0.5">⚑</span>
-                      <p className="text-xs text-blue-700">{(v as { faviconNote?: string }).faviconNote}</p>
+                  {(v as { faviconVariant?: { file: string; filePath: string; label: string; sizes: string; note: string } }).faviconVariant && (
+                    <div className="border border-gray-200 rounded overflow-hidden">
+                      <div className="bg-gray-50 px-3 py-1.5 border-b border-gray-200">
+                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Favicon Variant</span>
+                      </div>
+                      <div className="px-3 py-2 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+                        <div>
+                          <span className="text-gray-400 text-[10px] uppercase tracking-wide block mb-0.5">File</span>
+                          <code className="text-gray-700 font-mono">{(v as { faviconVariant?: { filePath: string } }).faviconVariant!.filePath}</code>
+                        </div>
+                        <div>
+                          <span className="text-gray-400 text-[10px] uppercase tracking-wide block mb-0.5">Sizes</span>
+                          <code className="text-gray-700 font-mono">{(v as { faviconVariant?: { sizes: string } }).faviconVariant!.sizes}</code>
+                        </div>
+                        <div className="col-span-2">
+                          <span className="text-gray-400 text-[10px] uppercase tracking-wide block mb-0.5">Note</span>
+                          <span className="text-gray-600">{(v as { faviconVariant?: { note: string } }).faviconVariant!.note}</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </CardContent>
