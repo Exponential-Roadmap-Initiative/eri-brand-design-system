@@ -33,8 +33,8 @@ import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos
 // BRAND PROPOSITION DATA
 // ============================================================================
 const brandProposition = {
-  mission: "To accelerate the transition to a regenerative economy by providing organizations with a clear, actionable framework for exponential climate impact.",
-  vision: "A world where every organization understands and maximizes its potential for positive climate impact across operations, value chains, solutions, finance, and policy.",
+  mission: "To accelerate the transition to a regenerative economy by providing organisations with a clear, actionable framework for exponential climate impact.",
+  vision: "A world where every organisation understands and maximises its potential for positive climate impact across operations, value chains, solutions, finance, and policy.",
   values: [
     { name: "Clarity", description: "Complex climate science made accessible and actionable" },
     { name: "Integrity", description: "Evidence-based, transparent, and honest assessment" },
@@ -97,6 +97,31 @@ const verbalIdentity = {
     { term: "Value chain", avoid: "Supply chain" },
     { term: "Exponential impact", avoid: "Incremental improvement" },
   ],
+  languageRules: {
+    standard: "British English",
+    rationale: "ERI is a Swedish-founded initiative operating globally, but headquartered and primarily published in a European context. British English is the standard for all external communications, publications, and digital products.",
+    spellingRules: [
+      { rule: "-ise not -ize", british: "organise, maximise, recognise, prioritise, emphasise, customise", avoid: "organize, maximize, recognize, prioritize, emphasize, customize" },
+      { rule: "-our not -or", british: "colour, behaviour, honour, favour, neighbour", avoid: "color, behavior, honor, favor, neighbor" },
+      { rule: "-re not -er", british: "centre, theatre, fibre, metre, litre", avoid: "center, theater, fiber, meter, liter" },
+      { rule: "-ence not -ense", british: "licence (noun), defence, offence, pretence", avoid: "license (noun), defense, offense, pretense" },
+      { rule: "-ogue not -og", british: "catalogue, dialogue, analogue", avoid: "catalog, dialog, analog" },
+      { rule: "Double consonants", british: "travelling, modelling, cancelled, labelling", avoid: "traveling, modeling, canceled, labeling" },
+    ],
+    punctuationRules: [
+      { rule: "Single quotation marks", detail: "Use single quotes for primary quotations: 'climate action'. Use double quotes for quotes within quotes: 'He said \"net zero\" is achievable.'" },
+      { rule: "Oxford comma", detail: "Optional but consistent within a document. ERI preference: omit unless ambiguity arises." },
+      { rule: "Date format", detail: "Day Month Year — no ordinal suffixes: 18 March 2026, not March 18th, 2026." },
+      { rule: "Numbers", detail: "Spell out one to nine; use numerals for 10 and above. Use commas as thousands separators: 1,000 not 1.000." },
+      { rule: "Per cent", detail: "Write 'per cent' as two words in running text; use the % symbol in tables, charts, and data labels." },
+    ],
+    commonPitfalls: [
+      { pitfall: "'Program' vs 'Programme'", correct: "Use 'programme' for schedules, events, and initiatives. Use 'program' only for computer software.", example: "The ERI accelerator programme; a software program" },
+      { pitfall: "'Practice' vs 'Practise'", correct: "'Practice' is the noun; 'practise' is the verb.", example: "Best practice (noun); to practise consistently (verb)" },
+      { pitfall: "'Licence' vs 'License'", correct: "'Licence' is the noun; 'license' is the verb.", example: "A Creative Commons licence (noun); licensed under CC BY (verb)" },
+      { pitfall: "'Enquire' vs 'Inquire'", correct: "Use 'enquire' for general questions; 'inquire' for formal investigations.", example: "Enquire about membership; a formal inquiry" },
+    ],
+  },
 };
 
 // ============================================================================
@@ -377,13 +402,13 @@ export default function BrandDesignSystem() {
             Visual Identity
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
-            Our color system is built around the Five Pillars framework. Each pillar has a dedicated color
+            Our colour system is built around the Five Pillars framework. Each pillar has a dedicated colour
             that creates instant recognition and helps users navigate complex climate information.
           </p>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Brand Colors</h3>
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">Brand Colours</h3>
           <p className="text-gray-600 mb-6 text-sm">
-            Core brand colors for UI elements, text, and backgrounds. These provide the foundation for all interfaces.
+            Core brand colours for UI elements, text, and backgrounds. These provide the foundation for all interfaces.
           </p>
           <div className="grid md:grid-cols-4 gap-4 mb-12">
             {colorSystem.brand.map((color) => (
@@ -391,9 +416,9 @@ export default function BrandDesignSystem() {
             ))}
           </div>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Pillar Colors</h3>
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">Pillar Colours</h3>
           <p className="text-gray-600 mb-6 text-sm">
-            These colors represent the five dimensions of organizational climate impact. Use them consistently
+            These colours represent the five dimensions of organisational climate impact. Use them consistently
             to reinforce the framework structure.
           </p>
           <div className="grid md:grid-cols-5 gap-4">
@@ -728,7 +753,7 @@ export default function BrandDesignSystem() {
           </div>
 
           <h3 className="font-bold text-[#232323] mb-4 text-lg">Preferred Terminology</h3>
-          <Card className="shadow-sm">
+          <Card className="shadow-sm mb-12">
             <CardContent className="p-0">
               <table className="w-full">
                 <thead className="bg-gray-50">
@@ -742,6 +767,75 @@ export default function BrandDesignSystem() {
                     <tr key={item.term} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                       <td className="p-4 text-[#3ba559] font-medium">{item.term}</td>
                       <td className="p-4 text-gray-500 line-through">{item.avoid}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          {/* ── LANGUAGE RULES ── */}
+          <h3 className="font-bold text-[#232323] mb-2 text-lg">Language</h3>
+          <div className="flex items-center gap-3 mb-4">
+            <span className="inline-flex items-center gap-1.5 bg-[#3ba559] text-white text-xs font-bold px-3 py-1 rounded-full">
+              {verbalIdentity.languageRules.standard}
+            </span>
+          </div>
+          <p className="text-gray-600 mb-8 max-w-3xl text-sm">{verbalIdentity.languageRules.rationale}</p>
+
+          <h4 className="font-bold text-[#232323] mb-4">Spelling Rules</h4>
+          <Card className="shadow-sm mb-8">
+            <CardContent className="p-0">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="text-left p-4 font-bold text-[#232323] w-40">Rule</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">British English ✓</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Avoid ✗</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {verbalIdentity.languageRules.spellingRules.map((row, i) => (
+                    <tr key={row.rule} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                      <td className="p-4 font-mono font-bold text-[#232323] text-xs">{row.rule}</td>
+                      <td className="p-4 text-[#3ba559] font-medium">{row.british}</td>
+                      <td className="p-4 text-gray-400 line-through">{row.avoid}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          <h4 className="font-bold text-[#232323] mb-4">Punctuation &amp; Formatting</h4>
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
+            {verbalIdentity.languageRules.punctuationRules.map((item) => (
+              <Card key={item.rule} className="shadow-sm">
+                <CardContent className="p-5">
+                  <h5 className="font-bold text-[#232323] mb-2 text-sm">{item.rule}</h5>
+                  <p className="text-sm text-gray-600">{item.detail}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <h4 className="font-bold text-[#232323] mb-4">Common Pitfalls</h4>
+          <Card className="shadow-sm">
+            <CardContent className="p-0">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="text-left p-4 font-bold text-[#232323] w-48">Word Pair</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Rule</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {verbalIdentity.languageRules.commonPitfalls.map((item, i) => (
+                    <tr key={item.pitfall} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                      <td className="p-4 font-mono font-bold text-[#232323] text-xs">{item.pitfall}</td>
+                      <td className="p-4 text-gray-700 text-xs">{item.correct}</td>
+                      <td className="p-4 text-gray-500 italic text-xs">{item.example}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -762,9 +856,10 @@ export default function BrandDesignSystem() {
             consistency and prevent styling violations.
           </p>
 
+
           <h3 className="font-bold text-[#232323] mb-4 text-lg">ChartContainer</h3>
           <p className="text-gray-600 mb-6 text-sm">
-            Use for any section requiring a colored header. The component restricts colors to the approved palette.
+            Use for any section requiring a coloured header. The component restricts colours to the approved palette.
           </p>
 
           <div className="grid md:grid-cols-3 gap-4 mb-8">
