@@ -982,7 +982,25 @@ import { pillarBottomIcons } from "@/lib/assets";
             <code className="text-sm font-mono bg-gray-100 px-1.5 py-0.5 rounded">PublicLayout</code> which composes the persistent Header and Footer around a flexible content area. Use these shells — never build a custom header or footer from scratch.
           </p>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">PublicLayout</h3>
+          {/* Two header patterns callout */}
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
+            <Card className="shadow-sm border-l-4 border-l-[#3ba559]">
+              <CardContent className="p-5">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#3ba559] mb-1 block">Pattern A</span>
+                <h4 className="font-bold text-[#232323] mb-2">Web App Header</h4>
+                <p className="text-sm text-gray-600">Used by all ERI web applications (PSM, Exponential Playbook, etc.). Sticky, 64px tall, white background with bottom border. Left: logo + divider + title block. Right: BETA badge + version + status dot + hamburger.</p>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm border-l-4 border-l-[#2999c5]">
+              <CardContent className="p-5">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#2999c5] mb-1 block">Pattern B</span>
+                <h4 className="font-bold text-[#232323] mb-2">Public Website Header</h4>
+                <p className="text-sm text-gray-600">Used by exponentialroadmap.org. 52px tall, white background, no bottom border. Left: ERI wordmark. Right: horizontal nav links (Resources, Events, News, About) with dropdown menus.</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">PublicLayout Props</h3>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-0">
               <table className="w-full text-sm">
@@ -1038,93 +1056,107 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* Header Anatomy */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Header Anatomy</h3>
-          <p className="text-gray-600 mb-4 text-sm">The header is fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">position: fixed; top: 0; z-50</code>), 64px tall, white with shadow. It has two zones:</p>
+          {/* Header Anatomy — Web App Pattern */}
+          <h3 className="font-bold text-[#232323] mb-2 text-lg">Web App Header Anatomy</h3>
+          <p className="text-gray-600 mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), white background with bottom border. Used across all ERI web applications.</p>
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <Card className="shadow-sm">
               <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3">Left Zone — Logo &amp; Context</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold">1.</span> ERI full-colour wordmark SVG (<code className="font-mono text-xs">h-8</code>), links to <code className="font-mono text-xs">/</code></li>
-                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold">2.</span> Platform super-title: <em>"Brand Design System"</em> — <code className="font-mono text-xs">text-xs uppercase tracking-widest text-gray-500</code></li>
-                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold">3.</span> Context sub-title: <em>"Exponential Roadmap Initiative"</em> — <code className="font-mono text-xs">text-[11px] text-gray-400</code></li>
-                </ul>
+                <h4 className="font-bold text-[#232323] mb-3">Left Zone — Logo + Divider + Title Block</h4>
+                <div className="space-y-3 text-sm text-gray-600">
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI full-colour wordmark PNG/SVG — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, links to <code className="font-mono text-xs">/</code></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Vertical divider — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-6 w-px bg-gray-300 shrink-0</code> (hidden on mobile)</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Supertitle (product family) — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-400 uppercase tracking-widest truncate</code><br/><em className="text-gray-400">e.g. "EXPONENTIAL PLAYBOOK NEXT GEN"</em></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>App title — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-base font-semibold text-gray-700 truncate</code><br/><em className="text-gray-400">e.g. "Professional Services Matrix"</em></span></div>
+                </div>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3">Right Zone — Nav &amp; Menu</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold">1.</span> Desktop nav links: Brand, Colours, Typography, Components, ERI Website</li>
-                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold">2.</span> Mobile: hamburger button opens full-screen overlay menu</li>
-                </ul>
-                <div className="mt-4 pt-4 border-t">
-                  <h5 className="font-bold text-[#232323] mb-2 text-sm">Background States</h5>
-                  <div className="space-y-1 text-xs text-gray-600">
-                    <div><code className="font-mono bg-gray-100 px-1 rounded">default</code> — bg-white border-b border-gray-200 shadow-sm</div>
-                    <div><code className="font-mono bg-gray-100 px-1 rounded">transparentHeader</code> — bg-transparent, transitions to white on scroll</div>
-                  </div>
+                <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Menu</h4>
+                <div className="space-y-3 text-sm text-gray-600">
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>BETA badge — outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">border border-gray-400 text-[11px] font-medium text-gray-600 rounded-full px-2 py-0.5 tracking-wide</code></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.03.18"</em></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Live status dot — <code className="font-mono text-xs bg-gray-100 px-1 rounded">w-2 h-2 rounded-full bg-[#3ba559]</code> (green = live)</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Header visual mockup */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Header — Visual Example</h3>
+          {/* Header visual mockup — Web App Pattern */}
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">Web App Header — Visual Examples</h3>
           <div className="space-y-4 mb-10">
+            {/* State 1: Default white */}
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 1 — Default (white background)</p>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 1 — Default (white background, scrolled)</p>
               <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 <div className="bg-white border-b border-gray-200">
-                  <div className="px-4">
-                    <div className="flex items-center justify-between h-16">
-                      <div className="flex items-center gap-3">
-                        <img src={logos.eriLogoFullColor} alt="ERI" className="h-8" />
-                        <div className="flex flex-col leading-tight">
-                          <span className="text-xs font-semibold tracking-widest text-gray-500 uppercase">Brand Design System</span>
-                          <span className="text-[11px] text-gray-400">Exponential Roadmap Initiative</span>
+                  <div className="px-6">
+                    <div className="flex items-center justify-between h-16 gap-4">
+                      {/* Left */}
+                      <div className="flex items-center gap-3 min-w-0">
+                        <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto shrink-0" />
+                        <div className="h-6 w-px bg-gray-300 shrink-0" />
+                        <div className="flex flex-col leading-tight min-w-0">
+                          <span className="text-[11px] font-medium text-gray-400 uppercase tracking-widest truncate">Exponential Roadmap Initiative</span>
+                          <span className="text-base font-semibold text-gray-700 truncate">Brand Design System</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-600">Brand</span>
-                        <span className="text-sm text-gray-600">Colours</span>
-                        <span className="text-sm text-[#3ba559] font-medium">ERI Website →</span>
+                      {/* Right */}
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-400 text-[11px] font-medium text-gray-600 tracking-wide">BETA</span>
+                        <span className="text-[11px] font-medium text-gray-500 tracking-wide">V.2026.03.18</span>
+                        <span className="w-2 h-2 rounded-full bg-[#3ba559] shrink-0" />
+                        <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100">
+                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-white · h-16 · fixed top-0 z-50 · border-b border-gray-200 shadow-sm</div>
+                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">sticky top-0 z-50 · bg-white · h-16 · border-b border-gray-200 · left: logo + divider + title block · right: BETA + version + dot + hamburger</div>
               </div>
             </div>
+
+            {/* State 2: Transparent on dark hero */}
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 2 — Transparent header (on dark hero section)</p>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 2 — Transparent header (on dark hero, not yet scrolled)</p>
               <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                <div className="bg-[#1a2e1a]">
-                  <div className="px-4">
-                    <div className="flex items-center justify-between h-16">
-                      <div className="flex items-center gap-3">
-                        <img src={logos.eriLogoFullColor} alt="ERI" className="h-8" style={{ filter: "brightness(0) invert(1)" }} />
-                        <div className="flex flex-col leading-tight">
-                          <span className="text-xs font-semibold tracking-widest text-gray-400 uppercase">Brand Design System</span>
-                          <span className="text-[11px] text-gray-500">Exponential Roadmap Initiative</span>
+                <div className="bg-[#232323]">
+                  <div className="px-6">
+                    <div className="flex items-center justify-between h-16 gap-4">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto shrink-0" style={{ filter: "brightness(0) invert(1)" }} />
+                        <div className="h-6 w-px bg-gray-600 shrink-0" />
+                        <div className="flex flex-col leading-tight min-w-0">
+                          <span className="text-[11px] font-medium text-gray-400 uppercase tracking-widest truncate">Exponential Roadmap Initiative</span>
+                          <span className="text-base font-semibold text-gray-300 truncate">Brand Design System</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-400">Brand</span>
-                        <span className="text-sm text-[#3ba559] font-medium">ERI Website →</span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-500 text-[11px] font-medium text-gray-400 tracking-wide">BETA</span>
+                        <span className="text-[11px] font-medium text-gray-400 tracking-wide">V.2026.03.18</span>
+                        <span className="w-2 h-2 rounded-full bg-[#3ba559] shrink-0" />
+                        <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-400">
+                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">transparentHeader=true · bg-transparent · logo filter: brightness(0) invert(1)</div>
+                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">transparentHeader=true · bg-transparent · logo: filter brightness(0) invert(1) · text colours inverted for dark bg</div>
               </div>
             </div>
           </div>
 
           {/* Footer anatomy */}
           <h3 className="font-bold text-[#232323] mb-4 text-lg">Footer Anatomy</h3>
-          <p className="text-gray-600 mb-4 text-sm">Dark green background (<code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#1a2e1a]</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">py-12</code> padding. Three-column grid on desktop.</p>
+          <p className="text-gray-600 mb-4 text-sm">Dark charcoal background (<code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#232323]</code>) — matching the public website exponentialroadmap.org. <code className="font-mono text-xs bg-gray-100 px-1 rounded">py-12</code> padding. Three-column grid on desktop. Accent link colour: brand green-300 (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#93cda3</code>).</p>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-0">
               <table className="w-full text-sm">
@@ -1138,7 +1170,7 @@ export default function HeroPage() {
                 <tbody>
                   {[
                     { col: "Brand (col 1)", content: "ERI full-colour wordmark (h-8, inverted to white) + one-line description", notes: "Logo inverted with filter: brightness(0) invert(1). Links to homepage." },
-                    { col: "Resources (col 2)", content: "Links: Brand Guidelines, Component Library, Colour Tokens, Typography, Badge Reference", notes: "Internal anchor links. text-gray-400 hover:text-[#3ba559]." },
+                    { col: "Resources (col 2)", content: "Links: Brand Guidelines, Component Library, Colour Tokens, Typography, Badge Reference", notes: "Internal anchor links. text-gray-400 hover:text-[#93cda3] (brand green-300)." },
                     { col: "Contact (col 3)", content: "exponentialroadmap.org, Exponential Roadmap Initiative, Business Playbook", notes: "All open in new tab. Same link style as Resources." },
                   ].map((row, i) => (
                     <tr key={row.col} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
@@ -1155,7 +1187,7 @@ export default function HeroPage() {
           {/* Footer visual mockup */}
           <h3 className="font-bold text-[#232323] mb-4 text-lg">Footer — Visual Example</h3>
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-2">
-            <footer className="bg-[#1a2e1a] text-white">
+            <footer className="bg-[#232323] text-white">
               <div className="px-6 py-10">
                 <div className="grid md:grid-cols-3 gap-8">
                   <div>
@@ -1166,7 +1198,7 @@ export default function HeroPage() {
                     <h3 className="font-semibold text-white mb-4">Resources</h3>
                     <ul className="space-y-2">
                       {["Brand Guidelines", "Component Library", "Colour Tokens"].map(l => (
-                        <li key={l}><span className="text-sm text-gray-400 hover:text-[#3ba559] transition-colors cursor-pointer">{l}</span></li>
+                        <li key={l}><span className="text-sm text-gray-400 hover:text-[#93cda3] transition-colors cursor-pointer">{l}</span></li>
                       ))}
                     </ul>
                   </div>
@@ -1174,7 +1206,7 @@ export default function HeroPage() {
                     <h3 className="font-semibold text-white mb-4">Contact</h3>
                     <ul className="space-y-2">
                       {["exponentialroadmap.org", "Exponential Roadmap Initiative", "Business Playbook"].map(l => (
-                        <li key={l}><span className="text-sm text-gray-400 hover:text-[#3ba559] transition-colors cursor-pointer">{l}</span></li>
+                        <li key={l}><span className="text-sm text-gray-400 hover:text-[#93cda3] transition-colors cursor-pointer">{l}</span></li>
                       ))}
                     </ul>
                   </div>
@@ -1184,7 +1216,7 @@ export default function HeroPage() {
                 </div>
               </div>
             </footer>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#1a2e1a] · text-white · grid md:grid-cols-3 · py-12 · border-t border-gray-700</div>
+                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#232323] · text-white · grid md:grid-cols-3 · py-12 · border-t border-gray-700 · accent links: #93cda3 (brand green-300)</div>
           </div>
         </section>
 
