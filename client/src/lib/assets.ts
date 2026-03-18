@@ -39,6 +39,60 @@ export const frameworkImages = {
   brandingGuidelines:           `${CDN}/ERI_branding_guidelines_87eb0fd1.webp`,
 };
 
+// Framework v5 diagrams
+export const frameworkV5 = {
+  // Full 5-pillar radial diagrams
+  fivePillarsBg:            `${CDN}/ERI_5Pillars_BG_ae436884.png`,
+  fivePillarsBgLogo:        `${CDN}/ERI_5Pillars_BG_Logo_1bacc79a.png`,
+  fivePillarsBgLogoTitle:   `${CDN}/ERI_5Pillars_BG_Logo_Title_0cbf7c89.png`,
+  fivePillarsExtended:      `${CDN}/ERI_5Pillars_Extended_7ed6daca.png`,
+  fivePillarsTransparent:   `${CDN}/ERI_5Pillars_Transparent_76a0d349.png`,
+  fivePillarsShortText:     `${CDN}/ERI_5_Pillars_Short_Text_Transp_RGB_dc461568.png`,
+  fivePillarsSymbols:       `${CDN}/ERI_5_Pillars_Symbols_Transp_RGB_e34a44e2.png`,
+  fivePillarsText:          `${CDN}/ERI_5_Pillars_Text_Transp_RGB_909b21e5.png`,
+  // Supporting diagrams
+  leadershipA:              `${CDN}/ERI_Leadership_A_c6dc798d.png`,
+  leadershipB:              `${CDN}/ERI_Leadership_B_691e4143.png`,
+  pillarsLinear:            `${CDN}/ERI_Pillars_6a5b1840.png`,
+  reducingEnabling:         `${CDN}/ERI_ReducingEnabling_e8800305.png`,
+};
+
+// Pillar elements — Long variant (primary, for presentations)
+export const pillarsLong: Record<number, { solid: string; transparent: string }> = {
+  1: { solid: `${CDN}/ERI_Pillar_1_Long_RGB_be48b143.png`,      transparent: `${CDN}/ERI_Pillar_1_Long_Transp_RGB_779b620c.png` },
+  2: { solid: `${CDN}/ERI_Pillar_2_Long_RGB_426442d5.png`,      transparent: `${CDN}/ERI_Pillar_2_Long_Transp_RGB_e6ad26cb.png` },
+  3: { solid: `${CDN}/ERI_Pillar_3_Long_RGB_3fe36f01.png`,      transparent: `${CDN}/ERI_Pillar_3_Long_Transp_RGB_91c00371.png` },
+  4: { solid: `${CDN}/ERI_Pillar_4_Long_RGB_8f71fa05.png`,      transparent: `${CDN}/ERI_Pillar_4_Long_Transp_RGB_262fb181.png` },
+  5: { solid: `${CDN}/ERI_Pillar_5_Long_RGB_d1a704f1.png`,      transparent: `${CDN}/ERI_Pillar_5_Long_Transp_RGB_c76155f7.png` },
+};
+
+// Pillar elements — Regular variant (scaled-down, for data slides)
+export const pillarsRegular: Record<number, { solid: string; transparent: string }> = {
+  1: { solid: `${CDN}/ERI_Pillar_1_RGB_f2b1a447.png`,           transparent: `${CDN}/ERI_Pillar_1_Transp_RGB_4e17abcb.png` },
+  2: { solid: `${CDN}/ERI_Pillar_2_RGB_46b39138.png`,           transparent: `${CDN}/ERI_Pillar_2_Transp_RGB_3a00adc5.png` },
+  3: { solid: `${CDN}/ERI_Pillar_3_RGB_fa4a1212.png`,           transparent: `${CDN}/ERI_Pillar_3_Transp_RGB_4f33eff0.png` },
+  4: { solid: `${CDN}/ERI_Pillar_4_RGB_d5ba88d5.png`,           transparent: `${CDN}/ERI_Pillar_4_Transp_RGB_d75aa31b.png` },
+  5: { solid: `${CDN}/ERI_Pillar_5_RGB_04c5e102.png`,           transparent: `${CDN}/ERI_Pillar_5_Transp_RGB_0f516df6.png` },
+};
+
+// Pillar elements — Extended variant (with action blocks)
+export const pillarsExtended: Record<number, { solid: string; transparent: string }> = {
+  1: { solid: `${CDN}/ERI_Pillar_1_Extented_RGB_c72c044a.png`,  transparent: `${CDN}/ERI_Pillar_1_Extented_Transp_RGB_6310874d.png` },
+  2: { solid: `${CDN}/ERI_Pillar_2_Extented_RGB_8887e8e8.png`,  transparent: `${CDN}/ERI_Pillar_2_Extented_Transp_RGB_5bd37356.png` },
+  3: { solid: `${CDN}/ERI_Pillar_3_Extented_RGB_b8d21717.png`,  transparent: `${CDN}/ERI_Pillar_3_Extented_Transp_RGB_71c60005.png` },
+  4: { solid: `${CDN}/ERI_Pillar_4_Extented_RGB_2e66300d.png`,  transparent: `${CDN}/ERI_Pillar_4_Extented_Transp_RGB_d61049be.png` },
+  5: { solid: `${CDN}/ERI_Pillar_5_Extented_RGB_4662ed0a.png`,  transparent: `${CDN}/ERI_Pillar_5_Extented_Transp_RGB_ee2d205a.png` },
+};
+
+// Pillar elements — Short variant (symbol or text only)
+export const pillarsShort: Record<number, { symbol: string; symbolTransp: string; text: string; textTransp: string }> = {
+  1: { symbol: `${CDN}/ERI_Pillar_1_Symbol_RGB_bd5bc7c1.png`, symbolTransp: `${CDN}/ERI_Pillar_1_Symbol_Transp_RGB_b509a59c.png`, text: `${CDN}/ERI_Pillar_1_Text_RGB_b91508f0.png`, textTransp: `${CDN}/ERI_Pillar_1_Text_Transp_RGB_a4e887fb.png` },
+  2: { symbol: `${CDN}/ERI_Pillar_2_Symbol_RGB_35296527.png`, symbolTransp: `${CDN}/ERI_Pillar_2_Symbol_Transp_RGB_9aaa96c5.png`, text: `${CDN}/ERI_Pillar_2_Text_RGB_39ee791f.png`, textTransp: `${CDN}/ERI_Pillar_2_Text_Transp_RGB_ab990cc2.png` },
+  3: { symbol: `${CDN}/ERI_Pillar_3_Symbol_RGB_99abeec2.png`, symbolTransp: `${CDN}/ERI_Pillar_3_Symbol_Transp_RGB_90bab0da.png`, text: `${CDN}/ERI_Pillar_3_Text_RGB_e589b56c.png`, textTransp: `${CDN}/ERI_Pillar_3_Text_Transp_RGB_4c14a666.png` },
+  4: { symbol: `${CDN}/ERI_Pillar_4_Symbol_RGB_afeba676.png`, symbolTransp: `${CDN}/ERI_Pillar_4_Symbol_Transp_RGB_f4017ee0.png`, text: `${CDN}/ERI_Pillar_4_Text_RGB_b0223cf5.png`, textTransp: `${CDN}/ERI_Pillar_4_Text_Transp_RGB_93502912.png` },
+  5: { symbol: `${CDN}/ERI_Pillar_5_Symbol_RGB_400dd958.png`, symbolTransp: `${CDN}/ERI_Pillar_5_Symbol_Transp_RGB_64804012.png`, text: `${CDN}/ERI_Pillar_5_Text_RGB_87dba8df.png`, textTransp: `${CDN}/ERI_Pillar_5_Text_Transp_RGB_e7ab9f61.png` },
+};
+
 export const dataSourceLogos: Record<string, string> = {
   cdp:                    `${CDN}/cdp-logo_e76366be.webp`,
   sbti:                   `${CDN}/sbti-logo_700c1951.webp`,

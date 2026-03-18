@@ -21,19 +21,22 @@ export type NavSection = {
 };
 
 export const SECTIONS: NavSection[] = [
-  { id: "brand-proposition", label: "Brand Proposition" },
-  { id: "visual-identity",   label: "Visual Identity",    sublabel: "Colours" },
-  { id: "logo-usage",        label: "Logo Usage" },
-  { id: "spacing",           label: "Spacing & Layout" },
-  { id: "typography",        label: "Typography" },
-  { id: "verbal-identity",   label: "Verbal Identity",    sublabel: "Language" },
-  { id: "page-layout",       label: "Page Layout Shells" },
-  { id: "badges",            label: "Badge Reference" },
-  { id: "interactive-states",label: "Interactive States" },
-  { id: "components",        label: "UI Components" },
-  { id: "pillar-icons",      label: "Pillar Icon Assets" },
-  { id: "resources",         label: "Resources" },
-  { id: "ai-instructions",   label: "Machine Instructions", sublabel: "For AI tasks" },
+  { id: "brand-proposition",  label: "Brand Proposition" },
+  { id: "visual-identity",    label: "Visual Identity",       sublabel: "Colours" },
+  { id: "logo-usage",         label: "Logo Usage" },
+  { id: "spacing",            label: "Spacing & Layout" },
+  { id: "typography",         label: "Typography" },
+  { id: "verbal-identity",    label: "Verbal Identity",       sublabel: "Language" },
+  { id: "component-library",  label: "Component Library" },
+  { id: "pillar-icons",       label: "Pillar Icon Assets" },
+  { id: "framework-diagrams", label: "Framework Diagrams",    sublabel: "v5 New" },
+  { id: "page-layout",        label: "Page Layout Shells" },
+  { id: "badges",             label: "Badge Reference" },
+  { id: "interactive-states", label: "Interactive States" },
+  { id: "components",         label: "UI Components" },
+  { id: "pillar-elements",    label: "Pillar Elements",        sublabel: "v5 New" },
+  { id: "resources",          label: "Resources" },
+  { id: "ai-instructions",    label: "Machine Instructions",  sublabel: "For AI tasks" },
 ];
 
 interface SectionNavigatorProps {
