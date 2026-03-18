@@ -47,19 +47,31 @@ const brandProposition = {
 // ============================================================================
 // COLOUR SYSTEM DATA
 // ============================================================================
-const colorSystem = {
+type TonalStop = { hex: string; rgb: string };
+type ColorEntry = { id: string; name: string; hex: string; rgb: string; context: string; tones: Record<number, TonalStop> };
+
+const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
   pillar: [
-    { id: "p1", name: "Pillar 1 - Operations", hex: "#8a9a87", rgb: "138, 154, 135", context: "Operational emissions, Scope 1 & 2, internal processes" },
-    { id: "p2", name: "Pillar 2 - Value Chain", hex: "#2999c5", rgb: "41, 153, 197", context: "Supply chain, Scope 3, procurement, supplier engagement" },
-    { id: "p3", name: "Pillar 3 - Solutions", hex: "#22803a", rgb: "34, 128, 58", context: "Climate solutions, products, services, avoided emissions" },
-    { id: "p4", name: "Pillar 4 - Finance", hex: "#f97316", rgb: "249, 115, 22", context: "Climate finance, green bonds, sustainable investment" },
-    { id: "p5", name: "Pillar 5 - Policy", hex: "#f74145", rgb: "247, 65, 69", context: "Policy advocacy, regulatory engagement, trade associations" },
+    { id: "p1", name: "Pillar 1 - Operations", hex: "#8a9a87", rgb: "138, 154, 135", context: "Operational emissions, Scope 1 & 2, internal processes",
+      tones: { 100: { hex: "#e9ece9", rgb: "233, 236, 233" }, 300: { hex: "#bec7bd", rgb: "190, 199, 189" }, 500: { hex: "#8a9a87", rgb: "138, 154, 135" }, 700: { hex: "#5d675b", rgb: "93, 103, 91" }, 900: { hex: "#393e38", rgb: "57, 62, 56" } } },
+    { id: "p2", name: "Pillar 2 - Value Chain", hex: "#2999c5", rgb: "41, 153, 197", context: "Supply chain, Scope 3, procurement, supplier engagement",
+      tones: { 100: { hex: "#d8ecf4", rgb: "216, 236, 244" }, 300: { hex: "#89c6df", rgb: "137, 198, 223" }, 500: { hex: "#2999c5", rgb: "41, 153, 197" }, 700: { hex: "#216681", rgb: "33, 102, 129" }, 900: { hex: "#1a3e4c", rgb: "26, 62, 76" } } },
+    { id: "p3", name: "Pillar 3 - Solutions", hex: "#22803a", rgb: "34, 128, 58", context: "Climate solutions, products, services, avoided emissions",
+      tones: { 100: { hex: "#d7e8db", rgb: "215, 232, 219" }, 300: { hex: "#85b992", rgb: "133, 185, 146" }, 500: { hex: "#22803a", rgb: "34, 128, 58" }, 700: { hex: "#1c562b", rgb: "28, 86, 43" }, 900: { hex: "#183620", rgb: "24, 54, 32" } } },
+    { id: "p4", name: "Pillar 4 - Finance", hex: "#f97316", rgb: "249, 115, 22", context: "Climate finance, green bonds, sustainable investment",
+      tones: { 100: { hex: "#fde5d5", rgb: "253, 229, 213" }, 300: { hex: "#fbb27e", rgb: "251, 178, 126" }, 500: { hex: "#f97316", rgb: "249, 115, 22" }, 700: { hex: "#a14e15", rgb: "161, 78, 21" }, 900: { hex: "#5d3214", rgb: "93, 50, 20" } } },
+    { id: "p5", name: "Pillar 5 - Policy", hex: "#f74145", rgb: "247, 65, 69", context: "Policy advocacy, regulatory engagement, trade associations",
+      tones: { 100: { hex: "#fddcdd", rgb: "253, 220, 221" }, 300: { hex: "#fa9698", rgb: "250, 150, 152" }, 500: { hex: "#f74145", rgb: "247, 65, 69" }, 700: { hex: "#a02f32", rgb: "160, 47, 50" }, 900: { hex: "#5c2223", rgb: "92, 34, 35" } } },
   ],
   brand: [
-    { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Primary buttons, CTAs, links, success states" },
-    { id: "dark", name: "Dark Text", hex: "#232323", rgb: "35, 35, 35", context: "Headings, primary body text, high-contrast elements" },
-    { id: "neutral", name: "Neutral Gray", hex: "#6b7280", rgb: "107, 114, 128", context: "Secondary text, borders, disabled states" },
-    { id: "background", name: "Background", hex: "#F9FAFB", rgb: "249, 250, 251", context: "Page backgrounds, card backgrounds" },
+    { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Primary buttons, CTAs, links, success states",
+      tones: { 100: { hex: "#dbeee1", rgb: "219, 238, 225" }, 300: { hex: "#93cda3", rgb: "147, 205, 163" }, 500: { hex: "#3ba559", rgb: "59, 165, 89" }, 700: { hex: "#2c6d3e", rgb: "44, 109, 62" }, 900: { hex: "#20422a", rgb: "32, 66, 42" } } },
+    { id: "dark", name: "Dark Text", hex: "#232323", rgb: "35, 35, 35", context: "Headings, primary body text, high-contrast elements",
+      tones: { 100: { hex: "#d7d7d7", rgb: "215, 215, 215" }, 300: { hex: "#868686", rgb: "134, 134, 134" }, 500: { hex: "#232323", rgb: "35, 35, 35" }, 700: { hex: "#1d1d1d", rgb: "29, 29, 29" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
+    { id: "neutral", name: "Neutral Gray", hex: "#6b7280", rgb: "107, 114, 128", context: "Secondary text, borders, disabled states",
+      tones: { 100: { hex: "#e4e5e8", rgb: "228, 229, 232" }, 300: { hex: "#adb1b9", rgb: "173, 177, 185" }, 500: { hex: "#6b7280", rgb: "107, 114, 128" }, 700: { hex: "#494e56", rgb: "73, 78, 86" }, 900: { hex: "#2f3236", rgb: "47, 50, 54" } } },
+    { id: "background", name: "Background", hex: "#F9FAFB", rgb: "249, 250, 251", context: "Page backgrounds, card backgrounds",
+      tones: { 100: { hex: "#fdfefe", rgb: "253, 254, 254" }, 300: { hex: "#fbfcfc", rgb: "251, 252, 252" }, 500: { hex: "#f9fafb", rgb: "249, 250, 251" }, 700: { hex: "#a1a2a3", rgb: "161, 162, 163" }, 900: { hex: "#5d5d5d", rgb: "93, 93, 93" } } },
   ],
 };
 
@@ -193,7 +205,33 @@ const gridPatterns = [
 // ============================================================================
 // COLOUR SWATCH COMPONENT
 // ============================================================================
-function ColorSwatch({ name, hex, rgb, context }: { name: string; hex: string; rgb: string; context: string }) {
+function ToneStop({ stop, tone }: { stop: number; tone: { hex: string; rgb: string } }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(tone.hex);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+  // Determine whether label should be dark or light based on luminance
+  const [r, g, b] = tone.rgb.split(",").map(Number);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  const labelColor = luminance > 0.55 ? "#374151" : "#ffffff";
+  return (
+    <button
+      onClick={copy}
+      title={`Copy ${tone.hex}`}
+      className="group relative flex-1 flex flex-col items-center justify-end pb-1.5 pt-0 transition-all hover:z-10 hover:scale-105 focus:outline-none"
+      style={{ backgroundColor: tone.hex, minHeight: "52px" }}
+    >
+      <span className="text-[9px] font-mono font-semibold leading-tight opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: labelColor }}>
+        {copied ? "✓" : tone.hex}
+      </span>
+      <span className="text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: labelColor }}>{stop}</span>
+    </button>
+  );
+}
+
+function ColorSwatch({ name, hex, rgb, context, tones }: { name: string; hex: string; rgb: string; context: string; tones: Record<number, { hex: string; rgb: string }> }) {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -204,10 +242,17 @@ function ColorSwatch({ name, hex, rgb, context }: { name: string; hex: string; r
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-      <div className="h-24 w-full" style={{ backgroundColor: hex }} />
+      {/* Base colour block */}
+      <div className="h-20 w-full" style={{ backgroundColor: hex }} />
+      {/* Tonal scale strip */}
+      <div className="flex h-14 overflow-hidden">
+        {[100, 300, 500, 700, 900].map((stop) => (
+          <ToneStop key={stop} stop={stop} tone={tones[stop]} />
+        ))}
+      </div>
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="font-bold text-[#232323]">{name}</span>
+          <span className="font-bold text-[#232323] text-sm">{name}</span>
           <button
             onClick={copyToClipboard}
             className="p-1.5 hover:bg-gray-100 rounded transition-colors"
@@ -216,7 +261,7 @@ function ColorSwatch({ name, hex, rgb, context }: { name: string; hex: string; r
             {copied ? <Check className="w-4 h-4 text-[#3ba559]" /> : <Copy className="w-4 h-4 text-gray-400" />}
           </button>
         </div>
-        <div className="space-y-1 text-sm">
+        <div className="space-y-1 text-xs">
           <div className="flex gap-2">
             <span className="text-gray-500 w-10">HEX</span>
             <code className="text-gray-700 font-mono">{hex}</code>
@@ -343,7 +388,7 @@ export default function BrandDesignSystem() {
           </p>
           <div className="grid md:grid-cols-4 gap-4 mb-12">
             {colorSystem.brand.map((color) => (
-              <ColorSwatch key={color.id} name={color.name} hex={color.hex} rgb={color.rgb} context={color.context} />
+              <ColorSwatch key={color.id} name={color.name} hex={color.hex} rgb={color.rgb} context={color.context} tones={color.tones} />
             ))}
           </div>
 
@@ -354,7 +399,7 @@ export default function BrandDesignSystem() {
           </p>
           <div className="grid md:grid-cols-5 gap-4">
             {colorSystem.pillar.map((color) => (
-              <ColorSwatch key={color.id} name={color.name} hex={color.hex} rgb={color.rgb} context={color.context} />
+              <ColorSwatch key={color.id} name={color.name} hex={color.hex} rgb={color.rgb} context={color.context} tones={color.tones} />
             ))}
           </div>
         </section>
