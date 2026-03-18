@@ -18,7 +18,7 @@
  * 12. Resources
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Copy, Check, ExternalLink, FileText, Plug, Layers, BookOpen, BarChart3 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PublicLayout from "@/components/PublicLayout";
+import SectionNavigator from "@/components/SectionNavigator";
 import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos } from "@/lib/assets";
 
 // ============================================================================
@@ -347,7 +348,19 @@ export default function BrandDesignSystem() {
         </div>
       </section>
 
+      {/* ── TWO-COLUMN LAYOUT: sticky nav + scrollable content ── */}
       <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="flex gap-10 items-start">
+
+          {/* ── STICKY SECTION NAVIGATOR (desktop only) ── */}
+          <div className="hidden lg:block w-52 shrink-0">
+            <div className="sticky top-20">
+              <SectionNavigator />
+            </div>
+          </div>
+
+          {/* ── MAIN CONTENT ── */}
+          <div className="flex-1 min-w-0">
 
         {/* ================================================================ */}
         {/* SECTION 1: BRAND PROPOSITION */}
@@ -1800,6 +1813,270 @@ const tabs: TabConfig[] = [
           </div>
         </section>
 
+        {/* ================================================================ */}
+        {/* SECTION 14: MACHINE INSTRUCTIONS */}
+        {/* ================================================================ */}
+        <section id="ai-instructions" className="mb-16 mt-4">
+          <div className="flex items-center gap-3 mb-2">
+            <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323]">
+              Machine Instructions
+            </h2>
+            <Badge className="bg-[#232323] text-white text-[10px] tracking-widest uppercase hover:bg-[#232323]">For AI Tasks</Badge>
+          </div>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            This section is the canonical reference for Manus AI tasks building ERI products.
+            When instructed to follow the ERI brand, read this section first. All values are
+            authoritative — do not infer, approximate, or substitute.
+          </p>
+
+          {/* ── HOW TO USE ── */}
+          <Card className="shadow-sm mb-6 border-l-4 border-l-[#3ba559]">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-3">How to reference this page in a Manus task prompt</h3>
+              <p className="text-sm text-gray-700 mb-3">
+                Add the following instruction to any task prompt that requires ERI brand compliance:
+              </p>
+              <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed">{`Before building, read the ERI Brand Design System at:
+https://eri-brand-design-system.manus.space/#ai-instructions
+
+Follow all rules in the Machine Instructions section exactly.
+Do not use any colours, fonts, or patterns not listed there.`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* ── COLOUR TOKENS ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-1">Colour Tokens</h3>
+              <p className="text-xs text-gray-500 mb-4">Use these exact hex values. Never approximate with Tailwind colour names.</p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Brand Colours</p>
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="text-left py-1 font-semibold text-gray-600">Token</th>
+                        <th className="text-left py-1 font-semibold text-gray-600">Hex</th>
+                        <th className="text-left py-1 font-semibold text-gray-600">Usage</th>
+                      </tr>
+                    </thead>
+                    <tbody className="font-mono">
+                      {[
+                        ["primary-green",  "#3ba559", "Buttons, CTAs, links, success"],
+                        ["dark-text",       "#232323", "Headings, body text, footer bg"],
+                        ["neutral-gray",    "#6b7280", "Secondary text, borders"],
+                        ["background",      "#F9FAFB", "Page bg, card bg"],
+                        ["green-300",       "#93cda3", "Accent links in footer"],
+                      ].map(([token, hex, usage]) => (
+                        <tr key={token} className="border-b border-gray-100">
+                          <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
+                          <td className="py-1.5 pr-3">
+                            <span className="inline-flex items-center gap-1.5">
+                              <span className="w-3 h-3 rounded-sm inline-block border border-gray-200" style={{ background: hex }} />
+                              {hex}
+                            </span>
+                          </td>
+                          <td className="py-1.5 text-gray-500 font-sans">{usage}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Pillar Colours</p>
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="text-left py-1 font-semibold text-gray-600">Pillar</th>
+                        <th className="text-left py-1 font-semibold text-gray-600">Hex (500)</th>
+                        <th className="text-left py-1 font-semibold text-gray-600">Name</th>
+                      </tr>
+                    </thead>
+                    <tbody className="font-mono">
+                      {[
+                        ["P1 Operations",   "#8a9a87"],
+                        ["P2 Value Chain",  "#2999c5"],
+                        ["P3 Solutions",    "#22803a"],
+                        ["P4 Finance",      "#f97316"],
+                        ["P5 Policy",       "#f74145"],
+                      ].map(([name, hex]) => (
+                        <tr key={name} className="border-b border-gray-100">
+                          <td className="py-1.5 pr-3 font-sans text-gray-700">{name}</td>
+                          <td className="py-1.5">
+                            <span className="inline-flex items-center gap-1.5">
+                              <span className="w-3 h-3 rounded-sm inline-block border border-gray-200" style={{ background: hex }} />
+                              {hex}
+                            </span>
+                          </td>
+                          <td className="py-1.5 font-sans text-gray-400 text-[11px]">See tonal scales in Visual Identity</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── TYPOGRAPHY RULES ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-1">Typography Rules</h3>
+              <p className="text-xs text-gray-500 mb-4">Mandatory. Do not substitute Inter, Roboto, or any other font.</p>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className="space-y-2">
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Font:</strong> Archivo — load via Google Fonts CDN. Map to <code className="bg-gray-100 px-1 rounded text-xs">font-sans</code> and <code className="bg-gray-100 px-1 rounded text-xs">font-archivo</code>.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Weights:</strong> 400 (body), 700 (semibold), 800 (headings/extrabold).</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Headings:</strong> <code className="bg-gray-100 px-1 rounded text-xs">font-extrabold</code> (800) for all h1–h3.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Body:</strong> 16px/400, line-height 1.6, colour <code className="bg-gray-100 px-1 rounded text-xs">#232323</code>.</span></div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use Inter as the primary font.</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use font-weight 600 for headings — use 800.</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use <code className="bg-gray-100 px-1 rounded text-xs">text-gray-900</code> for body text — use <code className="bg-gray-100 px-1 rounded text-xs">#232323</code>.</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not load Archivo from local files — use Google Fonts CDN only.</span></div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── HEADER ANATOMY ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-1">Header Anatomy — Web App Pattern</h3>
+              <p className="text-xs text-gray-500 mb-4">All ERI web applications use this exact header structure. Implement it using <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code>.</p>
+              <div className="bg-white border border-gray-200 rounded-md p-3 mb-4 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-3">
+                  <span className="font-bold text-[#232323] text-sm">EXPONENTIAL<br/>ROADMAP <span className="font-normal text-[10px]">INITIATIVE</span></span>
+                  <span className="w-px h-8 bg-gray-300" />
+                  <div>
+                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">EXPONENTIAL ROADMAP INITIATIVE</p>
+                    <p className="text-sm font-semibold text-gray-700">[App Title]</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="border border-gray-400 text-gray-600 rounded-full px-2 py-0.5 text-[10px]">BETA</span>
+                  <span className="text-gray-500 text-[11px]">V.YYYY.MM.DD</span>
+                  <span className="w-2 h-2 rounded-full bg-[#3ba559]" />
+                  <span className="text-gray-500 text-lg">≡</span>
+                </div>
+              </div>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-1 font-semibold text-gray-600">Element</th>
+                    <th className="text-left py-1 font-semibold text-gray-600">Tailwind Classes</th>
+                    <th className="text-left py-1 font-semibold text-gray-600">Notes</th>
+                  </tr>
+                </thead>
+                <tbody className="font-mono text-[11px]">
+                  {[
+                    ["ERI logo (PNG)",        "h-8 w-auto",                              "Link to /. PNG not SVG."],
+                    ["Vertical divider",       "w-px h-8 bg-gray-300 shrink-0",           "Hidden on mobile."],
+                    ["Supertitle",             "text-[11px] font-medium text-gray-400 uppercase tracking-widest", "Product family name."],
+                    ["App title",              "text-base font-semibold text-gray-700",   "Current app/page name."],
+                    ["BETA badge",             "border border-gray-400 text-gray-600 rounded-full px-2 py-0.5 text-[11px]", "Outlined pill."],
+                    ["Version string",         "text-[11px] font-medium text-gray-500 tracking-wide", "Format: V.YYYY.MM.DD"],
+                    ["Live status dot",        "w-2 h-2 rounded-full bg-[#3ba559]",       "Green = live."],
+                    ["Hamburger menu",         "size-9 rounded-md",                       "Lucide Menu icon. Opens full-screen overlay."],
+                  ].map(([el, classes, notes]) => (
+                    <tr key={el} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 font-sans text-gray-700">{el}</td>
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{classes}</td>
+                      <td className="py-1.5 font-sans text-gray-500">{notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          {/* ── LANGUAGE RULES ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-1">Language Rules</h3>
+              <p className="text-xs text-gray-500 mb-4">All copy generated for ERI products must follow these rules without exception.</p>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className="space-y-2">
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>British English</strong> spelling throughout — -ise not -ize, -our not -or, -re not -er.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <strong>organisations</strong>, <strong>maximises</strong>, <strong>colour</strong>, <strong>programme</strong>, <strong>licence</strong> (noun).</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Dates: <strong>DD Month YYYY</strong> (e.g. 18 March 2026).</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Single quotation marks for quotes; double for quotes within quotes.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Oxford comma: use in lists of three or more items.</span></div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not write <strong>organizations</strong>, <strong>maximizes</strong>, <strong>color</strong>, <strong>program</strong> (for a programme).</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not write dates as MM/DD/YYYY or YYYY-MM-DD in visible copy.</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use double quotation marks as the primary quote style.</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not write <strong>per cent</strong> as % in formal prose — spell it out.</span></div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── COMPONENT RULES ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-1">Component & Layout Rules</h3>
+              <p className="text-xs text-gray-500 mb-4">Follow these rules when building any ERI UI component or page.</p>
+              <div className="space-y-2 text-sm">
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code> as the wrapper for all public-facing pages — never build a custom header or footer.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Primary CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#3ba559] text-white hover:bg-[#2c6d3e]</code>.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, white background, <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Max content width: <code className="bg-gray-100 px-1 rounded text-xs">max-w-6xl mx-auto px-4</code>. Never exceed 1152px for content.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Pillar colours must always be used in their correct pillar context — do not reassign P1 colour to P3 content.</span></div>
+                <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use purple, teal, or pink as accent colours — they are not part of the ERI brand.</span></div>
+                <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use <code className="bg-gray-100 px-1 rounded text-xs">rounded-full</code> on cards or large containers — only on badges, pills, and avatars.</span></div>
+                <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use gradient backgrounds on hero sections — use solid <code className="bg-gray-100 px-1 rounded text-xs">#232323</code> or white.</span></div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── SECTION INDEX ── */}
+          <Card className="shadow-sm">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-1">Section Index</h3>
+              <p className="text-xs text-gray-500 mb-4">Canonical section IDs and their anchor URLs for programmatic reference.</p>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-1 font-semibold text-gray-600">#</th>
+                    <th className="text-left py-1 font-semibold text-gray-600">Section</th>
+                    <th className="text-left py-1 font-semibold text-gray-600 font-mono">Anchor ID</th>
+                  </tr>
+                </thead>
+                <tbody className="font-mono text-[11px]">
+                  {[
+                    ["1",  "Brand Proposition",    "brand-proposition"],
+                    ["2",  "Visual Identity",       "visual-identity"],
+                    ["3",  "Logo Usage",            "logo-usage"],
+                    ["4",  "Spacing & Layout",      "spacing"],
+                    ["5",  "Typography",            "typography"],
+                    ["6",  "Verbal Identity",       "verbal-identity"],
+                    ["7",  "Page Layout Shells",    "page-layout"],
+                    ["8",  "Badge Reference",       "badges"],
+                    ["9",  "Interactive States",    "interactive-states"],
+                    ["10", "UI Components",         "components"],
+                    ["11", "Pillar Icon Assets",    "pillar-icons"],
+                    ["12", "Resources",             "resources"],
+                    ["13", "Machine Instructions",  "ai-instructions"],
+                  ].map(([num, label, id]) => (
+                    <tr key={id} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
+                      <td className="py-1.5 pr-3 font-sans text-gray-700">{label}</td>
+                      <td className="py-1.5 text-[#3ba559]">#{id}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+        </section>
+
+          </div>{/* end main content */}
+        </div>{/* end two-column layout */}
       </div>
     </PublicLayout>
   );
