@@ -212,7 +212,6 @@ function ToneStop({ stop, tone }: { stop: number; tone: { hex: string; rgb: stri
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
-  // Determine whether label should be dark or light based on luminance
   const [r, g, b] = tone.rgb.split(",").map(Number);
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   const labelColor = luminance > 0.55 ? "#374151" : "#ffffff";
@@ -220,13 +219,13 @@ function ToneStop({ stop, tone }: { stop: number; tone: { hex: string; rgb: stri
     <button
       onClick={copy}
       title={`Copy ${tone.hex}`}
-      className="group relative flex-1 flex flex-col items-center justify-end pb-1.5 pt-0 transition-all hover:z-10 hover:scale-105 focus:outline-none"
-      style={{ backgroundColor: tone.hex, minHeight: "52px" }}
+      className="group relative flex-1 flex flex-col items-center justify-between py-2 px-0.5 transition-all hover:brightness-95 focus:outline-none"
+      style={{ backgroundColor: tone.hex }}
     >
-      <span className="text-[9px] font-mono font-semibold leading-tight opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: labelColor }}>
-        {copied ? "✓" : tone.hex}
+      <span className="text-[8px] font-mono font-bold leading-none" style={{ color: labelColor }}>{stop}</span>
+      <span className="text-[7.5px] font-mono leading-none break-all text-center" style={{ color: labelColor }}>
+        {copied ? "✓ copied" : tone.hex}
       </span>
-      <span className="text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: labelColor }}>{stop}</span>
     </button>
   );
 }
@@ -245,7 +244,7 @@ function ColorSwatch({ name, hex, rgb, context, tones }: { name: string; hex: st
       {/* Base colour block */}
       <div className="h-20 w-full" style={{ backgroundColor: hex }} />
       {/* Tonal scale strip */}
-      <div className="flex h-14 overflow-hidden">
+      <div className="flex h-20 overflow-hidden">
         {[100, 300, 500, 700, 900].map((stop) => (
           <ToneStop key={stop} stop={stop} tone={tones[stop]} />
         ))}
