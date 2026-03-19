@@ -29,6 +29,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PublicLayout from "@/components/PublicLayout";
 import SectionNavigator from "@/components/SectionNavigator";
 import { PhotoGallery } from "@/components/PhotoGallery";
+import { DataSourceLogoGrid } from "@/components/DataSourceLogoGrid";
 import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort, memberLogos } from "@/lib/assets";
 
 // ============================================================================
@@ -2308,7 +2309,33 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 15: RESOURCES */}
+        {/* SECTION 15: DATA SOURCE LOGOS */}
+        {/* ================================================================ */}
+        <section id="data-source-logos" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+            Data Source &amp; Partner Logos
+          </h2>
+          <p className="text-gray-600 mb-2 max-w-3xl">
+            Logos for data providers, research institutions, standards bodies, and partner organisations
+            used across ERI products and publications. Use these when citing data sources or acknowledging
+            partners in reports, dashboards, and presentations.
+          </p>
+          <p className="text-xs text-gray-400 mb-8 max-w-3xl">
+            All logos remain the property of their respective organisations and are provided here for use
+            within authorised ERI communications only.
+          </p>
+
+          {/* Category filter */}
+          {(() => {
+            const allCategories = Array.from(new Set(Object.values(dataSourceLogos).map(l => l.category))).sort();
+            return (
+              <DataSourceLogoGrid logos={dataSourceLogos} categories={allCategories} />
+            );
+          })()}
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION 16: RESOURCES */}
         {/* ================================================================ */}
         <section id="resources" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
@@ -2697,6 +2724,26 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </tbody>
               </table>
 
+              {/* Data source logos */}
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Data Source &amp; Partner Logos</p>
+              <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">dataSourceLogos.cdp.url</code> — 29 sources. Each entry has .name, .url, .category, .description. See the Data Source Logos section for the full grid.</p>
+              <table className="w-full text-xs mb-4">
+                <thead><tr className="border-b border-gray-200">
+                  <th className="text-left py-1 font-semibold text-gray-600">Token key</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Name</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Category</th>
+                </tr></thead>
+                <tbody className="font-mono text-[11px]">
+                  {Object.entries(dataSourceLogos).map(([key, { name, category }]) => (
+                    <tr key={key} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">dataSourceLogos.{key}</td>
+                      <td className="py-1.5 pr-3 font-sans text-gray-700">{name}</td>
+                      <td className="py-1.5 font-sans text-gray-500">{category}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
               {/* Member logos */}
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Member Company Logotypes</p>
               <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">memberLogos.scania.url</code> — 29 companies. See the Member Logotypes section for the full grid.</p>
@@ -2748,8 +2795,9 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["12", "UI Components",            "components"],
                     ["13", "Photography",              "photography"],
                     ["14", "Member Logotypes",         "member-logos"],
-                    ["15", "Resources",                "resources"],
-                    ["16", "Machine Instructions",     "ai-instructions"],
+                    ["15", "Data Source Logos",        "data-source-logos"],
+                    ["16", "Resources",                "resources"],
+                    ["17", "Machine Instructions",     "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
