@@ -2138,10 +2138,8 @@ const tabs: TabConfig[] = [
                     <img src={comp.example} alt={comp.alt} className="w-full h-full object-cover" />
                   </div>
                   <div className="p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-archivo font-bold text-[#232323] text-sm">{comp.type}</h4>
-                      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded ml-2 flex-shrink-0">{comp.usage}</span>
-                    </div>
+                    <h4 className="font-archivo font-bold text-[#232323] text-sm mb-1.5">{comp.type}</h4>
+                    <span className="inline-block text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded mb-3">{comp.usage}</span>
                     <p className="text-gray-600 text-sm leading-relaxed">{comp.desc}</p>
                   </div>
                 </div>
