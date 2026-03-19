@@ -30,6 +30,7 @@ import PublicLayout from "@/components/PublicLayout";
 import SectionNavigator from "@/components/SectionNavigator";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { DataSourceLogoGrid } from "@/components/DataSourceLogoGrid";
+import CrocodileChartExamples from "@/components/CrocodileChartExamples";
 import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort, memberLogos } from "@/lib/assets";
 
 // ============================================================================
@@ -2175,8 +2176,154 @@ const tabs: TabConfig[] = [
 
 
         {/* ================================================================ */}
-        {/* SECTION 13: PHOTOGRAPHY */}
+        {/* SECTION 13: CHARTS & DATA VISUALISATION */}
         {/* ================================================================ */}
+        <section id="charts" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Charts &amp; Data Visualisation
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            ERI data visualisation follows a consistent visual language across publications, the Crocodile Economy whitepaper, and digital products.
+            The chart style is minimal, editorial, and high-contrast — designed for print and screen alike.
+          </p>
+
+          {/* ── Crocodile Economy Chart Style ── */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">The Crocodile Economy Chart Style</h3>
+          <p className="text-gray-600 mb-6 text-sm max-w-3xl">
+            The Crocodile Economy charts show the decoupling of emissions from economic growth over time.
+            Two lines form the "crocodile jaw" — the upper line (GDP or revenue growth) diverges upward from the lower line (CO₂ emissions).
+            The fill colour between the lines encodes the <strong>entity type</strong>: green for companies, salmon for nations/regions.
+            This is a semantic encoding — not a stylistic choice.
+          </p>
+
+          {/* Colour semantics */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <Card className="shadow-sm overflow-hidden">
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded" style={{ backgroundColor: "#7DD87A" }} />
+                  <div>
+                    <p className="font-archivo font-bold text-[#232323] text-sm">Company / Corporate</p>
+                    <code className="text-xs font-mono text-gray-500">#7DD87A</code>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">
+                  Green fill between the GDP/revenue line and the CO₂ line. Used for all corporate entities (e.g. Astra Zeneca, Scania, Volvo).
+                  Signals that the entity is a private-sector actor.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm overflow-hidden">
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded" style={{ backgroundColor: "#F08070" }} />
+                  <div>
+                    <p className="font-archivo font-bold text-[#232323] text-sm">Nation / Region</p>
+                    <code className="text-xs font-mono text-gray-500">#F08070</code>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">
+                  Salmon/coral fill between the GDP line and the CO₂ line. Used for all national and supranational entities (e.g. European Union, Sweden, Australia).
+                  Signals that the entity is a public-sector actor.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Line colours */}
+          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Line Colours</h4>
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            <Card className="shadow-sm">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="w-8 h-2 rounded-full" style={{ backgroundColor: "#00B4D8" }} />
+                <div>
+                  <p className="font-archivo font-semibold text-[#232323] text-sm">GDP / Revenue line</p>
+                  <code className="text-xs font-mono text-gray-500">#00B4D8 — Cyan</code>
+                  <p className="text-xs text-gray-500 mt-1">Upper trajectory. Represents economic growth (GDP for nations, revenue for companies).</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="w-8 h-2 rounded-full bg-[#1A1A1A]" />
+                <div>
+                  <p className="font-archivo font-semibold text-[#232323] text-sm">CO₂ Emissions line</p>
+                  <code className="text-xs font-mono text-gray-500">#1A1A1A — Near-black</code>
+                  <p className="text-xs text-gray-500 mt-1">Lower trajectory. Represents territorial or Scope 1+2 CO₂ emissions over time.</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="w-8 h-2 rounded-full bg-[#CCCCCC]" />
+                <div>
+                  <p className="font-archivo font-semibold text-[#232323] text-sm">Grid lines / Axes</p>
+                  <code className="text-xs font-mono text-gray-500">#CCCCCC — Light grey</code>
+                  <p className="text-xs text-gray-500 mt-1">Horizontal gridlines and axis ticks. Minimal — no border box around the chart.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Live chart example */}
+          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Live Examples</h4>
+          <p className="text-gray-600 mb-4 text-sm">Interactive recreations of the Crocodile Economy chart style using ERI brand colours.</p>
+          <CrocodileChartExamples />
+
+          {/* Typography in charts */}
+          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider mt-8">Chart Typography</h4>
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
+            <Card className="shadow-sm">
+              <CardContent className="p-4">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-gray-100">
+                      <th className="text-left py-1 text-gray-400 font-normal">Element</th>
+                      <th className="text-left py-1 text-gray-400 font-normal">Style</th>
+                    </tr>
+                  </thead>
+                  <tbody className="font-mono text-gray-600">
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Chart title</td><td>Archivo 700 uppercase · #232323</td></tr>
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Axis labels</td><td>Open Sans 400 · #666666 · 11–12px</td></tr>
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Tick values</td><td>Open Sans 400 · #888888 · 10–11px</td></tr>
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Legend labels</td><td>Open Sans 400 · #444444 · 11px</td></tr>
+                    <tr><td className="py-1.5">Data callouts</td><td>Archivo 600 · #232323 · 11px</td></tr>
+                  </tbody>
+                </table>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm">
+              <CardContent className="p-4">
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">Chart Anatomy Rules</p>
+                <ul className="text-xs text-gray-600 space-y-2">
+                  <li>• No border box around the chart area — only horizontal gridlines</li>
+                  <li>• Y-axis on the left only; no right-side axis</li>
+                  <li>• Zero line is slightly thicker (1.5px) than other gridlines (0.5px)</li>
+                  <li>• X-axis shows year labels only — no tick marks</li>
+                  <li>• Fill opacity: 0.7 (allows gridlines to show through)</li>
+                  <li>• Line stroke width: 2px for both GDP and CO₂ lines</li>
+                  <li>• Background: white #FFFFFF — no chart background colour</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Data sources note */}
+          <Card className="shadow-sm border-l-4 border-[#3ba559]">
+            <CardContent className="p-4">
+              <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Data Sources</p>
+              <p className="text-sm text-gray-600">
+                Country charts use <strong>World Bank GDP data</strong> and <strong>Global Carbon Budget CO₂ data</strong>.
+                Company charts use <strong>Klimatkollen</strong> and <strong>ERI-compiled Scope 1+2 emissions</strong> with publicly reported revenue.
+                Always cite the data source beneath the chart.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+        {/* ================================================================ */}
+        {/* SECTION 14: PHOTOGRAPHY */}
+        {/* ================================================================ */}
+
         <section id="photography" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
             Photography
@@ -2377,7 +2524,7 @@ const tabs: TabConfig[] = [
 
         {/* ================================================================ */}
         {/* ================================================================ */}
-        {/* SECTION 14: MEMBER COMPANY LOGOTYPES */}
+        {/* SECTION 18: MEMBER COMPANY LOGOTYPES */}
         {/* ================================================================ */}
         <section id="member-logos" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
@@ -2442,7 +2589,7 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 15: DATA SOURCE LOGOS */}
+        {/* SECTION 18: DATA SOURCE LOGOS */}
         {/* ================================================================ */}
         <section id="data-source-logos" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
@@ -2468,7 +2615,7 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 16: RESOURCES */}
+        {/* SECTION 18: RESOURCES */}
         {/* ================================================================ */}
         <section id="resources" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
@@ -2525,7 +2672,7 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 17: MACHINE INSTRUCTIONS */}
+        {/* SECTION 18: MACHINE INSTRUCTIONS */}
         {/* ================================================================ */}
         <section id="ai-instructions" className="mb-16 mt-4">
           <div className="flex items-center gap-3 mb-2">
@@ -2926,11 +3073,12 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["10", "Badge Reference",          "badges"],
                     ["11", "Interactive States",       "interactive-states"],
                     ["12", "UI Components",            "components"],
-                    ["13", "Photography",              "photography"],
-                    ["14", "Member Logotypes",         "member-logos"],
-                    ["15", "Data Source Logos",        "data-source-logos"],
-                    ["16", "Resources",                "resources"],
-                    ["17", "Machine Instructions",     "ai-instructions"],
+                    ["13", "Charts & Data Visualisation", "charts"],
+                    ["14", "Photography",              "photography"],
+                    ["15", "Member Logotypes",         "member-logos"],
+                    ["16", "Data Source Logos",        "data-source-logos"],
+                    ["17", "Resources",                "resources"],
+                    ["18", "Machine Instructions",     "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>

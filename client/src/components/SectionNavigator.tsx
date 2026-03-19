@@ -33,6 +33,7 @@ export const SECTIONS: NavSection[] = [
   { id: "badges",                 label: "Badge Reference" },
   { id: "interactive-states",     label: "Interactive States" },
   { id: "components",             label: "UI Components" },
+  { id: "charts",                 label: "Charts",                  sublabel: "Crocodile Economy style" },
   { id: "photography",            label: "Photography",             sublabel: "Image guidelines" },
   { id: "member-logos",           label: "Member Logotypes" },
   { id: "data-source-logos",      label: "Data Source Logos" },
