@@ -2656,40 +2656,40 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               </table>
 
               {/* Data source logos */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Data Source &amp; Partner Logos</p>
-              <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">dataSourceLogos.cdp.url</code> — 29 sources. Each entry has .name, .url, .category, .description. See the Data Source Logos section for the full grid.</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Data Source &amp; Partner Logos — Direct CDN URLs</p>
+              <p className="text-xs text-gray-400 mb-2">Use the CDN URL directly in <code className="bg-gray-100 px-1 rounded">&lt;img src&gt;</code>. Token pattern: <code className="bg-gray-100 px-1 rounded">dataSourceLogos.cdp.url</code></p>
               <table className="w-full text-xs mb-4">
                 <thead><tr className="border-b border-gray-200">
-                  <th className="text-left py-1 font-semibold text-gray-600">Token key</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Name</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Category</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">CDN URL</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
-                  {Object.entries(dataSourceLogos).map(([key, { name, category }]) => (
+                  {Object.entries(dataSourceLogos).map(([key, { name, category, url }]) => (
                     <tr key={key} className="border-b border-gray-100">
-                      <td className="py-1.5 pr-3 text-[#3ba559]">dataSourceLogos.{key}</td>
-                      <td className="py-1.5 pr-3 font-sans text-gray-700">{name}</td>
-                      <td className="py-1.5 font-sans text-gray-500">{category}</td>
+                      <td className="py-1.5 pr-3 font-sans font-medium text-gray-700 whitespace-nowrap">{name}</td>
+                      <td className="py-1.5 pr-3 font-sans text-gray-500 whitespace-nowrap">{category}</td>
+                      <td className="py-1.5 text-[#3ba559] break-all">{url}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
               {/* Member logos */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Member Company Logotypes</p>
-              <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">memberLogos.scania.url</code> — 29 companies. See the Member Logotypes section for the full grid.</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Member Company Logotypes — Direct CDN URLs</p>
+              <p className="text-xs text-gray-400 mb-2">Use the CDN URL directly in <code className="bg-gray-100 px-1 rounded">&lt;img src&gt;</code>. Token pattern: <code className="bg-gray-100 px-1 rounded">memberLogos.scania.url</code></p>
               <table className="w-full text-xs mb-2">
                 <thead><tr className="border-b border-gray-200">
-                  <th className="text-left py-1 font-semibold text-gray-600">Token key</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Company</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Sector</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">CDN URL</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
-                  {Object.entries(memberLogos).map(([key, { name, sector }]) => (
+                  {Object.entries(memberLogos).map(([key, { name, sector, url }]) => (
                     <tr key={key} className="border-b border-gray-100">
-                      <td className="py-1.5 pr-3 text-[#3ba559]">memberLogos.{key}</td>
-                      <td className="py-1.5 pr-3 font-sans text-gray-700">{name}</td>
-                      <td className="py-1.5 font-sans text-gray-500">{sector}</td>
+                      <td className="py-1.5 pr-3 font-sans font-medium text-gray-700 whitespace-nowrap">{name}</td>
+                      <td className="py-1.5 pr-3 font-sans text-gray-500 whitespace-nowrap">{sector}</td>
+                      <td className="py-1.5 text-[#3ba559] break-all">{url}</td>
                     </tr>
                   ))}
                 </tbody>
