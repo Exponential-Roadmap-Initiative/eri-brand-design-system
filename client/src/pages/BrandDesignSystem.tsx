@@ -77,6 +77,10 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
       tones: { 100: { hex: "#fdfefe", rgb: "253, 254, 254" }, 300: { hex: "#fbfcfc", rgb: "251, 252, 252" }, 500: { hex: "#f9fafb", rgb: "249, 250, 251" }, 700: { hex: "#a1a2a3", rgb: "161, 162, 163" }, 900: { hex: "#5d5d5d", rgb: "93, 93, 93" } } },
     { id: "yellow", name: "Highlight Yellow", hex: "#F5C842", rgb: "245, 200, 66", context: "Data highlights, chart callouts, goal indicators, emphasis accents — introduced in Playbook v5",
       tones: { 100: { hex: "#f2e4bd", rgb: "242, 228, 189" }, 300: { hex: "#bfaa6b", rgb: "191, 170, 107" }, 500: { hex: "#f5c842", rgb: "245, 200, 66" }, 700: { hex: "#725f27", rgb: "114, 95, 39" }, 900: { hex: "#332b15", rgb: "51, 43, 21" } } },
+    { id: "accent-lime", name: "Accent Lime", hex: "#93E07D", rgb: "147, 224, 125", context: "Typographic heading highlights on marketing surfaces (exponentialroadmap.org). Used to colour individual accent words within Archivo headings. NOT for UI components, buttons, or data visualisation.",
+      tones: { 100: { hex: "#edf9e9", rgb: "237, 249, 233" }, 300: { hex: "#c4edba", rgb: "196, 237, 186" }, 500: { hex: "#93e07d", rgb: "147, 224, 125" }, 700: { hex: "#4a9e38", rgb: "74, 158, 56" }, 900: { hex: "#2a5a21", rgb: "42, 90, 33" } } },
+    { id: "link-green", name: "Link Green", hex: "#66B550", rgb: "102, 181, 80", context: "Hyperlink colour on the marketing website (exponentialroadmap.org). Used for inline body text links. In web applications, use Primary Green (#3ba559) for links instead.",
+      tones: { 100: { hex: "#e4f3de", rgb: "228, 243, 222" }, 300: { hex: "#a8d99b", rgb: "168, 217, 155" }, 500: { hex: "#66b550", rgb: "102, 181, 80" }, 700: { hex: "#3d7230", rgb: "61, 114, 48" }, 900: { hex: "#22401b", rgb: "34, 64, 27" } } },
   ],
 };
 
@@ -313,6 +317,8 @@ const chartHeaderColors: Record<string, string> = {
   green:  "#3ba559",
   cyan:   "#00B8D4",
   orange: "#F97316",
+  accentLime: "#93E07D",
+  linkGreen:  "#66B550",
   red:    "#EF4444",
   gray:   "#6B7280",
 };
@@ -443,8 +449,39 @@ export default function BrandDesignSystem() {
               <ColorSwatch key={color.id} name={color.name} hex={color.hex} rgb={color.rgb} context={color.context} tones={color.tones} />
             ))}
           </div>
-        </section>
 
+          {/* Hero Gradient */}
+          <h3 className="font-bold text-[#232323] mb-4 text-lg mt-12">Marketing Hero Gradient</h3>
+          <p className="text-gray-600 mb-6 text-sm max-w-3xl">
+            The marketing website (exponentialroadmap.org) uses a distinctive green gradient for hero sections.
+            This gradient is specific to marketing surfaces — do not use it in web application UI.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <Card className="shadow-sm overflow-hidden">
+              <div
+                className="h-32 w-full"
+                style={{ background: "linear-gradient(135deg, #93E07D 0%, #3ba559 40%, #22803a 100%)" }}
+              />
+              <CardContent className="p-4">
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Hero Green Gradient</p>
+                <code className="text-xs font-mono text-gray-700 block mb-2">linear-gradient(135deg, #93E07D 0%, #3ba559 40%, #22803a 100%)</code>
+                <p className="text-xs text-gray-500">Used on hero sections of exponentialroadmap.org. White Archivo 800 text on top. Approximate — exact values may vary by page.</p>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm overflow-hidden">
+              <div
+                className="h-32 w-full flex items-center justify-center"
+                style={{ background: "linear-gradient(135deg, #93E07D 0%, #3ba559 40%, #22803a 100%)" }}
+              >
+                <p className="font-archivo font-extrabold text-2xl text-white px-6 text-center">Scaling <span className="text-[#232323]">solutions</span> for a 1.5°C world</p>
+              </div>
+              <CardContent className="p-4">
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Heading Accent on Gradient</p>
+                <p className="text-xs text-gray-500">White Archivo 800 for main text. Dark <code className="bg-gray-100 px-1 rounded">#232323</code> or lime <code className="bg-gray-100 px-1 rounded">#93E07D</code> for accent words.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
         {/* ================================================================ */}
         {/* SECTION 3: LOGO USAGE */}
         {/* ================================================================ */}
@@ -649,42 +686,38 @@ export default function BrandDesignSystem() {
             Typography
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
-            The ERI platform uses a single typeface system: <strong>Archivo</strong> loaded via{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@font-face</code> in{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">index.css</code>. It is mapped to both{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">font-sans</code> (the Tailwind default) and the explicit{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">font-archivo</code> utility. All headings default to Archivo 800 (Extra Bold) via a global{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">h1–h6</code> base rule.
+            ERI uses a two-font system. <strong>Archivo</strong> is the heading and display typeface — used at weight 700–800 for all H1–H3 and marketing hero text.{" "}
+            <strong>Open Sans</strong> is the body typeface — used for all paragraph text, UI labels, navigation, and captions. Both are loaded via Google Fonts CDN.
+            The web applications map <code className="font-mono text-xs bg-gray-100 px-1 rounded">font-sans</code> to Archivo for consistency with the design system; the marketing website (exponentialroadmap.org) uses Open Sans for body text.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             <Card className="shadow-sm">
               <CardContent className="p-6">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Primary &amp; Default Font</p>
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Heading &amp; Display Font</p>
                 <p className="font-archivo font-extrabold text-3xl text-[#232323] mb-3">Archivo</p>
                 <p className="text-sm text-gray-600 mb-3">
-                  Loaded via <code className="font-mono text-xs bg-gray-100 px-1 rounded">@font-face</code> in{" "}
-                  <code className="font-mono text-xs bg-gray-100 px-1 rounded">index.css</code>. Weights available: 400, 700, 800.
+                  Used for all H1–H3, hero text, section titles, and card headings. Weights: 400, 500, 600, 700, 800, 900.
+                  Loaded via Google Fonts CDN.
                 </p>
                 <div className="space-y-1">
-                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-sans → Archivo (default for all text)</code>
-                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-archivo → Archivo (explicit alias)</code>
+                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-archivo → headings, display, hero text</code>
+                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-sans → Archivo (Tailwind default alias)</code>
                 </div>
               </CardContent>
             </Card>
-            <Card className="shadow-sm bg-amber-50 border-amber-200">
+            <Card className="shadow-sm">
               <CardContent className="p-6">
-                <p className="text-xs text-amber-600 uppercase tracking-wider mb-2 font-semibold">⚠ Note on Inter</p>
-                <p className="text-sm text-amber-800 mb-3">
-                  Inter is referenced in some older code as{" "}
-                  <code className="font-mono text-xs bg-amber-100 px-1 rounded">font-sans</code> or{" "}
-                  <code className="font-mono text-xs bg-amber-100 px-1 rounded">font-inter</code>, but it is <strong>not loaded</strong> in the current build.
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Body &amp; UI Font</p>
+                <p style={{ fontFamily: "'Open Sans', sans-serif" }} className="font-semibold text-3xl text-[#232323] mb-3">Open Sans</p>
+                <p className="text-sm text-gray-600 mb-3">
+                  Used for all body text, paragraphs, UI labels, navigation items, captions, and form fields.
+                  Weights: 400, 500, 600, 700. Loaded via Google Fonts CDN.
                 </p>
-                <p className="text-sm text-amber-700">
-                  Do not add Inter references. Use{" "}
-                  <code className="font-mono text-xs bg-amber-100 px-1 rounded">font-sans</code> or{" "}
-                  <code className="font-mono text-xs bg-amber-100 px-1 rounded">font-archivo</code> — both resolve to Archivo.
-                </p>
+                <div className="space-y-1">
+                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-['Open_Sans'] → body, UI, captions</code>
+                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">Used on exponentialroadmap.org for all body text</code>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -700,7 +733,7 @@ export default function BrandDesignSystem() {
                   { label: "Sub-section H2", classes: "font-archivo text-2xl md:text-3xl font-extrabold text-[#232323]", previewClass: "font-archivo text-2xl font-extrabold text-[#232323]",     text: "Brand Design System",                                                context: "Used in the design system itself and for secondary section headings." },
                   { label: "Card H3",        classes: "font-bold text-[#232323] text-lg",                                previewClass: "font-bold text-[#232323] text-lg",                         text: "Cut Operational Emissions",                                          context: "Card headings, widget titles, sidebar section labels." },
                   { label: "Accent H4",      classes: "font-bold text-[#3ba559]",                                        previewClass: "font-bold text-[#3ba559]",                                 text: "Core Values · Tone of Voice",                                        context: "Small card sub-headings, feature labels, pillar accent headings." },
-                  { label: "Body",           classes: "text-base text-gray-600",                                         previewClass: "text-base text-gray-600",                                  text: "The fastest economic transition in history is underway.",             context: "Standard paragraph text. 16px (1rem). Archivo 400 weight." },
+                  { label: "Body",           classes: "text-base text-gray-600",                                         previewClass: "text-base text-gray-600",                                  text: "The fastest economic transition in history is underway.",             context: "Standard paragraph text. 16px (1rem). Open Sans 400 on marketing site; Archivo 400 in web apps." },
                   { label: "Small / UI",     classes: "text-sm text-gray-600",                                           previewClass: "text-sm text-gray-600",                                    text: "Interactive assessment tool based on the Exponential Business Playbook v5.0", context: "Card descriptions, nav item descriptions, footer text, form labels. 14px." },
                   { label: "Caption / Meta", classes: "text-xs text-gray-500",                                           previewClass: "text-xs text-gray-500",                                    text: "Last updated · March 2026 · Exponential Roadmap Initiative",         context: "Timestamps, data source labels, badge text, table meta. 12px." },
                   { label: "Overline",       classes: "text-xs font-semibold text-gray-400 uppercase tracking-wider",    previewClass: "text-xs font-semibold text-gray-400 uppercase tracking-wider", text: "Five Pillars · Navigation · Resources",                            context: "Section category labels above headings or nav groups." },
@@ -728,11 +761,43 @@ export default function BrandDesignSystem() {
               <h4 className="font-bold text-[#232323] mb-2 text-sm">Italic Variant</h4>
               <p className="text-sm text-gray-600 mb-3">Archivo supports italic. Used sparingly for hero accent phrases and pull quotes.</p>
               <p className="font-archivo font-extrabold text-2xl text-[#232323] italic">"The fastest economic transition in history"</p>
-              <code className="text-xs font-mono text-gray-500 mt-2 block">font-archivo font-extrabold italic text-2xl text-[#232323]</code>
+               <code className="text-xs font-mono text-gray-500 mt-2 block">font-archivo font-extrabold italic text-2xl text-[#232323]</code>
+            </CardContent>
+          </Card>
+          {/* Marketing vs. Application note */}
+          <Card className="shadow-sm border-blue-200 bg-blue-50 mt-6">
+            <CardContent className="p-5">
+              <h4 className="font-bold text-[#232323] mb-3 text-sm">Marketing Site vs. Web Application Typography</h4>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Marketing Site (exponentialroadmap.org)</p>
+                  <table className="w-full text-xs">
+                    <tbody>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 80px · white on green</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">H2 section</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · ~36px · #232323</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#93E07D] font-bold">#93E07D</span> lime highlight</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · 16px · #383838</td></tr>
+                      <tr><td className="py-1.5 pr-3 text-gray-500">Links</td><td className="py-1.5 font-mono text-[#232323]">Open Sans · <span className="text-[#66B550]">#66B550</span> green</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Web Applications (ERI platform)</p>
+                  <table className="w-full text-xs">
+                    <tbody>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–5xl · #232323</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">H2 section</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 3xl–4xl · #232323</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#3ba559]">#3ba559</span> primary green</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Archivo 400 · 16px · gray-600</td></tr>
+                      <tr><td className="py-1.5 pr-3 text-gray-500">Links</td><td className="py-1.5 font-mono text-[#232323]">Archivo · <span className="text-[#3ba559]">#3ba559</span> primary green</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <p className="text-xs text-blue-700 mt-3">When building marketing pages that mirror exponentialroadmap.org, use Open Sans for body text and the lime accent <code className="bg-blue-100 px-1 rounded">#93E07D</code> for heading highlights. For web applications, use Archivo throughout.</p>
             </CardContent>
           </Card>
         </section>
-
         {/* ================================================================ */}
         {/* SECTION 6: VERBAL IDENTITY */}
         {/* ================================================================ */}
