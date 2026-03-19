@@ -69,7 +69,7 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
   brand: [
     { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Primary buttons, CTAs, links, success states",
       tones: { 100: { hex: "#dbeee1", rgb: "219, 238, 225" }, 300: { hex: "#93cda3", rgb: "147, 205, 163" }, 500: { hex: "#3ba559", rgb: "59, 165, 89" }, 700: { hex: "#2c6d3e", rgb: "44, 109, 62" }, 900: { hex: "#20422a", rgb: "32, 66, 42" } } },
-    { id: "dark", name: "Dark Text", hex: "#232323", rgb: "35, 35, 35", context: "Headings, primary body text, high-contrast elements",
+    { id: "dark", name: "Dark Text / Footer BG", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, high-contrast elements. Note: body paragraph text on the marketing site uses #383838 (slightly lighter). Use #232323 for headings and the footer background; use #383838 for body copy on white.",
       tones: { 100: { hex: "#d7d7d7", rgb: "215, 215, 215" }, 300: { hex: "#868686", rgb: "134, 134, 134" }, 500: { hex: "#232323", rgb: "35, 35, 35" }, 700: { hex: "#1d1d1d", rgb: "29, 29, 29" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
     { id: "neutral", name: "Neutral Gray", hex: "#6b7280", rgb: "107, 114, 128", context: "Secondary text, borders, disabled states",
       tones: { 100: { hex: "#e4e5e8", rgb: "228, 229, 232" }, 300: { hex: "#adb1b9", rgb: "173, 177, 185" }, 500: { hex: "#6b7280", rgb: "107, 114, 128" }, 700: { hex: "#494e56", rgb: "73, 78, 86" }, 900: { hex: "#2f3236", rgb: "47, 50, 54" } } },
@@ -81,6 +81,12 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
       tones: { 100: { hex: "#edf9e9", rgb: "237, 249, 233" }, 300: { hex: "#c4edba", rgb: "196, 237, 186" }, 500: { hex: "#93e07d", rgb: "147, 224, 125" }, 700: { hex: "#4a9e38", rgb: "74, 158, 56" }, 900: { hex: "#2a5a21", rgb: "42, 90, 33" } } },
     { id: "link-green", name: "Link Green", hex: "#66B550", rgb: "102, 181, 80", context: "Hyperlink colour on the marketing website (exponentialroadmap.org). Used for inline body text links. In web applications, use Primary Green (#3ba559) for links instead.",
       tones: { 100: { hex: "#e4f3de", rgb: "228, 243, 222" }, 300: { hex: "#a8d99b", rgb: "168, 217, 155" }, 500: { hex: "#66b550", rgb: "102, 181, 80" }, 700: { hex: "#3d7230", rgb: "61, 114, 48" }, 900: { hex: "#22401b", rgb: "34, 64, 27" } } },
+    { id: "body-text", name: "Body Text", hex: "#383838", rgb: "56, 56, 56", context: "Body paragraph text on the marketing website (exponentialroadmap.org). Slightly lighter than the heading/footer dark (#232323). Use #383838 for all body copy on white backgrounds on marketing surfaces.",
+      tones: { 100: { hex: "#d8d8d8", rgb: "216, 216, 216" }, 300: { hex: "#8a8a8a", rgb: "138, 138, 138" }, 500: { hex: "#383838", rgb: "56, 56, 56" }, 700: { hex: "#262626", rgb: "38, 38, 38" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
+    { id: "linkedin", name: "LinkedIn Blue", hex: "#007BB6", rgb: "0, 123, 182", context: "LinkedIn social media icon background. Used in the ERI footer social links row. Do not use for any other purpose.",
+      tones: { 100: { hex: "#cce5f3", rgb: "204, 229, 243" }, 300: { hex: "#66b3d9", rgb: "102, 179, 217" }, 500: { hex: "#007bb6", rgb: "0, 123, 182" }, 700: { hex: "#005a87", rgb: "0, 90, 135" }, 900: { hex: "#003a58", rgb: "0, 58, 88" } } },
+    { id: "youtube", name: "YouTube Red", hex: "#A82400", rgb: "168, 36, 0", context: "YouTube social media icon background. Used in the ERI footer social links row. Do not use for any other purpose.",
+      tones: { 100: { hex: "#f3d5cc", rgb: "243, 213, 204" }, 300: { hex: "#d47a66", rgb: "212, 122, 102" }, 500: { hex: "#a82400", rgb: "168, 36, 0" }, 700: { hex: "#7a1a00", rgb: "122, 26, 0" }, 900: { hex: "#4a1000", rgb: "74, 16, 0" } } },
   ],
 };
 
@@ -762,6 +768,33 @@ export default function BrandDesignSystem() {
               <p className="text-sm text-gray-600 mb-3">Archivo supports italic. Used sparingly for hero accent phrases and pull quotes.</p>
               <p className="font-archivo font-extrabold text-2xl text-[#232323] italic">"The fastest economic transition in history"</p>
                <code className="text-xs font-mono text-gray-500 mt-2 block">font-archivo font-extrabold italic text-2xl text-[#232323]</code>
+            </CardContent>
+          </Card>
+          {/* Accent Word Heading Pattern */}
+          <Card className="shadow-sm border-[#93E07D] bg-green-50 mt-6">
+            <CardContent className="p-5">
+              <h4 className="font-bold text-[#232323] mb-2 text-sm">Heading Accent Word Pattern</h4>
+              <p className="text-sm text-gray-600 mb-4">
+                On the marketing website, one or two words in a heading are rendered in Accent Lime <code className="bg-green-100 px-1 rounded text-xs">#93E07D</code> while the rest remains in the standard dark colour. This creates a distinctive typographic signature across all pages.
+              </p>
+              <div className="space-y-3 mb-4">
+                <p className="font-archivo font-extrabold text-2xl text-[#232323]">
+                  About the Exponential Roadmap <span className="text-[#93E07D]">Initiative</span>
+                </p>
+                <p className="font-archivo font-extrabold text-2xl text-[#232323]">
+                  Exponential Roadmap Initiative <span className="text-[#93E07D]">Members</span>
+                </p>
+                <p className="font-archivo font-extrabold text-2xl text-[#232323]">
+                  In <span className="text-[#93E07D]">brief</span>
+                </p>
+              </div>
+              <code className="text-xs font-mono text-gray-600 block bg-white border border-green-200 rounded p-2">
+                {`<h1 className="font-archivo font-extrabold text-[#232323]">
+  About the Exponential Roadmap{" "}
+  <span className="text-[#93E07D]">Initiative</span>
+</h1>`}
+              </code>
+              <p className="text-xs text-gray-500 mt-2">Use sparingly — one or two accent words per heading maximum. Never apply to body text. Marketing surfaces only.</p>
             </CardContent>
           </Card>
           {/* Marketing vs. Application note */}
@@ -2032,6 +2065,93 @@ const tabs: TabConfig[] = [
               </CardContent>
             </Card>
             <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Card p-0 · thead bg-gray-50 · tr alternating bg-white/bg-gray-50 · hover:bg-gray-100 · th font-bold text-[#232323]</div>
+          </div>
+
+          {/* ── Marketing CTA Button ── */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">3. Marketing CTA Button</h3>
+          <p className="text-gray-600 mb-4 text-sm">
+            The canonical call-to-action button used across <strong>all pages of exponentialroadmap.org</strong>. Pill-shaped, Accent Lime background, dark text. Use this style for primary actions on any marketing surface.
+          </p>
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="p-6 bg-white flex flex-wrap gap-4 items-center">
+              {["Our members and partners", "Read more about our impact", "Sign up to our newsletter"].map(label => (
+                <a
+                  key={label}
+                  href="#"
+                  className="inline-block px-6 py-3 rounded-full font-archivo font-semibold text-base text-[#242424] no-underline transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: "#93E07D" }}
+                  onClick={e => e.preventDefault()}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#93E07D] · text-[#242424] · rounded-full · font-archivo font-semibold · text-base · px-6 py-3</div>
+          </div>
+          <Card className="shadow-sm bg-gray-900 mb-10">
+            <CardContent className="p-5">
+              <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`<a
+  href="/members"
+  className="inline-block px-6 py-3 rounded-full font-archivo font-semibold text-base text-[#242424]"
+  style={{ backgroundColor: "#93E07D" }}
+>
+  Our members and partners
+</a>`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* ── Navigation Bar ── */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">4. Navigation Bar</h3>
+          <p className="text-gray-600 mb-4 text-sm">
+            The top navigation bar pattern used on exponentialroadmap.org. White background, Archivo 600 16px links, with the <code className="font-mono text-xs bg-gray-100 px-1 rounded">INITIATIVE</code> wordmark in Accent Lime.
+          </p>
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="bg-white px-6 py-3 flex items-center justify-between border-b border-gray-100">
+              <div className="flex items-center gap-1">
+                <span className="font-archivo font-extrabold text-sm text-[#232323] tracking-wide uppercase">EXPONENTIAL ROADMAP</span>
+                <span className="font-archivo font-extrabold text-sm text-[#93E07D] tracking-wide uppercase ml-1">INITIATIVE</span>
+              </div>
+              <div className="flex items-center gap-6">
+                {["Resources", "Events", "News", "About"].map(item => (
+                  <span key={item} className="font-archivo font-semibold text-sm text-[#232323] cursor-pointer hover:text-[#3ba559] transition-colors">{item}</span>
+                ))}
+              </div>
+            </div>
+            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-white · font-archivo font-semibold · text-sm · text-[#232323] · logo accent: text-[#93E07D]</div>
+          </div>
+
+          {/* ── Footer ── */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">5. Footer</h3>
+          <p className="text-gray-600 mb-4 text-sm">
+            The dark footer used on exponentialroadmap.org. Dark background <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code>, Archivo headings, Open Sans body, Accent Lime links, and social icon backgrounds.
+          </p>
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-6">
+            <div className="bg-[#232323] px-6 py-8">
+              <div className="grid grid-cols-3 gap-8 mb-6">
+                <div>
+                  <h4 className="font-archivo font-medium text-white text-sm mb-3 uppercase tracking-wide">Newsletter</h4>
+                  <p className="text-white/70 text-xs mb-3" style={{ fontFamily: "'Open Sans', sans-serif" }}>Stay up to date with our latest news and resources.</p>
+                  <a href="#" className="inline-block px-4 py-2 text-xs font-semibold text-white border border-white rounded-full hover:bg-white hover:text-[#232323] transition-colors" onClick={e => e.preventDefault()} style={{ fontFamily: "'Open Sans', sans-serif" }}>Subscribe now</a>
+                </div>
+                <div>
+                  <h4 className="font-archivo font-medium text-white text-sm mb-3 uppercase tracking-wide">Follow us</h4>
+                  <div className="flex gap-2">
+                    <span className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: "#007BB6" }}>in</span>
+                    <span className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold bg-black">𝕏</span>
+                    <span className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: "#A82400" }}>▶</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-archivo font-medium text-white text-sm mb-3 uppercase tracking-wide">Contact us</h4>
+                  <a href="mailto:hello@exponentialroadmap.org" className="text-[#93E07D] text-xs" style={{ fontFamily: "'Open Sans', sans-serif" }}>hello@exponentialroadmap.org</a>
+                </div>
+              </div>
+              <div className="border-t border-white/10 pt-4 flex items-center justify-between">
+                <span className="text-white/40 text-xs" style={{ fontFamily: "'Open Sans', sans-serif" }}>© Exponential Roadmap Initiative</span>
+                <a href="#" className="text-white/40 text-xs hover:text-[#93E07D]" style={{ fontFamily: "'Open Sans', sans-serif" }} onClick={e => e.preventDefault()}>Privacy policy</a>
+              </div>
+            </div>
+            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#232323] · headings: font-archivo font-medium text-white · body: Open Sans text-white/70 · links: text-[#93E07D] · newsletter btn: ghost white border rounded-full · social: LinkedIn #007BB6 · X #000 · YouTube #A82400</div>
           </div>
         </section>
 
