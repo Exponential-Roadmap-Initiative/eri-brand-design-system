@@ -2523,8 +2523,180 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
+        {/* SECTION 15: TESTIMONIALS */}
         {/* ================================================================ */}
-        {/* SECTION 18: MEMBER COMPANY LOGOTYPES */}
+
+        <section id="testimonials" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Testimonials &amp; Pull-Quotes
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            Testimonials appear on the marketing website and in reports to convey third-party credibility. The layout
+            pairs a circular portrait with a justified block-quote and a bold attribution line. Heading copy uses the
+            standard ERI accent-word treatment: one or two key words set in Primary Green on a light background.
+          </p>
+
+          {/* Anatomy overview */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <Card className="shadow-sm">
+              <CardContent className="p-6">
+                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Layout Anatomy</h3>
+                <ul className="space-y-3 text-sm text-gray-600">
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                    <span><strong>Section heading</strong> — Archivo 700–800, centred. One or two key words use Primary Green <code className="text-xs bg-gray-100 px-1 rounded">#3ba559</code> (or Accent Lime <code className="text-xs bg-gray-100 px-1 rounded">#93E07D</code> on dark backgrounds).</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                    <span><strong>Portrait</strong> — circular crop (<code className="text-xs bg-gray-100 px-1 rounded">border-radius: 50%</code>), 120–160 px diameter. No border or drop-shadow. Sits to the left of the quote block.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                    <span><strong>Quote body</strong> — Open Sans 400, 15–17 px, <code className="text-xs bg-gray-100 px-1 rounded">text-align: justify</code>. No typeset quotation marks. Colour: Body Text <code className="text-xs bg-gray-100 px-1 rounded">#383838</code>.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                    <span><strong>Attribution line</strong> — <strong>Bold name</strong> in Open Sans 700, comma, then role and organisation in Open Sans 400. Colour: <code className="text-xs bg-gray-100 px-1 rounded">#232323</code>.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                    <span><strong>Background</strong> — light grey <code className="text-xs bg-gray-100 px-1 rounded">#F9FAFB</code> or white. Never a coloured or gradient background behind testimonials.</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-sm">
+              <CardContent className="p-6">
+                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Typography &amp; Spacing</h3>
+                <div className="font-mono text-xs space-y-2 text-gray-600">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Section heading</span>
+                    <span>Archivo 700–800 · centred</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Accent word(s)</span>
+                    <span>#3ba559 (light bg) / #93E07D (dark bg)</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Portrait size</span>
+                    <span>120–160 px · circular</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Quote body</span>
+                    <span>Open Sans 400 · 15–17 px · justify</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Attribution name</span>
+                    <span>Open Sans 700 · #232323</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Attribution role</span>
+                    <span>Open Sans 400 · #232323</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4">
+                    <span className="text-gray-400">Background</span>
+                    <span>#F9FAFB or #FFFFFF</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Live example */}
+          <h3 className="font-archivo font-bold text-base text-[#232323] mb-4">Live Example</h3>
+          <div className="bg-[#F9FAFB] rounded-xl p-8 md:p-12 mb-6">
+            <h2
+              className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] text-center mb-10"
+              style={{ letterSpacing: "-0.01em" }}
+            >
+              What{" "}
+              <span style={{ color: "#3ba559" }}>others say</span>{" "}
+              about us
+            </h2>
+
+            <div className="flex flex-col sm:flex-row items-start gap-8 max-w-3xl mx-auto">
+              <div className="flex-shrink-0">
+                <div
+                  className="rounded-full overflow-hidden bg-gray-200"
+                  style={{ width: 140, height: 140 }}
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=280&h=280&fit=crop&crop=face"
+                    alt="Portrait placeholder"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+              </div>
+
+              <div className="flex-1">
+                <p
+                  style={{
+                    fontFamily: "'Open Sans', sans-serif",
+                    fontSize: 15,
+                    lineHeight: 1.75,
+                    textAlign: "justify",
+                    color: "#383838",
+                    marginBottom: 16,
+                  }}
+                >
+                  No company can achieve net zero alone. Accelerating decarbonisation requires collaboration and
+                  Exponential Roadmap Initiative has been a great partner and thought leader — helping us to think
+                  through our strategies and co-hosted Solutions House with Futerra at Climate Week NYC, facilitating
+                  great conversations around climate solutions, the challenges of Scope 3, advanced clean energy
+                  technologies and more.
+                </p>
+                <p style={{ fontFamily: "'Open Sans', sans-serif", fontSize: 15, color: "#232323" }}>
+                  <strong>Kate Brandt</strong>, Chief Sustainability Officer, Google
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Do / Don't */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <Card className="shadow-sm border-l-4 border-[#3ba559]">
+              <CardContent className="p-5">
+                <p className="font-archivo font-bold text-xs uppercase tracking-wider text-[#3ba559] mb-3">&#10003; Do</p>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li>Use a circular portrait crop — never square or oval.</li>
+                  <li>Justify the quote body text.</li>
+                  <li>Bold the speaker's name; use regular weight for role and organisation.</li>
+                  <li>Use Primary Green for the accent word(s) in the heading on light backgrounds.</li>
+                  <li>Keep the background white or light grey — no coloured panels.</li>
+                  <li>Use real photography — no illustrations or icons as the portrait.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm border-l-4 border-red-400">
+              <CardContent className="p-5">
+                <p className="font-archivo font-bold text-xs uppercase tracking-wider text-red-500 mb-3">&#10007; Don't</p>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li>Don't add decorative quotation mark glyphs (" ") — the layout implies the quote.</li>
+                  <li>Don't use a coloured or gradient background behind the testimonial block.</li>
+                  <li>Don't left-align the quote body text — justified alignment is part of the ERI editorial style.</li>
+                  <li>Don't omit the attribution — an unattributed quote cannot be published.</li>
+                  <li>Don't use Accent Lime on a white background for body text — only for heading accent words on dark backgrounds.</li>
+                  <li>Don't place the portrait below or to the right of the quote.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Multiple testimonials note */}
+          <Card className="shadow-sm bg-blue-50 border-blue-100">
+            <CardContent className="p-4">
+              <p className="text-sm text-blue-800">
+                <strong>Multiple testimonials:</strong> When displaying more than one testimonial, stack them vertically
+                with 40–48 px gap between entries. Do not use a carousel or slider — all testimonials should be
+                visible without interaction. Each entry follows the same portrait-left / quote-right layout.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+        {/* ================================================================ */}
+        {/* ================================================================ */}
+        {/* SECTION 16: MEMBER COMPANY LOGOTYPES */}
         {/* ================================================================ */}
         <section id="member-logos" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
