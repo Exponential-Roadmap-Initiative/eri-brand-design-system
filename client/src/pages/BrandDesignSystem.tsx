@@ -28,6 +28,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PublicLayout from "@/components/PublicLayout";
 import SectionNavigator from "@/components/SectionNavigator";
+import { PhotoGallery } from "@/components/PhotoGallery";
 import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort } from "@/lib/assets";
 
 // ============================================================================
@@ -906,14 +907,21 @@ export default function BrandDesignSystem() {
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 8: PILLAR ICON ASSETS */}
+        {/* SECTION 8: EXPONENTIAL FRAMEWORK (unified) */}
         {/* ================================================================ */}
-        <section className="mb-16" id="pillar-icons">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Pillar Icon Assets
+        <section className="mb-16" id="exponential-framework">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+            Exponential Framework
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
-            Five webp images represent the Exponential Framework pillars. They appear in the full-screen navigation overlay, pillar detail pages, and framework diagrams. Import from{" "}
+            All visual assets for the Exponential Roadmap framework — pillar icons, framework diagrams, and pillar elements — are documented here.
+            Always use the provided assets; never recreate or approximate them.
+          </p>
+
+          {/* ── SUB-SECTION: PILLAR ICON ASSETS ── */}
+          <h3 className="font-archivo font-bold text-[#232323] text-xl mb-3 mt-2 border-b border-gray-200 pb-2">Pillar Icon Assets</h3>
+          <p className="text-gray-600 mb-6 max-w-3xl text-sm">
+            Five WebP images represent the Exponential Framework pillars. They appear in the full-screen navigation overlay, pillar detail pages, and framework diagrams. Import from{" "}
             <code className="text-sm font-mono bg-gray-100 px-1.5 py-0.5 rounded">client/src/lib/pillarColors.ts</code> for the canonical hex colours — never hard-code pillar colours inline.
           </p>
 
@@ -983,19 +991,14 @@ import { pillarBottomIcons } from "@/lib/assets";
 ))}`}</pre>
             </CardContent>
           </Card>
-        </section>
 
-        {/* ================================================================ */}
-        {/* SECTION 9: EXPONENTIAL FRAMEWORK DIAGRAMS (v5) */}
-        {/* ================================================================ */}
-        <section className="mb-16" id="framework-diagrams">
-          <div className="flex items-center gap-3 mb-2">
-            <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323]">
-              Exponential Framework Diagrams
-            </h2>
+          {/* ── SUB-SECTION: FRAMEWORK DIAGRAMS ── */}
+          <div id="framework-diagrams" className="pt-4">
+          <div className="flex items-center gap-3 mb-3 border-b border-gray-200 pb-2">
+            <h3 className="font-archivo font-bold text-[#232323] text-xl">Framework Diagrams</h3>
             <Badge className="bg-[#3ba559] text-white text-[10px] tracking-widest uppercase hover:bg-[#3ba559]">v5 New</Badge>
           </div>
-          <p className="text-gray-600 mb-2 max-w-3xl">
+          <p className="text-gray-600 mb-2 max-w-3xl text-sm">
             The Five Pillars radial diagram is the central visual identity of the Exponential Roadmap framework.
             Eight approved variants exist for different placement contexts. Always use the provided assets — never recreate the diagram.
           </p>
@@ -1077,7 +1080,8 @@ import { pillarBottomIcons } from "@/lib/assets";
               </div>
             ))}
           </div>
-        </section>
+          </div>{/* end framework-diagrams sub-div */}
+        </section>{/* end exponential-framework section */}
 
         {/* ================================================================ */}
         {/* SECTION 10: PAGE LAYOUT SHELLS */}
@@ -2224,33 +2228,16 @@ const tabs: TabConfig[] = [
             </div>
           </div>
 
-          {/* Curated Example Gallery */}
+          {/* Curated Photo Library */}
           <div>
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Curated Example Gallery</h3>
-            <p className="text-gray-500 text-sm mb-4">One approved example per pillar, sourced from Unsplash. These demonstrate the correct subject matter, composition, and mood for each pillar context.</p>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-              {[
-                { pillar: "Pillar 1", label: "Operations", color: "#8a9a87", img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80", caption: "Aerial solar farm — industrial energy transformation at scale", credit: "Unsplash" },
-                { pillar: "Pillar 2", label: "Value Chain", color: "#2999c5", img: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&q=80", caption: "Aerial shipping port — global supply chain infrastructure", credit: "Unsplash" },
-                { pillar: "Pillar 3", label: "Solutions", color: "#22803a", img: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80", caption: "Wind turbines — clean technology deployment at scale", credit: "Unsplash" },
-                { pillar: "Pillar 4", label: "Finance", color: "#f97316", img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80", caption: "Aerial city — urban infrastructure and capital flows", credit: "Unsplash" },
-                { pillar: "Pillar 5", label: "Policy", color: "#f74145", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", caption: "Cyclists in the city — policy-driven behaviour change", credit: "Unsplash" },
-              ].map((ex) => (
-                <div key={ex.pillar} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="aspect-[4/3] overflow-hidden bg-gray-100">
-                    <img src={ex.img} alt={ex.caption} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="p-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: ex.color }} />
-                      <span className="font-archivo font-bold text-[#232323] text-xs">{ex.pillar} — {ex.label}</span>
-                    </div>
-                    <p className="text-gray-500 text-xs leading-relaxed">{ex.caption}</p>
-                    <span className="text-gray-400 text-xs">{ex.credit}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Curated Photo Library</h3>
+            <p className="text-gray-500 text-sm mb-4">
+              29 curated images across all five pillars and brand. Each image has a stable reference ID
+              (e.g. <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">ERI-OPS-001</code>) that
+              can be used in Manus AI task prompts or shared with colleagues. Filter by pillar, copy the
+              reference ID, or download directly.
+            </p>
+            <PhotoGallery />
           </div>
         </section>
 
@@ -2546,19 +2533,21 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </thead>
                 <tbody className="font-mono text-[11px]">
                   {[
-                    ["1",  "Brand Proposition",    "brand-proposition"],
-                    ["2",  "Visual Identity",       "visual-identity"],
-                    ["3",  "Logo Usage",            "logo-usage"],
-                    ["4",  "Spacing & Layout",      "spacing"],
-                    ["5",  "Typography",            "typography"],
-                    ["6",  "Verbal Identity",       "verbal-identity"],
-                    ["7",  "Page Layout Shells",    "page-layout"],
-                    ["8",  "Badge Reference",       "badges"],
-                    ["9",  "Interactive States",    "interactive-states"],
-                    ["10", "UI Components",         "components"],
-                    ["11", "Pillar Icon Assets",    "pillar-icons"],
-                    ["12", "Resources",             "resources"],
-                    ["13", "Machine Instructions",  "ai-instructions"],
+                    ["1",  "Brand Proposition",       "brand-proposition"],
+                    ["2",  "Visual Identity",          "visual-identity"],
+                    ["3",  "Logo Usage",               "logo-usage"],
+                    ["4",  "Spacing & Layout",         "spacing"],
+                    ["5",  "Typography",               "typography"],
+                    ["6",  "Verbal Identity",          "verbal-identity"],
+                    ["7",  "Component Library",        "component-library"],
+                    ["8",  "Exponential Framework",    "exponential-framework"],
+                    ["9",  "Page Layout Shells",       "page-layout"],
+                    ["10", "Badge Reference",          "badges"],
+                    ["11", "Interactive States",       "interactive-states"],
+                    ["12", "UI Components",            "components"],
+                    ["13", "Photography",              "photography"],
+                    ["14", "Resources",                "resources"],
+                    ["15", "Machine Instructions",     "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
