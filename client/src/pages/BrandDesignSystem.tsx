@@ -2037,9 +2037,229 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 13: RESOURCES */}
+        {/* SECTION 13: PHOTOGRAPHY */}
         {/* ================================================================ */}
-        <section id="resources">
+        <section id="photography" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Photography
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            ERI photography is documentary and systemic — it shows the infrastructure, industries, and cities that need to transform, not aspirational outcomes. These principles are derived from the Exponential Roadmap 1.5.1 report and apply across all ERI publications and digital products.
+          </p>
+
+          {/* Philosophy */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Photography Philosophy</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { title: "Systemic, not aspirational", desc: "Show the systems that need to change — factories, ports, cities, energy grids — not idealised green futures. The scale of transformation must be visible." },
+                { title: "Documentary, not decorative", desc: "Photography carries editorial weight. Every image should communicate something specific about climate action, not simply illustrate a mood or fill space." },
+                { title: "Human scale within systems", desc: "Where people appear, they are interacting with infrastructure or technology — engineers, workers, cyclists. People ground the systemic narrative in lived experience." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white border border-gray-200 rounded-lg p-5">
+                  <div className="w-2 h-2 rounded-full bg-[#3ba559] mb-3" />
+                  <h4 className="font-archivo font-bold text-[#232323] text-sm mb-2">{item.title}</h4>
+                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Subject Matter by Pillar */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Subject Matter by Pillar</h3>
+            <p className="text-gray-500 text-sm mb-4">Photography subject matter maps directly to the five pillars. Use these categories when sourcing images for pillar-specific content.</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200">
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Pillar</th>
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Subject Category</th>
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Example Subjects</th>
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Search Terms</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { pillar: "1 — Operations", color: "#8a9a87", category: "Industrial transformation", examples: "Factories, data centres, manufacturing lines, solar farms", terms: "aerial solar farm, industrial manufacturing overhead, data centre" },
+                    { pillar: "2 — Value Chain", color: "#2999c5", category: "Supply chain & logistics", examples: "Ports, shipping containers, warehouses, agricultural fields", terms: "aerial shipping port, cargo containers, supply chain logistics" },
+                    { pillar: "3 — Solutions", color: "#22803a", category: "Technology & innovation", examples: "Wind turbine engineers, EV charging, solar installation", terms: "wind turbine engineer, electric vehicle charging, clean technology worker" },
+                    { pillar: "4 — Finance", color: "#f97316", category: "Urban infrastructure & capital", examples: "City skylines, financial districts, construction sites", terms: "aerial city financial district, urban construction aerial, smart city" },
+                    { pillar: "5 — Policy", color: "#f74145", category: "People & governance", examples: "Cyclists, public transport, civic infrastructure", terms: "cyclists city commuting, public transport tram, urban planning aerial" },
+                  ].map((row) => (
+                    <tr key={row.pillar} className="border-b border-gray-100 hover:bg-gray-50">
+                      <td className="px-4 py-3">
+                        <span className="inline-flex items-center gap-2">
+                          <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: row.color }} />
+                          <span className="font-medium text-[#232323]">{row.pillar}</span>
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">{row.category}</td>
+                      <td className="px-4 py-3 text-gray-600">{row.examples}</td>
+                      <td className="px-4 py-3">
+                        <code className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{row.terms}</code>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Composition Principles */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Composition Principles</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  type: "Aerial / Overhead",
+                  usage: "Chapter openers, hero images, high-impact moments",
+                  desc: "Communicates scale, systemic thinking, and the roadmap metaphor. Looking down at the terrain signals strategic perspective. Used for the most important moments in a publication.",
+                  example: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
+                  alt: "Aerial city view — Finance pillar example",
+                },
+                {
+                  type: "Wide Establishing Shot",
+                  usage: "Section dividers, context-setting imagery",
+                  desc: "Shows the full context of a system or place, not a detail. Provides orientation and communicates the scope of the challenge or opportunity being discussed.",
+                  example: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+                  alt: "Wide shipping port — Value Chain pillar example",
+                },
+                {
+                  type: "Human-Scale Detail",
+                  usage: "Case studies, inline illustrations, pull quotes",
+                  desc: "Shows people interacting with technology or infrastructure. Engineers, workers, and citizens ground the systemic narrative in human experience and make abstract change tangible.",
+                  example: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80",
+                  alt: "Wind turbine engineer — Solutions pillar example",
+                },
+              ].map((comp) => (
+                <div key={comp.type} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                  <div className="aspect-video overflow-hidden bg-gray-100">
+                    <img src={comp.example} alt={comp.alt} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-archivo font-bold text-[#232323] text-sm">{comp.type}</h4>
+                      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded ml-2 flex-shrink-0">{comp.usage}</span>
+                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">{comp.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Colour Treatment */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Colour Treatment Rules</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-[#3ba559] flex items-center justify-center text-white text-xs">✓</span>
+                  Do
+                </h4>
+                <ul className="space-y-2">
+                  {[
+                    "Use photography at full colour with no filters or overlays applied",
+                    "Place the green brand colour (#3ba559) as a separate graphic element beside or on top of the photo — never blended into it",
+                    "Use the green underline bar or swirl shape as the brand accent on chapter openers",
+                    "Credit all photography sources — Unsplash, Alamy, Shutterstock, or company-provided",
+                  ].map((rule) => (
+                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
+                      <span className="text-[#3ba559] mt-0.5 flex-shrink-0">✓</span>
+                      {rule}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-white text-xs">✗</span>
+                  Don't
+                </h4>
+                <ul className="space-y-2">
+                  {[
+                    "Apply colour tints, green overlays, or duotone effects to photographs",
+                    "Use heavily processed photography: HDR, heavy vignettes, or dramatic colour grading",
+                    "Use stock photo clichés: handshakes, lightbulbs, people pointing at whiteboards",
+                    "Use nature/landscape photography decoratively — forests, mountains, or oceans without systemic context",
+                    "Use close-up portrait photography as a primary image (only for case study headshots)",
+                  ].map((rule) => (
+                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
+                      <span className="text-red-500 mt-0.5 flex-shrink-0">✗</span>
+                      {rule}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Approved Sources */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Approved Sources</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {[
+                { name: "Unsplash", url: "https://unsplash.com", type: "Free", note: "Best for aerial, urban, and technology subjects. Search by subject + 'aerial' for overhead shots." },
+                { name: "Alamy", url: "https://alamy.com", type: "Licensed", note: "Primary source used in ERI 1.5.1 report. Extensive editorial and documentary photography library." },
+                { name: "Shutterstock", url: "https://shutterstock.com", type: "Licensed", note: "Used for supplementary imagery. Prefer editorial collections over generic stock." },
+                { name: "Company-provided", url: "", type: "Case studies", note: "Partner organisations (Ericsson, Skanska, Telia, etc.) can provide images for case studies with attribution." },
+              ].map((src) => (
+                <div key={src.name} className="bg-white border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-archivo font-bold text-[#232323] text-sm">{src.name}</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      src.type === 'Free' ? 'bg-green-100 text-green-700' :
+                      src.type === 'Licensed' ? 'bg-blue-100 text-blue-700' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>{src.type}</span>
+                  </div>
+                  <p className="text-gray-600 text-xs leading-relaxed">{src.note}</p>
+                  {src.url && (
+                    <a href={src.url} target="_blank" rel="noopener noreferrer"
+                      className="text-[#3ba559] text-xs font-medium mt-2 inline-flex items-center gap-1 hover:underline">
+                      Visit ↗
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Curated Example Gallery */}
+          <div>
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Curated Example Gallery</h3>
+            <p className="text-gray-500 text-sm mb-4">One approved example per pillar, sourced from Unsplash. These demonstrate the correct subject matter, composition, and mood for each pillar context.</p>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+              {[
+                { pillar: "Pillar 1", label: "Operations", color: "#8a9a87", img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80", caption: "Aerial solar farm — industrial energy transformation at scale", credit: "Unsplash" },
+                { pillar: "Pillar 2", label: "Value Chain", color: "#2999c5", img: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&q=80", caption: "Aerial shipping port — global supply chain infrastructure", credit: "Unsplash" },
+                { pillar: "Pillar 3", label: "Solutions", color: "#22803a", img: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80", caption: "Wind turbines — clean technology deployment at scale", credit: "Unsplash" },
+                { pillar: "Pillar 4", label: "Finance", color: "#f97316", img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80", caption: "Aerial city — urban infrastructure and capital flows", credit: "Unsplash" },
+                { pillar: "Pillar 5", label: "Policy", color: "#f74145", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", caption: "Cyclists in the city — policy-driven behaviour change", credit: "Unsplash" },
+              ].map((ex) => (
+                <div key={ex.pillar} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                  <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                    <img src={ex.img} alt={ex.caption} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: ex.color }} />
+                      <span className="font-archivo font-bold text-[#232323] text-xs">{ex.pillar} — {ex.label}</span>
+                    </div>
+                    <p className="text-gray-500 text-xs leading-relaxed">{ex.caption}</p>
+                    <span className="text-gray-400 text-xs">{ex.credit}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION 14: RESOURCES */}
+        {/* ================================================================ */}
+        <section id="resources" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
             Resources
           </h2>

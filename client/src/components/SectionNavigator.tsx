@@ -35,6 +35,7 @@ export const SECTIONS: NavSection[] = [
   { id: "interactive-states", label: "Interactive States" },
   { id: "components",         label: "UI Components" },
   { id: "pillar-elements",    label: "Pillar Elements",        sublabel: "v5 New" },
+  { id: "photography",        label: "Photography",            sublabel: "Image guidelines" },
   { id: "resources",          label: "Resources" },
   { id: "ai-instructions",    label: "Machine Instructions",  sublabel: "For AI tasks" },
 ];
