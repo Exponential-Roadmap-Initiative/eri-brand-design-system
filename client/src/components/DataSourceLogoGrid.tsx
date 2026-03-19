@@ -6,6 +6,7 @@ interface DataSourceLogo {
   url: string;
   category: string;
   description?: string;
+  darkBackground?: boolean;
 }
 
 interface DataSourceLogoGridProps {
@@ -52,10 +53,14 @@ export function DataSourceLogoGrid({ logos, categories }: DataSourceLogoGridProp
 
       {/* Logo grid */}
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
-        {filtered.map(([key, { name, url, category, description }]) => (
+        {filtered.map(([key, { name, url, category, description, darkBackground }]) => (
           <div
             key={key}
-            className="group relative bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-shadow min-h-[100px]"
+            className={`group relative border rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-shadow min-h-[100px] ${
+              darkBackground
+                ? "bg-[#003366] border-[#003366]"
+                : "bg-white border-gray-200"
+            }`}
           >
             <img
               src={url}

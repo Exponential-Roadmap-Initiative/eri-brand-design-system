@@ -127,7 +127,7 @@ export const memberLogos: Record<string, { name: string; url: string; sector?: s
 };
 
 // Data source & partner logos — typed with name, category, and description
-export const dataSourceLogos: Record<string, { name: string; url: string; category: string; description?: string }> = {
+export const dataSourceLogos: Record<string, { name: string; url: string; category: string; description?: string; darkBackground?: boolean }> = {
   // Climate data & ratings
   cdp:                  { name: "CDP",                      category: "Climate Data",      url: `${CDN}/CDP_logo_bfb8c25c.jpeg`,                    description: "Corporate climate disclosure platform" },
   sbti:                 { name: "SBTi",                     category: "Standards",         url: `${CDN}/SBTi_logo_e552178d.jpeg`,                   description: "Science Based Targets initiative" },
@@ -157,8 +157,8 @@ export const dataSourceLogos: Record<string, { name: string; url: string; catego
   projectDrawdown:      { name: "Project Drawdown",         category: "Research",          url: `${CDN}/project_drawdown_logo_d315fcfc.jpeg`,       description: "Climate solutions research" },
   // Initiatives & campaigns
   climatechampions:     { name: "Climate Champions",        category: "Initiatives",       url: `${CDN}/climatechampions_logo_efb5a6d9.jpeg`,       description: "UNFCCC Race to Zero Champions" },
-  breakthroughs2030:    { name: "2030 Breakthroughs",       category: "Initiatives",       url: `${CDN}/2030_breakthroughs_2032a9ec.webp`,          description: "Exponential Roadmap 2030 Breakthroughs" },
+  breakthroughs2030:    { name: "2030 Breakthroughs",       category: "Initiatives",       url: `${CDN}/2030_breakthroughs_2032a9ec.webp`,          description: "Exponential Roadmap 2030 Breakthroughs",  darkBackground: true },
   klimatkommunerna:     { name: "Klimatkommunerna",         category: "Initiatives",       url: `${CDN}/Klimatkommunerna_logo_cda749cd.jpeg`,       description: "Swedish climate municipalities network" },
   viablecities:         { name: "Viable Cities",            category: "Initiatives",       url: `${CDN}/viablecities_logo_fa4b5162.jpeg`,           description: "Swedish smart city programme" },
-  naturvardsverket:     { name: "Naturvårdsverket",         category: "Government",        url: `${CDN}/naturvardsverket-logo_6b89c9a9.svg`,        description: "Swedish Environmental Protection Agency" },
+  naturvardsverket:     { name: "Naturvårdsverket",         category: "Government",        url: `${CDN}/naturvardsverket-logo_9b791265.png`,        description: "Swedish Environmental Protection Agency",  darkBackground: true },
 };
