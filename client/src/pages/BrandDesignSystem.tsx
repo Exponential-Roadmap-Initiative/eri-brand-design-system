@@ -161,7 +161,7 @@ const logoVariants = [
   {
     id: "icon",
     name: "Icon Mark (Exponential Swirl)",
-    file: logos.exponentialLogo,
+    file: logos.exponentialRoadmapLogo,
     filePath: "exponential-logo.webp",
     bg: "bg-white",
     border: "border border-gray-200",
@@ -944,7 +944,7 @@ export default function BrandDesignSystem() {
                     <span className="text-xs font-semibold text-gray-700">Pillar {p.num}</span>
                   </div>
                   <p className="text-xs text-gray-600 leading-snug mb-2">{p.name}</p>
-                  <code className="text-[10px] font-mono text-gray-400 block">pillar{p.num}-bottom.webp</code>
+                  <code className="text-[10px] font-mono text-gray-400 block">pillar-{p.num}-icon.webp</code>
                   <div className="mt-2 flex items-center gap-1.5">
                     <span className="inline-block w-4 h-4 rounded border border-gray-200 flex-shrink-0" style={{ backgroundColor: p.color }} />
                     <code className="text-[10px] font-mono text-gray-500">{p.color}</code>
@@ -954,25 +954,6 @@ export default function BrandDesignSystem() {
             ))}
           </div>
 
-          {/* ERI Pillar Marks */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">ERI Pillar Marks</h3>
-          <p className="text-gray-600 mb-4 text-sm">Compact square marks used in navigation menus and compact UI contexts.</p>
-          <div className="grid grid-cols-5 gap-4 mb-8">
-            {[
-              { num: 1, color: "#6B8068", img: pillarMarks.pillar1 },
-              { num: 2, color: "#00B8D4", img: pillarMarks.pillar2 },
-              { num: 3, color: "#3ba559", img: pillarMarks.pillar3 },
-              { num: 4, color: "#F97316", img: pillarMarks.pillar4 },
-              { num: 5, color: "#EF4444", img: pillarMarks.pillar5 },
-            ].map((p) => (
-              <div key={p.num} className="flex flex-col items-center gap-2">
-                <div className="w-16 h-16 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${p.color}20` }}>
-                  <img src={p.img} alt={`ERI Pillar ${p.num} mark`} className="w-12 h-12 object-contain" />
-                </div>
-                <code className="text-[10px] font-mono text-gray-400">ERI_Pillar{p.num}.webp</code>
-              </div>
-            ))}
-          </div>
 
           <Card className="shadow-sm">
             <CardContent className="p-5">
@@ -1011,15 +992,15 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h3 className="font-bold text-[#232323] mb-4 text-lg">Five Pillars Diagram — 8 Variants</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { key: "fivePillarsBg",          label: "BG",                   desc: "Background only (no logo/text)" },
-              { key: "fivePillarsBgLogo",       label: "BG + Logo",             desc: "With ERI wordmark" },
-              { key: "fivePillarsBgLogoTitle",  label: "BG + Logo + Title",     desc: "With wordmark and title text" },
-              { key: "fivePillarsExtended",     label: "Extended",              desc: "With action blocks around pillars" },
-              { key: "fivePillarsTransparent",  label: "Transparent",           desc: "No background — for dark slides" },
-              { key: "fivePillarsShortText",    label: "Short Text (Transp)",   desc: "Pillar names only, transparent" },
-              { key: "fivePillarsSymbols",      label: "Symbols (Transp)",      desc: "Icons only, transparent" },
-              { key: "fivePillarsText",         label: "Text (Transp)",         desc: "Full text labels, transparent" },
-            ].map(({ key, label, desc }) => (
+              { key: "fivePillarsBg",          label: "BG",                   desc: "Background only (no logo/text)",         file: "framework-5pillars-bg.webp" },
+              { key: "fivePillarsBgLogo",       label: "BG + Logo",             desc: "With ERI wordmark",                      file: "framework-5pillars-bg-logo.webp" },
+              { key: "fivePillarsBgLogoTitle",  label: "BG + Logo + Title",     desc: "With wordmark and title text",           file: "framework-5pillars-bg-logo-title.webp" },
+              { key: "fivePillarsExtended",     label: "Extended",              desc: "With action blocks around pillars",      file: "framework-5pillars-extended.webp" },
+              { key: "fivePillarsTransparent",  label: "Transparent",           desc: "No background — for dark slides",        file: "framework-5pillars-transparent.webp" },
+              { key: "fivePillarsShortText",    label: "Short Text (Transp)",   desc: "Pillar names only, transparent",         file: "framework-5pillars-short-text.webp" },
+              { key: "fivePillarsSymbols",      label: "Symbols (Transp)",      desc: "Icons only, transparent",                file: "framework-5pillars-symbols-transparent.webp" },
+              { key: "fivePillarsText",         label: "Text (Transp)",         desc: "Full text labels, transparent",          file: "framework-5pillars-text-transparent.webp" },
+            ].map(({ key, label, desc, file }) => (
               <div key={key} className="flex flex-col gap-2">
                 <div className="bg-gray-50 rounded-lg p-3 flex items-center justify-center" style={{minHeight: 160}}>
                   <img src={frameworkV5[key as keyof typeof frameworkV5]} alt={label} className="max-h-36 w-auto object-contain" />
@@ -1027,6 +1008,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div>
                   <p className="text-xs font-semibold text-[#232323]">{label}</p>
                   <p className="text-[11px] text-gray-500">{desc}</p>
+                  <code className="text-[10px] font-mono text-gray-400 block mt-1">{file}</code>
                 </div>
               </div>
             ))}
@@ -1065,11 +1047,11 @@ import { pillarBottomIcons } from "@/lib/assets";
           <p className="text-gray-600 mb-4 text-sm max-w-3xl">Four additional diagrams support the framework narrative. Use these in context — do not mix them with the Five Pillars radial diagram on the same slide.</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { key: "leadershipA",     label: "Leadership A",         desc: "Leadership categories diagram (variant A)" },
-              { key: "leadershipB",     label: "Leadership B",         desc: "Leadership categories diagram (variant B)" },
-              { key: "pillarsLinear",   label: "Pillars Linear",       desc: "Five pillars in horizontal linear layout" },
-              { key: "reducingEnabling",label: "Reducing / Enabling",  desc: "Reducing vs. enabling emissions framework" },
-            ].map(({ key, label, desc }) => (
+              { key: "leadershipA",     label: "Leadership A",         desc: "Leadership categories diagram (variant A)", file: "framework-leadership-a.webp" },
+              { key: "leadershipB",     label: "Leadership B",         desc: "Leadership categories diagram (variant B)", file: "framework-leadership-b.webp" },
+              { key: "pillarsLinear",   label: "Pillars Linear",       desc: "Five pillars in horizontal linear layout",  file: "framework-pillars-linear.webp" },
+              { key: "reducingEnabling",label: "Reducing / Enabling",  desc: "Reducing vs. enabling emissions framework",  file: "framework-reducing-enabling.webp" },
+            ].map(({ key, label, desc, file }) => (
               <div key={key} className="flex flex-col gap-2">
                 <div className="bg-gray-50 rounded-lg p-3 flex items-center justify-center" style={{minHeight: 140}}>
                   <img src={frameworkV5[key as keyof typeof frameworkV5]} alt={label} className="max-h-32 w-auto object-contain" />
@@ -1077,15 +1059,146 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div>
                   <p className="text-xs font-semibold text-[#232323]">{label}</p>
                   <p className="text-[11px] text-gray-500">{desc}</p>
+                  <code className="text-[10px] font-mono text-gray-400 block mt-1">{file}</code>
                 </div>
               </div>
             ))}
           </div>
           </div>{/* end framework-diagrams sub-div */}
+
+          {/* ── SUB-SECTION: PILLAR ELEMENTS ── */}
+          <div id="pillar-elements" className="pt-4">
+          <div className="flex items-center gap-3 mb-3 border-b border-gray-200 pb-2 mt-6">
+            <h3 className="font-archivo font-bold text-[#232323] text-xl">Pillar Elements</h3>
+            <Badge className="bg-[#3ba559] text-white text-[10px] tracking-widest uppercase hover:bg-[#3ba559]">v5 New</Badge>
+          </div>
+          <p className="text-gray-600 mb-2 max-w-3xl text-sm">
+            The pillar element is a vertical graphic unit that anchors each pillar in presentations, reports, and digital interfaces.
+            It always appears on the <strong>left side</strong> of a slide or frame. Four variants exist — choose based on available space and content depth.
+            All assets are available in solid (white background) and transparent versions.
+          </p>
+          <p className="text-gray-500 text-sm mb-8 max-w-3xl">
+            Source: <em>ERI Styleguide 1.0 — Framework Integration (pp. 13–18)</em>.
+          </p>
+
+          {/* Long */}
+          <h4 className="font-bold text-[#232323] text-base mb-1 mt-6">Long Pillar <span className="text-xs font-normal text-gray-500 ml-2">(Primary)</span></h4>
+          <p className="text-sm text-gray-600 mb-4 max-w-3xl">The primary integration element for company presentations. Placed on the left side of the frame. Use <code className="bg-gray-100 px-1 rounded text-xs">x</code> (width of the "E" in EXPONENTIAL) as minimum clear space from pillar to frame edge.</p>
+          <div className="grid grid-cols-5 gap-4 mb-3">
+            {([1,2,3,4,5] as const).map(n => (
+              <div key={n} className="flex flex-col items-center gap-2">
+                <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 200}}>
+                  <img src={pillarsLong[n].solid} alt={`Pillar ${n} Long`} className="max-h-48 w-auto object-contain" />
+                </div>
+                <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
+                <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-long-solid.webp</code>
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-5 gap-4 mb-10 bg-[#232323] rounded-xl p-4">
+            {([1,2,3,4,5] as const).map(n => (
+              <div key={n} className="flex flex-col items-center gap-2">
+                <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 160}}>
+                          <img src={pillarsLong[n].transparent} alt={`Pillar ${n} Long Transparent`} className="max-h-48 w-auto object-contain" />
+                </div>
+                <span className="text-xs text-gray-400 font-medium">Pillar {n}</span>
+                <code className="text-[10px] font-mono text-gray-500 text-center leading-tight">pillar-{n}-long-transparent.webp</code>
+              </div>
+            ))}
+          </div>
+
+          {/* Regular */}
+          <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Regular Pillar</h4>
+          <p className="text-sm text-gray-600 mb-4 max-w-3xl">Scaled-down version for data slides where more horizontal space is needed. Can be placed over images. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
+          <div className="grid grid-cols-5 gap-4 mb-10">
+            {([1,2,3,4,5] as const).map(n => (
+              <div key={n} className="flex flex-col items-center gap-2">
+                <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 160}}>
+                  <img src={pillarsRegular[n].solid} alt={`Pillar ${n} Regular`} className="max-h-40 w-auto object-contain" />
+                </div>
+                <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
+                <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-regular-solid.webp</code>
+              </div>
+            ))}
+          </div>
+
+          {/* Extended */}
+          <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Extended Pillar <span className="text-xs font-normal text-gray-500 ml-2">(with Action Blocks)</span></h4>
+          <p className="text-sm text-gray-600 mb-4 max-w-3xl">The most detailed variant — pillar extended downward with labelled Action Blocks (e.g. "Supplier Engagement"). The pillar icon appears at the bottom of the stack. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
+          <div className="grid grid-cols-5 gap-4 mb-4">
+            {([1,2,3,4,5] as const).map(n => (
+              <div key={n} className="flex flex-col items-center gap-2">
+                <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 240}}>
+                  <img src={pillarsExtended[n].solid} alt={`Pillar ${n} Extended`} className="max-h-56 w-auto object-contain" />
+                </div>
+                <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
+                <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-extended-solid.webp</code>
+              </div>
+            ))}
+          </div>
+          <div className="mb-10 bg-gray-50 rounded-lg p-4">
+            <h5 className="font-bold text-[#232323] text-sm mb-2">Action Block Specification</h5>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+              <div><span className="text-gray-500">Background</span><br/><span className="font-mono font-bold">Pillar colour</span></div>
+              <div><span className="text-gray-500">Text</span><br/><span className="font-mono font-bold">White, Archivo Bold</span></div>
+              <div><span className="text-gray-500">Size</span><br/><span className="font-mono font-bold">~8pt / 11px</span></div>
+              <div><span className="text-gray-500">Gap between blocks</span><br/><span className="font-mono font-bold">1px white</span></div>
+            </div>
+          </div>
+
+          {/* Short */}
+          <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Short Pillar <span className="text-xs font-normal text-gray-500 ml-2">(Symbol &amp; Text variants)</span></h4>
+          <p className="text-sm text-gray-600 mb-4 max-w-3xl">Minimal variant — symbol only (icon mark) or text only (pillar number + name). Used where space is very limited or as a compact reference marker.</p>
+          <div className="grid grid-cols-5 gap-6 mb-3">
+            {([1,2,3,4,5] as const).map(n => (
+              <div key={n} className="flex flex-col gap-3">
+                <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80}}>
+                  <img src={pillarsShort[n].symbol} alt={`Pillar ${n} Symbol`} className="max-h-16 w-auto object-contain" />
+                </div>
+                <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-symbol-solid.webp</code>
+                <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80}}>
+                  <img src={pillarsShort[n].text} alt={`Pillar ${n} Text`} className="max-h-16 w-auto object-contain" />
+                </div>
+                <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-text-solid.webp</code>
+                <span className="text-xs text-gray-500 font-medium text-center">Pillar {n}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400 mb-8">Top row: Symbol variant. Bottom row: Text variant. Transparent versions also available.</p>
+
+          {/* Usage Rules */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <Card className="shadow-sm border-l-4 border-l-[#3ba559]">
+              <CardContent className="p-5">
+                <h4 className="font-bold text-[#232323] mb-3 text-sm">✓ Correct Usage</h4>
+                <ul className="text-sm text-gray-600 space-y-1.5">
+                  <li>Always place on the <strong>left side</strong> of the slide or frame</li>
+                  <li>Maintain minimum clear space: <strong>x</strong> from pillar to frame edge (basic), <strong>3x</strong> for alternate</li>
+                  <li>Use solid version on light backgrounds; transparent on dark</li>
+                  <li>Use Long Pillar as the default; scale down only when content requires it</li>
+                  <li>Keep pillar colours exactly as specified — never approximate</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm border-l-4 border-l-[#f74145]">
+              <CardContent className="p-5">
+                <h4 className="font-bold text-[#232323] mb-3 text-sm">✗ Never Do</h4>
+                <ul className="text-sm text-gray-600 space-y-1.5">
+                  <li>Do not place the pillar on the right, centre, or bottom of the frame</li>
+                  <li>Do not distort, stretch, or rotate the pillar element</li>
+                  <li>Do not change pillar colours or mix pillar colours across elements</li>
+                  <li>Do not use the pillar element without the correct pillar number</li>
+                  <li>Do not use the Extended variant without all action blocks present</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+          </div>{/* end pillar-elements sub-div */}
+
         </section>{/* end exponential-framework section */}
 
         {/* ================================================================ */}
-        {/* SECTION 10: PAGE LAYOUT SHELLS */}
+        {/* SECTION 9: PAGE LAYOUT SHELLS */}
         {/* ================================================================ */}
         <section className="mb-16" id="page-layout">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
@@ -1857,189 +1970,7 @@ const tabs: TabConfig[] = [
           </div>
         </section>
 
-        {/* ================================================================ */}
-        {/* SECTION 12: PILLAR ELEMENTS (v5) */}
-        {/* ================================================================ */}
-        <section id="pillar-elements">
-          <div className="flex items-center gap-3 mb-2">
-            <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323]">
-              Pillar Elements
-            </h2>
-            <Badge className="bg-[#3ba559] text-white text-[10px] tracking-widest uppercase hover:bg-[#3ba559]">v5 New</Badge>
-          </div>
-          <p className="text-gray-600 mb-2 max-w-3xl">
-            The Exponential Roadmap pillar element is a vertical graphic unit that anchors each pillar in presentations, reports, and digital interfaces.
-            It always appears on the <strong>left side</strong> of a slide or frame. Four variants exist — choose based on available space and content depth.
-          </p>
-          <p className="text-gray-500 text-sm mb-8 max-w-3xl">
-            Source: <em>ERI Styleguide 1.0 — Framework Integration (pp. 13–18)</em>. All assets are available in solid (white background) and transparent versions.
-          </p>
 
-          <Tabs defaultValue="long">
-            <TabsList className="mb-6">
-              <TabsTrigger value="long">Long (Primary)</TabsTrigger>
-              <TabsTrigger value="regular">Regular</TabsTrigger>
-              <TabsTrigger value="extended">Extended</TabsTrigger>
-              <TabsTrigger value="short">Short</TabsTrigger>
-            </TabsList>
-
-            {/* ── LONG PILLAR ── */}
-            <TabsContent value="long">
-              <Card className="shadow-sm mb-4">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-[#232323] mb-1">Long Pillar</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    The primary integration element for company presentations. Placed on the left side of the frame.
-                    Use <code className="bg-gray-100 px-1 rounded text-xs">x</code> (one unit = width of the "E" in EXPONENTIAL) as the minimum clear space from pillar to frame edge.
-                    Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> for the alternate scaled-down version.
-                  </p>
-                  <div className="grid grid-cols-5 gap-4">
-                    {([1,2,3,4,5] as const).map(n => (
-                      <div key={n} className="flex flex-col items-center gap-2">
-                        <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 200}}>
-                          <img src={pillarsLong[n].solid} alt={`Pillar ${n} Long`} className="max-h-48 w-auto object-contain" />
-                        </div>
-                        <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 flex gap-2 flex-wrap">
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded font-mono">Solid (white bg)</span>
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded font-mono">Transparent version available</span>
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded font-mono">PNG + SVG</span>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="shadow-sm bg-[#232323]">
-                <CardContent className="p-6">
-                  <h4 className="font-bold text-white mb-3 text-sm">Dark Background Variant</h4>
-                  <p className="text-xs text-gray-400 mb-4">On dark backgrounds, use the transparent version — a white border is added automatically by the element.</p>
-                  <div className="grid grid-cols-5 gap-4">
-                    {([1,2,3,4,5] as const).map(n => (
-                      <div key={n} className="flex flex-col items-center gap-2">
-                        <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 160}}>
-                          <img src={pillarsLong[n].transparent} alt={`Pillar ${n} Long Transparent`} className="max-h-40 w-auto object-contain" />
-                        </div>
-                        <span className="text-xs text-gray-400 font-medium">Pillar {n}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* ── REGULAR PILLAR ── */}
-            <TabsContent value="regular">
-              <Card className="shadow-sm mb-4">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-[#232323] mb-1">Regular Pillar</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    A scaled-down version of the Long Pillar for integration into data slides where more horizontal space is needed.
-                    Can be placed over images. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.
-                  </p>
-                  <div className="grid grid-cols-5 gap-4">
-                    {([1,2,3,4,5] as const).map(n => (
-                      <div key={n} className="flex flex-col items-center gap-2">
-                        <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 160}}>
-                          <img src={pillarsRegular[n].solid} alt={`Pillar ${n} Regular`} className="max-h-40 w-auto object-contain" />
-                        </div>
-                        <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* ── EXTENDED PILLAR ── */}
-            <TabsContent value="extended">
-              <Card className="shadow-sm mb-4">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-[#232323] mb-1">Extended Pillar (with Action Blocks)</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    The most detailed variant. The pillar element is extended downward with labelled Action Blocks — one per sub-action within the pillar
-                    (e.g. "Supplier Engagement", "Supplier Energy"). The pillar icon appears at the bottom of the extended stack.
-                    Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.
-                  </p>
-                  <div className="grid grid-cols-5 gap-4">
-                    {([1,2,3,4,5] as const).map(n => (
-                      <div key={n} className="flex flex-col items-center gap-2">
-                        <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 240}}>
-                          <img src={pillarsExtended[n].solid} alt={`Pillar ${n} Extended`} className="max-h-56 w-auto object-contain" />
-                        </div>
-                        <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-bold text-[#232323] text-sm mb-2">Action Block Specification</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                      <div><span className="text-gray-500">Background</span><br/><span className="font-mono font-bold">Pillar colour</span></div>
-                      <div><span className="text-gray-500">Text</span><br/><span className="font-mono font-bold">White, Archivo Bold</span></div>
-                      <div><span className="text-gray-500">Size</span><br/><span className="font-mono font-bold">~8pt / 11px</span></div>
-                      <div><span className="text-gray-500">Gap between blocks</span><br/><span className="font-mono font-bold">1px white</span></div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* ── SHORT PILLAR ── */}
-            <TabsContent value="short">
-              <Card className="shadow-sm mb-4">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-[#232323] mb-1">Short Pillar</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    The minimal variant — symbol only (icon mark) or text only (pillar number + name). Used where space is very limited
-                    or as a compact reference marker. Four sub-variants: Symbol (solid), Symbol (transparent), Text (solid), Text (transparent).
-                  </p>
-                  <div className="grid grid-cols-5 gap-6">
-                    {([1,2,3,4,5] as const).map(n => (
-                      <div key={n} className="flex flex-col gap-3">
-                        <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80}}>
-                          <img src={pillarsShort[n].symbol} alt={`Pillar ${n} Symbol`} className="max-h-16 w-auto object-contain" />
-                        </div>
-                        <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80}}>
-                          <img src={pillarsShort[n].text} alt={`Pillar ${n} Text`} className="max-h-16 w-auto object-contain" />
-                        </div>
-                        <span className="text-xs text-gray-500 font-medium text-center">Pillar {n}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-xs text-gray-400 mt-3">Top row: Symbol variant. Bottom row: Text variant. Transparent versions also available.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-
-          {/* Usage Rules */}
-          <div className="mt-6 grid md:grid-cols-2 gap-4">
-            <Card className="shadow-sm border-l-4 border-l-[#3ba559]">
-              <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3 text-sm">✓ Correct Usage</h4>
-                <ul className="text-sm text-gray-600 space-y-1.5">
-                  <li>Always place on the <strong>left side</strong> of the slide or frame</li>
-                  <li>Maintain minimum clear space: <strong>x</strong> from pillar to frame edge (basic), <strong>3x</strong> for alternate</li>
-                  <li>Use solid version on light backgrounds; transparent on dark</li>
-                  <li>Use Long Pillar as the default; scale down only when content requires it</li>
-                  <li>Keep pillar colours exactly as specified — never approximate</li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm border-l-4 border-l-[#f74145]">
-              <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3 text-sm">✗ Never Do</h4>
-                <ul className="text-sm text-gray-600 space-y-1.5">
-                  <li>Do not place the pillar on the right, centre, or bottom of the frame</li>
-                  <li>Do not distort, stretch, or rotate the pillar element</li>
-                  <li>Do not change pillar colours or mix pillar colours across elements</li>
-                  <li>Do not use the pillar element without the correct pillar number</li>
-                  <li>Do not use the Extended variant without all action blocks present</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
 
         {/* ================================================================ */}
         {/* SECTION 13: PHOTOGRAPHY */}
@@ -2392,7 +2323,7 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 14: MACHINE INSTRUCTIONS */}
+        {/* SECTION 17: MACHINE INSTRUCTIONS */}
         {/* ================================================================ */}
         <section id="ai-instructions" className="mb-16 mt-4">
           <div className="flex items-center gap-3 mb-2">
@@ -2634,7 +2565,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["logos.eriLogoFullColor",    "eri-logo-full-color_f5763508.png",     "Primary wordmark (PNG) — use in <img> tags"],
                     ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — use for download links only"],
                     ["logos.eriIconMark",         "eri-icon-mark_08cd328f.webp",          "Compact ERI mark"],
-                    ["logos.exponentialLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon / favicon source"],
+                    ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon / favicon source"],
                     ["logos.faviconIco",          "favicon_46e834ad.ico",                 "Multi-size .ico for browser tab"],
                   ] as [string, string, string][]).map(([token, file, usage]) => (
                     <tr key={token} className="border-b border-gray-100">
@@ -2700,8 +2631,8 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               </table>
 
               {/* Pillar elements */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Pillar Elements (PNG) — v5</p>
-              <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">pillarsLong[1].solid</code> / <code className="bg-gray-100 px-1 rounded">pillarsLong[1].transparent</code> — same pattern for pillarsRegular, pillarsExtended. For pillarsShort: .symbol / .symbolTransp / .text / .textTransp</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Pillar Elements (WebP) — v5</p>
+              <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">pillarsLong[1].solid</code> → filename <code className="bg-gray-100 px-1 rounded">pillar-1-long-solid.webp</code>. Same for pillarsRegular, pillarsExtended. For pillarsShort: .symbol → <code className="bg-gray-100 px-1 rounded">pillar-N-symbol-solid.webp</code> / .text → <code className="bg-gray-100 px-1 rounded">pillar-N-text-solid.webp</code></p>
               <table className="w-full text-xs mb-4">
                 <thead><tr className="border-b border-gray-200">
                   <th className="text-left py-1 font-semibold text-gray-600">Namespace</th>
