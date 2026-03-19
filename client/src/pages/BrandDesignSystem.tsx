@@ -69,7 +69,7 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
   brand: [
     { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Primary buttons, CTAs, links, success states",
       tones: { 100: { hex: "#dbeee1", rgb: "219, 238, 225" }, 300: { hex: "#93cda3", rgb: "147, 205, 163" }, 500: { hex: "#3ba559", rgb: "59, 165, 89" }, 700: { hex: "#2c6d3e", rgb: "44, 109, 62" }, 900: { hex: "#20422a", rgb: "32, 66, 42" } } },
-    { id: "dark", name: "Dark Text / Footer BG", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, high-contrast elements. Note: body paragraph text on the marketing site uses #383838 (slightly lighter). Use #232323 for headings and the footer background; use #383838 for body copy on white.",
+    { id: "dark", name: "Dark Text / Footer BG", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, and high-contrast UI elements. Use #232323 for H1–H4 headings and the footer background. For body paragraph text on white backgrounds, use Body Text #383838 (slightly lighter) across all ERI surfaces.",
       tones: { 100: { hex: "#d7d7d7", rgb: "215, 215, 215" }, 300: { hex: "#868686", rgb: "134, 134, 134" }, 500: { hex: "#232323", rgb: "35, 35, 35" }, 700: { hex: "#1d1d1d", rgb: "29, 29, 29" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
     { id: "neutral", name: "Neutral Gray", hex: "#6b7280", rgb: "107, 114, 128", context: "Secondary text, borders, disabled states",
       tones: { 100: { hex: "#e4e5e8", rgb: "228, 229, 232" }, 300: { hex: "#adb1b9", rgb: "173, 177, 185" }, 500: { hex: "#6b7280", rgb: "107, 114, 128" }, 700: { hex: "#494e56", rgb: "73, 78, 86" }, 900: { hex: "#2f3236", rgb: "47, 50, 54" } } },
@@ -77,11 +77,11 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
       tones: { 100: { hex: "#fdfefe", rgb: "253, 254, 254" }, 300: { hex: "#fbfcfc", rgb: "251, 252, 252" }, 500: { hex: "#f9fafb", rgb: "249, 250, 251" }, 700: { hex: "#a1a2a3", rgb: "161, 162, 163" }, 900: { hex: "#5d5d5d", rgb: "93, 93, 93" } } },
     { id: "yellow", name: "Highlight Yellow", hex: "#F5C842", rgb: "245, 200, 66", context: "Data highlights, chart callouts, goal indicators, emphasis accents — introduced in Playbook v5",
       tones: { 100: { hex: "#f2e4bd", rgb: "242, 228, 189" }, 300: { hex: "#bfaa6b", rgb: "191, 170, 107" }, 500: { hex: "#f5c842", rgb: "245, 200, 66" }, 700: { hex: "#725f27", rgb: "114, 95, 39" }, 900: { hex: "#332b15", rgb: "51, 43, 21" } } },
-    { id: "accent-lime", name: "Accent Lime", hex: "#93E07D", rgb: "147, 224, 125", context: "Typographic heading highlights on marketing surfaces (exponentialroadmap.org). Used to colour individual accent words within Archivo headings. NOT for UI components, buttons, or data visualisation.",
+    { id: "accent-lime", name: "Accent Lime", hex: "#93E07D", rgb: "147, 224, 125", context: "Typographic heading accent colour for use on dark or green backgrounds (e.g. hero sections, dark cards). Use lime #93E07D for accent words when the background is dark green or black. On white or light backgrounds, use Primary Green #3ba559 instead. NOT for UI components, buttons, or data visualisation.",
       tones: { 100: { hex: "#edf9e9", rgb: "237, 249, 233" }, 300: { hex: "#c4edba", rgb: "196, 237, 186" }, 500: { hex: "#93e07d", rgb: "147, 224, 125" }, 700: { hex: "#4a9e38", rgb: "74, 158, 56" }, 900: { hex: "#2a5a21", rgb: "42, 90, 33" } } },
-    { id: "link-green", name: "Link Green", hex: "#66B550", rgb: "102, 181, 80", context: "Hyperlink colour on the marketing website (exponentialroadmap.org). Used for inline body text links. In web applications, use Primary Green (#3ba559) for links instead.",
+    { id: "link-green", name: "Link Green", hex: "#66B550", rgb: "102, 181, 80", context: "Legacy link colour used on the marketing website (exponentialroadmap.org). The unified standard for all ERI surfaces is Primary Green (#3ba559) for hyperlinks. #66B550 is retained here for reference when matching existing marketing pages exactly.",
       tones: { 100: { hex: "#e4f3de", rgb: "228, 243, 222" }, 300: { hex: "#a8d99b", rgb: "168, 217, 155" }, 500: { hex: "#66b550", rgb: "102, 181, 80" }, 700: { hex: "#3d7230", rgb: "61, 114, 48" }, 900: { hex: "#22401b", rgb: "34, 64, 27" } } },
-    { id: "body-text", name: "Body Text", hex: "#383838", rgb: "56, 56, 56", context: "Body paragraph text on the marketing website (exponentialroadmap.org). Slightly lighter than the heading/footer dark (#232323). Use #383838 for all body copy on white backgrounds on marketing surfaces.",
+    { id: "body-text", name: "Body Text", hex: "#383838", rgb: "56, 56, 56", context: "Standard body paragraph text colour for all ERI surfaces — both marketing (exponentialroadmap.org) and web applications. Use #383838 for all body copy on white or light backgrounds. Pair with Archivo headings (#232323) and Open Sans body text.",
       tones: { 100: { hex: "#d8d8d8", rgb: "216, 216, 216" }, 300: { hex: "#8a8a8a", rgb: "138, 138, 138" }, 500: { hex: "#383838", rgb: "56, 56, 56" }, 700: { hex: "#262626", rgb: "38, 38, 38" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
     { id: "linkedin", name: "LinkedIn Blue", hex: "#007BB6", rgb: "0, 123, 182", context: "LinkedIn social media icon background. Used in the ERI footer social links row. Do not use for any other purpose.",
       tones: { 100: { hex: "#cce5f3", rgb: "204, 229, 243" }, 300: { hex: "#66b3d9", rgb: "102, 179, 217" }, 500: { hex: "#007bb6", rgb: "0, 123, 182" }, 700: { hex: "#005a87", rgb: "0, 90, 135" }, 900: { hex: "#003a58", rgb: "0, 58, 88" } } },
@@ -460,7 +460,7 @@ export default function BrandDesignSystem() {
           <h3 className="font-bold text-[#232323] mb-4 text-lg mt-12">Marketing Hero Gradient</h3>
           <p className="text-gray-600 mb-6 text-sm max-w-3xl">
             The marketing website (exponentialroadmap.org) uses a distinctive green gradient for hero sections.
-            This gradient is specific to marketing surfaces — do not use it in web application UI.
+            This gradient is for large full-bleed hero sections on content-rich pages. Do not use it in web application UI components (cards, modals, forms).
           </p>
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <Card className="shadow-sm overflow-hidden">
@@ -739,7 +739,7 @@ export default function BrandDesignSystem() {
                   { label: "Sub-section H2", classes: "font-archivo text-2xl md:text-3xl font-extrabold text-[#232323]", previewClass: "font-archivo text-2xl font-extrabold text-[#232323]",     text: "Brand Design System",                                                context: "Used in the design system itself and for secondary section headings." },
                   { label: "Card H3",        classes: "font-bold text-[#232323] text-lg",                                previewClass: "font-bold text-[#232323] text-lg",                         text: "Cut Operational Emissions",                                          context: "Card headings, widget titles, sidebar section labels." },
                   { label: "Accent H4",      classes: "font-bold text-[#3ba559]",                                        previewClass: "font-bold text-[#3ba559]",                                 text: "Core Values · Tone of Voice",                                        context: "Small card sub-headings, feature labels, pillar accent headings." },
-                  { label: "Body",           classes: "text-base text-gray-600",                                         previewClass: "text-base text-gray-600",                                  text: "The fastest economic transition in history is underway.",             context: "Standard paragraph text. 16px (1rem). Open Sans 400 on marketing site; Archivo 400 in web apps." },
+                  { label: "Body",           classes: "text-base text-gray-600",                                         previewClass: "text-base text-gray-600",                                  text: "The fastest economic transition in history is underway.",             context: "Standard paragraph text. 16px (1rem). Open Sans 400 across all ERI surfaces — both marketing and web applications. Colour: #383838 on white backgrounds." },
                   { label: "Small / UI",     classes: "text-sm text-gray-600",                                           previewClass: "text-sm text-gray-600",                                    text: "Interactive assessment tool based on the Exponential Business Playbook v5.0", context: "Card descriptions, nav item descriptions, footer text, form labels. 14px." },
                   { label: "Caption / Meta", classes: "text-xs text-gray-500",                                           previewClass: "text-xs text-gray-500",                                    text: "Last updated · March 2026 · Exponential Roadmap Initiative",         context: "Timestamps, data source labels, badge text, table meta. 12px." },
                   { label: "Overline",       classes: "text-xs font-semibold text-gray-400 uppercase tracking-wider",    previewClass: "text-xs font-semibold text-gray-400 uppercase tracking-wider", text: "Five Pillars · Navigation · Resources",                            context: "Section category labels above headings or nav groups." },
@@ -815,19 +815,19 @@ export default function BrandDesignSystem() {
                   </table>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Web Applications (ERI platform)</p>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Web Applications (ERI platform) — unified standard</p>
                   <table className="w-full text-xs">
                     <tbody>
                       <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–5xl · #232323</td></tr>
                       <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">H2 section</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 3xl–4xl · #232323</td></tr>
-                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#3ba559]">#3ba559</span> primary green</td></tr>
-                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Archivo 400 · 16px · gray-600</td></tr>
-                      <tr><td className="py-1.5 pr-3 text-gray-500">Links</td><td className="py-1.5 font-mono text-[#232323]">Archivo · <span className="text-[#3ba559]">#3ba559</span> primary green</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#3ba559]">#3ba559</span> on white bg</td></tr>
+                      <tr className="border-b border-blue-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · 16px · #383838</td></tr>
+                      <tr><td className="py-1.5 pr-3 text-gray-500">Links</td><td className="py-1.5 font-mono text-[#232323]">Open Sans · <span className="text-[#3ba559]">#3ba559</span> primary green</td></tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <p className="text-xs text-blue-700 mt-3">When building marketing pages that mirror exponentialroadmap.org, use Open Sans for body text and the lime accent <code className="bg-blue-100 px-1 rounded">#93E07D</code> for heading highlights. For web applications, use Archivo throughout.</p>
+              <p className="text-xs text-blue-700 mt-3"><strong>Unified standard (all ERI surfaces):</strong> Archivo for headings · Open Sans for body text · #383838 for body copy · #3ba559 for links. Use lime <code className="bg-blue-100 px-1 rounded">#93E07D</code> for heading accents on dark/green backgrounds only; use <code className="bg-blue-100 px-1 rounded">#3ba559</code> on white backgrounds.</p>
             </CardContent>
           </Card>
         </section>
@@ -2070,7 +2070,7 @@ const tabs: TabConfig[] = [
           {/* ── Marketing CTA Button ── */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">3. Marketing CTA Button</h3>
           <p className="text-gray-600 mb-4 text-sm">
-            The canonical call-to-action button used across <strong>all pages of exponentialroadmap.org</strong>. Pill-shaped, Accent Lime background, dark text. Use this style for primary actions on any marketing surface.
+            The canonical call-to-action button for <strong>marketing surfaces and landing pages</strong>. Pill-shaped, Accent Lime background, dark text. Use this style for prominent standalone CTAs on content-rich pages. For web application UI (inline actions, form submissions, data operations), use the standard rounded button with Primary Green.
           </p>
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="p-6 bg-white flex flex-wrap gap-4 items-center">
