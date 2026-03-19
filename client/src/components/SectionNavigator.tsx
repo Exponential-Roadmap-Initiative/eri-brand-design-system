@@ -11,7 +11,7 @@
  * on desktop alongside the main content column.
  */
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export type NavSection = {
   id: string;
@@ -21,23 +21,25 @@ export type NavSection = {
 };
 
 export const SECTIONS: NavSection[] = [
-  { id: "brand-proposition",  label: "Brand Proposition" },
-  { id: "visual-identity",    label: "Visual Identity",       sublabel: "Colours" },
-  { id: "logo-usage",         label: "Logo Usage" },
-  { id: "spacing",            label: "Spacing & Layout" },
-  { id: "typography",         label: "Typography" },
-  { id: "verbal-identity",    label: "Verbal Identity",       sublabel: "Language" },
-  { id: "component-library",     label: "Component Library" },
+  // ── Zone 1: Communications & Brand ──────────────────────────────────────
+  { id: "brand-proposition",      label: "Brand Proposition" },
+  { id: "visual-identity",        label: "Visual Identity",         sublabel: "Colours" },
+  { id: "logo-usage",             label: "Logo Usage" },
+  { id: "typography",             label: "Typography" },
+  { id: "verbal-identity",        label: "Verbal Identity",         sublabel: "Language" },
+  { id: "photography",            label: "Photography",             sublabel: "Image guidelines" },
+  { id: "testimonials",           label: "Testimonials",            sublabel: "Pull-quote pattern" },
   { id: "exponential-framework",  label: "Exponential Framework",  sublabel: "Icons · Diagrams · Elements" },
+  { id: "charts",                 label: "Charts",                  sublabel: "Crocodile Economy style" },
+  { id: "member-logos",           label: "Member Logotypes" },
+  { id: "data-source-logos",      label: "Data Source Logos" },
+  // ── Zone 2: Web & Application Development ───────────────────────────────
+  { id: "spacing",                label: "Spacing & Layout" },
   { id: "page-layout",            label: "Page Layout Shells" },
+  { id: "component-library",      label: "Component Library" },
   { id: "badges",                 label: "Badge Reference" },
   { id: "interactive-states",     label: "Interactive States" },
   { id: "components",             label: "UI Components" },
-  { id: "charts",                 label: "Charts",                  sublabel: "Crocodile Economy style" },
-  { id: "testimonials",           label: "Testimonials",            sublabel: "Pull-quote pattern" },
-  { id: "photography",            label: "Photography",             sublabel: "Image guidelines" },
-  { id: "member-logos",           label: "Member Logotypes" },
-  { id: "data-source-logos",      label: "Data Source Logos" },
   { id: "resources",              label: "Resources" },
   { id: "ai-instructions",        label: "Machine Instructions",   sublabel: "For AI tasks" },
 ];
@@ -98,37 +100,47 @@ export default function SectionNavigator({ className = "" }: SectionNavigatorPro
         On this page
       </p>
 
+      {/* Zone 1 label */}
+      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-1 pb-1">
+        Communications &amp; Brand
+      </p>
+
       {SECTIONS.map(({ id, label, sublabel }) => {
         const isActive = activeId === id;
-        const isAI = id === "ai-instructions";
+        const isZone2Start = id === "spacing";
 
         return (
-          <button
-            key={id}
-            onClick={() => scrollTo(id)}
-            className={[
-              "group text-left px-3 py-2 rounded-md transition-all duration-150 cursor-pointer",
-              isActive
-                ? "bg-[#3ba559]/10 border-l-2 border-[#3ba559]"
-                : "border-l-2 border-transparent hover:bg-gray-100 hover:border-gray-300",
-              isAI && !isActive ? "mt-3 border-t border-gray-200 pt-4 rounded-none" : "",
-            ].join(" ")}
-            aria-current={isActive ? "location" : undefined}
-          >
-            <span
-              className={[
-                "block text-[13px] leading-tight font-medium transition-colors",
-                isActive ? "text-[#3ba559]" : "text-gray-600 group-hover:text-gray-900",
-              ].join(" ")}
-            >
-              {label}
-            </span>
-            {sublabel && (
-              <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">
-                {sublabel}
-              </span>
+          <React.Fragment key={id}>
+            {isZone2Start && (
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">
+                Web &amp; Development
+              </p>
             )}
-          </button>
+            <button
+              onClick={() => scrollTo(id)}
+              className={[
+                "group text-left px-3 py-2 rounded-md transition-all duration-150 cursor-pointer",
+                isActive
+                  ? "bg-[#3ba559]/10 border-l-2 border-[#3ba559]"
+                  : "border-l-2 border-transparent hover:bg-gray-100 hover:border-gray-300",
+              ].join(" ")}
+              aria-current={isActive ? "location" : undefined}
+            >
+              <span
+                className={[
+                  "block text-[13px] leading-tight font-medium transition-colors",
+                  isActive ? "text-[#3ba559]" : "text-gray-600 group-hover:text-gray-900",
+                ].join(" ")}
+              >
+                {label}
+              </span>
+              {sublabel && (
+                <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">
+                  {sublabel}
+                </span>
+              )}
+            </button>
+          </React.Fragment>
         );
       })}
     </nav>

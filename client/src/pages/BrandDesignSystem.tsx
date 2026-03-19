@@ -380,6 +380,10 @@ export default function BrandDesignSystem() {
           <div className="flex-1 min-w-0">
 
         {/* ================================================================ */}
+        {/* ================================================================ */}
+        {/* ── ZONE 1: COMMUNICATIONS & BRAND ─────────────────────────────── */}
+        {/* ================================================================ */}
+
         {/* SECTION 1: BRAND PROPOSITION */}
         {/* ================================================================ */}
         <section className="mb-16" id="brand-proposition">
@@ -598,91 +602,6 @@ export default function BrandDesignSystem() {
               </ul>
             </CardContent>
           </Card>
-        </section>
-
-        {/* ================================================================ */}
-        {/* SECTION 4: SPACING & LAYOUT TOKENS */}
-        {/* ================================================================ */}
-        <section className="mb-16" id="spacing">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Spacing &amp; Layout Tokens
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
-            All spacing uses the standard Tailwind 4px base scale. Container widths and grid patterns
-            are defined here so every page shares the same spatial rhythm.
-          </p>
-
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Container Widths</h3>
-          <Card className="shadow-sm mb-10">
-            <CardContent className="p-0">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="text-left p-4 font-bold text-[#232323]">Name</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Class</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Max Width</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Padding</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {containerTokens.map((row, i) => (
-                    <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <td className="p-4 font-medium text-[#232323]">{row.name}</td>
-                      <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.class}</code></td>
-                      <td className="p-4 font-mono text-gray-700">{row.maxWidth}</td>
-                      <td className="p-4 font-mono text-gray-700 text-xs">{row.padding}</td>
-                      <td className="p-4 text-gray-500 text-xs">{row.notes}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
-
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Standard Grid Patterns</h3>
-          <Card className="shadow-sm mb-10">
-            <CardContent className="p-0">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="text-left p-4 font-bold text-[#232323]">Pattern</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Tailwind Classes</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Typical Usage</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {gridPatterns.map((row, i) => (
-                    <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <td className="p-4 font-medium text-[#232323]">{row.name}</td>
-                      <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.class}</code></td>
-                      <td className="p-4 text-gray-600 text-xs">{row.usage}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
-
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Spacing Scale</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {spacingScale.map((row) => {
-              const pxVal = parseInt(row.token);
-              const barW = Math.min(pxVal, 48);
-              return (
-                <div key={row.token} className="flex items-center gap-4 bg-white border border-gray-200 rounded-lg p-4">
-                  <div className="flex-shrink-0 bg-[#3ba559] rounded" style={{ width: barW, height: 20 }} />
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="font-mono text-sm font-bold text-[#232323]">{row.token}</span>
-                      <code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.tailwind}</code>
-                    </div>
-                    <p className="text-xs text-gray-500">{row.usage}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </section>
 
         {/* ================================================================ */}
@@ -961,51 +880,380 @@ export default function BrandDesignSystem() {
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 7: COMPONENT LIBRARY (ChartContainer) */}
+        {/* SECTION 14: PHOTOGRAPHY */}
         {/* ================================================================ */}
-        <section className="mb-16" id="component-library">
+
+        <section id="photography" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Component Library
+            Photography
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
-            Reusable components that enforce brand standards through their API. These components ensure
-            consistency and prevent styling violations.
+            ERI photography is documentary and systemic — it shows the infrastructure, industries, and cities that need to transform, not aspirational outcomes. These principles are derived from the Exponential Roadmap 1.5.1 report and apply across all ERI publications and digital products.
           </p>
 
-
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">ChartContainer</h3>
-          <p className="text-gray-600 mb-6 text-sm">
-            Use for any section requiring a coloured header. The component restricts colours to the approved palette.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            <ChartContainer title="P1/P3 Content" subtitle="Operations or Solutions" headerColor="green">
-              <p className="text-gray-600 text-sm p-4">Green header for Pillar 1 (Operations) or Pillar 3 (Solutions) content.</p>
-            </ChartContainer>
-            <ChartContainer title="P2 Content" subtitle="Value Chain" headerColor="cyan">
-              <p className="text-gray-600 text-sm p-4">Cyan header for Pillar 2 (Value Chain) content.</p>
-            </ChartContainer>
-            <ChartContainer title="P4 Content" subtitle="Finance" headerColor="orange">
-              <p className="text-gray-600 text-sm p-4">Orange header for Pillar 4 (Finance) content.</p>
-            </ChartContainer>
+          {/* Philosophy */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Photography Philosophy</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { title: "Systemic, not aspirational", desc: "Show the systems that need to change — factories, ports, cities, energy grids — not idealised green futures. The scale of transformation must be visible." },
+                { title: "Documentary, not decorative", desc: "Photography carries editorial weight. Every image should communicate something specific about climate action, not simply illustrate a mood or fill space." },
+                { title: "Human scale within systems", desc: "Where people appear, they are interacting with infrastructure or technology — engineers, workers, cyclists. People ground the systemic narrative in lived experience." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white border border-gray-200 rounded-lg p-5">
+                  <div className="w-2 h-2 rounded-full bg-[#3ba559] mb-3" />
+                  <h4 className="font-archivo font-bold text-[#232323] text-sm mb-2">{item.title}</h4>
+                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <Card className="shadow-sm bg-gray-900">
-            <CardContent className="p-6">
-              <h4 className="font-bold text-white mb-3">Usage</h4>
-              <pre className="text-sm text-gray-300 overflow-x-auto">{`import { ChartContainer } from "@/components/ui/chart-container";
+          {/* Subject Matter by Pillar */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Subject Matter by Pillar</h3>
+            <p className="text-gray-500 text-sm mb-4">Photography subject matter maps directly to the five pillars. Use these categories when sourcing images for pillar-specific content.</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200">
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Pillar</th>
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Subject Category</th>
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Example Subjects</th>
+                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Search Terms</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { pillar: "1 — Operations", color: "#8a9a87", category: "Industrial transformation", examples: "Factories, data centres, manufacturing lines, solar farms", terms: "aerial solar farm, industrial manufacturing overhead, data centre" },
+                    { pillar: "2 — Value Chain", color: "#2999c5", category: "Supply chain & logistics", examples: "Ports, shipping containers, warehouses, agricultural fields", terms: "aerial shipping port, cargo containers, supply chain logistics" },
+                    { pillar: "3 — Solutions", color: "#22803a", category: "Technology & innovation", examples: "Wind turbine engineers, EV charging, solar installation", terms: "wind turbine engineer, electric vehicle charging, clean technology worker" },
+                    { pillar: "4 — Finance", color: "#f97316", category: "Urban infrastructure & capital", examples: "City skylines, financial districts, construction sites", terms: "aerial city financial district, urban construction aerial, smart city" },
+                    { pillar: "5 — Policy", color: "#f74145", category: "People & governance", examples: "Cyclists, public transport, civic infrastructure", terms: "cyclists city commuting, public transport tram, urban planning aerial" },
+                  ].map((row) => (
+                    <tr key={row.pillar} className="border-b border-gray-100 hover:bg-gray-50">
+                      <td className="px-4 py-3">
+                        <span className="inline-flex items-center gap-2">
+                          <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: row.color }} />
+                          <span className="font-medium text-[#232323]">{row.pillar}</span>
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">{row.category}</td>
+                      <td className="px-4 py-3 text-gray-600">{row.examples}</td>
+                      <td className="px-4 py-3">
+                        <code className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{row.terms}</code>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-<ChartContainer
-  title="Section Title"
-  subtitle="Optional subtitle"
-  headerColor="green" // green | cyan | orange | red | gray
->
-  {/* Your content */}
-</ChartContainer>`}</pre>
+          {/* Composition Principles */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Composition Principles</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  type: "Aerial / Overhead",
+                  usage: "Chapter openers, hero images, high-impact moments",
+                  desc: "Communicates scale, systemic thinking, and the roadmap metaphor. Looking down at the terrain signals strategic perspective. Used for the most important moments in a publication.",
+                  example: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
+                  alt: "Aerial city view — Finance pillar example",
+                },
+                {
+                  type: "Wide Establishing Shot",
+                  usage: "Section dividers, context-setting imagery",
+                  desc: "Shows the full context of a system or place, not a detail. Provides orientation and communicates the scope of the challenge or opportunity being discussed.",
+                  example: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+                  alt: "Wide shipping port — Value Chain pillar example",
+                },
+                {
+                  type: "Human-Scale Detail",
+                  usage: "Case studies, inline illustrations, pull quotes",
+                  desc: "Shows people interacting with technology or infrastructure. Engineers, workers, and citizens ground the systemic narrative in human experience and make abstract change tangible.",
+                  example: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80",
+                  alt: "Wind turbine engineer — Solutions pillar example",
+                },
+              ].map((comp) => (
+                <div key={comp.type} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                  <div className="aspect-video overflow-hidden bg-gray-100">
+                    <img src={comp.example} alt={comp.alt} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-4">
+                    <h4 className="font-archivo font-bold text-[#232323] text-sm mb-1.5">{comp.type}</h4>
+                    <span className="inline-block text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded mb-3">{comp.usage}</span>
+                    <p className="text-gray-600 text-sm leading-relaxed">{comp.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Colour Treatment */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Colour Treatment Rules</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-[#3ba559] flex items-center justify-center text-white text-xs">✓</span>
+                  Do
+                </h4>
+                <ul className="space-y-2">
+                  {[
+                    "Use photography at full colour with no filters or overlays applied",
+                    "Place the green brand colour (#3ba559) as a separate graphic element beside or on top of the photo — never blended into it",
+                    "Use the green underline bar or swirl shape as the brand accent on chapter openers",
+                    "Credit all photography sources — Unsplash, Alamy, Shutterstock, or company-provided",
+                  ].map((rule) => (
+                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
+                      <span className="text-[#3ba559] mt-0.5 flex-shrink-0">✓</span>
+                      {rule}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-white text-xs">✗</span>
+                  Don't
+                </h4>
+                <ul className="space-y-2">
+                  {[
+                    "Apply colour tints, green overlays, or duotone effects to photographs",
+                    "Use heavily processed photography: HDR, heavy vignettes, or dramatic colour grading",
+                    "Use stock photo clichés: handshakes, lightbulbs, people pointing at whiteboards",
+                    "Use nature/landscape photography decoratively — forests, mountains, or oceans without systemic context",
+                    "Use close-up portrait photography as a primary image (only for case study headshots)",
+                  ].map((rule) => (
+                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
+                      <span className="text-red-500 mt-0.5 flex-shrink-0">✗</span>
+                      {rule}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Approved Sources */}
+          <div className="mb-10">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Approved Sources</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {[
+                { name: "Unsplash", url: "https://unsplash.com", type: "Free", note: "Best for aerial, urban, and technology subjects. Search by subject + 'aerial' for overhead shots." },
+                { name: "Alamy", url: "https://alamy.com", type: "Licensed", note: "Primary source used in ERI 1.5.1 report. Extensive editorial and documentary photography library." },
+                { name: "Shutterstock", url: "https://shutterstock.com", type: "Licensed", note: "Used for supplementary imagery. Prefer editorial collections over generic stock." },
+                { name: "Company-provided", url: "", type: "Case studies", note: "Partner organisations (Ericsson, Skanska, Telia, etc.) can provide images for case studies with attribution." },
+              ].map((src) => (
+                <div key={src.name} className="bg-white border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-archivo font-bold text-[#232323] text-sm">{src.name}</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      src.type === 'Free' ? 'bg-green-100 text-green-700' :
+                      src.type === 'Licensed' ? 'bg-blue-100 text-blue-700' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>{src.type}</span>
+                  </div>
+                  <p className="text-gray-600 text-xs leading-relaxed">{src.note}</p>
+                  {src.url && (
+                    <a href={src.url} target="_blank" rel="noopener noreferrer"
+                      className="text-[#3ba559] text-xs font-medium mt-2 inline-flex items-center gap-1 hover:underline">
+                      Visit ↗
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Curated Photo Library */}
+          <div>
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Curated Photo Library</h3>
+            <p className="text-gray-500 text-sm mb-4">
+              29 curated images across all five pillars and brand. Each image has a stable reference ID
+              (e.g. <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">ERI-OPS-001</code>) that
+              can be used in Manus AI task prompts or shared with colleagues. Filter by pillar, copy the
+              reference ID, or download directly.
+            </p>
+            <PhotoGallery />
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION 15: TESTIMONIALS */}
+        {/* ================================================================ */}
+
+        <section id="testimonials" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Testimonials &amp; Pull-Quotes
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            Testimonials appear on the marketing website and in reports to convey third-party credibility. The layout
+            pairs a circular portrait with a justified block-quote and a bold attribution line. Heading copy uses the
+            standard ERI accent-word treatment: one or two key words set in Primary Green on a light background.
+          </p>
+
+          {/* Anatomy overview */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <Card className="shadow-sm">
+              <CardContent className="p-6">
+                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Layout Anatomy</h3>
+                <ul className="space-y-3 text-sm text-gray-600">
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                    <span><strong>Section heading</strong> — Archivo 700–800, centred. One or two key words use Primary Green <code className="text-xs bg-gray-100 px-1 rounded">#3ba559</code> (or Accent Lime <code className="text-xs bg-gray-100 px-1 rounded">#93E07D</code> on dark backgrounds).</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                    <span><strong>Portrait</strong> — circular crop (<code className="text-xs bg-gray-100 px-1 rounded">border-radius: 50%</code>), 120–160 px diameter. No border or drop-shadow. Sits to the left of the quote block.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                    <span><strong>Quote body</strong> — Open Sans 400, 15–17 px, <code className="text-xs bg-gray-100 px-1 rounded">text-align: justify</code>. No typeset quotation marks. Colour: Body Text <code className="text-xs bg-gray-100 px-1 rounded">#383838</code>.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                    <span><strong>Attribution line</strong> — <strong>Bold name</strong> in Open Sans 700, comma, then role and organisation in Open Sans 400. Colour: <code className="text-xs bg-gray-100 px-1 rounded">#232323</code>.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                    <span><strong>Background</strong> — light grey <code className="text-xs bg-gray-100 px-1 rounded">#F9FAFB</code> or white. Never a coloured or gradient background behind testimonials.</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-sm">
+              <CardContent className="p-6">
+                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Typography &amp; Spacing</h3>
+                <div className="font-mono text-xs space-y-2 text-gray-600">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Section heading</span>
+                    <span>Archivo 700–800 · centred</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Accent word(s)</span>
+                    <span>#3ba559 (light bg) / #93E07D (dark bg)</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Portrait size</span>
+                    <span>120–160 px · circular</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Quote body</span>
+                    <span>Open Sans 400 · 15–17 px · justify</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Attribution name</span>
+                    <span>Open Sans 700 · #232323</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                    <span className="text-gray-400">Attribution role</span>
+                    <span>Open Sans 400 · #232323</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-4">
+                    <span className="text-gray-400">Background</span>
+                    <span>#F9FAFB or #FFFFFF</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Live example */}
+          <h3 className="font-archivo font-bold text-base text-[#232323] mb-4">Live Example</h3>
+          <div className="bg-[#F9FAFB] rounded-xl p-8 md:p-12 mb-6">
+            <h2
+              className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] text-center mb-10"
+              style={{ letterSpacing: "-0.01em" }}
+            >
+              What{" "}
+              <span style={{ color: "#3ba559" }}>others say</span>{" "}
+              about us
+            </h2>
+
+            <div className="flex flex-col sm:flex-row items-start gap-8 max-w-3xl mx-auto">
+              <div className="flex-shrink-0">
+                <div
+                  className="rounded-full overflow-hidden bg-gray-200"
+                  style={{ width: 140, height: 140 }}
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=280&h=280&fit=crop&crop=face"
+                    alt="Portrait placeholder"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+              </div>
+
+              <div className="flex-1">
+                <p
+                  style={{
+                    fontFamily: "'Open Sans', sans-serif",
+                    fontSize: 15,
+                    lineHeight: 1.75,
+                    textAlign: "justify",
+                    color: "#383838",
+                    marginBottom: 16,
+                  }}
+                >
+                  No company can achieve net zero alone. Accelerating decarbonisation requires collaboration and
+                  Exponential Roadmap Initiative has been a great partner and thought leader — helping us to think
+                  through our strategies and co-hosted Solutions House with Futerra at Climate Week NYC, facilitating
+                  great conversations around climate solutions, the challenges of Scope 3, advanced clean energy
+                  technologies and more.
+                </p>
+                <p style={{ fontFamily: "'Open Sans', sans-serif", fontSize: 15, color: "#232323" }}>
+                  <strong>Kate Brandt</strong>, Chief Sustainability Officer, Google
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Do / Don't */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <Card className="shadow-sm border-l-4 border-[#3ba559]">
+              <CardContent className="p-5">
+                <p className="font-archivo font-bold text-xs uppercase tracking-wider text-[#3ba559] mb-3">&#10003; Do</p>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li>Use a circular portrait crop — never square or oval.</li>
+                  <li>Justify the quote body text.</li>
+                  <li>Bold the speaker's name; use regular weight for role and organisation.</li>
+                  <li>Use Primary Green for the accent word(s) in the heading on light backgrounds.</li>
+                  <li>Keep the background white or light grey — no coloured panels.</li>
+                  <li>Use real photography — no illustrations or icons as the portrait.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm border-l-4 border-red-400">
+              <CardContent className="p-5">
+                <p className="font-archivo font-bold text-xs uppercase tracking-wider text-red-500 mb-3">&#10007; Don't</p>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li>Don't add decorative quotation mark glyphs (" ") — the layout implies the quote.</li>
+                  <li>Don't use a coloured or gradient background behind the testimonial block.</li>
+                  <li>Don't left-align the quote body text — justified alignment is part of the ERI editorial style.</li>
+                  <li>Don't omit the attribution — an unattributed quote cannot be published.</li>
+                  <li>Don't use Accent Lime on a white background for body text — only for heading accent words on dark backgrounds.</li>
+                  <li>Don't place the portrait below or to the right of the quote.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Multiple testimonials note */}
+          <Card className="shadow-sm bg-blue-50 border-blue-100">
+            <CardContent className="p-4">
+              <p className="text-sm text-blue-800">
+                <strong>Multiple testimonials:</strong> When displaying more than one testimonial, stack them vertically
+                with 40–48 px gap between entries. Do not use a carousel or slider — all testimonials should be
+                visible without interaction. Each entry follows the same portrait-left / quote-right layout.
+              </p>
             </CardContent>
           </Card>
         </section>
-
+        {/* ================================================================ */}
         {/* ================================================================ */}
         {/* SECTION 8: EXPONENTIAL FRAMEWORK (unified) */}
         {/* ================================================================ */}
@@ -1297,6 +1545,331 @@ import { pillarBottomIcons } from "@/lib/assets";
         </section>{/* end exponential-framework section */}
 
         {/* ================================================================ */}
+        {/* SECTION 13: CHARTS & DATA VISUALISATION */}
+        {/* ================================================================ */}
+        <section id="charts" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Charts &amp; Data Visualisation
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            ERI data visualisation follows a consistent visual language across publications, the Crocodile Economy whitepaper, and digital products.
+            The chart style is minimal, editorial, and high-contrast — designed for print and screen alike.
+          </p>
+
+          {/* ── Crocodile Economy Chart Style ── */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">The Crocodile Economy Chart Style</h3>
+          <p className="text-gray-600 mb-6 text-sm max-w-3xl">
+            The Crocodile Economy charts show the decoupling of emissions from economic growth over time.
+            Two lines form the "crocodile jaw" — the upper line (GDP or revenue growth) diverges upward from the lower line (CO₂ emissions).
+            The fill colour between the lines encodes the <strong>entity type</strong>: green for companies, salmon for nations/regions.
+            This is a semantic encoding — not a stylistic choice.
+          </p>
+
+          {/* Colour semantics */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <Card className="shadow-sm overflow-hidden">
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded" style={{ backgroundColor: "#7DD87A" }} />
+                  <div>
+                    <p className="font-archivo font-bold text-[#232323] text-sm">Company / Corporate</p>
+                    <code className="text-xs font-mono text-gray-500">#7DD87A</code>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">
+                  Green fill between the GDP/revenue line and the CO₂ line. Used for all corporate entities (e.g. Astra Zeneca, Scania, Volvo).
+                  Signals that the entity is a private-sector actor.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm overflow-hidden">
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded" style={{ backgroundColor: "#F08070" }} />
+                  <div>
+                    <p className="font-archivo font-bold text-[#232323] text-sm">Nation / Region</p>
+                    <code className="text-xs font-mono text-gray-500">#F08070</code>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600">
+                  Salmon/coral fill between the GDP line and the CO₂ line. Used for all national and supranational entities (e.g. European Union, Sweden, Australia).
+                  Signals that the entity is a public-sector actor.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Line colours */}
+          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Line Colours</h4>
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            <Card className="shadow-sm">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="w-8 h-2 rounded-full" style={{ backgroundColor: "#00B4D8" }} />
+                <div>
+                  <p className="font-archivo font-semibold text-[#232323] text-sm">GDP / Revenue line</p>
+                  <code className="text-xs font-mono text-gray-500">#00B4D8 — Cyan</code>
+                  <p className="text-xs text-gray-500 mt-1">Upper trajectory. Represents economic growth (GDP for nations, revenue for companies).</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="w-8 h-2 rounded-full bg-[#1A1A1A]" />
+                <div>
+                  <p className="font-archivo font-semibold text-[#232323] text-sm">CO₂ Emissions line</p>
+                  <code className="text-xs font-mono text-gray-500">#1A1A1A — Near-black</code>
+                  <p className="text-xs text-gray-500 mt-1">Lower trajectory. Represents territorial or Scope 1+2 CO₂ emissions over time.</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="w-8 h-2 rounded-full bg-[#CCCCCC]" />
+                <div>
+                  <p className="font-archivo font-semibold text-[#232323] text-sm">Grid lines / Axes</p>
+                  <code className="text-xs font-mono text-gray-500">#CCCCCC — Light grey</code>
+                  <p className="text-xs text-gray-500 mt-1">Horizontal gridlines and axis ticks. Minimal — no border box around the chart.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Live chart example */}
+          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Live Examples</h4>
+          <p className="text-gray-600 mb-4 text-sm">Interactive recreations of the Crocodile Economy chart style using ERI brand colours.</p>
+          <CrocodileChartExamples />
+
+          {/* Typography in charts */}
+          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider mt-8">Chart Typography</h4>
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
+            <Card className="shadow-sm">
+              <CardContent className="p-4">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-gray-100">
+                      <th className="text-left py-1 text-gray-400 font-normal">Element</th>
+                      <th className="text-left py-1 text-gray-400 font-normal">Style</th>
+                    </tr>
+                  </thead>
+                  <tbody className="font-mono text-gray-600">
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Chart title</td><td>Archivo 700 uppercase · #232323</td></tr>
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Axis labels</td><td>Open Sans 400 · #666666 · 11–12px</td></tr>
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Tick values</td><td>Open Sans 400 · #888888 · 10–11px</td></tr>
+                    <tr className="border-b border-gray-50"><td className="py-1.5">Legend labels</td><td>Open Sans 400 · #444444 · 11px</td></tr>
+                    <tr><td className="py-1.5">Data callouts</td><td>Archivo 600 · #232323 · 11px</td></tr>
+                  </tbody>
+                </table>
+              </CardContent>
+            </Card>
+            <Card className="shadow-sm">
+              <CardContent className="p-4">
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">Chart Anatomy Rules</p>
+                <ul className="text-xs text-gray-600 space-y-2">
+                  <li>• No border box around the chart area — only horizontal gridlines</li>
+                  <li>• Y-axis on the left only; no right-side axis</li>
+                  <li>• Zero line is slightly thicker (1.5px) than other gridlines (0.5px)</li>
+                  <li>• X-axis shows year labels only — no tick marks</li>
+                  <li>• Fill opacity: 0.7 (allows gridlines to show through)</li>
+                  <li>• Line stroke width: 2px for both GDP and CO₂ lines</li>
+                  <li>• Background: white #FFFFFF — no chart background colour</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Data sources note */}
+          <Card className="shadow-sm border-l-4 border-[#3ba559]">
+            <CardContent className="p-4">
+              <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Data Sources</p>
+              <p className="text-sm text-gray-600">
+                Country charts use <strong>World Bank GDP data</strong> and <strong>Global Carbon Budget CO₂ data</strong>.
+                Company charts use <strong>Klimatkollen</strong> and <strong>ERI-compiled Scope 1+2 emissions</strong> with publicly reported revenue.
+                Always cite the data source beneath the chart.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+        {/* ================================================================ */}
+        {/* SECTION 16: MEMBER COMPANY LOGOTYPES */}
+        {/* ================================================================ */}
+        <section id="member-logos" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+            Member Company Logotypes
+          </h2>
+          <p className="text-gray-600 mb-2 max-w-3xl">
+            Official logotypes for ERI member companies. Use these assets when referencing member organisations
+            in ERI publications, case studies, and digital products. Each logo has a stable CDN URL for use in
+            Manus AI task prompts.
+          </p>
+          <p className="text-xs text-gray-400 mb-8 max-w-3xl">
+            Note: All logos are the property of their respective companies and are provided here solely for use
+            within authorised ERI communications.
+          </p>
+
+          {/* Usage note card */}
+          <Card className="shadow-sm mb-6 border-l-4 border-l-[#F5C842]">
+            <CardContent className="p-4">
+              <p className="text-sm text-gray-700">
+                <strong>Using member logos in AI tasks:</strong> Reference a logo by its token name, e.g.
+                <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono mx-1">memberLogos.scania.url</code>
+                from <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">assets.ts</code>,
+                or use the direct CDN URL shown on hover. Always display logos on a white or light background.
+                Do not apply colour filters, crop, or recolour any member logo.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Logo grid */}
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+            {Object.entries(memberLogos).map(([key, { name, url, sector }]) => (
+              <div
+                key={key}
+                className="group relative bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-shadow min-h-[100px]"
+              >
+                <img
+                  src={url}
+                  alt={`${name} logo`}
+                  className="max-h-12 max-w-full w-auto object-contain"
+                />
+                <span className="text-[11px] text-gray-500 text-center leading-tight">{name}</span>
+                {sector && (
+                  <span className="text-[10px] text-gray-400 text-center leading-tight">{sector}</span>
+                )}
+                {/* Hover overlay with CDN URL copy */}
+                <div className="absolute inset-0 bg-white/95 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
+                  <span className="text-[10px] font-mono text-gray-500 text-center break-all leading-tight">{key}</span>
+                  <a
+                    href={url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] text-[#3ba559] font-medium hover:underline flex items-center gap-1"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Download
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION 18: DATA SOURCE LOGOS */}
+        {/* ================================================================ */}
+        <section id="data-source-logos" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+            Data Source &amp; Partner Logos
+          </h2>
+          <p className="text-gray-600 mb-2 max-w-3xl">
+            Logos for data providers, research institutions, standards bodies, and partner organisations
+            used across ERI products and publications. Use these when citing data sources or acknowledging
+            partners in reports, dashboards, and presentations.
+          </p>
+          <p className="text-xs text-gray-400 mb-8 max-w-3xl">
+            All logos remain the property of their respective organisations and are provided here for use
+            within authorised ERI communications only.
+          </p>
+
+          {/* Category filter */}
+          {(() => {
+            const allCategories = Array.from(new Set(Object.values(dataSourceLogos).map(l => l.category))).sort();
+            return (
+              <DataSourceLogoGrid logos={dataSourceLogos} categories={allCategories} />
+            );
+          })()}
+        </section>
+
+        {/* ================================================================ */}
+        {/* ================================================================ */}
+        {/* ── ZONE 2: WEB & APPLICATION DEVELOPMENT ─────────────────────── */}
+        {/* ================================================================ */}
+
+        {/* SECTION 4: SPACING & LAYOUT TOKENS */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="spacing">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Spacing &amp; Layout Tokens
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            All spacing uses the standard Tailwind 4px base scale. Container widths and grid patterns
+            are defined here so every page shares the same spatial rhythm.
+          </p>
+
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">Container Widths</h3>
+          <Card className="shadow-sm mb-10">
+            <CardContent className="p-0">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="text-left p-4 font-bold text-[#232323]">Name</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Class</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Max Width</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Padding</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {containerTokens.map((row, i) => (
+                    <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                      <td className="p-4 font-medium text-[#232323]">{row.name}</td>
+                      <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.class}</code></td>
+                      <td className="p-4 font-mono text-gray-700">{row.maxWidth}</td>
+                      <td className="p-4 font-mono text-gray-700 text-xs">{row.padding}</td>
+                      <td className="p-4 text-gray-500 text-xs">{row.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">Standard Grid Patterns</h3>
+          <Card className="shadow-sm mb-10">
+            <CardContent className="p-0">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="text-left p-4 font-bold text-[#232323]">Pattern</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Tailwind Classes</th>
+                    <th className="text-left p-4 font-bold text-[#232323]">Typical Usage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {gridPatterns.map((row, i) => (
+                    <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                      <td className="p-4 font-medium text-[#232323]">{row.name}</td>
+                      <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.class}</code></td>
+                      <td className="p-4 text-gray-600 text-xs">{row.usage}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">Spacing Scale</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {spacingScale.map((row) => {
+              const pxVal = parseInt(row.token);
+              const barW = Math.min(pxVal, 48);
+              return (
+                <div key={row.token} className="flex items-center gap-4 bg-white border border-gray-200 rounded-lg p-4">
+                  <div className="flex-shrink-0 bg-[#3ba559] rounded" style={{ width: barW, height: 20 }} />
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-3 mb-1">
+                      <span className="font-mono text-sm font-bold text-[#232323]">{row.token}</span>
+                      <code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.tailwind}</code>
+                    </div>
+                    <p className="text-xs text-gray-500">{row.usage}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ================================================================ */}
         {/* SECTION 9: PAGE LAYOUT SHELLS */}
         {/* ================================================================ */}
         <section className="mb-16" id="page-layout">
@@ -1544,6 +2117,52 @@ export default function HeroPage() {
             </footer>
                 <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#232323] · text-white · grid md:grid-cols-3 · py-12 · border-t border-gray-700 · accent links: #93cda3 (brand green-300)</div>
           </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION 7: COMPONENT LIBRARY (ChartContainer) */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="component-library">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Component Library
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            Reusable components that enforce brand standards through their API. These components ensure
+            consistency and prevent styling violations.
+          </p>
+
+
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">ChartContainer</h3>
+          <p className="text-gray-600 mb-6 text-sm">
+            Use for any section requiring a coloured header. The component restricts colours to the approved palette.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            <ChartContainer title="P1/P3 Content" subtitle="Operations or Solutions" headerColor="green">
+              <p className="text-gray-600 text-sm p-4">Green header for Pillar 1 (Operations) or Pillar 3 (Solutions) content.</p>
+            </ChartContainer>
+            <ChartContainer title="P2 Content" subtitle="Value Chain" headerColor="cyan">
+              <p className="text-gray-600 text-sm p-4">Cyan header for Pillar 2 (Value Chain) content.</p>
+            </ChartContainer>
+            <ChartContainer title="P4 Content" subtitle="Finance" headerColor="orange">
+              <p className="text-gray-600 text-sm p-4">Orange header for Pillar 4 (Finance) content.</p>
+            </ChartContainer>
+          </div>
+
+          <Card className="shadow-sm bg-gray-900">
+            <CardContent className="p-6">
+              <h4 className="font-bold text-white mb-3">Usage</h4>
+              <pre className="text-sm text-gray-300 overflow-x-auto">{`import { ChartContainer } from "@/components/ui/chart-container";
+
+<ChartContainer
+  title="Section Title"
+  subtitle="Optional subtitle"
+  headerColor="green" // green | cyan | orange | red | gray
+>
+  {/* Your content */}
+</ChartContainer>`}</pre>
+            </CardContent>
+          </Card>
         </section>
 
         {/* ================================================================ */}
@@ -2174,617 +2793,6 @@ const tabs: TabConfig[] = [
         </section>
 
 
-
-        {/* ================================================================ */}
-        {/* SECTION 13: CHARTS & DATA VISUALISATION */}
-        {/* ================================================================ */}
-        <section id="charts" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Charts &amp; Data Visualisation
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
-            ERI data visualisation follows a consistent visual language across publications, the Crocodile Economy whitepaper, and digital products.
-            The chart style is minimal, editorial, and high-contrast — designed for print and screen alike.
-          </p>
-
-          {/* ── Crocodile Economy Chart Style ── */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">The Crocodile Economy Chart Style</h3>
-          <p className="text-gray-600 mb-6 text-sm max-w-3xl">
-            The Crocodile Economy charts show the decoupling of emissions from economic growth over time.
-            Two lines form the "crocodile jaw" — the upper line (GDP or revenue growth) diverges upward from the lower line (CO₂ emissions).
-            The fill colour between the lines encodes the <strong>entity type</strong>: green for companies, salmon for nations/regions.
-            This is a semantic encoding — not a stylistic choice.
-          </p>
-
-          {/* Colour semantics */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card className="shadow-sm overflow-hidden">
-              <CardContent className="p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded" style={{ backgroundColor: "#7DD87A" }} />
-                  <div>
-                    <p className="font-archivo font-bold text-[#232323] text-sm">Company / Corporate</p>
-                    <code className="text-xs font-mono text-gray-500">#7DD87A</code>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-600">
-                  Green fill between the GDP/revenue line and the CO₂ line. Used for all corporate entities (e.g. Astra Zeneca, Scania, Volvo).
-                  Signals that the entity is a private-sector actor.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm overflow-hidden">
-              <CardContent className="p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded" style={{ backgroundColor: "#F08070" }} />
-                  <div>
-                    <p className="font-archivo font-bold text-[#232323] text-sm">Nation / Region</p>
-                    <code className="text-xs font-mono text-gray-500">#F08070</code>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-600">
-                  Salmon/coral fill between the GDP line and the CO₂ line. Used for all national and supranational entities (e.g. European Union, Sweden, Australia).
-                  Signals that the entity is a public-sector actor.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Line colours */}
-          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Line Colours</h4>
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            <Card className="shadow-sm">
-              <CardContent className="p-4 flex items-center gap-3">
-                <div className="w-8 h-2 rounded-full" style={{ backgroundColor: "#00B4D8" }} />
-                <div>
-                  <p className="font-archivo font-semibold text-[#232323] text-sm">GDP / Revenue line</p>
-                  <code className="text-xs font-mono text-gray-500">#00B4D8 — Cyan</code>
-                  <p className="text-xs text-gray-500 mt-1">Upper trajectory. Represents economic growth (GDP for nations, revenue for companies).</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm">
-              <CardContent className="p-4 flex items-center gap-3">
-                <div className="w-8 h-2 rounded-full bg-[#1A1A1A]" />
-                <div>
-                  <p className="font-archivo font-semibold text-[#232323] text-sm">CO₂ Emissions line</p>
-                  <code className="text-xs font-mono text-gray-500">#1A1A1A — Near-black</code>
-                  <p className="text-xs text-gray-500 mt-1">Lower trajectory. Represents territorial or Scope 1+2 CO₂ emissions over time.</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm">
-              <CardContent className="p-4 flex items-center gap-3">
-                <div className="w-8 h-2 rounded-full bg-[#CCCCCC]" />
-                <div>
-                  <p className="font-archivo font-semibold text-[#232323] text-sm">Grid lines / Axes</p>
-                  <code className="text-xs font-mono text-gray-500">#CCCCCC — Light grey</code>
-                  <p className="text-xs text-gray-500 mt-1">Horizontal gridlines and axis ticks. Minimal — no border box around the chart.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Live chart example */}
-          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Live Examples</h4>
-          <p className="text-gray-600 mb-4 text-sm">Interactive recreations of the Crocodile Economy chart style using ERI brand colours.</p>
-          <CrocodileChartExamples />
-
-          {/* Typography in charts */}
-          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider mt-8">Chart Typography</h4>
-          <div className="grid md:grid-cols-2 gap-4 mb-8">
-            <Card className="shadow-sm">
-              <CardContent className="p-4">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b border-gray-100">
-                      <th className="text-left py-1 text-gray-400 font-normal">Element</th>
-                      <th className="text-left py-1 text-gray-400 font-normal">Style</th>
-                    </tr>
-                  </thead>
-                  <tbody className="font-mono text-gray-600">
-                    <tr className="border-b border-gray-50"><td className="py-1.5">Chart title</td><td>Archivo 700 uppercase · #232323</td></tr>
-                    <tr className="border-b border-gray-50"><td className="py-1.5">Axis labels</td><td>Open Sans 400 · #666666 · 11–12px</td></tr>
-                    <tr className="border-b border-gray-50"><td className="py-1.5">Tick values</td><td>Open Sans 400 · #888888 · 10–11px</td></tr>
-                    <tr className="border-b border-gray-50"><td className="py-1.5">Legend labels</td><td>Open Sans 400 · #444444 · 11px</td></tr>
-                    <tr><td className="py-1.5">Data callouts</td><td>Archivo 600 · #232323 · 11px</td></tr>
-                  </tbody>
-                </table>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm">
-              <CardContent className="p-4">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">Chart Anatomy Rules</p>
-                <ul className="text-xs text-gray-600 space-y-2">
-                  <li>• No border box around the chart area — only horizontal gridlines</li>
-                  <li>• Y-axis on the left only; no right-side axis</li>
-                  <li>• Zero line is slightly thicker (1.5px) than other gridlines (0.5px)</li>
-                  <li>• X-axis shows year labels only — no tick marks</li>
-                  <li>• Fill opacity: 0.7 (allows gridlines to show through)</li>
-                  <li>• Line stroke width: 2px for both GDP and CO₂ lines</li>
-                  <li>• Background: white #FFFFFF — no chart background colour</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Data sources note */}
-          <Card className="shadow-sm border-l-4 border-[#3ba559]">
-            <CardContent className="p-4">
-              <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Data Sources</p>
-              <p className="text-sm text-gray-600">
-                Country charts use <strong>World Bank GDP data</strong> and <strong>Global Carbon Budget CO₂ data</strong>.
-                Company charts use <strong>Klimatkollen</strong> and <strong>ERI-compiled Scope 1+2 emissions</strong> with publicly reported revenue.
-                Always cite the data source beneath the chart.
-              </p>
-            </CardContent>
-          </Card>
-        </section>
-        {/* ================================================================ */}
-        {/* SECTION 14: PHOTOGRAPHY */}
-        {/* ================================================================ */}
-
-        <section id="photography" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Photography
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
-            ERI photography is documentary and systemic — it shows the infrastructure, industries, and cities that need to transform, not aspirational outcomes. These principles are derived from the Exponential Roadmap 1.5.1 report and apply across all ERI publications and digital products.
-          </p>
-
-          {/* Philosophy */}
-          <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Photography Philosophy</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                { title: "Systemic, not aspirational", desc: "Show the systems that need to change — factories, ports, cities, energy grids — not idealised green futures. The scale of transformation must be visible." },
-                { title: "Documentary, not decorative", desc: "Photography carries editorial weight. Every image should communicate something specific about climate action, not simply illustrate a mood or fill space." },
-                { title: "Human scale within systems", desc: "Where people appear, they are interacting with infrastructure or technology — engineers, workers, cyclists. People ground the systemic narrative in lived experience." },
-              ].map((item) => (
-                <div key={item.title} className="bg-white border border-gray-200 rounded-lg p-5">
-                  <div className="w-2 h-2 rounded-full bg-[#3ba559] mb-3" />
-                  <h4 className="font-archivo font-bold text-[#232323] text-sm mb-2">{item.title}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Subject Matter by Pillar */}
-          <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Subject Matter by Pillar</h3>
-            <p className="text-gray-500 text-sm mb-4">Photography subject matter maps directly to the five pillars. Use these categories when sourcing images for pillar-specific content.</p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Pillar</th>
-                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Subject Category</th>
-                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Example Subjects</th>
-                    <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Search Terms</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { pillar: "1 — Operations", color: "#8a9a87", category: "Industrial transformation", examples: "Factories, data centres, manufacturing lines, solar farms", terms: "aerial solar farm, industrial manufacturing overhead, data centre" },
-                    { pillar: "2 — Value Chain", color: "#2999c5", category: "Supply chain & logistics", examples: "Ports, shipping containers, warehouses, agricultural fields", terms: "aerial shipping port, cargo containers, supply chain logistics" },
-                    { pillar: "3 — Solutions", color: "#22803a", category: "Technology & innovation", examples: "Wind turbine engineers, EV charging, solar installation", terms: "wind turbine engineer, electric vehicle charging, clean technology worker" },
-                    { pillar: "4 — Finance", color: "#f97316", category: "Urban infrastructure & capital", examples: "City skylines, financial districts, construction sites", terms: "aerial city financial district, urban construction aerial, smart city" },
-                    { pillar: "5 — Policy", color: "#f74145", category: "People & governance", examples: "Cyclists, public transport, civic infrastructure", terms: "cyclists city commuting, public transport tram, urban planning aerial" },
-                  ].map((row) => (
-                    <tr key={row.pillar} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: row.color }} />
-                          <span className="font-medium text-[#232323]">{row.pillar}</span>
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-gray-700">{row.category}</td>
-                      <td className="px-4 py-3 text-gray-600">{row.examples}</td>
-                      <td className="px-4 py-3">
-                        <code className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{row.terms}</code>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Composition Principles */}
-          <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Composition Principles</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                {
-                  type: "Aerial / Overhead",
-                  usage: "Chapter openers, hero images, high-impact moments",
-                  desc: "Communicates scale, systemic thinking, and the roadmap metaphor. Looking down at the terrain signals strategic perspective. Used for the most important moments in a publication.",
-                  example: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
-                  alt: "Aerial city view — Finance pillar example",
-                },
-                {
-                  type: "Wide Establishing Shot",
-                  usage: "Section dividers, context-setting imagery",
-                  desc: "Shows the full context of a system or place, not a detail. Provides orientation and communicates the scope of the challenge or opportunity being discussed.",
-                  example: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
-                  alt: "Wide shipping port — Value Chain pillar example",
-                },
-                {
-                  type: "Human-Scale Detail",
-                  usage: "Case studies, inline illustrations, pull quotes",
-                  desc: "Shows people interacting with technology or infrastructure. Engineers, workers, and citizens ground the systemic narrative in human experience and make abstract change tangible.",
-                  example: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80",
-                  alt: "Wind turbine engineer — Solutions pillar example",
-                },
-              ].map((comp) => (
-                <div key={comp.type} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="aspect-video overflow-hidden bg-gray-100">
-                    <img src={comp.example} alt={comp.alt} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="p-4">
-                    <h4 className="font-archivo font-bold text-[#232323] text-sm mb-1.5">{comp.type}</h4>
-                    <span className="inline-block text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded mb-3">{comp.usage}</span>
-                    <p className="text-gray-600 text-sm leading-relaxed">{comp.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Colour Treatment */}
-          <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Colour Treatment Rules</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-[#3ba559] flex items-center justify-center text-white text-xs">✓</span>
-                  Do
-                </h4>
-                <ul className="space-y-2">
-                  {[
-                    "Use photography at full colour with no filters or overlays applied",
-                    "Place the green brand colour (#3ba559) as a separate graphic element beside or on top of the photo — never blended into it",
-                    "Use the green underline bar or swirl shape as the brand accent on chapter openers",
-                    "Credit all photography sources — Unsplash, Alamy, Shutterstock, or company-provided",
-                  ].map((rule) => (
-                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
-                      <span className="text-[#3ba559] mt-0.5 flex-shrink-0">✓</span>
-                      {rule}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-white text-xs">✗</span>
-                  Don't
-                </h4>
-                <ul className="space-y-2">
-                  {[
-                    "Apply colour tints, green overlays, or duotone effects to photographs",
-                    "Use heavily processed photography: HDR, heavy vignettes, or dramatic colour grading",
-                    "Use stock photo clichés: handshakes, lightbulbs, people pointing at whiteboards",
-                    "Use nature/landscape photography decoratively — forests, mountains, or oceans without systemic context",
-                    "Use close-up portrait photography as a primary image (only for case study headshots)",
-                  ].map((rule) => (
-                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
-                      <span className="text-red-500 mt-0.5 flex-shrink-0">✗</span>
-                      {rule}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Approved Sources */}
-          <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Approved Sources</h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {[
-                { name: "Unsplash", url: "https://unsplash.com", type: "Free", note: "Best for aerial, urban, and technology subjects. Search by subject + 'aerial' for overhead shots." },
-                { name: "Alamy", url: "https://alamy.com", type: "Licensed", note: "Primary source used in ERI 1.5.1 report. Extensive editorial and documentary photography library." },
-                { name: "Shutterstock", url: "https://shutterstock.com", type: "Licensed", note: "Used for supplementary imagery. Prefer editorial collections over generic stock." },
-                { name: "Company-provided", url: "", type: "Case studies", note: "Partner organisations (Ericsson, Skanska, Telia, etc.) can provide images for case studies with attribution." },
-              ].map((src) => (
-                <div key={src.name} className="bg-white border border-gray-200 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-archivo font-bold text-[#232323] text-sm">{src.name}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                      src.type === 'Free' ? 'bg-green-100 text-green-700' :
-                      src.type === 'Licensed' ? 'bg-blue-100 text-blue-700' :
-                      'bg-gray-100 text-gray-600'
-                    }`}>{src.type}</span>
-                  </div>
-                  <p className="text-gray-600 text-xs leading-relaxed">{src.note}</p>
-                  {src.url && (
-                    <a href={src.url} target="_blank" rel="noopener noreferrer"
-                      className="text-[#3ba559] text-xs font-medium mt-2 inline-flex items-center gap-1 hover:underline">
-                      Visit ↗
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Curated Photo Library */}
-          <div>
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Curated Photo Library</h3>
-            <p className="text-gray-500 text-sm mb-4">
-              29 curated images across all five pillars and brand. Each image has a stable reference ID
-              (e.g. <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">ERI-OPS-001</code>) that
-              can be used in Manus AI task prompts or shared with colleagues. Filter by pillar, copy the
-              reference ID, or download directly.
-            </p>
-            <PhotoGallery />
-          </div>
-        </section>
-
-        {/* ================================================================ */}
-        {/* SECTION 15: TESTIMONIALS */}
-        {/* ================================================================ */}
-
-        <section id="testimonials" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Testimonials &amp; Pull-Quotes
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
-            Testimonials appear on the marketing website and in reports to convey third-party credibility. The layout
-            pairs a circular portrait with a justified block-quote and a bold attribution line. Heading copy uses the
-            standard ERI accent-word treatment: one or two key words set in Primary Green on a light background.
-          </p>
-
-          {/* Anatomy overview */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <Card className="shadow-sm">
-              <CardContent className="p-6">
-                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Layout Anatomy</h3>
-                <ul className="space-y-3 text-sm text-gray-600">
-                  <li className="flex gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
-                    <span><strong>Section heading</strong> — Archivo 700–800, centred. One or two key words use Primary Green <code className="text-xs bg-gray-100 px-1 rounded">#3ba559</code> (or Accent Lime <code className="text-xs bg-gray-100 px-1 rounded">#93E07D</code> on dark backgrounds).</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
-                    <span><strong>Portrait</strong> — circular crop (<code className="text-xs bg-gray-100 px-1 rounded">border-radius: 50%</code>), 120–160 px diameter. No border or drop-shadow. Sits to the left of the quote block.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
-                    <span><strong>Quote body</strong> — Open Sans 400, 15–17 px, <code className="text-xs bg-gray-100 px-1 rounded">text-align: justify</code>. No typeset quotation marks. Colour: Body Text <code className="text-xs bg-gray-100 px-1 rounded">#383838</code>.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
-                    <span><strong>Attribution line</strong> — <strong>Bold name</strong> in Open Sans 700, comma, then role and organisation in Open Sans 400. Colour: <code className="text-xs bg-gray-100 px-1 rounded">#232323</code>.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
-                    <span><strong>Background</strong> — light grey <code className="text-xs bg-gray-100 px-1 rounded">#F9FAFB</code> or white. Never a coloured or gradient background behind testimonials.</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="shadow-sm">
-              <CardContent className="p-6">
-                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Typography &amp; Spacing</h3>
-                <div className="font-mono text-xs space-y-2 text-gray-600">
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
-                    <span className="text-gray-400">Section heading</span>
-                    <span>Archivo 700–800 · centred</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
-                    <span className="text-gray-400">Accent word(s)</span>
-                    <span>#3ba559 (light bg) / #93E07D (dark bg)</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
-                    <span className="text-gray-400">Portrait size</span>
-                    <span>120–160 px · circular</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
-                    <span className="text-gray-400">Quote body</span>
-                    <span>Open Sans 400 · 15–17 px · justify</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
-                    <span className="text-gray-400">Attribution name</span>
-                    <span>Open Sans 700 · #232323</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
-                    <span className="text-gray-400">Attribution role</span>
-                    <span>Open Sans 400 · #232323</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-4">
-                    <span className="text-gray-400">Background</span>
-                    <span>#F9FAFB or #FFFFFF</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Live example */}
-          <h3 className="font-archivo font-bold text-base text-[#232323] mb-4">Live Example</h3>
-          <div className="bg-[#F9FAFB] rounded-xl p-8 md:p-12 mb-6">
-            <h2
-              className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] text-center mb-10"
-              style={{ letterSpacing: "-0.01em" }}
-            >
-              What{" "}
-              <span style={{ color: "#3ba559" }}>others say</span>{" "}
-              about us
-            </h2>
-
-            <div className="flex flex-col sm:flex-row items-start gap-8 max-w-3xl mx-auto">
-              <div className="flex-shrink-0">
-                <div
-                  className="rounded-full overflow-hidden bg-gray-200"
-                  style={{ width: 140, height: 140 }}
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=280&h=280&fit=crop&crop=face"
-                    alt="Portrait placeholder"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-              </div>
-
-              <div className="flex-1">
-                <p
-                  style={{
-                    fontFamily: "'Open Sans', sans-serif",
-                    fontSize: 15,
-                    lineHeight: 1.75,
-                    textAlign: "justify",
-                    color: "#383838",
-                    marginBottom: 16,
-                  }}
-                >
-                  No company can achieve net zero alone. Accelerating decarbonisation requires collaboration and
-                  Exponential Roadmap Initiative has been a great partner and thought leader — helping us to think
-                  through our strategies and co-hosted Solutions House with Futerra at Climate Week NYC, facilitating
-                  great conversations around climate solutions, the challenges of Scope 3, advanced clean energy
-                  technologies and more.
-                </p>
-                <p style={{ fontFamily: "'Open Sans', sans-serif", fontSize: 15, color: "#232323" }}>
-                  <strong>Kate Brandt</strong>, Chief Sustainability Officer, Google
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Do / Don't */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <Card className="shadow-sm border-l-4 border-[#3ba559]">
-              <CardContent className="p-5">
-                <p className="font-archivo font-bold text-xs uppercase tracking-wider text-[#3ba559] mb-3">&#10003; Do</p>
-                <ul className="text-sm text-gray-600 space-y-2">
-                  <li>Use a circular portrait crop — never square or oval.</li>
-                  <li>Justify the quote body text.</li>
-                  <li>Bold the speaker's name; use regular weight for role and organisation.</li>
-                  <li>Use Primary Green for the accent word(s) in the heading on light backgrounds.</li>
-                  <li>Keep the background white or light grey — no coloured panels.</li>
-                  <li>Use real photography — no illustrations or icons as the portrait.</li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm border-l-4 border-red-400">
-              <CardContent className="p-5">
-                <p className="font-archivo font-bold text-xs uppercase tracking-wider text-red-500 mb-3">&#10007; Don't</p>
-                <ul className="text-sm text-gray-600 space-y-2">
-                  <li>Don't add decorative quotation mark glyphs (" ") — the layout implies the quote.</li>
-                  <li>Don't use a coloured or gradient background behind the testimonial block.</li>
-                  <li>Don't left-align the quote body text — justified alignment is part of the ERI editorial style.</li>
-                  <li>Don't omit the attribution — an unattributed quote cannot be published.</li>
-                  <li>Don't use Accent Lime on a white background for body text — only for heading accent words on dark backgrounds.</li>
-                  <li>Don't place the portrait below or to the right of the quote.</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Multiple testimonials note */}
-          <Card className="shadow-sm bg-blue-50 border-blue-100">
-            <CardContent className="p-4">
-              <p className="text-sm text-blue-800">
-                <strong>Multiple testimonials:</strong> When displaying more than one testimonial, stack them vertically
-                with 40–48 px gap between entries. Do not use a carousel or slider — all testimonials should be
-                visible without interaction. Each entry follows the same portrait-left / quote-right layout.
-              </p>
-            </CardContent>
-          </Card>
-        </section>
-        {/* ================================================================ */}
-        {/* ================================================================ */}
-        {/* SECTION 16: MEMBER COMPANY LOGOTYPES */}
-        {/* ================================================================ */}
-        <section id="member-logos" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
-            Member Company Logotypes
-          </h2>
-          <p className="text-gray-600 mb-2 max-w-3xl">
-            Official logotypes for ERI member companies. Use these assets when referencing member organisations
-            in ERI publications, case studies, and digital products. Each logo has a stable CDN URL for use in
-            Manus AI task prompts.
-          </p>
-          <p className="text-xs text-gray-400 mb-8 max-w-3xl">
-            Note: All logos are the property of their respective companies and are provided here solely for use
-            within authorised ERI communications.
-          </p>
-
-          {/* Usage note card */}
-          <Card className="shadow-sm mb-6 border-l-4 border-l-[#F5C842]">
-            <CardContent className="p-4">
-              <p className="text-sm text-gray-700">
-                <strong>Using member logos in AI tasks:</strong> Reference a logo by its token name, e.g.
-                <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono mx-1">memberLogos.scania.url</code>
-                from <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">assets.ts</code>,
-                or use the direct CDN URL shown on hover. Always display logos on a white or light background.
-                Do not apply colour filters, crop, or recolour any member logo.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Logo grid */}
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
-            {Object.entries(memberLogos).map(([key, { name, url, sector }]) => (
-              <div
-                key={key}
-                className="group relative bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-shadow min-h-[100px]"
-              >
-                <img
-                  src={url}
-                  alt={`${name} logo`}
-                  className="max-h-12 max-w-full w-auto object-contain"
-                />
-                <span className="text-[11px] text-gray-500 text-center leading-tight">{name}</span>
-                {sector && (
-                  <span className="text-[10px] text-gray-400 text-center leading-tight">{sector}</span>
-                )}
-                {/* Hover overlay with CDN URL copy */}
-                <div className="absolute inset-0 bg-white/95 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
-                  <span className="text-[10px] font-mono text-gray-500 text-center break-all leading-tight">{key}</span>
-                  <a
-                    href={url}
-                    download
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[11px] text-[#3ba559] font-medium hover:underline flex items-center gap-1"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Download
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ================================================================ */}
-        {/* SECTION 18: DATA SOURCE LOGOS */}
-        {/* ================================================================ */}
-        <section id="data-source-logos" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
-            Data Source &amp; Partner Logos
-          </h2>
-          <p className="text-gray-600 mb-2 max-w-3xl">
-            Logos for data providers, research institutions, standards bodies, and partner organisations
-            used across ERI products and publications. Use these when citing data sources or acknowledging
-            partners in reports, dashboards, and presentations.
-          </p>
-          <p className="text-xs text-gray-400 mb-8 max-w-3xl">
-            All logos remain the property of their respective organisations and are provided here for use
-            within authorised ERI communications only.
-          </p>
-
-          {/* Category filter */}
-          {(() => {
-            const allCategories = Array.from(new Set(Object.values(dataSourceLogos).map(l => l.category))).sort();
-            return (
-              <DataSourceLogoGrid logos={dataSourceLogos} categories={allCategories} />
-            );
-          })()}
-        </section>
 
         {/* ================================================================ */}
         {/* SECTION 18: RESOURCES */}
