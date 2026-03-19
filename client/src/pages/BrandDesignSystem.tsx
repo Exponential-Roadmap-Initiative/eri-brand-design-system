@@ -360,7 +360,7 @@ export default function BrandDesignSystem() {
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl">
             The definitive guide to the Exponential Roadmap Initiative visual and verbal identity.
-            This system ensures consistency, quality, and integrity across all touchpoints.
+            The purpose of the system is to enable consistency, quality, and integrity across all touch points.
           </p>
         </div>
       </section>
