@@ -1,368 +1,280 @@
 /**
- * CrocodileChartExamples — Live interactive Recharts demos for the Charts section
+ * CrocodileChartExamples — Live SVG chart demos for the Charts section
  *
  * Design: ERI Brand Design System — Charts & Data Visualisation
- * Shows two canonical Crocodile Economy chart variants:
- *   1. Company chart (green fill) — Astra Zeneca example
- *   2. Nation/Region chart (salmon fill) — European Union example
  *
- * Colour semantics:
- *   Fill green  #7DD87A → company / corporate entity
- *   Fill salmon #F08070 → nation / region / supranational entity
- *   GDP/Revenue line #00B4D8 (cyan)
- *   CO₂ line    #1A1A1A (near-black)
+ * Chart anatomy (from reference screenshots):
+ *   - Y-axis centred on 0; gridlines at -50, 0, +50
+ *   - Revenue/GDP line goes POSITIVE (above 0) — cyan #00B4D8
+ *   - CO₂ line goes NEGATIVE (below 0) — near-black #1A1A1A
+ *   - Fill is the entire gap between the two lines (the "crocodile jaw")
+ *   - Green fill #7DD87A for company/corporate entities
+ *   - Salmon fill #F08070 for nation/region/supranational entities
+ *   - No chart border box; horizontal gridlines only
+ *   - Bold Archivo uppercase title, left-aligned
+ *   - Both charts shown side by side (no tabs)
+ *
+ * Implementation: custom SVG chart so we can correctly fill between
+ * two diverging lines (one positive, one negative) without Recharts
+ * stacking limitations.
  */
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
-import { useState } from "react";
 
-/* ─── Synthetic data ─────────────────────────────────────────────────────── */
+/* ─── Synthetic illustrative data ────────────────────────────────────────── */
+// Values represent % change from baseline (0 = baseline year)
+// upper (revenue/GDP) goes positive; lower (CO₂) goes negative
 
 const companyData = [
-  { year: "2000", revenue: 100, co2: 100 },
-  { year: "2002", revenue: 108, co2: 102 },
-  { year: "2004", revenue: 118, co2: 104 },
-  { year: "2006", revenue: 130, co2: 106 },
-  { year: "2008", revenue: 138, co2: 104 },
-  { year: "2010", revenue: 148, co2: 100 },
-  { year: "2012", revenue: 158, co2: 94 },
-  { year: "2014", revenue: 170, co2: 86 },
-  { year: "2016", revenue: 182, co2: 78 },
-  { year: "2018", revenue: 196, co2: 68 },
-  { year: "2020", revenue: 188, co2: 56 },
-  { year: "2022", revenue: 218, co2: 46 },
+  { year: "2013", upper: 0, lower: 0 },
+  { year: "14", upper: 2, lower: -2 },
+  { year: "15", upper: 4, lower: -5 },
+  { year: "16", upper: 3, lower: -8 },
+  { year: "17", upper: 5, lower: -12 },
+  { year: "18", upper: 8, lower: -18 },
+  { year: "19", upper: 12, lower: -24 },
+  { year: "20", upper: 10, lower: -30 },
+  { year: "21", upper: 22, lower: -36 },
+  { year: "22", upper: 38, lower: -42 },
+  { year: "23", upper: 52, lower: -48 },
+  { year: "24", upper: 65, lower: -52 },
 ];
 
 const nationData = [
-  { year: "2000", gdp: 100, co2: 100 },
-  { year: "2002", gdp: 106, co2: 101 },
-  { year: "2004", gdp: 114, co2: 102 },
-  { year: "2006", gdp: 124, co2: 102 },
-  { year: "2008", gdp: 130, co2: 100 },
-  { year: "2010", gdp: 128, co2: 96 },
-  { year: "2012", gdp: 130, co2: 91 },
-  { year: "2014", gdp: 136, co2: 85 },
-  { year: "2016", gdp: 144, co2: 79 },
-  { year: "2018", gdp: 152, co2: 73 },
-  { year: "2020", gdp: 144, co2: 62 },
-  { year: "2022", gdp: 158, co2: 57 },
+  { year: "1995", upper: 0, lower: 0 },
+  { year: "98", upper: 4, lower: -1 },
+  { year: "2000", upper: 8, lower: -2 },
+  { year: "02", upper: 10, lower: -4 },
+  { year: "04", upper: 14, lower: -6 },
+  { year: "06", upper: 18, lower: -8 },
+  { year: "08", upper: 20, lower: -10 },
+  { year: "10", upper: 18, lower: -14 },
+  { year: "12", upper: 20, lower: -18 },
+  { year: "14", upper: 24, lower: -22 },
+  { year: "16", upper: 28, lower: -26 },
+  { year: "18", upper: 32, lower: -30 },
+  { year: "20", upper: 30, lower: -36 },
+  { year: "22", upper: 36, lower: -40 },
+  { year: "24", upper: 44, lower: -46 },
 ];
 
-/* ─── Shared chart styles ────────────────────────────────────────────────── */
+/* ─── SVG chart component ────────────────────────────────────────────────── */
 
-const AXIS_STYLE = {
-  fontSize: 11,
-  fontFamily: "'Open Sans', sans-serif",
-  fill: "#888888",
-};
+type DataPoint = { year: string; upper: number; lower: number };
 
-const TOOLTIP_STYLE = {
-  backgroundColor: "#fff",
-  border: "1px solid #e5e7eb",
-  borderRadius: 4,
-  fontSize: 12,
-  fontFamily: "'Open Sans', sans-serif",
-};
-
-/* ─── Custom legend ──────────────────────────────────────────────────────── */
-
-function ChartLegend({
-  items,
+function CrocodileChart({
+  title,
+  data,
+  fillColor,
+  upperLabel,
+  lowerLabel,
+  sourceNote,
 }: {
-  items: { color: string; label: string; dashed?: boolean }[];
+  title: string;
+  data: DataPoint[];
+  fillColor: string;
+  upperLabel: string;
+  lowerLabel: string;
+  sourceNote: string;
 }) {
+  // Chart dimensions
+  const W = 400;
+  const H = 240;
+  const PAD = { top: 16, right: 16, bottom: 32, left: 44 };
+  const chartW = W - PAD.left - PAD.right;
+  const chartH = H - PAD.top - PAD.bottom;
+
+  // Data domain: y from -60 to +70
+  const Y_MIN = -60;
+  const Y_MAX = 70;
+  const Y_RANGE = Y_MAX - Y_MIN;
+
+  const n = data.length;
+
+  // Map data → SVG coordinates
+  const xScale = (i: number) => PAD.left + (i / (n - 1)) * chartW;
+  const yScale = (v: number) => PAD.top + ((Y_MAX - v) / Y_RANGE) * chartH;
+
+  // Build path strings
+  const upperPoints = data.map((d, i) => `${xScale(i)},${yScale(d.upper)}`);
+  const lowerPoints = data.map((d, i) => `${xScale(i)},${yScale(d.lower)}`);
+
+  // Fill polygon: upper line forward, lower line backward
+  const fillPath =
+    "M " +
+    upperPoints.join(" L ") +
+    " L " +
+    [...lowerPoints].reverse().join(" L ") +
+    " Z";
+
+  const upperLinePath = "M " + upperPoints.join(" L ");
+  const lowerLinePath = "M " + lowerPoints.join(" L ");
+
+  // Gridline y values
+  const gridYValues = [-50, 0, 50];
+  const y0 = yScale(0);
+
+  // X-axis: show first, middle, last labels + a couple in between
+  const labelIndices = [0, Math.floor(n / 3), Math.floor((2 * n) / 3), n - 1];
+
   return (
-    <div className="flex gap-5 justify-center mt-2">
-      {items.map((item) => (
-        <div key={item.label} className="flex items-center gap-1.5">
-          <div
-            className="w-8 h-0.5"
-            style={{
-              backgroundColor: item.color,
-              borderTop: item.dashed ? `2px dashed ${item.color}` : undefined,
-            }}
-          />
-          <span
-            style={{
-              fontSize: 11,
-              fontFamily: "'Open Sans', sans-serif",
-              color: "#444444",
-            }}
+    <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm flex-1 min-w-0">
+      {/* Title */}
+      <p
+        style={{
+          fontFamily: "'Archivo', sans-serif",
+          fontWeight: 700,
+          fontSize: 13,
+          textTransform: "uppercase",
+          letterSpacing: "0.04em",
+          color: "#232323",
+          marginBottom: 8,
+        }}
+      >
+        {title}
+      </p>
+
+      {/* SVG chart */}
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        width="100%"
+        style={{ display: "block", overflow: "visible" }}
+        aria-label={`${title} crocodile economy chart`}
+      >
+        {/* Horizontal gridlines */}
+        {gridYValues.map((v) => {
+          const y = yScale(v);
+          const isZero = v === 0;
+          return (
+            <g key={v}>
+              <line
+                x1={PAD.left}
+                y1={y}
+                x2={PAD.left + chartW}
+                y2={y}
+                stroke="#CCCCCC"
+                strokeWidth={isZero ? 1.5 : 0.5}
+              />
+              {/* Y-axis tick label */}
+              <text
+                x={PAD.left - 6}
+                y={y + 4}
+                textAnchor="end"
+                fontSize={10}
+                fontFamily="'Open Sans', sans-serif"
+                fill="#888888"
+              >
+                {v > 0 ? `+${v}` : v}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Fill between upper and lower lines */}
+        <path d={fillPath} fill={fillColor} fillOpacity={0.75} />
+
+        {/* Upper line (revenue/GDP) — cyan */}
+        <path
+          d={upperLinePath}
+          fill="none"
+          stroke="#00B4D8"
+          strokeWidth={2}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+
+        {/* Lower line (CO₂) — near-black */}
+        <path
+          d={lowerLinePath}
+          fill="none"
+          stroke="#1A1A1A"
+          strokeWidth={2}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+
+        {/* X-axis labels */}
+        {labelIndices.map((i) => (
+          <text
+            key={i}
+            x={xScale(i)}
+            y={H - 6}
+            textAnchor="middle"
+            fontSize={10}
+            fontFamily="'Open Sans', sans-serif"
+            fill="#888888"
           >
-            {item.label}
+            {data[i].year}
+          </text>
+        ))}
+      </svg>
+
+      {/* Legend */}
+      <div className="flex gap-4 mt-2 flex-wrap">
+        <div className="flex items-center gap-1.5">
+          <div className="w-6 h-0.5" style={{ backgroundColor: "#00B4D8" }} />
+          <span style={{ fontSize: 10, fontFamily: "'Open Sans', sans-serif", color: "#555" }}>
+            {upperLabel}
           </span>
         </div>
-      ))}
-    </div>
-  );
-}
-
-/* ─── Company chart ──────────────────────────────────────────────────────── */
-
-function CompanyChart() {
-  return (
-    <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
-      {/* Title */}
-      <p
-        className="text-center mb-4"
-        style={{
-          fontFamily: "'Archivo', sans-serif",
-          fontWeight: 700,
-          fontSize: 13,
-          textTransform: "uppercase",
-          letterSpacing: "0.05em",
-          color: "#232323",
-        }}
-      >
-        Astra Zeneca — Revenue vs CO₂ Emissions (2000–2022)
-      </p>
-
-      <ResponsiveContainer width="100%" height={260}>
-        <AreaChart
-          data={companyData}
-          margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
-        >
-          <defs>
-            <linearGradient id="companyFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#7DD87A" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#7DD87A" stopOpacity={0.3} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid
-            strokeDasharray="0"
-            horizontal
-            vertical={false}
-            stroke="#CCCCCC"
-            strokeWidth={0.5}
+        <div className="flex items-center gap-1.5">
+          <div className="w-6 h-0.5" style={{ backgroundColor: "#1A1A1A" }} />
+          <span style={{ fontSize: 10, fontFamily: "'Open Sans', sans-serif", color: "#555" }}>
+            {lowerLabel}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div
+            className="w-6 h-3 rounded-sm"
+            style={{ backgroundColor: fillColor, opacity: 0.75 }}
           />
-          <XAxis
-            dataKey="year"
-            tick={AXIS_STYLE}
-            axisLine={false}
-            tickLine={false}
-          />
-          <YAxis
-            tick={AXIS_STYLE}
-            axisLine={false}
-            tickLine={false}
-            domain={[0, 250]}
-            tickFormatter={(v) => `${v}`}
-            label={{
-              value: "Index (2000 = 100)",
-              angle: -90,
-              position: "insideLeft",
-              offset: 10,
-              style: { ...AXIS_STYLE, fill: "#AAAAAA", fontSize: 10 },
-            }}
-          />
-          <Tooltip
-            contentStyle={TOOLTIP_STYLE}
-            formatter={(value: number, name: string) => [
-              `${value}`,
-              name === "revenue" ? "Revenue index" : "CO₂ index",
-            ]}
-          />
-          {/* Green fill between revenue (top) and co2 (bottom) */}
-          <Area
-            type="monotone"
-            dataKey="revenue"
-            stroke="#00B4D8"
-            strokeWidth={2}
-            fill="url(#companyFill)"
-            dot={false}
-            activeDot={{ r: 4 }}
-          />
-          <Area
-            type="monotone"
-            dataKey="co2"
-            stroke="#1A1A1A"
-            strokeWidth={2}
-            fill="#ffffff"
-            dot={false}
-            activeDot={{ r: 4 }}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-
-      <ChartLegend
-        items={[
-          { color: "#00B4D8", label: "Revenue (indexed)" },
-          { color: "#1A1A1A", label: "CO₂ emissions (indexed)" },
-          { color: "#7DD87A", label: "Decoupling gap (company = green)" },
-        ]}
-      />
-
-      <p
-        className="text-center mt-3"
-        style={{
-          fontSize: 10,
-          fontFamily: "'Open Sans', sans-serif",
-          color: "#AAAAAA",
-        }}
-      >
-        Illustrative data based on Crocodile Economy chart style. Sources: company annual reports, Klimatkollen.
-      </p>
-    </div>
-  );
-}
-
-/* ─── Nation chart ───────────────────────────────────────────────────────── */
-
-function NationChart() {
-  return (
-    <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
-      {/* Title */}
-      <p
-        className="text-center mb-4"
-        style={{
-          fontFamily: "'Archivo', sans-serif",
-          fontWeight: 700,
-          fontSize: 13,
-          textTransform: "uppercase",
-          letterSpacing: "0.05em",
-          color: "#232323",
-        }}
-      >
-        European Union — GDP vs CO₂ Emissions (2000–2022)
-      </p>
-
-      <ResponsiveContainer width="100%" height={260}>
-        <AreaChart
-          data={nationData}
-          margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
-        >
-          <defs>
-            <linearGradient id="nationFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#F08070" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#F08070" stopOpacity={0.3} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid
-            strokeDasharray="0"
-            horizontal
-            vertical={false}
-            stroke="#CCCCCC"
-            strokeWidth={0.5}
-          />
-          <XAxis
-            dataKey="year"
-            tick={AXIS_STYLE}
-            axisLine={false}
-            tickLine={false}
-          />
-          <YAxis
-            tick={AXIS_STYLE}
-            axisLine={false}
-            tickLine={false}
-            domain={[0, 200]}
-            tickFormatter={(v) => `${v}`}
-            label={{
-              value: "Index (2000 = 100)",
-              angle: -90,
-              position: "insideLeft",
-              offset: 10,
-              style: { ...AXIS_STYLE, fill: "#AAAAAA", fontSize: 10 },
-            }}
-          />
-          <Tooltip
-            contentStyle={TOOLTIP_STYLE}
-            formatter={(value: number, name: string) => [
-              `${value}`,
-              name === "gdp" ? "GDP index" : "CO₂ index",
-            ]}
-          />
-          {/* Salmon fill between gdp (top) and co2 (bottom) */}
-          <Area
-            type="monotone"
-            dataKey="gdp"
-            stroke="#00B4D8"
-            strokeWidth={2}
-            fill="url(#nationFill)"
-            dot={false}
-            activeDot={{ r: 4 }}
-          />
-          <Area
-            type="monotone"
-            dataKey="co2"
-            stroke="#1A1A1A"
-            strokeWidth={2}
-            fill="#ffffff"
-            dot={false}
-            activeDot={{ r: 4 }}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-
-      <ChartLegend
-        items={[
-          { color: "#00B4D8", label: "GDP (indexed)" },
-          { color: "#1A1A1A", label: "CO₂ emissions (indexed)" },
-          { color: "#F08070", label: "Decoupling gap (nation = salmon)" },
-        ]}
-      />
-
-      <p
-        className="text-center mt-3"
-        style={{
-          fontSize: 10,
-          fontFamily: "'Open Sans', sans-serif",
-          color: "#AAAAAA",
-        }}
-      >
-        Illustrative data based on Crocodile Economy chart style. Sources: World Bank GDP, Global Carbon Budget.
-      </p>
-    </div>
-  );
-}
-
-/* ─── Tab wrapper ────────────────────────────────────────────────────────── */
-
-export default function CrocodileChartExamples() {
-  const [active, setActive] = useState<"company" | "nation">("company");
-
-  return (
-    <div>
-      {/* Tab switcher */}
-      <div className="flex gap-2 mb-4">
-        <button
-          onClick={() => setActive("company")}
-          className={[
-            "px-4 py-1.5 rounded-full text-sm font-medium transition-colors",
-            active === "company"
-              ? "bg-[#7DD87A] text-[#232323]"
-              : "bg-gray-100 text-gray-500 hover:bg-gray-200",
-          ].join(" ")}
-        >
-          Company chart
-        </button>
-        <button
-          onClick={() => setActive("nation")}
-          className={[
-            "px-4 py-1.5 rounded-full text-sm font-medium transition-colors",
-            active === "nation"
-              ? "bg-[#F08070] text-white"
-              : "bg-gray-100 text-gray-500 hover:bg-gray-200",
-          ].join(" ")}
-        >
-          Nation / Region chart
-        </button>
+          <span style={{ fontSize: 10, fontFamily: "'Open Sans', sans-serif", color: "#555" }}>
+            Decoupling gap
+          </span>
+        </div>
       </div>
 
-      {active === "company" ? <CompanyChart /> : <NationChart />}
+      <p
+        className="mt-2"
+        style={{
+          fontSize: 10,
+          fontFamily: "'Open Sans', sans-serif",
+          color: "#AAAAAA",
+        }}
+      >
+        {sourceNote}
+      </p>
+    </div>
+  );
+}
+
+/* ─── Exported wrapper — side by side, no tabs ───────────────────────────── */
+
+export default function CrocodileChartExamples() {
+  return (
+    <div>
+      <div className="flex gap-4 flex-col sm:flex-row">
+        <CrocodileChart
+          title="Company"
+          data={companyData}
+          fillColor="#7DD87A"
+          upperLabel="Revenue (% change)"
+          lowerLabel="CO₂ emissions (% change)"
+          sourceNote="Illustrative. Sources: company annual reports, Klimatkollen."
+        />
+        <CrocodileChart
+          title="Country"
+          data={nationData}
+          fillColor="#F08070"
+          upperLabel="GDP (% change)"
+          lowerLabel="CO₂ emissions (% change)"
+          sourceNote="Illustrative. Sources: World Bank GDP, Global Carbon Budget."
+        />
+      </div>
 
       {/* Semantic colour note */}
       <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded text-xs text-amber-800">
-        <strong>Semantic encoding rule:</strong> The fill colour between the two lines is not decorative.
-        It encodes entity type — always green for companies, always salmon for nations/regions.
-        Never swap these colours.
+        <strong>Semantic encoding rule:</strong> The fill colour between the two lines is not
+        decorative. It encodes entity type — always green for companies, always salmon for
+        countries/regions. Never swap these colours.
       </div>
     </div>
   );
