@@ -2103,55 +2103,72 @@ const tabs: TabConfig[] = [
           {/* ── Navigation Bar ── */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">4. Navigation Bar</h3>
           <p className="text-gray-600 mb-4 text-sm">
-            The top navigation bar pattern used on exponentialroadmap.org. White background, Archivo 600 16px links, with the <code className="font-mono text-xs bg-gray-100 px-1 rounded">INITIATIVE</code> wordmark in Accent Lime.
+            The fixed top navigation bar used on exponentialroadmap.org. Height: 52px. White background, Archivo 600 16px links in <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code>. Logo: "EXPONENTIAL ROADMAP" in Archivo 800 black + "INITIATIVE" in Accent Lime <code className="font-mono text-xs bg-gray-100 px-1 rounded">#93E07D</code>. Resources and News have dropdown chevrons.
           </p>
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="bg-white px-6 py-3 flex items-center justify-between border-b border-gray-100">
+            <div className="bg-white px-6 flex items-center justify-between border-b border-gray-100" style={{ height: '52px' }}>
               <div className="flex items-center gap-1">
                 <span className="font-archivo font-extrabold text-sm text-[#232323] tracking-wide uppercase">EXPONENTIAL ROADMAP</span>
                 <span className="font-archivo font-extrabold text-sm text-[#93E07D] tracking-wide uppercase ml-1">INITIATIVE</span>
               </div>
               <div className="flex items-center gap-6">
                 {["Resources", "Events", "News", "About"].map(item => (
-                  <span key={item} className="font-archivo font-semibold text-sm text-[#232323] cursor-pointer hover:text-[#3ba559] transition-colors">{item}</span>
+                  <span key={item} className="flex items-center gap-1 font-archivo font-semibold text-sm text-[#232323] cursor-pointer hover:text-[#3ba559] transition-colors">
+                    {item}
+                    {(item === "Resources" || item === "News") && (
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="opacity-40"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    )}
+                  </span>
                 ))}
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-white · font-archivo font-semibold · text-sm · text-[#232323] · logo accent: text-[#93E07D]</div>
+            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">position: fixed · height: 52px · bg-white · font-archivo font-semibold 16px · text-[#232323] · logo: Archivo 800 uppercase · INITIATIVE: text-[#93E07D] · Resources + News: dropdown chevrons</div>
           </div>
 
           {/* ── Footer ── */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">5. Footer</h3>
           <p className="text-gray-600 mb-4 text-sm">
-            The dark footer used on exponentialroadmap.org. Dark background <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code>, Archivo headings, Open Sans body, Accent Lime links, and social icon backgrounds.
+            The dark footer used on exponentialroadmap.org. Four columns: <strong>About</strong> (nav links), <strong>Newsletter</strong> (subscribe CTA), <strong>Follow us</strong> (social links as text), <strong>Contact us</strong> (email). Column headings: Archivo weight 500, 18px, white. All links in Accent Lime <code className="font-mono text-xs bg-gray-100 px-1 rounded">#93E07D</code>, Open Sans 14px. Bottom bar: Open Sans 16px, white/40.
           </p>
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-6">
             <div className="bg-[#232323] px-6 py-8">
-              <div className="grid grid-cols-3 gap-8 mb-6">
+              <div className="grid grid-cols-4 gap-6 mb-6">
+                {/* Column 1: About */}
                 <div>
-                  <h4 className="font-archivo font-medium text-white text-sm mb-3 uppercase tracking-wide">Newsletter</h4>
-                  <p className="text-white/70 text-xs mb-3" style={{ fontFamily: "'Open Sans', sans-serif" }}>Stay up to date with our latest news and resources.</p>
-                  <a href="#" className="inline-block px-4 py-2 text-xs font-semibold text-white border border-white rounded-full hover:bg-white hover:text-[#232323] transition-colors" onClick={e => e.preventDefault()} style={{ fontFamily: "'Open Sans', sans-serif" }}>Subscribe now</a>
-                </div>
-                <div>
-                  <h4 className="font-archivo font-medium text-white text-sm mb-3 uppercase tracking-wide">Follow us</h4>
-                  <div className="flex gap-2">
-                    <span className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: "#007BB6" }}>in</span>
-                    <span className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold bg-black">𝕏</span>
-                    <span className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: "#A82400" }}>▶</span>
+                  <h4 className="font-archivo text-white mb-4" style={{ fontWeight: 500, fontSize: '18px' }}>About</h4>
+                  <div className="flex flex-col gap-2">
+                    {["Members and partners", "Privacy policy"].map(link => (
+                      <a key={link} href="#" className="text-[#93E07D] hover:underline" onClick={e => e.preventDefault()} style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '14px', fontWeight: 400 }}>{link}</a>
+                    ))}
                   </div>
                 </div>
+                {/* Column 2: Newsletter */}
                 <div>
-                  <h4 className="font-archivo font-medium text-white text-sm mb-3 uppercase tracking-wide">Contact us</h4>
-                  <a href="mailto:hello@exponentialroadmap.org" className="text-[#93E07D] text-xs" style={{ fontFamily: "'Open Sans', sans-serif" }}>hello@exponentialroadmap.org</a>
+                  <h4 className="font-archivo text-white mb-4" style={{ fontWeight: 500, fontSize: '18px' }}>Newsletter</h4>
+                  <p className="text-white/70 mb-4" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '14px' }}>Stay up to date with our latest news and resources.</p>
+                  <a href="#" className="inline-block px-4 py-2 font-semibold text-white border border-white rounded-full hover:bg-white hover:text-[#232323] transition-colors" onClick={e => e.preventDefault()} style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '15px', fontWeight: 500 }}>Subscribe now</a>
+                </div>
+                {/* Column 3: Follow us — text links, not icon squares */}
+                <div>
+                  <h4 className="font-archivo text-white mb-4" style={{ fontWeight: 500, fontSize: '18px' }}>Follow us</h4>
+                  <div className="flex flex-col gap-2">
+                    {["Follow on LinkedIn", "Follow on X", "Follow on YouTube"].map(link => (
+                      <a key={link} href="#" className="text-[#93E07D] hover:underline" onClick={e => e.preventDefault()} style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '14px', fontWeight: 500 }}>{link}</a>
+                    ))}
+                  </div>
+                </div>
+                {/* Column 4: Contact us */}
+                <div>
+                  <h4 className="font-archivo text-white mb-4" style={{ fontWeight: 500, fontSize: '18px' }}>Contact us</h4>
+                  <a href="mailto:hello@exponentialroadmap.org" className="text-[#93E07D]" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '14.4px', fontWeight: 400 }}>hello@exponentialroadmap.org</a>
                 </div>
               </div>
               <div className="border-t border-white/10 pt-4 flex items-center justify-between">
-                <span className="text-white/40 text-xs" style={{ fontFamily: "'Open Sans', sans-serif" }}>© Exponential Roadmap Initiative</span>
-                <a href="#" className="text-white/40 text-xs hover:text-[#93E07D]" style={{ fontFamily: "'Open Sans', sans-serif" }} onClick={e => e.preventDefault()}>Privacy policy</a>
+                <span className="text-white/40" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '16px' }}>© Exponential Roadmap Initiative</span>
+                <a href="#" className="text-white/40 hover:text-[#93E07D]" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '16px' }} onClick={e => e.preventDefault()}>Privacy policy</a>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#232323] · headings: font-archivo font-medium text-white · body: Open Sans text-white/70 · links: text-[#93E07D] · newsletter btn: ghost white border rounded-full · social: LinkedIn #007BB6 · X #000 · YouTube #A82400</div>
+            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#232323] · 4 cols: About · Newsletter · Follow us · Contact us · headings: Archivo weight-500 18px white · body/links: Open Sans 14px text-[#93E07D] · newsletter btn: Open Sans 15px weight-500 white ghost rounded-full · social: text links not icon squares · bottom bar: Open Sans 16px text-white/40</div>
           </div>
         </section>
 
