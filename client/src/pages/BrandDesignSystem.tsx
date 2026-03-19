@@ -29,7 +29,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PublicLayout from "@/components/PublicLayout";
 import SectionNavigator from "@/components/SectionNavigator";
 import { PhotoGallery } from "@/components/PhotoGallery";
-import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort } from "@/lib/assets";
+import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort, memberLogos } from "@/lib/assets";
 
 // ============================================================================
 // BRAND PROPOSITION DATA
@@ -2242,7 +2242,73 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 14: RESOURCES */}
+        {/* ================================================================ */}
+        {/* SECTION 14: MEMBER COMPANY LOGOTYPES */}
+        {/* ================================================================ */}
+        <section id="member-logos" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+            Member Company Logotypes
+          </h2>
+          <p className="text-gray-600 mb-2 max-w-3xl">
+            Official logotypes for ERI member companies. Use these assets when referencing member organisations
+            in ERI publications, case studies, and digital products. Each logo has a stable CDN URL for use in
+            Manus AI task prompts.
+          </p>
+          <p className="text-xs text-gray-400 mb-8 max-w-3xl">
+            Note: All logos are the property of their respective companies and are provided here solely for use
+            within authorised ERI communications.
+          </p>
+
+          {/* Usage note card */}
+          <Card className="shadow-sm mb-6 border-l-4 border-l-[#F5C842]">
+            <CardContent className="p-4">
+              <p className="text-sm text-gray-700">
+                <strong>Using member logos in AI tasks:</strong> Reference a logo by its token name, e.g.
+                <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono mx-1">memberLogos.scania.url</code>
+                from <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">assets.ts</code>,
+                or use the direct CDN URL shown on hover. Always display logos on a white or light background.
+                Do not apply colour filters, crop, or recolour any member logo.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Logo grid */}
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+            {Object.entries(memberLogos).map(([key, { name, url, sector }]) => (
+              <div
+                key={key}
+                className="group relative bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-shadow min-h-[100px]"
+              >
+                <img
+                  src={url}
+                  alt={`${name} logo`}
+                  className="max-h-12 max-w-full w-auto object-contain"
+                />
+                <span className="text-[11px] text-gray-500 text-center leading-tight">{name}</span>
+                {sector && (
+                  <span className="text-[10px] text-gray-400 text-center leading-tight">{sector}</span>
+                )}
+                {/* Hover overlay with CDN URL copy */}
+                <div className="absolute inset-0 bg-white/95 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
+                  <span className="text-[10px] font-mono text-gray-500 text-center break-all leading-tight">{key}</span>
+                  <a
+                    href={url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] text-[#3ba559] font-medium hover:underline flex items-center gap-1"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Download
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION 15: RESOURCES */}
         {/* ================================================================ */}
         <section id="resources" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
@@ -2518,6 +2584,141 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             </CardContent>
           </Card>
 
+          {/* ── ASSET URL REFERENCE ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-6">
+              <h3 className="font-bold text-[#232323] mb-1">Asset URL Reference</h3>
+              <p className="text-xs text-gray-500 mb-4">
+                All brand assets are hosted on the same CloudFront CDN. Use these direct URLs in AI task prompts
+                or code. The base CDN path is{" "}
+                <code className="bg-gray-100 px-1 rounded text-xs font-mono">https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/</code>.
+              </p>
+
+              {/* Logos */}
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Logos</p>
+              <table className="w-full text-xs mb-4">
+                <thead><tr className="border-b border-gray-200">
+                  <th className="text-left py-1 font-semibold text-gray-600">Token</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">File</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Usage</th>
+                </tr></thead>
+                <tbody className="font-mono text-[11px]">
+                  {([
+                    ["logos.eriLogoFullColor",    "eri-logo-full-color_f5763508.png",     "Primary wordmark (PNG) — use in <img> tags"],
+                    ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — use for download links only"],
+                    ["logos.eriIconMark",         "eri-icon-mark_08cd328f.webp",          "Compact ERI mark"],
+                    ["logos.exponentialLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon / favicon source"],
+                    ["logos.faviconIco",          "favicon_46e834ad.ico",                 "Multi-size .ico for browser tab"],
+                  ] as [string, string, string][]).map(([token, file, usage]) => (
+                    <tr key={token} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
+                      <td className="py-1.5 pr-3 text-gray-600">{file}</td>
+                      <td className="py-1.5 font-sans text-gray-500">{usage}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              {/* Pillar icons */}
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Pillar Icons (WebP)</p>
+              <table className="w-full text-xs mb-4">
+                <thead><tr className="border-b border-gray-200">
+                  <th className="text-left py-1 font-semibold text-gray-600">Token</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Pillar</th>
+                </tr></thead>
+                <tbody className="font-mono text-[11px]">
+                  {([1,2,3,4,5] as const).map((n) => (
+                    <tr key={n} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">pillarBottomIcons.pillar{n}</td>
+                      <td className="py-1.5 font-sans text-gray-500">P{n} bottom icon (navigation overlay)</td>
+                    </tr>
+                  ))}
+                  {([1,2,3,4,5] as const).map((n) => (
+                    <tr key={`mark${n}`} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">pillarMarks.pillar{n}</td>
+                      <td className="py-1.5 font-sans text-gray-500">P{n} pillar mark (compact identifier)</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              {/* Framework diagrams */}
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Framework Diagrams (PNG) — v5</p>
+              <table className="w-full text-xs mb-4">
+                <thead><tr className="border-b border-gray-200">
+                  <th className="text-left py-1 font-semibold text-gray-600">Token</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Description</th>
+                </tr></thead>
+                <tbody className="font-mono text-[11px]">
+                  {([
+                    ["frameworkV5.fivePillarsBg",          "5 Pillars radial — coloured background"],
+                    ["frameworkV5.fivePillarsBgLogo",      "5 Pillars radial — bg + ERI logo"],
+                    ["frameworkV5.fivePillarsBgLogoTitle", "5 Pillars radial — bg + logo + title"],
+                    ["frameworkV5.fivePillarsExtended",    "5 Pillars extended (with action blocks)"],
+                    ["frameworkV5.fivePillarsTransparent", "5 Pillars radial — transparent bg"],
+                    ["frameworkV5.fivePillarsShortText",   "5 Pillars short text — transparent"],
+                    ["frameworkV5.fivePillarsSymbols",     "5 Pillars symbols only — transparent"],
+                    ["frameworkV5.fivePillarsText",        "5 Pillars text only — transparent"],
+                    ["frameworkV5.leadershipA",            "Leadership diagram A"],
+                    ["frameworkV5.leadershipB",            "Leadership diagram B"],
+                    ["frameworkV5.pillarsLinear",          "Pillars linear layout"],
+                    ["frameworkV5.reducingEnabling",       "Reducing & enabling diagram"],
+                  ] as [string, string][]).map(([token, desc]) => (
+                    <tr key={token} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
+                      <td className="py-1.5 font-sans text-gray-500">{desc}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              {/* Pillar elements */}
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Pillar Elements (PNG) — v5</p>
+              <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">pillarsLong[1].solid</code> / <code className="bg-gray-100 px-1 rounded">pillarsLong[1].transparent</code> — same pattern for pillarsRegular, pillarsExtended. For pillarsShort: .symbol / .symbolTransp / .text / .textTransp</p>
+              <table className="w-full text-xs mb-4">
+                <thead><tr className="border-b border-gray-200">
+                  <th className="text-left py-1 font-semibold text-gray-600">Namespace</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Pillars</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Variants</th>
+                </tr></thead>
+                <tbody className="font-mono text-[11px]">
+                  {([
+                    ["pillarsLong",     "1–5", "solid, transparent"],
+                    ["pillarsRegular",  "1–5", "solid, transparent"],
+                    ["pillarsExtended", "1–5", "solid, transparent"],
+                    ["pillarsShort",    "1–5", "symbol, symbolTransp, text, textTransp"],
+                  ] as [string, string, string][]).map(([ns, pillars, variants]) => (
+                    <tr key={ns} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{ns}</td>
+                      <td className="py-1.5 pr-3 font-sans text-gray-600">{pillars}</td>
+                      <td className="py-1.5 font-sans text-gray-500">{variants}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              {/* Member logos */}
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Member Company Logotypes</p>
+              <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">memberLogos.scania.url</code> — 29 companies. See the Member Logotypes section for the full grid.</p>
+              <table className="w-full text-xs mb-2">
+                <thead><tr className="border-b border-gray-200">
+                  <th className="text-left py-1 font-semibold text-gray-600">Token key</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Company</th>
+                  <th className="text-left py-1 font-semibold text-gray-600">Sector</th>
+                </tr></thead>
+                <tbody className="font-mono text-[11px]">
+                  {Object.entries(memberLogos).map(([key, { name, sector }]) => (
+                    <tr key={key} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">memberLogos.{key}</td>
+                      <td className="py-1.5 pr-3 font-sans text-gray-700">{name}</td>
+                      <td className="py-1.5 font-sans text-gray-500">{sector}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
           {/* ── SECTION INDEX ── */}
           <Card className="shadow-sm">
             <CardContent className="p-6">
@@ -2546,8 +2747,9 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["11", "Interactive States",       "interactive-states"],
                     ["12", "UI Components",            "components"],
                     ["13", "Photography",              "photography"],
-                    ["14", "Resources",                "resources"],
-                    ["15", "Machine Instructions",     "ai-instructions"],
+                    ["14", "Member Logotypes",         "member-logos"],
+                    ["15", "Resources",                "resources"],
+                    ["16", "Machine Instructions",     "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>

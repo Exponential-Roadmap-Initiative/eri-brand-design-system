@@ -93,6 +93,39 @@ export const pillarsShort: Record<number, { symbol: string; symbolTransp: string
   5: { symbol: `${CDN}/ERI_Pillar_5_Symbol_RGB_400dd958.png`, symbolTransp: `${CDN}/ERI_Pillar_5_Symbol_Transp_RGB_64804012.png`, text: `${CDN}/ERI_Pillar_5_Text_RGB_87dba8df.png`, textTransp: `${CDN}/ERI_Pillar_5_Text_Transp_RGB_e7ab9f61.png` },
 };
 
+// Member company logotypes
+export const memberLogos: Record<string, { name: string; url: string; sector?: string }> = {
+  afry:                  { name: "AFRY",                   url: `${CDN}/afry_logo_7a356573.jpeg`,                   sector: "Engineering" },
+  alfaLaval:             { name: "Alfa Laval",             url: `${CDN}/alfa_laval_logo_e1980ce0.jpeg`,             sector: "Industrial" },
+  apple:                 { name: "Apple",                  url: `${CDN}/apple_23e3c4b7.jpg`,                        sector: "Technology" },
+  axelJohnson:           { name: "Axel Johnson",           url: `${CDN}/AxelJohnson_logo_0ea2ad8b.jpeg`,            sector: "Investment" },
+  bt:                    { name: "BT",                     url: `${CDN}/bt_logo_ef828607.jpeg`,                     sector: "Telecoms" },
+  ericsson:              { name: "Ericsson",               url: `${CDN}/ericsson_logo_082a9175.jpeg`,               sector: "Technology" },
+  google:                { name: "Google",                 url: `${CDN}/google_logo_f29cae55.jpeg`,                 sector: "Technology" },
+  handelsbanken:         { name: "Handelsbanken",          url: `${CDN}/Handelsbanken_logo_96bfd364.png`,           sector: "Finance" },
+  houdiniSportswear:     { name: "Houdini Sportswear",    url: `${CDN}/houdini_sportswear_logo_2466f43a.jpeg`,    sector: "Apparel" },
+  icebug:                { name: "Icebug",                 url: `${CDN}/Icebug_logo_2b5b62f0.jpeg`,                sector: "Apparel" },
+  ikea:                  { name: "IKEA",                   url: `${CDN}/ikea_89cd68c0.jpg`,                         sector: "Retail" },
+  investorAb:            { name: "Investor AB",            url: `${CDN}/investor_ab_logo_505f487d.jpeg`,            sector: "Investment" },
+  juanValdezCafe:        { name: "Juan Valdez Café",       url: `${CDN}/juan_valdez_cafe_logo_d3023a45.jpeg`,       sector: "Food & Beverage" },
+  maxBurgers:            { name: "Max Burgers",            url: `${CDN}/Max_Burgers_logo_80348600.jpeg`,            sector: "Food & Beverage" },
+  netflix:               { name: "Netflix",                url: `${CDN}/netflix_logo_e71a7bdb.jpeg`,                sector: "Media" },
+  oatly:                 { name: "Oatly",                  url: `${CDN}/Oatly_logo_36fc37e4.jpeg`,                  sector: "Food & Beverage" },
+  oracle:                { name: "Oracle",                 url: `${CDN}/oracle_logo_5d064a95.jpeg`,                 sector: "Technology" },
+  polestar:              { name: "Polestar",               url: `${CDN}/polestar_logo_cc654cd6.jpg`,                sector: "Automotive" },
+  powercellSweden:       { name: "PowerCell Sweden",       url: `${CDN}/powercell_sweden_ab_logo_e25553c9.jpeg`,    sector: "Energy" },
+  ragnsells:             { name: "Ragn-Sells",             url: `${CDN}/ragnsells_logo_6a86779f.jpeg`,              sector: "Waste & Recycling" },
+  scanGlobalLogistics:   { name: "Scan Global Logistics",  url: `${CDN}/scan_global_logistics_logo_a618e915.jpeg`,  sector: "Logistics" },
+  scania:                { name: "Scania",                 url: `${CDN}/Scania_logo_346cbc2c.jpeg`,                 sector: "Automotive" },
+  skanska:               { name: "Skanska",                url: `${CDN}/Skanska_logo_9553338a.png`,                 sector: "Construction" },
+  speedyHire:            { name: "Speedy Hire",            url: `${CDN}/speedy_hire_logo_0e49cc28.jpeg`,            sector: "Equipment Hire" },
+  spotify:               { name: "Spotify",                url: `${CDN}/Spotify_logo_a473dbde.jpeg`,                sector: "Media" },
+  stegra:                { name: "Stegra",                 url: `${CDN}/Stegra_logo_f9be5f0a.jpeg`,                 sector: "Green Steel" },
+  tele2:                 { name: "Tele2",                  url: `${CDN}/tele2_logo_939414c6.jpeg`,                  sector: "Telecoms" },
+  teliaCompany:          { name: "Telia Company",          url: `${CDN}/teliacompany_logo_ce6b5d1e.jpeg`,           sector: "Telecoms" },
+  unilever:              { name: "Unilever",               url: `${CDN}/unilever_logo_e8b8dd8d.jpeg`,               sector: "Consumer Goods" },
+};
+
 export const dataSourceLogos: Record<string, string> = {
   cdp:                    `${CDN}/cdp-logo_e76366be.webp`,
   sbti:                   `${CDN}/sbti-logo_700c1951.webp`,
