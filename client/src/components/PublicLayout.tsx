@@ -3,9 +3,10 @@
  * Design: Faithful Documentation Mirror
  *
  * Header follows the established ERI web app pattern (AppHeader.tsx in PSM / Exp Playbook apps):
- *   LEFT:  ERI logo (h-8) → 1px gray-300 vertical divider → flex-col title block
- *            Supertitle: 12px / 500 / gray-400 / UPPERCASE / tracking-wide  (product family)
- *            App title:  16px / 600 / gray-700                               (app name)
+ *   TOP STRIP: 4px dark teal border (#2c3f43) across the full header width
+ *   LEFT:  ERI logo (h-8) → 1px gray-300 vertical divider → single-line app title
+ *            App title: 18px / 600 / #384151 (dark blue-slate)
+ *            NO supertitle — the logo already identifies ERI
  *   RIGHT: BETA badge (outlined pill) → version string → live dot → hamburger icon
  *
  * Footer follows the public website pattern (exponentialroadmap.org):
@@ -48,7 +49,9 @@ export default function PublicLayout({ children, transparentHeader = false, hide
     <div className="min-h-screen flex flex-col bg-[#F9FAFB]">
 
       {/* ── FIXED HEADER — ERI web app pattern ── */}
-      <header className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-200 ${headerBg}`}>
+      {/* Dark teal top strip — 4px, colour #2c3f43, always visible */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[#2c3f43]" />
+      <header className={`fixed top-1 left-0 right-0 z-50 h-16 transition-all duration-200 ${headerBg}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
 
           {/* LEFT: Logo + divider + title block */}
@@ -64,17 +67,10 @@ export default function PublicLayout({ children, transparentHeader = false, hide
             {/* Vertical divider — hidden on mobile */}
             <div className="hidden sm:block h-6 w-px bg-gray-300 shrink-0" />
 
-            {/* Title block — hidden on mobile */}
-            <div className="hidden sm:flex flex-col leading-tight min-w-0">
-              {/* Supertitle: product family label — 12px / 500 / gray-400 / UPPERCASE / tracking-wide */}
-              <span className="text-[11px] font-medium text-gray-400 uppercase tracking-widest truncate">
-                Exponential Roadmap Initiative
-              </span>
-              {/* App title — 16px / 600 / gray-700 */}
-              <span className="text-base font-semibold text-gray-700 truncate">
-                Brand Design System
-              </span>
-            </div>
+            {/* App title — single line, 18px / 600 / #384151 dark blue-slate — hidden on mobile */}
+            <span className="hidden sm:inline text-[18px] font-semibold text-[#384151] truncate">
+              Brand Design System
+            </span>
           </div>
 
           {/* RIGHT: BETA badge + version + live dot + hamburger */}
@@ -171,7 +167,8 @@ export default function PublicLayout({ children, transparentHeader = false, hide
       )}
 
       {/* ── MAIN CONTENT ── */}
-      <main className="flex-1 pt-16">
+      {/* pt-[68px] = 4px top strip + 64px header */}
+      <main className="flex-1 pt-[68px]">
         {children}
       </main>
 

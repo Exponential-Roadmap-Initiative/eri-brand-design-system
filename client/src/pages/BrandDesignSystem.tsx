@@ -1965,8 +1965,7 @@ export default function HeroPage() {
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI full-colour wordmark PNG/SVG — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, links to <code className="font-mono text-xs">/</code></span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Vertical divider — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-6 w-px bg-gray-300 shrink-0</code> (hidden on mobile)</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Supertitle (product family) — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-400 uppercase tracking-widest truncate</code><br/><em className="text-gray-400">e.g. "EXPONENTIAL PLAYBOOK NEXT GEN"</em></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>App title — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-base font-semibold text-gray-700 truncate</code><br/><em className="text-gray-400">e.g. "Professional Services Matrix"</em></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>App title — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[18px] font-semibold text-[#384151] truncate</code><br/><em className="text-gray-400">e.g. "Professional Services Matrix"</em></span></div>
                 </div>
               </CardContent>
             </Card>
@@ -1997,10 +1996,7 @@ export default function HeroPage() {
                       <div className="flex items-center gap-3 min-w-0">
                         <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto shrink-0" />
                         <div className="h-6 w-px bg-gray-300 shrink-0" />
-                        <div className="flex flex-col leading-tight min-w-0">
-                          <span className="text-[11px] font-medium text-gray-400 uppercase tracking-widest truncate">Exponential Roadmap Initiative</span>
-                          <span className="text-base font-semibold text-gray-700 truncate">Brand Design System</span>
-                        </div>
+                        <span className="text-[18px] font-semibold text-[#384151] truncate">Brand Design System</span>
                       </div>
                       {/* Right */}
                       <div className="flex items-center gap-2 shrink-0">
@@ -2030,10 +2026,7 @@ export default function HeroPage() {
                       <div className="flex items-center gap-3 min-w-0">
                         <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto shrink-0" style={{ filter: "brightness(0) invert(1)" }} />
                         <div className="h-6 w-px bg-gray-600 shrink-0" />
-                        <div className="flex flex-col leading-tight min-w-0">
-                          <span className="text-[11px] font-medium text-gray-400 uppercase tracking-widest truncate">Exponential Roadmap Initiative</span>
-                          <span className="text-base font-semibold text-gray-300 truncate">Brand Design System</span>
-                        </div>
+                        <span className="text-[18px] font-semibold text-gray-300 truncate">Brand Design System</span>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-500 text-[11px] font-medium text-gray-400 tracking-wide">BETA</span>
@@ -3011,8 +3004,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   {[
                     ["ERI logo (PNG)",        "h-8 w-auto",                              "Link to /. PNG not SVG."],
                     ["Vertical divider",       "w-px h-8 bg-gray-300 shrink-0",           "Hidden on mobile."],
-                    ["Supertitle",             "text-[11px] font-medium text-gray-400 uppercase tracking-widest", "Product family name."],
-                    ["App title",              "text-base font-semibold text-gray-700",   "Current app/page name."],
+                    ["App title",              "text-[18px] font-semibold text-[#384151]",   "Current app/page name."],
                     ["BETA badge",             "border border-gray-400 text-gray-600 rounded-full px-2 py-0.5 text-[11px]", "Outlined pill."],
                     ["Version string",         "text-[11px] font-medium text-gray-500 tracking-wide", "Format: V.YYYY.MM.DD"],
                     ["Live status dot",        "w-2 h-2 rounded-full bg-[#3ba559]",       "Green = live."],
