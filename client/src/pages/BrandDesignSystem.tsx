@@ -70,7 +70,7 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
   brand: [
     { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Primary buttons, CTAs, links, success states",
       tones: { 100: { hex: "#dbeee1", rgb: "219, 238, 225" }, 300: { hex: "#93cda3", rgb: "147, 205, 163" }, 500: { hex: "#3ba559", rgb: "59, 165, 89" }, 700: { hex: "#2c6d3e", rgb: "44, 109, 62" }, 900: { hex: "#20422a", rgb: "32, 66, 42" } } },
-    { id: "dark", name: "Dark Text / Footer BG", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, and high-contrast UI elements. Use #232323 for H1–H4 headings and the footer background. Also used as the primary dark section background on marketing sites (alternating with #F9FAFB light sections), and as the semi-transparent overlay (#232323 at 80–85% opacity) on top of hero background images to create a consistent dark tone. For body paragraph text on white backgrounds, use Body Text #383838 (slightly lighter).",
+    { id: "dark", name: "Primary Dark", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, and high-contrast UI elements. Use #232323 for H1–H4 headings and the footer background. Also used as the primary dark section background on marketing sites (alternating with #F9FAFB light sections), and as the semi-transparent overlay (#232323 at 80–85% opacity) on top of hero background images to create a consistent dark tone. For body paragraph text on white backgrounds, use Body Text #383838 (slightly lighter).",
       tones: { 100: { hex: "#d7d7d7", rgb: "215, 215, 215" }, 300: { hex: "#868686", rgb: "134, 134, 134" }, 500: { hex: "#232323", rgb: "35, 35, 35" }, 700: { hex: "#1d1d1d", rgb: "29, 29, 29" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
     { id: "neutral", name: "Neutral Gray", hex: "#6b7280", rgb: "107, 114, 128", context: "Secondary text, borders, disabled states",
       tones: { 100: { hex: "#e4e5e8", rgb: "228, 229, 232" }, 300: { hex: "#adb1b9", rgb: "173, 177, 185" }, 500: { hex: "#6b7280", rgb: "107, 114, 128" }, 700: { hex: "#494e56", rgb: "73, 78, 86" }, 900: { hex: "#2f3236", rgb: "47, 50, 54" } } },
@@ -2876,7 +2876,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     <tbody className="font-mono">
                       {[
                         ["primary-green",  "#3ba559", "Buttons, CTAs, links, success"],
-                        ["dark-text",       "#232323", "Headings, body text, footer bg"],
+                        ["primary-dark",    "#232323", "Headings, footer bg, dark section backgrounds, hero overlay"],
                         ["neutral-gray",    "#6b7280", "Secondary text, borders"],
                         ["background",      "#F9FAFB", "Page bg, card bg"],
                         ["green-300",       "#93cda3", "Accent links in footer"],
