@@ -1092,10 +1092,100 @@ export default function BrandDesignSystem() {
           </div>
         </section>
 
+         {/* ================================================================ */}
+        {/* SECTION: BRAND GRAPHICS & ILLUSTRATIONS */}
+        {/* ================================================================ */}
+        <section id="brand-graphics" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Brand Graphics &amp; Illustrations
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            Designed visual assets that represent ERI concepts and are approved for use across web applications,
+            reports, presentations, and social media. These are distinct from photography — they are purpose-built
+            illustrations and graphic compositions that carry specific conceptual meaning.
+          </p>
+
+          {/* Double S-Curve Hero */}
+          <div className="mb-12">
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Double S-Curve Hero</h3>
+            <p className="text-gray-600 mb-6 max-w-3xl text-sm">
+              The double S-curve represents the core ERI thesis: the exponential decline of fossil fuels and the
+              simultaneous exponential rise of clean technologies. Two crossing sigmoid curves — one amber
+              (legacy systems declining), one green (new systems rising) — set against a dark teal grid background
+              with particle network detail. This is the primary hero background image for ERI marketing web applications.
+            </p>
+
+            {/* Live preview */}
+            <div className="rounded-xl overflow-hidden mb-6 border border-gray-200" style={{maxWidth: 900}}>
+              <div
+                className="relative w-full"
+                style={{
+                  backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hero-scurve-dual_823ed0f9.webp)`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  aspectRatio: '16/9',
+                }}
+              >
+                <div className="absolute inset-0" style={{background: 'rgba(35,35,35,0.82)'}} />
+                <div className="absolute inset-0 flex flex-col justify-center px-12 py-10">
+                  <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">EXPONENTIAL ROADMAP INITIATIVE — EXAMPLE</p>
+                  <h1 className="font-archivo font-extrabold text-white text-4xl md:text-5xl leading-tight mb-4">
+                    <span className="text-[#93E07D]">Exponential</span><br />Human-AI Lab
+                  </h1>
+                  <p className="text-gray-300 text-base max-w-md mb-6">
+                    One place for everything ERI builds at the intersection of human expertise and AI.
+                  </p>
+                  <div>
+                    <button className="bg-[#3ba559] text-white font-semibold px-6 py-2.5 rounded text-sm">Explore the Application Suite →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Asset details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-white border border-gray-200 rounded-xl p-5">
+                <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Asset Details</h4>
+                <table className="w-full text-sm">
+                  <tbody>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hero-scurve-dual-rich.webp</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Dimensions</td><td className="py-1.5 text-[#232323]">1920 × 1072 px</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Format</td><td className="py-1.5 text-[#232323]">WebP (lossy)</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Aspect ratio</td><td className="py-1.5 text-[#232323]">16:9</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal bg</td></tr>
+                    <tr><td className="py-1.5 text-gray-500 pr-4">CDN URL</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">…/hero-scurve-dual-rich-8omR779SXimwMsMeedVoZ9.webp</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-xl p-5">
+                <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Usage Rules</h4>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Always use full-bleed — the image must fill the entire hero section width.</span></li>
+                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Always apply a <code className="bg-gray-100 px-1 rounded text-xs">#232323</code> overlay at 80–85% opacity over the image before placing text.</span></li>
+                  <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use white Archivo for the main heading; Accent Lime <code className="bg-gray-100 px-1 rounded text-xs">#93E07D</code> for the accent word.</span></li>
+                  <li className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not crop, rotate, or alter the image in any way.</span></li>
+                  <li className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use on light backgrounds without the dark overlay.</span></li>
+                  <li className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use as a decorative element in body content — hero sections only.</span></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Conceptual meaning */}
+            <div className="bg-[#f0f7f2] border border-[#c8e6d0] rounded-xl p-5 max-w-3xl">
+              <h4 className="font-archivo font-bold text-[#232323] text-sm mb-2">Conceptual Meaning</h4>
+              <p className="text-sm text-gray-700">
+                The two S-curves crossing represent the central ERI insight: legacy fossil-fuel systems are on a
+                declining S-curve while clean-technology systems are on a rising S-curve. The crossing point is
+                the transition moment. The amber curve represents the old economy; the green curve represents the
+                new. This image should only be used in contexts where this meaning is relevant — it is not a
+                generic technology background.
+              </p>
+            </div>
+          </div>
+        </section>
         {/* ================================================================ */}
         {/* SECTION 15: TESTIMONIALS */}
         {/* ================================================================ */}
-
         <section id="testimonials" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
             Testimonials &amp; Pull-Quotes

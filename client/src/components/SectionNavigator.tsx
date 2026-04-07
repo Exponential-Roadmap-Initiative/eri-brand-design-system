@@ -28,6 +28,7 @@ export const SECTIONS: NavSection[] = [
   { id: "typography",             label: "Typography" },
   { id: "verbal-identity",        label: "Verbal Identity",         sublabel: "Language" },
   { id: "photography",            label: "Photography",             sublabel: "Image guidelines" },
+  { id: "brand-graphics",         label: "Brand Graphics",          sublabel: "Illustrations & assets" },
   { id: "testimonials",           label: "Testimonials",            sublabel: "Pull-quote pattern" },
   { id: "exponential-framework",  label: "Exponential Framework",  sublabel: "Icons · Diagrams · Elements" },
   { id: "charts",                 label: "Charts",                  sublabel: "Crocodile Economy style" },
