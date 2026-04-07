@@ -70,18 +70,18 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
   brand: [
     { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Primary buttons, CTAs, links, success states",
       tones: { 100: { hex: "#dbeee1", rgb: "219, 238, 225" }, 300: { hex: "#93cda3", rgb: "147, 205, 163" }, 500: { hex: "#3ba559", rgb: "59, 165, 89" }, 700: { hex: "#2c6d3e", rgb: "44, 109, 62" }, 900: { hex: "#20422a", rgb: "32, 66, 42" } } },
-    { id: "dark", name: "Primary Dark", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, and high-contrast UI elements. Use #232323 for H1–H4 headings and the footer background. Also used as the primary dark section background on marketing sites (alternating with #F9FAFB light sections), and as the semi-transparent overlay (#232323 at 80–85% opacity) on top of hero background images to create a consistent dark tone. For body paragraph text on white backgrounds, use Body Text #383838 (slightly lighter).",
+    { id: "dark", name: "Primary Dark", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, and high-contrast UI elements. Use #232323 for H1–H4 headings and the footer background. Also used as the primary dark section background on marketing sites (alternating with #F9FAFB light sections), and as the semi-transparent overlay (#232323 at 80–85% opacity) on top of hero background images to create a consistent dark tone. For body paragraph text on white backgrounds, use Dark Gray #383838 (slightly lighter).",
       tones: { 100: { hex: "#d7d7d7", rgb: "215, 215, 215" }, 300: { hex: "#868686", rgb: "134, 134, 134" }, 500: { hex: "#232323", rgb: "35, 35, 35" }, 700: { hex: "#1d1d1d", rgb: "29, 29, 29" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
     { id: "neutral", name: "Neutral Gray", hex: "#6b7280", rgb: "107, 114, 128", context: "Secondary text, borders, disabled states",
       tones: { 100: { hex: "#e4e5e8", rgb: "228, 229, 232" }, 300: { hex: "#adb1b9", rgb: "173, 177, 185" }, 500: { hex: "#6b7280", rgb: "107, 114, 128" }, 700: { hex: "#494e56", rgb: "73, 78, 86" }, 900: { hex: "#2f3236", rgb: "47, 50, 54" } } },
-    { id: "background", name: "Background", hex: "#F9FAFB", rgb: "249, 250, 251", context: "Page backgrounds, card backgrounds",
+    { id: "off-white", name: "Off White", hex: "#F9FAFB", rgb: "249, 250, 251", context: "Page backgrounds, card backgrounds, and light section backgrounds. The standard light surface colour for all ERI web applications and the alternating light sections on marketing sites",
       tones: { 100: { hex: "#fdfefe", rgb: "253, 254, 254" }, 300: { hex: "#fbfcfc", rgb: "251, 252, 252" }, 500: { hex: "#f9fafb", rgb: "249, 250, 251" }, 700: { hex: "#a1a2a3", rgb: "161, 162, 163" }, 900: { hex: "#5d5d5d", rgb: "93, 93, 93" } } },
     { id: "yellow", name: "Highlight Yellow", hex: "#F5C842", rgb: "245, 200, 66", context: "Data highlights, chart callouts, goal indicators, emphasis accents — introduced in Playbook v5",
       tones: { 100: { hex: "#f2e4bd", rgb: "242, 228, 189" }, 300: { hex: "#bfaa6b", rgb: "191, 170, 107" }, 500: { hex: "#f5c842", rgb: "245, 200, 66" }, 700: { hex: "#725f27", rgb: "114, 95, 39" }, 900: { hex: "#332b15", rgb: "51, 43, 21" } } },
     { id: "accent-lime", name: "Accent Lime", hex: "#93E07D", rgb: "147, 224, 125", context: "Typographic heading accent colour for use on dark or green backgrounds (e.g. hero sections, dark cards). Use lime #93E07D for accent words when the background is dark green or black. On white or light backgrounds, use Primary Green #3ba559 instead. NOT for UI components, buttons, or data visualisation.",
       tones: { 100: { hex: "#edf9e9", rgb: "237, 249, 233" }, 300: { hex: "#c4edba", rgb: "196, 237, 186" }, 500: { hex: "#93e07d", rgb: "147, 224, 125" }, 700: { hex: "#4a9e38", rgb: "74, 158, 56" }, 900: { hex: "#2a5a21", rgb: "42, 90, 33" } } },
 
-    { id: "body-text", name: "Body Text", hex: "#383838", rgb: "56, 56, 56", context: "Standard body paragraph text colour for all ERI surfaces. Use #383838 for all body copy on white or light backgrounds. Pair with Archivo headings (#232323) and Open Sans body text.",
+    { id: "dark-gray", name: "Dark Gray", hex: "#383838", rgb: "56, 56, 56", context: "Standard body paragraph text colour for all ERI surfaces. Use #383838 for all body copy on white or light backgrounds. Pair with Archivo headings (Primary Dark #232323) and Open Sans body text.",
       tones: { 100: { hex: "#d8d8d8", rgb: "216, 216, 216" }, 300: { hex: "#8a8a8a", rgb: "138, 138, 138" }, 500: { hex: "#383838", rgb: "56, 56, 56" }, 700: { hex: "#262626", rgb: "38, 38, 38" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
     { id: "linkedin", name: "LinkedIn Blue", hex: "#007BB6", rgb: "0, 123, 182", context: "LinkedIn social media icon background. Used in the ERI footer social links row. Do not use for any other purpose.",
       tones: { 100: { hex: "#cce5f3", rgb: "204, 229, 243" }, 300: { hex: "#66b3d9", rgb: "102, 179, 217" }, 500: { hex: "#007bb6", rgb: "0, 123, 182" }, 700: { hex: "#005a87", rgb: "0, 90, 135" }, 900: { hex: "#003a58", rgb: "0, 58, 88" } } },
@@ -1122,7 +1122,7 @@ export default function BrandDesignSystem() {
                   </li>
                   <li className="flex gap-3">
                     <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
-                    <span><strong>Quote body</strong> — Open Sans 400, 15–17 px, <code className="text-xs bg-gray-100 px-1 rounded">text-align: justify</code>. No typeset quotation marks. Colour: Body Text <code className="text-xs bg-gray-100 px-1 rounded">#383838</code>.</span>
+                    <span><strong>Quote body</strong> — Open Sans 400, 15–17 px, <code className="text-xs bg-gray-100 px-1 rounded">text-align: justify</code>. No typeset quotation marks. Colour: Dark Gray <code className="text-xs bg-gray-100 px-1 rounded">#383838</code>.</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
@@ -2878,7 +2878,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                         ["primary-green",  "#3ba559", "Buttons, CTAs, links, success"],
                         ["primary-dark",    "#232323", "Headings, footer bg, dark section backgrounds, hero overlay"],
                         ["neutral-gray",    "#6b7280", "Secondary text, borders"],
-                        ["background",      "#F9FAFB", "Page bg, card bg"],
+                        ["off-white",       "#F9FAFB", "Page bg, card bg, light section bg"],
                         ["green-300",       "#93cda3", "Accent links in footer"],
                       ].map(([token, hex, usage]) => (
                         <tr key={token} className="border-b border-gray-100">
