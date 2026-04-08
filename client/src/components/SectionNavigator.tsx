@@ -35,6 +35,7 @@ export const SECTIONS: NavSection[] = [
   { id: "member-logos",           label: "Member Logotypes" },
   { id: "data-source-logos",      label: "Data Source Logos" },
   // ── Zone 2: Web & Application Development ───────────────────────────────
+  { id: "navigation",             label: "Navigation & Layout",    sublabel: "Tier A / Tier B patterns" },
   { id: "spacing",                label: "Spacing & Layout" },
   { id: "page-layout",            label: "Page Layout Shells" },
   { id: "component-library",      label: "Component Library" },

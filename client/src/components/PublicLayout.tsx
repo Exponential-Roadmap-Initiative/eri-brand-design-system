@@ -89,10 +89,10 @@ export default function PublicLayout({ children, transparentHeader = false, hide
             {/* Live status dot — green = live/published */}
             <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-[#3ba559] shrink-0" title="Live" />
 
-            {/* Hamburger menu — always visible */}
+            {/* Hamburger menu — visible on mobile only (lg+ uses the left panel) */}
             <button
               onClick={() => setMenuOpen(true)}
-              className="inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
+              className="lg:hidden inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
               aria-label="Open navigation menu"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -105,7 +105,10 @@ export default function PublicLayout({ children, transparentHeader = false, hide
         </div>
       </header>
 
-      {/* ── MOBILE / FULL NAVIGATION OVERLAY ── */}
+      {/* ── MOBILE NAVIGATION OVERLAY ── */}
+      {/* On desktop (lg+), the left panel is the sole navigation mechanism.
+           This overlay is for mobile only — it shows all sections + external links.
+           The hamburger is hidden on desktop when the left panel is visible. */}
       {menuOpen && (
         <div className="fixed inset-0 z-[60] bg-white flex flex-col">
           {/* Overlay header */}
@@ -129,35 +132,61 @@ export default function PublicLayout({ children, transparentHeader = false, hide
             </button>
           </div>
 
-          {/* Nav links */}
-          <nav className="flex flex-col gap-1 p-4 overflow-y-auto">
+          {/* Section links — mobile only (lg+ uses the left panel instead) */}
+          <nav className="flex flex-col gap-0.5 p-4 overflow-y-auto flex-1">
+            <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-3 px-3">On this page</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pb-1">Communications &amp; Brand</p>
             {[
-              { href: "#brand-proposition", label: "Brand Proposition" },
-              { href: "#visual-identity", label: "Visual Identity" },
-              { href: "#logo-usage", label: "Logo Usage" },
-              { href: "#spacing", label: "Spacing & Layout" },
-              { href: "#typography", label: "Typography" },
-              { href: "#verbal-identity", label: "Verbal Identity" },
-              { href: "#page-layout", label: "Page Layout Shells" },
-              { href: "#badges", label: "Badge Reference" },
-              { href: "#components", label: "UI Components" },
-              { href: "#resources", label: "Resources" },
+              { href: "#brand-proposition",     label: "Brand Proposition" },
+              { href: "#visual-identity",        label: "Visual Identity" },
+              { href: "#logo-usage",             label: "Logo Usage" },
+              { href: "#typography",             label: "Typography" },
+              { href: "#verbal-identity",        label: "Verbal Identity" },
+              { href: "#photography",            label: "Photography" },
+              { href: "#brand-graphics",         label: "Brand Graphics" },
+              { href: "#testimonials",           label: "Testimonials" },
+              { href: "#exponential-framework",  label: "Exponential Framework" },
+              { href: "#charts",                 label: "Charts" },
+              { href: "#member-logos",           label: "Member Logotypes" },
+              { href: "#data-source-logos",      label: "Data Source Logos" },
             ].map(({ href, label }) => (
               <a
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="px-4 py-3 text-sm font-medium text-gray-700 hover:text-[#3ba559] hover:bg-gray-50 rounded-md transition-colors"
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#3ba559] hover:bg-gray-50 rounded-md transition-colors"
               >
                 {label}
               </a>
             ))}
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">Web &amp; Development</p>
+            {[
+              { href: "#navigation",         label: "Navigation & Layout" },
+              { href: "#spacing",            label: "Spacing & Layout" },
+              { href: "#page-layout",        label: "Page Layout Shells" },
+              { href: "#component-library",  label: "Component Library" },
+              { href: "#badges",             label: "Badge Reference" },
+              { href: "#interactive-states", label: "Interactive States" },
+              { href: "#components",         label: "UI Components" },
+              { href: "#resources",          label: "Resources" },
+              { href: "#ai-instructions",    label: "Machine Instructions" },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#3ba559] hover:bg-gray-50 rounded-md transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+            {/* External links */}
             <div className="mt-4 pt-4 border-t border-gray-200">
               <a
                 href="https://exponentialroadmap.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-3 text-sm font-medium text-[#3ba559] hover:text-[#2d8a47] flex items-center gap-2 transition-colors"
+                className="px-3 py-2 text-sm font-medium text-[#3ba559] hover:text-[#2d8a47] flex items-center gap-2 transition-colors rounded-md hover:bg-gray-50"
               >
                 ERI Website <span aria-hidden>→</span>
               </a>
