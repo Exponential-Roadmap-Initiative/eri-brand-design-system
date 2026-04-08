@@ -1593,15 +1593,17 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h4 className="font-bold text-[#232323] text-base mb-1 mt-6">Long Pillar <span className="text-xs font-normal text-gray-500 ml-2">(Primary)</span></h4>
           <p className="text-sm text-gray-600 mb-4 max-w-3xl">The primary integration element for company presentations. Placed on the left side of the frame. Use <code className="bg-gray-100 px-1 rounded text-xs">x</code> (width of the "E" in EXPONENTIAL) as minimum clear space from pillar to frame edge.</p>
           <div className="grid grid-cols-5 gap-4 mb-3">
-            {([1,2,3,4,5] as const).map(n => (
+            {([1,2,3,4,5] as const).map(n => {
+              const tintKey = `pillar${n}` as keyof typeof pillarTints;
+              return (
               <div key={n} className="flex flex-col items-center gap-2">
-                <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 200}}>
+                <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 200, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsLong[n].solid} alt={`Pillar ${n} Long`} className="max-h-48 w-auto object-contain" />
                 </div>
-                <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
+                <span className="text-xs font-semibold text-gray-600">Pillar {n}</span>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-long-solid.webp</code>
               </div>
-            ))}
+            )})}
           </div>
           <div className="grid grid-cols-5 gap-4 mb-10 bg-[#232323] rounded-xl p-4">
             {([1,2,3,4,5] as const).map(n => (
@@ -1619,30 +1621,34 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Regular Pillar</h4>
           <p className="text-sm text-gray-600 mb-4 max-w-3xl">Scaled-down version for data slides where more horizontal space is needed. Can be placed over images. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
           <div className="grid grid-cols-5 gap-4 mb-10">
-            {([1,2,3,4,5] as const).map(n => (
+            {([1,2,3,4,5] as const).map(n => {
+              const tintKey = `pillar${n}` as keyof typeof pillarTints;
+              return (
               <div key={n} className="flex flex-col items-center gap-2">
-                <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 160}}>
+                <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 160, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsRegular[n].solid} alt={`Pillar ${n} Regular`} className="max-h-40 w-auto object-contain" />
                 </div>
                 <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-regular-solid.webp</code>
               </div>
-            ))}
+            )})}
           </div>
 
           {/* Extended */}
           <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Extended Pillar <span className="text-xs font-normal text-gray-500 ml-2">(with Action Blocks)</span></h4>
           <p className="text-sm text-gray-600 mb-4 max-w-3xl">The most detailed variant — pillar extended downward with labelled Action Blocks (e.g. "Supplier Engagement"). The pillar icon appears at the bottom of the stack. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
           <div className="grid grid-cols-5 gap-4 mb-4">
-            {([1,2,3,4,5] as const).map(n => (
+            {([1,2,3,4,5] as const).map(n => {
+              const tintKey = `pillar${n}` as keyof typeof pillarTints;
+              return (
               <div key={n} className="flex flex-col items-center gap-2">
-                <div className="bg-gray-50 rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 240}}>
+                <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 240, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsExtended[n].solid} alt={`Pillar ${n} Extended`} className="max-h-56 w-auto object-contain" />
                 </div>
                 <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-extended-solid.webp</code>
               </div>
-            ))}
+            )})}
           </div>
           <div className="mb-10 bg-gray-50 rounded-lg p-4">
             <h5 className="font-bold text-[#232323] text-sm mb-2">Action Block Specification</h5>
@@ -1658,19 +1664,21 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Short Pillar <span className="text-xs font-normal text-gray-500 ml-2">(Symbol &amp; Text variants)</span></h4>
           <p className="text-sm text-gray-600 mb-4 max-w-3xl">Minimal variant — symbol only (icon mark) or text only (pillar number + name). Used where space is very limited or as a compact reference marker.</p>
           <div className="grid grid-cols-5 gap-6 mb-3">
-            {([1,2,3,4,5] as const).map(n => (
+            {([1,2,3,4,5] as const).map(n => {
+              const tintKey = `pillar${n}` as keyof typeof pillarTints;
+              return (
               <div key={n} className="flex flex-col gap-3">
-                <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80}}>
+                <div className="rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsShort[n].symbol} alt={`Pillar ${n} Symbol`} className="max-h-16 w-auto object-contain" />
                 </div>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-symbol-solid.webp</code>
-                <div className="bg-gray-50 rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80}}>
+                <div className="rounded-lg p-2 flex items-center justify-center" style={{minHeight: 80, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsShort[n].text} alt={`Pillar ${n} Text`} className="max-h-16 w-auto object-contain" />
                 </div>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-text-solid.webp</code>
                 <span className="text-xs text-gray-500 font-medium text-center">Pillar {n}</span>
               </div>
-            ))}
+            )})}
           </div>
           <p className="text-xs text-gray-400 mb-8">Top row: Symbol variant. Bottom row: Text variant. Transparent versions also available.</p>
 

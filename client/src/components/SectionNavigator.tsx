@@ -109,7 +109,7 @@ export default function SectionNavigator({ className = "" }: SectionNavigatorPro
 
       {SECTIONS.map(({ id, label, sublabel }) => {
         const isActive = activeId === id;
-        const isZone2Start = id === "spacing";
+        const isZone2Start = id === "navigation";
 
         return (
           <React.Fragment key={id}>
