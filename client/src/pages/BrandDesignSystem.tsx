@@ -366,18 +366,31 @@ export default function BrandDesignSystem() {
 
       {/* ── TWO-COLUMN LAYOUT: sticky nav + scrollable content ── */}
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="flex gap-10 items-start">
+        {/* IMPORTANT: do NOT use items-start or items-stretch on this flex container.
+             The sticky nav requires its parent to have full height (default stretch behaviour).
+             The global .flex { min-height: 0 } override is intentional for other contexts
+             but here we need the default flex-start alignment on the cross-axis so that
+             the sticky child can use position:sticky correctly. */}
+        <div style={{ display: "flex", gap: "2.5rem", alignItems: "flex-start" }}>
 
           {/* ── STICKY SECTION NAVIGATOR (desktop only) ── */}
-          {/* top-[68px] = 4px top strip + 64px header. max-h + overflow-y-auto allows the nav
-               to scroll independently on very long pages without ever disappearing. */}
-          <div className="hidden lg:block w-52 shrink-0">
-            <div
-              className="sticky overflow-y-auto"
-              style={{ top: "68px", maxHeight: "calc(100vh - 68px - 2rem)", paddingBottom: "2rem" }}
-            >
-              <SectionNavigator />
-            </div>
+          {/* top: 68px = 4px top strip + 64px header.
+               The outer div uses position:sticky directly (no wrapper needed).
+               max-height + overflow-y-auto lets the nav scroll independently
+               on very long pages so it never disappears. */}
+          <div
+            className="hidden lg:block overflow-y-auto"
+            style={{
+              position: "sticky",
+              top: "68px",
+              width: "13rem",
+              flexShrink: 0,
+              maxHeight: "calc(100vh - 68px - 2rem)",
+              alignSelf: "flex-start",
+              paddingBottom: "2rem",
+            }}
+          >
+            <SectionNavigator />
           </div>
 
           {/* ── MAIN CONTENT ── */}
