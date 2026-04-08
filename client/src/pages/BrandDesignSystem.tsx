@@ -33,6 +33,7 @@ import { DataSourceLogoGrid } from "@/components/DataSourceLogoGrid";
 import CrocodileChartExamples from "@/components/CrocodileChartExamples";
 import { NavigationPatterns } from "@/components/NavigationPatterns";
 import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort, memberLogos } from "@/lib/assets";
+import { pillarTints } from "@/lib/pillarColors";
 
 // ============================================================================
 // BRAND PROPOSITION DATA
@@ -282,10 +283,18 @@ function ColorSwatch({ name, hex, rgb, context, tones }: { name: string; hex: st
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-      {/* Base colour block */}
-      <div className="h-20 w-full" style={{ backgroundColor: hex }} />
+      {/* Tint background block — full-saturation colour dot + tint bg */}
+      <div
+        className="h-20 w-full flex items-center justify-center"
+        style={{ backgroundColor: hex + "18" }}
+      >
+        <span
+          className="w-10 h-10 rounded-full shadow-sm"
+          style={{ backgroundColor: hex }}
+        />
+      </div>
       {/* Tonal scale strip */}
-      <div className="flex h-20 overflow-hidden">
+      <div className="flex h-8 overflow-hidden">
         {[100, 300, 500, 700, 900].map((stop) => (
           <ToneStop key={stop} stop={stop} tone={tones[stop]} />
         ))}
@@ -304,7 +313,7 @@ function ColorSwatch({ name, hex, rgb, context, tones }: { name: string; hex: st
         <div className="space-y-1 text-xs">
           <div className="flex gap-2">
             <span className="text-gray-500 w-10">HEX</span>
-            <code className="text-gray-700 font-mono">{hex}</code>
+            <code className="font-mono" style={{ color: hex }}>{hex}</code>
           </div>
           <div className="flex gap-2">
             <span className="text-gray-500 w-10">RGB</span>
@@ -973,17 +982,20 @@ export default function BrandDesignSystem() {
                 </thead>
                 <tbody>
                   {[
-                    { pillar: "1 — Cut Operational Emissions", color: "#9aa08c", category: "Industrial transformation", examples: "Factories, data centres, manufacturing lines, solar farms", terms: "aerial solar farm, industrial manufacturing overhead, data centre" },
-                    { pillar: "2 — Decarbonize Value Chain", color: "#17b7dd", category: "Supply chain & logistics", examples: "Ports, shipping containers, warehouses, agricultural fields", terms: "aerial shipping port, cargo containers, supply chain logistics" },
-                    { pillar: "3 — Build & Scale Solutions", color: "#00ac58", category: "Technology & innovation", examples: "Wind turbine engineers, EV charging, solar installation", terms: "wind turbine engineer, electric vehicle charging, clean technology worker" },
-                    { pillar: "4 — Mobilize Finance & Investment", color: "#ff8b00", category: "Urban infrastructure & capital", examples: "City skylines, financial districts, construction sites", terms: "aerial city financial district, urban construction aerial, smart city" },
-                    { pillar: "5 — Shape Policy & Narrative", color: "#ff5133", category: "People & governance", examples: "Cyclists, public transport, civic infrastructure", terms: "cyclists city commuting, public transport tram, urban planning aerial" },
+                    { pillar: "1 — Cut Operational Emissions", color: "#9aa08c", tint: pillarTints.pillar1, category: "Industrial transformation", examples: "Factories, data centres, manufacturing lines, solar farms", terms: "aerial solar farm, industrial manufacturing overhead, data centre" },
+                    { pillar: "2 — Decarbonize Value Chain", color: "#17b7dd", tint: pillarTints.pillar2, category: "Supply chain & logistics", examples: "Ports, shipping containers, warehouses, agricultural fields", terms: "aerial shipping port, cargo containers, supply chain logistics" },
+                    { pillar: "3 — Build & Scale Solutions", color: "#00ac58", tint: pillarTints.pillar3, category: "Technology & innovation", examples: "Wind turbine engineers, EV charging, solar installation", terms: "wind turbine engineer, electric vehicle charging, clean technology worker" },
+                    { pillar: "4 — Mobilize Finance & Investment", color: "#ff8b00", tint: pillarTints.pillar4, category: "Urban infrastructure & capital", examples: "City skylines, financial districts, construction sites", terms: "aerial city financial district, urban construction aerial, smart city" },
+                    { pillar: "5 — Shape Policy & Narrative", color: "#ff5133", tint: pillarTints.pillar5, category: "People & governance", examples: "Cyclists, public transport, civic infrastructure", terms: "cyclists city commuting, public transport tram, urban planning aerial" },
                   ].map((row) => (
-                    <tr key={row.pillar} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        <span className="inline-flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: row.color }} />
-                          <span className="font-medium text-[#232323]">{row.pillar}</span>
+                    <tr key={row.pillar} className="border-b border-gray-100">
+                      <td className="px-4 py-3">
+                        <span
+                          className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-xs font-semibold"
+                          style={{ backgroundColor: row.tint, color: row.color }}
+                        >
+                          <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: row.color }} />
+                          {row.pillar}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-gray-700">{row.category}</td>
@@ -1423,26 +1435,27 @@ export default function BrandDesignSystem() {
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
             {[
-              { num: 1, name: "Cut Operational Emissions",     shortName: "Operations", color: "#9aa08c", colorName: "Gray-Green", img: pillarBottomIcons.pillar1 },
-              { num: 2, name: "Decarbonize Value Chain",       shortName: "Value Chain", color: "#17b7dd", colorName: "Cyan",       img: pillarBottomIcons.pillar2 },
-              { num: 3, name: "Build & Scale Solutions",       shortName: "Solutions",   color: "#3ba559", colorName: "ERI Green",  img: pillarBottomIcons.pillar3 },
-              { num: 4, name: "Mobilize Finance & Investment", shortName: "Finance",     color: "#ff8b00", colorName: "Orange",     img: pillarBottomIcons.pillar4 },
-              { num: 5, name: "Shape Policy & Narrative",      shortName: "Policy",      color: "#ff5133", colorName: "Red",        img: pillarBottomIcons.pillar5 },
+              { num: 1, name: "Cut Operational Emissions",     shortName: "Operations", color: "#9aa08c", tint: pillarTints.pillar1, colorName: "Gray-Green", img: pillarBottomIcons.pillar1 },
+              { num: 2, name: "Decarbonize Value Chain",       shortName: "Value Chain", color: "#17b7dd", tint: pillarTints.pillar2, colorName: "Cyan",       img: pillarBottomIcons.pillar2 },
+              { num: 3, name: "Build & Scale Solutions",       shortName: "Solutions",   color: "#00ac58", tint: pillarTints.pillar3, colorName: "ERI Green",  img: pillarBottomIcons.pillar3 },
+              { num: 4, name: "Mobilize Finance & Investment", shortName: "Finance",     color: "#ff8b00", tint: pillarTints.pillar4, colorName: "Orange",     img: pillarBottomIcons.pillar4 },
+              { num: 5, name: "Shape Policy & Narrative",      shortName: "Policy",      color: "#ff5133", tint: pillarTints.pillar5, colorName: "Red",        img: pillarBottomIcons.pillar5 },
             ].map((p) => (
               <Card key={p.num} className="shadow-sm overflow-hidden">
-                <div className="flex items-center justify-center p-4" style={{ backgroundColor: `${p.color}20` }}>
+                {/* Tint background — icon sits on light tint, matching the icon treatment in the screenshot */}
+                <div className="flex items-center justify-center p-4" style={{ backgroundColor: p.tint }}>
                   <img src={p.img} alt={`Pillar ${p.num} icon`} className="w-20 h-20 object-contain" />
                 </div>
                 <CardContent className="p-3">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="inline-block w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: p.color }} />
-                    <span className="text-xs font-semibold text-gray-700">Pillar {p.num}</span>
+                    <span className="text-xs font-semibold" style={{ color: p.color }}>Pillar {p.num}</span>
                   </div>
                   <p className="text-xs text-gray-600 leading-snug mb-2">{p.name}</p>
                   <code className="text-[10px] font-mono text-gray-400 block">pillar-{p.num}-icon.webp</code>
                   <div className="mt-2 flex items-center gap-1.5">
-                    <span className="inline-block w-4 h-4 rounded border border-gray-200 flex-shrink-0" style={{ backgroundColor: p.color }} />
-                    <code className="text-[10px] font-mono text-gray-500">{p.color}</code>
+                    <span className="inline-block w-4 h-4 rounded flex-shrink-0" style={{ backgroundColor: p.tint, border: `2px solid ${p.color}` }} />
+                    <code className="text-[10px] font-mono" style={{ color: p.color }}>{p.color}</code>
                   </div>
                 </CardContent>
               </Card>
@@ -3036,19 +3049,24 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     </thead>
                     <tbody className="font-mono">
                       {[
-                        ["P1 Operations",   "#9aa08c"],
-                        ["P2 Value Chain",  "#17b7dd"],
-                        ["P3 Solutions",    "#00ac58"],
-                        ["P4 Finance",      "#ff8b00"],
-                        ["P5 Policy",       "#ff5133"],
-                      ].map(([name, hex]) => (
+                        ["P1 Operations",   "#9aa08c", pillarTints.pillar1],
+                        ["P2 Value Chain",  "#17b7dd", pillarTints.pillar2],
+                        ["P3 Solutions",    "#00ac58", pillarTints.pillar3],
+                        ["P4 Finance",      "#ff8b00", pillarTints.pillar4],
+                        ["P5 Policy",       "#ff5133", pillarTints.pillar5],
+                      ].map(([name, hex, tint]) => (
                         <tr key={name} className="border-b border-gray-100">
-                          <td className="py-1.5 pr-3 font-sans text-gray-700">{name}</td>
-                          <td className="py-1.5">
-                            <span className="inline-flex items-center gap-1.5">
-                              <span className="w-3 h-3 rounded-sm inline-block border border-gray-200" style={{ background: hex }} />
-                              {hex}
+                          <td className="py-1.5 pr-3">
+                            <span
+                              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold"
+                              style={{ backgroundColor: tint as string, color: hex as string }}
+                            >
+                              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: hex as string }} />
+                              {name}
                             </span>
+                          </td>
+                          <td className="py-1.5">
+                            <code className="font-mono text-[11px]" style={{ color: hex as string }}>{hex}</code>
                           </td>
                           <td className="py-1.5 font-sans text-gray-400 text-[11px]">See tonal scales in Visual Identity</td>
                         </tr>
