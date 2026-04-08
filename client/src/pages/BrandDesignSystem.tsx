@@ -1156,6 +1156,18 @@ export default function BrandDesignSystem() {
                     <tr><td className="py-1.5 text-gray-500 pr-4">CDN URL</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">…/hero-scurve-dual-rich-8omR779SXimwMsMeedVoZ9.webp</td></tr>
                   </tbody>
                 </table>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <a
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/6sKWYdw7G6EKjncr6qBxmN/hero-scurve-dual-rich-8omR779SXimwMsMeedVoZ9.webp"
+                    download="eri-hero-scurve-dual.webp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#3ba559] hover:bg-[#2e8a47] text-white text-sm font-semibold px-4 py-2 rounded transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download WebP (1920 × 1072)
+                  </a>
+                </div>
               </div>
               <div className="bg-white border border-gray-200 rounded-xl p-5">
                 <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Usage Rules</h4>
