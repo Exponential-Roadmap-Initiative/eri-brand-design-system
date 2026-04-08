@@ -150,43 +150,30 @@ const logoVariants = [
     name: "Full Colour Wordmark",
     file: logos.eriLogoFullColor,
     filePath: "eri-logo-full-color.svg",
-    bg: "bg-white",
-    border: "border border-gray-200",
-    usage: "Primary logo for all light-background contexts: website headers, footers, documents, presentations.",
-    when: "Default choice. Use whenever background is white or light grey.",
+    darkBg: "#232323",
+    darkFilter: "brightness(0) invert(1)",
+    usage: "Primary logo for all light-background contexts: website headers, footers, documents, presentations. On dark backgrounds, apply CSS filter: brightness(0) invert(1) to render the logo in white.",
+    when: "Default choice. Use whenever background is white or light grey. Use the inverted (white) version on dark backgrounds.",
     minWidth: "160px",
     clearSpace: "Equal to the height of the 'E' letterform on all four sides.",
-  },
-  {
-    id: "dark-bg",
-    name: "Wordmark on Dark Background",
-    file: logos.eriLogoFullColor,
-    filePath: "eri-logo-full-color.svg",
-    bg: "bg-[#232323]",
-    border: "",
-    usage: "Use on dark hero sections, dark sidebars, or dark-mode interfaces. Apply CSS filter: brightness(0) invert(1) to convert the SVG to white.",
-    when: "When background is #232323 or any dark colour with insufficient contrast for the colour version.",
-    minWidth: "160px",
-    clearSpace: "Equal to the height of the 'E' letterform on all four sides.",
-    filter: "brightness(0) invert(1)",
   },
   {
     id: "icon",
     name: "Icon Mark (Exponential Swirl)",
     file: logos.exponentialRoadmapLogo,
     filePath: "exponential-logo.webp",
-    bg: "bg-white",
-    border: "border border-gray-200",
-    usage: "The single icon asset used across all compact contexts: browser tab favicon, sidebar nav items, data source badges, app icons, and pillar navigation.",
+    darkBg: "#2c3f43",
+    darkFile: logos.faviconRoundedDark,
+    darkLabel: "Rounded app-icon variant",
+    usage: "Used across all compact contexts: browser tab favicon, sidebar nav items, data source badges, app icons, and pillar navigation. On dark backgrounds, use the rounded app-icon variant.",
     when: "Space-constrained UI elements where the full wordmark would be illegible (< 40px height), and as the browser tab favicon.",
     minWidth: "32px",
     clearSpace: "4px on all sides minimum.",
-    faviconVariant: {
-      file: logos.faviconIco,
-      filePath: "favicon.ico",
-      label: "Favicon (.ico)",
-      sizes: "16×16, 32×32, 48×48, 64×64",
-      note: "Multi-size .ico bundle. Referenced in index.html as the browser tab icon.",
+    appIcon: {
+      dark: logos.faviconRoundedDark,
+      light: logos.faviconRoundedLight,
+      sizes: "16 · 32 · 48 · 180 · 192px",
+      note: "Rounded app-icon variant (18% corner radius). Use on dark backgrounds for app icons, Apple Touch, and Android manifest. The multi-size .ico (16/32/48px) is used for browser tabs.",
     },
   },
   {
@@ -194,9 +181,8 @@ const logoVariants = [
     name: "ERI Icon Mark",
     file: logos.eriIconMark,
     filePath: "eri-icon-mark.webp",
-    bg: "bg-white",
-    border: "border border-gray-200",
-    usage: "Compact ERI mark for use in navigation menus, compact UI elements, and alongside pillar icons.",
+    darkBg: "#2c3f43",
+    usage: "Compact ERI mark for use in navigation menus, compact UI elements, and alongside pillar icons. The mark uses original green and black colours — do not recolour.",
     when: "When a compact ERI identifier is needed without the full wordmark.",
     minWidth: "32px",
     clearSpace: "4px on all sides minimum.",
@@ -539,89 +525,94 @@ export default function BrandDesignSystem() {
             Logo Usage
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
-            Four logo assets are available. Choose based on context and background colour. Always respect
-            minimum sizes and clear-space rules to maintain legibility and brand integrity.
+            Three logo assets are available. Each card shows the asset on both a light and dark background so you can verify contrast before use. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
-            {logoVariants.map((v) => (
-              <Card key={v.id} className="shadow-sm overflow-hidden">
-                {(v as { faviconVariant?: { file: string; filePath: string; label: string; sizes: string; note: string } }).faviconVariant ? (
-                  <div className={`flex items-stretch h-32 ${v.bg} ${v.border} rounded-t-lg divide-x divide-gray-200`}>
-                    <div className="flex-1 flex flex-col items-center justify-center gap-1 px-4">
-                      <img src={v.file} alt={v.name} className="max-h-12 max-w-[80px] object-contain" />
-                      <span className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">Icon Mark</span>
-                    </div>
-                    <div className="flex-1 flex flex-col items-center justify-center gap-1 px-4 bg-gray-50">
+            {logoVariants.map((v) => {
+              const vx = v as {
+                darkBg?: string; darkFilter?: string; darkFile?: string; darkLabel?: string;
+                appIcon?: { dark: string; light: string; sizes: string; note: string };
+              };
+              return (
+                <Card key={v.id} className="shadow-sm overflow-hidden">
+                  {/* Dual background preview: white left / dark right */}
+                  <div className="flex items-stretch h-36 rounded-t-lg overflow-hidden divide-x divide-gray-200">
+                    {/* Light side */}
+                    <div className="flex-1 flex flex-col items-center justify-center gap-1.5 bg-white px-4">
                       <img
-                        src={(v as { faviconVariant?: { file: string } }).faviconVariant!.file}
-                        alt="Favicon"
-                        className="w-8 h-8 object-contain"
-                        style={{ imageRendering: "pixelated" }}
+                        src={v.file}
+                        alt={v.name}
+                        className="max-h-14 max-w-[160px] object-contain"
                       />
-                      <span className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">Favicon .ico</span>
+                      <span className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">Light background</span>
+                    </div>
+                    {/* Dark side */}
+                    <div
+                      className="flex-1 flex flex-col items-center justify-center gap-1.5 px-4"
+                      style={{ backgroundColor: vx.darkBg || "#232323" }}
+                    >
+                      <img
+                        src={vx.darkFile || v.file}
+                        alt={vx.darkLabel || v.name}
+                        className="max-h-14 max-w-[160px] object-contain"
+                        style={vx.darkFilter ? { filter: vx.darkFilter } : undefined}
+                      />
+                      <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase">
+                        {vx.darkLabel || "Dark background"}
+                      </span>
                     </div>
                   </div>
-                ) : (
-                  <div className={`flex items-center justify-center h-32 ${v.bg} ${v.border} rounded-t-lg`}>
-                    <img
-                      src={v.file}
-                      alt={v.name}
-                      className="max-h-16 max-w-[200px] object-contain"
-                      style={v.filter ? { filter: v.filter } : undefined}
-                    />
-                  </div>
-                )}
-                <CardContent className="p-5 space-y-3">
-                  <h3 className="font-bold text-[#232323] text-base">{v.name}</h3>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                    <div>
-                      <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">File</span>
-                      <code className="text-gray-700 font-mono text-xs break-all">{v.filePath}</code>
-                    </div>
-                    <div>
-                      <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Min Width</span>
-                      <span className="text-gray-700 font-mono text-xs">{v.minWidth}</span>
-                    </div>
-                    <div className="col-span-2">
-                      <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Clear Space</span>
-                      <span className="text-gray-600 text-xs">{v.clearSpace}</span>
-                    </div>
-                    <div className="col-span-2">
-                      <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">When to use</span>
-                      <span className="text-gray-600 text-xs">{v.when}</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 border-t pt-3">{v.usage}</p>
-                  {v.filter && (
-                    <div className="bg-gray-900 rounded p-2">
-                      <code className="text-xs text-gray-300 font-mono">filter: {v.filter}</code>
-                    </div>
-                  )}
-                  {(v as { faviconVariant?: { file: string; filePath: string; label: string; sizes: string; note: string } }).faviconVariant && (
-                    <div className="border border-gray-200 rounded overflow-hidden">
-                      <div className="bg-gray-50 px-3 py-1.5 border-b border-gray-200">
-                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Favicon Variant</span>
+                  <CardContent className="p-5 space-y-3">
+                    <h3 className="font-bold text-[#232323] text-base">{v.name}</h3>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                      <div>
+                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">File</span>
+                        <code className="text-gray-700 font-mono text-xs break-all">{v.filePath}</code>
                       </div>
-                      <div className="px-3 py-2 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
-                        <div>
-                          <span className="text-gray-400 text-[10px] uppercase tracking-wide block mb-0.5">File</span>
-                          <code className="text-gray-700 font-mono">{(v as { faviconVariant?: { filePath: string } }).faviconVariant!.filePath}</code>
-                        </div>
-                        <div>
-                          <span className="text-gray-400 text-[10px] uppercase tracking-wide block mb-0.5">Sizes</span>
-                          <code className="text-gray-700 font-mono">{(v as { faviconVariant?: { sizes: string } }).faviconVariant!.sizes}</code>
-                        </div>
-                        <div className="col-span-2">
-                          <span className="text-gray-400 text-[10px] uppercase tracking-wide block mb-0.5">Note</span>
-                          <span className="text-gray-600">{(v as { faviconVariant?: { note: string } }).faviconVariant!.note}</span>
-                        </div>
+                      <div>
+                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Min Width</span>
+                        <span className="text-gray-700 font-mono text-xs">{v.minWidth}</span>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Clear Space</span>
+                        <span className="text-gray-600 text-xs">{v.clearSpace}</span>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">When to use</span>
+                        <span className="text-gray-600 text-xs">{v.when}</span>
                       </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+                    <p className="text-xs text-gray-500 border-t pt-3">{v.usage}</p>
+                    {vx.darkFilter && (
+                      <div className="bg-gray-900 rounded p-2">
+                        <code className="text-xs text-gray-300 font-mono">filter: {vx.darkFilter}</code>
+                      </div>
+                    )}
+                    {/* App icon sub-section for icon mark */}
+                    {vx.appIcon && (
+                      <div className="border border-gray-200 rounded overflow-hidden">
+                        <div className="bg-gray-50 px-3 py-1.5 border-b border-gray-200 flex items-center justify-between">
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">App Icon Variants</span>
+                          <span className="text-[10px] text-gray-400">{vx.appIcon.sizes}</span>
+                        </div>
+                        <div className="px-3 py-3 flex items-center gap-4">
+                          <div className="flex flex-col items-center gap-1">
+                            <img src={vx.appIcon.dark} alt="Dark app icon" className="w-12 h-12 object-contain rounded-lg" />
+                            <span className="text-[10px] text-gray-400">Dark bg</span>
+                          </div>
+                          <div className="flex flex-col items-center gap-1">
+                            <img src={vx.appIcon.light} alt="Light app icon" className="w-12 h-12 object-contain rounded-lg border border-gray-200" />
+                            <span className="text-[10px] text-gray-400">Light bg</span>
+                          </div>
+                          <p className="text-xs text-gray-500 flex-1">{vx.appIcon.note}</p>
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
 
           <Card className="shadow-sm border-red-100 bg-red-50">

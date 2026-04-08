@@ -23,6 +23,11 @@ export const logos = {
   exponentialRoadmapLogo: `${CDN}/exponential-roadmap-logo_6ca65904.webp`,
   favicon:                `${CDN}/favicon_01927692.webp`,
   faviconIco:             `${CDN}/favicon_46e834ad.ico`,
+  // Rounded app-icon variants (generated 2026-04-08)
+  faviconRoundedDark:     `${CDN}/favicon-rounded-dark-512_9a2b05c0.png`,
+  faviconRoundedLight:    `${CDN}/favicon-rounded-light-512_e8f157be.png`,
+  faviconRoundedDark192:  `${CDN}/favicon-rounded-dark-192_6ca6e763.png`,
+  faviconRoundedDark180:  `${CDN}/favicon-rounded-dark-180_c84fbe3e.png`,
 };
 
 // ─── PILLAR BOTTOM ICONS (arch/arrow motif) ──────────────────────────────────
