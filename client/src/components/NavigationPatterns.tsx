@@ -20,6 +20,284 @@ import {
   LayoutDashboard, UserCog
 } from "lucide-react";
 
+// ── Tier C: Mobile drawer mock ───────────────────────────────────────────
+function TierCMobileDrawerMock() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activePage, setActivePage] = useState("admin-dashboard");
+
+  const navGroups = [
+    {
+      label: null,
+      items: [
+        { id: "admin-dashboard", label: "Admin Dashboard", icon: <LayoutDashboard size={15} /> },
+        { id: "system-health", label: "System Health", icon: <Activity size={15} /> },
+        { id: "data-lake", label: "ERI Data Lake", icon: <Database size={15} /> },
+        { id: "data-hub", label: "Data Hub", icon: <BarChart2 size={15} /> },
+        { id: "architecture", label: "Data Lake Architecture", icon: <Database size={15} /> },
+        { id: "criteria", label: "Assessment Criteria", icon: <FileText size={15} /> },
+        { id: "templates", label: "Copy Templates", icon: <Copy size={15} /> },
+      ],
+    },
+    {
+      label: "PSM APPLICATION",
+      items: [
+        { id: "members", label: "ERI Members (Public)", icon: <Users size={15} /> },
+        { id: "psm", label: "PSM Application", icon: <BarChart2 size={15} /> },
+      ],
+    },
+    {
+      label: null,
+      items: [
+        { id: "user-mgmt", label: "ERI User Management", icon: <UserCog size={15} /> },
+        { id: "workspace-members", label: "Workspace Members", icon: <Users size={15} /> },
+        { id: "audit", label: "Security Audit Log", icon: <FileText size={15} /> },
+        { id: "trust", label: "Trust & Security", icon: <Shield size={15} /> },
+      ],
+    },
+  ];
+
+  const handleSelect = (id: string) => {
+    setActivePage(id);
+    setDrawerOpen(false);
+  };
+
+  return (
+    <div className="flex gap-8 items-start flex-wrap">
+      {/* Phone frame */}
+      <div className="flex-shrink-0">
+        <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-3">Mobile — drawer closed</p>
+        <div
+          className="relative rounded-[28px] overflow-hidden border-4 border-[#232323] shadow-xl bg-[#F9FAFB]"
+          style={{ width: 220, height: 400 }}
+        >
+          {/* Status bar */}
+          <div className="h-6 bg-white flex items-center justify-between px-4">
+            <span className="text-[8px] font-bold text-[#232323]">9:41</span>
+            <div className="flex gap-1">
+              <div className="w-3 h-1.5 rounded-sm bg-[#232323] opacity-60" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[#232323] opacity-60" />
+            </div>
+          </div>
+          {/* Header */}
+          <div className="h-1 bg-[#2C3F43]" />
+          <div className="bg-white border-b border-gray-200 px-3 py-2 flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <div className="w-5 h-5 rounded bg-gray-100 flex items-center justify-center">
+                <span className="text-[7px] font-archivo font-black text-[#232323]">App</span>
+              </div>
+              <span className="text-[10px] font-archivo font-bold text-[#232323] truncate max-w-[100px]">ERI Professional Serv…</span>
+            </div>
+            <button
+              onClick={() => setDrawerOpen(true)}
+              className="w-7 h-7 flex items-center justify-center rounded hover:bg-gray-100 transition-colors"
+            >
+              <Menu size={14} className="text-[#232323]" />
+            </button>
+          </div>
+          {/* Page content */}
+          <div className="p-3">
+            <p className="font-archivo font-extrabold text-[11px] text-[#232323] mb-1">
+              {navGroups.flatMap(g => g.items).find(i => i.id === activePage)?.label ?? "Dashboard"}
+            </p>
+            <div className="grid grid-cols-2 gap-1.5 mt-2">
+              {["Workspaces", "Active", "Credits", "Members"].map(l => (
+                <div key={l} className="bg-white rounded border border-gray-200 p-1.5">
+                  <p className="text-[7px] font-open-sans text-gray-400">{l}</p>
+                  <p className="font-archivo font-bold text-[10px] text-[#232323] mt-0.5">—</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-[9px] font-open-sans text-gray-400 mt-3 text-center">Tap ☰ to open drawer</p>
+          </div>
+
+          {/* Drawer overlay backdrop */}
+          <div
+            onClick={() => setDrawerOpen(false)}
+            style={{
+              position: "absolute", inset: 0,
+              background: "rgba(0,0,0,0.45)",
+              opacity: drawerOpen ? 1 : 0,
+              pointerEvents: drawerOpen ? "auto" : "none",
+              transition: "opacity 280ms ease",
+              zIndex: 10,
+            }}
+          />
+
+          {/* Slide-in drawer */}
+          <div
+            style={{
+              position: "absolute", top: 0, left: 0, bottom: 0,
+              width: "82%",
+              background: "#ffffff",
+              boxShadow: "4px 0 24px rgba(0,0,0,0.18)",
+              transform: drawerOpen ? "translateX(0)" : "translateX(-100%)",
+              transition: "transform 280ms cubic-bezier(0.4,0,0.2,1)",
+              zIndex: 20,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {/* Drawer header */}
+            <div className="h-1 bg-[#2C3F43]" />
+            <div className="flex items-center justify-between px-3 py-2 border-b border-gray-100">
+              <div className="flex items-center gap-1.5">
+                <div className="w-5 h-5 rounded bg-gray-100 flex items-center justify-center">
+                  <span className="text-[7px] font-archivo font-black text-[#232323]">App</span>
+                </div>
+                <span className="text-[10px] font-archivo font-bold text-[#232323]">ERI PSM</span>
+              </div>
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="w-6 h-6 flex items-center justify-center rounded hover:bg-gray-100"
+              >
+                <X size={12} className="text-gray-500" />
+              </button>
+            </div>
+
+            {/* Nav groups */}
+            <div className="flex-1 overflow-y-auto py-1">
+              {navGroups.map((group, gi) => (
+                <div key={gi} className={gi > 0 ? "mt-1" : ""}>
+                  {group.label && (
+                    <p className="px-3 pt-2 pb-0.5 text-[8px] font-archivo font-bold uppercase tracking-widest text-gray-400">{group.label}</p>
+                  )}
+                  {group.items.map(item => (
+                    <button
+                      key={item.id}
+                      onClick={() => handleSelect(item.id)}
+                      className={`w-full flex items-center gap-2 px-3 py-1.5 text-left transition-colors text-[10px] font-open-sans ${
+                        activePage === item.id
+                          ? "bg-green-50 text-[#3ba559] font-semibold border-l-2 border-[#3ba559]"
+                          : "text-gray-600 hover:bg-gray-50 border-l-2 border-transparent"
+                      }`}
+                    >
+                      <span className={activePage === item.id ? "text-[#3ba559]" : "text-gray-400"}>{item.icon}</span>
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* User footer */}
+            <div className="border-t border-gray-100 px-3 py-2 flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-[#232323] flex items-center justify-center flex-shrink-0">
+                <span className="text-white text-[8px] font-archivo font-bold">N</span>
+              </div>
+              <div className="min-w-0">
+                <p className="text-[9px] font-open-sans font-semibold text-[#232323] truncate">nicklas.lemon</p>
+                <p className="text-[8px] font-open-sans text-gray-400 truncate">ERI Admin</p>
+              </div>
+              <button className="ml-auto flex-shrink-0">
+                <LogOut size={11} className="text-gray-400" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Open state phone frame */}
+      <div className="flex-shrink-0">
+        <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-3">Mobile — drawer open</p>
+        <div
+          className="relative rounded-[28px] overflow-hidden border-4 border-[#232323] shadow-xl bg-[#F9FAFB]"
+          style={{ width: 220, height: 400 }}
+        >
+          {/* Status bar */}
+          <div className="h-6 bg-white flex items-center justify-between px-4">
+            <span className="text-[8px] font-bold text-[#232323]">9:41</span>
+            <div className="flex gap-1">
+              <div className="w-3 h-1.5 rounded-sm bg-[#232323] opacity-60" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[#232323] opacity-60" />
+            </div>
+          </div>
+          {/* Header (dimmed) */}
+          <div className="h-1 bg-[#2C3F43]" />
+          <div className="bg-white border-b border-gray-200 px-3 py-2 flex items-center justify-between opacity-40">
+            <span className="text-[10px] font-archivo font-bold text-[#232323]">ERI Professional Serv…</span>
+            <Menu size={14} className="text-[#232323]" />
+          </div>
+          {/* Dimmed content */}
+          <div className="absolute inset-0 bg-black/45" style={{ top: 33 }} />
+          {/* Static drawer preview */}
+          <div
+            className="absolute top-0 bottom-0 left-0 bg-white flex flex-col"
+            style={{ width: "82%", boxShadow: "4px 0 24px rgba(0,0,0,0.18)", zIndex: 20 }}
+          >
+            <div className="h-1 bg-[#2C3F43]" />
+            <div className="flex items-center justify-between px-3 py-2 border-b border-gray-100">
+              <div className="flex items-center gap-1.5">
+                <div className="w-5 h-5 rounded bg-gray-100 flex items-center justify-center">
+                  <span className="text-[7px] font-archivo font-black text-[#232323]">App</span>
+                </div>
+                <span className="text-[10px] font-archivo font-bold text-[#232323]">ERI PSM</span>
+              </div>
+              <X size={12} className="text-gray-500" />
+            </div>
+            <div className="flex-1 overflow-hidden py-1">
+              {navGroups.map((group, gi) => (
+                <div key={gi} className={gi > 0 ? "mt-1" : ""}>
+                  {group.label && (
+                    <p className="px-3 pt-2 pb-0.5 text-[8px] font-archivo font-bold uppercase tracking-widest text-gray-400">{group.label}</p>
+                  )}
+                  {group.items.map(item => (
+                    <div
+                      key={item.id}
+                      className={`flex items-center gap-2 px-3 py-1.5 text-[10px] font-open-sans border-l-2 ${
+                        item.id === "admin-dashboard"
+                          ? "bg-green-50 text-[#3ba559] font-semibold border-[#3ba559]"
+                          : "text-gray-600 border-transparent"
+                      }`}
+                    >
+                      <span className={item.id === "admin-dashboard" ? "text-[#3ba559]" : "text-gray-400"}>{item.icon}</span>
+                      {item.label}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className="border-t border-gray-100 px-3 py-2 flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-[#232323] flex items-center justify-center flex-shrink-0">
+                <span className="text-white text-[8px] font-archivo font-bold">N</span>
+              </div>
+              <div className="min-w-0">
+                <p className="text-[9px] font-open-sans font-semibold text-[#232323] truncate">nicklas.lemon</p>
+                <p className="text-[8px] font-open-sans text-gray-400 truncate">ERI Admin</p>
+              </div>
+              <LogOut size={11} className="text-gray-400 ml-auto flex-shrink-0" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Spec callouts */}
+      <div className="flex-1 min-w-[220px] space-y-3">
+        <div className="bg-[#F9FAFB] rounded-lg p-4 border border-gray-200">
+          <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-2">Drawer dimensions</p>
+          <p className="text-xs font-open-sans text-gray-700">Width: 82% of viewport — leaves a visible backdrop strip on the right so users can tap to close. Max-width: 320px on large phones.</p>
+        </div>
+        <div className="bg-[#F9FAFB] rounded-lg p-4 border border-gray-200">
+          <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-2">Animation</p>
+          <p className="text-xs font-open-sans text-gray-700">Slide in from left: <code className="bg-gray-100 px-1 rounded text-[10px]">transform: translateX(-100%) → translateX(0)</code>, 280ms, <code className="bg-gray-100 px-1 rounded text-[10px]">cubic-bezier(0.4,0,0.2,1)</code>. Backdrop fades in simultaneously: opacity 0 → 0.45, same duration.</p>
+        </div>
+        <div className="bg-[#F9FAFB] rounded-lg p-4 border border-gray-200">
+          <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-2">Close triggers</p>
+          <div className="space-y-1 text-xs font-open-sans text-gray-700">
+            <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Tap the × button in the drawer header</span></div>
+            <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Tap the backdrop overlay</span></div>
+            <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Select any navigation item (drawer closes after navigation)</span></div>
+            <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Press Escape on keyboard (accessibility)</span></div>
+          </div>
+        </div>
+        <div className="bg-[#F9FAFB] rounded-lg p-4 border border-gray-200">
+          <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-2">Breakpoint</p>
+          <p className="text-xs font-open-sans text-gray-700">Sidebar hidden below <code className="bg-gray-100 px-1 rounded text-[10px]">lg</code> (1024px). Hamburger always visible in header on mobile. Drawer replaces sidebar entirely — do not show both simultaneously.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Tier B: Marketing Hub overlay (two-column, full anatomy) ──────────────
 function TierBHubOverlayMock() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -719,6 +997,21 @@ export function NavigationPatterns() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* ── Tier C: Mobile drawer ── */}
+      <div>
+        <div className="flex items-center gap-3 mb-2">
+          <span className="bg-[#3ba559] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER C</span>
+          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Mobile — Hamburger-Triggered Slide-In Drawer</h3>
+        </div>
+        <p className="text-gray-600 font-open-sans text-sm mb-5 max-w-3xl">
+          Below the <code className="bg-gray-100 px-1 rounded text-xs">lg</code> breakpoint (1024px) the persistent sidebar is hidden entirely.
+          A hamburger button in the header triggers a full-height drawer that slides in from the left over a semi-transparent backdrop.
+          The drawer contains the same navigation groups, active states, and user footer as the desktop sidebar.
+          Tap the interactive mock on the left to see the animation.
+        </p>
+        <TierCMobileDrawerMock />
       </div>
 
       {/* ── Tier A Simple live example ── */}
