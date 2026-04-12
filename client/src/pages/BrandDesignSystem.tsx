@@ -149,7 +149,12 @@ const logoVariants = [
     id: "full-color",
     name: "Full Colour Wordmark",
     file: logos.eriLogoFullColor,
-    filePath: "eri-logo-full-color.svg",
+    filePath: "eri-logo-full-color.webp",
+    fileId: "eri-logo-full-color_64e5c7db",
+    cdnUrl: logos.eriLogoFullColor,
+    downloadName: "eri-logo-full-color.webp",
+    svgUrl: logos.eriLogoFullColorSvg,
+    svgFileId: "eri-logo-full-color_775a0122",
     darkBg: "#232323",
     darkFilter: "brightness(0) invert(1)",
     usage: "Primary logo for all light-background contexts: website headers, footers, documents, presentations. On dark backgrounds, apply CSS filter: brightness(0) invert(1) to render the logo in white.",
@@ -162,6 +167,9 @@ const logoVariants = [
     name: "Icon Mark (Exponential Swirl)",
     file: logos.exponentialRoadmapLogo,
     filePath: "exponential-logo.webp",
+    fileId: "exponential-roadmap-logo_6ca65904",
+    cdnUrl: logos.exponentialRoadmapLogo,
+    downloadName: "exponential-roadmap-logo.webp",
     darkBg: "#2c3f43",
     darkFile: logos.faviconRoundedDark,
     darkLabel: "Rounded app-icon variant",
@@ -171,9 +179,14 @@ const logoVariants = [
     clearSpace: "4px on all sides minimum.",
     appIcon: {
       dark: logos.faviconRoundedDark,
-      light: logos.faviconRoundedLight,
-      sizes: "16 · 32 · 48 · 180 · 192px",
-      note: "Rounded app-icon variant (12% corner radius). White background variant is the standard browser tab favicon. Dark teal background variant is for dark-background contexts only. Do not use .ico files on Manus — PNG only.",
+      darkFileId: "favicon-rounded-dark-512_9a2b05c0",
+      darkDownloadName: "favicon-rounded-dark-512.png",
+      light: logos.faviconWhiteRounded32,
+      lightFileId: "favicon-white-rounded-32_05ba5ceb",
+      lightDownloadName: "favicon-white-rounded-32.png",
+      lightCdnUrl: logos.faviconWhiteRounded32,
+      sizes: "32 · 180 · 192px",
+      note: "Rounded app-icon variant (12% corner radius). White background is the canonical browser tab favicon for Manus-hosted projects. Dark teal background is for dark-background contexts only. PNG only — do not use .ico on Manus.",
     },
   },
   {
@@ -181,11 +194,35 @@ const logoVariants = [
     name: "ERI Icon Mark",
     file: logos.eriIconMark,
     filePath: "eri-icon-mark.webp",
+    fileId: "eri-icon-mark_6c872e6b",
+    cdnUrl: logos.eriIconMark,
+    downloadName: "eri-icon-mark.webp",
     darkBg: "#2c3f43",
     usage: "Compact ERI mark for use in navigation menus, compact UI elements, and alongside pillar icons. The mark uses original green and black colours — do not recolour.",
     when: "When a compact ERI identifier is needed without the full wordmark.",
     minWidth: "32px",
     clearSpace: "4px on all sides minimum.",
+  },
+  {
+    id: "favicon-white",
+    name: "Favicon — White Rounded (Canonical)",
+    file: logos.faviconWhiteRounded32,
+    filePath: "favicon-white-rounded-32.png",
+    fileId: "favicon-white-rounded-32_05ba5ceb",
+    cdnUrl: logos.faviconWhiteRounded32,
+    downloadName: "favicon-white-rounded-32.png",
+    darkBg: "#232323",
+    darkFile: logos.faviconWhiteRounded32,
+    darkLabel: "White bg — visible on dark",
+    usage: "The canonical browser tab favicon for all ERI Manus-hosted projects. White background with 12% corner radius. Copy to client/public/favicon.png in each project. Larger sizes (180px, 192px) are available on CDN for Apple Touch and PWA manifest.",
+    when: "Always. This is the only approved favicon format for Manus-hosted ERI projects. Do not use .ico.",
+    minWidth: "32px",
+    clearSpace: "N/A — favicon is always displayed at system-determined size.",
+    faviconSizes: [
+      { label: "32px (browser tab)", fileId: "favicon-white-rounded-32_05ba5ceb", cdnUrl: logos.faviconWhiteRounded32, downloadName: "favicon-white-rounded-32.png", note: "Copy to /public/favicon.png" },
+      { label: "180px (Apple Touch)", fileId: "favicon-white-rounded-180_2daaa7d4", cdnUrl: logos.faviconWhiteRounded180, downloadName: "favicon-white-rounded-180.png", note: "Apple Touch Icon" },
+      { label: "192px (Android/PWA)", fileId: "favicon-white-rounded-192_54fb4338", cdnUrl: logos.faviconWhiteRounded192, downloadName: "favicon-white-rounded-192.png", note: "PWA manifest" },
+    ],
   },
 ];
 
@@ -525,14 +562,21 @@ export default function BrandDesignSystem() {
             Logo Usage
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
-            Three logo assets are available. Each card shows the asset on both a light and dark background so you can verify contrast before use. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
+            Four logo assets are available. Each card shows the asset on both a light and dark background so you can verify contrast before use. Each card includes a file identifier and a direct download button. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             {logoVariants.map((v) => {
               const vx = v as {
                 darkBg?: string; darkFilter?: string; darkFile?: string; darkLabel?: string;
-                appIcon?: { dark: string; light: string; sizes: string; note: string };
+                cdnUrl?: string; fileId?: string; downloadName?: string;
+                svgUrl?: string; svgFileId?: string;
+                appIcon?: {
+                  dark: string; darkFileId?: string; darkDownloadName?: string;
+                  light: string; lightFileId?: string; lightDownloadName?: string; lightCdnUrl?: string;
+                  sizes: string; note: string;
+                };
+                faviconSizes?: { label: string; fileId: string; cdnUrl: string; downloadName: string; note: string }[];
               };
               return (
                 <Card key={v.id} className="shadow-sm overflow-hidden">
@@ -564,17 +608,57 @@ export default function BrandDesignSystem() {
                     </div>
                   </div>
                   <CardContent className="p-5 space-y-3">
-                    <h3 className="font-bold text-[#232323] text-base">{v.name}</h3>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                      <div>
-                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">File</span>
-                        <code className="text-gray-700 font-mono text-xs break-all">{v.filePath}</code>
+                    {/* Name + download button row */}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-[#232323] text-base mb-1">{v.name}</h3>
+                        {/* File identifier chip */}
+                        {vx.fileId && (
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">
+                              <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z" /></svg>
+                              {vx.fileId}
+                            </span>
+                            {vx.svgFileId && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">
+                                <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z" /></svg>
+                              {vx.svgFileId}
+                            </span>
+                            )}
+                          </div>
+                        )}
                       </div>
+                      {/* Download buttons */}
+                      <div className="flex flex-col gap-1.5 shrink-0">
+                        {vx.cdnUrl && vx.downloadName && (
+                          <a
+                            href={vx.cdnUrl}
+                            download={vx.downloadName}
+                            className="inline-flex items-center gap-1.5 bg-[#3ba559] text-white text-[11px] font-semibold px-3 py-1.5 rounded-md hover:bg-[#2c6d3e] transition-colors whitespace-nowrap"
+                          >
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            Download
+                          </a>
+                        )}
+                        {vx.svgUrl && (
+                          <a
+                            href={vx.svgUrl}
+                            download="eri-logo-full-color.svg"
+                            className="inline-flex items-center gap-1.5 border border-gray-300 text-gray-600 text-[11px] font-medium px-3 py-1.5 rounded-md hover:bg-gray-50 transition-colors whitespace-nowrap"
+                          >
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            SVG
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                       <div>
                         <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Min Width</span>
                         <span className="text-gray-700 font-mono text-xs">{v.minWidth}</span>
                       </div>
-                      <div className="col-span-2">
+                      <div>
                         <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Clear Space</span>
                         <span className="text-gray-600 text-xs">{v.clearSpace}</span>
                       </div>
@@ -596,16 +680,70 @@ export default function BrandDesignSystem() {
                           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">App Icon Variants</span>
                           <span className="text-[10px] text-gray-400">{vx.appIcon.sizes}</span>
                         </div>
-                        <div className="px-3 py-3 flex items-center gap-4">
+                        <div className="px-3 py-3 flex items-start gap-4">
+                          <div className="flex flex-col items-center gap-1">
+                            <img src={vx.appIcon.light} alt="White rounded app icon" className="w-12 h-12 object-contain rounded-lg border border-gray-200" />
+                            <span className="text-[10px] text-gray-400 text-center">White bg</span>
+                            <span className="text-[9px] text-[#3ba559] font-semibold">Canonical</span>
+                            {vx.appIcon.lightCdnUrl && vx.appIcon.lightDownloadName && (
+                              <a href={vx.appIcon.lightCdnUrl} download={vx.appIcon.lightDownloadName}
+                                className="text-[9px] text-[#3ba559] underline hover:text-[#2c6d3e]">↓ PNG</a>
+                            )}
+                          </div>
                           <div className="flex flex-col items-center gap-1">
                             <img src={vx.appIcon.dark} alt="Dark app icon" className="w-12 h-12 object-contain rounded-lg" />
-                            <span className="text-[10px] text-gray-400">Dark bg</span>
-                          </div>
-                          <div className="flex flex-col items-center gap-1">
-                            <img src={vx.appIcon.light} alt="Light app icon" className="w-12 h-12 object-contain rounded-lg border border-gray-200" />
-                            <span className="text-[10px] text-gray-400">Light bg</span>
+                            <span className="text-[10px] text-gray-400 text-center">Dark bg</span>
+                            <span className="text-[9px] text-gray-400">Dark contexts</span>
+                            {vx.appIcon.darkDownloadName && (
+                              <a href={vx.appIcon.dark} download={vx.appIcon.darkDownloadName}
+                                className="text-[9px] text-gray-400 underline hover:text-gray-600">↓ PNG</a>
+                            )}
                           </div>
                           <p className="text-xs text-gray-500 flex-1">{vx.appIcon.note}</p>
+                        </div>
+                        {/* File IDs for app icon variants */}
+                        {(vx.appIcon.lightFileId || vx.appIcon.darkFileId) && (
+                          <div className="px-3 pb-3 flex flex-wrap gap-1.5">
+                            {vx.appIcon.lightFileId && (
+                              <span className="inline-flex items-center gap-1 text-[9px] font-mono bg-[#f0faf3] text-[#3ba559] px-2 py-0.5 rounded border border-[#c6e8d0]">
+                                {vx.appIcon.lightFileId}
+                              </span>
+                            )}
+                            {vx.appIcon.darkFileId && (
+                              <span className="inline-flex items-center gap-1 text-[9px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">
+                                {vx.appIcon.darkFileId}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {/* Favicon sizes sub-section */}
+                    {vx.faviconSizes && (
+                      <div className="border border-gray-200 rounded overflow-hidden">
+                        <div className="bg-gray-50 px-3 py-1.5 border-b border-gray-200">
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Available Sizes</span>
+                        </div>
+                        <div className="divide-y divide-gray-100">
+                          {vx.faviconSizes.map((fs) => (
+                            <div key={fs.label} className="px-3 py-2 flex items-center justify-between gap-3">
+                              <div className="flex-1 min-w-0">
+                                <span className="text-xs font-medium text-gray-700">{fs.label}</span>
+                                <span className="text-[10px] text-gray-400 ml-2">{fs.note}</span>
+                                <div className="mt-0.5">
+                                  <span className="text-[9px] font-mono bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded border border-gray-200">{fs.fileId}</span>
+                                </div>
+                              </div>
+                              <a
+                                href={fs.cdnUrl}
+                                download={fs.downloadName}
+                                className="inline-flex items-center gap-1 bg-[#3ba559] text-white text-[10px] font-semibold px-2.5 py-1 rounded hover:bg-[#2c6d3e] transition-colors whitespace-nowrap shrink-0"
+                              >
+                                <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                Download
+                              </a>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     )}
@@ -625,7 +763,13 @@ export default function BrandDesignSystem() {
               </p>
               <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed">{`<!-- Favicon — PNG only (Manus hosting does not serve .ico correctly) -->
 <!-- White background, 12% corner radius, original green + black S-curve mark -->
+
+<!-- Option A: Local file (copy favicon-white-rounded-32.png to client/public/favicon.png) -->
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+
+<!-- Option B: CDN URL (no local file needed) -->
+<!-- <link rel="icon" type="image/png" sizes="32x32"
+  href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/favicon-white-rounded-32_05ba5ceb.png" /> -->
 
 <!-- Apple Touch Icon: iOS home screen (180px) -->
 <link rel="apple-touch-icon" sizes="180x180"
@@ -3043,7 +3187,7 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_f177ba40.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_46cf7a8e.skill"
                     download="eri-bds-reference-v1.0.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
@@ -3051,7 +3195,7 @@ const tabs: TabConfig[] = [
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_f177ba40.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_46cf7a8e.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-gray-300 text-gray-600 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
@@ -3361,9 +3505,9 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — use for download links only"],
                     ["logos.eriIconMark",         "eri-icon-mark_08cd328f.webp",          "Compact ERI mark"],
                     ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon / favicon source"],
-                    ["logos.faviconWhite32",      "/favicon.png (in /public/)",           "32px white-bg rounded PNG — use as browser tab favicon (PNG only on Manus)"],
-                    ["logos.faviconWhite180",     "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],
-                    ["logos.faviconWhite192",     "favicon-white-rounded-192_54fb4338.png", "192px Android / PWA manifest icon"],
+                    ["logos.faviconWhiteRounded32",  "favicon-white-rounded-32_05ba5ceb.png",  "32px white-bg rounded PNG — canonical browser tab favicon (PNG only on Manus)"],
+                    ["logos.faviconWhiteRounded180", "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],
+                    ["logos.faviconWhiteRounded192", "favicon-white-rounded-192_54fb4338.png", "192px Android / PWA manifest icon"],
                   ] as [string, string, string][]).map(([token, file, usage]) => (
                     <tr key={token} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
@@ -3388,11 +3532,11 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     <td className="py-1.5 pr-3 text-gray-500">v1.0.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_f177ba40.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_46cf7a8e.skill"
                         download="eri-bds-reference-v1.0.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v1.0.0_f177ba40.skill
+                        eri-bds-reference-v1.0.0_46cf7a8e.skill
                       </a>
                     </td>
                   </tr>

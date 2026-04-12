@@ -28,6 +28,10 @@ export const logos = {
   faviconRoundedLight:    `${CDN}/favicon-rounded-light-512_e8f157be.png`,
   faviconRoundedDark192:  `${CDN}/favicon-rounded-dark-192_6ca6e763.png`,
   faviconRoundedDark180:  `${CDN}/favicon-rounded-dark-180_c84fbe3e.png`,
+  // White rounded variants — canonical browser favicon (Manus hosting, PNG only)
+  faviconWhiteRounded32:  `${CDN}/favicon-white-rounded-32_05ba5ceb.png`,
+  faviconWhiteRounded180: `${CDN}/favicon-white-rounded-180_2daaa7d4.png`,
+  faviconWhiteRounded192: `${CDN}/favicon-white-rounded-192_54fb4338.png`,
 };
 
 // ─── PILLAR BOTTOM ICONS (arch/arrow motif) ──────────────────────────────────
