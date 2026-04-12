@@ -2314,7 +2314,7 @@ export default function HeroPage() {
                 <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Menu</h4>
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>BETA badge — outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">border border-gray-400 text-[11px] font-medium text-gray-600 rounded-full px-2 py-0.5 tracking-wide</code></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.03.18"</em></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.12"</em></span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Live status dot — <code className="font-mono text-xs bg-gray-100 px-1 rounded">w-2 h-2 rounded-full bg-[#3ba559]</code> (green = live)</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
                 </div>
@@ -2341,7 +2341,7 @@ export default function HeroPage() {
                       {/* Right */}
                       <div className="flex items-center gap-2 shrink-0">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-400 text-[11px] font-medium text-gray-600 tracking-wide">BETA</span>
-                        <span className="text-[11px] font-medium text-gray-500 tracking-wide">V.2026.03.18</span>
+                        <span className="text-[11px] font-medium text-gray-500 tracking-wide">V.2026.04.12</span>
                         <span className="w-2 h-2 rounded-full bg-[#3ba559] shrink-0" />
                         <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -2370,7 +2370,7 @@ export default function HeroPage() {
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-500 text-[11px] font-medium text-gray-400 tracking-wide">BETA</span>
-                        <span className="text-[11px] font-medium text-gray-400 tracking-wide">V.2026.03.18</span>
+                        <span className="text-[11px] font-medium text-gray-400 tracking-wide">V.2026.04.12</span>
                         <span className="w-2 h-2 rounded-full bg-[#3ba559] shrink-0" />
                         <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-400">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

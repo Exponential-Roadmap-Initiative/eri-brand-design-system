@@ -24,7 +24,7 @@ interface PublicLayoutProps {
 }
 
 // Current version — matches the V.YYYY.MM.DD convention used across ERI apps
-const APP_VERSION = "V.2026.03.18";
+const APP_VERSION = "V.2026.04.12";
 
 export default function PublicLayout({ children, transparentHeader = false, hideFooter = false }: PublicLayoutProps) {
   const [scrolled, setScrolled] = useState(false);
