@@ -187,12 +187,12 @@ const logoVariants = [
     darkBg: "#232323",
     darkFile: logos.faviconWhiteRounded32,
     darkLabel: "White bg — visible on dark",
-    usage: "The canonical browser tab favicon for all ERI Manus-hosted projects. White background with 12% corner radius. Copy to client/public/favicon.png in each project. Larger sizes (180px, 192px) are available on CDN for Apple Touch and PWA manifest.",
+    usage: "The canonical browser tab favicon for all ERI Manus-hosted projects. White background with 12% corner radius. Use the CDN URL directly in client/index.html — do not copy to client/public/. See the Favicon Implementation card below for the exact head code.",
     when: "Always. This is the only approved favicon format for Manus-hosted ERI projects. Do not use .ico.",
     minWidth: "32px",
     clearSpace: "N/A — favicon is always displayed at system-determined size.",
     faviconSizes: [
-      { label: "32px (browser tab)", fileId: "favicon-white-rounded-32_05ba5ceb", cdnUrl: logos.faviconWhiteRounded32, downloadName: "favicon-white-rounded-32.png", note: "Copy to /public/favicon.png" },
+      { label: "32px (browser tab)", fileId: "favicon-white-rounded-32_05ba5ceb", cdnUrl: logos.faviconWhiteRounded32, downloadName: "favicon-white-rounded-32.png", note: "Use CDN URL directly — do not copy to /public/" },
       { label: "180px (Apple Touch)", fileId: "favicon-white-rounded-180_2daaa7d4", cdnUrl: logos.faviconWhiteRounded180, downloadName: "favicon-white-rounded-180.png", note: "Apple Touch Icon" },
       { label: "192px (Android/PWA)", fileId: "favicon-white-rounded-192_54fb4338", cdnUrl: logos.faviconWhiteRounded192, downloadName: "favicon-white-rounded-192.png", note: "PWA manifest" },
     ],
@@ -727,36 +727,57 @@ export default function BrandDesignSystem() {
           </div>
 
           {/* Favicon head code snippet */}
-          <Card className="shadow-sm mb-6">
+          <Card className="shadow-sm mb-4 border-2 border-[#3ba559]">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Favicon Implementation — Correct <code className="font-mono text-sm">&lt;head&gt;</code> Code</h3>
-              <p className="text-xs text-gray-500 mb-4">
-                For Manus-hosted projects: use PNG only. The <code className="bg-gray-100 px-1 rounded text-xs">.ico</code> format is not served correctly by Manus hosting.
-                Copy the 32px PNG to <code className="bg-gray-100 px-1 rounded text-xs">client/public/favicon.png</code> and reference it as shown below.
+              <div className="flex items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 bg-[#3ba559] text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Mandatory</span>
+                <h3 className="font-bold text-[#232323] text-base">Favicon — Correct <code className="font-mono text-sm">&lt;head&gt;</code> Implementation</h3>
+              </div>
+              <p className="text-sm text-gray-600 mb-4">
+                Copy these exact three lines into <code className="bg-gray-100 px-1 rounded text-xs">client/index.html</code> inside <code className="bg-gray-100 px-1 rounded text-xs">&lt;head&gt;</code>.
+                Remove any existing <code className="bg-gray-100 px-1 rounded text-xs">&lt;link rel="icon"&gt;</code> or <code className="bg-gray-100 px-1 rounded text-xs">&lt;link rel="shortcut icon"&gt;</code> tags first.
+                Do <strong>not</strong> copy any file into <code className="bg-gray-100 px-1 rounded text-xs">client/public/</code> — use the CDN URLs directly.
               </p>
-              <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed">{`<!-- Favicon — PNG only (Manus hosting does not serve .ico correctly) -->
-<!-- White background, 12% corner radius, original green + black S-curve mark -->
-
-<!-- Option A: Local file (copy favicon-white-rounded-32.png to client/public/favicon.png) -->
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-
-<!-- Option B: CDN URL (no local file needed) -->
-<!-- <link rel="icon" type="image/png" sizes="32x32"
-  href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/favicon-white-rounded-32_05ba5ceb.png" /> -->
-
-<!-- Apple Touch Icon: iOS home screen (180px) -->
+              <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed mb-4">{`<!-- ERI Favicon — white rounded PNG (32px, white bg, 12% corner radius) -->
+<!-- PNG only — Manus hosting does not serve .ico correctly -->
+<link rel="icon" type="image/png" sizes="32x32"
+  href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/favicon-white-rounded-32_05ba5ceb.png" />
 <link rel="apple-touch-icon" sizes="180x180"
   href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/favicon-white-rounded-180_2daaa7d4.png" />
-
-<!-- Android / PWA manifest icon (192px) -->
 <link rel="icon" type="image/png" sizes="192x192"
   href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/favicon-white-rounded-192_54fb4338.png" />`}</pre>
-              <p className="text-xs text-gray-400 mt-3">
-                The 32px white rounded PNG is generated by{" "}
-                <code className="bg-gray-100 px-1 rounded">/home/ubuntu/generate-eri-favicon-white-rounded.py</code>.
-                Corner radius: 12% of icon size. Background: pure white <code className="bg-gray-100 px-1 rounded">#ffffff</code>.
-                Mark colours: original green + black S-curve — never recoloured.
-              </p>
+              <p className="text-xs text-gray-500 mb-1 font-semibold">Why 32px? That is the correct and intentional size for a browser tab favicon. Do not search for a larger file to use as the tab icon.</p>
+            </CardContent>
+          </Card>
+
+          {/* What NOT to use warning */}
+          <Card className="shadow-sm mb-6 border border-red-200 bg-red-50">
+            <CardContent className="p-5">
+              <h4 className="font-bold text-red-800 mb-3 flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-bold flex-shrink-0">!</span>
+                Favicon — What NOT to use
+              </h4>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-red-200">
+                    <th className="text-left py-1.5 pr-4 text-red-700 font-semibold">File / variant</th>
+                    <th className="text-left py-1.5 text-red-700 font-semibold">Why it is wrong</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-red-100">
+                  {[
+                    ["favicon-rounded-dark-512.png", "Dark teal background — for dark-background app icons only, never for browser tabs"],
+                    ["exponential-logo.webp", "Raw swirl with no rounded corners — source file only, not a favicon"],
+                    ["Any .ico file", "Manus hosting does not serve .ico correctly — PNG only"],
+                    ["Any local /favicon.png file", "Local files cause deployment timeouts on Manus — use CDN URLs above"],
+                  ].map(([file, reason]) => (
+                    <tr key={file}>
+                      <td className="py-1.5 pr-4 font-mono text-red-700">{file}</td>
+                      <td className="py-1.5 text-red-800">{reason}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </CardContent>
           </Card>
 
@@ -3136,8 +3157,8 @@ const tabs: TabConfig[] = [
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
-                    <span className="text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">v1.0.0</span>
-                    <span className="text-[10px] text-gray-400">Updated 10 Apr 2026</span>
+                    <span className="text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">v1.1.0</span>
+                    <span className="text-[10px] text-gray-400">Updated 12 Apr 2026</span>
                   </div>
                   <p className="text-sm text-gray-600 mb-3 max-w-2xl">
                     A portable Manus skill that embeds the ERI brand reference directly into any AI project.
@@ -3160,15 +3181,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_46cf7a8e.skill"
-                    download="eri-bds-reference-v1.0.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.1.0_8300b4da.skill"
+                    download="eri-bds-reference-v1.1.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_46cf7a8e.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.1.0_8300b4da.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-gray-300 text-gray-600 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
@@ -3176,7 +3197,7 @@ const tabs: TabConfig[] = [
                     <ExternalLink className="w-3.5 h-3.5" />
                     CDN URL
                   </a>
-                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v1.0.0</p>
+                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v1.1.0</p>
                 </div>
               </div>
             </CardContent>
@@ -3200,7 +3221,7 @@ const tabs: TabConfig[] = [
                     trigger: "Touching any logo or favicon",
                     action: "Check Logo Usage section",
                     anchor: "logo-usage",
-                    rule: "Never recolour the S-curve mark. Use white-bg rounded PNG for browser tabs. Corner radius is 12%.",
+                    rule: "Never recolour the S-curve mark. Favicon = white-bg rounded PNG only. Use CDN URL favicon-white-rounded-32_05ba5ceb.png. 32px is correct — do not use the dark variant.",
                   },
                   {
                     trigger: "Writing any colour value",
@@ -3478,7 +3499,8 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — use for download links only"],
                     ["logos.eriIconMark",         "eri-icon-mark_08cd328f.webp",          "Compact ERI mark"],
                     ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon — raw source file (no rounded corners). Use favicon variants for production."],
-                    ["logos.faviconWhiteRounded32",  "favicon-white-rounded-32_05ba5ceb.png",  "32px white-bg rounded PNG — canonical browser tab favicon (PNG only on Manus)"],
+                    ["logos.faviconRoundedDark",     "favicon-rounded-dark-512_9a2b05c0.png",  "⚠️ DO NOT use as browser tab favicon — dark teal background, for dark-bg app icons only"],
+                    ["logos.faviconWhiteRounded32",  "favicon-white-rounded-32_05ba5ceb.png",  "✅ CORRECT browser tab favicon — 32px white-bg rounded PNG (PNG only on Manus)"],
                     ["logos.faviconWhiteRounded180", "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],
                     ["logos.faviconWhiteRounded192", "favicon-white-rounded-192_54fb4338.png", "192px Android / PWA manifest icon"],
                   ] as [string, string, string][]).map(([token, file, usage]) => (
@@ -3505,11 +3527,11 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     <td className="py-1.5 pr-3 text-gray-500">v1.0.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.0.0_46cf7a8e.skill"
-                        download="eri-bds-reference-v1.0.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.1.0_8300b4da.skill"
+                        download="eri-bds-reference-v1.1.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v1.0.0_46cf7a8e.skill
+                        eri-bds-reference-v1.1.0_8300b4da.skill
                       </a>
                     </td>
                   </tr>
