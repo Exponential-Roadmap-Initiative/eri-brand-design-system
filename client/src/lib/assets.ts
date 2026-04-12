@@ -21,14 +21,7 @@ export const logos = {
   eriLogoFullColorSvg:    `${CDN}/eri-logo-full-color_775a0122.svg`,
   eriIconMark:            `${CDN}/eri-icon-mark_6c872e6b.webp`,
   exponentialRoadmapLogo: `${CDN}/exponential-roadmap-logo_6ca65904.webp`,
-  favicon:                `${CDN}/favicon_01927692.webp`,
-  faviconIco:             `${CDN}/favicon_46e834ad.ico`,
-  // Rounded app-icon variants (generated 2026-04-08)
-  faviconRoundedDark:     `${CDN}/favicon-rounded-dark-512_9a2b05c0.png`,
-  faviconRoundedLight:    `${CDN}/favicon-rounded-light-512_e8f157be.png`,
-  faviconRoundedDark192:  `${CDN}/favicon-rounded-dark-192_6ca6e763.png`,
-  faviconRoundedDark180:  `${CDN}/favicon-rounded-dark-180_c84fbe3e.png`,
-  // White rounded variants — canonical browser favicon (Manus hosting, PNG only)
+  // Canonical browser favicon — white background, 12% corner radius, PNG only
   faviconWhiteRounded32:  `${CDN}/favicon-white-rounded-32_05ba5ceb.png`,
   faviconWhiteRounded180: `${CDN}/favicon-white-rounded-180_2daaa7d4.png`,
   faviconWhiteRounded192: `${CDN}/favicon-white-rounded-192_54fb4338.png`,

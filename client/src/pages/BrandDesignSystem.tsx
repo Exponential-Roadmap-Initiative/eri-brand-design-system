@@ -766,7 +766,6 @@ export default function BrandDesignSystem() {
                 </thead>
                 <tbody className="divide-y divide-red-100">
                   {[
-                    ["favicon-rounded-dark-512.png", "Dark teal background — for dark-background app icons only, never for browser tabs"],
                     ["exponential-logo.webp", "Raw swirl with no rounded corners — source file only, not a favicon"],
                     ["Any .ico file", "Manus hosting does not serve .ico correctly — PNG only"],
                     ["Any local /favicon.png file", "Local files cause deployment timeouts on Manus — use CDN URLs above"],
@@ -3181,15 +3180,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.1.0_8300b4da.skill"
-                    download="eri-bds-reference-v1.1.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.2.0_dc90d54c.skill"
+                    download="eri-bds-reference-v1.2.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.1.0_8300b4da.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.2.0_dc90d54c.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-gray-300 text-gray-600 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
@@ -3197,7 +3196,7 @@ const tabs: TabConfig[] = [
                     <ExternalLink className="w-3.5 h-3.5" />
                     CDN URL
                   </a>
-                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v1.1.0</p>
+                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v1.2.0</p>
                 </div>
               </div>
             </CardContent>
@@ -3499,7 +3498,6 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — use for download links only"],
                     ["logos.eriIconMark",         "eri-icon-mark_08cd328f.webp",          "Compact ERI mark"],
                     ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon — raw source file (no rounded corners). Use favicon variants for production."],
-                    ["logos.faviconRoundedDark",     "favicon-rounded-dark-512_9a2b05c0.png",  "⚠️ DO NOT use as browser tab favicon — dark teal background, for dark-bg app icons only"],
                     ["logos.faviconWhiteRounded32",  "favicon-white-rounded-32_05ba5ceb.png",  "✅ CORRECT browser tab favicon — 32px white-bg rounded PNG (PNG only on Manus)"],
                     ["logos.faviconWhiteRounded180", "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],
                     ["logos.faviconWhiteRounded192", "favicon-white-rounded-192_54fb4338.png", "192px Android / PWA manifest icon"],
@@ -3527,11 +3525,11 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     <td className="py-1.5 pr-3 text-gray-500">v1.0.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.1.0_8300b4da.skill"
-                        download="eri-bds-reference-v1.1.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.2.0_dc90d54c.skill"
+                        download="eri-bds-reference-v1.2.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v1.1.0_8300b4da.skill
+                        eri-bds-reference-v1.2.0_dc90d54c.skill
                       </a>
                     </td>
                   </tr>
