@@ -163,33 +163,6 @@ const logoVariants = [
     clearSpace: "Equal to the height of the 'E' letterform on all four sides.",
   },
   {
-    id: "icon",
-    name: "Icon Mark (Exponential Swirl)",
-    file: logos.exponentialRoadmapLogo,
-    filePath: "exponential-logo.webp",
-    fileId: "exponential-roadmap-logo_6ca65904",
-    cdnUrl: logos.exponentialRoadmapLogo,
-    downloadName: "exponential-roadmap-logo.webp",
-    darkBg: "#2c3f43",
-    darkFile: logos.faviconRoundedDark,
-    darkLabel: "Rounded app-icon variant",
-    usage: "Used across all compact contexts: browser tab favicon, sidebar nav items, data source badges, app icons, and pillar navigation. On dark backgrounds, use the rounded app-icon variant.",
-    when: "Space-constrained UI elements where the full wordmark would be illegible (< 40px height), and as the browser tab favicon.",
-    minWidth: "32px",
-    clearSpace: "4px on all sides minimum.",
-    appIcon: {
-      dark: logos.faviconRoundedDark,
-      darkFileId: "favicon-rounded-dark-512_9a2b05c0",
-      darkDownloadName: "favicon-rounded-dark-512.png",
-      light: logos.faviconWhiteRounded32,
-      lightFileId: "favicon-white-rounded-32_05ba5ceb",
-      lightDownloadName: "favicon-white-rounded-32.png",
-      lightCdnUrl: logos.faviconWhiteRounded32,
-      sizes: "32 · 180 · 192px",
-      note: "Rounded app-icon variant (12% corner radius). White background is the canonical browser tab favicon for Manus-hosted projects. Dark teal background is for dark-background contexts only. PNG only — do not use .ico on Manus.",
-    },
-  },
-  {
     id: "eri-icon",
     name: "ERI Icon Mark",
     file: logos.eriIconMark,
@@ -562,7 +535,7 @@ export default function BrandDesignSystem() {
             Logo Usage
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
-            Four logo assets are available. Each card shows the asset on both a light and dark background so you can verify contrast before use. Each card includes a file identifier and a direct download button. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
+            Three logo assets are available. Each card shows the asset on both a light and dark background so you can verify contrast before use. Each card includes a file identifier and a direct download button. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -3504,7 +3477,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["logos.eriLogoFullColor",    "eri-logo-full-color_f5763508.png",     "Primary wordmark (PNG) — use in <img> tags"],
                     ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — use for download links only"],
                     ["logos.eriIconMark",         "eri-icon-mark_08cd328f.webp",          "Compact ERI mark"],
-                    ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon / favicon source"],
+                    ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon — raw source file (no rounded corners). Use favicon variants for production."],
                     ["logos.faviconWhiteRounded32",  "favicon-white-rounded-32_05ba5ceb.png",  "32px white-bg rounded PNG — canonical browser tab favicon (PNG only on Manus)"],
                     ["logos.faviconWhiteRounded180", "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],
                     ["logos.faviconWhiteRounded192", "favicon-white-rounded-192_54fb4338.png", "192px Android / PWA manifest icon"],
