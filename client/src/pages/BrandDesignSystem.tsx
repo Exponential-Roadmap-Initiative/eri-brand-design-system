@@ -1310,14 +1310,14 @@ export default function BrandDesignSystem() {
             illustrations and graphic compositions that carry specific conceptual meaning.
           </p>
 
-          {/* Double S-Curve Hero */}
+          {/* Human Network Hero */}
           <div className="mb-12">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Double S-Curve Hero</h3>
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Human-AI Lab Hero — Human Network (Primary)</h3>
             <p className="text-gray-600 mb-6 max-w-3xl text-sm">
-              The double S-curve represents the core ERI thesis: the exponential decline of fossil fuels and the
-              simultaneous exponential rise of clean technologies. Two crossing sigmoid curves — one amber
-              (legacy systems declining), one green (new systems rising) — set against a dark teal grid background
-              with particle network detail. This is the primary hero background image for ERI marketing web applications.
+              The primary hero background for the Human-AI Lab and any human + AI collaboration narrative. Two crossing
+              S-curves (amber declining, lime rising) on a deep teal grid, overlaid with a distributed network of
+              connected person icons representing global human collaboration. The crossing point of the curves is the
+              visual focal point — the moment of transition enabled by human-AI partnership.
             </p>
 
             {/* Live preview */}
@@ -1325,7 +1325,7 @@ export default function BrandDesignSystem() {
               <div
                 className="relative w-full"
                 style={{
-                  backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hero-scurve-dual_823ed0f9.webp)`,
+                  backgroundImage: `url(${heroImages.halHumanNetwork})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   aspectRatio: '16/9',
@@ -1353,24 +1353,24 @@ export default function BrandDesignSystem() {
                 <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Asset Details</h4>
                 <table className="w-full text-sm">
                   <tbody>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hero-scurve-dual-rich.webp</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Dimensions</td><td className="py-1.5 text-[#232323]">1920 × 1072 px</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Format</td><td className="py-1.5 text-[#232323]">WebP (lossy)</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hal-hero-human-v3-network.png</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Dimensions</td><td className="py-1.5 text-[#232323]">1456 × 816 px</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Format</td><td className="py-1.5 text-[#232323]">PNG</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Aspect ratio</td><td className="py-1.5 text-[#232323]">16:9</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal bg</td></tr>
-                    <tr><td className="py-1.5 text-gray-500 pr-4">CDN URL</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">…/hero-scurve-dual-rich-8omR779SXimwMsMeedVoZ9.webp</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal grid · Human network icons</td></tr>
+                    <tr><td className="py-1.5 text-gray-500 pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halHumanNetwork</td></tr>
                   </tbody>
                 </table>
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/6sKWYdw7G6EKjncr6qBxmN/hero-scurve-dual-rich-8omR779SXimwMsMeedVoZ9.webp"
-                    download="eri-hero-scurve-dual.webp"
+                    href={heroImages.halHumanNetwork}
+                    download="hal-hero-human-v3-network.png"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-[#3ba559] hover:bg-[#2e8a47] text-white text-sm font-semibold px-4 py-2 rounded transition-colors"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download WebP (1920 × 1072)
+                    Download PNG (1456 × 816)
                   </a>
                 </div>
               </div>
@@ -1393,9 +1393,10 @@ export default function BrandDesignSystem() {
               <p className="text-sm text-gray-700">
                 The two S-curves crossing represent the central ERI insight: legacy fossil-fuel systems are on a
                 declining S-curve while clean-technology systems are on a rising S-curve. The crossing point is
-                the transition moment. The amber curve represents the old economy; the green curve represents the
-                new. This image should only be used in contexts where this meaning is relevant — it is not a
-                generic technology background.
+                the transition moment — enabled by human collaboration and AI. The amber curve represents the old
+                economy; the lime curve represents the new. The distributed network of person icons reinforces that
+                this transition is driven by people working together. This image should only be used in contexts
+                where this meaning is relevant — it is not a generic technology background.
               </p>
             </div>
           </div>
