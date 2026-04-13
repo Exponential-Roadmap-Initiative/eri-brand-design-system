@@ -19,7 +19,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { Copy, Check, ExternalLink, FileText, Plug, Layers, BookOpen, BarChart3 } from "lucide-react";
+import { Copy, Check, ExternalLink, FileText, Plug, Layers, BookOpen, BarChart3, Download } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ import { PhotoGallery } from "@/components/PhotoGallery";
 import { DataSourceLogoGrid } from "@/components/DataSourceLogoGrid";
 import CrocodileChartExamples from "@/components/CrocodileChartExamples";
 import { NavigationPatterns } from "@/components/NavigationPatterns";
-import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort, memberLogos } from "@/lib/assets";
+import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort, memberLogos, heroImages } from "@/lib/assets";
 import { pillarTints } from "@/lib/pillarColors";
 
 // ============================================================================
@@ -3098,7 +3098,166 @@ const tabs: TabConfig[] = [
 
 
         {/* ================================================================ */}
-        {/* SECTION 18: RESOURCES */}
+        {/* SECTION 18: SURFACE MODES */}
+        {/* ================================================================ */}
+        <section id="surface-modes" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Surface Modes
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            ERI products use two named surface modes — <strong>Light</strong> and <strong>Dark</strong>. These are not competing themes; they are two contexts within the same brand. Light mode is the default for application interiors. Dark mode is used for marketing landing pages and hero sections.
+          </p>
+
+          {/* Mode comparison table */}
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            {[
+              {
+                mode: "Light Mode",
+                badge: "Default",
+                badgeColor: "bg-[#3ba559] text-white",
+                bg: "bg-white border border-gray-200",
+                tokens: [
+                  { name: "Page background", value: "#F9FAFB", swatch: "#F9FAFB", border: true },
+                  { name: "Card / panel",    value: "#FFFFFF",  swatch: "#FFFFFF",  border: true },
+                  { name: "Primary text",    value: "#232323",  swatch: "#232323" },
+                  { name: "Secondary text",  value: "#6B7280",  swatch: "#6B7280" },
+                  { name: "Border",          value: "#E5E7EB",  swatch: "#E5E7EB",  border: true },
+                  { name: "CTA button",      value: "#3ba559",  swatch: "#3ba559" },
+                ],
+                use: "Application interiors — PSM, Crocodile data views, user management, dashboards",
+              },
+              {
+                mode: "Dark Mode",
+                badge: "Marketing",
+                badgeColor: "bg-[#232323] text-[#93E07D]",
+                bg: "bg-[#0d2828] border border-[#1a3a3a]",
+                tokens: [
+                  { name: "Page background", value: "#0d2828",  swatch: "#0d2828" },
+                  { name: "Card / panel",    value: "#1a3a3a",  swatch: "#1a3a3a" },
+                  { name: "Primary text",    value: "#FFFFFF",  swatch: "#FFFFFF",  border: true },
+                  { name: "Secondary text",  value: "#9CA3AF",  swatch: "#9CA3AF" },
+                  { name: "Accent text",     value: "#93E07D",  swatch: "#93E07D" },
+                  { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
+                ],
+                use: "Marketing landing pages, hero sections, Human-AI Lab, public-facing app entry points",
+              },
+            ].map((m) => (
+              <div key={m.mode} className={`rounded-xl p-6 ${m.bg}`}>
+                <div className="flex items-center gap-3 mb-4">
+                  <h3 className={`font-archivo font-bold text-lg ${m.mode === 'Dark Mode' ? 'text-white' : 'text-[#232323]'}`}>{m.mode}</h3>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
+                </div>
+                <div className="space-y-2 mb-4">
+                  {m.tokens.map((t) => (
+                    <div key={t.name} className="flex items-center gap-3">
+                      <div
+                        className="w-6 h-6 rounded flex-shrink-0"
+                        style={{ backgroundColor: t.swatch, border: t.border ? '1px solid #D1D5DB' : 'none' }}
+                      />
+                      <span className={`text-sm font-medium w-36 flex-shrink-0 ${m.mode === 'Dark Mode' ? 'text-gray-300' : 'text-gray-700'}`}>{t.name}</span>
+                      <code className={`text-xs font-mono ${m.mode === 'Dark Mode' ? 'text-gray-400' : 'text-gray-500'}`}>{t.value}</code>
+                    </div>
+                  ))}
+                </div>
+                <p className={`text-xs mt-4 pt-4 border-t ${m.mode === 'Dark Mode' ? 'border-[#1a4a4a] text-gray-400' : 'border-gray-100 text-gray-500'}`}>
+                  <strong className={m.mode === 'Dark Mode' ? 'text-gray-300' : 'text-gray-600'}>Use for:</strong> {m.use}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Decision rule */}
+          <div className="bg-[#f0faf4] border border-[#b7e4c7] rounded-xl p-5 mb-10">
+            <h3 className="font-semibold text-[#232323] mb-3">When to use which mode</h3>
+            <div className="grid md:grid-cols-3 gap-4 text-sm">
+              {[
+                { q: "Public marketing / landing page?", a: "Dark mode" },
+                { q: "Authenticated app interior?",       a: "Light mode" },
+                { q: "App with both landing + interior?", a: "Dark hero → Light app (switch at login)" },
+              ].map((r) => (
+                <div key={r.q} className="bg-white rounded-lg p-4 border border-[#d1fae5]">
+                  <p className="text-gray-600 mb-2">{r.q}</p>
+                  <p className="font-semibold text-[#3ba559]">{r.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Hero image gallery */}
+          <h3 className="font-archivo font-bold text-lg text-[#232323] mb-2">Dark Hero Background Images</h3>
+          <p className="text-gray-600 text-sm mb-6 max-w-2xl">
+            Pre-approved hero backgrounds for dark-mode landing pages. Always overlay with white or Accent Lime <code className="bg-gray-100 px-1 rounded text-xs">#93E07D</code> text. The left quarter of each image is kept dark for text placement.
+          </p>
+
+          <div className="grid md:grid-cols-1 gap-6">
+            {[
+              {
+                id: "halHumanNetwork",
+                label: "Human-AI Lab — Human Network (Primary)",
+                badge: "Primary",
+                badgeColor: "bg-[#3ba559] text-white",
+                url: heroImages.halHumanNetwork,
+                token: "heroImages.halHumanNetwork",
+                use: "Human-AI Lab landing page, any human + AI collaboration narrative. Features the dual S-curves with a distributed network of connected person icons representing global human collaboration.",
+              },
+              {
+                id: "halSCurveDual",
+                label: "Human-AI Lab — Dual S-Curve (Minimal)",
+                badge: "Minimal",
+                badgeColor: "bg-gray-500 text-white",
+                url: heroImages.halSCurveDual,
+                token: "heroImages.halSCurveDual",
+                use: "Generic ERI dark hero, any dual-transition narrative without an explicit human network element.",
+              },
+              {
+                id: "halMFReaching",
+                label: "Human-AI Lab — Reaching (Duo Figures)",
+                badge: "Alternate",
+                badgeColor: "bg-[#2C3F43] text-white",
+                url: heroImages.halMFReaching,
+                token: "heroImages.halMFReaching",
+                use: "Human-AI Lab, human collaboration with AI, gender-balanced team narratives. Two constellation figures (male left, female right) reaching toward each other across the S-curve crossing point — emphasising the human-to-human connection enabled by AI.",
+              },
+              {
+                id: "crocodileDecoupling",
+                label: "Crocodile Economics — Decoupling",
+                badge: "App-specific",
+                badgeColor: "bg-[#00B4D8] text-white",
+                url: heroImages.crocodileDecoupling,
+                token: "heroImages.crocodileDecoupling",
+                use: "Crocodile Economics app, any absolute decoupling / emissions-reduction narrative. Features diverging jaw curves: cyan (#00B4D8) GDP line rising, amber emissions line falling.",
+              },
+            ].map((img) => (
+              <div key={img.id} className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                <div className="relative">
+                  <img src={img.url} alt={img.label} className="w-full h-56 object-cover" />
+                  <div className="absolute top-3 left-3 flex gap-2">
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${img.badgeColor}`}>{img.badge}</span>
+                  </div>
+                  <a
+                    href={img.url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors"
+                  >
+                    <Download className="w-3 h-3" /> Download
+                  </a>
+                </div>
+                <div className="p-4 bg-white">
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <h4 className="font-semibold text-[#232323] text-sm">{img.label}</h4>
+                    <code className="text-xs font-mono bg-gray-100 px-2 py-0.5 rounded text-gray-600 flex-shrink-0">{img.token}</code>
+                  </div>
+                  <p className="text-xs text-gray-500">{img.use}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION 19: RESOURCES */}
         {/* ================================================================ */}
         <section id="resources" className="mb-16">
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
@@ -3688,8 +3847,9 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["15", "Member Logotypes",         "member-logos"],
                     ["16", "Data Source Logos",        "data-source-logos"],
                     ["17", "Resources",                "resources"],
-                    ["18", "Navigation & Layout",      "navigation"],
-                    ["19", "Machine Instructions",     "ai-instructions"],
+                    ["18", "Surface Modes",             "surface-modes"],
+                    ["19", "Navigation & Layout",      "navigation"],
+                    ["20", "Machine Instructions",     "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>

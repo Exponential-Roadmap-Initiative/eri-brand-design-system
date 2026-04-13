@@ -27,6 +27,30 @@ export const logos = {
   faviconWhiteRounded192: `${CDN}/favicon-white-rounded-192_54fb4338.png`,
 };
 
+// ─── HERO BACKGROUND IMAGES ─────────────────────────────────────────────────
+// Dark hero backgrounds for use in full-viewport hero sections.
+// Always use with white or Accent Lime (#93E07D) text overlay.
+export const heroImages = {
+  // Human-AI Lab — PRIMARY: two crossing S-curves (amber + lime) on deep teal grid,
+  // with a distributed human network of person icons connected by luminous lines.
+  // Use for: Human-AI Lab, any human+AI collaboration narrative.
+  halHumanNetwork: `${CDN}/hal-hero-human-v3-network_9ab07ca2.png`,
+
+  // Human-AI Lab — MINIMAL: same S-curves without human network overlay.
+  // Use for: generic ERI dark hero, any dual-transition narrative without explicit human element.
+  halSCurveDual: `${CDN}/hero-scurve-dual_823ed0f9.webp`,
+
+  // Crocodile Economics: diverging jaw (cyan GDP up + amber emissions down),
+  // atmospheric teal bg with grid and particle effects.
+  // Use for: Crocodile Economics app, any decoupling / absolute-reduction narrative.
+  crocodileDecoupling: `${CDN}/crocodile-hero-hybrid-v1_67b8bdc5.png`,
+
+  // Human-AI Lab — REACHING: two constellation figures (male left, female right)
+  // reaching toward each other across the S-curve crossing point.
+  // Use for: Human-AI Lab, human collaboration with AI, gender-balanced team narratives.
+  halMFReaching: `${CDN}/hal-hero-human-v9-mf-reaching_e8bf7da7.png`,
+};
+
 // ─── PILLAR BOTTOM ICONS (arch/arrow motif) ──────────────────────────────────
 export const pillarBottomIcons = {
   pillar1: `${CDN}/pillar-1-icon_689cc920.webp`,
