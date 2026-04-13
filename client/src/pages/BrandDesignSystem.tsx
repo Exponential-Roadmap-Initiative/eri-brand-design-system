@@ -3219,6 +3219,15 @@ const tabs: TabConfig[] = [
                 use: "Human-AI Lab, human collaboration with AI, gender-balanced team narratives. Two constellation figures (male left, female right) reaching toward each other across the S-curve crossing point — emphasising the human-to-human connection enabled by AI.",
               },
               {
+                id: "halHandsTouching",
+                label: "Human-AI Lab — Hands Touching",
+                badge: "Alternate",
+                badgeColor: "bg-[#2C3F43] text-white",
+                url: heroImages.halHandsTouching,
+                token: "heroImages.halHandsTouching",
+                use: "Human-AI Lab, human-AI connection, moment-of-contact narratives. Two translucent wireframe hands reaching toward each other, fingertips meeting at the S-curve crossing point with a golden burst of light. Michelangelo-inspired composition.",
+              },
+              {
                 id: "crocodileDecoupling",
                 label: "Crocodile Economics — Decoupling",
                 badge: "App-specific",

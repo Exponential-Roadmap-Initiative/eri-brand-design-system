@@ -49,6 +49,11 @@ export const heroImages = {
   // reaching toward each other across the S-curve crossing point.
   // Use for: Human-AI Lab, human collaboration with AI, gender-balanced team narratives.
   halMFReaching: `${CDN}/hal-hero-human-v9-mf-reaching_e8bf7da7.png`,
+
+  // Human-AI Lab — HANDS: two translucent wireframe hands reaching toward each other,
+  // fingertips meeting at the S-curve crossing point with a golden burst of light.
+  // Michelangelo-inspired composition. Use for: HAL, human-AI connection, moment-of-contact narratives.
+  halHandsTouching: `${CDN}/hal-hero-human-v2-hands_75d155b6.png`,
 };
 
 // ─── PILLAR BOTTOM ICONS (arch/arrow motif) ──────────────────────────────────
