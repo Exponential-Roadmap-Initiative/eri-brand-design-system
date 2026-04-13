@@ -1310,14 +1310,14 @@ export default function BrandDesignSystem() {
             illustrations and graphic compositions that carry specific conceptual meaning.
           </p>
 
-          {/* Human Network Hero */}
+          {/* Hands Touching Hero — PRIMARY */}
           <div className="mb-12">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Human-AI Lab Hero — Human Network (Primary)</h3>
+            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Human-AI Lab Hero — Hands Touching (Primary)</h3>
             <p className="text-gray-600 mb-6 max-w-3xl text-sm">
-              The primary hero background for the Human-AI Lab and any human + AI collaboration narrative. Two crossing
-              S-curves (amber declining, lime rising) on a deep teal grid, overlaid with a distributed network of
-              connected person icons representing global human collaboration. The crossing point of the curves is the
-              visual focal point — the moment of transition enabled by human-AI partnership.
+              The primary hero background for the Human-AI Lab and any human + AI collaboration narrative. Two translucent
+              wireframe hands reach toward each other across the S-curve crossing point, fingertips meeting in a golden
+              burst of light — a Michelangelo-inspired composition set against a deep teal grid. The crossing point of
+              the S-curves is the visual focal point: the moment of connection between human and AI.
             </p>
 
             {/* Live preview */}
@@ -1325,7 +1325,7 @@ export default function BrandDesignSystem() {
               <div
                 className="relative w-full"
                 style={{
-                  backgroundImage: `url(${heroImages.halHumanNetwork})`,
+                  backgroundImage: `url(${heroImages.halHandsTouching})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   aspectRatio: '16/9',
@@ -1353,18 +1353,18 @@ export default function BrandDesignSystem() {
                 <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Asset Details</h4>
                 <table className="w-full text-sm">
                   <tbody>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hal-hero-human-v3-network.png</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hal-hero-human-v2-hands.png</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Dimensions</td><td className="py-1.5 text-[#232323]">1456 × 816 px</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Format</td><td className="py-1.5 text-[#232323]">PNG</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Aspect ratio</td><td className="py-1.5 text-[#232323]">16:9</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal grid · Human network icons</td></tr>
-                    <tr><td className="py-1.5 text-gray-500 pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halHumanNetwork</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal grid · Wireframe hands</td></tr>
+                    <tr><td className="py-1.5 text-gray-500 pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halHandsTouching</td></tr>
                   </tbody>
                 </table>
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <a
-                    href={heroImages.halHumanNetwork}
-                    download="hal-hero-human-v3-network.png"
+                    href={heroImages.halHandsTouching}
+                    download="hal-hero-human-v2-hands.png"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-[#3ba559] hover:bg-[#2e8a47] text-white text-sm font-semibold px-4 py-2 rounded transition-colors"
@@ -1393,10 +1393,11 @@ export default function BrandDesignSystem() {
               <p className="text-sm text-gray-700">
                 The two S-curves crossing represent the central ERI insight: legacy fossil-fuel systems are on a
                 declining S-curve while clean-technology systems are on a rising S-curve. The crossing point is
-                the transition moment — enabled by human collaboration and AI. The amber curve represents the old
-                economy; the lime curve represents the new. The distributed network of person icons reinforces that
-                this transition is driven by people working together. This image should only be used in contexts
-                where this meaning is relevant — it is not a generic technology background.
+                the transition moment — the moment of connection between human and AI. The amber curve represents
+                the old economy; the lime curve represents the new. The wireframe hands reaching toward each other
+                evoke the Michelangelo “Creation of Adam” — a universal symbol of the spark of intelligence passing
+                between two entities. This image should only be used in contexts where this meaning is relevant —
+                it is not a generic technology background.
               </p>
             </div>
 
@@ -1406,9 +1407,9 @@ export default function BrandDesignSystem() {
               <p className="text-xs text-gray-500 mb-4">Three alternate hero compositions share the same S-curve structure and are documented in full in the <a href="#surface-modes" className="text-[#3ba559] underline hover:text-[#2e8a47]">Surface Modes</a> section.</p>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { url: heroImages.halSCurveDual,    label: "Dual S-Curve",      badge: "Minimal",  anchor: "#halSCurveDual" },
+                  { url: heroImages.halHumanNetwork, label: "Human Network",     badge: "Alternate", anchor: "#halHumanNetwork" },
                   { url: heroImages.halMFReaching,    label: "Reaching Duo",      badge: "Alternate", anchor: "#halMFReaching" },
-                  { url: heroImages.halHandsTouching, label: "Hands Touching",    badge: "Alternate", anchor: "#halHandsTouching" },
+                  { url: heroImages.halSCurveDual,    label: "Dual S-Curve",      badge: "Minimal",   anchor: "#halSCurveDual" },
                 ].map((alt) => (
                   <a
                     key={alt.anchor}
@@ -3225,13 +3226,22 @@ const tabs: TabConfig[] = [
           <div className="grid md:grid-cols-1 gap-6">
             {[
               {
-                id: "halHumanNetwork",
-                label: "Human-AI Lab — Human Network (Primary)",
+                id: "halHandsTouching",
+                label: "Human-AI Lab — Hands Touching (Primary)",
                 badge: "Primary",
                 badgeColor: "bg-[#3ba559] text-white",
+                url: heroImages.halHandsTouching,
+                token: "heroImages.halHandsTouching",
+                use: "Human-AI Lab landing page, any human + AI collaboration narrative. Two translucent wireframe hands reaching toward each other, fingertips meeting at the S-curve crossing point with a golden burst of light. Michelangelo-inspired composition. Currently live on human-ai-lab.exponentialroadmap.org.",
+              },
+              {
+                id: "halHumanNetwork",
+                label: "Human-AI Lab — Human Network",
+                badge: "Alternate",
+                badgeColor: "bg-[#2C3F43] text-white",
                 url: heroImages.halHumanNetwork,
                 token: "heroImages.halHumanNetwork",
-                use: "Human-AI Lab landing page, any human + AI collaboration narrative. Features the dual S-curves with a distributed network of connected person icons representing global human collaboration.",
+                use: "Human-AI Lab, any human + AI collaboration narrative. Features the dual S-curves with a distributed network of connected person icons representing global human collaboration.",
               },
               {
                 id: "halSCurveDual",
@@ -3250,15 +3260,6 @@ const tabs: TabConfig[] = [
                 url: heroImages.halMFReaching,
                 token: "heroImages.halMFReaching",
                 use: "Human-AI Lab, human collaboration with AI, gender-balanced team narratives. Two constellation figures (male left, female right) reaching toward each other across the S-curve crossing point — emphasising the human-to-human connection enabled by AI.",
-              },
-              {
-                id: "halHandsTouching",
-                label: "Human-AI Lab — Hands Touching",
-                badge: "Alternate",
-                badgeColor: "bg-[#2C3F43] text-white",
-                url: heroImages.halHandsTouching,
-                token: "heroImages.halHandsTouching",
-                use: "Human-AI Lab, human-AI connection, moment-of-contact narratives. Two translucent wireframe hands reaching toward each other, fingertips meeting at the S-curve crossing point with a golden burst of light. Michelangelo-inspired composition.",
               },
               {
                 id: "crocodileDecoupling",
