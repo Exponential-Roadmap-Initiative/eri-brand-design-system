@@ -1388,7 +1388,7 @@ export default function BrandDesignSystem() {
             </div>
 
             {/* Conceptual meaning */}
-            <div className="bg-[#f0f7f2] border border-[#c8e6d0] rounded-xl p-5 max-w-3xl">
+            <div className="bg-[#f0f7f2] border border-[#c8e6d0] rounded-xl p-5 max-w-3xl mb-6">
               <h4 className="font-archivo font-bold text-[#232323] text-sm mb-2">Conceptual Meaning</h4>
               <p className="text-sm text-gray-700">
                 The two S-curves crossing represent the central ERI insight: legacy fossil-fuel systems are on a
@@ -1398,6 +1398,38 @@ export default function BrandDesignSystem() {
                 this transition is driven by people working together. This image should only be used in contexts
                 where this meaning is relevant — it is not a generic technology background.
               </p>
+            </div>
+
+            {/* Alternate versions */}
+            <div className="max-w-3xl">
+              <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Alternate Versions</h4>
+              <p className="text-xs text-gray-500 mb-4">Three alternate hero compositions share the same S-curve structure and are documented in full in the <a href="#surface-modes" className="text-[#3ba559] underline hover:text-[#2e8a47]">Surface Modes</a> section.</p>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { url: heroImages.halSCurveDual,    label: "Dual S-Curve",      badge: "Minimal",  anchor: "#halSCurveDual" },
+                  { url: heroImages.halMFReaching,    label: "Reaching Duo",      badge: "Alternate", anchor: "#halMFReaching" },
+                  { url: heroImages.halHandsTouching, label: "Hands Touching",    badge: "Alternate", anchor: "#halHandsTouching" },
+                ].map((alt) => (
+                  <a
+                    key={alt.anchor}
+                    href={alt.anchor}
+                    className="group block rounded-lg overflow-hidden border border-gray-200 hover:border-[#3ba559] transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.querySelector('#surface-modes')?.scrollIntoView({ behavior: 'smooth' });
+                      setTimeout(() => document.querySelector(`[data-hero-id="${alt.anchor.slice(1)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
+                    }}
+                  >
+                    <div className="relative">
+                      <img src={alt.url} alt={alt.label} className="w-full h-20 object-cover" />
+                      <span className="absolute top-1.5 left-1.5 bg-black/60 text-white text-[10px] font-semibold px-1.5 py-0.5 rounded">{alt.badge}</span>
+                    </div>
+                    <div className="px-2.5 py-2 bg-white">
+                      <p className="text-xs font-semibold text-[#232323] group-hover:text-[#3ba559] transition-colors">{alt.label} →</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -3238,7 +3270,7 @@ const tabs: TabConfig[] = [
                 use: "Crocodile Economics app, any absolute decoupling / emissions-reduction narrative. Features diverging jaw curves: cyan (#00B4D8) GDP line rising, amber emissions line falling.",
               },
             ].map((img) => (
-              <div key={img.id} className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <div key={img.id} data-hero-id={img.id} className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                 <div className="relative">
                   <img src={img.url} alt={img.label} className="w-full h-56 object-cover" />
                   <div className="absolute top-3 left-3 flex gap-2">
