@@ -6,6 +6,7 @@
  *   - Tier B (Marketing): dark header + two-column hamburger overlay (Hub pattern)
  *   - Tier B (Application): white header + single-column hamburger overlay (PSM pattern)
  *   - Tier A Simple (Application): white header + tab bar
+ *   - Tier A Simple + Landing Hero: transparent header over dark hero → white header in app interior
  *   - Tier A Workflow (Application): white header + context bar + workflow stepper + tab bar
  *   - Tier C (Admin/Tool): persistent left sidebar + white header with hamburger
  *
@@ -623,6 +624,139 @@ function TierCSidebarMock() {
   );
 }
 
+// ── Tier A + Landing Hero: transparent header over dark hero → white on interior ──
+function TierALandingHeroMock() {
+  const [view, setView] = useState<"landing" | "interior">("landing");
+  const [activeTab, setActiveTab] = useState("solutions");
+  const HANDS_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hero-human-v2-hands_75d155b6.png";
+  const tabs = [
+    { id: "solutions",  label: "Climate Solutions" },
+    { id: "fossil",     label: "Fossil Fuel Activities" },
+    { id: "transition", label: "Transition Support" },
+    { id: "sources",    label: "Trusted Sources" },
+    { id: "api",        label: "API Docs" },
+  ];
+  return (
+    <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+      {/* Toggle */}
+      <div className="bg-gray-50 border-b border-gray-200 px-4 py-2 flex items-center gap-3">
+        <span className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400">View:</span>
+        <button
+          onClick={() => setView("landing")}
+          className={`text-xs px-3 py-1 rounded font-open-sans font-medium transition-colors ${
+            view === "landing" ? "bg-[#232323] text-white" : "bg-white border border-gray-300 text-gray-600 hover:bg-gray-100"
+          }`}
+        >
+          Landing page (<code className="font-mono">/</code>)
+        </button>
+        <button
+          onClick={() => setView("interior")}
+          className={`text-xs px-3 py-1 rounded font-open-sans font-medium transition-colors ${
+            view === "interior" ? "bg-[#3ba559] text-white" : "bg-white border border-gray-300 text-gray-600 hover:bg-gray-100"
+          }`}
+        >
+          Interior page (/solutions)
+        </button>
+      </div>
+
+      {view === "landing" ? (
+        /* ── Landing page: dark hero with transparent header ── */
+        <div
+          className="relative"
+          style={{
+            backgroundImage: `url(${HANDS_URL})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: 260,
+          }}
+        >
+          {/* Dark overlay */}
+          <div className="absolute inset-0" style={{ background: "rgba(35,35,35,0.83)" }} />
+          {/* Transparent header */}
+          <div className="relative z-10">
+            <div className="h-1 bg-[#2C3F43] w-full" />
+            <div className="h-16 flex items-center px-6 justify-between" style={{ background: "transparent" }}>
+              <div className="flex items-center gap-3">
+                <div className="flex flex-col leading-none">
+                  <span className="font-archivo font-black text-white text-[10px] tracking-widest uppercase">EXPONENTIAL</span>
+                  <span className="font-archivo font-black text-white text-[10px] tracking-widest uppercase">ROADMAP <span className="font-normal text-[9px]">INITIATIVE</span></span>
+                </div>
+                <div className="w-px h-8 bg-white/30 mx-2" />
+                <span className="font-archivo font-bold text-white text-sm">Exponential Taxonomy</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] border border-white/40 rounded-full px-2 py-0.5 font-open-sans text-white/80">BETA</span>
+                <span className="text-[10px] text-white/60 font-open-sans">V.2026.04</span>
+                <button className="text-white/80 p-2 hover:bg-white/10 rounded transition-colors">
+                  <Menu size={18} />
+                </button>
+              </div>
+            </div>
+            {/* Hero content */}
+            <div className="px-8 pb-10 pt-4 text-center">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-[0.2em] text-[#93E07D] mb-3">Exponential Roadmap Initiative</p>
+              <h1 className="font-archivo font-extrabold text-2xl text-white leading-tight mb-3">
+                <span className="text-[#93E07D]">Science-Backed</span><br />Climate Solutions
+              </h1>
+              <p className="text-white/70 text-xs font-open-sans mb-5 max-w-xs mx-auto">114 Climate Solutions · 31 Fossil Fuel Activities · 17 Transition Support Activities</p>
+              <button className="bg-[#93E07D] text-[#232323] font-archivo font-bold text-xs px-5 py-2 rounded-full hover:bg-[#7ecf68] transition-colors">
+                Explore Climate Solutions
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* ── Interior page: white header + tab bar ── */
+        <div>
+          <div className="h-1 bg-[#2C3F43] w-full" />
+          <div className="bg-white h-16 flex items-center px-6 justify-between border-b border-gray-100">
+            <div className="flex items-center gap-3">
+              <div className="flex flex-col leading-none">
+                <span className="font-archivo font-black text-[#232323] text-[10px] tracking-widest uppercase">EXPONENTIAL</span>
+                <span className="font-archivo font-black text-[#232323] text-[10px] tracking-widest uppercase">ROADMAP <span className="font-normal text-[9px]">INITIATIVE</span></span>
+              </div>
+              <div className="w-px h-8 bg-gray-300 mx-2" />
+              <span className="font-archivo font-bold text-[#383838] text-sm">Exponential Taxonomy</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] border border-gray-300 rounded-full px-2 py-0.5 font-open-sans text-gray-500">BETA</span>
+              <span className="text-[10px] text-gray-400 font-open-sans">V.2026.04</span>
+              <button className="text-gray-500 p-2 hover:bg-gray-100 rounded transition-colors">
+                <Menu size={18} />
+              </button>
+            </div>
+          </div>
+          <div className="bg-white border-b border-gray-200 px-6 flex overflow-x-auto">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-shrink-0 px-4 py-3 text-xs font-open-sans font-medium border-b-2 transition-colors ${
+                  activeTab === tab.id
+                    ? "border-[#3ba559] text-[#3ba559]"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <div className="bg-[#F9FAFB] px-6 py-8 text-center">
+            <p className="font-archivo font-extrabold text-base text-[#232323] mb-1">{tabs.find(t => t.id === activeTab)?.label}</p>
+            <p className="text-xs font-open-sans text-gray-400">White header · solid · tab bar below · #F9FAFB page background</p>
+          </div>
+        </div>
+      )}
+
+      <div className="bg-[#F9FAFB] px-4 py-2 text-[11px] text-gray-400 font-open-sans border-t border-gray-200">
+        {view === "landing"
+          ? "Landing page — transparent header over dark hero · Accent Lime accent word · pill CTA"
+          : `Interior page — white solid header · tab bar · active: ${tabs.find(t => t.id === activeTab)?.label}`}
+      </div>
+    </div>
+  );
+}
+
 // ── Tier A Simple: white header + tab bar ──────────────────────────────────
 function TierASimpleHeaderMock() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -852,10 +986,17 @@ export function NavigationPatterns() {
               </tr>
               <tr className="border-b border-gray-100">
                 <td className="py-3 pr-6 font-bold text-[#232323]">Tier A Simple<br /><span className="text-xs font-normal text-gray-500">Application</span></td>
-                <td className="py-3 pr-6 text-gray-700">Data tools, reference apps, single-workflow<br /><span className="text-xs text-gray-400">Crocodile Economy, Exponential Taxonomy</span></td>
+                <td className="py-3 pr-6 text-gray-700">Data tools, reference apps, single-workflow — no public landing page<br /><span className="text-xs text-gray-400">Crocodile Economy</span></td>
                 <td className="py-3 pr-6 font-mono text-xs text-[#3ba559]">max-w-screen-xl (1280px)</td>
                 <td className="py-3 pr-6 text-gray-700">White, always solid</td>
                 <td className="py-3 text-gray-700">Header + tab bar</td>
+              </tr>
+              <tr className="border-b border-gray-100 bg-green-50/40">
+                <td className="py-3 pr-6 font-bold text-[#232323]">Tier A + Landing Hero<br /><span className="text-xs font-normal text-gray-500">Application</span></td>
+                <td className="py-3 pr-6 text-gray-700">Data / reference apps with a public-facing landing page that benefits from a visual hero<br /><span className="text-xs text-gray-400">Exponential Taxonomy</span></td>
+                <td className="py-3 pr-6 font-mono text-xs text-[#3ba559]">max-w-screen-xl (1280px)</td>
+                <td className="py-3 pr-6 text-gray-700">Transparent over dark hero on <code className="font-mono text-xs">/</code> → white solid on interior pages</td>
+                <td className="py-3 text-gray-700">Dark hero (landing) → Header + tab bar (interior)</td>
               </tr>
               <tr className="border-b border-gray-100">
                 <td className="py-3 pr-6 font-bold text-[#232323]">Tier A Workflow<br /><span className="text-xs font-normal text-gray-500">Application</span></td>
@@ -884,7 +1025,7 @@ export function NavigationPatterns() {
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
             <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Header Anatomy</h4>
             <AnatomyRow label="Top strip" height="4px" colour="#2C3F43" description="Dark teal (#2C3F43) — always present, full width" />
-            <AnatomyRow label="Header" height="64px" colour="#232323" description="Dark (#232323) for Tier B, white for Tier A & C" />
+            <AnatomyRow label="Header" height="64px" colour="#232323" description="Dark (#232323) for Tier B; white for Tier A & C; transparent over hero for Tier A + Landing Hero (landing page only)" />
             <AnatomyRow label="Logo" height="—" colour="#3ba559" description="ERI logo left, vertical divider, app title right — single line, no supertitle" />
             <AnatomyRow label="Hamburger" height="—" colour="#6b7280" description="Top right — always present, even when tabs or sidebar exist" />
           </div>
@@ -896,7 +1037,7 @@ export function NavigationPatterns() {
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Header height is always 64px — never taller or shorter</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>4px dark teal top strip is always present — it is the first visual element</span></div>
               <div className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">✗</span><span>Do not add inline nav links inside the header bar — use the tab bar or sidebar instead</span></div>
-              <div className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">✗</span><span>Do not make the header transparent on scroll for Tier A or Tier C applications</span></div>
+              <div className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">✗</span><span>Do not make the header transparent on scroll for Tier A or Tier C <em>interior</em> pages — only on the public landing page of a Tier A + Landing Hero app</span></div>
             </div>
           </div>
         </div>
@@ -1021,7 +1162,7 @@ export function NavigationPatterns() {
           <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Application — Header + Tab Bar</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5">
-          Used for data tools and single-workflow apps. White header with the tab bar directly below.
+          Used for data tools and single-workflow apps with no public landing page. White header with the tab bar directly below.
           Active tab is underlined in Primary Green. The hamburger opens the single-column application
           overlay (see above).
         </p>
@@ -1038,6 +1179,52 @@ export function NavigationPatterns() {
           <div className="bg-[#F9FAFB] rounded-lg p-4 border border-gray-200">
             <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-1">Mobile</p>
             <p className="text-xs font-open-sans text-gray-700">Tabs scroll horizontally — do not wrap or collapse to a dropdown</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Tier A + Landing Hero ── */}
+      <div>
+        <div className="flex items-center gap-3 mb-2">
+          <span className="bg-[#3ba559] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER A + LANDING HERO</span>
+          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Application with Public Landing Page — Dark Hero → White App Interior</h3>
+        </div>
+        <p className="text-gray-600 font-open-sans text-sm mb-3 max-w-3xl">
+          Used when a Tier A data application has a public-facing landing page that benefits from a visual hero.
+          The landing page (<code className="bg-gray-100 px-1 rounded text-xs">/</code>) uses the standard dark image hero pattern with a transparent header.
+          Once the user navigates into the application interior (tab bar pages), the header becomes white and solid.
+          The app is still classified as <strong>Tier A</strong> — the tier does not change.
+        </p>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-5 flex gap-3">
+          <span className="text-amber-600 font-bold text-sm shrink-0">!</span>
+          <p className="text-xs font-open-sans text-amber-800">
+            <strong>When to use this pattern vs Tier B:</strong> If the app has a data/tool interior with tabs, use Tier A + Landing Hero.
+            If the entire site is editorial or marketing content (no tab-bar app interior), use Tier B.
+            The Exponential Taxonomy is Tier A + Landing Hero. Human-AI Lab is Tier B.
+          </p>
+        </div>
+        <TierALandingHeroMock />
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
+            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Landing Page Rules</h4>
+            <div className="space-y-2 text-xs font-open-sans text-gray-700">
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Use <code className="bg-gray-100 px-1 rounded">transparentHeader</code> prop on the landing page only — header becomes transparent until scrolled</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Hero image: <code className="bg-gray-100 px-1 rounded">heroImages.halHandsTouching</code> (primary) — full-bleed, <code className="bg-gray-100 px-1 rounded">#232323</code> overlay at 80–85% opacity</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Heading: white Archivo ExtraBold — first word or key phrase in Accent Lime <code className="bg-gray-100 px-1 rounded">#93E07D</code></span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>CTA button: Accent Lime background, dark text — pill-shaped marketing CTA style</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Stat counters below hero: white background, large Archivo numbers, Primary Green accent</span></div>
+              <div className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">✗</span><span>Do not use a transparent header on interior tab pages — white solid only</span></div>
+              <div className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">✗</span><span>Do not add a tab bar to the landing page — tabs appear only in the app interior</span></div>
+            </div>
+          </div>
+          <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
+            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Interior Page Rules</h4>
+            <div className="space-y-2 text-xs font-open-sans text-gray-700">
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>All interior pages use the standard white Tier A Simple header — no transparency</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Tab bar appears immediately below the white header — same as Tier A Simple</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded">#F9FAFB</code> — same as all Tier A apps</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>The landing page CTA buttons navigate to the first tab of the app interior</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1110,6 +1297,17 @@ export function NavigationPatterns() {
               <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Context bar hides on mobile</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Stepper scrolls horizontally</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Tab bar scrolls horizontally — no wrapping</span></div>
+            </div>
+          </div>
+          <div className="bg-green-50/60 rounded-lg p-5 border border-green-200">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-1.5 py-0.5 rounded">TIER A + HERO</span>
+              <span className="text-xs font-archivo font-bold text-[#232323]">Landing Hero</span>
+            </div>
+            <div className="space-y-1.5 text-xs font-open-sans text-gray-700">
+              <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Hero image scales to full viewport width</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Transparent header collapses to logo + hamburger only</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559]">→</span><span>Interior tab bar scrolls horizontally — no wrapping</span></div>
             </div>
           </div>
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">

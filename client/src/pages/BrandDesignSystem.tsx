@@ -2263,6 +2263,13 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <p className="text-sm text-gray-600">Used by all ERI web applications (PSM, Exponential Playbook, etc.). Sticky, 64px tall, white background with bottom border. Left: logo + divider + title block. Right: BETA badge + version + status dot + hamburger.</p>
               </CardContent>
             </Card>
+            <Card className="shadow-sm border-l-4 border-l-[#232323]">
+              <CardContent className="p-5">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#232323] mb-1 block">Pattern B</span>
+                <h4 className="font-bold text-[#232323] mb-2">Tier A + Landing Hero Header</h4>
+                <p className="text-sm text-gray-600">Used on the public landing page (<code className="font-mono text-xs bg-gray-100 px-1 rounded">/</code>) of a Tier A app with a visual hero (e.g. Exponential Taxonomy). Transparent background over the dark hero image until scrolled — then transitions to white. Logo and text in white. On interior tab pages, reverts to Pattern A (white solid).</p>
+              </CardContent>
+            </Card>
 
           </div>
 
@@ -2282,7 +2289,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                   {[
                     { prop: "children", type: "ReactNode", def: "—", desc: "Page content. Rendered inside <main> between header and footer." },
                     { prop: "hideFooter", type: "boolean", def: "false", desc: "Set true on pages where the footer would be redundant (e.g. full-screen app views)." },
-                    { prop: "transparentHeader", type: "boolean", def: "false", desc: "Makes the header background transparent until scrolled. Use on hero pages with a dark/image background." },
+                    { prop: "transparentHeader", type: "boolean", def: "false", desc: "Makes the header background transparent until scrolled. Use on the public landing page of a Tier A + Landing Hero app (e.g. Exponential Taxonomy /) and on Tier B marketing pages. Do not use on Tier A interior pages or Tier C pages." },
                   ].map((row, i) => (
                     <tr key={row.prop} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                       <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.prop}</code></td>
