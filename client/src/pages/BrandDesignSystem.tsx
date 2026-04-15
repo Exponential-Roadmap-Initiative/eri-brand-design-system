@@ -3083,6 +3083,127 @@ className="transition-all duration-300 ease-in-out"`}</pre>
         </section>
 
         {/* ================================================================ */}
+        {/* SECTION: FOOTER */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="footer">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Footer
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            ERI uses a <strong>minimal two-zone footer</strong> across all apps. Background is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code>. Logo and tagline on the left, copyright on the right. Link columns will be added in a future version once footer URLs are confirmed.
+          </p>
+
+          {/* Rules table */}
+          <div className="overflow-x-auto mb-8">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-[#232323] text-white">
+                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Property</th>
+                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Background", "#232323 — always. Never dark green, never white (except Tier C)"],
+                  ["Top border", "border-t border-gray-700"],
+                  ["Padding", "py-8 vertical · paddingInline: var(--eri-content-inset) horizontal"],
+                  ["Layout", "flex items-center justify-between — two zones, single row"],
+                  ["Left zone", "ERI white wordmark (h-7) + app tagline below (text-sm text-gray-400, max 80 chars)"],
+                  ["Right zone", "© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-gray-500"],
+                  ["Link columns", "None in v1 — to be added in a future version"],
+                ].map(([prop, val]) => (
+                  <tr key={prop} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="px-4 py-3 font-mono text-xs text-[#232323] font-medium w-48">{prop}</td>
+                    <td className="px-4 py-3 text-gray-600">{val}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Live demo */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Live Demo</h3>
+          <p className="text-gray-500 text-sm mb-4">Standard dark footer — used on all Tier A and Tier B apps.</p>
+          <div className="rounded-lg overflow-hidden border border-gray-200 mb-8">
+            <footer className="border-t border-gray-700" style={{ backgroundColor: '#232323' }}>
+              <div
+                className="max-w-screen-xl mx-auto w-full py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+                style={{ paddingInline: 'var(--eri-content-inset)' }}
+              >
+                <div>
+                  <img
+                    src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_f5763508.png"
+                    alt="Exponential Roadmap Initiative"
+                    className="h-7 w-auto mb-2"
+                  />
+                  <p className="text-sm text-gray-400">Science-backed taxonomy for climate impact assessment.</p>
+                </div>
+                <p className="text-sm text-gray-500 sm:text-right">
+                  © {new Date().getFullYear()} Exponential Roadmap Initiative. Exponential Taxonomy.
+                </p>
+              </div>
+            </footer>
+          </div>
+
+          {/* Tier C variation */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Permitted Variation — Tier C (White Background)</h3>
+          <p className="text-gray-500 text-sm mb-4">Admin tools with a persistent sidebar. No logo (sidebar already shows it). Same two-zone layout, light surface.</p>
+          <div className="rounded-lg overflow-hidden border border-gray-200 mb-8">
+            <footer className="border-t border-gray-200 bg-white">
+              <div
+                className="max-w-screen-xl mx-auto w-full py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+                style={{ paddingInline: 'var(--eri-content-inset)' }}
+              >
+                <p className="text-sm text-gray-500">Professional Services Matrix — Admin</p>
+                <p className="text-sm text-gray-400 sm:text-right">
+                  © {new Date().getFullYear()} Exponential Roadmap Initiative.
+                </p>
+              </div>
+            </footer>
+          </div>
+
+          {/* Code reference */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Code Reference</h3>
+          <div className="bg-[#1a1a1a] rounded-lg p-5 font-mono text-xs text-gray-300 overflow-x-auto mb-4">
+            <pre>{`{/* ✅ Standard ERI footer */}
+<footer className="border-t border-gray-700" style={{ backgroundColor: '#232323' }}>
+  <div
+    className="max-w-screen-xl mx-auto w-full py-8
+               flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+    style={{ paddingInline: 'var(--eri-content-inset)' }}
+  >
+    {/* Left zone: logo + tagline */}
+    <div>
+      <img src="[ERI_LOGO_CDN_URL]" alt="Exponential Roadmap Initiative"
+           className="h-7 w-auto mb-2" />
+      <p className="text-sm text-gray-400">App tagline — one line, max 80 chars.</p>
+    </div>
+    {/* Right zone: copyright */}
+    <p className="text-sm text-gray-500 sm:text-right">
+      © {new Date().getFullYear()} Exponential Roadmap Initiative. App Name.
+    </p>
+  </div>
+</footer>
+
+{/* ❌ Do NOT */}
+{/* bg-[#1a3a2a] dark green background */}
+{/* rounded-full on any footer element */}
+{/* Link columns in v1 */}
+{/* Omitting --eri-content-inset (breaks logo alignment) */}`}</pre>
+          </div>
+
+          {/* Non-conformant callout */}
+          <div className="border border-red-200 bg-red-50 rounded-lg p-4">
+            <p className="text-sm font-semibold text-red-700 mb-2">Non-conformant patterns to correct</p>
+            <ul className="text-sm text-red-600 space-y-1 list-disc list-inside">
+              <li>ERI Platform footer: <code className="font-mono text-xs">bg-[#1a3a2a]</code> dark green — replace with <code className="font-mono text-xs">#232323</code></li>
+              <li>PSM light footer: white background — acceptable only for Tier C admin tools, not for public-facing apps</li>
+              <li>Taxonomy footer: single-row flat layout with no logo column — upgrade to two-zone standard</li>
+            </ul>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
         {/* SECTION 12: UI COMPONENTS */}
         {/* ================================================================ */}
         <section className="mb-16" id="components">
