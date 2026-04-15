@@ -40,6 +40,7 @@ export const SECTIONS: NavSection[] = [
   { id: "page-layout",            label: "Page Layout Shells" },
   { id: "component-library",      label: "Component Library" },
   { id: "badges",                 label: "Badge Reference" },
+  { id: "cta-buttons",             label: "CTA Buttons",             sublabel: "Primary · Secondary · Rules" },
   { id: "interactive-states",     label: "Interactive States" },
   { id: "components",             label: "UI Components" },
   { id: "resources",              label: "Resources" },

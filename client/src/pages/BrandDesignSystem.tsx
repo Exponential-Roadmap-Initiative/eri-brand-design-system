@@ -2830,6 +2830,178 @@ export default function HeroPage() {
         </section>
 
         {/* ================================================================ */}
+        {/* SECTION: CTA BUTTONS */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="cta-buttons">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            CTA Buttons
+          </h2>
+          <p className="text-gray-600 mb-2 max-w-3xl">
+            ERI uses <strong>one CTA button style</strong> across all products and surfaces. There are no exceptions.
+            The shape is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-lg</code> — never a pill (<code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-full</code>).
+            The fill colour is always <strong>Accent Lime <code className="font-mono text-xs bg-[#93E07D]/20 text-[#1a6b30] px-1 rounded">#93E07D</code></strong> — never Primary Green.
+          </p>
+
+          {/* ── CRITICAL RULES BANNER ── */}
+          <div className="bg-[#1a1a1a] rounded-xl p-5 mb-8 border border-gray-700 flex flex-col md:flex-row gap-4">
+            <div className="flex-1 flex items-start gap-3">
+              <span className="text-[#93E07D] font-bold text-lg shrink-0">✓</span>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">Shape: <code className="font-mono text-[#93E07D]">rounded-lg</code> — always, everywhere</p>
+                <p className="text-gray-400 text-xs">Hero CTAs, section CTAs, header CTAs, card CTAs, footer CTAs — all use <code className="font-mono text-[#93E07D]">rounded-lg</code>.</p>
+              </div>
+            </div>
+            <div className="flex-1 flex items-start gap-3">
+              <span className="text-[#93E07D] font-bold text-lg shrink-0">✓</span>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">Fill: <code className="font-mono text-[#93E07D]">#93E07D</code> Accent Lime — always</p>
+                <p className="text-gray-400 text-xs">Never use Primary Green <code className="font-mono text-gray-400">#3ba559</code> for filled buttons. Primary Green is for links and text accents only.</p>
+              </div>
+            </div>
+            <div className="flex-1 flex items-start gap-3">
+              <span className="text-red-400 font-bold text-lg shrink-0">✗</span>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">No icon prefix, no pill shape</p>
+                <p className="text-gray-400 text-xs"><code className="font-mono text-red-400">rounded-full</code> is reserved for status badges only. Do not add Lucide icons before button text.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* ── LIVE DEMOS ── */}
+          <h3 className="font-bold text-[#232323] mb-4 text-lg">Live Examples</h3>
+
+          {/* Demo 1: Dark background (hero context) */}
+          <div className="mb-6">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">On dark background — hero sections, dark cards</p>
+            <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <div className="bg-[#232323] px-8 py-10 flex flex-wrap items-center gap-5">
+                {/* Primary */}
+                <a
+                  href="#"
+                  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a] no-underline transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: "#93E07D" }}
+                  onClick={e => e.preventDefault()}
+                >
+                  Explore the Platform
+                </a>
+                {/* Secondary */}
+                <a
+                  href="#"
+                  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-white border-2 border-white no-underline transition-opacity hover:opacity-80"
+                  onClick={e => e.preventDefault()}
+                >
+                  Human-AI Playbook
+                </a>
+              </div>
+              <div className="bg-gray-900 px-4 py-2 text-xs text-gray-400 font-mono">
+                Primary: <span className="text-[#93E07D]">bg-[#93E07D] text-[#1a1a1a] rounded-lg</span> · Secondary: <span className="text-gray-300">border-2 border-white text-white rounded-lg</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Demo 2: White background (interior pages, cards) */}
+          <div className="mb-6">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">On white / light background — interior pages, cards</p>
+            <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <div className="bg-white px-8 py-10 flex flex-wrap items-center gap-5">
+                {/* Primary */}
+                <a
+                  href="#"
+                  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a] no-underline transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: "#93E07D" }}
+                  onClick={e => e.preventDefault()}
+                >
+                  Explore Climate Solutions
+                </a>
+                {/* Secondary */}
+                <a
+                  href="#"
+                  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#232323] border-2 border-[#232323] no-underline transition-opacity hover:opacity-80"
+                  onClick={e => e.preventDefault()}
+                >
+                  Learn More
+                </a>
+              </div>
+              <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">
+                Primary: <span className="text-[#3ba559]">bg-[#93E07D] text-[#1a1a1a] rounded-lg</span> · Secondary: <span className="text-gray-600">border-2 border-[#232323] text-[#232323] rounded-lg</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Demo 3: Wrong patterns */}
+          <div className="mb-8">
+            <p className="text-xs font-semibold text-red-400 uppercase tracking-widest mb-2">Non-conformant patterns — do not use</p>
+            <div className="rounded-xl overflow-hidden border border-red-200 shadow-sm">
+              <div className="bg-[#232323] px-8 py-10 flex flex-wrap items-center gap-5">
+                <div className="flex flex-col items-start gap-2">
+                  <a href="#" className="inline-block px-6 py-3 rounded-full font-archivo font-semibold text-base text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>Pill shape — wrong</a>
+                  <span className="text-red-400 text-xs font-mono">rounded-full — reserved for status badges only</span>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <a href="#" className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-white no-underline" style={{ backgroundColor: "#3ba559" }} onClick={e => e.preventDefault()}>Primary Green fill — wrong</a>
+                  <span className="text-red-400 text-xs font-mono">#3ba559 — links &amp; accents only, never filled buttons</span>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                    Icon prefix — wrong
+                  </a>
+                  <span className="text-red-400 text-xs font-mono">No icon prefix on CTA buttons</span>
+                </div>
+              </div>
+              <div className="bg-red-950/30 px-4 py-2 text-xs text-red-400 font-mono">All three patterns above are non-conformant. Do not use in any ERI product.</div>
+            </div>
+          </div>
+
+          {/* ── CODE REFERENCE ── */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Code Reference</h3>
+          <Card className="shadow-sm bg-gray-900 mb-4">
+            <CardContent className="p-5">
+              <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`{/* ✅ Primary CTA — use on ALL surfaces */}
+<a
+  href="/solutions"
+  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a]"
+  style={{ backgroundColor: "#93E07D" }}
+>
+  Explore Climate Solutions
+</a>
+
+{/* ✅ Secondary CTA — dark background */}
+<a
+  href="/playbook"
+  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-white border-2 border-white"
+>
+  Human-AI Playbook
+</a>
+
+{/* ✅ Secondary CTA — light background */}
+<a
+  href="/playbook"
+  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#232323] border-2 border-[#232323]"
+>
+  Learn More
+</a>
+
+{/* ❌ WRONG: pill shape */}  {/* rounded-full — reserved for status badges only */}
+{/* ❌ WRONG: Primary Green fill */}  {/* bg-[#3ba559] — never for filled buttons */}
+{/* ❌ WRONG: icon prefix */}  {/* no Lucide icons before button text */}
+{/* ❌ WRONG: CTA in Tier A header */}  {/* Tier A apps: no CTA in header right zone */}`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Size variants */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Size Variants</h3>
+          <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm mb-8">
+            <div className="bg-[#232323] px-8 py-8 flex flex-wrap items-center gap-5">
+              <a href="#" className="inline-block px-4 py-2 rounded-lg font-archivo font-semibold text-sm text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>Small — header</a>
+              <a href="#" className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>Default — hero / section</a>
+              <a href="#" className="inline-block px-8 py-4 rounded-lg font-archivo font-semibold text-lg text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>Large — hero primary</a>
+            </div>
+            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Small: px-4 py-2 text-sm · Default: px-6 py-3 text-base · Large: px-8 py-4 text-lg · All use rounded-lg</div>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
         {/* SECTION 11: INTERACTIVE STATES */}
         {/* ================================================================ */}
         <section className="mb-16" id="interactive-states">
@@ -3224,7 +3396,7 @@ const tabs: TabConfig[] = [
                 <div>
                   <h4 className="font-archivo text-white mb-4" style={{ fontWeight: 500, fontSize: '18px' }}>Newsletter</h4>
                   <p className="text-white/70 mb-4" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '14px' }}>Stay up to date with our latest news and resources.</p>
-                  <a href="#" className="inline-block px-4 py-2 font-semibold text-white border border-white rounded-full hover:bg-white hover:text-[#232323] transition-colors" onClick={e => e.preventDefault()} style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '15px', fontWeight: 500 }}>Subscribe now</a>
+                  <a href="#" className="inline-block px-4 py-2 font-semibold text-white border border-white rounded-lg hover:bg-white hover:text-[#232323] transition-colors" onClick={e => e.preventDefault()} style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '15px', fontWeight: 500 }}>Subscribe now</a>
                 </div>
                 {/* Column 3: Follow us — text links, not icon squares */}
                 <div>
