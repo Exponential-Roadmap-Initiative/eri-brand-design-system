@@ -488,8 +488,7 @@ export default function BrandDesignSystem() {
             The standard hero pattern for all ERI web applications and marketing sites. A full-bleed background image
             is overlaid with a semi-transparent <code className="font-mono bg-gray-100 px-1 rounded">#232323</code> at 80–85% opacity,
             creating a consistent dark tone while allowing the image to show through. White Archivo heading with one or two
-            accent words in Accent Lime <code className="font-mono bg-gray-100 px-1 rounded">#93E07D</code>. Primary Green
-            <code className="font-mono bg-gray-100 px-1 rounded">#3ba559</code> CTA button.
+            accent words in Accent Lime <code className="font-mono bg-gray-100 px-1 rounded">#93E07D</code>. Accent Lime CTA button (<code className="font-mono bg-gray-100 px-1 rounded">rounded-lg</code>, dark text).
           </p>
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <Card className="shadow-sm overflow-hidden">
@@ -508,7 +507,7 @@ export default function BrandDesignSystem() {
               </div>
               <CardContent className="p-4">
                 <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Dark Image Hero</p>
-                <p className="text-xs text-gray-500">Background image + <code className="bg-gray-100 px-1 rounded">#232323/85</code> overlay. White Archivo 800 heading. Accent Lime for one or two accent words. Primary Green CTA button.</p>
+                <p className="text-xs text-gray-500">Background image + <code className="bg-gray-100 px-1 rounded">#232323/85</code> overlay. White Archivo 800 heading. Accent Lime for one or two accent words. Accent Lime CTA button (rounded-lg, dark text).</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
@@ -520,7 +519,7 @@ export default function BrandDesignSystem() {
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Heading</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · white · 4xl–6xl</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Accent word</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · white/80 · 16–18px</td></tr>
-                    <tr><td className="py-1.5 pr-3 text-gray-500">CTA button</td><td className="py-1.5 font-mono"><span className="text-[#3ba559] font-bold">#3ba559</span> Primary Green · white text</td></tr>
+                    <tr><td className="py-1.5 pr-3 text-gray-500">CTA button</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime · dark text <code className="text-xs">#1a1a1a</code> · rounded-lg</td></tr>
                   </tbody>
                 </table>
               </CardContent>
@@ -2348,7 +2347,7 @@ export default function HeroPage() {
                 <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Menu</h4>
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>BETA badge — outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">border border-gray-400 text-[11px] font-medium text-gray-600 rounded-full px-2 py-0.5 tracking-wide</code></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.12"</em></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.15"</em><br/><em className="text-red-400">Do NOT use: date-only format ("14 Apr 2026"), lowercase v, or date without V prefix</em></span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
                 </div>
               </CardContent>
@@ -3051,10 +3050,10 @@ const tabs: TabConfig[] = [
             <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Card p-0 · thead bg-gray-50 · tr alternating bg-white/bg-gray-50 · hover:bg-gray-100 · th font-bold text-[#232323]</div>
           </div>
 
-          {/* ── Marketing CTA Button ── */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">3. Marketing CTA Button</h3>
+          {/* ── CTA Buttons ── */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">3. CTA Buttons</h3>
           <p className="text-gray-600 mb-4 text-sm">
-            The canonical call-to-action button for <strong>marketing surfaces and landing pages</strong>. Pill-shaped, Accent Lime background, dark text. Use this style for prominent standalone CTAs on content-rich pages. For web application UI (inline actions, form submissions, data operations), use the standard rounded button with Primary Green.
+            The canonical call-to-action button for <strong>all ERI surfaces</strong> — hero sections, landing pages, interior pages, and footers. Accent Lime background (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#93E07D</code>), dark text (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#1a1a1a</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-lg</code> shape. This is the <strong>single CTA button style</strong> across all ERI products — do not use Primary Green (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#3ba559</code>) for filled buttons. Primary Green is reserved for links, active states, and text accents only.
           </p>
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="p-6 bg-white flex flex-wrap gap-4 items-center">
@@ -3062,7 +3061,7 @@ const tabs: TabConfig[] = [
                 <a
                   key={label}
                   href="#"
-                  className="inline-block px-6 py-3 rounded-full font-archivo font-semibold text-base text-[#242424] no-underline transition-opacity hover:opacity-90"
+                  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a] no-underline transition-opacity hover:opacity-90"
                   style={{ backgroundColor: "#93E07D" }}
                   onClick={e => e.preventDefault()}
                 >
@@ -3070,17 +3069,39 @@ const tabs: TabConfig[] = [
                 </a>
               ))}
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#93E07D] · text-[#242424] · rounded-full · font-archivo font-semibold · text-base · px-6 py-3</div>
+            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#93E07D] · text-[#1a1a1a] · rounded-lg · font-archivo font-semibold · text-base · px-6 py-3 · no icon prefix</div>
           </div>
           <Card className="shadow-sm bg-gray-900 mb-10">
             <CardContent className="p-5">
-              <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`<a
-  href="/members"
-  className="inline-block px-6 py-3 rounded-full font-archivo font-semibold text-base text-[#242424]"
+              <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`{/* ✅ Primary CTA — use everywhere (hero, interior, footer) */}
+<a
+  href="/solutions"
+  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a]"
   style={{ backgroundColor: "#93E07D" }}
 >
-  Our members and partners
-</a>`}</pre>
+  Explore Climate Solutions
+</a>
+
+{/* ✅ Secondary CTA — dark background surfaces */}
+<a
+  href="/playbook"
+  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-white border-2 border-white"
+>
+  Human-AI Playbook
+</a>
+
+{/* ✅ Secondary CTA — light background surfaces */}
+<a
+  href="/playbook"
+  className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#232323] border-2 border-[#232323]"
+>
+  Learn More
+</a>
+
+{/* ❌ Do NOT use Primary Green for filled buttons */}
+{/* ❌ Do NOT add icon prefixes to CTA buttons */}
+{/* ❌ Do NOT add CTA buttons to the header right zone */}
+{/* ❌ Do NOT use pill shape (rounded-full) for CTAs */}`}</pre>
             </CardContent>
           </Card>
 
@@ -3160,7 +3181,7 @@ const tabs: TabConfig[] = [
                   { name: "Primary text",    value: "#232323",  swatch: "#232323" },
                   { name: "Secondary text",  value: "#6B7280",  swatch: "#6B7280" },
                   { name: "Border",          value: "#E5E7EB",  swatch: "#E5E7EB",  border: true },
-                  { name: "CTA button",      value: "#3ba559",  swatch: "#3ba559" },
+                  { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
                 ],
                 use: "Application interiors — PSM, Crocodile data views, user management, dashboards",
               },
@@ -3505,7 +3526,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     </thead>
                     <tbody className="font-mono">
                       {[
-                        ["primary-green",  "#3ba559", "Buttons, CTAs, links, success"],
+                        ["primary-green",  "#3ba559", "Links, active states, text accents — NOT for filled buttons"],
                         ["primary-dark",    "#232323", "Headings, footer bg, dark section backgrounds, hero overlay"],
                         ["neutral-gray",    "#6b7280", "Secondary text, borders"],
                         ["off-white",       "#F9FAFB", "Page bg, card bg, light section bg"],
@@ -3667,7 +3688,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code> as the wrapper for all public-facing pages — never build a custom header or footer.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
-                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Primary CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#3ba559] text-white hover:bg-[#2c6d3e]</code>.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. No CTA buttons in the header right zone.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, white background, <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Max content width: <code className="bg-gray-100 px-1 rounded text-xs">max-w-6xl mx-auto px-4</code>. Never exceed 1152px for content.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Pillar colours must always be used in their correct pillar context — do not reassign P1 colour to P3 content.</span></div>
