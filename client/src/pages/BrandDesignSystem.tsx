@@ -520,7 +520,7 @@ export default function BrandDesignSystem() {
                   <tbody>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Background</td><td className="py-1.5 font-mono text-[#232323]">Full-bleed image + <span className="text-[#232323] font-bold">#232323</span> at 80–85% opacity</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Text alignment</td><td className="py-1.5 font-mono text-[#232323]">text-left — NEVER text-center</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Left edge</td><td className="py-1.5 font-mono text-[#232323]">Aligned with header logotype — <code className="text-xs">pl-6 md:pl-10 lg:pl-16</code></td></tr>
+                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Left edge</td><td className="py-1.5 font-mono text-[#232323]">Anchored to logotype via <code className="text-xs text-[#3ba559] bg-green-50 px-1 rounded">--eri-content-inset</code> — wrap text block in <code className="text-xs">max-w-screen-xl mx-auto</code> container with <code className="text-xs">paddingInline: var(--eri-content-inset)</code>. Do NOT use raw <code className="text-xs">pl-*</code> padding.</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Content width</td><td className="py-1.5 font-mono text-[#232323]">max-w-xl (~540px) — right half reserved for image</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Eyebrow label</td><td className="py-1.5 font-mono text-[#232323]">Required — <span className="text-[#93E07D] font-bold">#93E07D</span> uppercase tracking-widest · "BRAND NAME ——— BETA"</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Heading</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · white · 4xl–6xl</td></tr>
@@ -2175,6 +2175,49 @@ import { pillarBottomIcons } from "@/lib/assets";
             are defined here so every page shares the same spatial rhythm.
           </p>
 
+          {/* Content Inset Variable */}
+          <div className="bg-[#232323] rounded-xl p-6 mb-10 border border-gray-700">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="shrink-0 bg-[#93E07D]/10 border border-[#93E07D]/30 rounded-lg px-3 py-1.5">
+                <span className="font-mono text-[#93E07D] text-sm font-bold">--eri-content-inset</span>
+              </div>
+              <div>
+                <h4 className="font-archivo font-bold text-white text-base mb-1">Content Inset — The Logotype Anchor</h4>
+                <p className="text-gray-400 text-sm">A single CSS variable that anchors the header logotype and the hero text block to the same left edge. Both containers must use this variable — never hard-code padding values.</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-2">Definition — add to client/src/index.css :root</p>
+                <pre className="bg-black/40 rounded-lg p-4 text-[#93E07D] font-mono text-xs overflow-x-auto">{
+`--eri-content-inset: clamp(1rem, 3vw, 2rem);
+/* ~16px on mobile → ~32px on wide screens */
+/* Defines the left edge shared by the header
+   logotype and the hero text block. */`
+                }</pre>
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-2">Usage — header + hero containers</p>
+                <pre className="bg-black/40 rounded-lg p-4 text-gray-300 font-mono text-xs overflow-x-auto">{
+`{/* Header inner container */}
+<div className="max-w-screen-xl mx-auto w-full"
+  style={{ paddingInline:
+    'var(--eri-content-inset)' }}>
+
+{/* Hero text container — same anchor */}
+<div className="max-w-screen-xl mx-auto w-full"
+  style={{ paddingInline:
+    'var(--eri-content-inset)' }}>
+  <div className="max-w-xl text-left">`
+                }</pre>
+              </div>
+            </div>
+            <div className="mt-4 flex gap-6 text-xs">
+              <div className="flex items-center gap-2 text-[#93E07D]"><span className="font-bold">✓</span><span>Logo left edge = Hero H1 left edge — always</span></div>
+              <div className="flex items-center gap-2 text-red-400"><span className="font-bold">✗</span><span>Do NOT use <code className="font-mono bg-black/30 px-1 rounded">px-4 md:px-6 lg:px-8</code> — static values break the alignment</span></div>
+            </div>
+          </div>
+
           <h3 className="font-bold text-[#232323] mb-4 text-lg">Container Widths</h3>
           <Card className="shadow-sm mb-10">
             <CardContent className="p-0">
@@ -2337,7 +2380,7 @@ export default function HeroPage() {
 
           {/* Header Anatomy — Web App Pattern */}
           <h3 className="font-bold text-[#232323] mb-2 text-lg">Web App Header Anatomy</h3>
-          <p className="text-gray-600 mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), white background with bottom border. Used across all ERI web applications.</p>
+          <p className="text-gray-600 mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), white background with bottom border. Inner container uses <code className="font-mono text-xs bg-gray-100 px-1 rounded">max-w-screen-xl mx-auto</code> with <code className="font-mono text-xs bg-[#93E07D]/10 text-[#3ba559] px-1 rounded">paddingInline: var(--eri-content-inset)</code> — this is the canonical anchor that aligns the logotype with the hero text block.</p>
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <Card className="shadow-sm">
               <CardContent className="p-5">
