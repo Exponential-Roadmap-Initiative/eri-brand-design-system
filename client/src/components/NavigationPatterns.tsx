@@ -1100,6 +1100,39 @@ export function NavigationPatterns() {
             <p className="text-xs font-open-sans text-gray-700">Full-width outlined button below the user footer. Uses the dark border (#232323) with a logout icon. Never use a destructive red colour here.</p>
           </div>
         </div>
+
+        {/* Live example */}
+        <div className="mt-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider">Live Example</span>
+            <span className="text-xs font-archivo font-bold text-[#232323]">Exponential Taxonomy — App Overlay open on landing page</span>
+          </div>
+          <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/taxonomy-app-overlay-example_19a0f51f.png"
+              alt="Exponential Taxonomy app overlay open — dark floating panel anchored top-right, showing nav items, Admin Workspace in green, user identity footer, and Log Out button, with the hero image and content visible behind it"
+              className="w-full block"
+            />
+          </div>
+          <div className="mt-3 grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Dark panel bg</p>
+              <p className="text-[11px] font-open-sans text-gray-600"><code className="bg-gray-100 px-1 rounded">#232323</code> surface — not white or grey</p>
+            </div>
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Active item</p>
+              <p className="text-[11px] font-open-sans text-gray-600">"Home" in Primary Green — inactive items in white/light text</p>
+            </div>
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Admin link</p>
+              <p className="text-[11px] font-open-sans text-gray-600">"Admin Workspace" in Primary Green with external-link icon</p>
+            </div>
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Content behind</p>
+              <p className="text-[11px] font-open-sans text-gray-600">Hero image and page content remain visible — panel overlays right side only</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* ── Tier C: Persistent sidebar ── */}
