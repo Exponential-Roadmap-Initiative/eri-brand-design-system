@@ -2353,9 +2353,10 @@ export default function HeroPage() {
               <CardContent className="p-5">
                 <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Menu</h4>
                 <div className="space-y-3 text-sm text-gray-600">
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>BETA badge — outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">border border-gray-400 text-[11px] font-medium text-gray-600 rounded-full px-2 py-0.5 tracking-wide</code></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>App status badge — transparent outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>. Values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">LIVE</code>. On dark headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-white border-white/60</code>. On white headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-gray-500 border-gray-400</code>. <em className="text-red-400">Never use a filled background.</em></span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.15"</em><br/><em className="text-red-400">Do NOT use: date-only format ("14 Apr 2026"), lowercase v, or date without V prefix</em></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Tier B only</strong> — optional single CTA button: <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#93E07D] text-[#1a1a1a] rounded-lg px-4 py-2 text-sm font-semibold</code> (e.g. "Contact us"). <em className="text-red-400">Tier A apps: no CTA in header.</em></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
                 </div>
               </CardContent>
             </Card>
@@ -2379,7 +2380,7 @@ export default function HeroPage() {
                       </div>
                       {/* Right */}
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-400 text-[11px] font-medium text-gray-600 tracking-wide">BETA</span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full border border-gray-400 text-[11px] font-semibold text-gray-500 tracking-widest uppercase">BETA</span>
                         <span className="text-[11px] font-medium text-gray-500 tracking-wide">V.2026.04.12</span>
                         <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -2390,13 +2391,13 @@ export default function HeroPage() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">sticky top-0 z-50 · bg-white · h-16 · border-b border-gray-200 · left: logo + divider + title block · right: BETA + version + hamburger</div>
+                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">sticky top-0 z-50 · bg-white · h-16 · border-b border-gray-200 · left: logo + divider + title block · right: status badge (outlined, text-gray-500 border-gray-400) + version + hamburger</div>
               </div>
             </div>
 
-            {/* State 2: Transparent on dark hero */}
+            {/* State 2b: Tier B transparent header with CTA */}
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 2 — Transparent header (on dark hero, not yet scrolled)</p>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 2 — Tier B Marketing Header (transparent on dark hero, with optional CTA)</p>
               <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 <div className="bg-[#232323]">
                   <div className="px-6">
@@ -2407,8 +2408,9 @@ export default function HeroPage() {
                         <span className="text-[18px] font-semibold text-gray-300 truncate">Brand Design System</span>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-500 text-[11px] font-medium text-gray-400 tracking-wide">BETA</span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full border border-white/60 text-white text-[11px] font-semibold tracking-widest uppercase">BETA</span>
                         <span className="text-[11px] font-medium text-gray-400 tracking-wide">V.2026.04.12</span>
+                        <button className="px-4 py-1.5 bg-[#93E07D] text-[#1a1a1a] rounded-lg text-sm font-semibold">Contact us</button>
                         <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-400">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" />
@@ -2418,7 +2420,7 @@ export default function HeroPage() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">transparentHeader=true · bg-transparent · logo: filter brightness(0) invert(1) · text colours inverted for dark bg</div>
+                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Tier B only · transparentHeader=true · optional CTA button between version and hamburger · bg-[#93E07D] text-[#1a1a1a] rounded-lg · Tier A: no CTA in header</div>
               </div>
             </div>
           </div>
@@ -2569,8 +2571,51 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 2. System & Experimental Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">2. System &amp; Experimental Badges</h3>
+          {/* 2. App Status Badges — Header */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">2. App Status Badges</h3>
+          <p className="text-gray-600 mb-4 text-sm">Used in the header right zone of all ERI apps to communicate the release stage of the application. One canonical style: transparent outlined pill, all-caps, adapts to header background colour.</p>
+          <Card className="shadow-sm mb-4">
+            <CardContent className="p-5">
+              <div className="flex flex-wrap gap-6 mb-5">
+                {[
+                  { label: "ALPHA",   desc: "Internal / pre-release" },
+                  { label: "BETA",    desc: "Public, under active development" },
+                  { label: "PREVIEW", desc: "Feature-complete, not yet launched" },
+                  { label: "LIVE",    desc: "Fully launched, stable, production" },
+                ].map(({ label, desc }) => (
+                  <div key={label} className="flex flex-col items-start gap-2">
+                    <div className="flex items-center gap-3">
+                      {/* On dark */}
+                      <div className="bg-[#232323] px-3 py-1.5 rounded">
+                        <span className="rounded-full border border-white/60 text-white text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
+                      </div>
+                      {/* On white */}
+                      <div className="bg-white border border-gray-200 px-3 py-1.5 rounded">
+                        <span className="rounded-full border border-gray-400 text-gray-500 text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-500">{desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-gray-50 rounded p-3 text-xs space-y-1.5">
+                <p className="font-semibold text-[#232323] mb-1">Canonical class string</p>
+                <code className="font-mono text-gray-700 block">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>
+                <p className="text-gray-500 mt-2"><strong>On dark/transparent headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-white border-white/60</code></p>
+                <p className="text-gray-500"><strong>On white/light headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-gray-500 border-gray-400</code></p>
+                <p className="text-red-500 mt-1">Never use a filled background colour on the status badge. Never use a status dot alongside the badge.</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="shadow-sm mb-8 border-amber-200 bg-amber-50">
+            <CardContent className="p-4">
+              <p className="text-xs font-semibold text-amber-800 mb-1">Non-conformant pattern to correct</p>
+              <p className="text-xs text-amber-700">HAL currently uses a filled gray pill (<code className="font-mono bg-white px-1 rounded">bg-gray-700 text-white rounded-full</code>) for its Beta badge. This should be replaced with the transparent outlined style above.</p>
+            </CardContent>
+          </Card>
+
+          {/* 3. System & Experimental Badges */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">3. System &amp; Experimental Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in the header and on feature flags to signal development status.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2591,8 +2636,8 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 3. Priority Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">3. Priority Badges</h3>
+          {/* 4. Priority Badges */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">4. Priority Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in CPR Recommendations and action lists to indicate urgency level.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2613,8 +2658,8 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 4. KPI & Framework Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">4. KPI &amp; Framework Badges</h3>
+          {/* 5. KPI & Framework Badges */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">5. KPI &amp; Framework Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in KPI sections and action themes to classify framework items.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2635,8 +2680,8 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 5. Qualification & Status Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">5. Qualification &amp; Status Badges</h3>
+          {/* 6. Qualification & Status Badges */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Qualification &amp; Status Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in Climate Solutions qualification, case study cards, and pillar content.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2657,8 +2702,8 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 6. Data Source Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Data Source &amp; API Badges</h3>
+          {/* 7. Data Source Badges */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">7. Data Source &amp; API Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in DataSourceCard, DataSourcesTable, and widget headers to show data freshness and source type.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2681,8 +2726,8 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 7. Opportunity Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">7. Opportunity &amp; Category Badges</h3>
+          {/* 8. Opportunity Badges */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">8. Opportunity &amp; Category Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in CPR Opportunities and impact portfolio to categorise opportunity types.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2719,6 +2764,7 @@ export default function HeroPage() {
                 <tbody>
                   {[
                     { family: "Tier",          shape: "rounded",      size: "text-[10px] px-1.5 py-0.5", border: "No",     where: "Header, WorkspaceHub, assessment pages" },
+                    { family: "App Status",    shape: "rounded-full", size: "text-[11px] px-2.5 py-0.5", border: "Yes (border-current)", where: "Header right zone — ALPHA / BETA / PREVIEW / LIVE" },
                     { family: "Experimental",  shape: "rounded-full", size: "text-[11px] px-2.5 py-1",   border: "Yes",    where: "Header right zone" },
                     { family: "Priority",      shape: "rounded-full", size: "text-xs px-2 py-0.5",        border: "Yes",    where: "CPR Recommendations, action lists" },
                     { family: "KPI / Framework", shape: "rounded",    size: "text-xs px-2 py-0.5",        border: "No",     where: "KPI sections, action themes" },
@@ -3695,7 +3741,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code> as the wrapper for all public-facing pages — never build a custom header or footer.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
-                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. No CTA buttons in the header right zone.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. Tier B marketing headers may include one CTA button (e.g. "Contact us") in the right zone. Tier A application headers: no CTA in header.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, white background, <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Max content width: <code className="bg-gray-100 px-1 rounded text-xs">max-w-6xl mx-auto px-4</code>. Never exceed 1152px for content.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Pillar colours must always be used in their correct pillar context — do not reassign P1 colour to P3 content.</span></div>
