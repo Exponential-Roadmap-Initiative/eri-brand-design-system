@@ -2260,7 +2260,7 @@ import { pillarBottomIcons } from "@/lib/assets";
               <CardContent className="p-5">
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-[#3ba559] mb-1 block">Pattern A</span>
                 <h4 className="font-bold text-[#232323] mb-2">Web App Header</h4>
-                <p className="text-sm text-gray-600">Used by all ERI web applications (PSM, Exponential Playbook, etc.). Sticky, 64px tall, white background with bottom border. Left: logo + divider + title block. Right: BETA badge + version + status dot + hamburger.</p>
+                <p className="text-sm text-gray-600">Used by all ERI web applications (PSM, Exponential Playbook, etc.). Sticky, 64px tall, white background with bottom border. Left: logo + divider + title block. Right: BETA badge + version + hamburger.</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm border-l-4 border-l-[#232323]">
@@ -2349,8 +2349,7 @@ export default function HeroPage() {
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>BETA badge — outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">border border-gray-400 text-[11px] font-medium text-gray-600 rounded-full px-2 py-0.5 tracking-wide</code></span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.12"</em></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Live status dot — <code className="font-mono text-xs bg-gray-100 px-1 rounded">w-2 h-2 rounded-full bg-[#3ba559]</code> (green = live)</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
                 </div>
               </CardContent>
             </Card>
@@ -2376,7 +2375,6 @@ export default function HeroPage() {
                       <div className="flex items-center gap-2 shrink-0">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-400 text-[11px] font-medium text-gray-600 tracking-wide">BETA</span>
                         <span className="text-[11px] font-medium text-gray-500 tracking-wide">V.2026.04.12</span>
-                        <span className="w-2 h-2 rounded-full bg-[#3ba559] shrink-0" />
                         <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" />
@@ -2386,7 +2384,7 @@ export default function HeroPage() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">sticky top-0 z-50 · bg-white · h-16 · border-b border-gray-200 · left: logo + divider + title block · right: BETA + version + dot + hamburger</div>
+                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">sticky top-0 z-50 · bg-white · h-16 · border-b border-gray-200 · left: logo + divider + title block · right: BETA + version + hamburger</div>
               </div>
             </div>
 
@@ -2405,7 +2403,6 @@ export default function HeroPage() {
                       <div className="flex items-center gap-2 shrink-0">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-500 text-[11px] font-medium text-gray-400 tracking-wide">BETA</span>
                         <span className="text-[11px] font-medium text-gray-400 tracking-wide">V.2026.04.12</span>
-                        <span className="w-2 h-2 rounded-full bg-[#3ba559] shrink-0" />
                         <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-400">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" />
@@ -3608,7 +3605,6 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <div className="flex items-center gap-2">
                   <span className="border border-gray-400 text-gray-600 rounded-full px-2 py-0.5 text-[10px]">BETA</span>
                   <span className="text-gray-500 text-[11px]">V.YYYY.MM.DD</span>
-                  <span className="w-2 h-2 rounded-full bg-[#3ba559]" />
                   <span className="text-gray-500 text-lg">≡</span>
                 </div>
               </div>
@@ -3627,7 +3623,6 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["App title",              "text-[18px] font-semibold text-[#384151]",   "Current app/page name."],
                     ["BETA badge",             "border border-gray-400 text-gray-600 rounded-full px-2 py-0.5 text-[11px]", "Outlined pill."],
                     ["Version string",         "text-[11px] font-medium text-gray-500 tracking-wide", "Format: V.YYYY.MM.DD"],
-                    ["Live status dot",        "w-2 h-2 rounded-full bg-[#3ba559]",       "Green = live."],
                     ["Hamburger menu",         "size-9 rounded-md",                       "Lucide Menu icon. Opens full-screen overlay."],
                   ].map(([el, classes, notes]) => (
                     <tr key={el} className="border-b border-gray-100">

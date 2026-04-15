@@ -457,7 +457,6 @@ function TierBAppOverlayMock() {
         <div className="flex items-center gap-2">
           <span className="text-[10px] border border-gray-300 rounded-full px-2 py-0.5 font-open-sans text-gray-500">BETA</span>
           <span className="text-[10px] text-gray-400 font-open-sans">V.2026.04.08</span>
-          <div className="w-2 h-2 rounded-full bg-red-500" />
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-gray-500 p-2 hover:bg-gray-100 rounded transition-colors ml-1"
@@ -858,7 +857,6 @@ function TierAWorkflowHeaderMock() {
         <div className="flex items-center gap-2">
           <span className="text-[10px] border border-gray-300 rounded-full px-2 py-0.5 font-open-sans text-gray-500">BETA</span>
           <span className="text-[10px] text-gray-400 font-open-sans">V.2026.04.08</span>
-          <div className="w-2 h-2 rounded-full bg-red-500" />
           <button className="text-gray-500 p-2 hover:bg-gray-100 rounded transition-colors ml-1">
             <Menu size={18} />
           </button>

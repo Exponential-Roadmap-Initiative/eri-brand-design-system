@@ -7,7 +7,7 @@
  *   LEFT:  ERI logo (h-8) → 1px gray-300 vertical divider → single-line app title
  *            App title: 18px / 600 / #384151 (dark blue-slate)
  *            NO supertitle — the logo already identifies ERI
- *   RIGHT: BETA badge (outlined pill) → version string → live dot → hamburger icon
+ *   RIGHT: BETA badge (outlined pill) → version string → hamburger icon
  *
  * Footer follows the public website pattern (exponentialroadmap.org):
  *   Background: #232323 (dark charcoal — NOT dark green)
@@ -73,7 +73,7 @@ export default function PublicLayout({ children, transparentHeader = false, hide
             </span>
           </div>
 
-          {/* RIGHT: BETA badge + version + live dot + hamburger */}
+          {/* RIGHT: BETA badge + version + hamburger */}
           <div className="flex items-center gap-2 shrink-0">
 
             {/* BETA badge — outlined pill, matches PSM app style */}
@@ -86,8 +86,6 @@ export default function PublicLayout({ children, transparentHeader = false, hide
               {APP_VERSION}
             </span>
 
-            {/* Live status dot — green = live/published */}
-            <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-[#3ba559] shrink-0" title="Live" />
 
             {/* Hamburger menu — visible on mobile only (lg+ uses the left panel) */}
             <button
