@@ -1071,6 +1071,39 @@ export function NavigationPatterns() {
             <p className="text-xs font-open-sans text-gray-700">Below the navigation column, separated by a rule. Small caps label "EXTERNAL RESOURCES", then compact link list with external-link icons.</p>
           </div>
         </div>
+
+        {/* Live example */}
+        <div className="mt-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider">Live Example</span>
+            <span className="text-xs font-archivo font-bold text-[#232323]">Human-AI Lab — Hub Overlay open</span>
+          </div>
+          <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hub-overlay-example_e5772e0c.png"
+              alt="Human-AI Lab Hub Overlay — full-screen dark #232323 background, two-column layout with Navigation on the left and numbered Application cards on the right, Contact Us in Primary Green, External Resources section at the bottom left"
+              className="w-full block"
+            />
+          </div>
+          <div className="mt-3 grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Background #232323</p>
+              <p className="text-[11px] font-open-sans text-gray-600">Dark neutral surface — not green-tinted. Applies to both columns and the header bar.</p>
+            </div>
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Two-column layout</p>
+              <p className="text-[11px] font-open-sans text-gray-600">Navigation left, Applications right. Divider line separates the columns.</p>
+            </div>
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Pillar-colour borders</p>
+              <p className="text-[11px] font-open-sans text-gray-600">Each application card has a 2px left border in its pillar colour — green, teal, orange, purple.</p>
+            </div>
+            <div className="bg-[#F9FAFB] rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">✓ Contact Us green</p>
+              <p className="text-[11px] font-open-sans text-gray-600">"Contact Us" link in Primary Green <code className="bg-gray-100 px-1 rounded">#3ba559</code> — the only coloured nav item.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* ── Tier B: Application overlay ── */}
