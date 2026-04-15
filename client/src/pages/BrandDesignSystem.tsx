@@ -486,9 +486,10 @@ export default function BrandDesignSystem() {
           <h3 className="font-bold text-[#232323] mb-4 text-lg mt-12">Dark Image Hero — Standard</h3>
           <p className="text-gray-600 mb-6 text-sm max-w-3xl">
             The standard hero pattern for all ERI web applications and marketing sites. A full-bleed background image
-            is overlaid with a semi-transparent <code className="font-mono bg-gray-100 px-1 rounded">#232323</code> at 80–85% opacity,
-            creating a consistent dark tone while allowing the image to show through. White Archivo heading with one or two
-            accent words in Accent Lime <code className="font-mono bg-gray-100 px-1 rounded">#93E07D</code>. Accent Lime CTA button (<code className="font-mono bg-gray-100 px-1 rounded">rounded-lg</code>, dark text).
+            is overlaid with a semi-transparent <code className="font-mono bg-gray-100 px-1 rounded">#232323</code> at 80–85% opacity.
+            Text is <strong>always left-aligned</strong>, with the left edge aligned with the ERI logotype in the header (same container padding).
+            The eyebrow label, H1, body text, and CTA buttons occupy the <strong>left half only</strong> — the right half is reserved for the image composition.
+            H1 accent word uses <strong>Accent Lime <code className="font-mono bg-gray-100 px-1 rounded">#93E07D</code></strong> — never Primary Green on dark backgrounds.
           </p>
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <Card className="shadow-sm overflow-hidden">
@@ -498,16 +499,18 @@ export default function BrandDesignSystem() {
               >
                 {/* Simulated dark overlay pattern */}
                 <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 70% 50%, #3ba559 0%, transparent 60%)" }} />
-                <div className="relative z-10 px-6 text-center">
+                <div className="relative z-10 pl-6 text-left" style={{maxWidth: '55%'}}>
+                  <p className="font-mono text-[8px] tracking-widest text-[#93E07D] uppercase mb-1">EXPONENTIAL ROADMAP INITIATIVE <span className="text-white/50">———</span> BETA</p>
                   <p className="font-archivo font-extrabold text-2xl text-white leading-tight">
                     <span className="text-[#93E07D]">Exponential</span><br />Human-AI Lab
                   </p>
-                  <button className="mt-3 px-4 py-1.5 bg-[#3ba559] text-white text-xs font-semibold rounded">Explore the Application Suite →</button>
+                  <p className="text-white/70 text-[10px] mt-1 mb-2 leading-snug">One place for everything ERI builds at the intersection of human expertise and AI.</p>
+                  <button className="mt-1 px-3 py-1 bg-[#93E07D] text-[#1a1a1a] text-[10px] font-semibold rounded-md">Explore the Application Suite →</button>
                 </div>
               </div>
               <CardContent className="p-4">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Dark Image Hero</p>
-                <p className="text-xs text-gray-500">Background image + <code className="bg-gray-100 px-1 rounded">#232323/85</code> overlay. White Archivo 800 heading. Accent Lime for one or two accent words. Accent Lime CTA button (rounded-lg, dark text).</p>
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Dark Image Hero — Correct Layout</p>
+                <p className="text-xs text-gray-500">Left-aligned text, left edge aligned with header logotype. Eyebrow label above H1. Accent Lime <code className="bg-gray-100 px-1 rounded">#93E07D</code> accent word. Accent Lime CTA button (rounded-lg, dark text). Right half reserved for image.</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
@@ -516,8 +519,12 @@ export default function BrandDesignSystem() {
                 <table className="w-full text-xs">
                   <tbody>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Background</td><td className="py-1.5 font-mono text-[#232323]">Full-bleed image + <span className="text-[#232323] font-bold">#232323</span> at 80–85% opacity</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Text alignment</td><td className="py-1.5 font-mono text-[#232323]">text-left — NEVER text-center</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Left edge</td><td className="py-1.5 font-mono text-[#232323]">Aligned with header logotype — <code className="text-xs">pl-6 md:pl-10 lg:pl-16</code></td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Content width</td><td className="py-1.5 font-mono text-[#232323]">max-w-xl (~540px) — right half reserved for image</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Eyebrow label</td><td className="py-1.5 font-mono text-[#232323]">Required — <span className="text-[#93E07D] font-bold">#93E07D</span> uppercase tracking-widest · "BRAND NAME ——— BETA"</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Heading</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · white · 4xl–6xl</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Accent word</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime</td></tr>
+                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Accent word</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime — NEVER <span className="text-[#3ba559] font-bold">#3ba559</span> on dark bg</td></tr>
                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · white/80 · 16–18px</td></tr>
                     <tr><td className="py-1.5 pr-3 text-gray-500">CTA button</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime · dark text <code className="text-xs">#1a1a1a</code> · rounded-lg</td></tr>
                   </tbody>
