@@ -44,6 +44,7 @@ export const SECTIONS: NavSection[] = [
   { id: "footer",                  label: "Footer",                  sublabel: "Standard · Tier C variation" },
   { id: "layout-wrapper",          label: "Layout Wrapper",           sublabel: "Persistent header & footer" },
   { id: "contact-us",              label: "Contact Us Integration",  sublabel: "Shared service · URL params" },
+  { id: "standard-components",    label: "Standard Components",     sublabel: "6 canonical files · copy verbatim" },
   { id: "interactive-states",     label: "Interactive States" },
   { id: "components",             label: "UI Components" },
   { id: "resources",              label: "Resources" },

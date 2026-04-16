@@ -3377,6 +3377,81 @@ function ContactPage() {
             </CardContent>
           </Card>
 
+          {/* Button implementation — CRITICAL */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Button Implementation — Mandatory Style</h3>
+          <div className="rounded-lg border-2 border-red-400 bg-red-50 p-4 mb-4">
+            <p className="text-sm font-bold text-red-700 mb-1">CRITICAL — Do not style this button yourself.</p>
+            <p className="text-sm text-red-600">The Contact Us button MUST use Accent Lime fill, <code className="font-mono text-xs bg-red-100 px-1 rounded">rounded-lg</code>, dark text, and no icon. Any other style is non-conformant.</p>
+          </div>
+
+          {/* Live demo */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-3 px-6 py-3 rounded-lg" style={{ backgroundColor: '#232323' }}>
+              <span className="text-xs text-gray-400 uppercase tracking-widest">On dark header:</span>
+              <a
+                href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
+                className="px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+                target="_blank" rel="noreferrer"
+              >
+                Contact Us
+              </a>
+            </div>
+            <div className="flex items-center gap-3 px-6 py-3 rounded-lg border border-gray-200 bg-white">
+              <span className="text-xs text-gray-400 uppercase tracking-widest">On white header:</span>
+              <a
+                href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
+                className="px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+                target="_blank" rel="noreferrer"
+              >
+                Contact Us
+              </a>
+            </div>
+          </div>
+
+          {/* Code snippet */}
+          <Card className="shadow-sm bg-gray-900 mb-4">
+            <CardContent className="p-5">
+              <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`{/* ✅ CORRECT — copy this exactly */}
+const contactUrl =
+  'https://contact-us.exponentialroadmap.org/' +
+  '?source=YOUR_SOURCE_ID' +
+  '&sourceLabel=Your+App+Name' +
+  '&return=https%3A%2F%2Fyour-app.exponentialroadmap.org';
+
+<a
+  href={contactUrl}
+  className="px-4 py-2 bg-[#93E07D] text-[#1a1a1a] rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+>
+  Contact Us
+</a>
+
+{/* ❌ WRONG — white fill */}
+{/* <button className="bg-white text-gray-900 rounded-lg">Contact Us</button> */}
+
+{/* ❌ WRONG — pill shape */}
+{/* <button className="bg-[#93E07D] rounded-full">Contact Us</button> */}
+
+{/* ❌ WRONG — icon suffix */}
+{/* <button className="bg-[#93E07D] rounded-lg">Contact Us ✉</button> */}`}</pre>
+            </CardContent>
+          </Card>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            {[
+              { label: 'Fill', value: 'bg-[#93E07D]', ok: true },
+              { label: 'Text', value: 'text-[#1a1a1a]', ok: true },
+              { label: 'Shape', value: 'rounded-lg', ok: true },
+              { label: 'Icon', value: 'None — text only', ok: true },
+            ].map(({ label, value, ok }) => (
+              <div key={label} className={`rounded-lg p-3 border ${ok ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-1">{label}</p>
+                <p className="text-xs font-mono text-gray-800">{value}</p>
+              </div>
+            ))}
+          </div>
+
           {/* Registered source IDs */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">Registered Source IDs</h3>
           <p className="text-sm text-gray-500 mb-4">Source IDs are self-registering — no manual setup required. This table is maintained here for human reference. Add your app's row when integrating.</p>
@@ -3445,6 +3520,528 @@ function ContactPage() {
               <p className="text-xs text-gray-500 mt-2">Requires a Manus account with the <code className="font-mono text-xs bg-gray-200 px-1 rounded">admin</code> role on the contact service. Provides a Submissions tab (all enquiries, filterable by source app) and a Registered Apps tab (submission counts, first/last seen, return URL).</p>
             </CardContent>
           </Card>
+        </section>
+
+        {/* ================================================================ */}
+        {/* STANDARD COMPONENTS */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="standard-components">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+            Standard Components
+          </h2>
+          <p className="text-gray-500 text-sm mb-6">Version 2.0.0 · 6 canonical files · Copy verbatim — do not reconstruct</p>
+
+          {/* Critical instruction banner */}
+          <div className="rounded-lg p-5 mb-8 border-l-4" style={{ backgroundColor: '#1a1a1a', borderLeftColor: '#93E07D' }}>
+            <p className="text-sm font-bold mb-2" style={{ color: '#93E07D' }}>COPY THESE FILES — DO NOT RECONSTRUCT FROM RULES</p>
+            <p className="text-sm text-gray-300 mb-3">
+              At the start of every new ERI project, copy all 6 standard component files into{" "}
+              <code className="font-mono text-xs bg-gray-800 px-1 rounded">client/src/components/eri/</code>.
+              These files are the single source of truth. Do not rewrite them from the BDS rules — copy the files.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+              {[
+                { name: "EriStatusBadge.tsx",      url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriStatusBadge_d862f741.tsx" },
+                { name: "EriContactUsButton.tsx",  url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriContactUsButton_55080863.tsx" },
+                { name: "EriAppHeader.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_6b836634.tsx" },
+                { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_0aef00aa.tsx" },
+                { name: "EriHeroSection.tsx",       url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriHeroSection_48155b1d.tsx" },
+                { name: "EriPageLayout.tsx",        url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriPageLayout_ca390308.tsx" },
+              ].map(({ name, url }) => (
+                <a
+                  key={name}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                >
+                  <Download className="w-3 h-3 shrink-0" style={{ color: '#93E07D' }} />
+                  <span>{name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Component 1: EriStatusBadge ─────────────────────────────── */}
+          <h3 className="font-bold text-[#232323] mb-1 text-lg">1. EriStatusBadge</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Transparent outlined pill badge for app status. Four values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code>{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code>{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code>{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">LIVE</code>. Adapts to dark and light backgrounds via the{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">theme</code> prop. Never filled, never coloured.
+          </p>
+
+          {/* Live preview */}
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
+            <div className="p-6 flex flex-wrap gap-6 items-center">
+              {/* Dark theme */}
+              <div className="rounded-lg px-6 py-4 flex items-center gap-3" style={{ backgroundColor: '#232323' }}>
+                <span className="text-xs text-gray-400 mr-1">dark:</span>
+                {(['ALPHA','BETA','PREVIEW','LIVE'] as const).map(s => (
+                  <span key={s} className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">{s}</span>
+                ))}
+              </div>
+              {/* Light theme */}
+              <div className="rounded-lg px-6 py-4 flex items-center gap-3 bg-white border border-gray-200">
+                <span className="text-xs text-gray-400 mr-1">light:</span>
+                {(['ALPHA','BETA','PREVIEW','LIVE'] as const).map(s => (
+                  <span key={s} className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-gray-400 text-gray-500">{s}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Source code */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-gray-400">EriStatusBadge.tsx</span>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriStatusBadge_d862f741.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`export type EriStatusValue = 'ALPHA' | 'BETA' | 'PREVIEW' | 'LIVE';
+
+export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
+  const colours =
+    theme === 'dark'
+      ? 'border-white/60 text-white'
+      : 'border-gray-400 text-gray-500';
+  return (
+    <span className={\`inline-flex items-center rounded-full border
+      px-2.5 py-0.5 text-[11px] font-semibold tracking-widest
+      uppercase \${colours} \${className}\`}>
+      {status}
+    </span>
+  );
+}`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Non-conformant callout */}
+          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
+            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
+              <li>Filled background (e.g. <code className="font-mono bg-red-100 px-1 rounded">bg-gray-200</code> or <code className="font-mono bg-red-100 px-1 rounded">bg-green-500</code>) — always transparent</li>
+              <li>Rounded rectangle (<code className="font-mono bg-red-100 px-1 rounded">rounded-md</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-full</code></li>
+              <li>Coloured text (e.g. green or amber) — always white on dark, gray on light</li>
+            </ul>
+          </div>
+
+          {/* ── Component 2: EriContactUsButton ─────────────────────────── */}
+          <h3 className="font-bold text-[#232323] mb-1 text-lg">2. EriContactUsButton</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Accent Lime CTA button that links to the shared ERI contact service. Constructs the URL automatically from{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">source</code>,{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">sourceLabel</code>, and{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">returnUrl</code> props. Label is always "Contact Us" — do not rename.
+          </p>
+
+          {/* Live preview */}
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
+            <div className="p-6 flex flex-wrap gap-6 items-center">
+              <div className="rounded-lg px-6 py-4 flex items-center gap-4" style={{ backgroundColor: '#232323' }}>
+                <span className="text-xs text-gray-400">dark bg:</span>
+                <a
+                  href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-lg font-semibold transition-opacity hover:opacity-90 px-4 py-2 text-sm"
+                  style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+                >Contact Us</a>
+                <a
+                  href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-lg font-semibold transition-opacity hover:opacity-90 px-3 py-1.5 text-xs"
+                  style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+                >Contact Us <span className="ml-1 text-gray-600 font-normal">sm</span></a>
+              </div>
+              <div className="rounded-lg px-6 py-4 flex items-center gap-4 bg-white border border-gray-200">
+                <span className="text-xs text-gray-400">light bg:</span>
+                <a
+                  href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-lg font-semibold transition-opacity hover:opacity-90 px-4 py-2 text-sm"
+                  style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+                >Contact Us</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Source code */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-gray-400">EriContactUsButton.tsx</span>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriContactUsButton_55080863.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`export function EriContactUsButton({
+  source, sourceLabel, returnUrl, subject, size = 'md', className = ''
+}) {
+  const encodedReturn = encodeURIComponent(returnUrl);
+  const encodedLabel  = encodeURIComponent(sourceLabel);
+  const subjectParam  = subject ? \`&subject=\${encodeURIComponent(subject)}\` : '';
+  const href = \`https://contact-us.exponentialroadmap.org/
+    ?source=\${source}&sourceLabel=\${encodedLabel}
+    &return=\${encodedReturn}\${subjectParam}\`;
+  const padding = size === 'sm' ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm';
+  return (
+    <a href={href}
+       className={\`inline-flex items-center justify-center
+         rounded-lg font-semibold transition-opacity
+         hover:opacity-90 \${padding} \${className}\`}
+       style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}>
+      Contact Us
+    </a>
+  );
+}`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Non-conformant callout */}
+          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
+            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
+              <li>White or gray button fill — always Accent Lime <code className="font-mono bg-red-100 px-1 rounded">#93E07D</code></li>
+              <li>Pill shape (<code className="font-mono bg-red-100 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-lg</code></li>
+              <li>Custom label ("Get in touch", "Send message") — always "Contact Us"</li>
+              <li>Custom contact form — always link to the shared service</li>
+            </ul>
+          </div>
+
+          {/* ── Component 3: EriAppHeader ────────────────────────────────── */}
+          <h3 className="font-bold text-[#232323] mb-1 text-lg">3. EriAppHeader</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Canonical 64px fixed header. Left zone: ERI logo → pipe divider → app name. Right zone: status badge → version → optional CTA → hamburger.
+            The <code className="font-mono text-xs bg-gray-100 px-1 rounded">showCTA</code> prop must be driven by auth state:{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={!isAuthenticated}"}</code>.
+            Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
+          </p>
+
+          {/* Live preview */}
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — public surface (showCTA=true)</div>
+            <div className="relative" style={{ height: '64px', backgroundColor: '#232323' }}>
+              <div className="absolute inset-0 flex items-center justify-between" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
+                <div className="flex items-center gap-3">
+                  <img src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZXhwb25lbnRpYWxyb2FkbWFwXC9maWxlXC9tVlJBaGpvQWtBZVlpQVZkQUZBZy5zdmcifQ:exponentialroadmap:WMvBRmHfGEkm_WUBnEWjMFSaFhJHkxMhLDjkMHKVl-I?width=800" alt="ERI" className="h-8 w-auto" />
+                  <div className="w-px h-6 bg-white/20" />
+                  <span className="text-white text-sm font-medium">Professional Services Matrix</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">BETA</span>
+                  <span className="text-gray-400 text-xs font-mono hidden sm:block">V.2026.04.15</span>
+                  <a href="#" className="inline-flex items-center justify-center rounded-lg font-semibold px-3 py-1.5 text-xs" style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}>Contact Us</a>
+                  <div className="flex flex-col gap-1.5 p-2 text-white">
+                    <span className="block w-5 h-0.5 bg-white" />
+                    <span className="block w-5 h-0.5 bg-white" />
+                    <span className="block w-5 h-0.5 bg-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — authenticated surface (showCTA=false)</div>
+            <div className="relative" style={{ height: '64px', backgroundColor: '#232323' }}>
+              <div className="absolute inset-0 flex items-center justify-between" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
+                <div className="flex items-center gap-3">
+                  <img src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZXhwb25lbnRpYWxyb2FkbWFwXC9maWxlXC9tVlJBaGpvQWtBZVlpQVZkQUZBZy5zdmcifQ:exponentialroadmap:WMvBRmHfGEkm_WUBnEWjMFSaFhJHkxMhLDjkMHKVl-I?width=800" alt="ERI" className="h-8 w-auto" />
+                  <div className="w-px h-6 bg-white/20" />
+                  <span className="text-white text-sm font-medium">Professional Services Matrix</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">BETA</span>
+                  <span className="text-gray-400 text-xs font-mono hidden sm:block">V.2026.04.15</span>
+                  <div className="flex flex-col gap-1.5 p-2 text-white">
+                    <span className="block w-5 h-0.5 bg-white" />
+                    <span className="block w-5 h-0.5 bg-white" />
+                    <span className="block w-5 h-0.5 bg-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Props table */}
+          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-3">
+            <CardContent className="p-4">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <table className="w-full text-xs">
+                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <tbody className="font-mono">
+                  {[
+                    ["appName",        "string",          "App display name shown after the pipe divider"],
+                    ["status",         "EriStatusValue?", "Omit to hide the badge"],
+                    ["version",        "string",          "e.g. \"V.2026.04.15\""],
+                    ["showCTA",        "boolean",         "Pass !isAuthenticated — true = public surface"],
+                    ["source",         "string?",         "Required if showCTA may be true"],
+                    ["sourceLabel",    "string?",         "Human-readable app name for contact service"],
+                    ["returnUrl",      "string?",         "Return URL for contact service"],
+                    ["onMenuClick",    "() => void",      "Opens the navigation drawer"],
+                    ["logoHref",       "string?",         "Defaults to \"/\""],
+                  ].map(([prop, type, note]) => (
+                    <tr key={prop} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
+                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          {/* Source code */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-gray-400">EriAppHeader.tsx — usage</span>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_6b836634.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`// In EriPageLayout (not in page files directly):
+<EriAppHeader
+  appName="Professional Services Matrix"
+  status="BETA"
+  version="V.2026.04.15"
+  showCTA={!isAuthenticated}
+  source="psm"
+  sourceLabel="Professional Services Matrix"
+  returnUrl="https://psm.exponentialroadmap.org"
+  onMenuClick={() => setMenuOpen(true)}
+/>`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Non-conformant callout */}
+          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
+            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
+              <li>Background other than <code className="font-mono bg-red-100 px-1 rounded">#232323</code> — never white, green, or transparent</li>
+              <li>Height other than 64px — always <code className="font-mono bg-red-100 px-1 rounded">h-16</code></li>
+              <li>Status dot (coloured circle) in the right zone — removed in v1.8.0, do not re-add</li>
+              <li>Navigation links in the header — use the hamburger drawer</li>
+              <li>Importing EriAppHeader directly in page files — use EriPageLayout</li>
+            </ul>
+          </div>
+
+          {/* ── Component 4: EriAppFooter ────────────────────────────────── */}
+          <h3 className="font-bold text-[#232323] mb-1 text-lg">4. EriAppFooter</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Canonical two-zone dark footer. Left zone: ERI logo + optional tagline. Right zone: copyright string.
+            Background is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> — never dark green, white, or any other colour.
+            Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
+          </p>
+
+          {/* Live preview */}
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
+            <div style={{ backgroundColor: '#232323', borderTop: '1px solid #374151', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                <div className="flex flex-col gap-2">
+                  <img src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZXhwb25lbnRpYWxyb2FkbWFwXC9maWxlXC9tVlJBaGpvQWtBZVlpQVZkQUZBZy5zdmcifQ:exponentialroadmap:WMvBRmHfGEkm_WUBnEWjMFSaFhJHkxMhLDjkMHKVl-I?width=800" alt="ERI" className="h-7 w-auto" />
+                  <p className="text-sm text-gray-400 max-w-xs">Making Pillar 3 climate impact measurable and actionable.</p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-4" style={{ borderTop: '1px solid #1f2937' }}>
+                <p className="text-sm text-gray-500">© 2026 Exponential Roadmap Initiative. Professional Services Matrix.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Source code */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-gray-400">EriAppFooter.tsx — usage</span>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_0aef00aa.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`// In EriPageLayout (not in page files directly):
+<EriAppFooter
+  appName="Professional Services Matrix"
+  tagline="Making Pillar 3 climate impact measurable and actionable."
+/>`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Non-conformant callout */}
+          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
+            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
+              <li>Dark green background (e.g. PSM v1) — always <code className="font-mono bg-red-100 px-1 rounded">#232323</code></li>
+              <li>White footer (Tier C variation) — only for public marketing sites, not apps</li>
+              <li>Link columns before URLs are confirmed — footer is minimal until URLs are provided</li>
+              <li>Importing EriAppFooter directly in page files — use EriPageLayout</li>
+            </ul>
+          </div>
+
+          {/* ── Component 5: EriHeroSection ──────────────────────────────── */}
+          <h3 className="font-bold text-[#232323] mb-1 text-lg">5. EriHeroSection</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Canonical full-viewport hero section. Text block is always vertically centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">flex items-center</code>),
+            left-aligned, and anchored to <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> so it aligns with the header logotype.
+            Primary CTA is always Accent Lime. One optional accent word in the H1 is highlighted in Accent Lime.
+          </p>
+
+          {/* Live preview */}
+          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW (condensed — full height in production)</div>
+            <div
+              className="relative flex items-center overflow-hidden"
+              style={{
+                minHeight: '320px',
+                backgroundImage: `url(${heroImages.halHandsTouching})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="relative z-10 max-w-xl" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#93E07D' }}>Professional Services Matrix</span>
+                  <span className="w-8 h-px bg-gray-500" />
+                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">BETA</span>
+                </div>
+                <h2 className="text-4xl font-extrabold leading-tight text-white mb-4">
+                  <span className="block">Professional Services</span>
+                  <span className="block">Climate <span style={{ color: '#93E07D' }}>Matrix</span></span>
+                </h2>
+                <p className="text-base text-gray-200 mb-6 leading-relaxed">Making Pillar 3 climate impact measurable and actionable.</p>
+                <div className="flex flex-wrap gap-3">
+                  <a href="#" className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold" style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}>Try the Client Assessment</a>
+                  <a href="#" className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold border border-white text-white bg-transparent">PSM Journey Demo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Props table */}
+          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-3">
+            <CardContent className="p-4">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <table className="w-full text-xs">
+                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <tbody className="font-mono">
+                  {[
+                    ["eyebrow",         "string",          "Uppercase Accent Lime label above H1"],
+                    ["status",          "EriStatusValue?", "Optional badge after eyebrow dash"],
+                    ["titleLine1",      "string",          "First line of the H1"],
+                    ["titleLine2",      "string?",         "Second line of the H1"],
+                    ["accentWord",      "string?",         "One word highlighted in Accent Lime"],
+                    ["body",            "string",          "Body paragraph text"],
+                    ["primaryCTA",      "{ label, href }", "Accent Lime button — required"],
+                    ["secondaryCTA",    "{ label, href }?","Outline button — optional"],
+                    ["backgroundImage", "string",          "CDN URL for hero background image"],
+                  ].map(([prop, type, note]) => (
+                    <tr key={prop} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
+                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          {/* Source code */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-gray-400">EriHeroSection.tsx — usage</span>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriHeroSection_48155b1d.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`<EriHeroSection
+  eyebrow="Professional Services Matrix"
+  status="BETA"
+  titleLine1="Professional Services"
+  titleLine2="Climate Matrix"
+  accentWord="Matrix"
+  body="Making Pillar 3 climate impact measurable and actionable."
+  primaryCTA={{ label: "Try the Client Assessment", href: "/assessment" }}
+  secondaryCTA={{ label: "PSM Journey Demo", href: "/demo" }}
+  backgroundImage="https://cdn.example.com/hero-bg.webp"
+/>`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Non-conformant callout */}
+          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
+            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
+              <li>Top-anchored text (document flow without <code className="font-mono bg-red-100 px-1 rounded">flex items-center</code>) — text must be vertically centred</li>
+              <li>Right-aligned or centred text — always left-aligned</li>
+              <li>Accent word in Primary Green (<code className="font-mono bg-red-100 px-1 rounded">#3ba559</code>) — always Accent Lime (<code className="font-mono bg-red-100 px-1 rounded">#93E07D</code>) on dark</li>
+              <li>Pill-shaped CTA (<code className="font-mono bg-red-100 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-lg</code></li>
+              <li>Icon prefix on CTA buttons — text only</li>
+            </ul>
+          </div>
+
+          {/* ── Component 6: EriPageLayout ───────────────────────────────── */}
+          <h3 className="font-bold text-[#232323] mb-1 text-lg">6. EriPageLayout</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Canonical layout wrapper. Renders <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriAppHeader</code> and{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriAppFooter</code> exactly once, wrapping all page content.
+            Use this in <code className="font-mono text-xs bg-gray-100 px-1 rounded">App.tsx</code> — never import header or footer directly in page files.
+            The <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> CSS variable must be defined in{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">index.css</code>.
+          </p>
+
+          {/* Required CSS */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-gray-400">index.css — required CSS variable</span>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`:root {
+  --eri-content-inset: clamp(1rem, 3vw, 2rem);
+}`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Source code */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-gray-400">App.tsx — canonical usage</span>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriPageLayout_ca390308.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`import { EriPageLayout } from '@/components/eri/EriPageLayout';
+
+function App() {
+  const isAuthenticated = useAuthState();
+
+  return (
+    <EriPageLayout
+      appName="Professional Services Matrix"
+      status="BETA"
+      version="V.2026.04.15"
+      showCTA={!isAuthenticated}
+      source="psm"
+      sourceLabel="Professional Services Matrix"
+      returnUrl="https://psm.exponentialroadmap.org"
+      footerTagline="Making Pillar 3 climate impact measurable."
+    >
+      <Router /> {/* your page router */}
+    </EriPageLayout>
+  );
+}`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Non-conformant callout */}
+          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
+            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
+              <li>Importing EriAppHeader or EriAppFooter directly in page files — always use EriPageLayout in App.tsx</li>
+              <li>Rendering the header inside a page component — leads to duplicate headers on navigation</li>
+              <li>Missing <code className="font-mono bg-red-100 px-1 rounded">--eri-content-inset</code> in index.css — header and hero text will not align</li>
+            </ul>
+          </div>
+
         </section>
 
         {/* ================================================================ */}
@@ -4548,7 +5145,8 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["17", "Resources",                "resources"],
                     ["18", "Surface Modes",             "surface-modes"],
                     ["19", "Navigation & Layout",      "navigation"],
-                    ["20", "Machine Instructions",     "ai-instructions"],
+                    ["20", "Standard Components",      "standard-components"],
+                    ["21", "Machine Instructions",     "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
