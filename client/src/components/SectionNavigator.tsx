@@ -42,6 +42,7 @@ export const SECTIONS: NavSection[] = [
   { id: "badges",                 label: "Badge Reference" },
   { id: "cta-buttons",             label: "CTA Buttons",             sublabel: "Primary · Secondary · Rules" },
   { id: "footer",                  label: "Footer",                  sublabel: "Standard · Tier C variation" },
+  { id: "layout-wrapper",          label: "Layout Wrapper",           sublabel: "Persistent header & footer" },
   { id: "interactive-states",     label: "Interactive States" },
   { id: "components",             label: "UI Components" },
   { id: "resources",              label: "Resources" },

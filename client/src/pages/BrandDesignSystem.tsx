@@ -3204,6 +3204,120 @@ className="transition-all duration-300 ease-in-out"`}</pre>
         </section>
 
         {/* ================================================================ */}
+        {/* SECTION: LAYOUT WRAPPER PATTERN */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="layout-wrapper">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+            Layout Wrapper Pattern
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-3xl">
+            The header and footer are <strong>persistent</strong> — they appear on every public-facing page without exception.
+            They must be implemented as <strong>single shared React components</strong> rendered once in a layout wrapper in{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">App.tsx</code>, not copy-pasted into individual page files.
+          </p>
+
+          {/* Why it matters */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-8">
+            <div className="flex items-start gap-3">
+              <span className="text-amber-600 text-lg mt-0.5">⚠</span>
+              <div>
+                <p className="font-semibold text-amber-900 mb-1">Why this matters</p>
+                <p className="text-sm text-amber-800">
+                  If the header or footer markup is duplicated across page files, a change to one copy does not propagate to the others.
+                  A single component in a layout wrapper means <strong>one change updates every page simultaneously</strong>.
+                  This is a structural requirement, not a preference.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Rules table */}
+          <div className="overflow-x-auto mb-8">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-[#232323] text-white">
+                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Rule</th>
+                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Requirement</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Persistence", "Header and footer appear on every public-facing page — no exceptions"],
+                  ["Single component", "<AppHeader /> and <AppFooter /> are each a single file: client/src/components/AppHeader.tsx and AppFooter.tsx"],
+                  ["Layout wrapper", "Both components are rendered once in a PageLayout wrapper function in App.tsx"],
+                  ["No duplication", "Never import or render AppHeader / AppFooter inside individual page files"],
+                  ["Change propagation", "Editing AppHeader.tsx or AppFooter.tsx updates every page automatically"],
+                ].map(([rule, req], i) => (
+                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <td className="px-4 py-3 font-medium text-[#232323] border-b border-gray-100 w-48">{rule}</td>
+                    <td className="px-4 py-3 text-gray-600 border-b border-gray-100 font-mono text-xs">{req}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Code reference */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Canonical App.tsx structure</h3>
+          <Card className="shadow-sm bg-gray-900 mb-6">
+            <CardContent className="p-5">
+              <pre className="text-sm text-gray-300 overflow-x-auto">{`// ✅ App.tsx — header and footer rendered ONCE in a layout wrapper
+import { AppHeader } from "@/components/AppHeader";
+import { AppFooter } from "@/components/AppFooter";
+
+function PageLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <AppHeader />          {/* Single component — change here = change everywhere */}
+      <main className="flex-1">{children}</main>
+      <AppFooter />          {/* Single component — change here = change everywhere */}
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <PageLayout>
+      <Switch>
+        <Route path="/" component={HomePage} />
+        <Route path="/contact" component={ContactPage} />
+        {/* All public routes share the same header and footer automatically */}
+      </Switch>
+    </PageLayout>
+  );
+}`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Non-conformant */}
+          <Card className="shadow-sm bg-red-50 border border-red-200 mb-6">
+            <CardContent className="p-5">
+              <p className="font-semibold text-red-800 mb-3 text-sm">❌ Non-conformant — do not do this</p>
+              <pre className="text-sm text-red-700 overflow-x-auto">{`// ❌ Wrong — header/footer duplicated inside each page file
+function HomePage() {
+  return (
+    <>
+      <header>...</header>  {/* Duplicated — changes won't propagate to other pages */}
+      <main>...</main>
+      <footer>...</footer>  {/* Duplicated — changes won't propagate to other pages */}
+    </>
+  );
+}
+
+function ContactPage() {
+  return (
+    <>
+      <header>...</header>  {/* Different copy — will drift from HomePage's header */}
+      <main>...</main>
+      <footer>...</footer>
+    </>
+  );
+}`}</pre>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* ================================================================ */}
         {/* SECTION 12: UI COMPONENTS */}
         {/* ================================================================ */}
         <section className="mb-16" id="components">
