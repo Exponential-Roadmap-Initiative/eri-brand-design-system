@@ -2153,9 +2153,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             Navigation &amp; Layout Standards
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl font-open-sans">
-            All ERI web applications follow one of two layout tiers. Choose the correct tier based on
-            application type — not personal preference. Live interactive examples below demonstrate
-            each pattern.
+            All ERI web applications follow one of two layout tiers. <strong>Most apps have both a public marketing surface and an authenticated application surface</strong> — the tier determines the header behaviour for each surface, not the app as a whole. Choose the correct tier based on the surface being rendered, not the app type.
           </p>
           <NavigationPatterns />
         </section>
@@ -2398,7 +2396,7 @@ export default function HeroPage() {
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>App status badge — transparent outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>. Values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">LIVE</code>. On dark headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-white border-white/60</code>. On white headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-gray-500 border-gray-400</code>. <em className="text-red-400">Never use a filled background.</em></span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.15"</em><br/><em className="text-red-400">Do NOT use: date-only format ("14 Apr 2026"), lowercase v, or date without V prefix</em></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Tier B only</strong> — optional single CTA button: <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#93E07D] text-[#1a1a1a] rounded-lg px-4 py-2 text-sm font-semibold</code> (e.g. "Contact us"). <em className="text-red-400">Tier A apps: no CTA in header.</em></span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Public surface only</strong> — optional single CTA button: <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#93E07D] text-[#1a1a1a] rounded-lg px-4 py-2 text-sm font-semibold</code> (e.g. "Contact us"). <em className="text-red-400">Authenticated surface: no CTA in header.</em> Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">showCTA={"{"}!isAuthenticated{"}"}</code> to conditionally render.</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
                 </div>
               </CardContent>
@@ -2463,7 +2461,7 @@ export default function HeroPage() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Tier B only · transparentHeader=true · optional CTA button between version and hamburger · bg-[#93E07D] text-[#1a1a1a] rounded-lg · Tier A: no CTA in header</div>
+                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Public surface only · transparentHeader=true · optional CTA between version and hamburger · bg-[#93E07D] text-[#1a1a1a] rounded-lg · Authenticated surface: no CTA · use showCTA={"{"}!isAuthenticated{"}"}</div>
               </div>
             </div>
           </div>
@@ -2985,7 +2983,7 @@ export default function HeroPage() {
 {/* ❌ WRONG: pill shape */}  {/* rounded-full — reserved for status badges only */}
 {/* ❌ WRONG: Primary Green fill */}  {/* bg-[#3ba559] — never for filled buttons */}
 {/* ❌ WRONG: icon prefix */}  {/* no Lucide icons before button text */}
-{/* ❌ WRONG: CTA in Tier A header */}  {/* Tier A apps: no CTA in header right zone */}`}</pre>
+{/* ❌ WRONG: CTA in authenticated surface header */}  {/* Authenticated surface: no CTA in header right zone */}`}</pre>
             </CardContent>
           </Card>
 
@@ -4191,7 +4189,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code> as the wrapper for all public-facing pages — never build a custom header or footer.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
-                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. Tier B marketing headers may include one CTA button (e.g. "Contact us") in the right zone. Tier A application headers: no CTA in header.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. <strong>Public surface (pre-login):</strong> one CTA button permitted in header right zone. <strong>Authenticated surface (post-login):</strong> no CTA in header. Use <code className="bg-gray-100 px-1 rounded text-xs">showCTA={"{"}!isAuthenticated{"}"}</code> to conditionally render — most apps have both surfaces.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, white background, <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Max content width: <code className="bg-gray-100 px-1 rounded text-xs">max-w-6xl mx-auto px-4</code>. Never exceed 1152px for content.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Pillar colours must always be used in their correct pillar context — do not reassign P1 colour to P3 content.</span></div>
