@@ -43,6 +43,7 @@ export const SECTIONS: NavSection[] = [
   { id: "cta-buttons",             label: "CTA Buttons",             sublabel: "Primary · Secondary · Rules" },
   { id: "footer",                  label: "Footer",                  sublabel: "Standard · Tier C variation" },
   { id: "layout-wrapper",          label: "Layout Wrapper",           sublabel: "Persistent header & footer" },
+  { id: "contact-us",              label: "Contact Us Integration",  sublabel: "Shared service · URL params" },
   { id: "interactive-states",     label: "Interactive States" },
   { id: "components",             label: "UI Components" },
   { id: "resources",              label: "Resources" },

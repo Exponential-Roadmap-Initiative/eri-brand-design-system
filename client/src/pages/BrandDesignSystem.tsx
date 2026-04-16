@@ -2396,7 +2396,7 @@ export default function HeroPage() {
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>App status badge — transparent outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>. Values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">LIVE</code>. On dark headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-white border-white/60</code>. On white headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-gray-500 border-gray-400</code>. <em className="text-red-400">Never use a filled background.</em></span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.15"</em><br/><em className="text-red-400">Do NOT use: date-only format ("14 Apr 2026"), lowercase v, or date without V prefix</em></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Public surface only</strong> — optional single CTA button: <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#93E07D] text-[#1a1a1a] rounded-lg px-4 py-2 text-sm font-semibold</code> (e.g. "Contact us"). <em className="text-red-400">Authenticated surface: no CTA in header.</em> Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">showCTA={"{"}!isAuthenticated{"}"}</code> to conditionally render.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Public surface only</strong> — optional single CTA button: <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#93E07D] text-[#1a1a1a] rounded-lg px-4 py-2 text-sm font-semibold</code> (e.g. &ldquo;Contact us&rdquo;). <em className="text-red-400">Authenticated surface: no CTA in header.</em> Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={!isAuthenticated}"}</code> to conditionally render.</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
                 </div>
               </CardContent>
@@ -3311,6 +3311,138 @@ function ContactPage() {
     </>
   );
 }`}</pre>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION: CONTACT US INTEGRATION */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="contact-us">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+            Contact Us Integration
+          </h2>
+          <p className="text-gray-500 text-sm mb-6">Version 2026.04.16 · Service URL: contact-us.exponentialroadmap.org</p>
+
+          {/* Critical rule banner */}
+          <Card className="shadow-sm bg-amber-50 border border-amber-300 mb-8">
+            <CardContent className="p-5">
+              <p className="font-semibold text-amber-900 mb-1">⚠ Never build a custom contact form</p>
+              <p className="text-sm text-amber-800">All ERI applications link to the single shared contact service at <code className="font-mono text-xs bg-amber-100 px-1 rounded">https://contact-us.exponentialroadmap.org</code>. The service is self-registering — no configuration is needed on the contact service side. The app simply passes its identity in the URL.</p>
+            </CardContent>
+          </Card>
+
+          {/* URL pattern */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">URL Pattern</h3>
+          <Card className="shadow-sm bg-gray-900 mb-6">
+            <CardContent className="p-5">
+              <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`https://contact-us.exponentialroadmap.org/?source=<id>&sourceLabel=<name>&return=<url>`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Parameters table */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Parameters</h3>
+          <div className="overflow-x-auto mb-8">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-gray-50">
+                  {["Parameter", "Required", "Description", "Example"].map(h => (
+                    <th key={h} className="text-left px-4 py-2 font-semibold text-[#232323] border border-gray-200">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["source", "Recommended", "Stable lowercase machine ID for your app. Never change after launch.", "psm"],
+                  ["sourceLabel", "Recommended", "Human-readable app name. URL-encode spaces as +.", "Professional+Services+Matrix"],
+                  ["return", "Recommended", "Full URL to return to after form submission. URL-encode the value.", "https%3A%2F%2Fpsm.exponentialroadmap.org"],
+                  ["subject", "Optional", "Subject hint for the owner alert email. URL-encode spaces as +.", "PSM+Partnership+Enquiry"],
+                ].map(([param, req, desc, ex], i) => (
+                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-[#3ba559]">{param}</td>
+                    <td className="px-4 py-2 border border-gray-200 text-gray-600">{req}</td>
+                    <td className="px-4 py-2 border border-gray-200 text-gray-700">{desc}</td>
+                    <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-gray-500">{ex}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Full example */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Full Example — Professional Services Matrix</h3>
+          <Card className="shadow-sm bg-gray-900 mb-8">
+            <CardContent className="p-5">
+              <pre className="text-sm text-[#93E07D] overflow-x-auto whitespace-pre-wrap">{`https://contact-us.exponentialroadmap.org/?source=psm&sourceLabel=Professional+Services+Matrix&return=https%3A%2F%2Fpsm.exponentialroadmap.org&subject=PSM+Enquiry`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Registered source IDs */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Registered Source IDs</h3>
+          <p className="text-sm text-gray-500 mb-4">Source IDs are self-registering — no manual setup required. This table is maintained here for human reference. Add your app's row when integrating.</p>
+          <div className="overflow-x-auto mb-8">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-gray-50">
+                  {["Source ID", "App Name", "Return URL"].map(h => (
+                    <th key={h} className="text-left px-4 py-2 font-semibold text-[#232323] border border-gray-200">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["hal", "Human-AI Lab", "https://human-ai-lab.exponentialroadmap.org"],
+                  ["psm", "Professional Services Matrix", "https://psm.exponentialroadmap.org"],
+                  ["taxonomy", "ERI Taxonomy", "https://taxonomy.exponentialroadmap.org"],
+                  ["platform", "ERI Platform", "https://exponentialroadmap.org"],
+                ].map(([id, name, url], i) => (
+                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-[#3ba559]">{id}</td>
+                    <td className="px-4 py-2 border border-gray-200 text-gray-700">{name}</td>
+                    <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-gray-500">{url}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Source ID naming rules */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Choosing a Source ID</h3>
+          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-8">
+            <CardContent className="p-5">
+              <ul className="text-sm text-gray-700 space-y-2">
+                <li>• Use <strong>lowercase letters, numbers, and hyphens only</strong> — no spaces or special characters.</li>
+                <li>• Keep it <strong>short and stable</strong>. It is stored in the database and used in analytics — do not change it after launch.</li>
+                <li>• Use the product's short name or abbreviation. Examples: <code className="font-mono text-xs bg-gray-200 px-1 rounded">hal</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">psm</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">playbook</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">data-hub</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">climate-tracker</code>.</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Implementation checklist */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Implementation Checklist</h3>
+          <Card className="shadow-sm bg-green-50 border border-green-200 mb-8">
+            <CardContent className="p-5">
+              <ul className="text-sm text-gray-700 space-y-2">
+                {[
+                  "Choose a unique source ID following the naming conventions above.",
+                  "Add the ID and app name to the Registered Source IDs table in this BDS.",
+                  "Construct the full contact URL with source, sourceLabel, return, and optionally subject.",
+                  "Place the link in the header CTA (public surface only), footer, or navigation drawer per BDS guidelines.",
+                  "Test end-to-end: verify the contact page hero shows your app name, the form submits successfully, and the success screen returns to your app.",
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">{i + 1}.</span><span>{item}</span></li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Admin dashboard */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">Admin Dashboard</h3>
+          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-6">
+            <CardContent className="p-5">
+              <p className="text-sm text-gray-700 mb-2">All enquiries across all apps are visible at:</p>
+              <code className="font-mono text-sm text-[#3ba559]">https://contact-us.exponentialroadmap.org/admin</code>
+              <p className="text-xs text-gray-500 mt-2">Requires a Manus account with the <code className="font-mono text-xs bg-gray-200 px-1 rounded">admin</code> role on the contact service. Provides a Submissions tab (all enquiries, filterable by source app) and a Registered Apps tab (submission counts, first/last seen, return URL).</p>
             </CardContent>
           </Card>
         </section>
