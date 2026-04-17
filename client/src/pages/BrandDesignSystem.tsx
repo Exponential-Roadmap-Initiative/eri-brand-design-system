@@ -3026,14 +3026,21 @@ const contactUrl =
             <p className="text-sm font-bold mb-1" style={{ color: '#93E07D' }}>PREFERRED: INSTALL AS NPM PACKAGE</p>
             <p className="text-sm text-gray-300 mb-3">
               Install <code className="font-mono text-xs bg-gray-800 px-1 rounded">@eri/components</code> once per project.
-              Updates to these components in the BDS automatically propagate to all ERI sites on their next deploy — no manual file copying required.
+              Updates propagate automatically to all ERI sites on their next deploy.
             </p>
+            <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.5.0&path:packages/eri-components"`}</pre>
+            <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
               Then import in <code className="font-mono bg-gray-800 px-1 rounded">App.tsx</code>:
             </p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`import { EriPageLayout, EriHeroSection, EriStatusBadge, EriContactUsButton } from '@eri/components';`}</pre>
-            <p className="text-xs text-gray-500">
+            <div className="mt-3 pt-3 border-t border-gray-700">
+              <p className="text-xs text-gray-400 mb-1"><span style={{ color: '#93E07D' }}>Release workflow (BDS maintainer):</span> After updating a component, bump the version in <code className="font-mono bg-gray-800 px-1 rounded">packages/eri-components/package.json</code>, save a checkpoint (auto-pushes to GitHub), then run:</p>
+              <pre className="text-xs text-green-400 bg-gray-900 rounded p-2 overflow-x-auto font-mono">{`cd /home/ubuntu/eri-brand-design-system && TOKEN=$(gh auth token) && git remote set-url user_github "https://x-access-token:\${TOKEN}@github.com/Exponential-Roadmap-Initiative/eri-brand-design-system.git" && git tag vX.Y.Z && git push user_github vX.Y.Z`}</pre>
+            </div>
+            <p className="text-xs text-gray-500 mt-3">
               Source: <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/tree/main/packages/eri-components" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300 transition-colors">github.com/Exponential-Roadmap-Initiative/eri-brand-design-system</a>
             </p>
           </div>
