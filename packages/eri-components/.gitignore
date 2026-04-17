@@ -1,0 +1,6 @@
+# Un-ignore the pre-built CSS file so it is committed to the repo.
+# The root .gitignore has a blanket `dist/` rule, but this package
+# intentionally ships dist/eri-components.css as a compiled artefact
+# so consuming projects do not need Tailwind in their pipeline.
+!dist/
+!dist/eri-components.css
