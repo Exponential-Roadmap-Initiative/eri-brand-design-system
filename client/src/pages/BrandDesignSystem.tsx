@@ -3365,6 +3365,16 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             </CardContent>
           </Card>
 
+          {/* Integration Notes */}
+          <div className="rounded-lg p-4 mb-4 border border-amber-200 bg-amber-50">
+            <p className="text-xs font-semibold text-amber-800 mb-2">INTEGRATION NOTES — read before implementing</p>
+            <ul className="text-xs text-amber-900 space-y-2 list-disc list-inside">
+              <li><strong>Use via <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code>, not directly</strong> — do not import <code className="font-mono bg-amber-100 px-1 rounded">EriAppHeader</code> in page files. It is rendered once inside <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> in <code className="font-mono bg-amber-100 px-1 rounded">App.tsx</code>. All header props (<code className="font-mono bg-amber-100 px-1 rounded">appName</code>, <code className="font-mono bg-amber-100 px-1 rounded">status</code>, <code className="font-mono bg-amber-100 px-1 rounded">version</code>, <code className="font-mono bg-amber-100 px-1 rounded">showCTA</code>, etc.) are passed to <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> and forwarded internally.</li>
+              <li><strong>Contact Us button is built in</strong> — the green Contact Us button in the right zone is part of <code className="font-mono bg-amber-100 px-1 rounded">EriAppHeader</code>. Control it with <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{!isAuthenticated}'}</code>. Pass <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, and <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> to wire it to the correct contact service URL. No separate <code className="font-mono bg-amber-100 px-1 rounded">EriContactUsButton</code> import is needed.</li>
+              <li><strong>Hamburger fires <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> only</strong> — the header does not manage a drawer. Your app must listen to <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> and open its own drawer. The correct drawer pattern for each navigation tier is documented in the Navigation &amp; Layout section.</li>
+              <li><strong>Scope: public-facing apps only</strong> — this dark (<code className="font-mono bg-amber-100 px-1 rounded">#232323</code>) header is for Taxonomy, PSM, HAL, and future public ERI product apps. Internal tools (e.g. the BDS site itself) use their own layout and are exempt.</li>
+            </ul>
+          </div>
           {/* Non-conformant callout */}
           <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
             <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
@@ -3683,6 +3693,16 @@ function App() {
             </CardContent>
           </Card>
 
+          {/* Integration Notes */}
+          <div className="rounded-lg p-4 mb-4 border border-amber-200 bg-amber-50">
+            <p className="text-xs font-semibold text-amber-800 mb-2">INTEGRATION NOTES — read before implementing</p>
+            <ul className="text-xs text-amber-900 space-y-2 list-disc list-inside">
+              <li><strong>No drawer slot</strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> manages <code className="font-mono bg-amber-100 px-1 rounded">menuOpen</code> state internally but does <em>not</em> render a drawer. The <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> callback fires when the hamburger is tapped — your app must render its own drawer component and open it in response. See the Navigation &amp; Layout section for the correct tier drawer pattern.</li>
+              <li><strong>Outer background is <code className="font-mono bg-amber-100 px-1 rounded">#232323</code></strong> — the layout wrapper sets a dark background on the outermost div. Each page component must set its own background colour (typically <code className="font-mono bg-amber-100 px-1 rounded">bg-[#F9FAFB]</code>) on its outermost div, otherwise the page will appear dark.</li>
+              <li><strong>No automatic top padding</strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> does not add <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> to the content area. The header is <code className="font-mono bg-amber-100 px-1 rounded">fixed</code> at 64px — each page's first section must add enough top padding to clear it (e.g. <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> or <code className="font-mono bg-amber-100 px-1 rounded">pt-24</code> for hero sections).</li>
+              <li><strong>Contact Us button is built in</strong> — pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{!isAuthenticated}'}</code> to show or hide the green Contact Us button in the header right zone. No separate <code className="font-mono bg-amber-100 px-1 rounded">EriContactUsButton</code> import is needed — it is wired internally with the <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, and <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> props you pass to the layout.</li>
+            </ul>
+          </div>
           {/* Non-conformant callout */}
           <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
             <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
