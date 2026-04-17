@@ -3021,13 +3021,30 @@ const contactUrl =
             </p>
           </div>
 
-          {/* Critical instruction banner */}
-          <div className="rounded-lg p-5 mb-8 border-l-4" style={{ backgroundColor: '#1a1a1a', borderLeftColor: '#93E07D' }}>
-            <p className="text-sm font-bold mb-2" style={{ color: '#93E07D' }}>COPY THESE FILES — DO NOT RECONSTRUCT FROM RULES</p>
+          {/* Installation banner */}
+          <div className="rounded-lg p-5 mb-4 border-l-4" style={{ backgroundColor: '#1a1a1a', borderLeftColor: '#93E07D' }}>
+            <p className="text-sm font-bold mb-1" style={{ color: '#93E07D' }}>PREFERRED: INSTALL AS NPM PACKAGE</p>
             <p className="text-sm text-gray-300 mb-3">
-              At the start of every new ERI project, copy all 6 standard component files into{" "}
-              <code className="font-mono text-xs bg-gray-800 px-1 rounded">client/src/components/eri/</code>.
-              These files are the single source of truth. Do not rewrite them from the BDS rules — copy the files.
+              Install <code className="font-mono text-xs bg-gray-800 px-1 rounded">@eri/components</code> once per project.
+              Updates to these components in the BDS automatically propagate to all ERI sites on their next deploy — no manual file copying required.
+            </p>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
+            <p className="text-xs text-gray-400 mb-2">
+              Then import in <code className="font-mono bg-gray-800 px-1 rounded">App.tsx</code>:
+            </p>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`import { EriPageLayout, EriHeroSection, EriStatusBadge, EriContactUsButton } from '@eri/components';`}</pre>
+            <p className="text-xs text-gray-500">
+              Source: <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/tree/main/packages/eri-components" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300 transition-colors">github.com/Exponential-Roadmap-Initiative/eri-brand-design-system</a>
+            </p>
+          </div>
+
+          {/* CDN fallback banner */}
+          <div className="rounded-lg p-5 mb-8 border border-gray-200 bg-gray-50">
+            <p className="text-sm font-bold text-gray-700 mb-1">FALLBACK: DOWNLOAD FILES DIRECTLY</p>
+            <p className="text-sm text-gray-500 mb-3">
+              If the npm package cannot be used, copy all 6 files into{" "}
+              <code className="font-mono text-xs bg-gray-200 px-1 rounded">client/src/components/eri/</code>.
+              Note: these copies will <strong>not</strong> receive automatic updates — you must re-download when the BDS is updated.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
               {[
@@ -3043,16 +3060,15 @@ const contactUrl =
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors"
                 >
-                  <Download className="w-3 h-3 shrink-0" style={{ color: '#93E07D' }} />
+                  <Download className="w-3 h-3 shrink-0" />
                   <span>{name}</span>
                 </a>
               ))}
             </div>
           </div>
-
-          {/* ── Component 1: EriStatusBadge ─────────────────────────────── */}
+          {/* ── Component 1: EriStatusBadge ──────────────────────────────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">1. EriStatusBadge</h3>
           <p className="text-gray-600 text-sm mb-4">
             Transparent outlined pill badge for app status. Four values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code>{" "}
