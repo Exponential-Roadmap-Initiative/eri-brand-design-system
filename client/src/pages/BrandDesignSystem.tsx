@@ -3023,7 +3023,7 @@ const contactUrl =
                 { name: "EriStatusBadge.tsx",      url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriStatusBadge_d862f741.tsx" },
                 { name: "EriContactUsButton.tsx",  url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriContactUsButton_55080863.tsx" },
                 { name: "EriAppHeader.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_12b5f8fa.tsx" },
-                { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_1afd82a3.tsx" },
+                { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_1dd350ec.tsx" },
                 { name: "EriHeroSection.tsx",       url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriHeroSection_48155b1d.tsx" },
                 { name: "EriPageLayout.tsx",        url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriPageLayout_ca390308.tsx" },
               ].map(({ name, url }) => (
@@ -3386,9 +3386,15 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <div style={{ backgroundColor: '#232323', borderTop: '1px solid #374151', padding: 'clamp(1rem, 3vw, 2rem)' }}>
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                 <div className="flex flex-col gap-2">
-                  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-7 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
+                  <a href="https://exponentialroadmap.org/" target="_blank" rel="noopener noreferrer">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-7 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
+                  </a>
                   <p className="text-sm text-gray-400 max-w-xs">Making Pillar 3 climate impact measurable and actionable.</p>
                 </div>
+                <nav className="flex flex-col gap-2 sm:items-end">
+                  <a href="https://exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Exponential Roadmap Initiative</a>
+                  <a href="https://contact-us.exponentialroadmap.org?source=footer&app=professional-services-matrix" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Contact Us</a>
+                </nav>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-4" style={{ borderTop: '1px solid #1f2937' }}>
                 <p className="text-sm text-gray-500">© 2026 Exponential Roadmap Initiative. Professional Services Matrix.</p>
@@ -3401,7 +3407,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <CardContent className="p-0">
               <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
                 <span className="text-xs font-mono text-gray-400">EriAppFooter.tsx — usage</span>
-                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_1afd82a3.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_1dd350ec.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
               </div>
               <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`// In EriPageLayout (not in page files directly):
 <EriAppFooter
@@ -3417,7 +3423,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
               <li>Dark green background (e.g. PSM v1) — always <code className="font-mono bg-red-100 px-1 rounded">#232323</code></li>
               <li>White footer (Tier C variation) — only for public marketing sites, not apps</li>
-              <li>Link columns before URLs are confirmed — footer is minimal until URLs are provided</li>
+              <li>Placeholder link columns with unconfirmed URLs — only show links with a confirmed destination</li>
               <li>Importing EriAppFooter directly in page files — use EriPageLayout</li>
             </ul>
           </div>
@@ -3440,8 +3446,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ['Padding', 'py-8 vertical · paddingInline: var(--eri-content-inset) horizontal'],
                     ['Layout', 'flex items-center justify-between — two zones, single row'],
                     ['Left zone', 'ERI white wordmark (h-7, filter brightness(0) invert(1)) + optional tagline below (text-sm text-gray-400, max 80 chars)'],
-                    ['© Right zone', '© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-gray-500'],
-                    ['Link columns', 'None in v1 — to be added once footer URLs are confirmed'],
+                    ['Right nav zone', 'Confirmed links only: ERI homepage (https://exponentialroadmap.org/) + Contact Us (https://contact-us.exponentialroadmap.org?source=footer&app=...) — text-sm text-gray-400 hover:text-white'],
+                    ['© Bottom bar', '© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-gray-500'],
+                    ['Link columns', 'Only show links with confirmed URLs — no placeholder columns'],
                   ].map(([prop, val]) => (
                     <tr key={prop} className="border-b border-gray-100 hover:bg-gray-50">
                       <td className="px-4 py-3 font-mono text-xs text-[#232323] font-medium w-48">{prop}</td>
