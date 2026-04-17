@@ -1,0 +1,29 @@
+{
+  "name": "@eri/components",
+  "version": "1.0.0",
+  "description": "ERI Standard Components — canonical shared UI components for all Exponential Roadmap Initiative web applications.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "eri",
+    "exponential-roadmap",
+    "components",
+    "react"
+  ],
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system.git",
+    "directory": "packages/eri-components"
+  },
+  "license": "UNLICENSED"
+}
