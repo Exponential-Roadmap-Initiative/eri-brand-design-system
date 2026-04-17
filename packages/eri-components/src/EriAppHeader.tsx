@@ -1,18 +1,18 @@
 /**
- * EriAppHeader — ERI Brand Design System v2.0.0
+ * EriAppHeader — ERI Brand Design System v2.1.0
  *
  * Canonical 64px header for all ERI applications.
- * Renders once in PageLayout — never duplicated across page files.
+ * Renders once in EriPageLayout — never duplicated across page files.
  *
  * USAGE:
  *   <EriAppHeader
- *     appName="Professional Services Matrix"
+ *     appName="Exponential Taxonomy"
  *     status="BETA"
- *     version="V.2026.04.15"
+ *     version="V.2026.04.14"
  *     showCTA={!isAuthenticated}
- *     source="psm"
- *     sourceLabel="Professional Services Matrix"
- *     returnUrl="https://psm.exponentialroadmap.org"
+ *     source="taxonomy"
+ *     sourceLabel="Exponential Taxonomy"
+ *     returnUrl="https://taxonomy.exponentialroadmap.org"
  *     onMenuClick={() => setMenuOpen(true)}
  *   />
  *
@@ -21,23 +21,26 @@
  *   - Height: 64px (h-16) always
  *   - Left zone: ERI logo → pipe divider → app name
  *   - Right zone: status badge → version string → CTA (if showCTA) → hamburger
- *   - CTA: shown on public surface (showCTA=true), hidden on authenticated surface (showCTA=false)
+ *   - showCTA: pass !isAuthenticated — defaults to true (public surface)
+ *   - CTA requires source + sourceLabel + returnUrl — all three must be provided
+ *   - onMenuClick: provide () => setMenuOpen(true) — defaults to no-op (hamburger always visible)
  *   - Horizontal padding: var(--eri-content-inset) — aligns with hero text block
  *   - No navigation links in the header — use the hamburger drawer
  *
- * BDS reference: https://eri-brand-design-system.manus.space/#navigation
+ * COMMON MISTAKES:
+ *   - Omitting showCTA: defaults to true (CTA shown). Pass showCTA={false} on authenticated surface.
+ *   - Omitting source/sourceLabel/returnUrl with showCTA=true: CTA will be hidden. All three required.
+ *   - Omitting onMenuClick: hamburger renders but does nothing. Always wire to your drawer open handler.
+ *
+ * BDS reference: https://eri-brand-design-system.manus.space/#standard-components
  */
 
 import React from 'react';
 import { EriStatusBadge, EriStatusValue } from './EriStatusBadge';
 import { EriContactUsButton } from './EriContactUsButton';
 
-// ERI white wordmark SVG — do not replace with a different logo
-const ERI_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" fill="white" aria-label="Exponential Roadmap Initiative">
-  <text x="0" y="22" font-family="Arial Black, sans-serif" font-weight="900" font-size="16" letter-spacing="-0.5">EXPONENTIAL</text>
-  <text x="0" y="36" font-family="Arial Black, sans-serif" font-weight="900" font-size="16" letter-spacing="-0.5">ROADMAP</text>
-  <text x="106" y="36" font-family="Arial, sans-serif" font-weight="400" font-size="7" letter-spacing="0.5">INITIATIVE</text>
-</svg>`;
+// ERI wordmark — CDN hosted, inverted to white via CSS filter on dark background
+const ERI_LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp';
 
 interface EriAppHeaderProps {
   /** App display name shown after the pipe divider */
@@ -46,9 +49,14 @@ interface EriAppHeaderProps {
   status?: EriStatusValue;
   /** Version string — e.g. "V.2026.04.15" */
   version: string;
-  /** Show the Contact Us CTA — true on public surface, false on authenticated surface */
+  /**
+   * Show the Contact Us CTA.
+   * Pass !isAuthenticated — true on public surface, false on authenticated surface.
+   * Defaults to true (public surface).
+   * NOTE: CTA also requires source + sourceLabel + returnUrl — all three must be provided.
+   */
   showCTA?: boolean;
-  /** Source ID for the contact service — required if showCTA is true */
+  /** Source ID for the contact service — required if showCTA is true (e.g. "taxonomy") */
   source?: string;
   /** Human-readable app name for the contact service — required if showCTA is true */
   sourceLabel?: string;
@@ -56,8 +64,12 @@ interface EriAppHeaderProps {
   returnUrl?: string;
   /** Optional subject for the contact service */
   contactSubject?: string;
-  /** Callback for the hamburger menu button */
-  onMenuClick: () => void;
+  /**
+   * Callback for the hamburger menu button.
+   * Provide () => setMenuOpen(true) to open your drawer.
+   * Defaults to a no-op — hamburger is always visible regardless.
+   */
+  onMenuClick?: () => void;
   /** Logo href — defaults to "/" */
   logoHref?: string;
 }
@@ -66,14 +78,22 @@ export function EriAppHeader({
   appName,
   status,
   version,
-  showCTA = false,
+  showCTA = true,
   source,
   sourceLabel,
   returnUrl,
   contactSubject,
-  onMenuClick,
+  onMenuClick = () => {},
   logoHref = '/',
 }: EriAppHeaderProps) {
+  // Dev-mode warning: CTA requested but missing required props
+  if (process.env.NODE_ENV !== 'production' && showCTA && (!source || !sourceLabel || !returnUrl)) {
+    console.warn(
+      '[EriAppHeader] showCTA is true but source, sourceLabel, or returnUrl is missing. ' +
+      'The Contact Us button will not render. Provide all three props to show the CTA.'
+    );
+  }
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 flex items-center h-16"
@@ -82,9 +102,8 @@ export function EriAppHeader({
       {/* Left zone: logo + pipe + app name */}
       <div className="flex items-center gap-3 flex-1 min-w-0">
         <a href={logoHref} className="shrink-0" aria-label="Exponential Roadmap Initiative home">
-          {/* ERI wordmark — inverted to white on dark background */}
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp"
+            src={ERI_LOGO_URL}
             alt="Exponential Roadmap Initiative"
             className="h-8 w-auto"
             style={{ filter: 'brightness(0) invert(1)' }}
@@ -107,6 +126,7 @@ export function EriAppHeader({
             size="sm"
           />
         )}
+        {/* Hamburger — always rendered; wire onMenuClick to your drawer open handler */}
         <button
           onClick={onMenuClick}
           className="flex flex-col gap-1.5 p-2 text-white hover:opacity-70 transition-opacity"

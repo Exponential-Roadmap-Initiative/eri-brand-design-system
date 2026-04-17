@@ -1,5 +1,5 @@
 /**
- * EriPageLayout — ERI Brand Design System v2.0.0
+ * EriPageLayout — ERI Brand Design System v2.1.0
  *
  * Canonical layout wrapper for all ERI applications.
  * Renders EriAppHeader and EriAppFooter ONCE, wrapping all page content.
@@ -14,16 +14,17 @@
  *
  *     return (
  *       <EriPageLayout
- *         appName="Professional Services Matrix"
+ *         appName="Exponential Taxonomy"
  *         status="BETA"
- *         version="V.2026.04.15"
+ *         version="V.2026.04.14"
  *         showCTA={!isAuthenticated}
- *         source="psm"
- *         sourceLabel="Professional Services Matrix"
- *         returnUrl="https://psm.exponentialroadmap.org"
- *         footerTagline="Making Pillar 3 climate impact measurable and actionable."
+ *         source="taxonomy"
+ *         sourceLabel="Exponential Taxonomy"
+ *         returnUrl="https://taxonomy.exponentialroadmap.org"
+ *         footerTagline="The definitive framework for corporate climate action."
  *         onMenuClick={() => setMenuOpen(true)}
  *       >
+ *         <NavDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
  *         <Router /> {/* your page router *\/}
  *       </EriPageLayout>
  *     );
@@ -32,18 +33,24 @@
  * RULES (do not override):
  *   - This component is the ONLY place EriAppHeader and EriAppFooter are rendered
  *   - Never import EriAppHeader or EriAppFooter directly in page files
- *   - showCTA must be driven by auth state — true when user is NOT authenticated
+ *   - showCTA defaults to true (public surface) — pass showCTA={false} on authenticated surfaces
+ *   - showCTA requires source + sourceLabel + returnUrl — all three must be provided for CTA to render
+ *   - onMenuClick defaults to no-op — hamburger is always visible; wire to () => setMenuOpen(true)
+ *   - EriPageLayout does NOT render a drawer — your app owns the drawer as a child of EriPageLayout
  *   - The --eri-content-inset CSS variable must be defined in index.css (see below)
+ *   - Each page's outermost div must set its own background (e.g. bg-[#F9FAFB]) — the layout wrapper
+ *     sets #232323 on the outer shell; pages must override this for their own content area
+ *   - EriPageLayout does NOT add pt-16 — pages must clear the fixed 64px header themselves
  *
  * Required in index.css:
  *   :root {
  *     --eri-content-inset: clamp(1rem, 3vw, 2rem);
  *   }
  *
- * BDS reference: https://eri-brand-design-system.manus.space/#layout-wrapper
+ * BDS reference: https://eri-brand-design-system.manus.space/#standard-components
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { EriAppHeader } from './EriAppHeader';
 import { EriAppFooter } from './EriAppFooter';
 import { EriStatusValue } from './EriStatusBadge';
@@ -55,13 +62,17 @@ interface EriPageLayoutProps {
   status?: EriStatusValue;
   /** Version string — e.g. "V.2026.04.15" */
   version: string;
-  /** Show the Contact Us CTA — pass !isAuthenticated from your auth state */
+  /**
+   * Show the Contact Us CTA.
+   * Defaults to true (public surface). Pass showCTA={false} on authenticated surfaces.
+   * Also requires source + sourceLabel + returnUrl — all three must be provided.
+   */
   showCTA?: boolean;
-  /** Source ID for the contact service (required if showCTA may be true) */
+  /** Source ID for the contact service — required if showCTA is true (e.g. "taxonomy") */
   source?: string;
-  /** Human-readable app name for the contact service */
+  /** Human-readable app name for the contact service — required if showCTA is true */
   sourceLabel?: string;
-  /** Return URL for the contact service */
+  /** Return URL for the contact service — required if showCTA is true */
   returnUrl?: string;
   /** Optional subject for the contact service */
   contactSubject?: string;
@@ -69,11 +80,15 @@ interface EriPageLayoutProps {
   footerTagline?: string;
   /** Optional right-aligned attribution in the footer bottom bar */
   footerAttribution?: string;
-  /** Callback for hamburger menu open — implement your own drawer/sheet */
+  /**
+   * Callback for hamburger menu open.
+   * Defaults to no-op — hamburger is always visible regardless.
+   * Wire to () => setMenuOpen(true) and render your own drawer as a child.
+   */
   onMenuClick?: () => void;
   /** Logo href — defaults to "/" */
   logoHref?: string;
-  /** Page content */
+  /** Page content — include your drawer component here as a sibling to Router */
   children: React.ReactNode;
 }
 
@@ -81,7 +96,7 @@ export function EriPageLayout({
   appName,
   status,
   version,
-  showCTA = false,
+  showCTA = true,
   source,
   sourceLabel,
   returnUrl,
@@ -92,10 +107,8 @@ export function EriPageLayout({
   logoHref = '/',
   children,
 }: EriPageLayoutProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
+  // Clean delegation — no internal menuOpen state (that belongs to the consuming app)
   const handleMenuClick = () => {
-    setMenuOpen(true);
     onMenuClick?.();
   };
 
@@ -114,7 +127,7 @@ export function EriPageLayout({
         logoHref={logoHref}
       />
 
-      {/* Page content — padded top by header height */}
+      {/* Page content — each page must add its own top padding to clear the fixed 64px header */}
       <main className="flex-1">
         {children}
       </main>
