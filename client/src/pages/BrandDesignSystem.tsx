@@ -2290,249 +2290,6 @@ import { pillarBottomIcons } from "@/lib/assets";
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION 9: PAGE LAYOUT SHELLS */}
-        {/* ================================================================ */}
-        <section className="mb-16" id="page-layout">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Page Layout Shells
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
-            Every public-facing ERI page uses{" "}
-            <code className="text-sm font-mono bg-gray-100 px-1.5 py-0.5 rounded">PublicLayout</code> which composes the persistent Header and Footer around a flexible content area. Use these shells — never build a custom header or footer from scratch.
-          </p>
-
-          {/* Two header patterns callout */}
-          <div className="grid md:grid-cols-2 gap-4 mb-8">
-            <Card className="shadow-sm border-l-4 border-l-[#3ba559]">
-              <CardContent className="p-5">
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#3ba559] mb-1 block">Pattern A</span>
-                <h4 className="font-bold text-[#232323] mb-2">Web App Header</h4>
-                <p className="text-sm text-gray-600">Used by all ERI web applications (PSM, Exponential Playbook, etc.). Sticky, 64px tall, white background with bottom border. Left: logo + divider + title block. Right: BETA badge + version + hamburger.</p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm border-l-4 border-l-[#232323]">
-              <CardContent className="p-5">
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#232323] mb-1 block">Pattern B</span>
-                <h4 className="font-bold text-[#232323] mb-2">Tier A + Landing Hero Header</h4>
-                <p className="text-sm text-gray-600">Used on the public landing page (<code className="font-mono text-xs bg-gray-100 px-1 rounded">/</code>) of a Tier A app with a visual hero (e.g. Exponential Taxonomy). Transparent background over the dark hero image until scrolled — then transitions to white. Logo and text in white. On interior tab pages, reverts to Pattern A (white solid).</p>
-              </CardContent>
-            </Card>
-
-          </div>
-
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">PublicLayout Props</h3>
-          <Card className="shadow-sm mb-6">
-            <CardContent className="p-0">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="text-left p-4 font-bold text-[#232323]">Prop</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Type</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Default</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { prop: "children", type: "ReactNode", def: "—", desc: "Page content. Rendered inside <main> between header and footer." },
-                    { prop: "hideFooter", type: "boolean", def: "false", desc: "Set true on pages where the footer would be redundant (e.g. full-screen app views)." },
-                    { prop: "transparentHeader", type: "boolean", def: "false", desc: "Makes the header background transparent until scrolled. Use on the public landing page of a Tier A + Landing Hero app (e.g. Exponential Taxonomy /) and on Tier B marketing pages. Do not use on Tier A interior pages or Tier C pages." },
-                  ].map((row, i) => (
-                    <tr key={row.prop} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.prop}</code></td>
-                      <td className="p-4 font-mono text-gray-600 text-xs">{row.type}</td>
-                      <td className="p-4 font-mono text-gray-600 text-xs">{row.def}</td>
-                      <td className="p-4 text-gray-600 text-xs">{row.desc}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
-          <Card className="shadow-sm bg-gray-900 mb-10">
-            <CardContent className="p-6">
-              <pre className="text-sm text-gray-300 overflow-x-auto">{`import PublicLayout from "@/components/PublicLayout";
-
-// Standard public page
-export default function MyPage() {
-  return (
-    <PublicLayout>
-      {/* First child should be a hero section with pt-16 to clear the fixed header */}
-      <section className="pt-16 bg-[#232323] text-white">
-        ...
-      </section>
-    </PublicLayout>
-  );
-}
-
-// Hero page with transparent header
-export default function HeroPage() {
-  return (
-    <PublicLayout transparentHeader>
-      <section className="min-h-screen bg-cover bg-center">...</section>
-    </PublicLayout>
-  );
-}`}</pre>
-            </CardContent>
-          </Card>
-
-          {/* Header Anatomy — Web App Pattern */}
-          <h3 className="font-bold text-[#232323] mb-2 text-lg">Web App Header Anatomy</h3>
-          <p className="text-gray-600 mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), white background with bottom border. Inner container uses <code className="font-mono text-xs bg-gray-100 px-1 rounded">max-w-screen-xl mx-auto</code> with <code className="font-mono text-xs bg-[#93E07D]/10 text-[#3ba559] px-1 rounded">paddingInline: var(--eri-content-inset)</code> — this is the canonical anchor that aligns the logotype with the hero text block.</p>
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            <Card className="shadow-sm">
-              <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3">Left Zone — Logo + Divider + Title Block</h4>
-                <div className="space-y-3 text-sm text-gray-600">
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI full-colour wordmark PNG/SVG — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, links to <code className="font-mono text-xs">/</code></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Vertical divider — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-6 w-px bg-gray-300 shrink-0</code> (hidden on mobile)</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>App title — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[18px] font-semibold text-[#384151] truncate</code><br/><em className="text-gray-400">e.g. "Professional Services Matrix"</em></span></div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="shadow-sm">
-              <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Menu</h4>
-                <div className="space-y-3 text-sm text-gray-600">
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>App status badge — transparent outlined pill: <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>. Values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code> / <code className="font-mono text-xs bg-gray-100 px-1 rounded">LIVE</code>. On dark headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-white border-white/60</code>. On white headers: <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-gray-500 border-gray-400</code>. <em className="text-red-400">Never use a filled background.</em></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-[11px] font-medium text-gray-500 tracking-wide</code><br/><em className="text-gray-400">Format: V.YYYY.MM.DD — e.g. "V.2026.04.15"</em><br/><em className="text-red-400">Do NOT use: date-only format ("14 Apr 2026"), lowercase v, or date without V prefix</em></span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Public surface only</strong> — optional single CTA button: <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#93E07D] text-[#1a1a1a] rounded-lg px-4 py-2 text-sm font-semibold</code> (e.g. &ldquo;Contact us&rdquo;). <em className="text-red-400">Authenticated surface: no CTA in header.</em> Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={!isAuthenticated}"}</code> to conditionally render.</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger menu button — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md hover:bg-gray-100</code> with lucide <code className="font-mono text-xs">Menu</code> icon (always visible, opens full-screen overlay)</span></div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Header visual mockup — Web App Pattern */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Web App Header — Visual Examples</h3>
-          <div className="space-y-4 mb-10">
-            {/* State 1: Default white */}
-            <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 1 — Default (white background, scrolled)</p>
-              <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                <div className="bg-white border-b border-gray-200">
-                  <div className="px-6">
-                    <div className="flex items-center justify-between h-16 gap-4">
-                      {/* Left */}
-                      <div className="flex items-center gap-3 min-w-0">
-                        <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto shrink-0" />
-                        <div className="h-6 w-px bg-gray-300 shrink-0" />
-                        <span className="text-[18px] font-semibold text-[#384151] truncate">Brand Design System</span>
-                      </div>
-                      {/* Right */}
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full border border-gray-400 text-[11px] font-semibold text-gray-500 tracking-widest uppercase">BETA</span>
-                        <span className="text-[11px] font-medium text-gray-500 tracking-wide">V.2026.04.12</span>
-                        <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100">
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">sticky top-0 z-50 · bg-white · h-16 · border-b border-gray-200 · left: logo + divider + title block · right: status badge (outlined, text-gray-500 border-gray-400) + version + hamburger</div>
-              </div>
-            </div>
-
-            {/* State 2b: Tier B transparent header with CTA */}
-            <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">State 2 — Tier B Marketing Header (transparent on dark hero, with optional CTA)</p>
-              <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                <div className="bg-[#232323]">
-                  <div className="px-6">
-                    <div className="flex items-center justify-between h-16 gap-4">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto shrink-0" style={{ filter: "brightness(0) invert(1)" }} />
-                        <div className="h-6 w-px bg-gray-600 shrink-0" />
-                        <span className="text-[18px] font-semibold text-gray-300 truncate">Brand Design System</span>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full border border-white/60 text-white text-[11px] font-semibold tracking-widest uppercase">BETA</span>
-                        <span className="text-[11px] font-medium text-gray-400 tracking-wide">V.2026.04.12</span>
-                        <button className="px-4 py-1.5 bg-[#93E07D] text-[#1a1a1a] rounded-lg text-sm font-semibold">Contact us</button>
-                        <div className="inline-flex items-center justify-center size-9 rounded-md text-gray-400">
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Public surface only · transparentHeader=true · optional CTA between version and hamburger · bg-[#93E07D] text-[#1a1a1a] rounded-lg · Authenticated surface: no CTA · use showCTA={"{"}!isAuthenticated{"}"}</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer anatomy */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Footer Anatomy</h3>
-          <p className="text-gray-600 mb-4 text-sm">Dark charcoal background (<code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-[#232323]</code>). <code className="font-mono text-xs bg-gray-100 px-1 rounded">py-12</code> padding. Three-column grid on desktop. Accent link colour: brand green-300 (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#93cda3</code>).</p>
-          <Card className="shadow-sm mb-6">
-            <CardContent className="p-0">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="text-left p-4 font-bold text-[#232323]">Column</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Content</th>
-                    <th className="text-left p-4 font-bold text-[#232323]">Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { col: "Brand (col 1)", content: "ERI full-colour wordmark (h-8, inverted to white) + one-line description", notes: "Logo inverted with filter: brightness(0) invert(1). Links to homepage." },
-                    { col: "Resources (col 2)", content: "Links: Brand Guidelines, Component Library, Colour Tokens, Typography, Badge Reference", notes: "Internal anchor links. text-gray-400 hover:text-[#93cda3] (brand green-300)." },
-                    { col: "Contact (col 3)", content: "exponentialroadmap.org, Exponential Roadmap Initiative, Business Playbook", notes: "All open in new tab. Same link style as Resources." },
-                  ].map((row, i) => (
-                    <tr key={row.col} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <td className="p-4 font-medium text-[#232323]">{row.col}</td>
-                      <td className="p-4 text-gray-600 text-xs">{row.content}</td>
-                      <td className="p-4 text-gray-500 text-xs">{row.notes}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
-
-          {/* Footer visual mockup */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Footer — Visual Example</h3>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-2">
-            <footer className="bg-[#232323] text-white">
-              <div className="px-6 py-10">
-                <div className="grid md:grid-cols-3 gap-8">
-                  <div>
-                    <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 mb-4" style={{ filter: "brightness(0) invert(1)" }} />
-                    <p className="text-sm text-gray-400">The official brand design system for all ERI digital products.</p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white mb-4">Resources</h3>
-                    <ul className="space-y-2">
-                      {["Brand Guidelines", "Component Library", "Colour Tokens"].map(l => (
-                        <li key={l}><span className="text-sm text-gray-400 hover:text-[#93cda3] transition-colors cursor-pointer">{l}</span></li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white mb-4">Contact</h3>
-                    <ul className="space-y-2">
-                      {["exponentialroadmap.org", "Exponential Roadmap Initiative", "Business Playbook"].map(l => (
-                        <li key={l}><span className="text-sm text-gray-400 hover:text-[#93cda3] transition-colors cursor-pointer">{l}</span></li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div className="mt-10 pt-6 border-t border-gray-700">
-                  <p className="text-sm text-gray-500 text-center">© {new Date().getFullYear()} Exponential Roadmap Initiative. All rights reserved. | Based on Exponential Business Playbook v5.0</p>
-                </div>
-              </div>
-            </footer>
-                <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#232323] · text-white · grid md:grid-cols-3 · py-12 · border-t border-gray-700 · accent links: #93cda3 (brand green-300)</div>
-          </div>
-        </section>
-
-        {/* ================================================================ */}
         {/* SECTION 7: COMPONENT LIBRARY (ChartContainer) */}
         {/* ================================================================ */}
         <section className="mb-16" id="component-library">
@@ -2612,51 +2369,8 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 2. App Status Badges — Header */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">2. App Status Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in the header right zone of all ERI apps to communicate the release stage of the application. One canonical style: transparent outlined pill, all-caps, adapts to header background colour.</p>
-          <Card className="shadow-sm mb-4">
-            <CardContent className="p-5">
-              <div className="flex flex-wrap gap-6 mb-5">
-                {[
-                  { label: "ALPHA",   desc: "Internal / pre-release" },
-                  { label: "BETA",    desc: "Public, under active development" },
-                  { label: "PREVIEW", desc: "Feature-complete, not yet launched" },
-                  { label: "LIVE",    desc: "Fully launched, stable, production" },
-                ].map(({ label, desc }) => (
-                  <div key={label} className="flex flex-col items-start gap-2">
-                    <div className="flex items-center gap-3">
-                      {/* On dark */}
-                      <div className="bg-[#232323] px-3 py-1.5 rounded">
-                        <span className="rounded-full border border-white/60 text-white text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
-                      </div>
-                      {/* On white */}
-                      <div className="bg-white border border-gray-200 px-3 py-1.5 rounded">
-                        <span className="rounded-full border border-gray-400 text-gray-500 text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-gray-500">{desc}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="bg-gray-50 rounded p-3 text-xs space-y-1.5">
-                <p className="font-semibold text-[#232323] mb-1">Canonical class string</p>
-                <code className="font-mono text-gray-700 block">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>
-                <p className="text-gray-500 mt-2"><strong>On dark/transparent headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-white border-white/60</code></p>
-                <p className="text-gray-500"><strong>On white/light headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-gray-500 border-gray-400</code></p>
-                <p className="text-red-500 mt-1">Never use a filled background colour on the status badge. Never use a status dot alongside the badge.</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="shadow-sm mb-8 border-amber-200 bg-amber-50">
-            <CardContent className="p-4">
-              <p className="text-xs font-semibold text-amber-800 mb-1">Non-conformant pattern to correct</p>
-              <p className="text-xs text-amber-700">HAL currently uses a filled gray pill (<code className="font-mono bg-white px-1 rounded">bg-gray-700 text-white rounded-full</code>) for its Beta badge. This should be replaced with the transparent outlined style above.</p>
-            </CardContent>
-          </Card>
-
-          {/* 3. System & Experimental Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">3. System &amp; Experimental Badges</h3>
+          {/* 2. System & Experimental Badges (was section 3 — App Status Badges moved to Standard Components › EriStatusBadge) */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">2. System &amp; Experimental Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in the header and on feature flags to signal development status.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2677,8 +2391,8 @@ export default function HeroPage() {
             </CardContent>
           </Card>
 
-          {/* 4. Priority Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">4. Priority Badges</h3>
+          {/* 3. Priority Badges */}
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">3. Priority Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in CPR Recommendations and action lists to indicate urgency level.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2700,7 +2414,7 @@ export default function HeroPage() {
           </Card>
 
           {/* 5. KPI & Framework Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">5. KPI &amp; Framework Badges</h3>
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">4. KPI &amp; Framework Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in KPI sections and action themes to classify framework items.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2722,7 +2436,7 @@ export default function HeroPage() {
           </Card>
 
           {/* 6. Qualification & Status Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Qualification &amp; Status Badges</h3>
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">5. Qualification &amp; Status Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in Climate Solutions qualification, case study cards, and pillar content.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2744,7 +2458,7 @@ export default function HeroPage() {
           </Card>
 
           {/* 7. Data Source Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">7. Data Source &amp; API Badges</h3>
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Data Source &amp; API Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in DataSourceCard, DataSourcesTable, and widget headers to show data freshness and source type.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2768,7 +2482,7 @@ export default function HeroPage() {
           </Card>
 
           {/* 8. Opportunity Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">8. Opportunity &amp; Category Badges</h3>
+          <h3 className="font-bold text-[#232323] mb-3 text-lg">7. Opportunity &amp; Category Badges</h3>
           <p className="text-gray-600 mb-4 text-sm">Used in CPR Opportunities and impact portfolio to categorise opportunity types.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -3081,241 +2795,6 @@ className="transition-all duration-300 ease-in-out"`}</pre>
         </section>
 
         {/* ================================================================ */}
-        {/* SECTION: FOOTER */}
-        {/* ================================================================ */}
-        <section className="mb-16" id="footer">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Footer
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
-            ERI uses a <strong>minimal two-zone footer</strong> across all apps. Background is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code>. Logo and tagline on the left, copyright on the right. Link columns will be added in a future version once footer URLs are confirmed.
-          </p>
-
-          {/* Rules table */}
-          <div className="overflow-x-auto mb-8">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-[#232323] text-white">
-                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Property</th>
-                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Background", "#232323 — always. Never dark green, never white (except Tier C)"],
-                  ["Top border", "border-t border-gray-700"],
-                  ["Padding", "py-8 vertical · paddingInline: var(--eri-content-inset) horizontal"],
-                  ["Layout", "flex items-center justify-between — two zones, single row"],
-                  ["Left zone", "ERI white wordmark (h-7) + app tagline below (text-sm text-gray-400, max 80 chars)"],
-                  ["Right zone", "© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-gray-500"],
-                  ["Link columns", "None in v1 — to be added in a future version"],
-                ].map(([prop, val]) => (
-                  <tr key={prop} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="px-4 py-3 font-mono text-xs text-[#232323] font-medium w-48">{prop}</td>
-                    <td className="px-4 py-3 text-gray-600">{val}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Live demo */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Live Demo</h3>
-          <p className="text-gray-500 text-sm mb-4">Standard dark footer — used on all Tier A and Tier B apps.</p>
-          <div className="rounded-lg overflow-hidden border border-gray-200 mb-8">
-            <footer className="border-t border-gray-700" style={{ backgroundColor: '#232323' }}>
-              <div
-                className="max-w-screen-xl mx-auto w-full py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-                style={{ paddingInline: 'var(--eri-content-inset)' }}
-              >
-                <div>
-                  <img
-                    src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_f5763508.png"
-                    alt="Exponential Roadmap Initiative"
-                    className="h-7 w-auto mb-2"
-                  />
-                  <p className="text-sm text-gray-400">Science-backed taxonomy for climate impact assessment.</p>
-                </div>
-                <p className="text-sm text-gray-500 sm:text-right">
-                  © {new Date().getFullYear()} Exponential Roadmap Initiative. Exponential Taxonomy.
-                </p>
-              </div>
-            </footer>
-          </div>
-
-          {/* Tier C variation */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Permitted Variation — Tier C (White Background)</h3>
-          <p className="text-gray-500 text-sm mb-4">Admin tools with a persistent sidebar. No logo (sidebar already shows it). Same two-zone layout, light surface.</p>
-          <div className="rounded-lg overflow-hidden border border-gray-200 mb-8">
-            <footer className="border-t border-gray-200 bg-white">
-              <div
-                className="max-w-screen-xl mx-auto w-full py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-                style={{ paddingInline: 'var(--eri-content-inset)' }}
-              >
-                <p className="text-sm text-gray-500">Professional Services Matrix — Admin</p>
-                <p className="text-sm text-gray-400 sm:text-right">
-                  © {new Date().getFullYear()} Exponential Roadmap Initiative.
-                </p>
-              </div>
-            </footer>
-          </div>
-
-          {/* Code reference */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Code Reference</h3>
-          <div className="bg-[#1a1a1a] rounded-lg p-5 font-mono text-xs text-gray-300 overflow-x-auto mb-4">
-            <pre>{`{/* ✅ Standard ERI footer */}
-<footer className="border-t border-gray-700" style={{ backgroundColor: '#232323' }}>
-  <div
-    className="max-w-screen-xl mx-auto w-full py-8
-               flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-    style={{ paddingInline: 'var(--eri-content-inset)' }}
-  >
-    {/* Left zone: logo + tagline */}
-    <div>
-      <img src="[ERI_LOGO_CDN_URL]" alt="Exponential Roadmap Initiative"
-           className="h-7 w-auto mb-2" />
-      <p className="text-sm text-gray-400">App tagline — one line, max 80 chars.</p>
-    </div>
-    {/* Right zone: copyright */}
-    <p className="text-sm text-gray-500 sm:text-right">
-      © {new Date().getFullYear()} Exponential Roadmap Initiative. App Name.
-    </p>
-  </div>
-</footer>
-
-{/* ❌ Do NOT */}
-{/* bg-[#1a3a2a] dark green background */}
-{/* rounded-full on any footer element */}
-{/* Link columns in v1 */}
-{/* Omitting --eri-content-inset (breaks logo alignment) */}`}</pre>
-          </div>
-
-          {/* Non-conformant callout */}
-          <div className="border border-red-200 bg-red-50 rounded-lg p-4">
-            <p className="text-sm font-semibold text-red-700 mb-2">Non-conformant patterns to correct</p>
-            <ul className="text-sm text-red-600 space-y-1 list-disc list-inside">
-              <li>ERI Platform footer: <code className="font-mono text-xs">bg-[#1a3a2a]</code> dark green — replace with <code className="font-mono text-xs">#232323</code></li>
-              <li>PSM light footer: white background — acceptable only for Tier C admin tools, not for public-facing apps</li>
-              <li>Taxonomy footer: single-row flat layout with no logo column — upgrade to two-zone standard</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* ================================================================ */}
-        {/* SECTION: LAYOUT WRAPPER PATTERN */}
-        {/* ================================================================ */}
-        <section className="mb-16" id="layout-wrapper">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
-            Layout Wrapper Pattern
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
-            The header and footer are <strong>persistent</strong> — they appear on every public-facing page without exception.
-            They must be implemented as <strong>single shared React components</strong> rendered once in a layout wrapper in{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">App.tsx</code>, not copy-pasted into individual page files.
-          </p>
-
-          {/* Why it matters */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-8">
-            <div className="flex items-start gap-3">
-              <span className="text-amber-600 text-lg mt-0.5">⚠</span>
-              <div>
-                <p className="font-semibold text-amber-900 mb-1">Why this matters</p>
-                <p className="text-sm text-amber-800">
-                  If the header or footer markup is duplicated across page files, a change to one copy does not propagate to the others.
-                  A single component in a layout wrapper means <strong>one change updates every page simultaneously</strong>.
-                  This is a structural requirement, not a preference.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Rules table */}
-          <div className="overflow-x-auto mb-8">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-[#232323] text-white">
-                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Rule</th>
-                  <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Requirement</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Persistence", "Header and footer appear on every public-facing page — no exceptions"],
-                  ["Single component", "<AppHeader /> and <AppFooter /> are each a single file: client/src/components/AppHeader.tsx and AppFooter.tsx"],
-                  ["Layout wrapper", "Both components are rendered once in a PageLayout wrapper function in App.tsx"],
-                  ["No duplication", "Never import or render AppHeader / AppFooter inside individual page files"],
-                  ["Change propagation", "Editing AppHeader.tsx or AppFooter.tsx updates every page automatically"],
-                ].map(([rule, req], i) => (
-                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                    <td className="px-4 py-3 font-medium text-[#232323] border-b border-gray-100 w-48">{rule}</td>
-                    <td className="px-4 py-3 text-gray-600 border-b border-gray-100 font-mono text-xs">{req}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Code reference */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Canonical App.tsx structure</h3>
-          <Card className="shadow-sm bg-gray-900 mb-6">
-            <CardContent className="p-5">
-              <pre className="text-sm text-gray-300 overflow-x-auto">{`// ✅ App.tsx — header and footer rendered ONCE in a layout wrapper
-import { AppHeader } from "@/components/AppHeader";
-import { AppFooter } from "@/components/AppFooter";
-
-function PageLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <AppHeader />          {/* Single component — change here = change everywhere */}
-      <main className="flex-1">{children}</main>
-      <AppFooter />          {/* Single component — change here = change everywhere */}
-    </div>
-  );
-}
-
-export default function App() {
-  return (
-    <PageLayout>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/contact" component={ContactPage} />
-        {/* All public routes share the same header and footer automatically */}
-      </Switch>
-    </PageLayout>
-  );
-}`}</pre>
-            </CardContent>
-          </Card>
-
-          {/* Non-conformant */}
-          <Card className="shadow-sm bg-red-50 border border-red-200 mb-6">
-            <CardContent className="p-5">
-              <p className="font-semibold text-red-800 mb-3 text-sm">❌ Non-conformant — do not do this</p>
-              <pre className="text-sm text-red-700 overflow-x-auto">{`// ❌ Wrong — header/footer duplicated inside each page file
-function HomePage() {
-  return (
-    <>
-      <header>...</header>  {/* Duplicated — changes won't propagate to other pages */}
-      <main>...</main>
-      <footer>...</footer>  {/* Duplicated — changes won't propagate to other pages */}
-    </>
-  );
-}
-
-function ContactPage() {
-  return (
-    <>
-      <header>...</header>  {/* Different copy — will drift from HomePage's header */}
-      <main>...</main>
-      <footer>...</footer>
-    </>
-  );
-}`}</pre>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* ================================================================ */}
         {/* SECTION: CONTACT US INTEGRATION */}
         {/* ================================================================ */}
         <section className="mb-16" id="contact-us">
@@ -3543,8 +3022,8 @@ const contactUrl =
               {[
                 { name: "EriStatusBadge.tsx",      url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriStatusBadge_d862f741.tsx" },
                 { name: "EriContactUsButton.tsx",  url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriContactUsButton_55080863.tsx" },
-                { name: "EriAppHeader.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_6b836634.tsx" },
-                { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_0aef00aa.tsx" },
+                { name: "EriAppHeader.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_12b5f8fa.tsx" },
+                { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_1afd82a3.tsx" },
                 { name: "EriHeroSection.tsx",       url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriHeroSection_48155b1d.tsx" },
                 { name: "EriPageLayout.tsx",        url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriPageLayout_ca390308.tsx" },
               ].map(({ name, url }) => (
@@ -3626,6 +3105,42 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               <li>Rounded rectangle (<code className="font-mono bg-red-100 px-1 rounded">rounded-md</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-full</code></li>
               <li>Coloured text (e.g. green or amber) — always white on dark, gray on light</li>
             </ul>
+          </div>
+
+          {/* ── Status Badge Anatomy ── */}
+          <div className="mb-10">
+            <h4 className="font-bold text-[#232323] mb-3 text-base">Anatomy &amp; Canonical Class String</h4>
+            <Card className="shadow-sm mb-4">
+              <CardContent className="p-5">
+                <div className="flex flex-wrap gap-6 mb-5">
+                  {[
+                    { label: 'ALPHA',   desc: 'Internal / pre-release' },
+                    { label: 'BETA',    desc: 'Public, under active development' },
+                    { label: 'PREVIEW', desc: 'Feature-complete, not yet launched' },
+                    { label: 'LIVE',    desc: 'Fully launched, stable, production' },
+                  ].map(({ label, desc }) => (
+                    <div key={label} className="flex flex-col items-start gap-2">
+                      <div className="flex items-center gap-3">
+                        <div className="bg-[#232323] px-3 py-1.5 rounded">
+                          <span className="rounded-full border border-white/60 text-white text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
+                        </div>
+                        <div className="bg-white border border-gray-200 px-3 py-1.5 rounded">
+                          <span className="rounded-full border border-gray-400 text-gray-500 text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-500">{desc}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-gray-50 rounded p-3 text-xs space-y-1.5">
+                  <p className="font-semibold text-[#232323] mb-1">Canonical class string</p>
+                  <code className="font-mono text-gray-700 block">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>
+                  <p className="text-gray-500 mt-2"><strong>On dark/transparent headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-white border-white/60</code></p>
+                  <p className="text-gray-500"><strong>On white/light headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-gray-500 border-gray-400</code></p>
+                  <p className="text-red-500 mt-1">Never use a filled background colour. Never use a status dot alongside the badge.</p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* ── Component 2: EriContactUsButton ─────────────────────────── */}
@@ -3727,7 +3242,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <div className="relative" style={{ height: '64px', backgroundColor: '#232323' }}>
               <div className="absolute inset-0 flex items-center justify-between" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
                 <div className="flex items-center gap-3">
-                  <img src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZXhwb25lbnRpYWxyb2FkbWFwXC9maWxlXC9tVlJBaGpvQWtBZVlpQVZkQUZBZy5zdmcifQ:exponentialroadmap:WMvBRmHfGEkm_WUBnEWjMFSaFhJHkxMhLDjkMHKVl-I?width=800" alt="ERI" className="h-8 w-auto" />
+                  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-8 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
                   <div className="w-px h-6 bg-white/20" />
                   <span className="text-white text-sm font-medium">Professional Services Matrix</span>
                 </div>
@@ -3749,7 +3264,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <div className="relative" style={{ height: '64px', backgroundColor: '#232323' }}>
               <div className="absolute inset-0 flex items-center justify-between" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
                 <div className="flex items-center gap-3">
-                  <img src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZXhwb25lbnRpYWxyb2FkbWFwXC9maWxlXC9tVlJBaGpvQWtBZVlpQVZkQUZBZy5zdmcifQ:exponentialroadmap:WMvBRmHfGEkm_WUBnEWjMFSaFhJHkxMhLDjkMHKVl-I?width=800" alt="ERI" className="h-8 w-auto" />
+                  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-8 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
                   <div className="w-px h-6 bg-white/20" />
                   <span className="text-white text-sm font-medium">Professional Services Matrix</span>
                 </div>
@@ -3800,7 +3315,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <CardContent className="p-0">
               <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
                 <span className="text-xs font-mono text-gray-400">EriAppHeader.tsx — usage</span>
-                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_6b836634.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_12b5f8fa.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
               </div>
               <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`// In EriPageLayout (not in page files directly):
 <EriAppHeader
@@ -3828,7 +3343,36 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             </ul>
           </div>
 
-          {/* ── Component 4: EriAppFooter ────────────────────────────────── */}
+          {/* ── Header Anatomy Detail ── */}
+          <div className="mb-10">
+            <h4 className="font-bold text-[#232323] mb-3 text-base">Header Anatomy</h4>
+            <p className="text-gray-600 mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> background. Inner container uses <code className="font-mono text-xs bg-gray-100 px-1 rounded">max-w-screen-xl mx-auto</code> with <code className="font-mono text-xs bg-[#93E07D]/10 text-[#3ba559] px-1 rounded">paddingInline: var(--eri-content-inset)</code> — this aligns the logotype with the hero text block.</p>
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <Card className="shadow-sm">
+                <CardContent className="p-5">
+                  <h4 className="font-bold text-[#232323] mb-3">Left Zone — Logo + Divider + Title Block</h4>
+                  <div className="space-y-3 text-sm text-gray-600">
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI wordmark — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, <code className="font-mono text-xs bg-gray-100 px-1 rounded">filter: brightness(0) invert(1)</code>, links to <code className="font-mono text-xs">/</code></span></div>
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Vertical divider — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-6 w-px bg-white/20 shrink-0</code></span></div>
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>App title — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-sm font-medium text-white truncate</code></span></div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="shadow-sm">
+                <CardContent className="p-5">
+                  <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Version + CTA + Menu</h4>
+                  <div className="space-y-3 text-sm text-gray-600">
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span><code className="font-mono text-xs bg-gray-100 px-1 rounded">EriStatusBadge</code> — transparent outlined pill, white on dark</span></div>
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — format <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.YYYY.MM.DD</code> (e.g. <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.2026.04.15</code>). <em className="text-red-400">Never date-only, never lowercase v.</em></span></div>
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Public surface only</strong> — <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriContactUsButton</code>. Drive with <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={!isAuthenticated}"}</code>. <em className="text-red-400">No CTA on authenticated surface.</em></span></div>
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md</code> with lucide <code className="font-mono text-xs">Menu</code> icon, always visible</span></div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+             {/* ── Component 4: EriAppFooter ──────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">4. EriAppFooter</h3>
           <p className="text-gray-600 text-sm mb-4">
             Canonical two-zone dark footer. Left zone: ERI logo + optional tagline. Right zone: copyright string.
@@ -3842,7 +3386,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <div style={{ backgroundColor: '#232323', borderTop: '1px solid #374151', padding: 'clamp(1rem, 3vw, 2rem)' }}>
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                 <div className="flex flex-col gap-2">
-                  <img src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZXhwb25lbnRpYWxyb2FkbWFwXC9maWxlXC9tVlJBaGpvQWtBZVlpQVZkQUZBZy5zdmcifQ:exponentialroadmap:WMvBRmHfGEkm_WUBnEWjMFSaFhJHkxMhLDjkMHKVl-I?width=800" alt="ERI" className="h-7 w-auto" />
+                  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-7 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
                   <p className="text-sm text-gray-400 max-w-xs">Making Pillar 3 climate impact measurable and actionable.</p>
                 </div>
               </div>
@@ -3857,7 +3401,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <CardContent className="p-0">
               <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
                 <span className="text-xs font-mono text-gray-400">EriAppFooter.tsx — usage</span>
-                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_0aef00aa.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_1afd82a3.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
               </div>
               <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`// In EriPageLayout (not in page files directly):
 <EriAppFooter
@@ -3878,7 +3422,58 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             </ul>
           </div>
 
-          {/* ── Component 5: EriHeroSection ──────────────────────────────── */}
+            {/* ── Footer Rules Table ── */}
+          <div className="mb-10">
+            <h4 className="font-bold text-[#232323] mb-3 text-base">Footer Rules</h4>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-[#232323] text-white">
+                    <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Property</th>
+                    <th className="text-left px-4 py-3 font-semibold text-xs tracking-widest uppercase">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ['Background', '#232323 — always. Never dark green, never white (except Tier C admin tools)'],
+                    ['Top border', 'border-t border-gray-700'],
+                    ['Padding', 'py-8 vertical · paddingInline: var(--eri-content-inset) horizontal'],
+                    ['Layout', 'flex items-center justify-between — two zones, single row'],
+                    ['Left zone', 'ERI white wordmark (h-7, filter brightness(0) invert(1)) + optional tagline below (text-sm text-gray-400, max 80 chars)'],
+                    ['© Right zone', '© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-gray-500'],
+                    ['Link columns', 'None in v1 — to be added once footer URLs are confirmed'],
+                  ].map(([prop, val]) => (
+                    <tr key={prop} className="border-b border-gray-100 hover:bg-gray-50">
+                      <td className="px-4 py-3 font-mono text-xs text-[#232323] font-medium w-48">{prop}</td>
+                      <td className="px-4 py-3 text-gray-600 text-sm">{val}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <h4 className="font-bold text-[#232323] mb-3 text-base">Permitted Variation — Tier C (White Background)</h4>
+            <p className="text-gray-500 text-sm mb-4">Admin tools with a persistent sidebar. No logo (sidebar already shows it). Same two-zone layout, light surface.</p>
+            <div className="rounded-lg overflow-hidden border border-gray-200 mb-6">
+              <footer className="border-t border-gray-200 bg-white">
+                <div className="max-w-screen-xl mx-auto w-full py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ paddingInline: 'var(--eri-content-inset)' }}>
+                  <p className="text-sm text-gray-500">Professional Services Matrix — Admin</p>
+                  <p className="text-sm text-gray-400 sm:text-right">© {new Date().getFullYear()} Exponential Roadmap Initiative.</p>
+                </div>
+              </footer>
+            </div>
+
+            <div className="border border-red-200 bg-red-50 rounded-lg p-4">
+              <p className="text-sm font-semibold text-red-700 mb-2">Known violations to correct</p>
+              <ul className="text-sm text-red-600 space-y-1 list-disc list-inside">
+                <li>ERI Platform footer: <code className="font-mono text-xs">bg-[#1a3a2a]</code> dark green — replace with <code className="font-mono text-xs">#232323</code></li>
+                <li>PSM light footer: white background — acceptable only for Tier C admin tools, not for public-facing apps</li>
+                <li>Taxonomy footer: single-row flat layout with no logo column — upgrade to two-zone standard</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* ── Component 5: EriHeroSection ──────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">5. EriHeroSection</h3>
           <p className="text-gray-600 text-sm mb-4">
             Canonical full-viewport hero section. Text block is always vertically centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">flex items-center</code>),
@@ -3989,6 +3584,21 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             The <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> CSS variable must be defined in{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">index.css</code>.
           </p>
+
+          {/* Why it matters */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-6">
+            <div className="flex items-start gap-3">
+              <span className="text-amber-600 text-lg mt-0.5">⚠</span>
+              <div>
+                <p className="font-semibold text-amber-900 mb-1">Why this matters</p>
+                <p className="text-sm text-amber-800">
+                  If the header or footer markup is duplicated across page files, a change to one copy does not propagate to the others.
+                  A single component in a layout wrapper means <strong>one change updates every page simultaneously</strong>.
+                  This is a structural requirement, not a preference.
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* Required CSS */}
           <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
@@ -5126,27 +4736,30 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </thead>
                 <tbody className="font-mono text-[11px]">
                   {[
-                    ["1",  "Brand Proposition",       "brand-proposition"],
-                    ["2",  "Visual Identity",          "visual-identity"],
-                    ["3",  "Logo Usage",               "logo-usage"],
-                    ["4",  "Spacing & Layout",         "spacing"],
-                    ["5",  "Typography",               "typography"],
-                    ["6",  "Verbal Identity",          "verbal-identity"],
-                    ["7",  "Component Library",        "component-library"],
-                    ["8",  "Exponential Framework",    "exponential-framework"],
-                    ["9",  "Page Layout Shells",       "page-layout"],
-                    ["10", "Badge Reference",          "badges"],
-                    ["11", "Interactive States",       "interactive-states"],
-                    ["12", "UI Components",            "components"],
-                    ["13", "Charts & Data Visualisation", "charts"],
-                    ["14", "Photography",              "photography"],
-                    ["15", "Member Logotypes",         "member-logos"],
-                    ["16", "Data Source Logos",        "data-source-logos"],
-                    ["17", "Resources",                "resources"],
-                    ["18", "Surface Modes",             "surface-modes"],
-                    ["19", "Navigation & Layout",      "navigation"],
-                    ["20", "Standard Components",      "standard-components"],
-                    ["21", "Machine Instructions",     "ai-instructions"],
+                    ["1",  "Brand Proposition",          "brand-proposition"],
+                    ["2",  "Visual Identity",             "visual-identity"],
+                    ["3",  "Logo Usage",                  "logo-usage"],
+                    ["4",  "Typography",                  "typography"],
+                    ["5",  "Verbal Identity",             "verbal-identity"],
+                    ["6",  "Photography",                 "photography"],
+                    ["7",  "Brand Graphics",              "brand-graphics"],
+                    ["8",  "Testimonials",                "testimonials"],
+                    ["9",  "Exponential Framework",       "exponential-framework"],
+                    ["10", "Charts & Data Visualisation", "charts"],
+                    ["11", "Member Logotypes",            "member-logos"],
+                    ["12", "Data Source Logos",           "data-source-logos"],
+                    ["13", "Navigation & Layout",         "navigation"],
+                    ["14", "Spacing & Layout",            "spacing"],
+                    ["15", "Component Library",           "component-library"],
+                    ["16", "Badge Reference",             "badges"],
+                    ["17", "CTA Buttons",                 "cta-buttons"],
+                    ["18", "Interactive States",          "interactive-states"],
+                    ["19", "Contact Us Integration",      "contact-us"],
+                    ["20", "Standard Components",         "standard-components"],
+                    ["21", "UI Components",               "components"],
+                    ["22", "Surface Modes",               "surface-modes"],
+                    ["23", "Resources",                   "resources"],
+                    ["24", "Machine Instructions",        "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
