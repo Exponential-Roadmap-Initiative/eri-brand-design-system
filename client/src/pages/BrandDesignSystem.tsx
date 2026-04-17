@@ -3296,8 +3296,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           <h3 className="font-bold text-[#232323] mb-1 text-lg">3. EriAppHeader</h3>
           <p className="text-gray-600 text-sm mb-4">
             Canonical 64px fixed header. Left zone: ERI logo → pipe divider → app name. Right zone: status badge → version → optional CTA → hamburger.
-            The <code className="font-mono text-xs bg-gray-100 px-1 rounded">showCTA</code> prop must be driven by auth state:{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={!isAuthenticated}"}</code>.
+            The <code className="font-mono text-xs bg-gray-100 px-1 rounded">showCTA</code> prop is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">true</code> — the Contact Us CTA is visible on all surfaces.
             Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
           </p>
 
@@ -3357,7 +3356,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["appName",        "string",          "App display name shown after the pipe divider"],
                     ["status",         "EriStatusValue?", "Omit to hide the badge"],
                     ["version",        "string",          "e.g. \"V.2026.04.15\""],
-                    ["showCTA",        "boolean",         "Pass !isAuthenticated — true = public surface"],
+                    ["showCTA",        "boolean",         "Always pass true — CTA visible on all surfaces. Only false for purely internal tools."],
                     ["source",         "string?",         "Required if showCTA may be true"],
                     ["sourceLabel",    "string?",         "Human-readable app name for contact service"],
                     ["returnUrl",      "string?",         "Return URL for contact service"],
@@ -3386,8 +3385,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 <EriAppHeader
   appName="Professional Services Matrix"
   status="BETA"
-  version="V.2026.04.15"
-  showCTA={!isAuthenticated}
+  version="V.2026.04.17"
+  showCTA={true}
   source="psm"
   sourceLabel="Professional Services Matrix"
   returnUrl="https://psm.exponentialroadmap.org"
@@ -3401,7 +3400,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <p className="text-xs font-semibold text-amber-800 mb-2">INTEGRATION NOTES — read before implementing</p>
             <ul className="text-xs text-amber-900 space-y-2 list-disc list-inside">
               <li><strong>Use via <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code>, not directly</strong> — do not import <code className="font-mono bg-amber-100 px-1 rounded">EriAppHeader</code> in page files. It is rendered once inside <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> in <code className="font-mono bg-amber-100 px-1 rounded">App.tsx</code>. All header props (<code className="font-mono bg-amber-100 px-1 rounded">appName</code>, <code className="font-mono bg-amber-100 px-1 rounded">status</code>, <code className="font-mono bg-amber-100 px-1 rounded">version</code>, <code className="font-mono bg-amber-100 px-1 rounded">showCTA</code>, etc.) are passed to <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> and forwarded internally.</li>
-              <li><strong>Contact Us button — three props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 px-1 rounded">showCTA</code>, <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> are all provided. Omitting any one of them silently hides the button. <code className="font-mono bg-amber-100 px-1 rounded">showCTA</code> defaults to <code className="font-mono bg-amber-100 px-1 rounded">true</code> (public surface) — pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{false}'}</code> on authenticated surfaces. A dev-mode console warning fires if <code className="font-mono bg-amber-100 px-1 rounded">showCTA=true</code> but props are missing.</li>
+              <li><strong>showCTA — always true</strong> — the Contact Us CTA must be visible on <strong>all</strong> surfaces (public and authenticated). Always pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{true}'}</code>. Only pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{false}'}</code> if the app has no Contact Us entry point (e.g. a purely internal admin tool). <strong>Do not use <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{!isAuthenticated}'}</code></strong> — this incorrectly hides the CTA from logged-in users.</li>
+              <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> are all provided. Omitting any one of them silently hides the button. A dev-mode console warning fires if <code className="font-mono bg-amber-100 px-1 rounded">showCTA=true</code> but props are missing.</li>
               <li><strong>Hamburger — always visible, wire <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> to your drawer</strong> — the hamburger button is always rendered. <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> is optional (defaults to no-op) so the button never disappears, but it will do nothing unless you pass <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick={'{() => setMenuOpen(true)}'}</code>. The header does not manage a drawer — your app must render its own drawer component.</li>
               <li><strong>Scope: public-facing apps only</strong> — this dark (<code className="font-mono bg-amber-100 px-1 rounded">#232323</code>) header is for Taxonomy, PSM, HAL, and future public ERI product apps. Internal tools (e.g. the BDS site itself) use their own layout and are exempt.</li>
             </ul>
@@ -3439,7 +3439,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                   <div className="space-y-3 text-sm text-gray-600">
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span><code className="font-mono text-xs bg-gray-100 px-1 rounded">EriStatusBadge</code> — transparent outlined pill, white on dark</span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — format <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.YYYY.MM.DD</code> (e.g. <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.2026.04.15</code>). <em className="text-red-400">Never date-only, never lowercase v.</em></span></div>
-                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>Public surface only</strong> — <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriContactUsButton</code>. Drive with <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={!isAuthenticated}"}</code>. <em className="text-red-400">No CTA on authenticated surface.</em></span></div>
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>All surfaces</strong> — <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriContactUsButton</code>. Always pass <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={true}"}</code>. The CTA is visible on both public and authenticated surfaces.</span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">4.</span><span>Hamburger — <code className="font-mono text-xs bg-gray-100 px-1 rounded">size-9 rounded-md</code> with lucide <code className="font-mono text-xs">Menu</code> icon, always visible</span></div>
                   </div>
                 </CardContent>
@@ -3701,22 +3701,24 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                 <span className="text-xs font-mono text-gray-400">App.tsx — canonical usage</span>
                 <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriPageLayout_78d3d824.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
               </div>
-              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`import { EriPageLayout } from '@/components/eri/EriPageLayout';
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`import { EriPageLayout } from '@eri/components';
 
 function App() {
-  const isAuthenticated = useAuthState();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <EriPageLayout
       appName="Professional Services Matrix"
       status="BETA"
-      version="V.2026.04.15"
-      showCTA={!isAuthenticated}
+      version="V.2026.04.17"
+      showCTA={true}
       source="psm"
       sourceLabel="Professional Services Matrix"
       returnUrl="https://psm.exponentialroadmap.org"
       footerTagline="Making Pillar 3 climate impact measurable."
+      onMenuClick={() => setMenuOpen(true)}
     >
+      <NavDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
       <Router /> {/* your page router */}
     </EriPageLayout>
   );
@@ -3732,7 +3734,8 @@ function App() {
               <li><strong>Your app owns the drawer — render it as a child of <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code></strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> fires <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> but never renders a drawer itself. Your app must manage <code className="font-mono bg-amber-100 px-1 rounded">menuOpen</code> state and render its own <code className="font-mono bg-amber-100 px-1 rounded">&lt;NavDrawer&gt;</code> or <code className="font-mono bg-amber-100 px-1 rounded">&lt;Sheet&gt;</code> as a sibling to <code className="font-mono bg-amber-100 px-1 rounded">&lt;Router /&gt;</code> inside the layout children.</li>
               <li><strong>Outer background is <code className="font-mono bg-amber-100 px-1 rounded">#232323</code></strong> — the layout wrapper sets a dark background on the outermost div. Each page component must set its own background colour (typically <code className="font-mono bg-amber-100 px-1 rounded">bg-[#F9FAFB]</code>) on its outermost div, otherwise the page will appear dark.</li>
               <li><strong>No automatic top padding</strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> does not add <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> to the content area. The header is <code className="font-mono bg-amber-100 px-1 rounded">fixed</code> at 64px — each page's first section must add enough top padding to clear it (e.g. <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> or <code className="font-mono bg-amber-100 px-1 rounded">pt-24</code> for hero sections).</li>
-              <li><strong>Contact Us button — three props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 px-1 rounded">showCTA</code>, <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> are all provided. <code className="font-mono bg-amber-100 px-1 rounded">showCTA</code> defaults to <code className="font-mono bg-amber-100 px-1 rounded">true</code> — pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{false}'}</code> on authenticated surfaces. Omitting any of the three source props silently hides the button with a dev-mode console warning.</li>
+              <li><strong>showCTA — always true</strong> — the Contact Us CTA must be visible on <strong>all</strong> surfaces (public and authenticated). Always pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{true}'}</code>. Only pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{false}'}</code> if the app has no Contact Us entry point (e.g. a purely internal admin tool). <strong>Do not use <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{!isAuthenticated}'}</code></strong> — this incorrectly hides the CTA from logged-in users.</li>
+              <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> are all provided. Omitting any of the three source props silently hides the button with a dev-mode console warning.</li>
             </ul>
           </div>
           {/* Non-conformant callout */}
@@ -4621,7 +4624,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code> as the wrapper for all public-facing pages — never build a custom header or footer.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
-                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. <strong>Public surface (pre-login):</strong> one CTA button permitted in header right zone. <strong>Authenticated surface (post-login):</strong> no CTA in header. Use <code className="bg-gray-100 px-1 rounded text-xs">showCTA={"{"}!isAuthenticated{"}"}</code> to conditionally render — most apps have both surfaces.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. One Contact Us CTA in the header right zone on <strong>all surfaces</strong> (public and authenticated). Always pass <code className="bg-gray-100 px-1 rounded text-xs">showCTA={"{"}true{"}"}</code>.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, white background, <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Max content width: <code className="bg-gray-100 px-1 rounded text-xs">max-w-6xl mx-auto px-4</code>. Never exceed 1152px for content.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Pillar colours must always be used in their correct pillar context — do not reassign P1 colour to P3 content.</span></div>

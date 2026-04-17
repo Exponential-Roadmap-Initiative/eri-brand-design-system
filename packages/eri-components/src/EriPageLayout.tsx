@@ -1,23 +1,22 @@
 /**
- * EriPageLayout — ERI Brand Design System v2.1.0
+ * EriPageLayout — ERI Brand Design System v2.9.2
  *
  * Canonical layout wrapper for all ERI applications.
  * Renders EriAppHeader and EriAppFooter ONCE, wrapping all page content.
  * Use this in App.tsx — never import header or footer directly in page files.
  *
  * USAGE in App.tsx:
- *   import { EriPageLayout } from '@/components/eri/EriPageLayout';
+ *   import { EriPageLayout } from '@eri/components';
  *
  *   function App() {
  *     const [menuOpen, setMenuOpen] = useState(false);
- *     const isAuthenticated = useAuthState(); // your auth hook
  *
  *     return (
  *       <EriPageLayout
  *         appName="Exponential Taxonomy"
  *         status="BETA"
- *         version="V.2026.04.14"
- *         showCTA={!isAuthenticated}
+ *         version="V.2026.04.17"
+ *         showCTA={true}
  *         source="taxonomy"
  *         sourceLabel="Exponential Taxonomy"
  *         returnUrl="https://taxonomy.exponentialroadmap.org"
@@ -33,7 +32,9 @@
  * RULES (do not override):
  *   - This component is the ONLY place EriAppHeader and EriAppFooter are rendered
  *   - Never import EriAppHeader or EriAppFooter directly in page files
- *   - showCTA defaults to true (public surface) — pass showCTA={false} on authenticated surfaces
+ *   - showCTA: always pass true — the Contact Us CTA is visible on ALL surfaces (public and authenticated).
+ *     Only pass showCTA={false} if the app explicitly has no Contact Us entry point
+ *     (e.g. a purely internal admin tool). Do NOT use showCTA={!isAuthenticated}.
  *   - showCTA requires source + sourceLabel + returnUrl — all three must be provided for CTA to render
  *   - onMenuClick defaults to no-op — hamburger is always visible; wire to () => setMenuOpen(true)
  *   - EriPageLayout does NOT render a drawer — your app owns the drawer as a child of EriPageLayout
@@ -64,7 +65,9 @@ interface EriPageLayoutProps {
   version: string;
   /**
    * Show the Contact Us CTA.
-   * Defaults to true (public surface). Pass showCTA={false} on authenticated surfaces.
+   * Always pass true — the CTA is visible on ALL surfaces (public and authenticated).
+   * Only pass false if the app has no Contact Us entry point (e.g. a purely internal admin tool).
+   * Do NOT use !isAuthenticated. Defaults to true.
    * Also requires source + sourceLabel + returnUrl — all three must be provided.
    */
   showCTA?: boolean;
