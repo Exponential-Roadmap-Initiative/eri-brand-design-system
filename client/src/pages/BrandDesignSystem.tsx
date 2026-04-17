@@ -3029,7 +3029,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.9.0&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.9.1&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
@@ -3061,15 +3061,15 @@ const contactUrl =
             </p>
             <pre className="text-xs text-blue-900 bg-blue-100 rounded p-3 mb-3 overflow-x-auto font-mono">{`@import "@eri/components/dist/eri-components.css";`}</pre>
             <div className="mt-3 pt-3 border-t border-blue-200">
-              <p className="text-xs text-blue-700 font-semibold mb-1">Temporary workaround (pre-v2.9.0 only)</p>
-              <p className="text-xs text-blue-700 mb-2">If pinned to an older version, add this line immediately after <code className="font-mono bg-blue-100 px-1 rounded">@import "tailwindcss";</code> in <code className="font-mono bg-blue-100 px-1 rounded">client/src/index.css</code>. Remove it once upgraded to v2.9.0+.</p>
+              <p className="text-xs text-blue-700 font-semibold mb-1">Temporary workaround (pre-v2.9.1 only)</p>
+              <p className="text-xs text-blue-700 mb-2">If pinned to an older version, add this line immediately after <code className="font-mono bg-blue-100 px-1 rounded">@import "tailwindcss";</code> in <code className="font-mono bg-blue-100 px-1 rounded">client/src/index.css</code>. Remove it once upgraded to v2.9.1+.</p>
               <pre className="text-xs text-blue-900 bg-blue-100 rounded p-2 overflow-x-auto font-mono">{`@source "../../node_modules/@eri/components/src";`}</pre>
               <div className="mt-3">
                 <p className="text-xs text-blue-700 font-semibold mb-1">Projects with workaround applied</p>
                 <table className="text-xs w-full">
                   <thead><tr className="text-blue-600"><th className="text-left py-1 pr-4">Project</th><th className="text-left py-1">Status</th></tr></thead>
                   <tbody>
-                    <tr className="border-t border-blue-200"><td className="py-1 pr-4 text-blue-800">Exponential Taxonomy</td><td className="py-1 text-blue-800">Temporary <code className="font-mono bg-blue-100 px-1 rounded">@source</code> workaround applied — upgrade to v2.9.0 and switch to <code className="font-mono bg-blue-100 px-1 rounded">@import</code></td></tr>
+                    <tr className="border-t border-blue-200"><td className="py-1 pr-4 text-blue-800">Exponential Taxonomy</td><td className="py-1 text-blue-800">Temporary <code className="font-mono bg-blue-100 px-1 rounded">@source</code> workaround applied — upgrade to v2.9.1 and switch to <code className="font-mono bg-blue-100 px-1 rounded">@import</code></td></tr>
                   </tbody>
                 </table>
               </div>
