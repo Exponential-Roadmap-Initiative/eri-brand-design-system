@@ -3010,6 +3010,17 @@ const contactUrl =
           </h2>
           <p className="text-gray-500 text-sm mb-6">Version 2.0.0 · 6 canonical files · Copy verbatim — do not reconstruct</p>
 
+          {/* Scope note */}
+          <div className="rounded-lg p-4 mb-6 border" style={{ backgroundColor: '#f9fafb', borderColor: '#e5e7eb' }}>
+            <p className="text-sm font-bold text-[#232323] mb-1">Scope: Public-Facing ERI Apps Only</p>
+            <p className="text-sm text-gray-600">
+              These components apply to <strong>public-facing ERI product apps</strong> — such as Taxonomy, Professional Services Matrix, and HAL.
+              They are <strong>not</strong> intended for internal or documentation tools (such as this BDS site itself, which uses its own{" "}
+              <code className="font-mono text-xs bg-gray-200 px-1 rounded">PublicLayout</code> with a white header appropriate for a reference document).
+              If a project has a fundamentally different surface — for example a white header, an admin panel, or an embedded widget — it is exempt and should use its own layout.
+            </p>
+          </div>
+
           {/* Critical instruction banner */}
           <div className="rounded-lg p-5 mb-8 border-l-4" style={{ backgroundColor: '#1a1a1a', borderLeftColor: '#93E07D' }}>
             <p className="text-sm font-bold mb-2" style={{ color: '#93E07D' }}>COPY THESE FILES — DO NOT RECONSTRUCT FROM RULES</p>
