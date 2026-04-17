@@ -1,14 +1,19 @@
 {
   "name": "@eri/components",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "description": "ERI Standard Components — canonical shared UI components for all Exponential Roadmap Initiative web applications.",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./dist/eri-components.css": "./dist/eri-components.css"
+  },
+  "scripts": {
+    "build:css": "tailwindcss --input src/styles.css --output dist/eri-components.css --minify"
   },
   "files": [
-    "src"
+    "src",
+    "dist/eri-components.css"
   ],
   "keywords": [
     "eri",
@@ -19,6 +24,10 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.2.2",
+    "tailwindcss": "4.2.2"
   },
   "repository": {
     "type": "git",

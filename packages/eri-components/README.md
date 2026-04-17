@@ -8,23 +8,29 @@ Canonical shared UI components for all Exponential Roadmap Initiative web applic
 
 ## Installation
 
-Add to any ERI Manus project:
+Pin to a stable release (recommended):
 
 ```bash
-pnpm add github:Exponential-Roadmap-Initiative/eri-brand-design-system#main --filter packages/eri-components
+pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.9.0&path:packages/eri-components"
 ```
 
-Or add directly to `package.json`:
+Or track latest (auto-updates on each deploy):
 
-```json
-{
-  "dependencies": {
-    "@eri/components": "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"
-  }
-}
+```bash
+pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"
 ```
 
-Then run `pnpm install`.
+---
+
+## Required: Import the Pre-Built CSS
+
+In your project's global stylesheet (e.g. `client/src/index.css`), add this line **before** your own styles:
+
+```css
+@import "@eri/components/dist/eri-components.css";
+```
+
+This is required for all ERI projects using Tailwind 4. Without it, the `EriAppHeader` and `EriAppFooter` components will render in the DOM but be invisible, because Tailwind 4 does not scan `node_modules` by default.
 
 ---
 
@@ -70,7 +76,7 @@ Wrap your router in `EriPageLayout` in `App.tsx`:
 
 When a component is updated in the BDS:
 
-1. The BDS task edits the file in `packages/eri-components/src/` and saves a checkpoint (which pushes to this GitHub repo)
+1. The BDS task edits the file in `packages/eri-components/src/`, runs `pnpm build:css` to rebuild `dist/eri-components.css`, and saves a checkpoint (which pushes to this GitHub repo)
 2. Each ERI site picks up the change on its next deploy automatically (pnpm resolves the GitHub URL at install time)
 3. To force an immediate update without waiting for a deploy, run `pnpm update @eri/components` in the target project
 
