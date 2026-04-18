@@ -21,6 +21,8 @@ export type NavSection = {
 };
 
 export const SECTIONS: NavSection[] = [
+  // ── Introduction ─────────────────────────────────────────────────────────
+  { id: "introduction",            label: "Introduction",            sublabel: "Purpose · Who · How to use" },
   // ── Zone 1: Communications & Brand ──────────────────────────────────────
   { id: "brand-proposition",      label: "Brand Proposition" },
   { id: "visual-identity",        label: "Visual Identity",         sublabel: "Colours" },
@@ -105,17 +107,18 @@ export default function SectionNavigator({ className = "" }: SectionNavigatorPro
         On this page
       </p>
 
-      {/* Zone 1 label */}
-      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-1 pb-1">
-        Communications &amp; Brand
-      </p>
-
       {SECTIONS.map(({ id, label, sublabel }) => {
         const isActive = activeId === id;
         const isZone2Start = id === "navigation";
+        const isZone1Start = id === "brand-proposition";
 
         return (
           <React.Fragment key={id}>
+            {isZone1Start && (
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">
+                Communications &amp; Brand
+              </p>
+            )}
             {isZone2Start && (
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">
                 Web &amp; Development

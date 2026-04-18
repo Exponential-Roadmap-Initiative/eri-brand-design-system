@@ -402,6 +402,143 @@ export default function BrandDesignSystem() {
           <div className="flex-1 min-w-0">
 
         {/* ================================================================ */}
+        {/* ── INTRODUCTION ────────────────────────────────────────────────── */}
+        {/* ================================================================ */}
+        <section className="mb-16" id="introduction">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-3">
+            Introduction
+          </h2>
+          <p className="text-gray-500 text-sm mb-8">
+            BDS site version: <span className="font-mono">V.2026.04.18</span> &nbsp;·&nbsp;
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.10.0</span>
+          </p>
+
+          {/* What is the BDS */}
+          <div className="rounded-lg p-6 mb-6" style={{ backgroundColor: '#232323' }}>
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: '#93E07D' }}>WHAT IS THE ERI BRAND DESIGN SYSTEM?</p>
+            <p className="text-white text-base leading-relaxed mb-3">
+              The ERI Brand Design System (BDS) is the <strong className="text-white">single source of truth</strong> for all visual, verbal, and component decisions across ERI digital products.
+              It covers brand tokens, typography, logo usage, layout patterns, and canonical UI components.
+            </p>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Every ERI web application — whether built by a human designer, a developer, or a Manus AI agent — must follow this system.
+              Consistency across touch points is not optional: it is what makes ERI products feel like a coherent family rather than a collection of one-off builds.
+            </p>
+          </div>
+
+          {/* Who is it for — four audience cards */}
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">WHO IS IT FOR?</p>
+          <div className="grid sm:grid-cols-2 gap-4 mb-8">
+            {[
+              {
+                role: "Designers",
+                colour: "#3ba559",
+                desc: "Colour tokens, typography scale, logo usage rules, photography style, brand graphics, and verbal identity guidelines. Use the Communications & Brand zone.",
+                sections: ["Visual Identity", "Logo Usage", "Typography", "Verbal Identity", "Photography", "Brand Graphics"],
+              },
+              {
+                role: "Developers",
+                colour: "#3ba559",
+                desc: "Component library, spacing system, navigation tier patterns, CTA rules, and the Standard Components package. Use the Web & Development zone.",
+                sections: ["Navigation & Layout", "Spacing & Layout", "CTA Buttons", "Standard Components", "UI Components"],
+              },
+              {
+                role: "Manus AI Agents",
+                colour: "#93E07D",
+                desc: "Read the eri-bds-reference skill before writing any code. The Machine Instructions section provides structured specs. Standard Components is the canonical implementation reference for all ERI app builds.",
+                sections: ["Machine Instructions", "Standard Components", "eri-bds-reference skill"],
+                dark: true,
+              },
+              {
+                role: "BDS Maintainers",
+                colour: "#3ba559",
+                desc: "Release workflow, version tagging, and package build steps are documented in the Standard Components section. Run pnpm build:css before every checkpoint.",
+                sections: ["Standard Components → Release Workflow"],
+              },
+            ].map(({ role, colour, desc, sections, dark }) => (
+              <div key={role} className={`rounded-lg p-5 border ${dark ? 'border-[#93E07D]/30' : 'border-gray-200'}`} style={{ backgroundColor: dark ? '#1a1a1a' : '#F9FAFB' }}>
+                <p className="text-sm font-bold mb-2" style={{ color: colour }}>{role}</p>
+                <p className={`text-xs leading-relaxed mb-3 ${dark ? 'text-gray-300' : 'text-gray-600'}`}>{desc}</p>
+                <div className="flex flex-wrap gap-1">
+                  {sections.map(s => (
+                    <span key={s} className={`text-[10px] font-mono px-2 py-0.5 rounded ${dark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-500'}`}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Two paths */}
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">TWO PATHS THROUGH THE BDS</p>
+          <div className="grid sm:grid-cols-2 gap-4 mb-8">
+            <div className="rounded-lg p-5 border border-gray-200 bg-white">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-6 h-6 rounded-full bg-[#3ba559] text-white text-xs font-bold flex items-center justify-center">A</span>
+                <p className="text-sm font-bold text-[#232323]">Brand &amp; Communications only</p>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed mb-3">Use the <strong>Communications &amp; Brand zone</strong> for colour, typography, logo, and verbal identity. No code or package installation required.</p>
+              <p className="text-[10px] text-gray-400 font-mono">Sections: Visual Identity → Verbal Identity</p>
+            </div>
+            <div className="rounded-lg p-5 border-2 border-[#3ba559] bg-white">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-6 h-6 rounded-full bg-[#3ba559] text-white text-xs font-bold flex items-center justify-center">B</span>
+                <p className="text-sm font-bold text-[#232323]">Building an ERI application</p>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed mb-3">Install <code className="font-mono bg-gray-100 px-1 rounded">@eri/components</code> and follow the <strong>Standard Components</strong> section. This is the mandatory starting point for all ERI public-facing applications.</p>
+              <p className="text-[10px] text-gray-400 font-mono">Sections: Standard Components → UI Components</p>
+            </div>
+          </div>
+
+          {/* Standard Components quick-start callout */}
+          <div className="rounded-lg p-6 mb-6 border-l-4" style={{ backgroundColor: '#f0fdf4', borderLeftColor: '#3ba559' }}>
+            <p className="text-sm font-bold text-[#232323] mb-1">Building an ERI app? Start with Standard Components.</p>
+            <p className="text-xs text-gray-600 leading-relaxed mb-4">
+              The <code className="font-mono bg-green-100 px-1 rounded">@eri/components</code> package ships six canonical components that every ERI public-facing application must use verbatim.
+              Install once, import, and the layout, header, hero, footer, status badges, and contact button are all handled.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-2 mb-4">
+              {[
+                ["EriPageLayout",      "Full-page wrapper: dark header, footer, content slot"],
+                ["EriAppHeader",       "Fixed 64px header: ERI logo, app name, version, CTA"],
+                ["EriHeroSection",     "Full-viewport hero: hands image, left text block, CTAs"],
+                ["EriAppFooter",       "Standard dark footer with ERI branding and links"],
+                ["EriStatusBadge",     "Pill badge for BETA / PILOT / PROTOTYPE labels"],
+                ["EriContactUsButton", "Standalone Contact Us CTA linking to the shared service"],
+              ].map(([name, desc]) => (
+                <div key={name} className="flex gap-2 items-start">
+                  <span className="text-[#3ba559] font-mono text-[10px] shrink-0 mt-0.5">{name}</span>
+                  <span className="text-[10px] text-gray-500 leading-tight">{desc}</span>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => { const el = document.getElementById('standard-components'); if (el) { const top = el.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top, behavior: 'smooth' }); } }}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90"
+              style={{ backgroundColor: '#3ba559', color: 'white' }}
+            >
+              Go to Standard Components
+            </button>
+          </div>
+
+          {/* Manus AI agent panel */}
+          <div className="rounded-lg p-6 border" style={{ backgroundColor: '#1a1a1a', borderColor: '#93E07D' }}>
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: '#93E07D' }}>FOR MANUS AI AGENTS — READ THIS FIRST</p>
+            <p className="text-gray-300 text-sm leading-relaxed mb-4">
+              If you are a Manus AI agent working on any ERI project, you must read the{" "}
+              <code className="font-mono text-xs bg-gray-800 px-1 rounded" style={{ color: '#93E07D' }}>eri-bds-reference</code>{" "}
+              skill before writing any code. The skill contains the canonical colour tokens, typography rules, component specs, and integration notes in a format optimised for AI consumption.
+            </p>
+            <div className="space-y-2 text-xs text-gray-400">
+              <div className="flex gap-2"><span style={{ color: '#93E07D' }}>1.</span><span>Read <code className="font-mono bg-gray-800 px-1 rounded">/home/ubuntu/skills/eri-bds-reference/SKILL.md</code> — this is your primary reference for all ERI brand and component decisions.</span></div>
+              <div className="flex gap-2"><span style={{ color: '#93E07D' }}>2.</span><span>For building ERI apps: follow the <strong className="text-gray-300">Standard Components</strong> section of this BDS site. Install <code className="font-mono bg-gray-800 px-1 rounded">@eri/components</code> and use the six canonical components verbatim.</span></div>
+              <div className="flex gap-2"><span style={{ color: '#93E07D' }}>3.</span><span>For brand decisions (colour, typography, logo): use the <strong className="text-gray-300">Machine Instructions</strong> section at the bottom of this page — it provides structured, AI-readable specs.</span></div>
+              <div className="flex gap-2"><span style={{ color: '#93E07D' }}>4.</span><span>Never regenerate the ERI logo, the hands hero image, or brand assets. Use the CDN URLs documented in the skill and in the Logo Usage section of this site.</span></div>
+              <div className="flex gap-2"><span style={{ color: '#93E07D' }}>5.</span><span>When in doubt about a brand decision, refer to this BDS site — it is the authoritative source. The skill is a portable summary; the BDS site is the full specification.</span></div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
         {/* ================================================================ */}
         {/* ── ZONE 1: COMMUNICATIONS & BRAND ─────────────────────────────── */}
         {/* ================================================================ */}
@@ -3029,7 +3166,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.9.1&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.10.0&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
