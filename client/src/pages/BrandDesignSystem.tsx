@@ -3558,38 +3558,44 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {/* ── Component 5: EriHeroSection ──────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">5. EriHeroSection</h3>
           <p className="text-gray-600 text-sm mb-4">
-            Canonical full-viewport hero section. Text block is always vertically centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">flex items-center</code>),
-            left-aligned, and anchored to <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> so it aligns with the header logotype.
-            Primary CTA is always Accent Lime. One optional accent word in the H1 is highlighted in Accent Lime.
+            Canonical full-viewport hero section. Matches the live pattern on{" "}
+            <a href="https://human-ai-lab.exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-[#3ba559] underline">human-ai-lab.exponentialroadmap.org</a>.{" "}
+            Text block is always left-aligned and vertically centred, anchored to{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> so it aligns with the header logotype.
+            The background image is centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">50% 50%</code>) — the hands composition is designed to be centred.
+            The overlay is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">rgba(35,35,35,0.82)</code> — brand dark, not pure black.
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">titleLine1</code> is in Accent Lime; <code className="font-mono text-xs bg-gray-100 px-1 rounded">titleLine2</code> is in white.
+            The canonical hands image is baked in as the default — no need to pass <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code> for standard use.
           </p>
 
           {/* Live preview */}
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW (condensed — full height in production)</div>
             <div
-              className="relative flex items-center overflow-hidden"
+              className="relative flex flex-col justify-center overflow-hidden"
               style={{
-                minHeight: '320px',
+                minHeight: '340px',
                 backgroundImage: `url(${heroImages.halHandsTouching})`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                backgroundPosition: '50% 50%',
               }}
             >
-              <div className="absolute inset-0 bg-black/40" />
-              <div className="relative z-10 max-w-xl" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#93E07D' }}>Professional Services Matrix</span>
-                  <span className="w-8 h-px bg-gray-500" />
-                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">BETA</span>
-                </div>
-                <h2 className="text-4xl font-extrabold leading-tight text-white mb-4">
-                  <span className="block">Professional Services</span>
-                  <span className="block">Climate <span style={{ color: '#93E07D' }}>Matrix</span></span>
-                </h2>
-                <p className="text-base text-gray-200 mb-6 leading-relaxed">Making Pillar 3 climate impact measurable and actionable.</p>
-                <div className="flex flex-wrap gap-3">
-                  <a href="#" className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold" style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}>Try the Client Assessment</a>
-                  <a href="#" className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold border border-white text-white bg-transparent">PSM Journey Demo</a>
+              {/* Brand dark overlay — rgba(35,35,35,0.82), NOT pure black */}
+              <div className="absolute inset-0" style={{ backgroundColor: 'rgba(35,35,35,0.82)' }} />
+              {/* Content container — max-w-screen-xl + --eri-content-inset aligns with header logotype */}
+              <div className="relative z-10 w-full max-w-screen-xl mx-auto" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
+                {/* Text block — max-w-xl keeps text in the left half */}
+                <div className="max-w-xl text-left">
+                  <p className="text-[11px] font-semibold uppercase tracking-widest mb-5" style={{ color: '#93E07D' }}>PROFESSIONAL SERVICES MATRIX ——— BETA</p>
+                  <h2 className="font-extrabold leading-tight mb-5" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+                    <span className="block" style={{ color: '#93E07D' }}>Professional</span>
+                    <span className="block text-white">Services Matrix</span>
+                  </h2>
+                  <p className="text-base leading-relaxed mb-7" style={{ color: 'rgba(255,255,255,0.85)' }}>Making Pillar 3 climate impact measurable and actionable.</p>
+                  <div className="flex flex-wrap gap-3">
+                    <a href="#" onClick={e => e.preventDefault()} className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90" style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}>Try the Client Assessment</a>
+                    <a href="#" onClick={e => e.preventDefault()} className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-white bg-transparent transition-colors hover:bg-white/10" style={{ border: '2px solid rgba(255,255,255,0.9)' }}>PSM Journey Demo</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3600,22 +3606,23 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <CardContent className="p-4">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
               <table className="w-full text-xs">
-                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Required</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
-                    ["eyebrow",         "string",          "Uppercase Accent Lime label above H1"],
-                    ["status",          "EriStatusValue?", "Optional badge after eyebrow dash"],
-                    ["titleLine1",      "string",          "First line of the H1"],
-                    ["titleLine2",      "string?",         "Second line of the H1"],
-                    ["accentWord",      "string?",         "One word highlighted in Accent Lime"],
-                    ["body",            "string",          "Body paragraph text"],
-                    ["primaryCTA",      "{ label, href }", "Accent Lime button — required"],
-                    ["secondaryCTA",    "{ label, href }?","Outline button — optional"],
-                    ["backgroundImage", "string",          "CDN URL for hero background image"],
-                  ].map(([prop, type, note]) => (
+                    ["eyebrow",         "string",           "Yes",  "Full eyebrow string e.g. \"APP NAME ——— BETA\""],
+                    ["titleLine1",      "string",           "Yes",  "First H1 line — displayed in Accent Lime (#93E07D)"],
+                    ["titleLine2",      "string?",          "No",   "Second H1 line — displayed in white"],
+                    ["body",            "string",           "Yes",  "Body paragraph text"],
+                    ["primaryCTA",      "{ label, href }",  "Yes",  "Accent Lime filled button — rounded-lg always"],
+                    ["secondaryCTA",    "{ label, href }?", "No",   "White outline button — rounded-lg always"],
+                    ["backgroundImage", "string?",          "No",   "Defaults to ERI_HERO_IMAGE_HANDS — only override for app-specific images"],
+                    ["overlayOpacity",  "number?",          "No",   "0–1, defaults to 0.82. Overlay colour is always #232323"],
+                    ["children",        "ReactNode?",       "No",   "Optional slot below CTAs (stat counters, scroll indicator)"],
+                  ].map(([prop, type, req, note]) => (
                     <tr key={prop} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
                       <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 pr-3 text-gray-500">{req}</td>
                       <td className="py-1.5 text-gray-600 font-sans">{note}</td>
                     </tr>
                   ))}
@@ -3628,32 +3635,58 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
             <CardContent className="p-0">
               <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
-                <span className="text-xs font-mono text-gray-400">EriHeroSection.tsx — usage</span>
-                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriHeroSection_48155b1d.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+                <span className="text-xs font-mono text-gray-400">EriHeroSection.tsx — standard usage (no backgroundImage needed)</span>
               </div>
-              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`<EriHeroSection
-  eyebrow="Professional Services Matrix"
-  status="BETA"
-  titleLine1="Professional Services"
-  titleLine2="Climate Matrix"
-  accentWord="Matrix"
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`import { EriHeroSection } from '@eri/components';
+
+<EriHeroSection
+  eyebrow="PROFESSIONAL SERVICES MATRIX ——— BETA"
+  titleLine1="Professional"
+  titleLine2="Services Matrix"
   body="Making Pillar 3 climate impact measurable and actionable."
   primaryCTA={{ label: "Try the Client Assessment", href: "/assessment" }}
   secondaryCTA={{ label: "PSM Journey Demo", href: "/demo" }}
-  backgroundImage="https://cdn.example.com/hero-bg.webp"
+/>
+
+{/* Custom image (e.g. Crocodile Economics) */}
+import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
+
+<EriHeroSection
+  eyebrow="CROCODILE ECONOMICS ——— PROTOTYPE"
+  titleLine1="Crocodile"
+  titleLine2="Economics"
+  body="Revenue up. Emissions down."
+  primaryCTA={{ label: "Explore the Data", href: "/data" }}
+  backgroundImage="https://cdn.example.com/croc-hero.webp"
+  overlayOpacity={0.75}
 />`}</pre>
             </CardContent>
           </Card>
+
+          {/* Integration notes */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-3">
+            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wider mb-3">Integration Notes</p>
+            <div className="space-y-2 text-xs text-blue-800">
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">1.</span><span><strong>No pt-16 wrapper needed.</strong> <code className="font-mono bg-blue-100 px-1 rounded">EriHeroSection</code> adds <code className="font-mono bg-blue-100 px-1 rounded">paddingTop: 64px</code> internally to clear the fixed header. Do NOT wrap it in a div with <code className="font-mono bg-blue-100 px-1 rounded">pt-16</code> — that doubles the clearance.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">2.</span><span><strong>No background colour needed on the page wrapper.</strong> The component sets its own background via the image and overlay.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">3.</span><span><strong><code className="font-mono bg-blue-100 px-1 rounded">--eri-content-inset</code> is optional</strong> — the component falls back to <code className="font-mono bg-blue-100 px-1 rounded">clamp(1rem, 3vw, 2rem)</code> if the variable is absent. Define it in <code className="font-mono bg-blue-100 px-1 rounded">index.css :root</code> for alignment with the header logotype.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">4.</span><span><strong>CSS import required.</strong> Ensure <code className="font-mono bg-blue-100 px-1 rounded">@import "@eri/components/dist/eri-components.css"</code> is at the top of <code className="font-mono bg-blue-100 px-1 rounded">index.css</code> (v2.9.1+) to prevent Tailwind 4 from purging component classes.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">5.</span><span><strong>Default image is baked in.</strong> The canonical hands image (<code className="font-mono bg-blue-100 px-1 rounded">ERI_HERO_IMAGE_HANDS</code>) is the default. Only pass <code className="font-mono bg-blue-100 px-1 rounded">backgroundImage</code> for app-specific hero images. Never regenerate the hands image.</span></div>
+            </div>
+          </div>
 
           {/* Non-conformant callout */}
           <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
             <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
             <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
-              <li>Top-anchored text (document flow without <code className="font-mono bg-red-100 px-1 rounded">flex items-center</code>) — text must be vertically centred</li>
-              <li>Right-aligned or centred text — always left-aligned</li>
-              <li>Accent word in Primary Green (<code className="font-mono bg-red-100 px-1 rounded">#3ba559</code>) — always Accent Lime (<code className="font-mono bg-red-100 px-1 rounded">#93E07D</code>) on dark</li>
+              <li>Centred text (<code className="font-mono bg-red-100 px-1 rounded">text-center</code>) — always left-aligned</li>
+              <li>Top-anchored text (no <code className="font-mono bg-red-100 px-1 rounded">flex flex-col justify-center</code>) — text must be vertically centred</li>
+              <li>Pure black overlay (<code className="font-mono bg-red-100 px-1 rounded">bg-black/40</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rgba(35,35,35,0.82)</code></li>
+              <li>Accent word in Primary Green (<code className="font-mono bg-red-100 px-1 rounded">#3ba559</code>) — always Accent Lime (<code className="font-mono bg-red-100 px-1 rounded">#93E07D</code>) on dark backgrounds</li>
               <li>Pill-shaped CTA (<code className="font-mono bg-red-100 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-lg</code></li>
               <li>Icon prefix on CTA buttons — text only</li>
+              <li>Wrapping <code className="font-mono bg-red-100 px-1 rounded">EriHeroSection</code> in a <code className="font-mono bg-red-100 px-1 rounded">pt-16</code> div — the component handles its own header clearance</li>
+              <li>Passing <code className="font-mono bg-red-100 px-1 rounded">backgroundImage</code> with the hands URL manually — import <code className="font-mono bg-red-100 px-1 rounded">ERI_HERO_IMAGE_HANDS</code> or omit the prop entirely</li>
             </ul>
           </div>
 

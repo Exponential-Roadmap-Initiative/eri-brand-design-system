@@ -1,37 +1,62 @@
 /**
- * EriHeroSection — ERI Brand Design System v2.0.0
+ * EriHeroSection — ERI Brand Design System v2.10.0
  *
- * Canonical full-viewport hero section for all ERI applications.
+ * Canonical full-viewport hero section for all ERI public-facing applications.
+ * Matches the live pattern on human-ai-lab.exponentialroadmap.org.
  *
  * USAGE:
  *   <EriHeroSection
- *     eyebrow="Professional Services Matrix"
- *     status="BETA"
- *     titleLine1="Professional"
- *     titleLine2="Services Matrix"
- *     accentWord="Matrix"
- *     body="Making Pillar 3 climate impact measurable and actionable."
- *     primaryCTA={{ label: "Try the Client Assessment", href: "/assessment" }}
- *     secondaryCTA={{ label: "PSM Journey Demo", href: "/demo" }}
- *     backgroundImage="https://cdn.example.com/hero-bg.webp"
+ *     eyebrow="EXPONENTIAL HUMAN-AI LAB ——— BETA"
+ *     titleLine1="Exponential"
+ *     titleLine2="Human-AI Lab"
+ *     body="One place for everything ERI builds at the intersection of human expertise and AI."
+ *     primaryCTA={{ label: "Explore the Application Suite", href: "/suite" }}
+ *     secondaryCTA={{ label: "Human-AI Playbook", href: "/playbook" }}
  *   />
  *
  * RULES (do not override):
- *   - Height: 100vh (full viewport) — the hero fills the screen
- *   - Vertical alignment: flex items-center — text block is always vertically centred
+ *   - Height: min-h-screen — the hero fills the viewport
+ *   - Vertical alignment: flex flex-col justify-center — text block is always vertically centred
+ *   - Background image: centred (50% 50%), cover — the hands image is designed to be centred
+ *   - Overlay: rgba(35,35,35,0.82) — brand dark colour, NOT pure black, NOT 40% opacity
  *   - Left edge: var(--eri-content-inset) — aligned with the header logotype
- *   - Text block width: max-w-xl — never full-width
- *   - Eyebrow: uppercase, Accent Lime (#93E07D), tracking-widest, with status badge if provided
- *   - H1: white, with one optional accent word in Accent Lime (#93E07D)
+ *   - Text block width: max-w-xl — right half of viewport is reserved for the image composition
+ *   - Text alignment: ALWAYS left — NEVER centred
+ *   - Eyebrow: single string, uppercase, Accent Lime (#93E07D), tracking-widest
+ *   - titleLine1: displayed in Accent Lime (#93E07D) — the accent line of the H1
+ *   - titleLine2: displayed in white — the supporting line of the H1
  *   - Primary CTA: Accent Lime fill (#93E07D), #1a1a1a text, rounded-lg — NEVER rounded-full
- *   - Secondary CTA: transparent background, white border, white text, rounded-lg
+ *   - Secondary CTA: transparent background, 2px white border, white text, rounded-lg
  *   - No icon prefix or suffix on any CTA button
+ *   - Default backgroundImage: ERI_HERO_IMAGE_HANDS — no need to pass it for standard use
  *
- * BDS reference: https://eri-brand-design-system.manus.space/#navigation
+ * INTEGRATION NOTES (lessons from previous component iterations):
+ *   1. Top padding: this component adds paddingTop: 64px internally to clear the fixed header.
+ *      Do NOT wrap it in a div with pt-16 — that would double the clearance.
+ *   2. Background: this component sets its own background. The consuming page does NOT need to set
+ *      a background colour on its wrapper for the hero area.
+ *   3. --eri-content-inset: define this in index.css :root. The component falls back to
+ *      clamp(1rem, 3vw, 2rem) if the variable is absent, so it works even without it.
+ *   4. CSS import: ensure @import "@eri/components/dist/eri-components.css" is at the top of
+ *      index.css (required since v2.9.1 to prevent Tailwind 4 from purging component classes).
+ *   5. backgroundImage default: the canonical hands image is baked in. Only override for
+ *      app-specific hero images (e.g. Crocodile Economics). Never regenerate the hands image.
+ *
+ * REQUIRED CSS VARIABLE (add to index.css :root):
+ *   --eri-content-inset: clamp(1rem, 3vw, 2rem);
+ *
+ * BDS reference: https://eri-brand-design-system.manus.space/#standard-components
  */
 
 import React from 'react';
-import { EriStatusBadge, EriStatusValue } from './EriStatusBadge';
+
+/**
+ * Canonical ERI hero background image — Michelangelo-inspired wireframe hands reaching toward
+ * each other, fingertips meeting at the S-curve crossing point with a golden burst of light.
+ * Use this constant directly rather than hard-coding the URL.
+ */
+export const ERI_HERO_IMAGE_HANDS =
+  'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hero-human-v2-hands_75d155b6.png';
 
 interface CtaButton {
   label: string;
@@ -39,119 +64,162 @@ interface CtaButton {
 }
 
 interface EriHeroSectionProps {
-  /** Eyebrow label — displayed in uppercase Accent Lime above the H1 */
+  /**
+   * Eyebrow label — full string displayed in uppercase Accent Lime above the H1.
+   * Recommended format: "APP NAME ——— STATUS"
+   * Example: "EXPONENTIAL HUMAN-AI LAB ——— BETA"
+   */
   eyebrow: string;
-  /** Optional status badge shown after the eyebrow dash */
-  status?: EriStatusValue;
-  /** First line of the H1 heading */
-  titleLine1: string;
-  /** Second line of the H1 heading */
-  titleLine2?: string;
-  /** A single word from titleLine1 or titleLine2 to highlight in Accent Lime */
-  accentWord?: string;
-  /** Body paragraph text */
-  body: string;
-  /** Primary CTA — Accent Lime button */
-  primaryCTA: CtaButton;
-  /** Optional secondary CTA — outline button */
-  secondaryCTA?: CtaButton;
-  /** CDN URL for the hero background image */
-  backgroundImage: string;
-  /** Optional additional content below the CTA buttons */
-  children?: React.ReactNode;
-}
 
-function highlightAccentWord(text: string, accentWord?: string): React.ReactNode {
-  if (!accentWord) return text;
-  const parts = text.split(accentWord);
-  if (parts.length < 2) return text;
-  return (
-    <>
-      {parts[0]}
-      <span style={{ color: '#93E07D' }}>{accentWord}</span>
-      {parts[1]}
-    </>
-  );
+  /**
+   * First line of the H1 — displayed in Accent Lime (#93E07D).
+   * Typically the brand word(s): e.g. "Exponential"
+   */
+  titleLine1: string;
+
+  /**
+   * Second line of the H1 — displayed in white.
+   * e.g. "Human-AI Lab"
+   */
+  titleLine2?: string;
+
+  /** Body paragraph text — displayed in near-white (rgba(255,255,255,0.85)) */
+  body: string;
+
+  /**
+   * Primary CTA — Accent Lime filled button (#93E07D background, #1a1a1a text).
+   * Required. Shape is always rounded-lg — never rounded-full.
+   */
+  primaryCTA: CtaButton;
+
+  /**
+   * Secondary CTA — white outline button (transparent background, 2px white border).
+   * Optional. Use for a secondary navigation action (e.g. "Human-AI Playbook").
+   * Shape is always rounded-lg — never rounded-full.
+   */
+  secondaryCTA?: CtaButton;
+
+  /**
+   * CDN URL for the hero background image.
+   * Defaults to ERI_HERO_IMAGE_HANDS (the canonical wireframe hands image).
+   * Only override for app-specific hero images. Never regenerate the hands image.
+   */
+  backgroundImage?: string;
+
+  /**
+   * Overlay opacity — 0 to 1. Defaults to 0.82.
+   * The overlay colour is always #232323 (brand dark). Do not change the colour.
+   * Increase toward 1.0 if text legibility is poor against a bright image.
+   */
+  overlayOpacity?: number;
+
+  /**
+   * Optional slot rendered below the CTA buttons.
+   * Use for stat counters, scroll indicators, or other supplementary content.
+   */
+  children?: React.ReactNode;
 }
 
 export function EriHeroSection({
   eyebrow,
-  status,
   titleLine1,
   titleLine2,
-  accentWord,
   body,
   primaryCTA,
   secondaryCTA,
-  backgroundImage,
+  backgroundImage = ERI_HERO_IMAGE_HANDS,
+  overlayOpacity = 0.82,
   children,
 }: EriHeroSectionProps) {
   return (
     <section
-      className="relative flex items-center min-h-screen w-full overflow-hidden"
-      style={{ paddingTop: '64px' /* header height */ }}
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden w-full"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: '50% 50%',
+        backgroundRepeat: 'no-repeat',
+        // Clear the fixed 64px header — consuming projects must NOT add pt-16 on top of this
+        paddingTop: '64px',
+      }}
     >
-      {/* Background image */}
+      {/* Brand dark overlay — #232323 at 82% opacity, NOT pure black */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        className="absolute inset-0"
+        style={{ backgroundColor: `rgba(35, 35, 35, ${overlayOpacity})` }}
         aria-hidden="true"
       />
-      {/* Dark overlay for text legibility */}
-      <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
 
-      {/* Text block — left-aligned, vertically centred, anchored to --eri-content-inset */}
+      {/*
+        Content container — max-w-screen-xl + --eri-content-inset aligns the left edge of the
+        text block with the ERI logotype in the header. This is the same alignment anchor used
+        by EriAppHeader.
+      */}
       <div
-        className="relative z-10 max-w-xl"
+        className="relative z-10 w-full max-w-screen-xl mx-auto"
         style={{ paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))' }}
       >
-        {/* Eyebrow */}
-        <div className="flex items-center gap-3 mb-4">
-          <span
-            className="text-[11px] font-semibold uppercase tracking-widest"
+        {/* Text block — max-w-xl keeps text in the left half; right half open for the image */}
+        <div className="max-w-xl text-left">
+
+          {/* Eyebrow — uppercase Accent Lime, tracking-widest */}
+          <p
+            className="text-[11px] font-semibold uppercase tracking-widest mb-5"
             style={{ color: '#93E07D' }}
           >
             {eyebrow}
-          </span>
-          {status && (
-            <>
-              <span className="w-8 h-px bg-gray-500" aria-hidden="true" />
-              <EriStatusBadge status={status} theme="dark" />
-            </>
-          )}
-        </div>
+          </p>
 
-        {/* H1 */}
-        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight text-white mb-6">
-          <span className="block">{highlightAccentWord(titleLine1, accentWord)}</span>
-          {titleLine2 && (
-            <span className="block">{highlightAccentWord(titleLine2, accentWord)}</span>
-          )}
-        </h1>
-
-        {/* Body */}
-        <p className="text-base md:text-lg text-gray-200 mb-8 leading-relaxed">{body}</p>
-
-        {/* CTA buttons */}
-        <div className="flex flex-wrap gap-3">
-          <a
-            href={primaryCTA.href}
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90"
-            style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+          {/* H1 — titleLine1 in Accent Lime, titleLine2 in white */}
+          <h1
+            className="font-extrabold leading-tight mb-6"
+            style={{ fontSize: 'clamp(2.5rem, 5vw, 3.75rem)' }}
           >
-            {primaryCTA.label}
-          </a>
-          {secondaryCTA && (
-            <a
-              href={secondaryCTA.href}
-              className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold border border-white text-white bg-transparent transition-colors hover:bg-white/10"
-            >
-              {secondaryCTA.label}
-            </a>
-          )}
-        </div>
+            <span className="block" style={{ color: '#93E07D' }}>
+              {titleLine1}
+            </span>
+            {titleLine2 && (
+              <span className="block text-white">
+                {titleLine2}
+              </span>
+            )}
+          </h1>
 
-        {children && <div className="mt-6">{children}</div>}
+          {/* Body paragraph */}
+          <p
+            className="text-base md:text-lg leading-relaxed mb-8"
+            style={{ color: 'rgba(255, 255, 255, 0.85)' }}
+          >
+            {body}
+          </p>
+
+          {/* CTA buttons — side by side, flex-wrap for narrow viewports */}
+          <div className="flex flex-wrap gap-3">
+
+            {/* Primary — Accent Lime fill, dark text, rounded-lg */}
+            <a
+              href={primaryCTA.href}
+              className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90"
+              style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+            >
+              {primaryCTA.label}
+            </a>
+
+            {/* Secondary — transparent, 2px white border, white text, rounded-lg */}
+            {secondaryCTA && (
+              <a
+                href={secondaryCTA.href}
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-white bg-transparent transition-colors hover:bg-white/10"
+                style={{ border: '2px solid rgba(255, 255, 255, 0.9)' }}
+              >
+                {secondaryCTA.label}
+              </a>
+            )}
+          </div>
+
+          {/* Optional children slot — stat counters, scroll indicator, etc. */}
+          {children && <div className="mt-8">{children}</div>}
+        </div>
       </div>
     </section>
   );
