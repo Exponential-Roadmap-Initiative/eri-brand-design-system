@@ -11,12 +11,18 @@
 
 export type CssImportMethod = "dist" | "source-workaround" | "none";
 export type OverallStatus = "green" | "amber" | "red" | "unknown";
+
+/**
+ * Canonical component names exported from @eri/components.
+ * These must match the actual exports in packages/eri-components/src/index.ts.
+ */
 export type ComponentName =
   | "EriAppHeader"
   | "EriPageLayout"
   | "EriHeroSection"
-  | "EriNavDrawer"
-  | "EriFooter";
+  | "EriAppFooter"
+  | "EriStatusBadge"
+  | "EriContactUsButton";
 
 export interface ComponentStatus {
   /** Whether the component is used in this project */

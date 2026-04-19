@@ -18,8 +18,9 @@ const COMPONENT_NAMES: ComponentName[] = [
   "EriAppHeader",
   "EriPageLayout",
   "EriHeroSection",
-  "EriNavDrawer",
-  "EriFooter",
+  "EriAppFooter",
+  "EriStatusBadge",
+  "EriContactUsButton",
 ];
 
 const LATEST_VERSION = "v2.10.6";
@@ -403,7 +404,7 @@ export default function AlignmentTracker() {
                 onClick={() => {
                   const today = new Date().toISOString().slice(0, 10);
                   navigator.clipboard.writeText(
-`{\n  "schemaVersion": "1.0",\n  "project": "your-project-id",\n  "projectName": "Your Project Name",\n  "domain": "your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":   { "used": true,  "compliant": true  },\n    "EriPageLayout":  { "used": true,  "compliant": true  },\n    "EriHeroSection": { "used": true,  "compliant": true  },\n    "EriNavDrawer":   { "used": false, "compliant": false },\n    "EriFooter":      { "used": true,  "compliant": true  }\n  },\n  "knownViolations": [],\n  "overallStatus": "green",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
+`{\n  "schemaVersion": "1.0",\n  "project": "your-project-id",\n  "projectName": "Your Project Name",\n  "domain": "your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "knownViolations": [],\n  "overallStatus": "green",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
                   );
                 }}
                 className="text-[11px] px-3 py-1.5 rounded font-semibold transition-opacity hover:opacity-80"
@@ -424,8 +425,9 @@ export default function AlignmentTracker() {
     "EriAppHeader":   { "used": true,  "compliant": true  },
     "EriPageLayout":  { "used": true,  "compliant": true  },
     "EriHeroSection": { "used": true,  "compliant": true  },
-    "EriNavDrawer":   { "used": false, "compliant": false },
-    "EriFooter":      { "used": true,  "compliant": true  }
+    "EriAppFooter":        { "used": true,  "compliant": true  },
+    "EriStatusBadge":      { "used": true,  "compliant": true  },
+    "EriContactUsButton":  { "used": true,  "compliant": true  }
   },
   "knownViolations": [],
   "overallStatus": "green",
@@ -502,7 +504,7 @@ export default function AlignmentTracker() {
                 </div>
                 <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
                   <code className="font-mono" style={{ color: T.dark }}>used: false, compliant: false</code>
-                  <p className="mt-0.5">Component is not used in this project (e.g. EriNavDrawer on a simple site).</p>
+                  <p className="mt-0.5">Component is not used in this project (e.g. EriContactUsButton on a data-only tool).</p>
                 </div>
               </div>
 
