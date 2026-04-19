@@ -241,52 +241,53 @@ export function EriHeroSection({
       {showScrollIndicator && (
         <>
           {/*
-            Self-contained keyframe — no external CSS dependency.
-            The animation gently bobs the chevron up and down to invite scrolling.
+            Self-contained keyframes — no external CSS dependency.
+            Two animations:
+              eri-scroll-drift  — the whole indicator drifts 6px down and back, breathing slowly
+              eri-scroll-fadein — delays the indicator's appearance by 1.5s so it does not
+                                  compete with the hero content on first impression
           */}
           <style>{`
-            @keyframes eri-scroll-bounce {
-              0%, 100% { transform: translateY(0);   opacity: 0.5; }
-              50%       { transform: translateY(6px); opacity: 1;   }
+            @keyframes eri-scroll-drift {
+              0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.3; }
+              50%       { transform: translateX(-50%) translateY(6px); opacity: 0.8; }
             }
-            .eri-scroll-indicator {
-              animation: eri-scroll-bounce 2s ease-in-out infinite;
+            @keyframes eri-scroll-fadein {
+              0%   { opacity: 0; }
+              100% { opacity: 1; }
+            }
+            .eri-scroll-indicator-wrap {
+              animation:
+                eri-scroll-fadein 0.8s ease-out 1.5s both,
+                eri-scroll-drift  2.5s ease-in-out 2.3s infinite;
             }
           `}</style>
           <div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
+            className="eri-scroll-indicator-wrap absolute bottom-8 left-1/2 z-10 flex flex-col items-center"
+            style={{ transform: 'translateX(-50%)' }}
             aria-hidden="true"
           >
-            {/* Chevron SVG — two stacked for a subtle double-chevron effect */}
+            {/* Vertical line */}
+            <div
+              style={{
+                width: '1px',
+                height: '24px',
+                background: 'rgba(255,255,255,0.35)',
+                marginBottom: '6px',
+              }}
+            />
+            {/* Single open chevron */}
             <svg
-              className="eri-scroll-indicator"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
+              width="20"
+              height="12"
+              viewBox="0 0 20 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M6 9L12 15L18 9"
-                stroke="rgba(255,255,255,0.55)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <svg
-              className="eri-scroll-indicator"
-              style={{ animationDelay: '0.15s', marginTop: '-10px' }}
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 9L12 15L18 9"
-                stroke="rgba(255,255,255,0.25)"
-                strokeWidth="2"
+                d="M1 1L10 10L19 1"
+                stroke="rgba(255,255,255,0.7)"
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
