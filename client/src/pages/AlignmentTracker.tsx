@@ -132,7 +132,7 @@ export default function AlignmentTracker() {
   const redCount = liveResults.filter((r) => r.meta?.overallStatus === "red" || r.status === "error").length;
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] pt-[108px]">
+    <div className="min-h-screen bg-[#F9FAFB]">
       {/* ── Page header ── */}
       <div className="bg-[#232323] text-white px-6 py-10">
         <div className="max-w-7xl mx-auto">

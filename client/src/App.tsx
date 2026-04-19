@@ -6,18 +6,47 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import BrandDesignSystem from "./pages/BrandDesignSystem";
 import AlignmentTracker from "./pages/AlignmentTracker";
+import { logos } from "@/lib/assets";
+
+const APP_VERSION = "V.2026.04.18";
+
+/// ── Shared fixed header ──────────────────────────────────────────────────────
+// Renders on every tab. Mirrors the PublicLayout header exactly so the
+// AlignmentTracker page (which does not use PublicLayout) also gets the header.
+// PublicLayout suppresses its own header when this is present via the
+// hideHeader prop.
+function SiteHeader() {
+  return (
+    <>
+      {/* 4px dark teal top strip */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[#2c3f43]" />
+      {/* Main header bar */}
+      <header className="fixed top-1 left-0 right-0 z-50 h-16 bg-white border-b border-gray-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <a href="/" aria-label="Go to homepage" className="shrink-0">
+              <img src={logos.eriLogoFullColor} alt="Exponential Roadmap Initiative logo" className="h-8 w-auto" />
+            </a>
+            <div className="hidden sm:block h-6 w-px bg-gray-300 shrink-0" />
+            <span className="hidden sm:inline text-[18px] font-semibold text-[#384151] truncate">
+              Brand Design System
+            </span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full border border-gray-400 text-[11px] font-medium text-gray-600 tracking-wide">
+              BETA
+            </span>
+            <span className="hidden sm:inline text-[11px] font-medium text-gray-500 tracking-wide">
+              {APP_VERSION}
+            </span>
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}
 
 // ── Tab navigation bar ────────────────────────────────────────────────────────
-// Fixed below the PublicLayout header (68px: 4px strip + 64px header).
-// Height: 40px. Total header+tab height: 108px.
-//
-// The BDS page uses PublicLayout which already adds pt-[68px] on <main>.
-// We add an additional pt-10 (40px) to PublicLayout's <main> via a prop
-// so the tab bar does not overlap content.
-//
-// The AlignmentTracker page does NOT use PublicLayout — it manages its own
-// top padding directly (pt-[108px] on its outermost div).
-
 function TabNav() {
   const [location] = useLocation();
   const tabs = [
@@ -56,6 +85,7 @@ function TabNav() {
 function Router() {
   return (
     <>
+      <SiteHeader />
       <TabNav />
       <Switch>
         <Route path={"/"} component={BrandDesignSystem} />

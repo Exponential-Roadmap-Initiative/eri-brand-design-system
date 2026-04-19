@@ -12,6 +12,9 @@
  * Footer follows the public website pattern (exponentialroadmap.org):
  *   Background: #232323 (dark charcoal — NOT dark green)
  *   Text: white; accent links: brand green-300 (#93cda3)
+ *
+ * hideHeader prop: when true, the fixed header is suppressed so the shared
+ * SiteHeader in App.tsx renders instead (used by AlignmentTracker tab).
  */
 
 import { useState, useEffect } from "react";
@@ -21,36 +24,27 @@ interface PublicLayoutProps {
   children: React.ReactNode;
   transparentHeader?: boolean;
   hideFooter?: boolean;
+  hideHeader?: boolean;
 }
 
 // Current version — matches the V.YYYY.MM.DD convention used across ERI apps
 const APP_VERSION = "V.2026.04.18";
 
-export default function PublicLayout({ children, transparentHeader = false, hideFooter = false }: PublicLayoutProps) {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
-
+function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
+  transparentHeader: boolean;
+  scrolled: boolean;
+  menuOpen: boolean;
+  setMenuOpen: (v: boolean) => void;
+}) {
   const headerBg = transparentHeader && !scrolled
     ? "bg-transparent border-transparent"
     : "bg-white border-b border-gray-200";
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F9FAFB]">
-
-      {/* ── FIXED HEADER — ERI web app pattern ── */}
+    <>
       {/* Dark teal top strip — 4px, colour #2c3f43, always visible */}
       <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[#2c3f43]" />
+
       <header className={`fixed top-1 left-0 right-0 z-50 h-16 transition-all duration-200 ${headerBg}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
 
@@ -86,7 +80,6 @@ export default function PublicLayout({ children, transparentHeader = false, hide
               {APP_VERSION}
             </span>
 
-
             {/* Hamburger menu — visible on mobile only (lg+ uses the left panel) */}
             <button
               onClick={() => setMenuOpen(true)}
@@ -104,9 +97,6 @@ export default function PublicLayout({ children, transparentHeader = false, hide
       </header>
 
       {/* ── MOBILE NAVIGATION OVERLAY ── */}
-      {/* On desktop (lg+), the left panel is the sole navigation mechanism.
-           This overlay is for mobile only — it shows all sections + external links.
-           The hamburger is hidden on desktop when the left panel is visible. */}
       {menuOpen && (
         <div className="fixed inset-0 z-[60] bg-white flex flex-col">
           {/* Overlay header */}
@@ -204,9 +194,40 @@ export default function PublicLayout({ children, transparentHeader = false, hide
           </nav>
         </div>
       )}
+    </>
+  );
+}
+
+export default function PublicLayout({ children, transparentHeader = false, hideFooter = false, hideHeader = false }: PublicLayoutProps) {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-[#F9FAFB]">
+
+      {/* ── FIXED HEADER — suppressed when hideHeader=true ── */}
+      {!hideHeader && (
+        <LayoutHeader
+          transparentHeader={transparentHeader}
+          scrolled={scrolled}
+          menuOpen={menuOpen}
+          setMenuOpen={setMenuOpen}
+        />
+      )}
 
       {/* ── MAIN CONTENT ── */}
-      {/* pt-[68px] = 4px top strip + 64px header */}
+      {/* pt-[108px] = 4px strip + 64px header + 40px tab bar */}
       <main className="flex-1 pt-[108px]">
         {children}
       </main>

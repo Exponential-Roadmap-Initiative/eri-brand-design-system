@@ -354,7 +354,7 @@ function ChartContainer({ title, subtitle, headerColor = "green", children }: {
 // ============================================================================
 export default function BrandDesignSystem() {
   return (
-    <PublicLayout>
+    <PublicLayout hideHeader>
       {/* ── HERO ── */}
       <section className="bg-[#232323] text-white pt-28 pb-16 md:pb-24" id="top">
         <div className="max-w-6xl mx-auto px-4">
