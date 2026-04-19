@@ -159,9 +159,9 @@ export default function AlignmentTracker() {
     // pt-[108px] clears the fixed SiteHeader (68px) + TabNav (40px)
     <div className="min-h-screen pt-[108px]" style={{ backgroundColor: T.offWhite }}>
 
-      {/* ── Dark header band — full viewport width ───────────────────────── */}
+       {/* ── Dark header band — full viewport width ───────────────────── */}
       <div style={{ backgroundColor: T.dark }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 md:pb-24">
 
           {/* Eyebrow */}
           <p className="font-archivo text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: T.lime }}>
@@ -171,10 +171,10 @@ export default function AlignmentTracker() {
           {/* Title + refresh */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
-              <h1 className="font-archivo text-3xl md:text-4xl font-extrabold text-white leading-tight mb-2">
+              <h1 className="font-archivo text-4xl md:text-5xl font-extrabold text-white leading-tight mb-2">
                 Project Compliance
               </h1>
-              <p className="text-sm leading-relaxed max-w-2xl" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <p className="text-xl leading-relaxed max-w-3xl" style={{ color: "rgba(255,255,255,0.6)" }}>
                 Live status of BDS alignment across all ERI projects. Data is fetched directly from each project's published{" "}
                 <code className="font-mono text-[11px] px-1.5 py-0.5 rounded" style={{ backgroundColor: "rgba(255,255,255,0.08)", color: T.lime }}>bds-meta.json</code>{" "}
                 file. Latest{" "}

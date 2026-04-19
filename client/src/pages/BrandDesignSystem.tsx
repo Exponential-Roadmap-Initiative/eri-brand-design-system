@@ -368,7 +368,9 @@ export default function BrandDesignSystem() {
       {/* ── HERO ── */}
       <section className="bg-[#232323] text-white pt-28 pb-16 md:pb-24" id="top">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Badge className="bg-[#3ba559] text-white mb-4 hover:bg-[#3ba559]">Brand Reference</Badge>
+          <p className="font-archivo text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: '#93E07D' }}>
+            Brand Reference
+          </p>
           <h1 className="font-archivo text-4xl md:text-5xl font-extrabold mb-6">
             Brand Design System
           </h1>
