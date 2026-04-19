@@ -66,6 +66,67 @@ function StatusDot({ status }: { status: RowStatus }) {
   );
 }
 
+/**
+ * Compute the compliance status from the raw BdsMeta data.
+ * The tracker does NOT trust the self-reported overallStatus field — it derives
+ * status independently so that projects cannot accidentally mis-classify themselves.
+ *
+ * Rules (in priority order):
+ *   red   — any component with used:true AND compliant:false, OR any knownViolations
+ *           entry whose component key maps to a used:true component
+ *   amber — cssImportMethod is "source-workaround", OR eriComponentsPin is more than
+ *           one minor version behind LATEST_VERSION
+ *   green — everything else (including used:false components with knownViolations notes)
+ */
+function deriveStatus(meta: BdsMeta | undefined): RowStatus {
+  if (!meta) return "unknown";
+
+  // Build a set of component keys that are actively used
+  const usedComponents = new Set<string>(
+    Object.entries(meta.components ?? {}).filter(([, v]) => {
+      if (typeof v === "object" && v !== null) return (v as { used?: boolean }).used === true;
+      // legacy string format — treat any string value as "used"
+      return typeof v === "string";
+    }).map(([k]) => k)
+  );
+
+  // Red: any used component is non-compliant
+  const hasNonCompliantUsed = Object.entries(meta.components ?? {}).some(([, v]) => {
+    if (typeof v === "object" && v !== null) {
+      const c = v as { used?: boolean; compliant?: boolean };
+      return c.used === true && c.compliant === false;
+    }
+    return false;
+  });
+
+  // Red: any knownViolations entry references a used component
+  const hasActiveViolation = (meta.knownViolations ?? []).some((v) => {
+    if (typeof v === "object" && v !== null) {
+      const component = (v as Record<string, unknown>).component;
+      if (typeof component === "string") return usedComponents.has(component);
+    }
+    // plain string violations always count as active
+    return typeof v === "string" && v.trim().length > 0;
+  });
+
+  if (hasNonCompliantUsed || hasActiveViolation) return "red";
+
+  // Amber: CSS import method is not dist
+  if (meta.cssImportMethod && meta.cssImportMethod !== "dist") return "amber";
+
+  // Amber: package pin is more than one minor version behind
+  const pinMatch    = (meta.eriComponentsPin ?? "").match(/v?(\d+)\.(\d+)/);
+  const latestMatch = LATEST_VERSION.match(/v?(\d+)\.(\d+)/);
+  if (pinMatch && latestMatch) {
+    const pinMinor    = parseInt(pinMatch[2], 10);
+    const latestMinor = parseInt(latestMatch[2], 10);
+    if (parseInt(pinMatch[1], 10) < parseInt(latestMatch[1], 10)) return "amber";
+    if (latestMinor - pinMinor > 1) return "amber";
+  }
+
+  return "green";
+}
+
 // ── Cell helpers ──────────────────────────────────────────────────────────────
 
 function Dash() {
@@ -170,9 +231,9 @@ export default function AlignmentTracker() {
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
   const live       = PROJECT_REGISTRY.map((p) => results[p.id]).filter(Boolean);
-  const greenCount = live.filter((r) => r.meta?.overallStatus === "green").length;
-  const amberCount = live.filter((r) => r.meta?.overallStatus === "amber").length;
-  const redCount   = live.filter((r) => r.meta?.overallStatus === "red" || r.status === "error").length;
+  const greenCount = live.filter((r) => deriveStatus(r.meta) === "green").length;
+  const amberCount = live.filter((r) => deriveStatus(r.meta) === "amber").length;
+  const redCount   = live.filter((r) => deriveStatus(r.meta) === "red" || r.status === "error").length;
 
   return (
     // pt-[108px] clears the fixed SiteHeader (68px) + TabNav (40px)
@@ -269,8 +330,7 @@ export default function AlignmentTracker() {
                 const meta      = result?.meta;
                 const isLoading = result?.status === "loading";
                 const isError   = result?.status === "error";
-                const rowStatus: RowStatus = isLoading ? "loading" : isError ? "error" : (meta?.overallStatus as RowStatus) ?? "unknown";
-
+                 const rowStatus: RowStatus = isLoading ? "loading" : isError ? "error" : deriveStatus(meta);
                 return (
                   <tr
                     key={project.id}
@@ -358,8 +418,7 @@ export default function AlignmentTracker() {
             const meta      = result?.meta;
             const isLoading = result?.status === "loading";
             const isError   = result?.status === "error";
-            const rowStatus: RowStatus = isLoading ? "loading" : isError ? "error" : (meta?.overallStatus as RowStatus) ?? "unknown";
-
+            const rowStatus: RowStatus = isLoading ? "loading" : isError ? "error" : deriveStatus(meta);
             return (
               <div key={project.id} className="rounded-xl p-4 bg-white" style={{ border: `1px solid ${T.border}` }}>
                 <div className="flex items-start justify-between mb-3">
@@ -470,8 +529,8 @@ export default function AlignmentTracker() {
                   ["eriComponentsPin", `"${LATEST_VERSION}"`,        `Exact version tag installed. Latest is ${LATEST_VERSION}.`],
                   ["cssImportMethod", '"dist"',                      '"dist" = correct. "source-workaround" = amber. "none" = red.'],
                   ["components",    '{ ... }',                       'Per-component status. Each key: { used: boolean, compliant: boolean }.'],
-                  ["knownViolations", '[]',                          'Array of free-text violation strings. Empty array = no violations.'],
-                  ["overallStatus", '"green"',                       '"green" | "amber" | "red". Set manually based on the status rules.'],
+                  ["knownViolations", '[]',                          'Violations for used:true components only. Entries for used:false components are shown as documentation but do not affect status. Supports plain strings or objects: { component, reason, approvedBy, bdsRef }.'],
+                  ["overallStatus", '"green"',                       '"green" | "amber" | "red". Informational — the tracker computes status independently from the component data and ignores this field.'],
                   ["lastUpdated",   '"2026-04-19"',                  'ISO date (YYYY-MM-DD) of last update.'],
                   ["updatedBy",     '"Manus"',                       'Who last updated this file — "Manus" or your name.'],
                 ] as [string, string, string][]).map(([field, example, desc]) => (
@@ -493,9 +552,9 @@ export default function AlignmentTracker() {
                 {(["green","amber","red","error"] as RowStatus[]).map((s) => {
                   const { dot, label } = statusCfg(s);
                   const desc: Record<string, string> = {
-                    green: `All components compliant, CSS uses dist/, no violations.`,
+                    green: `All used components are compliant, CSS uses dist/, and no knownViolations entry references a used component. Unused components (used:false) with documentation notes do not affect this status.`,
                     amber: `CSS uses @source workaround, or package pin is 2+ minor versions behind ${LATEST_VERSION}.`,
-                    red:   `Any component has a known violation, or knownViolations is non-empty.`,
+                    red:   `Any used component (used:true) has compliant:false, or a knownViolations entry references a used component.`,
                     error: `Project has not yet published a bds-meta.json file, or the URL is unreachable.`,
                   };
                   return (

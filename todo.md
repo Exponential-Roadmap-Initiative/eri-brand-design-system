@@ -17,6 +17,8 @@
 
 ## Pending
 - [x] Push updated v2.10.6 Git tag
+- [x] Fix tracker: used:false components must not trigger Violations status even if knownViolations is non-empty
+- [x] Update field reference docs to clarify knownViolations should only contain entries for used:true components
 - [ ] Publish BDS site (click Publish button)
 - [ ] Add bds-meta.json to Trust site
 - [ ] Update HAL's bds-meta.json to canonical object format
