@@ -195,6 +195,31 @@ function ViolationsCell({ violations, error }: { violations?: unknown[]; error?:
   );
 }
 
+/**
+ * Filter knownViolations to only those that reference a used:true component.
+ * Entries for used:false components are documentation notes and must not be displayed
+ * as violations in the tracker UI.
+ */
+function activeViolations(meta: BdsMeta | undefined): unknown[] {
+  if (!meta) return [];
+  const usedComponents = new Set<string>(
+    Object.entries(meta.components ?? {}).filter(([, v]) => {
+      if (typeof v === "object" && v !== null) return (v as { used?: boolean }).used === true;
+      return typeof v === "string";
+    }).map(([k]) => k)
+  );
+  return (meta.knownViolations ?? []).filter((v) => {
+    if (typeof v === "object" && v !== null) {
+      const component = (v as Record<string, unknown>).component;
+      if (typeof component === "string") return usedComponents.has(component);
+      // object without a component key — show it (conservative)
+      return true;
+    }
+    // plain string — always show
+    return typeof v === "string" && v.trim().length > 0;
+  });
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 export default function AlignmentTracker() {
@@ -392,7 +417,7 @@ export default function AlignmentTracker() {
                     <td className="px-4 py-4 max-w-[200px]">
                       {isLoading ? <span className="text-xs animate-pulse" style={{ color: "#e5e7eb" }}>…</span>
                         : isError ? <ViolationsCell error={result.error} />
-                        : <ViolationsCell violations={meta?.knownViolations ?? []} />}
+                        : <ViolationsCell violations={activeViolations(meta)} />}
                     </td>
 
                     {/* Updated */}
@@ -442,9 +467,9 @@ export default function AlignmentTracker() {
                         <CssCell method={meta.cssImportMethod} />
                       </div>
                     </div>
-                    {(meta.knownViolations ?? []).length > 0 && (
+                    {activeViolations(meta).length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {(meta.knownViolations ?? []).map((v, i) => (
+                        {activeViolations(meta).map((v, i) => (
                           <span key={i} className="font-mono text-[10px] px-1 rounded" style={{ backgroundColor: "#fef2f2", color: "#ef4444" }}>{violationText(v)}</span>
                         ))}
                       </div>
@@ -577,11 +602,11 @@ export default function AlignmentTracker() {
                 </div>
                 <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
                   <code className="font-mono" style={{ color: T.dark }}>used: true, compliant: false</code>
-                  <p className="mt-0.5">Component is used but has a known deviation. Add a note to <code className="font-mono">knownViolations</code>.</p>
+                  <p className="mt-0.5">Component is used but deviates from the BDS spec. Add an entry to <code className="font-mono">knownViolations</code> with <code className="font-mono">component</code>, <code className="font-mono">reason</code>, <code className="font-mono">approvedBy</code>, and <code className="font-mono">bdsRef</code>.</p>
                 </div>
                 <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
                   <code className="font-mono" style={{ color: T.dark }}>used: false, compliant: false</code>
-                  <p className="mt-0.5">Component is not used in this project (e.g. EriContactUsButton on a data-only tool).</p>
+                  <p className="mt-0.5">Component is not applicable to this project (e.g. <code className="font-mono">EriContactUsButton</code> on the Contact Us page itself). No <code className="font-mono">knownViolations</code> entry is needed — <code className="font-mono">used: false</code> is sufficient. Do not add a violation note for unused components.</p>
                 </div>
               </div>
 
@@ -591,7 +616,7 @@ export default function AlignmentTracker() {
                   <li>✓ <code className="font-mono">@eri/components</code> pinned to {LATEST_VERSION}</li>
                   <li>✓ CSS imported from <code className="font-mono">dist/eri-components.css</code></li>
                   <li>✓ All used components have <code className="font-mono">compliant: true</code></li>
-                  <li>✓ <code className="font-mono">knownViolations</code> is an empty array <code className="font-mono">[]</code></li>
+                  <li>✓ <code className="font-mono">knownViolations</code> contains no entries for <code className="font-mono">used:true</code> components (entries for <code className="font-mono">used:false</code> components must be removed — they are not violations)</li>
                   <li>✓ File committed at <code className="font-mono">client/public/bds-meta.json</code> and deployed</li>
                 </ul>
               </div>
