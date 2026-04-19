@@ -30,7 +30,7 @@ function TabNav() {
       className="fixed left-0 right-0 z-40 bg-white border-b border-gray-200"
       style={{ top: "68px" }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-0 h-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-0 h-10">
         {tabs.map(({ href, label }) => {
           const isActive = href === "/" ? location === "/" : location.startsWith(href);
           return (
