@@ -103,14 +103,32 @@ function CssCell({ method }: { method?: string }) {
   return <span style={{ color: "#ef4444", fontSize: 12, fontWeight: 600 }}>✗ None</span>;
 }
 
-function ViolationsCell({ violations, error }: { violations?: string[]; error?: string }) {
+/** Normalise a knownViolations entry to a display string regardless of whether
+ * the project published it as a plain string or a richer object
+ * (e.g. { component, reason, approvedBy, bdsRef }).
+ */
+function violationText(v: unknown): string {
+  if (typeof v === "string") return v;
+  if (v && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    const parts: string[] = [];
+    if (o.component) parts.push(String(o.component));
+    if (o.reason)    parts.push(String(o.reason));
+    if (o.bdsRef)    parts.push(`ref:${o.bdsRef}`);
+    if (o.approvedBy) parts.push(`approved:${o.approvedBy}`);
+    return parts.length ? parts.join(" — ") : JSON.stringify(v);
+  }
+  return String(v);
+}
+
+function ViolationsCell({ violations, error }: { violations?: unknown[]; error?: string }) {
   if (error) return <span style={{ color: "#ef4444", fontSize: 11 }}>Failed to fetch</span>;
   if (!violations) return <Dash />;
   if (violations.length === 0) return <span style={{ color: T.green, fontSize: 12 }}>None</span>;
   return (
     <ul className="space-y-0.5">
       {violations.map((v, i) => (
-        <li key={i} className="font-mono text-[10px] px-1 rounded" style={{ color: "#ef4444", backgroundColor: "#fef2f2" }}>{v}</li>
+        <li key={i} className="font-mono text-[10px] px-1 rounded" style={{ color: "#ef4444", backgroundColor: "#fef2f2" }}>{violationText(v)}</li>
       ))}
     </ul>
   );
@@ -368,7 +386,7 @@ export default function AlignmentTracker() {
                     {(meta.knownViolations ?? []).length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {(meta.knownViolations ?? []).map((v, i) => (
-                          <span key={i} className="font-mono text-[10px] px-1 rounded" style={{ backgroundColor: "#fef2f2", color: "#ef4444" }}>{v}</span>
+                          <span key={i} className="font-mono text-[10px] px-1 rounded" style={{ backgroundColor: "#fef2f2", color: "#ef4444" }}>{violationText(v)}</span>
                         ))}
                       </div>
                     )}

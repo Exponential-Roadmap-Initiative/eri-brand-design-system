@@ -16,7 +16,7 @@
 - [x] BrandDesignSystem.tsx version references updated v2.10.0 → v2.10.6
 
 ## Pending
-- [ ] Push updated v2.10.6 Git tag
+- [x] Push updated v2.10.6 Git tag
 - [ ] Publish BDS site (click Publish button)
 - [ ] Add bds-meta.json to Trust site
 - [ ] Update HAL's bds-meta.json to canonical object format
