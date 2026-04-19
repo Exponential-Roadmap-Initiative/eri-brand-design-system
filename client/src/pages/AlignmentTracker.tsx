@@ -382,33 +382,94 @@ export default function AlignmentTracker() {
 
         {/* ── How it works ─────────────────────────────────────────────────── */}
         <div className="mt-8 rounded-xl p-6 bg-white" style={{ border: `1px solid ${T.border}` }}>
-          <h2 className="font-archivo font-bold text-lg mb-5" style={{ color: T.dark }}>How this tracker works</h2>
-          <div className="grid md:grid-cols-2 gap-8 text-sm">
+          <h2 className="font-archivo font-bold text-lg mb-1" style={{ color: T.dark }}>How this tracker works</h2>
+          <p className="text-sm mb-6" style={{ color: T.muted }}>
+            Every ERI project must publish a static{" "}
+            <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>{" "}
+            file at <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>client/public/bds-meta.json</code>{" "}
+            so it is served at{" "}
+            <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>https://&#123;domain&#125;/bds-meta.json</code>.
+            The tracker fetches this file from every registered project and renders a live compliance dashboard.
+            Update it whenever you upgrade <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>@eri/components</code>, change the CSS import method, add or fix a component, or resolve a violation.
+          </p>
 
-            <div>
-              <h3 className="font-semibold mb-2" style={{ color: T.dark }}>For Manus AI agents</h3>
-              <p className="leading-relaxed mb-4" style={{ color: T.muted }}>
-                When working on any ERI project, update{" "}
-                <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>client/public/bds-meta.json</code>{" "}
-                whenever you upgrade <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>@eri/components</code>,
-                change the CSS import method, add or fix a component, or resolve a violation.
-              </p>
-              <div className="rounded-lg p-4 font-mono text-xs overflow-x-auto" style={{ backgroundColor: T.dark, color: T.lime }}>
+          {/* Canonical template */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-semibold text-sm" style={{ color: T.dark }}>
+                Canonical template — copy into <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>client/public/bds-meta.json</code>
+              </h3>
+              <button
+                onClick={() => {
+                  const today = new Date().toISOString().slice(0, 10);
+                  navigator.clipboard.writeText(
+`{\n  "schemaVersion": "1.0",\n  "project": "your-project-id",\n  "projectName": "Your Project Name",\n  "domain": "your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":   { "used": true,  "compliant": true  },\n    "EriPageLayout":  { "used": true,  "compliant": true  },\n    "EriHeroSection": { "used": true,  "compliant": true  },\n    "EriNavDrawer":   { "used": false, "compliant": false },\n    "EriFooter":      { "used": true,  "compliant": true  }\n  },\n  "knownViolations": [],\n  "overallStatus": "green",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
+                  );
+                }}
+                className="text-[11px] px-3 py-1.5 rounded font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: T.lime, color: T.dark }}
+              >
+                Copy template
+              </button>
+            </div>
+            <div className="rounded-lg p-4 font-mono text-xs overflow-x-auto leading-relaxed" style={{ backgroundColor: T.dark, color: T.lime }}>
 {`{
   "schemaVersion": "1.0",
-  "project": "PSM",
+  "project": "your-project-id",
+  "projectName": "Your Project Name",
+  "domain": "your-project.exponentialroadmap.org",
   "eriComponentsPin": "${LATEST_VERSION}",
   "cssImportMethod": "dist",
+  "components": {
+    "EriAppHeader":   { "used": true,  "compliant": true  },
+    "EriPageLayout":  { "used": true,  "compliant": true  },
+    "EriHeroSection": { "used": true,  "compliant": true  },
+    "EriNavDrawer":   { "used": false, "compliant": false },
+    "EriFooter":      { "used": true,  "compliant": true  }
+  },
+  "knownViolations": [],
   "overallStatus": "green",
   "lastUpdated": "2026-04-19",
   "updatedBy": "Manus"
 }`}
+            </div>
+          </div>
+
+          {/* Field reference + Status rules */}
+          <div className="grid md:grid-cols-2 gap-8 text-sm">
+
+            {/* Field reference */}
+            <div>
+              <h3 className="font-semibold mb-3" style={{ color: T.dark }}>Field reference</h3>
+              <div className="space-y-2">
+                {([
+                  ["schemaVersion", '"1.0"',                        'Always "1.0" — do not change.'],
+                  ["project",       '"hal"',                         'Short lowercase project code. Examples: hal, psm, playbook, taxonomy.'],
+                  ["projectName",   '"Human-AI Lab"',                'Full human-readable project name.'],
+                  ["domain",        '"hal.exponentialroadmap.org"',  'Canonical deployed domain (no https://).'],
+                  ["eriComponentsPin", `"${LATEST_VERSION}"`,        `Exact version tag installed. Latest is ${LATEST_VERSION}.`],
+                  ["cssImportMethod", '"dist"',                      '"dist" = correct. "source-workaround" = amber. "none" = red.'],
+                  ["components",    '{ ... }',                       'Per-component status. Each key: { used: boolean, compliant: boolean }.'],
+                  ["knownViolations", '[]',                          'Array of free-text violation strings. Empty array = no violations.'],
+                  ["overallStatus", '"green"',                       '"green" | "amber" | "red". Set manually based on the status rules.'],
+                  ["lastUpdated",   '"2026-04-19"',                  'ISO date (YYYY-MM-DD) of last update.'],
+                  ["updatedBy",     '"Manus"',                       'Who last updated this file — "Manus" or your name.'],
+                ] as [string, string, string][]).map(([field, example, desc]) => (
+                  <div key={field} className="rounded-lg p-3" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                    <div className="flex items-baseline gap-2 mb-0.5 flex-wrap">
+                      <code className="font-mono text-[11px] font-bold" style={{ color: T.dark }}>{field}</code>
+                      <code className="font-mono text-[10px]" style={{ color: T.muted }}>{example}</code>
+                    </div>
+                    <p className="text-[11px]" style={{ color: T.muted }}>{desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
+            {/* Status rules + component guide + checklist */}
             <div>
               <h3 className="font-semibold mb-3" style={{ color: T.dark }}>Status rules</h3>
-              <div className="space-y-3">
+              <div className="space-y-3 mb-6">
                 {(["green","amber","red","error"] as RowStatus[]).map((s) => {
                   const { dot, label } = statusCfg(s);
                   const desc: Record<string, string> = {
@@ -428,12 +489,32 @@ export default function AlignmentTracker() {
                   );
                 })}
               </div>
-              <div className="mt-5 p-4 rounded-lg" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
-                <p className="text-[11px]" style={{ color: T.muted }}>
-                  <strong style={{ color: T.dark }}>File location in each project:</strong><br />
-                  <code className="font-mono">client/public/bds-meta.json</code><br />
-                  Served at: <code className="font-mono">https://&#123;domain&#125;/bds-meta.json</code>
-                </p>
+
+              <h3 className="font-semibold mb-3" style={{ color: T.dark }}>Component values guide</h3>
+              <div className="space-y-2 text-[11px] mb-6" style={{ color: T.muted }}>
+                <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                  <code className="font-mono" style={{ color: T.dark }}>used: true, compliant: true</code>
+                  <p className="mt-0.5">Component is used and follows the BDS spec.</p>
+                </div>
+                <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                  <code className="font-mono" style={{ color: T.dark }}>used: true, compliant: false</code>
+                  <p className="mt-0.5">Component is used but has a known deviation. Add a note to <code className="font-mono">knownViolations</code>.</p>
+                </div>
+                <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                  <code className="font-mono" style={{ color: T.dark }}>used: false, compliant: false</code>
+                  <p className="mt-0.5">Component is not used in this project (e.g. EriNavDrawer on a simple site).</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                <p className="text-[11px] font-semibold mb-2" style={{ color: T.dark }}>Quick checklist before setting overallStatus: "green"</p>
+                <ul className="text-[11px] space-y-1" style={{ color: T.muted }}>
+                  <li>✓ <code className="font-mono">@eri/components</code> pinned to {LATEST_VERSION}</li>
+                  <li>✓ CSS imported from <code className="font-mono">dist/eri-components.css</code></li>
+                  <li>✓ All used components have <code className="font-mono">compliant: true</code></li>
+                  <li>✓ <code className="font-mono">knownViolations</code> is an empty array <code className="font-mono">[]</code></li>
+                  <li>✓ File committed at <code className="font-mono">client/public/bds-meta.json</code> and deployed</li>
+                </ul>
               </div>
             </div>
           </div>
