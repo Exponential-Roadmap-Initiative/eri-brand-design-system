@@ -367,7 +367,7 @@ export default function BrandDesignSystem() {
     <PublicLayout hideHeader>
       {/* ── HERO ── */}
       <section className="bg-[#232323] text-white pt-28 pb-16 md:pb-24" id="top">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <Badge className="bg-[#3ba559] text-white mb-4 hover:bg-[#3ba559]">Brand Reference</Badge>
           <h1 className="font-archivo text-4xl md:text-5xl font-extrabold mb-6">
             Brand Design System
@@ -380,7 +380,7 @@ export default function BrandDesignSystem() {
       </section>
 
       {/* ── TWO-COLUMN LAYOUT: sticky nav + scrollable content ── */}
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* IMPORTANT: do NOT use items-start or items-stretch on this flex container.
              The sticky nav requires its parent to have full height (default stretch behaviour).
              The global .flex { min-height: 0 } override is intentional for other contexts
@@ -3447,7 +3447,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {/* Live preview — real EriAppHeader component */}
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — public surface (showCTA=true)</div>
-            <div className="relative" style={{ height: '64px' }}>
+            {/* isolation:isolate + transform creates a new stacking context, trapping the fixed-position EriAppHeader inside this container */}
+            <div style={{ height: '64px', isolation: 'isolate', transform: 'translateZ(0)', position: 'relative', overflow: 'hidden' }}>
               <EriAppHeader
                 appName="Professional Services Matrix"
                 status="BETA"
@@ -3462,7 +3463,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </div>
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — internal tool (showCTA=false)</div>
-            <div className="relative" style={{ height: '64px' }}>
+            <div style={{ height: '64px', isolation: 'isolate', transform: 'translateZ(0)', position: 'relative', overflow: 'hidden' }}>
               <EriAppHeader
                 appName="Internal Admin Tool"
                 status="ALPHA"
