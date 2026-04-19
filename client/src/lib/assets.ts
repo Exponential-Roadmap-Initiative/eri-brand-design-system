@@ -54,6 +54,11 @@ export const heroImages = {
   // fingertips meeting at the S-curve crossing point with a golden burst of light.
   // Michelangelo-inspired composition. Use for: HAL, human-AI connection, moment-of-contact narratives.
   halHandsTouching: `${CDN}/hal-hero-human-v2-hands_75d155b6.png`,
+
+  // Trust Centre — polygon dot-network shield on dark teal background with circuit traces.
+  // Use for: Trust Centre, security, data integrity, compliance contexts.
+  // In code: import ERI_HERO_IMAGE_TRUST from @eri/components rather than using this token directly.
+  trust: `${CDN}/eri-trust-hero-clean_4d9b9a4a.png`,
 };
 
 // ─── PILLAR BOTTOM ICONS (arch/arrow motif) ──────────────────────────────────

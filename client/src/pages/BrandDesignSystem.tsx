@@ -4420,6 +4420,15 @@ const tabs: TabConfig[] = [
                 token: "heroImages.crocodileDecoupling",
                 use: "Crocodile Economics app, any absolute decoupling / emissions-reduction narrative. Features diverging jaw curves: cyan (#00B4D8) GDP line rising, amber emissions line falling.",
               },
+              {
+                id: "trust",
+                label: "Trust Centre — Security Shield",
+                badge: "App-specific",
+                badgeColor: "bg-[#2C3F43] text-white",
+                url: heroImages.trust,
+                token: "heroImages.trust",
+                use: "Trust Centre (trust.exponentialroadmap.org), security, data integrity, and compliance contexts. Polygon dot-network shield on dark teal background with circuit traces. In code, import ERI_HERO_IMAGE_TRUST from @eri/components rather than using this token directly.",
+              },
             ].map((img) => (
               <div key={img.id} data-hero-id={img.id} className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                 <div className="relative">

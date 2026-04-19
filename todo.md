@@ -22,3 +22,4 @@
 - [ ] Publish BDS site (click Publish button)
 - [ ] Add bds-meta.json to Trust site
 - [ ] Update HAL's bds-meta.json to canonical object format
+- [x] Add heroImages.trust to assets.ts and Surface Modes gallery
