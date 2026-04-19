@@ -24,7 +24,7 @@ interface PublicLayoutProps {
 }
 
 // Current version — matches the V.YYYY.MM.DD convention used across ERI apps
-const APP_VERSION = "V.2026.04.12";
+const APP_VERSION = "V.2026.04.18";
 
 export default function PublicLayout({ children, transparentHeader = false, hideFooter = false }: PublicLayoutProps) {
   const [scrolled, setScrolled] = useState(false);
@@ -133,7 +133,19 @@ export default function PublicLayout({ children, transparentHeader = false, hide
           {/* Section links — mobile only (lg+ uses the left panel instead) */}
           <nav className="flex flex-col gap-0.5 p-4 overflow-y-auto flex-1">
             <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-3 px-3">On this page</p>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pb-1">Communications &amp; Brand</p>
+            {[
+              { href: "#introduction",          label: "Introduction" },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#3ba559] hover:bg-gray-50 rounded-md transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">Communications &amp; Brand</p>
             {[
               { href: "#brand-proposition",     label: "Brand Proposition" },
               { href: "#visual-identity",        label: "Visual Identity" },
