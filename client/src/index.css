@@ -5,6 +5,7 @@
  * Primary green: #3ba559 | Dark heading: #232323 | Page bg: #F9FAFB
  */
 
+@import "@eri/components/dist/eri-components.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 

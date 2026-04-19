@@ -34,6 +34,16 @@ import CrocodileChartExamples from "@/components/CrocodileChartExamples";
 import { NavigationPatterns } from "@/components/NavigationPatterns";
 import { logos, pillarBottomIcons, pillarMarks, frameworkImages, dataSourceLogos, frameworkV5, pillarsLong, pillarsRegular, pillarsExtended, pillarsShort, memberLogos, heroImages } from "@/lib/assets";
 import { pillarTints } from "@/lib/pillarColors";
+import {
+  EriStatusBadge,
+  EriContactUsButton,
+  EriAppHeader,
+  EriAppFooter,
+  EriHeroSection,
+  EriPageLayout,
+  ERI_HERO_IMAGE_HANDS,
+  ERI_HERO_IMAGE_TRUST,
+} from "@eri/components";
 
 // ============================================================================
 // BRAND PROPOSITION DATA
@@ -3257,18 +3267,18 @@ const contactUrl =
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
             <div className="p-6 flex flex-wrap gap-6 items-center">
-              {/* Dark theme */}
+              {/* Dark theme — real component */}
               <div className="rounded-lg px-6 py-4 flex items-center gap-3" style={{ backgroundColor: '#232323' }}>
                 <span className="text-xs text-gray-400 mr-1">dark:</span>
                 {(['ALPHA','BETA','PREVIEW','LIVE'] as const).map(s => (
-                  <span key={s} className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">{s}</span>
+                  <EriStatusBadge key={s} status={s} theme="dark" />
                 ))}
               </div>
-              {/* Light theme */}
+              {/* Light theme — real component */}
               <div className="rounded-lg px-6 py-4 flex items-center gap-3 bg-white border border-gray-200">
                 <span className="text-xs text-gray-400 mr-1">light:</span>
                 {(['ALPHA','BETA','PREVIEW','LIVE'] as const).map(s => (
-                  <span key={s} className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-gray-400 text-gray-500">{s}</span>
+                  <EriStatusBadge key={s} status={s} theme="light" />
                 ))}
               </div>
             </div>
@@ -3360,30 +3370,27 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <div className="p-6 flex flex-wrap gap-6 items-center">
               <div className="rounded-lg px-6 py-4 flex items-center gap-4" style={{ backgroundColor: '#232323' }}>
                 <span className="text-xs text-gray-400">dark bg:</span>
-                <a
-                  href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-lg font-semibold transition-opacity hover:opacity-90 px-4 py-2 text-sm"
-                  style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
-                >Contact Us</a>
-                <a
-                  href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-lg font-semibold transition-opacity hover:opacity-90 px-3 py-1.5 text-xs"
-                  style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
-                >Contact Us <span className="ml-1 text-gray-600 font-normal">sm</span></a>
+                <EriContactUsButton
+                  source="bds-demo"
+                  sourceLabel="Brand Design System"
+                  returnUrl="https://eri-brand-design-system.manus.space"
+                  size="md"
+                />
+                <EriContactUsButton
+                  source="bds-demo"
+                  sourceLabel="Brand Design System"
+                  returnUrl="https://eri-brand-design-system.manus.space"
+                  size="sm"
+                />
               </div>
               <div className="rounded-lg px-6 py-4 flex items-center gap-4 bg-white border border-gray-200">
                 <span className="text-xs text-gray-400">light bg:</span>
-                <a
-                  href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-lg font-semibold transition-opacity hover:opacity-90 px-4 py-2 text-sm"
-                  style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
-                >Contact Us</a>
+                <EriContactUsButton
+                  source="bds-demo"
+                  sourceLabel="Brand Design System"
+                  returnUrl="https://eri-brand-design-system.manus.space"
+                  size="md"
+                />
               </div>
             </div>
           </div>
@@ -3437,48 +3444,32 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
           </p>
 
-          {/* Live preview */}
+          {/* Live preview — real EriAppHeader component */}
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — public surface (showCTA=true)</div>
-            <div className="relative" style={{ height: '64px', backgroundColor: '#232323' }}>
-              <div className="absolute inset-0 flex items-center justify-between" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
-                <div className="flex items-center gap-3">
-                  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-8 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
-                  <div className="w-px h-6 bg-white/20" />
-                  <span className="text-white text-sm font-medium">Professional Services Matrix</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">BETA</span>
-                  <span className="text-gray-400 text-xs font-mono hidden sm:block">V.2026.04.15</span>
-                  <a href="#" className="inline-flex items-center justify-center rounded-lg font-semibold px-3 py-1.5 text-xs" style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}>Contact Us</a>
-                  <div className="flex flex-col gap-1.5 p-2 text-white">
-                    <span className="block w-5 h-0.5 bg-white" />
-                    <span className="block w-5 h-0.5 bg-white" />
-                    <span className="block w-5 h-0.5 bg-white" />
-                  </div>
-                </div>
-              </div>
+            <div className="relative" style={{ height: '64px' }}>
+              <EriAppHeader
+                appName="Professional Services Matrix"
+                status="BETA"
+                version="V.2026.04.18"
+                showCTA={true}
+                source="bds-demo"
+                sourceLabel="Brand Design System"
+                returnUrl="https://eri-brand-design-system.manus.space"
+                onMenuClick={() => {}}
+              />
             </div>
           </div>
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — authenticated surface (showCTA=false)</div>
-            <div className="relative" style={{ height: '64px', backgroundColor: '#232323' }}>
-              <div className="absolute inset-0 flex items-center justify-between" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
-                <div className="flex items-center gap-3">
-                  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-8 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
-                  <div className="w-px h-6 bg-white/20" />
-                  <span className="text-white text-sm font-medium">Professional Services Matrix</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-widest uppercase border-white/60 text-white">BETA</span>
-                  <span className="text-gray-400 text-xs font-mono hidden sm:block">V.2026.04.15</span>
-                  <div className="flex flex-col gap-1.5 p-2 text-white">
-                    <span className="block w-5 h-0.5 bg-white" />
-                    <span className="block w-5 h-0.5 bg-white" />
-                    <span className="block w-5 h-0.5 bg-white" />
-                  </div>
-                </div>
-              </div>
+            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — internal tool (showCTA=false)</div>
+            <div className="relative" style={{ height: '64px' }}>
+              <EriAppHeader
+                appName="Internal Admin Tool"
+                status="ALPHA"
+                version="V.2026.04.18"
+                showCTA={false}
+                onMenuClick={() => {}}
+              />
             </div>
           </div>
 
@@ -3592,26 +3583,13 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
           </p>
 
-          {/* Live preview */}
+          {/* Live preview — real EriAppFooter component */}
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
-            <div style={{ backgroundColor: '#232323', borderTop: '1px solid #374151', padding: 'clamp(1rem, 3vw, 2rem)' }}>
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-                <div className="flex flex-col gap-2">
-                  <a href="https://exponentialroadmap.org/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp" alt="ERI" className="h-7 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
-                  </a>
-                  <p className="text-sm text-gray-400 max-w-xs">Making Pillar 3 climate impact measurable and actionable.</p>
-                </div>
-                <nav className="flex flex-col gap-2 sm:items-end">
-                  <a href="https://exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Exponential Roadmap Initiative</a>
-                  <a href="https://contact-us.exponentialroadmap.org?source=footer&app=professional-services-matrix" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Contact Us</a>
-                </nav>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-4" style={{ borderTop: '1px solid #1f2937' }}>
-                <p className="text-sm text-gray-500">© 2026 Exponential Roadmap Initiative. Professional Services Matrix.</p>
-              </div>
-            </div>
+            <EriAppFooter
+              appName="Professional Services Matrix"
+              tagline="Making Pillar 3 climate impact measurable and actionable."
+            />
           </div>
 
           {/* Source code */}
@@ -3705,36 +3683,19 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             The canonical hands image is baked in as the default — no need to pass <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code> for standard use.
           </p>
 
-          {/* Live preview */}
+          {/* Live preview — real EriHeroSection component */}
           <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW (condensed — full height in production)</div>
-            <div
-              className="relative flex flex-col justify-center overflow-hidden"
-              style={{
-                minHeight: '340px',
-                backgroundImage: `url(${heroImages.halHandsTouching})`,
-                backgroundSize: 'cover',
-                backgroundPosition: '50% 50%',
-              }}
-            >
-              {/* Brand dark overlay — rgba(35,35,35,0.82), NOT pure black */}
-              <div className="absolute inset-0" style={{ backgroundColor: 'rgba(35,35,35,0.82)' }} />
-              {/* Content container — max-w-screen-xl + --eri-content-inset aligns with header logotype */}
-              <div className="relative z-10 w-full max-w-screen-xl mx-auto" style={{ paddingInline: 'clamp(1rem, 3vw, 2rem)' }}>
-                {/* Text block — max-w-xl keeps text in the left half */}
-                <div className="max-w-xl text-left">
-                  <p className="text-[11px] font-semibold uppercase tracking-widest mb-5" style={{ color: '#93E07D' }}>PROFESSIONAL SERVICES MATRIX ——— BETA</p>
-                  <h2 className="font-extrabold leading-tight mb-5" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
-                    <span className="block" style={{ color: '#93E07D' }}>Professional</span>
-                    <span className="block text-white">Services Matrix</span>
-                  </h2>
-                  <p className="text-base leading-relaxed mb-7" style={{ color: 'rgba(255,255,255,0.85)' }}>Making Pillar 3 climate impact measurable and actionable.</p>
-                  <div className="flex flex-wrap gap-3">
-                    <a href="#" onClick={e => e.preventDefault()} className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90" style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}>Try the Client Assessment</a>
-                    <a href="#" onClick={e => e.preventDefault()} className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-white bg-transparent transition-colors hover:bg-white/10" style={{ border: '2px solid rgba(255,255,255,0.9)' }}>PSM Journey Demo</a>
-                  </div>
-                </div>
-              </div>
+            <div style={{ maxHeight: '380px', overflow: 'hidden' }}>
+              <EriHeroSection
+                backgroundImage={ERI_HERO_IMAGE_HANDS}
+                eyebrow="PROFESSIONAL SERVICES MATRIX ——— BETA"
+                titleLine1="Professional"
+                titleLine2="Services Matrix"
+                body="Making Pillar 3 climate impact measurable and actionable."
+                primaryCTA={{ label: "Try the Client Assessment", href: "#" }}
+                secondaryCTA={{ label: "PSM Journey Demo", href: "#" }}
+              />
             </div>
           </div>
 
@@ -3856,17 +3817,17 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
               and a subtle shield motif — conveying rigour and institutional credibility rather than human-AI collaboration.
               Import the constant from <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> and pass it as <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code>.
             </p>
-            {/* Mini preview */}
+            {/* Mini preview — real EriHeroSection component */}
             <div className="rounded-lg overflow-hidden mb-4" style={{ height: 200 }}>
-              <div className="w-full h-full relative" style={{ backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-trust-hero-BQQK4r665LBmYj3F222fXy.png)`, backgroundSize: 'cover', backgroundPosition: '50% 50%' }}>
-                <div className="absolute inset-0" style={{ background: 'rgba(35,35,35,0.82)' }} />
-                <div className="absolute inset-0 flex items-center" style={{ paddingLeft: 'clamp(1rem,3vw,2rem)' }}>
-                  <div>
-                    <p className="text-xs font-semibold tracking-widest mb-2" style={{ color: '#93E07D' }}>EXPONENTIAL ROADMAP INITIATIVE ——— TRUST</p>
-                    <h2 className="text-2xl font-extrabold text-white leading-tight">Security &amp; Transparency<br /><span style={{ color: '#93E07D' }}>for every ERI application</span></h2>
-                  </div>
-                </div>
-              </div>
+              <EriHeroSection
+                backgroundImage={ERI_HERO_IMAGE_TRUST}
+                eyebrow="EXPONENTIAL ROADMAP INITIATIVE ——— TRUST"
+                titleLine1="Security &amp; Transparency"
+                titleLine2="for every ERI application"
+                body="How ERI protects your data, maintains system integrity, and upholds transparency across all applications."
+                primaryCTA={{ label: "View Security Practices", href: "#" }}
+                secondaryCTA={{ label: "Data Privacy", href: "#" }}
+              />
             </div>
             <pre className="bg-[#1e1e1e] text-green-300 text-xs rounded-lg p-4 overflow-x-auto"><code>{`import { EriHeroSection, ERI_HERO_IMAGE_TRUST } from '@eri/components';
 
