@@ -299,7 +299,13 @@ export default function AlignmentTracker() {
                       <td key={c} className="px-4 py-4">
                         {isLoading ? <span className="text-xs animate-pulse" style={{ color: "#e5e7eb" }}>…</span>
                           : isError ? <Dash />
-                          : <ComponentCell used={meta?.components[c]?.used} compliant={meta?.components[c]?.compliant} />}
+                          : (() => {
+                              const cv = meta?.components[c];
+                              // Handle both object format {used, compliant} and legacy string format
+                              if (!cv) return <Dash />;
+                              if (typeof cv === 'string') return <ComponentCell used={true} compliant={cv === 'used' || cv === 'via-EriPageLayout'} />;
+                              return <ComponentCell used={(cv as {used:boolean}).used} compliant={(cv as {compliant:boolean}).compliant} />;
+                            })()}
                       </td>
                     ))}
 
@@ -307,7 +313,7 @@ export default function AlignmentTracker() {
                     <td className="px-4 py-4 max-w-[200px]">
                       {isLoading ? <span className="text-xs animate-pulse" style={{ color: "#e5e7eb" }}>…</span>
                         : isError ? <ViolationsCell error={result.error} />
-                        : <ViolationsCell violations={meta?.knownViolations} />}
+                        : <ViolationsCell violations={meta?.knownViolations ?? []} />}
                     </td>
 
                     {/* Updated */}
@@ -358,9 +364,9 @@ export default function AlignmentTracker() {
                         <CssCell method={meta.cssImportMethod} />
                       </div>
                     </div>
-                    {meta.knownViolations.length > 0 && (
+                    {(meta.knownViolations ?? []).length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {meta.knownViolations.map((v, i) => (
+                        {(meta.knownViolations ?? []).map((v, i) => (
                           <span key={i} className="font-mono text-[10px] px-1 rounded" style={{ backgroundColor: "#fef2f2", color: "#ef4444" }}>{v}</span>
                         ))}
                       </div>

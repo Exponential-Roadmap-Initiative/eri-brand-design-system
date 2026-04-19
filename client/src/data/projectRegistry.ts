@@ -83,7 +83,11 @@ export const PROJECT_REGISTRY: ProjectRegistryEntry[] = [
   },
 ];
 
-/** URL to fetch bds-meta.json from a given project */
+/** URL to fetch bds-meta.json from a given project.
+ *  Routes through the server-side proxy so the browser never makes a
+ *  cross-origin request — CORS headers on the target site are irrelevant.
+ */
 export function getBdsMetaUrl(projectUrl: string): string {
-  return `${projectUrl}/bds-meta.json`;
+  const target = encodeURIComponent(`${projectUrl}/bds-meta.json`);
+  return `/api/fetch-bds-meta?url=${target}`;
 }
