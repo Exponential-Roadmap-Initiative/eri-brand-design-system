@@ -72,7 +72,7 @@ export const ERI_HERO_IMAGE_HANDS =
  * Use this constant directly rather than hard-coding the URL.
  */
 export const ERI_HERO_IMAGE_TRUST =
-  'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-trust-hero-BQQK4r665LBmYj3F222fXy.png';
+  'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-trust-hero-clean_4d9b9a4a.png';
 
 interface CtaButton {
   label: string;
