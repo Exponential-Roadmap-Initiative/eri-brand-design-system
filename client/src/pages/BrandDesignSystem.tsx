@@ -3843,7 +3843,43 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
               <li>Icon prefix on CTA buttons — text only</li>
               <li>Wrapping <code className="font-mono bg-red-100 px-1 rounded">EriHeroSection</code> in a <code className="font-mono bg-red-100 px-1 rounded">pt-16</code> div — the component handles its own header clearance</li>
               <li>Passing <code className="font-mono bg-red-100 px-1 rounded">backgroundImage</code> with the hands URL manually — import <code className="font-mono bg-red-100 px-1 rounded">ERI_HERO_IMAGE_HANDS</code> or omit the prop entirely</li>
+              <li>Using the hands image on a Trust / Security / Compliance page — use <code className="font-mono bg-red-100 px-1 rounded">ERI_HERO_IMAGE_TRUST</code> instead</li>
             </ul>
+          </div>
+
+          {/* ── Trust Hero Variant ─────────────────────────────────────────── */}
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-5 mb-10">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">Trust &amp; Security Variant — <code className="font-mono normal-case">ERI_HERO_IMAGE_TRUST</code></p>
+            <p className="text-sm text-gray-700 mb-4">
+              For trust, security, data integrity, and compliance contexts, use <code className="font-mono text-xs bg-gray-100 px-1 rounded">ERI_HERO_IMAGE_TRUST</code> instead
+              of the default hands image. The Trust image uses an abstract dark texture with interconnected nodes, a hexagonal grid,
+              and a subtle shield motif — conveying rigour and institutional credibility rather than human-AI collaboration.
+              Import the constant from <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> and pass it as <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code>.
+            </p>
+            {/* Mini preview */}
+            <div className="rounded-lg overflow-hidden mb-4" style={{ height: 200 }}>
+              <div className="w-full h-full relative" style={{ backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-trust-hero-BQQK4r665LBmYj3F222fXy.png)`, backgroundSize: 'cover', backgroundPosition: '50% 50%' }}>
+                <div className="absolute inset-0" style={{ background: 'rgba(35,35,35,0.82)' }} />
+                <div className="absolute inset-0 flex items-center" style={{ paddingLeft: 'clamp(1rem,3vw,2rem)' }}>
+                  <div>
+                    <p className="text-xs font-semibold tracking-widest mb-2" style={{ color: '#93E07D' }}>EXPONENTIAL ROADMAP INITIATIVE ——— TRUST</p>
+                    <h2 className="text-2xl font-extrabold text-white leading-tight">Security &amp; Transparency<br /><span style={{ color: '#93E07D' }}>for every ERI application</span></h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <pre className="bg-[#1e1e1e] text-green-300 text-xs rounded-lg p-4 overflow-x-auto"><code>{`import { EriHeroSection, ERI_HERO_IMAGE_TRUST } from '@eri/components';
+
+<EriHeroSection
+  eyebrow="EXPONENTIAL ROADMAP INITIATIVE ——— TRUST"
+  titleLine1="Security & Transparency"
+  titleLine2="for every ERI application"
+  body="How ERI protects your data, maintains system integrity, and upholds transparency across all applications."
+  primaryCTA={{ label: "View Security Practices", href: "/security" }}
+  secondaryCTA={{ label: "Data Privacy", href: "/privacy" }}
+  backgroundImage={ERI_HERO_IMAGE_TRUST}
+  showScrollIndicator
+/>`}</code></pre>
           </div>
 
           {/* ── Component 6: EriPageLayout ───────────────────────────────── */}

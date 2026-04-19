@@ -63,6 +63,17 @@ import React from 'react';
 export const ERI_HERO_IMAGE_HANDS =
   'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hero-human-v2-hands_75d155b6.png';
 
+/**
+ * Trust & Security hero background image — abstract dark texture with interconnected node
+ * network, hexagonal grid, and a subtle shield motif in the right half. Designed for
+ * trust.exponentialroadmap.org and any ERI application where the hands image is inappropriate
+ * (e.g. security, data integrity, compliance, or internal tool contexts).
+ * The left half is darker to ensure white text reads clearly.
+ * Use this constant directly rather than hard-coding the URL.
+ */
+export const ERI_HERO_IMAGE_TRUST =
+  'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-trust-hero-BQQK4r665LBmYj3F222fXy.png';
+
 interface CtaButton {
   label: string;
   href: string;
