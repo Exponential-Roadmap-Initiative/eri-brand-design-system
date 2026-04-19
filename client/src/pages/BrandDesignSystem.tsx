@@ -3796,7 +3796,23 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
   primaryCTA={{ label: "Explore the Data", href: "/data" }}
   backgroundImage="https://cdn.example.com/croc-hero.webp"
   overlayOpacity={0.75}
-/>`}</pre>
+/>
+
+{/* children slot — supplementary content below the CTAs */}
+{/* Use for: attribution lines, stat counters, scroll indicators */}
+<EriHeroSection
+  eyebrow="HUMAN-AI LAB ——— EXPONENTIAL ROADMAP INITIATIVE"
+  titleLine1="Human-AI"
+  titleLine2="Collaboration"
+  body="Exploring the frontier of human and AI working together."
+  primaryCTA={{ label: "Explore the Lab", href: "/lab" }}
+  secondaryCTA={{ label: "Read the Research", href: "/research" }}
+>
+  {/* Attribution line — rendered below the CTA buttons */}
+  <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '11px', marginTop: '1.5rem' }}>
+    Data sourced from the ERI Exponential Framework v5.0
+  </p>
+</EriHeroSection>`}</pre>
             </CardContent>
           </Card>
 

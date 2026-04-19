@@ -207,7 +207,7 @@ export default function PublicLayout({ children, transparentHeader = false, hide
 
       {/* ── MAIN CONTENT ── */}
       {/* pt-[68px] = 4px top strip + 64px header */}
-      <main className="flex-1 pt-[68px]">
+      <main className="flex-1 pt-[108px]">
         {children}
       </main>
 
