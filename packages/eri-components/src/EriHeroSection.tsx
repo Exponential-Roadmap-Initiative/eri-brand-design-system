@@ -1,5 +1,5 @@
 /**
- * EriHeroSection — ERI Brand Design System v2.10.0
+ * EriHeroSection — ERI Brand Design System v2.10.4
  *
  * Canonical full-viewport hero section for all ERI public-facing applications.
  * Matches the live pattern on human-ai-lab.exponentialroadmap.org.
@@ -12,6 +12,7 @@
  *     body="One place for everything ERI builds at the intersection of human expertise and AI."
  *     primaryCTA={{ label: "Explore the Application Suite", href: "/suite" }}
  *     secondaryCTA={{ label: "Human-AI Playbook", href: "/playbook" }}
+ *     showScrollIndicator
  *   />
  *
  * RULES (do not override):
@@ -29,6 +30,7 @@
  *   - Secondary CTA: transparent background, 2px white border, white text, rounded-lg
  *   - No icon prefix or suffix on any CTA button
  *   - Default backgroundImage: ERI_HERO_IMAGE_HANDS — no need to pass it for standard use
+ *   - showScrollIndicator: renders a subtle animated chevron at the bottom-centre of the hero
  *
  * INTEGRATION NOTES (lessons from previous component iterations):
  *   1. Top padding: this component adds paddingTop: 64px internally to clear the fixed header.
@@ -41,6 +43,9 @@
  *      index.css (required since v2.9.1 to prevent Tailwind 4 from purging component classes).
  *   5. backgroundImage default: the canonical hands image is baked in. Only override for
  *      app-specific hero images (e.g. Crocodile Economics). Never regenerate the hands image.
+ *   6. showScrollIndicator: the indicator is absolutely positioned at the bottom-centre of the
+ *      section. It uses a self-contained <style> tag for the bounce keyframe — no external CSS
+ *      dependency. Safe to use in any consuming project.
  *
  * REQUIRED CSS VARIABLE (add to index.css :root):
  *   --eri-content-inset: clamp(1rem, 3vw, 2rem);
@@ -114,8 +119,17 @@ interface EriHeroSectionProps {
   overlayOpacity?: number;
 
   /**
+   * When true, renders a subtle animated chevron at the bottom-centre of the hero
+   * to indicate that more content is available below the fold.
+   * The animation is a gentle, repeating vertical bounce.
+   * Defaults to false.
+   */
+  showScrollIndicator?: boolean;
+
+  /**
    * Optional slot rendered below the CTA buttons.
-   * Use for stat counters, scroll indicators, or other supplementary content.
+   * Use for stat counters, attribution lines, or other supplementary content.
+   * Note: for a scroll indicator, prefer the showScrollIndicator prop instead.
    */
   children?: React.ReactNode;
 }
@@ -129,6 +143,7 @@ export function EriHeroSection({
   secondaryCTA,
   backgroundImage = ERI_HERO_IMAGE_HANDS,
   overlayOpacity = 0.82,
+  showScrollIndicator = false,
   children,
 }: EriHeroSectionProps) {
   return (
@@ -217,10 +232,68 @@ export function EriHeroSection({
             )}
           </div>
 
-          {/* Optional children slot — stat counters, scroll indicator, etc. */}
+          {/* Optional children slot — stat counters, attribution lines, etc. */}
           {children && <div className="mt-8">{children}</div>}
         </div>
       </div>
+
+      {/* ── Scroll indicator ── */}
+      {showScrollIndicator && (
+        <>
+          {/*
+            Self-contained keyframe — no external CSS dependency.
+            The animation gently bobs the chevron up and down to invite scrolling.
+          */}
+          <style>{`
+            @keyframes eri-scroll-bounce {
+              0%, 100% { transform: translateY(0);   opacity: 0.5; }
+              50%       { transform: translateY(6px); opacity: 1;   }
+            }
+            .eri-scroll-indicator {
+              animation: eri-scroll-bounce 2s ease-in-out infinite;
+            }
+          `}</style>
+          <div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
+            aria-hidden="true"
+          >
+            {/* Chevron SVG — two stacked for a subtle double-chevron effect */}
+            <svg
+              className="eri-scroll-indicator"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="rgba(255,255,255,0.55)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <svg
+              className="eri-scroll-indicator"
+              style={{ animationDelay: '0.15s', marginTop: '-10px' }}
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="rgba(255,255,255,0.25)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </>
+      )}
     </section>
   );
 }

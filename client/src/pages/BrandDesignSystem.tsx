@@ -3753,8 +3753,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["primaryCTA",      "{ label, href }",  "Yes",  "Accent Lime filled button — rounded-lg always"],
                     ["secondaryCTA",    "{ label, href }?", "No",   "White outline button — rounded-lg always"],
                     ["backgroundImage", "string?",          "No",   "Defaults to ERI_HERO_IMAGE_HANDS — only override for app-specific images"],
-                    ["overlayOpacity",  "number?",          "No",   "0–1, defaults to 0.82. Overlay colour is always #232323"],
-                    ["children",        "ReactNode?",       "No",   "Optional slot below CTAs (stat counters, scroll indicator)"],
+                    ["overlayOpacity",      "number?",   "No",   "0–1, defaults to 0.82. Overlay colour is always #232323"],
+                    ["showScrollIndicator", "boolean?",  "No",   "Renders an animated double-chevron at the bottom-centre of the hero. Defaults to false."],
+                    ["children",            "ReactNode?", "No",   "Optional slot below CTAs — for stat counters, attribution lines, etc."],
                   ].map(([prop, type, req, note]) => (
                     <tr key={prop} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
@@ -3776,6 +3777,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               </div>
               <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`import { EriHeroSection } from '@eri/components';
 
+{/* Standard usage with scroll indicator */}
 <EriHeroSection
   eyebrow="PROFESSIONAL SERVICES MATRIX ——— BETA"
   titleLine1="Professional"
@@ -3783,6 +3785,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
   body="Making Pillar 3 climate impact measurable and actionable."
   primaryCTA={{ label: "Try the Client Assessment", href: "/assessment" }}
   secondaryCTA={{ label: "PSM Journey Demo", href: "/demo" }}
+  showScrollIndicator
 />
 
 {/* Custom image (e.g. Crocodile Economics) */}
