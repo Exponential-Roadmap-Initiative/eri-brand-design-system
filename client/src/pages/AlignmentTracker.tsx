@@ -161,7 +161,7 @@ export default function AlignmentTracker() {
 
       {/* ── Dark header band — full viewport width ───────────────────────── */}
       <div style={{ backgroundColor: T.dark }}>
-        <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
           {/* Eyebrow */}
           <p className="font-archivo text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: T.lime }}>
@@ -169,7 +169,7 @@ export default function AlignmentTracker() {
           </p>
 
           {/* Title + refresh */}
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
               <h1 className="font-archivo text-3xl md:text-4xl font-extrabold text-white leading-tight mb-2">
                 Project Compliance
@@ -190,36 +190,35 @@ export default function AlignmentTracker() {
               ↻ Refresh
             </button>
           </div>
+        </div>
+      </div>
 
-          {/* Stat cards */}
-          <div className="flex flex-wrap gap-3 mt-6">
+      {/* ── Stats strip — below hero, same alignment as header logo ─────── */}
+      <div className="border-b" style={{ backgroundColor: "#fff", borderColor: T.border }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap gap-0 divide-x" style={{ borderColor: T.border }}>
             {[
-              { count: PROJECT_REGISTRY.length, label: "Projects tracked", color: "white" },
-              { count: greenCount,              label: "Compliant",         color: T.lime },
-              { count: amberCount,              label: "Needs update",      color: "#fbbf24" },
-              { count: redCount,                label: "Violations / unreachable", color: "#f87171" },
+              { count: PROJECT_REGISTRY.length, label: "Projects tracked", color: T.bodyText },
+              { count: greenCount,              label: "Compliant",         color: T.green },
+              { count: amberCount,              label: "Needs update",      color: "#d97706" },
+              { count: redCount,                label: "Violations / unreachable", color: "#dc2626" },
             ].map(({ count, label, color }) => (
-              <div
-                key={label}
-                className="flex items-center gap-3 px-5 py-3 rounded-lg"
-                style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
-              >
+              <div key={label} className="flex items-center gap-3 px-6 py-4 first:pl-0">
                 <span className="font-archivo text-2xl font-extrabold leading-none" style={{ color }}>{count}</span>
-                <span className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{label}</span>
+                <span className="text-xs" style={{ color: T.muted }}>{label}</span>
               </div>
             ))}
+            {lastRefreshed && (
+              <div className="flex items-center px-6 py-4 ml-auto">
+                <span className="text-[11px]" style={{ color: T.muted }}>Refreshed {lastRefreshed.toLocaleTimeString()}</span>
+              </div>
+            )}
           </div>
-
-          {lastRefreshed && (
-            <p className="text-[11px] mt-4" style={{ color: "rgba(255,255,255,0.25)" }}>
-              Last refreshed: {lastRefreshed.toLocaleTimeString()}
-            </p>
-          )}
         </div>
       </div>
 
       {/* ── Table ────────────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Desktop */}
         <div className="hidden lg:block overflow-x-auto rounded-xl shadow-sm" style={{ border: `1px solid ${T.border}` }}>
