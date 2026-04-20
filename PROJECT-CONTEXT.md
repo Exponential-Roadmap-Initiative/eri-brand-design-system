@@ -67,7 +67,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Standard components — canonical names and current version
 
-Package: `@eri/components` — current pin: **v2.10.6**
+Package: `@eri/components` — current pin: **v2.10.7**
 
 The six canonical component names are:
 
@@ -180,5 +180,21 @@ Before saving a checkpoint, run this mental checklist:
 3. Do all component names in the skill and BDS site match the six canonical names?
 4. Does the skill Colour Tokens table include `#383838` Dark Gray as the body text colour?
 5. Are all prop tables in the BDS site complete and matching the component source in `packages/eri-components/src/`?
+6. If the `@eri/components` version was bumped: has the git tag been created AND pushed to `user_github`? Run `git ls-remote --tags user_github | grep v2.` to verify. **Never bump version strings in files without also pushing the tag.**
 
 If any answer is "no" or "unsure", fix it before closing the task.
+
+---
+
+## Release process for @eri/components version bumps
+
+1. Update `packages/eri-components/package.json` version field
+2. Update version display string in `BrandDesignSystem.tsx` (introduction section, live previews, prop table examples)
+3. Update install command in `BrandDesignSystem.tsx` to reference the new tag
+4. Run `npx tsc --noEmit` — must be 0 errors
+5. Save checkpoint (this pushes the commit to `main`)
+6. **Create and push the git tag:** `git tag -a vX.Y.Z -m "release notes" && git push user_github vX.Y.Z`
+7. Verify with `git ls-remote --tags user_github | grep vX.Y.Z`
+8. Update `PROJECT-CONTEXT.md` canonical version pin
+
+Do NOT skip step 6. The install command in the BDS site is `github:Exponential-Roadmap-Initiative/eri-brand-design-system#vX.Y.Z&path:packages/eri-components` — if the tag does not exist, the install command fails silently for all downstream projects.
