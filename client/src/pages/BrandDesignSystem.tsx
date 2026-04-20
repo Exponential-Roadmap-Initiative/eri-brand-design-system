@@ -80,7 +80,7 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
       tones: { 100: { hex: "#fddcdd", rgb: "253, 220, 221" }, 300: { hex: "#fa9698", rgb: "250, 150, 152" }, 500: { hex: "#ff5133", rgb: "255, 81, 51" }, 700: { hex: "#a02f32", rgb: "160, 47, 50" }, 900: { hex: "#5c2223", rgb: "92, 34, 35" } } },
   ],
   brand: [
-    { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Primary buttons, CTAs, links, success states",
+    { id: "primary", name: "Primary Green", hex: "#3ba559", rgb: "59, 165, 89", context: "Links, active states, text accents, nav highlights — NOT for filled buttons or CTAs",
       tones: { 100: { hex: "#dbeee1", rgb: "219, 238, 225" }, 300: { hex: "#93cda3", rgb: "147, 205, 163" }, 500: { hex: "#3ba559", rgb: "59, 165, 89" }, 700: { hex: "#2c6d3e", rgb: "44, 109, 62" }, 900: { hex: "#20422a", rgb: "32, 66, 42" } } },
     { id: "dark", name: "Primary Dark", hex: "#232323", rgb: "35, 35, 35", context: "Headings, footer background, and high-contrast UI elements. Use #232323 for H1–H4 headings and the footer background. Also used as the primary dark section background on marketing sites (alternating with #F9FAFB light sections), and as the semi-transparent overlay (#232323 at 80–85% opacity) on top of hero background images to create a consistent dark tone. For body paragraph text on white backgrounds, use Dark Gray #383838 (slightly lighter).",
       tones: { 100: { hex: "#d7d7d7", rgb: "215, 215, 215" }, 300: { hex: "#868686", rgb: "134, 134, 134" }, 500: { hex: "#232323", rgb: "35, 35, 35" }, 700: { hex: "#1d1d1d", rgb: "29, 29, 29" }, 900: { hex: "#181818", rgb: "24, 24, 24" } } },
@@ -90,7 +90,7 @@ const colorSystem: { pillar: ColorEntry[]; brand: ColorEntry[] } = {
       tones: { 100: { hex: "#fdfefe", rgb: "253, 254, 254" }, 300: { hex: "#fbfcfc", rgb: "251, 252, 252" }, 500: { hex: "#f9fafb", rgb: "249, 250, 251" }, 700: { hex: "#a1a2a3", rgb: "161, 162, 163" }, 900: { hex: "#5d5d5d", rgb: "93, 93, 93" } } },
     { id: "yellow", name: "Highlight Yellow", hex: "#F5C842", rgb: "245, 200, 66", context: "Data highlights, chart callouts, goal indicators, emphasis accents — introduced in Playbook v5",
       tones: { 100: { hex: "#f2e4bd", rgb: "242, 228, 189" }, 300: { hex: "#bfaa6b", rgb: "191, 170, 107" }, 500: { hex: "#f5c842", rgb: "245, 200, 66" }, 700: { hex: "#725f27", rgb: "114, 95, 39" }, 900: { hex: "#332b15", rgb: "51, 43, 21" } } },
-    { id: "accent-lime", name: "Accent Lime", hex: "#93E07D", rgb: "147, 224, 125", context: "Typographic heading accent colour for use on dark or green backgrounds (e.g. hero sections, dark cards). Use lime #93E07D for accent words when the background is dark green or black. On white or light backgrounds, use Primary Green #3ba559 instead. NOT for UI components, buttons, or data visualisation.",
+    { id: "accent-lime", name: "Accent Lime", hex: "#93E07D", rgb: "147, 224, 125", context: "All filled CTA buttons (every surface) + heading accent words on dark backgrounds (hero sections, dark cards). On white/light backgrounds use Primary Green #3ba559 for text accents. NOT for data visualisation or general UI tinting.",
       tones: { 100: { hex: "#edf9e9", rgb: "237, 249, 233" }, 300: { hex: "#c4edba", rgb: "196, 237, 186" }, 500: { hex: "#93e07d", rgb: "147, 224, 125" }, 700: { hex: "#4a9e38", rgb: "74, 158, 56" }, 900: { hex: "#2a5a21", rgb: "42, 90, 33" } } },
 
     { id: "dark-gray", name: "Dark Gray", hex: "#383838", rgb: "56, 56, 56", context: "Standard body paragraph text colour for all ERI surfaces. Use #383838 for all body copy on white or light backgrounds. Pair with Archivo headings (Primary Dark #232323) and Open Sans body text.",
@@ -3540,9 +3540,11 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["source",         "string?",         "Required if showCTA is true (e.g. \"taxonomy\", \"hal\", \"psm\")"],
                     ["sourceLabel",    "string?",         "Human-readable app name for the contact service — required if showCTA is true"],
                     ["returnUrl",      "string?",         "Return URL after form submission — required if showCTA is true"],
-                    ["contactSubject", "string?",         "Optional subject hint for the contact email (e.g. \"PSM Partnership Enquiry\")"],
-                    ["onMenuClick",    "(() => void)?",   "Callback for the hamburger button. Defaults to no-op — hamburger is always visible. Pass () => setMenuOpen(true) to wire your drawer."],
-                    ["logoHref",       "string?",         "Defaults to \"/\""],
+                    ["contactSubject",    "string?",         "Optional subject hint for the contact email (e.g. \"PSM Partnership Enquiry\")"],
+                    ["onMenuClick",       "(() => void)?",   "Callback for the hamburger button. Defaults to no-op — hamburger is always visible. Pass () => setMenuOpen(true) to wire your drawer."],
+                    ["logoHref",          "string?",         "Logo link destination. Defaults to \"/\"."],
+                    ["footerTagline",     "string?",         "(EriPageLayout only) One-line tagline shown in the footer below the logo (max 80 chars)"],
+                    ["footerAttribution", "string?",         "(EriPageLayout only) Right-aligned attribution string in the footer bottom bar"],
                   ].map(([prop, type, note]) => (
                     <tr key={prop} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
@@ -4005,7 +4007,38 @@ function App() {
 }`}</pre>
             </CardContent>
           </Card>
-
+          {/* Props table */}
+          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-3">
+            <CardContent className="p-4">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <table className="w-full text-xs">
+                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <tbody className="font-mono">
+                  {[
+                    ["appName",           "string",            "App display name — used in header and footer copyright"],
+                    ["version",           "string",            'e.g. "V.2026.04.17" — format V.YYYY.MM.DD'],
+                    ["status",            "EriStatusValue?",   "Omit to hide the status badge"],
+                    ["showCTA",           "boolean?",          "Defaults to true — always pass true. Only false for purely internal tools with no contact entry point."],
+                    ["source",            "string?",           'Required if showCTA is true (e.g. "psm", "hal")'],
+                    ["sourceLabel",       "string?",           "Human-readable app name for the contact service — required if showCTA is true"],
+                    ["returnUrl",         "string?",           "Return URL after form submission — required if showCTA is true"],
+                    ["contactSubject",    "string?",           "Optional subject hint for the contact email"],
+                    ["footerTagline",     "string?",           "One-line tagline shown in the footer below the logo (max 80 chars)"],
+                    ["footerAttribution", "string?",           "Right-aligned attribution string in the footer bottom bar"],
+                    ["onMenuClick",       "(() => void)?",     "Callback for the hamburger button. Defaults to no-op — hamburger is always visible. Pass () => setMenuOpen(true) to wire your drawer."],
+                    ["logoHref",          "string?",           'Logo link destination. Defaults to "/".'],
+                    ["children",          "React.ReactNode",   "Page content — include your drawer as a sibling to Router"],
+                  ].map(([prop, type, note]) => (
+                    <tr key={prop} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
+                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
           {/* Integration Notes */}
           <div className="rounded-lg p-4 mb-4 border border-amber-200 bg-amber-50">
             <p className="text-xs font-semibold text-amber-800 mb-2">INTEGRATION NOTES — read before implementing</p>

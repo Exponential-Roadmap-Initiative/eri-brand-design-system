@@ -26,3 +26,7 @@
 - [x] Audit all Standard Components prop descriptions against source code
 - [x] Add live showScrollIndicator toggle to EriHeroSection preview
 - [x] Fix PSM label: "Planetary Stewardship Monitor" -> "Professional Services Matrix" in tracker and BDS
+- [x] Fix BDS colour table: clarify #3ba559 primary-green usage (NOT for filled buttons)
+- [x] Fix BDS colour table: clarify #93E07D Accent Lime usage (typographic accent + CTA buttons on dark bg)
+- [x] Update eri-bds-reference skill colour table to match corrected BDS rules
+- [x] Full consistency audit: skill + BDS site vs component source — fix all 13 inconsistencies in one pass (S1–S11 in skill, B1–B2 in BDS site)
