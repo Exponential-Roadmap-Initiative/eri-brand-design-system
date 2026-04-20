@@ -3718,7 +3718,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["secondaryCTA",    "{ label, href }?", "No",   "White outline button — rounded-lg always"],
                     ["backgroundImage", "string?",          "No",   "Defaults to ERI_HERO_IMAGE_HANDS — only override for app-specific images"],
                     ["overlayOpacity",      "number?",   "No",   "0–1, defaults to 0.82. Overlay colour is always #232323"],
-                    ["showScrollIndicator", "boolean?",  "No",   "Renders an animated double-chevron at the bottom-centre of the hero. Defaults to false."],
+                    ["showScrollIndicator", "boolean?",  "No",   "Renders a subtle animated scroll indicator at the bottom-centre of the hero: a short vertical line above a single open chevron. The whole element drifts gently up and down via an inlined CSS keyframe (no external dependency). Defaults to false."],
                     ["children",            "ReactNode?", "No",   "Optional slot below CTAs — for stat counters, attribution lines, etc."],
                   ].map(([prop, type, req, note]) => (
                     <tr key={prop} className="border-b border-gray-100">
