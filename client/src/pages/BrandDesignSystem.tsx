@@ -3321,6 +3321,29 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             </ul>
           </div>
 
+          {/* ── EriStatusBadge Props ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-5">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <table className="w-full text-xs">
+                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <tbody className="font-mono">
+                  {[
+                    ["status",    "EriStatusValue",           "Required. One of: ALPHA | BETA | PREVIEW | LIVE"],
+                    ["theme",     "'dark' | 'light'?",        "Defaults to 'dark'. Use 'dark' on dark/transparent headers, 'light' on white/light headers."],
+                    ["className", "string?",                  "Optional extra Tailwind classes — only for spacing overrides. Never override colour or shape."],
+                  ].map(([prop, type, note]) => (
+                    <tr key={prop} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
+                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
           {/* ── Status Badge Anatomy ── */}
           <div className="mb-10">
             <h4 className="font-bold text-[#232323] mb-3 text-base">Anatomy &amp; Canonical Class String</h4>
@@ -3427,6 +3450,32 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             </CardContent>
           </Card>
 
+          {/* ── EriContactUsButton Props ── */}
+          <Card className="shadow-sm mb-3">
+            <CardContent className="p-5">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <table className="w-full text-xs">
+                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <tbody className="font-mono">
+                  {[
+                    ["source",      "string",   "Required. Short identifier for the originating app (e.g. \"taxonomy\", \"hal\", \"psm\"). Passed as a query param to the contact service."],
+                    ["sourceLabel", "string",   "Required. Human-readable app name shown in the contact form (e.g. \"Exponential Taxonomy\")."],
+                    ["returnUrl",   "string",   "Required. URL the user is returned to after submitting the contact form."],
+                    ["subject",     "string?",  "Optional pre-filled subject line for the contact email (e.g. \"PSM Partnership Enquiry\")."],
+                    ["size",        "'md'|'sm'?","Defaults to 'md'. Use 'sm' for compact headers or inline contexts."],
+                    ["className",   "string?",  "Optional extra Tailwind classes — only for spacing overrides. Never override colour or shape."],
+                  ].map(([prop, type, note]) => (
+                    <tr key={prop} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
+                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
           {/* Non-conformant callout */}
           <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
             <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
@@ -3487,11 +3536,12 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["appName",        "string",          "App display name shown after the pipe divider"],
                     ["status",         "EriStatusValue?", "Omit to hide the badge"],
                     ["version",        "string",          "e.g. \"V.2026.04.15\""],
-                    ["showCTA",        "boolean",         "Always pass true — CTA visible on all surfaces. Only false for purely internal tools."],
-                    ["source",         "string?",         "Required if showCTA may be true"],
-                    ["sourceLabel",    "string?",         "Human-readable app name for contact service"],
-                    ["returnUrl",      "string?",         "Return URL for contact service"],
-                    ["onMenuClick",    "() => void",      "Opens the navigation drawer"],
+                    ["showCTA",        "boolean?",        "Defaults to true — CTA visible on all surfaces. Only false for purely internal tools with no contact entry point."],
+                    ["source",         "string?",         "Required if showCTA is true (e.g. \"taxonomy\", \"hal\", \"psm\")"],
+                    ["sourceLabel",    "string?",         "Human-readable app name for the contact service — required if showCTA is true"],
+                    ["returnUrl",      "string?",         "Return URL after form submission — required if showCTA is true"],
+                    ["contactSubject", "string?",         "Optional subject hint for the contact email (e.g. \"PSM Partnership Enquiry\")"],
+                    ["onMenuClick",    "(() => void)?",   "Callback for the hamburger button. Defaults to no-op — hamburger is always visible. Pass () => setMenuOpen(true) to wire your drawer."],
                     ["logoHref",       "string?",         "Defaults to \"/\""],
                   ].map(([prop, type, note]) => (
                     <tr key={prop} className="border-b border-gray-100">
@@ -3610,6 +3660,29 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             </CardContent>
           </Card>
 
+          {/* ── EriAppFooter Props ── */}
+          <Card className="shadow-sm mb-3">
+            <CardContent className="p-5">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <table className="w-full text-xs">
+                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <tbody className="font-mono">
+                  {[
+                    ["appName",     "string",  "Required. App display name shown in the footer left zone alongside the ERI logo."],
+                    ["tagline",     "string?", "Optional one-line tagline shown below the app name. Keep to one sentence."],
+                    ["attribution", "string?", "Optional attribution or copyright override. Defaults to the standard ERI copyright string."],
+                  ].map(([prop, type, note]) => (
+                    <tr key={prop} className="border-b border-gray-100">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
+                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
           {/* Non-conformant callout */}
           <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
             <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
@@ -3687,20 +3760,38 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </p>
 
           {/* Live preview — real EriHeroSection component */}
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW (condensed — full height in production)</div>
-            <div style={{ maxHeight: '380px', overflow: 'hidden' }}>
-              <EriHeroSection
-                backgroundImage={ERI_HERO_IMAGE_HANDS}
-                eyebrow="PROFESSIONAL SERVICES MATRIX ——— BETA"
-                titleLine1="Professional"
-                titleLine2="Services Matrix"
-                body="Making Pillar 3 climate impact measurable and actionable."
-                primaryCTA={{ label: "Try the Client Assessment", href: "#" }}
-                secondaryCTA={{ label: "PSM Journey Demo", href: "#" }}
-              />
-            </div>
-          </div>
+          {(() => {
+            const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+            return (
+              <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+                <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200 flex items-center justify-between">
+                  <span>LIVE PREVIEW (condensed — full height in production)</span>
+                  <button
+                    onClick={() => setShowScrollIndicator(v => !v)}
+                    className={`text-[10px] font-mono px-2 py-0.5 rounded border transition-colors ${
+                      showScrollIndicator
+                        ? 'bg-[#3ba559] text-white border-[#3ba559]'
+                        : 'bg-white text-gray-500 border-gray-300 hover:border-[#3ba559] hover:text-[#3ba559]'
+                    }`}
+                  >
+                    showScrollIndicator={showScrollIndicator ? 'true' : 'false'}
+                  </button>
+                </div>
+                <div style={{ maxHeight: '380px', overflow: 'hidden' }}>
+                  <EriHeroSection
+                    backgroundImage={ERI_HERO_IMAGE_HANDS}
+                    eyebrow="PROFESSIONAL SERVICES MATRIX ——— BETA"
+                    titleLine1="Professional"
+                    titleLine2="Services Matrix"
+                    body="Making Pillar 3 climate impact measurable and actionable."
+                    primaryCTA={{ label: "Try the Client Assessment", href: "#" }}
+                    secondaryCTA={{ label: "PSM Journey Demo", href: "#" }}
+                    showScrollIndicator={showScrollIndicator}
+                  />
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Props table */}
           <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-3">

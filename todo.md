@@ -23,3 +23,6 @@
 - [ ] Add bds-meta.json to Trust site
 - [ ] Update HAL's bds-meta.json to canonical object format
 - [x] Add heroImages.trust to assets.ts and Surface Modes gallery
+- [x] Audit all Standard Components prop descriptions against source code
+- [x] Add live showScrollIndicator toggle to EriHeroSection preview
+- [x] Fix PSM label: "Planetary Stewardship Monitor" -> "Professional Services Matrix" in tracker and BDS

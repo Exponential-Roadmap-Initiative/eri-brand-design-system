@@ -34,9 +34,9 @@ export const PROJECT_REGISTRY: ProjectRegistryEntry[] = [
   },
   {
     id: "PSM",
-    displayName: "Planetary Stewardship Monitor",
+    displayName: "Professional Services Matrix",
     url: "https://psm.exponentialroadmap.org",
-    description: "Corporate climate action and SBTi alignment monitoring platform.",
+    description: "ERI professional services and partnership enquiry platform.",
     status: "live",
   },
   {
