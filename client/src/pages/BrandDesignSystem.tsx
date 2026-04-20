@@ -4784,11 +4784,14 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     </thead>
                     <tbody className="font-mono">
                       {[
-                        ["primary-green",  "#3ba559", "Links, active states, text accents — NOT for filled buttons"],
-                        ["primary-dark",    "#232323", "Headings, footer bg, dark section backgrounds, hero overlay"],
+                        ["primary-green",  "#3ba559", "Links, active states, text accents — NOT for filled buttons or CTAs"],
+                        ["primary-dark",    "#232323", "Headings (H1–H4), footer bg, dark section backgrounds, hero overlay"],
+                        ["dark-gray",       "#383838", "Body paragraph text on white/light backgrounds — NOT #232323"],
+                        ["accent-lime",     "#93E07D", "All filled CTA buttons (every surface) + heading accent words on dark/hero backgrounds"],
                         ["neutral-gray",    "#6b7280", "Secondary text, borders"],
                         ["off-white",       "#F9FAFB", "Page bg, card bg, light section bg"],
                         ["green-300",       "#93cda3", "Accent links in footer"],
+                        ["highlight-yellow","#F5C842", "Data highlights, chart callouts — Playbook v5"],
                       ].map(([token, hex, usage]) => (
                         <tr key={token} className="border-b border-gray-100">
                           <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
@@ -4855,12 +4858,12 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Font:</strong> Archivo — load via Google Fonts CDN. Map to <code className="bg-gray-100 px-1 rounded text-xs">font-sans</code> and <code className="bg-gray-100 px-1 rounded text-xs">font-archivo</code>.</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Weights:</strong> 400 (body), 700 (semibold), 800 (headings/extrabold).</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Headings:</strong> <code className="bg-gray-100 px-1 rounded text-xs">font-extrabold</code> (800) for all h1–h3.</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Body:</strong> 16px/400, line-height 1.6, colour <code className="bg-gray-100 px-1 rounded text-xs">#232323</code>.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Body:</strong> 16px/400, line-height 1.6, colour <code className="bg-gray-100 px-1 rounded text-xs">#383838</code> on white/light backgrounds.</span></div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use Inter as the primary font.</span></div>
                   <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use font-weight 600 for headings — use 800.</span></div>
-                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use <code className="bg-gray-100 px-1 rounded text-xs">text-gray-900</code> for body text — use <code className="bg-gray-100 px-1 rounded text-xs">#232323</code>.</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use <code className="bg-gray-100 px-1 rounded text-xs">text-gray-900</code> for body text — use <code className="bg-gray-100 px-1 rounded text-xs">#383838</code> on white/light backgrounds. Reserve <code className="bg-gray-100 px-1 rounded text-xs">#232323</code> for headings and the footer background.</span></div>
                   <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not load Archivo from local files — use Google Fonts CDN only.</span></div>
                 </div>
               </div>
@@ -4871,7 +4874,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Header Anatomy — Web App Pattern</h3>
-              <p className="text-xs text-gray-500 mb-4">All ERI web applications use this exact header structure. Implement it using <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code>.</p>
+              <p className="text-xs text-gray-500 mb-4">All ERI web applications use this exact header structure. Implement it using <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build the header directly.</p>
               <div className="bg-white border border-gray-200 rounded-md p-3 mb-4 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
                   <span className="font-bold text-[#232323] text-sm">EXPONENTIAL<br/>ROADMAP <span className="font-normal text-[10px]">INITIATIVE</span></span>
@@ -4944,7 +4947,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <h3 className="font-bold text-[#232323] mb-1">Component & Layout Rules</h3>
               <p className="text-xs text-gray-500 mb-4">Follow these rules when building any ERI UI component or page.</p>
               <div className="space-y-2 text-sm">
-                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">PublicLayout</code> as the wrapper for all public-facing pages — never build a custom header or footer.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> as the wrapper for all public-facing pages in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build a custom header or footer, and never import <code className="bg-gray-100 px-1 rounded text-xs">EriAppHeader</code> or <code className="bg-gray-100 px-1 rounded text-xs">EriAppFooter</code> directly in page files.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. One Contact Us CTA in the header right zone on <strong>all surfaces</strong> (public and authenticated). Always pass <code className="bg-gray-100 px-1 rounded text-xs">showCTA={"{"}true{"}"}</code>.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, white background, <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
