@@ -67,7 +67,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Standard components — canonical names and current version
 
-Package: `@eri/components` — current pin: **v2.10.7**
+Package: `@eri/components` — current pin: **v2.10.8**
 
 The six canonical component names are:
 
@@ -142,6 +142,7 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
+- [ ] Push v2.10.8 git tag (see release process below)
 
 ---
 

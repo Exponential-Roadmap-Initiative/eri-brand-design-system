@@ -1,6 +1,6 @@
 {
   "name": "@eri/components",
-  "version": "2.10.7",
+  "version": "2.10.8",
   "description": "ERI Standard Components — canonical shared UI components for all Exponential Roadmap Initiative web applications.",
   "main": "./src/index.ts",
   "types": "./src/index.ts",

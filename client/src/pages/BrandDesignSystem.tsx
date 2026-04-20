@@ -422,7 +422,7 @@ export default function BrandDesignSystem() {
           </h2>
           <p className="text-gray-500 text-sm mb-8">
             BDS site version: <span className="font-mono">V.2026.04.20</span> &nbsp;·&nbsp;
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.10.7</span>
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.10.8</span>
           </p>
 
           {/* What is the BDS */}
@@ -3178,7 +3178,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.10.7&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.10.8&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
@@ -3645,6 +3645,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               appName="Professional Services Matrix"
               tagline="Making Pillar 3 climate impact measurable and actionable."
             />
+            {/* footerLinks defaults to Trust Centre + Human-AI Lab */}
           </div>
 
           {/* Source code */}
@@ -3658,6 +3659,10 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 <EriAppFooter
   appName="Professional Services Matrix"
   tagline="Making Pillar 3 climate impact measurable and actionable."
+  // footerLinks defaults to:
+  // [{ label: 'Trust Centre', href: 'https://trust.exponentialroadmap.org' },
+  //  { label: 'Human-AI Lab', href: 'https://human-ai-lab.exponentialroadmap.org' }]
+  // Pass [] to show no additional links, or override with your own list.
 />`}</pre>
             </CardContent>
           </Card>
@@ -3670,9 +3675,10 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                 <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
-                    ["appName",     "string",  "Required. App display name shown in the footer left zone alongside the ERI logo."],
-                    ["tagline",     "string?", "Optional one-line tagline shown below the app name. Keep to one sentence."],
-                    ["attribution", "string?", "Optional attribution or copyright override. Defaults to the standard ERI copyright string."],
+                    ["appName",     "string",         "Required. App display name shown in the footer left zone alongside the ERI logo."],
+                    ["tagline",     "string?",        "Optional one-line tagline shown below the app name. Keep to one sentence."],
+                    ["attribution", "string?",        "Optional right-aligned attribution string in the footer bottom bar."],
+                    ["footerLinks", "FooterLink[]?",  "Links shown in the right zone between the ERI homepage and Contact Us. Defaults to Trust Centre + Human-AI Lab. Pass [] to show no additional links."],
                   ].map(([prop, type, note]) => (
                     <tr key={prop} className="border-b border-gray-100">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>

@@ -1,5 +1,5 @@
 /**
- * EriAppFooter — ERI Brand Design System v2.1.0
+ * EriAppFooter — ERI Brand Design System v2.10.8
  *
  * Canonical two-zone footer for all ERI applications.
  * Renders once in EriPageLayout — never duplicated across page files.
@@ -10,18 +10,34 @@
  *     tagline="Making Pillar 3 climate impact measurable and actionable."
  *   />
  *
+ *   // Override or extend the right-zone links:
+ *   <EriAppFooter
+ *     appName="Professional Services Matrix"
+ *     footerLinks={[
+ *       { label: 'Trust Centre', href: 'https://trust.exponentialroadmap.org' },
+ *       { label: 'Brand Design System', href: 'https://bds.exponentialroadmap.org' },
+ *     ]}
+ *   />
+ *
  * RULES (do not override):
  *   - Background: #232323 always — never dark green, white, or any other colour
  *   - Border: border-t border-gray-700 at the top
  *   - Left zone: ERI logo (h-7, links to exponentialroadmap.org) + optional tagline below
- *   - Right zone: confirmed links only — ERI homepage + Contact Us
+ *   - Right zone: ERI homepage + footerLinks (default: Trust Centre) + Contact Us
  *   - Horizontal padding: var(--eri-content-inset) — aligns with header logo
  *   - Only show links with confirmed URLs — no placeholder link columns
  *
- * BDS reference: https://eri-brand-design-system.manus.space/#standard-components
+ * BDS reference: https://bds.exponentialroadmap.org/#standard-components
  */
 
 import React from 'react';
+
+export interface FooterLink {
+  /** Display label for the link */
+  label: string;
+  /** Absolute URL */
+  href: string;
+}
 
 interface EriAppFooterProps {
   /** App name used in the copyright string and Contact Us source param */
@@ -30,9 +46,20 @@ interface EriAppFooterProps {
   tagline?: string;
   /** Optional right-aligned attribution string (e.g. data sources, playbook version) */
   attribution?: string;
+  /**
+   * Additional links shown in the right-zone navigation, between the ERI homepage
+   * and the Contact Us link. Defaults to [{ label: 'Trust Centre', href: 'https://trust.exponentialroadmap.org' }].
+   * Pass an empty array to show no additional links.
+   */
+  footerLinks?: FooterLink[];
 }
 
-export function EriAppFooter({ appName, tagline, attribution }: EriAppFooterProps) {
+const DEFAULT_FOOTER_LINKS: FooterLink[] = [
+  { label: 'Trust Centre', href: 'https://trust.exponentialroadmap.org' },
+  { label: 'Human-AI Lab', href: 'https://human-ai-lab.exponentialroadmap.org' },
+];
+
+export function EriAppFooter({ appName, tagline, attribution, footerLinks = DEFAULT_FOOTER_LINKS }: EriAppFooterProps) {
   const year = new Date().getFullYear();
 
   // Build the Contact Us URL with source tracking params
@@ -65,7 +92,7 @@ export function EriAppFooter({ appName, tagline, attribution }: EriAppFooterProp
           )}
         </div>
 
-        {/* Right zone: confirmed links only */}
+        {/* Right zone: ERI homepage + configurable links + Contact Us */}
         <nav aria-label="Footer navigation" className="flex flex-col gap-2 sm:items-end">
           <a
             href="https://exponentialroadmap.org/"
@@ -75,6 +102,17 @@ export function EriAppFooter({ appName, tagline, attribution }: EriAppFooterProp
           >
             Exponential Roadmap Initiative
           </a>
+          {footerLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-gray-400 hover:text-white transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
           <a
             href={contactUrl}
             target="_blank"
