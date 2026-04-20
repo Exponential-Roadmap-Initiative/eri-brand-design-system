@@ -3809,7 +3809,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["body",            "string",           "Yes",  "Body paragraph text"],
                     ["primaryCTA",      "{ label, href }",  "Yes",  "Accent Lime filled button — rounded-lg always"],
                     ["secondaryCTA",    "{ label, href }?", "No",   "White outline button — rounded-lg always"],
-                    ["backgroundImage", "string?",          "No",   "Defaults to ERI_HERO_IMAGE_HANDS — only override for app-specific images"],
+                    ["backgroundImage", "string?",          "No",   "Trust Centre MUST pass ERI_HERO_IMAGE_TRUST. All other ERI apps: omit (defaults to ERI_HERO_IMAGE_HANDS). Never use hands image on Trust Centre."],
                     ["overlayOpacity",      "number?",   "No",   "0–1, defaults to 0.82. Overlay colour is always #232323"],
                     ["showScrollIndicator", "boolean?",  "No",   "Renders a subtle animated scroll indicator at the bottom-centre of the hero: a short vertical line above a single open chevron. The whole element drifts gently up and down via an inlined CSS keyframe (no external dependency). Defaults to false."],
                     ["children",            "ReactNode?", "No",   "Optional slot below CTAs — for stat counters, attribution lines, etc."],
@@ -3887,7 +3887,17 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
               <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">5.</span><span><strong>Default image is baked in.</strong> The canonical hands image (<code className="font-mono bg-blue-100 px-1 rounded">ERI_HERO_IMAGE_HANDS</code>) is the default. Only pass <code className="font-mono bg-blue-100 px-1 rounded">backgroundImage</code> for app-specific hero images. Never regenerate the hands image.</span></div>
             </div>
           </div>
-
+          {/* Mandatory per-project assignment */}
+          <div className="rounded-lg p-4 mb-6 border border-amber-300 bg-amber-50">
+            <p className="text-xs font-semibold text-amber-800 mb-2">MANDATORY PER-PROJECT HERO IMAGE ASSIGNMENT</p>
+            <table className="text-xs w-full">
+              <thead><tr className="text-amber-700"><th className="text-left pr-4 pb-1">Project</th><th className="text-left pr-4 pb-1">backgroundImage prop</th></tr></thead>
+              <tbody className="text-amber-900">
+                <tr><td className="pr-4 py-0.5 font-semibold">Trust Centre (trust.exponentialroadmap.org)</td><td className="py-0.5 font-mono">backgroundImage={'{'}ERI_HERO_IMAGE_TRUST{'}'} — MANDATORY</td></tr>
+                <tr><td className="pr-4 py-0.5">All other ERI apps (HAL, PSM, Taxonomy, etc.)</td><td className="py-0.5">Omit prop — defaults to ERI_HERO_IMAGE_HANDS automatically</td></tr>
+              </tbody>
+            </table>
+          </div>
           {/* Non-conformant callout */}
           <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
             <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
@@ -4551,7 +4561,7 @@ const tabs: TabConfig[] = [
                 badgeColor: "bg-[#2C3F43] text-white",
                 url: heroImages.trust,
                 token: "heroImages.trust",
-                use: "Trust Centre (trust.exponentialroadmap.org), security, data integrity, and compliance contexts. Polygon dot-network shield on dark teal background with circuit traces. In code, import ERI_HERO_IMAGE_TRUST from @eri/components rather than using this token directly.",
+                use: "MANDATORY for Trust Centre (trust.exponentialroadmap.org). MUST NOT be used on any other ERI app. Import ERI_HERO_IMAGE_TRUST from @eri/components and pass as backgroundImage={ERI_HERO_IMAGE_TRUST}. Never use the hands image on the Trust Centre.",
               },
             ].map((img) => (
               <div key={img.id} data-hero-id={img.id} className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
