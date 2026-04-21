@@ -422,7 +422,7 @@ export default function BrandDesignSystem() {
           </h2>
           <p className="text-gray-500 text-sm mb-8">
             BDS site version: <span className="font-mono">V.2026.04.21</span> &nbsp;·&nbsp;
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.11.0</span>
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.11.1</span>
           </p>
 
           {/* What is the BDS */}
@@ -3178,7 +3178,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.11.0&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.11.1&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
@@ -4871,10 +4871,10 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <p className="text-xs text-gray-500 mb-4">Mandatory. Do not substitute Inter, Roboto, or any other font.</p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Font:</strong> Archivo — load via Google Fonts CDN. Map to <code className="bg-gray-100 px-1 rounded text-xs">font-sans</code> and <code className="bg-gray-100 px-1 rounded text-xs">font-archivo</code>.</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Weights:</strong> 400 (body), 700 (semibold), 800 (headings/extrabold).</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Headings:</strong> <code className="bg-gray-100 px-1 rounded text-xs">font-extrabold</code> (800) for all h1–h3.</span></div>
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Body:</strong> 16px/400, line-height 1.6, colour <code className="bg-gray-100 px-1 rounded text-xs">#383838</code> on white/light backgrounds.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Two-font system:</strong> Archivo (headings) + Open Sans (body text) — both loaded via Google Fonts CDN. Map Archivo to <code className="bg-gray-100 px-1 rounded text-xs">font-sans</code> and <code className="bg-gray-100 px-1 rounded text-xs">font-archivo</code>.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Weights:</strong> Archivo 800 (headings/extrabold), Archivo 700 (semibold), Open Sans 400 (body).</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Headings:</strong> Archivo <code className="bg-gray-100 px-1 rounded text-xs">font-extrabold</code> (800) for all h1–h3.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Body:</strong> Open Sans 400, 16px, line-height 1.6, colour <code className="bg-gray-100 px-1 rounded text-xs">#383838</code> on white/light backgrounds.</span></div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use Inter as the primary font.</span></div>
@@ -4972,6 +4972,37 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use purple, teal, or pink as accent colours — they are not part of the ERI brand.</span></div>
                 <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use <code className="bg-gray-100 px-1 rounded text-xs">rounded-full</code> on cards or large containers — only on badges, pills, and avatars.</span></div>
                 <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use gradient backgrounds on hero sections — use solid <code className="bg-gray-100 px-1 rounded text-xs">#232323</code> or white.</span></div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── REQUIRED PROJECT FILE: bds-meta.json ── */}
+          <Card className="shadow-sm mb-6 border-2 border-amber-400 bg-amber-50">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-amber-600 text-lg">⚠️</span>
+                <h3 className="font-bold text-[#232323] text-base">Required Project File: <code className="font-mono text-sm bg-amber-100 px-1 rounded">bds-meta.json</code></h3>
+              </div>
+              <p className="text-sm text-gray-700 mb-3">
+                Every ERI application <strong>must</strong> publish a <code className="bg-gray-100 px-1 rounded text-xs font-mono">client/public/bds-meta.json</code> file at its root.
+                This file is <strong>not</strong> part of the <code className="bg-gray-100 px-1 rounded text-xs font-mono">@eri/components</code> package — you create it yourself in the consuming project.
+                The BDS Project Alignment Tracker fetches it from <code className="bg-gray-100 px-1 rounded text-xs font-mono">https://&#123;domain&#125;/bds-meta.json</code> to compute live compliance status.
+                Failure to publish this file causes the project to appear as &ldquo;Unreachable&rdquo; in the tracker.
+              </p>
+              <p className="text-sm text-gray-700 mb-3">
+                <strong>Where to find the canonical template and schema:</strong> Go to the{" "}
+                <a href="/tracker" className="text-[#3ba559] underline underline-offset-2 font-medium">Project Alignment Tracker</a>{" "}
+                page on this site. The tracker page contains the full schema, a copy-paste template, and field-by-field documentation.
+              </p>
+              <div className="bg-white border border-amber-200 rounded p-3 text-xs font-mono text-gray-600">
+                <div className="text-gray-400 mb-1">{"// Minimum required structure — see /tracker for full schema"}</div>
+                <div>{'{'}</div>
+                <div className="pl-4">{`"appName": "Your App Name",`}</div>
+                <div className="pl-4">{`"version": "V.YYYY.MM.DD",`}</div>
+                <div className="pl-4">{`"eriComponentsPin": "v2.11.1",`}</div>
+                <div className="pl-4">{`"overallStatus": "green",`}</div>
+                <div className="pl-4">{`"components": { ... }`}</div>
+                <div>{'}'}</div>
               </div>
             </CardContent>
           </Card>

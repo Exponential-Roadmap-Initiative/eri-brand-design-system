@@ -143,7 +143,7 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [x] Add `footerLinks` prop to `EriAppFooter` (v2.10.8) and `EriPageLayout` pass-through (v2.10.9)
 - [x] Add `bds-meta.json` ownership warning to skill pre-action checklist and BDS site tracker
 - [x] Push v2.10.9 git tag — verified on GitHub 2026-04-21
-- [ ] Push v2.11.0 git tag — first minor release: footerLinks prop (EriAppFooter + EriPageLayout), ERI_HERO_IMAGE_TRUST export, instruction quality fixes
+- [x] Push v2.11.0 git tag — verified on GitHub 2026-04-21
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)

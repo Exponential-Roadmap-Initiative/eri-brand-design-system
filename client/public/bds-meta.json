@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0",
+  "project": "bds",
+  "displayName": "ERI Brand Design System",
+  "url": "https://bds.exponentialroadmap.org",
+  "eriComponentsPin": "v2.11.1",
+  "cssImportMethod": "source-workaround",
+  "components": {
+    "EriAppHeader":       { "used": false, "compliant": false, "note": "BDS site uses its own PublicLayout header — exempt from standard header requirement" },
+    "EriPageLayout":      { "used": false, "compliant": false, "note": "BDS site uses its own PublicLayout — exempt" },
+    "EriHeroSection":     { "used": false, "compliant": false, "note": "BDS site has no hero section — exempt" },
+    "EriAppFooter":       { "used": false, "compliant": false, "note": "BDS site uses its own footer — exempt" },
+    "EriStatusBadge":     { "used": true,  "compliant": true  },
+    "EriContactUsButton": { "used": true,  "compliant": true  }
+  },
+  "knownViolations": [
+    "BDS site is the reference implementation and is exempt from standard layout requirements (EriPageLayout, EriAppHeader, EriAppFooter, EriHeroSection). It uses its own PublicLayout and custom header/footer to demonstrate all patterns."
+  ],
+  "overallStatus": "amber",
+  "lastUpdated": "2026-04-21",
+  "updatedBy": "Manus"
+}

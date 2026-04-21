@@ -30,3 +30,8 @@
 - [x] Fix BDS colour table: clarify #93E07D Accent Lime usage (typographic accent + CTA buttons on dark bg)
 - [x] Update eri-bds-reference skill colour table to match corrected BDS rules
 - [x] Full consistency audit: skill + BDS site vs component source — fix all 13 inconsistencies in one pass (S1–S11 in skill, B1–B2 in BDS site)
+- [x] Add bds-meta.json Required Project File callout card to Machine Instructions section
+- [x] Fix Machine Instructions Typography Rules: add Open Sans as body font (two-font system was only showing Archivo)
+- [x] Update eri-bds-reference skill pre-action checklist item 5: add /tracker URL link for canonical template
+- [x] Create BDS site's own client/public/bds-meta.json (was missing)
+- [x] Bump @eri/components to v2.11.1 and update all version strings
