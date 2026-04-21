@@ -240,7 +240,15 @@ export default function AlignmentTracker() {
         try {
           const res = await fetch(getBdsMetaUrl(project.url), { cache: "no-store" });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const meta: BdsMeta = await res.json();
+          const json = await res.json();
+          // Validate that the JSON is a v1.0 bds-meta.json — reject legacy or wrong-schema files
+          if (!json || typeof json !== "object" || json.error) {
+            throw new Error(json?.error ?? "Invalid JSON response");
+          }
+          if (!json.schemaVersion) {
+            throw new Error("Not a bds-meta.json file (missing schemaVersion)");
+          }
+          const meta: BdsMeta = json as BdsMeta;
           setResults((prev) => ({ ...prev, [project.id]: { projectId: project.id, url: project.url, status: "ok", meta } }));
         } catch (err) {
           setResults((prev) => ({
@@ -404,7 +412,7 @@ export default function AlignmentTracker() {
                         {isLoading ? <span className="text-xs animate-pulse" style={{ color: "#e5e7eb" }}>…</span>
                           : isError ? <Dash />
                           : (() => {
-                              const cv = meta?.components[c];
+                              const cv = meta?.components?.[c];
                               // Handle both object format {used, compliant} and legacy string format
                               if (!cv) return <Dash />;
                               if (typeof cv === 'string') return <ComponentCell used={true} compliant={cv === 'used' || cv === 'via-EriPageLayout'} />;

@@ -36,3 +36,4 @@
 - [x] Create BDS site's own client/public/bds-meta.json (was missing)
 - [x] Bump @eri/components to v2.11.1 and update all version strings
 - [x] Fix duplicate version display: remove Introduction section version line, keep header badge as canonical; update APP_VERSION to V.2026.04.21
+- [x] Fix /tracker crash: TypeError on meta?.components[c] when components field is missing (Framework site uses legacy schema); added optional chaining and schema validation on fetch
