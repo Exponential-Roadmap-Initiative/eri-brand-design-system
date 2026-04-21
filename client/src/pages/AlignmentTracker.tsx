@@ -634,6 +634,87 @@ export default function AlignmentTracker() {
             </div>
           </div>
         </div>
+
+        {/* ── System Operations ──────────────────────────────────────────────── */}
+        <div className="mt-8 rounded-xl p-6 bg-white" style={{ border: `1px solid ${T.border}` }}>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="inline-flex items-center justify-center rounded-full text-xs font-bold px-2 py-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>SYS OPS</span>
+            <h2 className="font-archivo font-bold text-lg" style={{ color: T.dark }}>System Operations — AI context continuity</h2>
+          </div>
+
+          {/* What */}
+          <div className="mb-6">
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-2" style={{ color: T.lime }}>WHAT</p>
+            <p className="text-sm mb-3" style={{ color: T.bodyText }}>
+              Every ERI Manus project must follow three mandatory steps at the start of every AI task session. Together they form the <strong>System Operations</strong> pattern — a lightweight protocol that prevents recurring errors caused by context compaction and sandbox resets.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {[
+                {
+                  step: "Step 0",
+                  title: "Read Manus project instructions",
+                  body: "Every ERI Manus project has project-level instructions set in the Manus platform. These appear in the project_instructions tag at the top of each conversation. Read them in full before doing anything else.",
+                  color: T.lime,
+                },
+                {
+                  step: "Step 1",
+                  title: "Read or create PROJECT-CONTEXT.md",
+                  body: "A PROJECT-CONTEXT.md file at the project root is the persistent memory that survives context compaction. If it exists, read it first. If not, create it — seed it with canonical values from the eri-bds-reference skill. Update it after every task.",
+                  color: T.lime,
+                },
+                {
+                  step: "Step 2",
+                  title: "Check bds-meta.json exists",
+                  body: "Every ERI project must publish client/public/bds-meta.json. This file is not part of the @eri/components package — it is created in each consuming project. If missing, create it before closing the task.",
+                  color: T.lime,
+                },
+              ].map(({ step, title, body, color }) => (
+                <div key={step} className="rounded-lg p-4" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: T.dark, color }}>{step}</span>
+                    <span className="text-xs font-semibold" style={{ color: T.dark }}>{title}</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed" style={{ color: T.muted }}>{body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Why */}
+          <div className="mb-6">
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-2" style={{ color: T.lime }}>WHY</p>
+            <p className="text-sm mb-3" style={{ color: T.bodyText }}>
+              AI agents operating in long-running projects suffer from two failure modes: <strong>context compaction</strong> (earlier conversation history is summarised and key details are lost) and <strong>sandbox resets</strong> (the agent's working memory is wiped between sessions). Without a structured recovery mechanism, the agent reverts to defaults — re-introducing errors that were previously fixed, using stale component names, or missing required files.
+            </p>
+            <p className="text-sm" style={{ color: T.bodyText }}>
+              The System Operations pattern solves this by externalising memory into two durable artefacts: the Manus platform project instructions (set once by the project owner, always present) and the <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> file (updated after every task, read before every task). Together they give the agent a reliable starting point regardless of what was lost from session memory.
+            </p>
+          </div>
+
+          {/* How */}
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-2" style={{ color: T.lime }}>HOW — Set up a new ERI project</p>
+            <ol className="text-sm space-y-3" style={{ color: T.bodyText }}>
+              <li className="flex gap-3">
+                <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>1</span>
+                <span><strong>Set Manus project instructions.</strong> In the Manus platform, open the project settings and add instructions that include: the ERI development workflow (Research → Design → Plan → Implement → Test → Iterate), the active skills to apply (<code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>eri-bds-reference</code>, <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>exponential-human-ai-collaboration</code>), and any project-specific constraints.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>2</span>
+                <span><strong>Create <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> at the project root.</strong> Seed it with: current <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>@eri/components</code> version pin, colour tokens, known errors, pending work, and any canonical decisions made for this project. Commit it to the repository.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>3</span>
+                <span><strong>Create <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>client/public/bds-meta.json</code>.</strong> Copy the canonical template from the section above. Fill in the project-specific fields and commit it so the tracker can fetch it.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>4</span>
+                <span><strong>Maintain both files.</strong> After every AI task session, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> with new decisions and corrected errors. After every component upgrade or compliance change, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>.</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+
       </div>
     </div>
   );

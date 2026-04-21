@@ -150,6 +150,7 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [x] Create BDS site's own `client/public/bds-meta.json` (was missing)
 - [x] Push v2.11.1 git tag — verified on GitHub 2026-04-21
 - [x] Fix duplicate version display: removed Introduction section version line, header badge is canonical (APP_VERSION in App.tsx)
+- [x] Fix /tracker crash: TypeError on meta?.components[c] when components field missing (Framework uses legacy schema); added optional chaining + schema validation on fetch
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)

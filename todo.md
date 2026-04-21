@@ -37,3 +37,5 @@
 - [x] Bump @eri/components to v2.11.1 and update all version strings
 - [x] Fix duplicate version display: remove Introduction section version line, keep header badge as canonical; update APP_VERSION to V.2026.04.21
 - [x] Fix /tracker crash: TypeError on meta?.components[c] when components field is missing (Framework site uses legacy schema); added optional chaining and schema validation on fetch
+- [x] Update eri-bds-reference skill: restructure pre-action checklist with Step 0 (Manus project instructions), Step 1 (PROJECT-CONTEXT.md for all ERI projects), Step 2 (bds-meta.json)
+- [x] Add System Operations section to AlignmentTracker page: what/why/how display for PROJECT-CONTEXT.md and Manus project instructions pattern
