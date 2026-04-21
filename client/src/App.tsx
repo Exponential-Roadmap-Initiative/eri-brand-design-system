@@ -8,7 +8,7 @@ import BrandDesignSystem from "./pages/BrandDesignSystem";
 import AlignmentTracker from "./pages/AlignmentTracker";
 import { logos } from "@/lib/assets";
 
-const APP_VERSION = "V.2026.04.18";
+const APP_VERSION = "V.2026.04.21";
 
 /// ── Shared fixed header ──────────────────────────────────────────────────────
 // Renders on every tab. Mirrors the PublicLayout header exactly so the

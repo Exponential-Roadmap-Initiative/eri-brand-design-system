@@ -67,7 +67,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Standard components — canonical names and current version
 
-Package: `@eri/components` — current pin: **v2.11.0**
+Package: `@eri/components` — current pin: **v2.11.1**
 
 The six canonical component names are:
 
@@ -137,13 +137,18 @@ Full spec: see `bds-meta-spec.md` in this project root.
 
 ---
 
-## Known pending work (as of 2026-04-20)
+## Known pending work (as of 2026-04-21)
 
 - [x] Push v2.10.8 git tag — verified on GitHub 2026-04-20
 - [x] Add `footerLinks` prop to `EriAppFooter` (v2.10.8) and `EriPageLayout` pass-through (v2.10.9)
 - [x] Add `bds-meta.json` ownership warning to skill pre-action checklist and BDS site tracker
 - [x] Push v2.10.9 git tag — verified on GitHub 2026-04-21
 - [x] Push v2.11.0 git tag — verified on GitHub 2026-04-21
+- [x] Add bds-meta.json Required Project File callout card to Machine Instructions section
+- [x] Fix Machine Instructions Typography Rules: add Open Sans as body font (two-font system was only showing Archivo)
+- [x] Update skill pre-action checklist item 5: add /tracker URL link for canonical template
+- [x] Create BDS site's own `client/public/bds-meta.json` (was missing)
+- [x] Push v2.11.1 git tag — verified on GitHub 2026-04-21
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
@@ -172,7 +177,13 @@ The following errors have been found and fixed multiple times. If you see them a
 
 9. **Registered Source IDs table was incomplete** — `trust` was missing. Trust Centre source ID is `trust`, `sourceLabel` is `"Trust Centre"`, `returnUrl` is `"https://trust.exponentialroadmap.org"`, `status` is `"LIVE"`. Added to skill table 2026-04-20.
 
-10. **Manual hero container code block was not marked as fallback** — an AI reading the skill would build the hero manually instead of using `EriHeroSection`. Fixed 2026-04-20: block now labelled “Manual hero container structure (fallback only — prefer `EriHeroSection`)” with a mandatory preference note.
+10. **Manual hero container code block was not marked as fallback** — an AI reading the skill would build the hero manually instead of using `EriHeroSection`. Fixed 2026-04-20: block now labelled "Manual hero container structure (fallback only — prefer `EriHeroSection`)" with a mandatory preference note.
+
+11. **Machine Instructions Typography Rules only mentioned Archivo, not Open Sans** — the Typography Rules card in Machine Instructions said "Font: Archivo" but did not mention Open Sans as the body font. An AI reading only this card would use Archivo for everything. Fixed 2026-04-21: card now says "Two-font system: Archivo (headings) + Open Sans (body text)" with explicit Open Sans weight and usage.
+
+12. **Skill pre-action checklist item 5 did not link to /tracker** — item 5 referenced the bds-meta.json section at the bottom of the skill but not the canonical template URL on the BDS site. An AI following the checklist would not know to visit `/tracker`. Fixed 2026-04-21: item 5 now includes a direct link to `https://bds.exponentialroadmap.org/tracker`.
+
+13. **BDS site's own `client/public/bds-meta.json` was missing** — the BDS site had no `bds-meta.json` file at all, causing it to appear as "Unreachable" in its own tracker. Created 2026-04-21 with `overallStatus: "amber"` (exempt from standard layout requirements).
 
 ---
 

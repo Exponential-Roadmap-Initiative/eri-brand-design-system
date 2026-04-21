@@ -420,11 +420,6 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-3">
             Introduction
           </h2>
-          <p className="text-gray-500 text-sm mb-8">
-            BDS site version: <span className="font-mono">V.2026.04.21</span> &nbsp;·&nbsp;
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.11.1</span>
-          </p>
-
           {/* What is the BDS */}
           <div className="rounded-lg p-6 mb-6" style={{ backgroundColor: '#232323' }}>
             <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: '#93E07D' }}>WHAT IS THE ERI BRAND DESIGN SYSTEM?</p>

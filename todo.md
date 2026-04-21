@@ -35,3 +35,4 @@
 - [x] Update eri-bds-reference skill pre-action checklist item 5: add /tracker URL link for canonical template
 - [x] Create BDS site's own client/public/bds-meta.json (was missing)
 - [x] Bump @eri/components to v2.11.1 and update all version strings
+- [x] Fix duplicate version display: remove Introduction section version line, keep header badge as canonical; update APP_VERSION to V.2026.04.21
