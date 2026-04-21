@@ -4751,7 +4751,7 @@ const tabs: TabConfig[] = [
                     trigger: "Choosing a font",
                     action: "Check Typography Rules below",
                     anchor: "ai-instructions",
-                    rule: "Archivo only. Load from Google Fonts CDN. font-extrabold (800) for all headings.",
+                    rule: "Two-font system: Archivo for headings (font-extrabold 800), Open Sans for body text (400). Both from Google Fonts CDN only.",
                   },
                 ].map(({ trigger, action, anchor, rule }) => (
                   <div key={trigger} className="bg-white rounded-lg border border-[#c6e8d0] p-3">

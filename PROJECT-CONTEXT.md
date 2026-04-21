@@ -142,7 +142,7 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [x] Push v2.10.8 git tag — verified on GitHub 2026-04-20
 - [x] Add `footerLinks` prop to `EriAppFooter` (v2.10.8) and `EriPageLayout` pass-through (v2.10.9)
 - [x] Add `bds-meta.json` ownership warning to skill pre-action checklist and BDS site tracker
-- [ ] Push v2.10.9 git tag
+- [x] Push v2.10.9 git tag — verified on GitHub 2026-04-21
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
@@ -177,14 +177,48 @@ The following errors have been found and fixed multiple times. If you see them a
 
 ## How to verify consistency before closing any task
 
-Before saving a checkpoint, run this mental checklist:
+This checklist is **mandatory** before every checkpoint. Every item must be checked explicitly — do not skip items because they seem unrelated to the current task. Errors recur precisely because they are in sections that seem unrelated.
 
-1. Does any rule in the Machine Instructions section of the BDS site contradict the Colour System section? (Check body text colour, heading colour, CTA colour.)
-2. Does the skill Typography Rules section match the BDS site Typography section?
-3. Do all component names in the skill and BDS site match the six canonical names?
-4. Does the skill Colour Tokens table include `#383838` Dark Gray as the body text colour?
-5. Are all prop tables in the BDS site complete and matching the component source in `packages/eri-components/src/`?
-6. If the `@eri/components` version was bumped: has the git tag been created AND pushed to `user_github`? Run `git ls-remote --tags user_github | grep v2.` to verify. **Never bump version strings in files without also pushing the tag.**
+### A. Colour rules — check all four locations independently
+
+1. **BDS Colour System section** — does the `dark-gray #383838` entry say it is for body text? Does the `primary-dark #232323` entry say it is NOT for body text?
+2. **BDS Typography section** — does the type scale specimen show `#383838` for body text?
+3. **BDS Machine Instructions — Colour Tokens table** — are `dark-gray #383838` and `accent-lime #93E07D` present? Does the table say body text is `#383838`, not `#232323`?
+4. **BDS Machine Instructions — quick-reference cards** — does the "Choosing a font" card say two-font system (Archivo + Open Sans)? Does any card contradict the Colour System?
+5. **Skill — Canonical Colour Tokens table** — same check as item 3 above.
+6. **Skill — Typography Rules section** — does it say body colour is `#383838`?
+
+### B. Typography rules — check all four locations independently
+
+7. **BDS Typography section** — does it say Archivo for headings AND Open Sans for body?
+8. **BDS Machine Instructions — Typography Rules subsection** — same check.
+9. **BDS Machine Instructions — quick-reference cards** — does the "Choosing a font" card say the two-font system? (This card is a summary of the Typography Rules subsection — they must match.)
+10. **Skill — Typography Rules section** — same check.
+11. **Skill — Machine Instructions quick-reference table** — does the "Choosing a font" row say the two-font system?
+
+### C. Component names — check all locations
+
+12. Do all six canonical names appear correctly everywhere? The six names are: `EriAppHeader`, `EriPageLayout`, `EriHeroSection`, `EriAppFooter`, `EriStatusBadge`, `EriContactUsButton`. No `EriNavDrawer`, no `EriFooter`, no `PublicLayout` (except the BDS site's own internal layout which is exempt).
+
+### D. Prop tables — check against component source
+
+13. For each of the six components, does the BDS site prop table match the TypeScript interface in `packages/eri-components/src/`? Run: `grep -n "interface.*Props" packages/eri-components/src/*.tsx` to get the current interfaces.
+14. Does the skill Component Summaries section list all props for each component?
+
+### E. Per-project assignment rules
+
+15. **Hero image** — does the BDS site EriHeroSection section have the mandatory amber callout table? Does it say Trust Centre → `ERI_HERO_IMAGE_TRUST`, all others → omit `backgroundImage`?
+16. **Source IDs** — does the skill Registered Source IDs table include all five projects (BDS, HAL, PSM, Trust, Taxonomy) with their canonical `source`, `sourceLabel`, `returnUrl`, and `status` values?
+
+### F. Version and release
+
+17. **Version strings** — are all version strings in `BrandDesignSystem.tsx` (header display, live previews, prop table examples, install command) consistent with `packages/eri-components/package.json`?
+18. **Git tag** — if the version was bumped, has the tag been pushed? Run: `git ls-remote --tags user_github | grep v2.` to verify. **Never bump version strings without pushing the tag.**
+19. **`PROJECT-CONTEXT.md` version pin** — does the "current pin" line match the package version?
+
+### G. bds-meta.json
+
+20. **Ownership warning** — does the BDS site Alignment Tracker section and the skill pre-action checklist both say that `bds-meta.json` is created by the consuming project, not shipped in `@eri/components`?
 
 If any answer is "no" or "unsure", fix it before closing the task.
 
