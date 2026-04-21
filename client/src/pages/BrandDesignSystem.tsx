@@ -422,7 +422,7 @@ export default function BrandDesignSystem() {
           </h2>
           <p className="text-gray-500 text-sm mb-8">
             BDS site version: <span className="font-mono">V.2026.04.21</span> &nbsp;·&nbsp;
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.10.9</span>
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.10.10</span>
           </p>
 
           {/* What is the BDS */}
@@ -3178,7 +3178,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.10.9&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.10.10&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
