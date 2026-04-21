@@ -67,7 +67,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Standard components — canonical names and current version
 
-Package: `@eri/components` — current pin: **v2.10.8**
+Package: `@eri/components` — current pin: **v2.10.9**
 
 The six canonical component names are:
 
@@ -139,10 +139,13 @@ Full spec: see `bds-meta-spec.md` in this project root.
 
 ## Known pending work (as of 2026-04-20)
 
+- [x] Push v2.10.8 git tag — verified on GitHub 2026-04-20
+- [x] Add `footerLinks` prop to `EriAppFooter` (v2.10.8) and `EriPageLayout` pass-through (v2.10.9)
+- [x] Add `bds-meta.json` ownership warning to skill pre-action checklist and BDS site tracker
+- [ ] Push v2.10.9 git tag
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
-- [ ] Push v2.10.8 git tag (see release process below)
 
 ---
 

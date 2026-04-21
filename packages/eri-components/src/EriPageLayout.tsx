@@ -15,7 +15,7 @@
  *       <EriPageLayout
  *         appName="Exponential Taxonomy"
  *         status="BETA"
- *         version="V.2026.04.17"
+ *         version="V.2026.04.21"
  *         showCTA={true}
  *         source="taxonomy"
  *         sourceLabel="Exponential Taxonomy"
@@ -53,7 +53,7 @@
 
 import React from 'react';
 import { EriAppHeader } from './EriAppHeader';
-import { EriAppFooter } from './EriAppFooter';
+import { EriAppFooter, FooterLink } from './EriAppFooter';
 import { EriStatusValue } from './EriStatusBadge';
 
 interface EriPageLayoutProps {
@@ -61,7 +61,7 @@ interface EriPageLayoutProps {
   appName: string;
   /** Status badge value — omit to hide the badge */
   status?: EriStatusValue;
-  /** Version string — e.g. "V.2026.04.15" */
+  /** Version string — e.g. "V.2026.04.21" */
   version: string;
   /**
    * Show the Contact Us CTA.
@@ -83,6 +83,14 @@ interface EriPageLayoutProps {
   footerTagline?: string;
   /** Optional right-aligned attribution in the footer bottom bar */
   footerAttribution?: string;
+  /**
+   * Links shown in the footer right zone between ERI homepage and Contact Us.
+   * Defaults to Trust Centre + Human-AI Lab.
+   * Pass an empty array to show no additional links.
+   * The Trust Centre should pass footerLinks={[{ label: 'Human-AI Lab', href: 'https://human-ai-lab.exponentialroadmap.org' }]}
+   * to avoid a self-referential link in its own footer.
+   */
+  footerLinks?: FooterLink[];
   /**
    * Callback for hamburger menu open.
    * Defaults to no-op — hamburger is always visible regardless.
@@ -106,6 +114,7 @@ export function EriPageLayout({
   contactSubject,
   footerTagline,
   footerAttribution,
+  footerLinks,
   onMenuClick,
   logoHref = '/',
   children,
@@ -139,6 +148,7 @@ export function EriPageLayout({
         appName={appName}
         tagline={footerTagline}
         attribution={footerAttribution}
+        footerLinks={footerLinks}
       />
     </div>
   );

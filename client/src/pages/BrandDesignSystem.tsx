@@ -421,8 +421,8 @@ export default function BrandDesignSystem() {
             Introduction
           </h2>
           <p className="text-gray-500 text-sm mb-8">
-            BDS site version: <span className="font-mono">V.2026.04.20</span> &nbsp;·&nbsp;
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.10.8</span>
+            BDS site version: <span className="font-mono">V.2026.04.21</span> &nbsp;·&nbsp;
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> package version: <span className="font-mono">v2.10.9</span>
           </p>
 
           {/* What is the BDS */}
@@ -3178,7 +3178,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.10.8&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.10.9&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
@@ -3503,7 +3503,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               <EriAppHeader
                 appName="Professional Services Matrix"
                 status="BETA"
-                version="V.2026.04.20"
+                version="V.2026.04.21"
                 showCTA={true}
                 source="bds-demo"
                 sourceLabel="Brand Design System"
@@ -3518,7 +3518,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               <EriAppHeader
                 appName="Internal Admin Tool"
                 status="ALPHA"
-                version="V.2026.04.20"
+                version="V.2026.04.21"
                 showCTA={false}
                 onMenuClick={() => {}}
               />
@@ -3568,7 +3568,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 <EriAppHeader
   appName="Professional Services Matrix"
   status="BETA"
-  version="V.2026.04.20"
+  version="V.2026.04.21"
   showCTA={true}
   source="psm"
   sourceLabel="Professional Services Matrix"
@@ -4008,7 +4008,7 @@ function App() {
     <EriPageLayout
       appName="Professional Services Matrix"
       status="BETA"
-      version="V.2026.04.20"
+      version="V.2026.04.21"
       showCTA={true}
       source="psm"
       sourceLabel="Professional Services Matrix"
@@ -4032,7 +4032,7 @@ function App() {
                 <tbody className="font-mono">
                   {[
                     ["appName",           "string",            "App display name — used in header and footer copyright"],
-                    ["version",           "string",            'e.g. "V.2026.04.20" — format V.YYYY.MM.DD'],
+                    ["version",           "string",            'e.g. "V.2026.04.21" — format V.YYYY.MM.DD'],
                     ["status",            "EriStatusValue?",   "Omit to hide the status badge"],
                     ["showCTA",           "boolean?",          "Defaults to true — always pass true. Only false for purely internal tools with no contact entry point."],
                     ["source",            "string?",           'Required if showCTA is true (e.g. "psm", "hal")'],

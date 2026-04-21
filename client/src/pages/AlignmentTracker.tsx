@@ -23,7 +23,7 @@ const COMPONENT_NAMES: ComponentName[] = [
   "EriContactUsButton",
 ];
 
-const LATEST_VERSION = "v2.10.6";
+const LATEST_VERSION = "v2.10.9";
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 
@@ -486,6 +486,9 @@ export default function AlignmentTracker() {
         {/* ── How it works ─────────────────────────────────────────────────── */}
         <div className="mt-8 rounded-xl p-6 bg-white" style={{ border: `1px solid ${T.border}` }}>
           <h2 className="font-archivo font-bold text-lg mb-1" style={{ color: T.dark }}>How this tracker works</h2>
+          <div className="mb-4 px-3 py-2 rounded text-xs font-medium" style={{ backgroundColor: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
+            ⚠️ <strong>This file is NOT part of the <code className="font-mono">@eri/components</code> package.</strong> You create it yourself in each consuming project. The package ships only component source and <code className="font-mono">dist/eri-components.css</code> — nothing else. Copy the template below and commit it to <code className="font-mono">client/public/bds-meta.json</code> in your project.
+          </div>
           <p className="text-sm mb-6" style={{ color: T.muted }}>
             Every ERI project must publish a static{" "}
             <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>{" "}
