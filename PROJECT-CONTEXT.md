@@ -155,6 +155,10 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [x] Add System Operations section to /tracker page: WHAT/WHY/HOW cards explaining context continuity pattern
 - [x] Add PROJECT-CONTEXT.md seed template to /tracker HOW section with copy button (also fixed LATEST_VERSION stale at v2.10.9 → v2.11.1)
 - [x] Add System Operations callout card (dark #232323 card with SYS OPS badge) to Machine Instructions section on main BDS page, linking to /tracker
+- [x] Fix skill Gap 1 (C5): showCTA wording — now says "Pass showCTA={true} explicitly — do not rely on the default"
+- [x] Fix skill Gap 2 (C6): add trust and bds to Contact Us Registered Source IDs table in skill
+- [x] Add Project Alignment Checklist (S1-S3, B1-B5, C1-C7) to eri-bds-reference skill
+- [x] Add Project Alignment Checklist section to /tracker page with three colour-coded tables (S/B/C) and quick shell commands
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)

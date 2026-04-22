@@ -815,6 +815,135 @@ Overall status: [green / amber / red]
           </div>
         </div>
 
+      {/* ================================================================ */}
+      {/* PROJECT ALIGNMENT CHECKLIST */}
+      {/* ================================================================ */}
+      <div className="mt-16 rounded-xl overflow-hidden" style={{ border: `1px solid ${T.border}` }}>
+        {/* Header */}
+        <div className="px-6 py-4 flex items-center gap-3" style={{ backgroundColor: T.dark }}>
+          <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded tracking-widest uppercase" style={{ backgroundColor: T.lime, color: T.dark }}>CHECKLIST</span>
+          <h2 className="font-archivo text-lg font-extrabold" style={{ color: '#ffffff' }}>Project Alignment Checklist</h2>
+        </div>
+        <div className="px-6 py-5" style={{ backgroundColor: '#ffffff' }}>
+          <p className="text-sm mb-6" style={{ color: T.bodyText }}>
+            Run this checklist before saving a checkpoint or marking any task complete on an ERI project. Each item maps to a specific section of the <a href="/" className="underline" style={{ color: '#3ba559' }}>BDS reference</a> or the <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system" className="underline" style={{ color: '#3ba559' }}>eri-bds-reference skill</a>. If any item fails, fix it before closing.
+          </p>
+
+          {/* S — System Operations */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>S</span>
+              <h3 className="font-archivo text-base font-extrabold" style={{ color: T.dark }}>System Operations</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr style={{ backgroundColor: '#f9fafb' }}>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>#</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Check</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Pass condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { id: 'S1', check: 'PROJECT-CONTEXT.md exists at project root and was read at task start', pass: 'File exists; you read it before taking any action' },
+                    { id: 'S2', check: 'client/public/bds-meta.json exists', pass: 'File is present and served at https://{domain}/bds-meta.json' },
+                    { id: 'S3', check: 'bds-meta.json has schemaVersion: "1.0" and overallStatus reflects actual state', pass: 'Field present; status is green, amber, or red per the overallStatus rules' },
+                  ].map((row, i) => (
+                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? '#ffffff' : '#f9fafb', borderBottom: `1px solid ${T.border}` }}>
+                      <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: T.lime, backgroundColor: T.dark }}>{row.id}</td>
+                      <td className="px-3 py-2" style={{ color: T.bodyText }}>{row.check}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: T.muted }}>{row.pass}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* B — Brand */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#dbeafe', color: '#1e40af' }}>B</span>
+              <h3 className="font-archivo text-base font-extrabold" style={{ color: T.dark }}>Brand</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr style={{ backgroundColor: '#f9fafb' }}>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>#</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Check</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Pass condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { id: 'B1', check: 'All colour values use exact hex tokens', pass: 'No Tailwind colour names (text-green-500, bg-gray-900) for brand colours — only exact hex values' },
+                    { id: 'B2', check: 'Heading font is Archivo, loaded via Google Fonts CDN', pass: 'family=Archivo in the <link> tag in index.html; no local font files' },
+                    { id: 'B3', check: 'Body font is Open Sans, loaded via Google Fonts CDN', pass: 'family=Open+Sans in the <link> tag in index.html' },
+                    { id: 'B4', check: 'Body text colour is #383838, not #232323', pass: '#383838 for paragraph text on white/light backgrounds; #232323 reserved for headings and footer background only' },
+                    { id: 'B5', check: 'Filled CTA buttons use #93E07D (Accent Lime) and rounded-lg shape', pass: 'No rounded-full on CTAs; no bg-[#3ba559] for filled buttons' },
+                  ].map((row, i) => (
+                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? '#ffffff' : '#f9fafb', borderBottom: `1px solid ${T.border}` }}>
+                      <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: '#1e40af', backgroundColor: '#dbeafe' }}>{row.id}</td>
+                      <td className="px-3 py-2" style={{ color: T.bodyText }}>{row.check}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: T.muted }}>{row.pass}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* C — Components */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#dcfce7', color: '#166534' }}>C</span>
+              <h3 className="font-archivo text-base font-extrabold" style={{ color: T.dark }}>Components</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr style={{ backgroundColor: '#f9fafb' }}>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>#</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Check</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Pass condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { id: 'C1', check: '@eri/components is installed and pinned to a stable version', pass: 'pnpm list @eri/components shows a version; bds-meta.json eriComponentsPin matches' },
+                    { id: 'C2', check: '@import "@eri/components/dist/eri-components.css" is at the top of client/src/index.css', pass: 'Line present; no @source workaround unless pinned to pre-v2.9.1' },
+                    { id: 'C3', check: 'EriPageLayout wraps all public pages in App.tsx', pass: 'Single <EriPageLayout> in App.tsx; no header/footer markup in individual page files' },
+                    { id: 'C4', check: 'EriAppHeader and EriAppFooter are NOT imported directly in page files', pass: 'grep -r "EriAppHeader|EriAppFooter" client/src/pages/ returns no results' },
+                    { id: 'C5', check: 'showCTA={true} is passed explicitly on EriPageLayout', pass: 'The prop is written out — do not rely on the default' },
+                    { id: 'C6', check: 'source, sourceLabel, and returnUrl are all passed when showCTA={true}', pass: 'All three props present; values match the Registered Source IDs table exactly' },
+                    { id: 'C7', check: 'No stale component names (EriNavDrawer, EriFooter) anywhere in the codebase', pass: 'grep -r "EriNavDrawer|EriFooter" client/src/ returns no results' },
+                  ].map((row, i) => (
+                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? '#ffffff' : '#f9fafb', borderBottom: `1px solid ${T.border}` }}>
+                      <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: '#166534', backgroundColor: '#dcfce7' }}>{row.id}</td>
+                      <td className="px-3 py-2" style={{ color: T.bodyText }}>{row.check}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: T.muted }}>{row.pass}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Quick shell commands */}
+          <div className="rounded-lg p-4" style={{ backgroundColor: T.dark }}>
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: T.lime }}>QUICK VERIFICATION COMMANDS</p>
+            <p className="text-xs mb-3" style={{ color: '#9ca3af' }}>Run these in the project root to verify C4 and C7 in seconds. Both should return no output.</p>
+            <pre className="text-xs leading-relaxed" style={{ color: '#e5e7eb', fontFamily: 'monospace' }}>{`# C4 — confirm header/footer not imported in page files
+grep -r "EriAppHeader\\|EriAppFooter" client/src/pages/
+
+# C7 — confirm no stale component names
+grep -r "EriNavDrawer\\|EriFooter" client/src/`}</pre>
+          </div>
+        </div>
+      </div>
+
       </div>
     </div>
   );

@@ -41,3 +41,7 @@
 - [x] Add System Operations section to AlignmentTracker page: what/why/how display for PROJECT-CONTEXT.md and Manus project instructions pattern
 - [x] Add PROJECT-CONTEXT.md seed template to /tracker System Operations HOW section with copy button
 - [x] Add System Operations callout card to Machine Instructions section on main BDS page pointing to /tracker
+- [x] Fix skill Gap 1: C5 showCTA wording — change to "Pass showCTA={true} explicitly, do not rely on default"
+- [x] Fix skill Gap 2: C6 — add trust and bds to Contact Us Registered Source IDs table in skill
+- [x] Add Project Alignment Checklist section to eri-bds-reference skill (S1-S3, B1-B5, C1-C7)
+- [x] Add Project Alignment Checklist section to /tracker page with human-readable what/why for each item
