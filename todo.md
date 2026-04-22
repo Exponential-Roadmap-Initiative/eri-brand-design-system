@@ -39,3 +39,5 @@
 - [x] Fix /tracker crash: TypeError on meta?.components[c] when components field is missing (Framework site uses legacy schema); added optional chaining and schema validation on fetch
 - [x] Update eri-bds-reference skill: restructure pre-action checklist with Step 0 (Manus project instructions), Step 1 (PROJECT-CONTEXT.md for all ERI projects), Step 2 (bds-meta.json)
 - [x] Add System Operations section to AlignmentTracker page: what/why/how display for PROJECT-CONTEXT.md and Manus project instructions pattern
+- [x] Add PROJECT-CONTEXT.md seed template to /tracker System Operations HOW section with copy button
+- [x] Add System Operations callout card to Machine Instructions section on main BDS page pointing to /tracker

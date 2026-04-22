@@ -4971,6 +4971,38 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             </CardContent>
           </Card>
 
+          {/* ── SYSTEM OPERATIONS ── */}
+          <Card className="shadow-sm mb-6 border-2" style={{ borderColor: '#232323', backgroundColor: '#232323' }}>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="inline-flex items-center justify-center rounded-full text-[10px] font-bold px-2 py-0.5" style={{ backgroundColor: '#93E07D', color: '#232323' }}>SYS OPS</span>
+                <h3 className="font-bold text-base" style={{ color: '#93E07D' }}>System Operations — AI context continuity</h3>
+              </div>
+              <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.85)' }}>
+                Context compaction and sandbox resets erase session memory. These three steps are mandatory before any action on any ERI task.
+              </p>
+              <div className="grid md:grid-cols-3 gap-3 mb-4">
+                {[
+                  { step: 'Step 0', title: 'Read Manus project instructions', body: 'Read the project_instructions tag at the top of the conversation before doing anything else. It contains workflow rules, active skills, and project-specific constraints.' },
+                  { step: 'Step 1', title: 'Read or create PROJECT-CONTEXT.md', body: 'Every ERI project must have a PROJECT-CONTEXT.md at its root. Read it first if it exists. If not, create it — seed it with canonical values from the eri-bds-reference skill.' },
+                  { step: 'Step 2', title: 'Check bds-meta.json exists', body: 'Every ERI project must publish client/public/bds-meta.json. This file is not part of @eri/components — you create it. If missing, create it before closing the task.' },
+                ].map(({ step, title, body }) => (
+                  <div key={step} className="rounded-lg p-3" style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)' }}>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: '#93E07D', color: '#232323' }}>{step}</span>
+                      <span className="text-xs font-semibold" style={{ color: '#93E07D' }}>{title}</span>
+                    </div>
+                    <p className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>{body}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                Full documentation, seed templates, and setup guide at the{' '}
+                <a href="/tracker" className="underline underline-offset-2 font-medium" style={{ color: '#93E07D' }}>Project Alignment Tracker</a>{' '}
+                — scroll to the System Operations section.
+              </p>
+            </CardContent>
+          </Card>
           {/* ── REQUIRED PROJECT FILE: bds-meta.json ── */}
           <Card className="shadow-sm mb-6 border-2 border-amber-400 bg-amber-50">
             <CardContent className="p-6">

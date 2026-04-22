@@ -151,6 +151,10 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [x] Push v2.11.1 git tag — verified on GitHub 2026-04-21
 - [x] Fix duplicate version display: removed Introduction section version line, header badge is canonical (APP_VERSION in App.tsx)
 - [x] Fix /tracker crash: TypeError on meta?.components[c] when components field missing (Framework uses legacy schema); added optional chaining + schema validation on fetch
+- [x] Update eri-bds-reference skill: new Steps 0-2 pre-action checklist (Step 0 = read Manus project instructions, Step 1 = PROJECT-CONTEXT.md for all ERI projects, Step 2 = bds-meta.json)
+- [x] Add System Operations section to /tracker page: WHAT/WHY/HOW cards explaining context continuity pattern
+- [x] Add PROJECT-CONTEXT.md seed template to /tracker HOW section with copy button (also fixed LATEST_VERSION stale at v2.10.9 → v2.11.1)
+- [x] Add System Operations callout card (dark #232323 card with SYS OPS badge) to Machine Instructions section on main BDS page, linking to /tracker
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)

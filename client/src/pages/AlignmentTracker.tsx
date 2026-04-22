@@ -23,7 +23,7 @@ const COMPONENT_NAMES: ComponentName[] = [
   "EriContactUsButton",
 ];
 
-const LATEST_VERSION = "v2.10.9";
+const LATEST_VERSION = "v2.11.1";
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 
@@ -707,6 +707,106 @@ export default function AlignmentTracker() {
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>3</span>
                 <span><strong>Create <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>client/public/bds-meta.json</code>.</strong> Copy the canonical template from the section above. Fill in the project-specific fields and commit it so the tracker can fetch it.</span>
               </li>
+            </ol>
+
+            {/* PROJECT-CONTEXT.md seed template */}
+            <div className="mt-6 rounded-lg overflow-hidden" style={{ border: `1px solid ${T.border}` }}>
+              <div className="flex items-center justify-between px-4 py-2.5" style={{ backgroundColor: T.dark }}>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: T.lime, color: T.dark }}>SEED TEMPLATE</span>
+                  <span className="text-xs font-semibold font-mono" style={{ color: T.lime }}>PROJECT-CONTEXT.md</span>
+                </div>
+                <button
+                  onClick={() => {
+                    const today = new Date().toISOString().slice(0, 10);
+                    navigator.clipboard.writeText(
+`# [Project Name] — Project Context
+
+**READ THIS FILE FIRST.** Before taking any action on this project, read this file in full.
+It is the single source of truth for all project decisions, known errors, and canonical values.
+Do not rely on memory of previous sessions — context compaction removes that history.
+
+---
+
+## What this project is
+
+[Brief description of the project purpose and outputs.]
+
+---
+
+## Canonical colour values
+
+| Token | Hex | Usage |
+|---|---|---|
+| Primary Green | \`#3ba559\` | Links, active states, text accents — NOT for filled buttons |
+| Primary Dark | \`#232323\` | Headings (H1–H4), footer background, dark section backgrounds |
+| Dark Gray | \`#383838\` | Standard body paragraph text on white/light backgrounds |
+| Neutral Gray | \`#6b7280\` | Secondary text, borders, disabled states |
+| Off White | \`#F9FAFB\` | Page background, card background |
+| Accent Lime | \`#93E07D\` | All filled CTA buttons; heading accent words on dark backgrounds |
+
+---
+
+## Standard components — canonical names and current version
+
+Package: \`@eri/components\` — current pin: **${LATEST_VERSION}**
+
+| Component | Purpose |
+|---|---|
+| \`EriAppHeader\` | 64px fixed header — rendered once via EriPageLayout |
+| \`EriPageLayout\` | Full-page layout wrapper — use in App.tsx only |
+| \`EriHeroSection\` | Full-viewport hero section |
+| \`EriAppFooter\` | Two-zone dark footer — rendered once via EriPageLayout |
+| \`EriStatusBadge\` | Status pill badge (ALPHA / BETA / PREVIEW / LIVE) |
+| \`EriContactUsButton\` | Accent Lime CTA linking to the shared contact service |
+
+---
+
+## Known pending work (as of ${today})
+
+- [ ] [Add initial tasks here]
+
+---
+
+## Known errors that have been corrected — do not reintroduce
+
+[Document any errors found and fixed, so they are not re-introduced in future sessions.]
+
+---
+
+## bds-meta.json status
+
+File: \`client/public/bds-meta.json\` — [exists / missing]
+Last updated: ${today}
+Overall status: [green / amber / red]
+`
+                    );
+                  }}
+                  className="text-[11px] px-3 py-1 rounded font-semibold transition-opacity hover:opacity-80"
+                  style={{ backgroundColor: T.lime, color: T.dark }}
+                >
+                  Copy template
+                </button>
+              </div>
+              <div className="p-4 font-mono text-[11px] leading-relaxed overflow-x-auto" style={{ backgroundColor: "#1a1a1a", color: "#a3e635" }}>
+                <div style={{ color: T.lime, fontWeight: 700 }}># [Project Name] — Project Context</div>
+                <div className="mt-1" style={{ color: "#9ca3af" }}>**READ THIS FILE FIRST.** Before taking any action on this project, read this file in full.</div>
+                <div style={{ color: "#9ca3af" }}>It is the single source of truth for all project decisions, known errors, and canonical values.</div>
+                <div className="mt-2" style={{ color: T.lime }}>## Canonical colour values</div>
+                <div style={{ color: "#9ca3af" }}>| Primary Dark | #232323 | Headings, footer background |</div>
+                <div style={{ color: "#9ca3af" }}>| Dark Gray    | #383838 | Body text on white/light bg  |</div>
+                <div style={{ color: "#9ca3af" }}>| Accent Lime  | #93E07D | All filled CTA buttons       |</div>
+                <div className="mt-2" style={{ color: T.lime }}>## Standard components — pin: {LATEST_VERSION}</div>
+                <div style={{ color: "#9ca3af" }}>EriAppHeader · EriPageLayout · EriHeroSection</div>
+                <div style={{ color: "#9ca3af" }}>EriAppFooter · EriStatusBadge · EriContactUsButton</div>
+                <div className="mt-2" style={{ color: T.lime }}>## Known pending work</div>
+                <div style={{ color: "#9ca3af" }}>- [ ] [Add initial tasks here]</div>
+                <div className="mt-2" style={{ color: T.lime }}>## Known errors that have been corrected</div>
+                <div style={{ color: "#9ca3af" }}>[Document errors fixed so they are not re-introduced]</div>
+              </div>
+            </div>
+
+            <ol className="text-sm space-y-3 mt-4" style={{ color: T.bodyText }}>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>4</span>
                 <span><strong>Maintain both files.</strong> After every AI task session, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> with new decisions and corrected errors. After every component upgrade or compliance change, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>.</span>
