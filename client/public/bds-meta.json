@@ -13,10 +13,32 @@
     "EriStatusBadge":     { "used": true,  "compliant": true  },
     "EriContactUsButton": { "used": true,  "compliant": true  }
   },
+  "systemOps": {
+    "projectContextExists":          true,
+    "manusPlatformInstructionsRead": true
+  },
+  "brand": {
+    "hexTokensOnly":     true,
+    "archivoHeadings":   true,
+    "openSansBody":      true,
+    "bodyTextHex383838": true,
+    "ctaAccentLime":     true
+  },
+  "layout": {
+    "eriPageLayoutInAppTsx": false,
+    "showCtaExplicit":       false,
+    "sourcePropsPresent":    false,
+    "noStaleComponentNames": true
+  },
   "knownViolations": [
-    "BDS site is the reference implementation and is exempt from standard layout requirements (EriPageLayout, EriAppHeader, EriAppFooter, EriHeroSection). It uses its own PublicLayout and custom header/footer to demonstrate all patterns."
+    {
+      "component": "EriPageLayout",
+      "reason": "BDS site is the reference implementation and is exempt from standard layout requirements. It uses its own PublicLayout and custom header/footer to demonstrate all patterns.",
+      "approvedBy": "ERI BDS maintainer",
+      "bdsRef": "Standard Components scope note"
+    }
   ],
   "overallStatus": "amber",
-  "lastUpdated": "2026-04-21",
+  "lastUpdated": "2026-04-22",
   "updatedBy": "Manus"
 }

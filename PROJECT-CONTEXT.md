@@ -159,9 +159,15 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [x] Fix skill Gap 2 (C6): add trust and bds to Contact Us Registered Source IDs table in skill
 - [x] Add Project Alignment Checklist (S1-S3, B1-B5, C1-C7) to eri-bds-reference skill
 - [x] Add Project Alignment Checklist section to /tracker page with three colour-coded tables (S/B/C) and quick shell commands
+- [x] Extend bds-meta.json schema with self-reported systemOps, brand, layout compliance fields (Option A) — 2026-04-22
+- [x] Update bds-meta-spec.md with new schema fields — 2026-04-22
+- [x] Update eri-bds-reference skill: add new fields to schema example and checklist — 2026-04-22
+- [x] Update AlignmentTracker: Checklist score column, self-reporting note, updated canonical and seed templates — 2026-04-22
+- [x] Update BDS site bds-meta.json with new systemOps/brand/layout fields — 2026-04-22
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
+- [ ] Update Framework site's `bds-meta.json` to v1.0 schema (currently uses legacy format, shows as Unreachable)
 
 ---
 

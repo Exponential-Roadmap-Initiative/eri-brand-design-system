@@ -182,6 +182,50 @@ function violationText(v: unknown): string {
   return String(v);
 }
 
+/** Compute a checklist compliance score from the self-reported fields in bds-meta.json */
+function checklistScore(meta: BdsMeta | undefined): { score: number; total: number } | null {
+  if (!meta) return null;
+  const { systemOps, brand, layout } = meta;
+  // Only compute if at least one field group is present
+  if (!systemOps && !brand && !layout) return null;
+  const fields = [
+    systemOps?.projectContextExists,
+    systemOps?.manusPlatformInstructionsRead,
+    brand?.hexTokensOnly,
+    brand?.archivoHeadings,
+    brand?.openSansBody,
+    brand?.bodyTextHex383838,
+    brand?.ctaAccentLime,
+    layout?.eriPageLayoutInAppTsx,
+    layout?.showCtaExplicit,
+    layout?.sourcePropsPresent,
+    layout?.noStaleComponentNames,
+  ];
+  const reported = fields.filter((f) => f !== undefined && f !== null);
+  const passing  = reported.filter((f) => f === true);
+  return { score: passing.length, total: reported.length };
+}
+
+function ChecklistScoreCell({ meta, isLoading, isError }: { meta?: BdsMeta; isLoading: boolean; isError: boolean }) {
+  if (isLoading) return <span className="text-xs animate-pulse" style={{ color: "#d1d5db" }}>…</span>;
+  if (isError)   return <Dash />;
+  const result = checklistScore(meta);
+  if (!result)   return <span className="text-[11px]" style={{ color: T.muted }}>—</span>;
+  const { score, total } = result;
+  const pct = total > 0 ? score / total : 0;
+  const bg  = pct === 1 ? "#dcfce7" : pct >= 0.7 ? "#fef9c3" : "#fee2e2";
+  const fg  = pct === 1 ? "#166534" : pct >= 0.7 ? "#854d0e" : "#991b1b";
+  return (
+    <span
+      className="inline-flex items-center font-mono text-[11px] font-semibold px-1.5 py-0.5 rounded"
+      style={{ backgroundColor: bg, color: fg }}
+      title={`${score} of ${total} checklist items passing`}
+    >
+      {score}/{total}
+    </span>
+  );
+}
+
 function ViolationsCell({ violations, error }: { violations?: unknown[]; error?: string }) {
   if (error) return <span style={{ color: "#ef4444", fontSize: 11 }}>Failed to fetch</span>;
   if (!violations) return <Dash />;
@@ -345,6 +389,7 @@ export default function AlignmentTracker() {
                   { label: "CSS Import",   w: "" },
                   ...COMPONENT_NAMES.map((c) => ({ label: c.replace("Eri", ""), w: "" })),
                   { label: "Violations",   w: "" },
+                  { label: "Checklist",    w: "" },
                   { label: "Updated",      w: "" },
                 ].map(({ label, w }) => (
                   <th
@@ -426,6 +471,11 @@ export default function AlignmentTracker() {
                       {isLoading ? <span className="text-xs animate-pulse" style={{ color: "#e5e7eb" }}>…</span>
                         : isError ? <ViolationsCell error={result.error} />
                         : <ViolationsCell violations={activeViolations(meta)} />}
+                    </td>
+
+                    {/* Checklist score */}
+                    <td className="px-4 py-4">
+                      <ChecklistScoreCell meta={meta} isLoading={isLoading} isError={isError} />
                     </td>
 
                     {/* Updated */}
@@ -517,7 +567,7 @@ export default function AlignmentTracker() {
                 onClick={() => {
                   const today = new Date().toISOString().slice(0, 10);
                   navigator.clipboard.writeText(
-`{\n  "schemaVersion": "1.0",\n  "project": "your-project-id",\n  "projectName": "Your Project Name",\n  "domain": "your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "knownViolations": [],\n  "overallStatus": "green",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
+`{\n  "schemaVersion": "1.0",\n  "project": "your-project-id",\n  "displayName": "Your Project Name",\n  "url": "https://your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "systemOps": {\n    "projectContextExists":          false,\n    "manusPlatformInstructionsRead": false\n  },\n  "brand": {\n    "hexTokensOnly":     false,\n    "archivoHeadings":   false,\n    "openSansBody":      false,\n    "bodyTextHex383838": false,\n    "ctaAccentLime":     false\n  },\n  "layout": {\n    "eriPageLayoutInAppTsx": false,\n    "showCtaExplicit":       false,\n    "sourcePropsPresent":    false,\n    "noStaleComponentNames": false\n  },\n  "knownViolations": [],\n  "overallStatus": "red",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
                   );
                 }}
                 className="text-[11px] px-3 py-1.5 rounded font-semibold transition-opacity hover:opacity-80"
@@ -530,21 +580,38 @@ export default function AlignmentTracker() {
 {`{
   "schemaVersion": "1.0",
   "project": "your-project-id",
-  "projectName": "Your Project Name",
-  "domain": "your-project.exponentialroadmap.org",
+  "displayName": "Your Project Name",
+  "url": "https://your-project.exponentialroadmap.org",
   "eriComponentsPin": "${LATEST_VERSION}",
   "cssImportMethod": "dist",
   "components": {
-    "EriAppHeader":   { "used": true,  "compliant": true  },
-    "EriPageLayout":  { "used": true,  "compliant": true  },
-    "EriHeroSection": { "used": true,  "compliant": true  },
-    "EriAppFooter":        { "used": true,  "compliant": true  },
-    "EriStatusBadge":      { "used": true,  "compliant": true  },
-    "EriContactUsButton":  { "used": true,  "compliant": true  }
+    "EriAppHeader":       { "used": true,  "compliant": true  },
+    "EriPageLayout":      { "used": true,  "compliant": true  },
+    "EriHeroSection":     { "used": true,  "compliant": true  },
+    "EriAppFooter":       { "used": true,  "compliant": true  },
+    "EriStatusBadge":     { "used": true,  "compliant": true  },
+    "EriContactUsButton": { "used": true,  "compliant": true  }
+  },
+  "systemOps": {
+    "projectContextExists":          false,
+    "manusPlatformInstructionsRead": false
+  },
+  "brand": {
+    "hexTokensOnly":     false,
+    "archivoHeadings":   false,
+    "openSansBody":      false,
+    "bodyTextHex383838": false,
+    "ctaAccentLime":     false
+  },
+  "layout": {
+    "eriPageLayoutInAppTsx": false,
+    "showCtaExplicit":       false,
+    "sourcePropsPresent":    false,
+    "noStaleComponentNames": false
   },
   "knownViolations": [],
-  "overallStatus": "green",
-  "lastUpdated": "2026-04-19",
+  "overallStatus": "red",
+  "lastUpdated": "2026-04-22",
   "updatedBy": "Manus"
 }`}
             </div>
@@ -929,6 +996,14 @@ Overall status: [green / amber / red]
                 </tbody>
               </table>
             </div>
+          </div>
+
+          {/* Self-reporting note */}
+          <div className="mb-6 rounded-lg p-4" style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+            <p className="text-xs font-semibold mb-1" style={{ color: '#166534' }}>Self-reporting in bds-meta.json</p>
+            <p className="text-[11px]" style={{ color: '#166534' }}>
+              After running this checklist, update the <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>systemOps</code>, <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>brand</code>, and <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>layout</code> fields in <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>client/public/bds-meta.json</code> to reflect the results. Set each field to <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>true</code> if the check passes, <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>false</code> if it fails (and add an entry to <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>knownViolations</code>), or omit the field if not applicable. The tracker will display a compliance score badge (<span className="font-mono font-bold">9/11</span>) in the Checklist column, computed from these self-reported values.
+            </p>
           </div>
 
           {/* Quick shell commands */}

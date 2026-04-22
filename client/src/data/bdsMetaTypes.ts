@@ -1,6 +1,6 @@
 /**
  * BDS Alignment Metadata — type definitions
- * Schema version 1.0
+ * Schema version 1.0 (extended with self-reported compliance fields)
  *
  * Each ERI project publishes a static bds-meta.json at:
  *   client/public/bds-meta.json  →  https://{project-domain}/bds-meta.json
@@ -35,6 +35,50 @@ export interface ComponentStatus {
   note?: string;
 }
 
+/**
+ * Self-reported System Operations compliance fields.
+ * Set after running the Project Alignment Checklist.
+ * Missing fields are shown as "—" in the tracker (not as failures).
+ */
+export interface SystemOpsCompliance {
+  /** PROJECT-CONTEXT.md exists at project root and was read at task start */
+  projectContextExists?: boolean;
+  /** Manus platform project instructions were read before acting */
+  manusPlatformInstructionsRead?: boolean;
+}
+
+/**
+ * Self-reported Brand compliance fields.
+ * Set after running the Project Alignment Checklist.
+ */
+export interface BrandCompliance {
+  /** All brand colour values use exact hex tokens — no Tailwind colour names */
+  hexTokensOnly?: boolean;
+  /** Heading font is Archivo loaded from Google Fonts CDN */
+  archivoHeadings?: boolean;
+  /** Body font is Open Sans loaded from Google Fonts CDN */
+  openSansBody?: boolean;
+  /** Body paragraph text uses #383838 (not #232323) on white/light backgrounds */
+  bodyTextHex383838?: boolean;
+  /** All filled CTA buttons use #93E07D (Accent Lime) */
+  ctaAccentLime?: boolean;
+}
+
+/**
+ * Self-reported Layout compliance fields.
+ * Set after running the Project Alignment Checklist.
+ */
+export interface LayoutCompliance {
+  /** EriPageLayout wraps all public pages in App.tsx only — not in individual page files */
+  eriPageLayoutInAppTsx?: boolean;
+  /** showCTA={true} is passed explicitly on EriPageLayout — not relying on default */
+  showCtaExplicit?: boolean;
+  /** source, sourceLabel, and returnUrl are all passed when showCTA={true} */
+  sourcePropsPresent?: boolean;
+  /** No stale component names (EriNavDrawer, EriFooter) anywhere in the codebase */
+  noStaleComponentNames?: boolean;
+}
+
 export interface BdsMeta {
   schemaVersion: "1.0";
   /** Short project code matching PROJECT_REGISTRY id */
@@ -43,12 +87,18 @@ export interface BdsMeta {
   displayName: string;
   /** Canonical deployed URL */
   url: string;
-  /** Current @eri/components pin, e.g. "v2.10.0" or "main" */
+  /** Current @eri/components pin, e.g. "v2.11.1" or "main" */
   eriComponentsPin: string;
   /** How the pre-built CSS is imported */
   cssImportMethod: CssImportMethod;
   /** Per-component compliance status */
   components: Partial<Record<ComponentName, ComponentStatus>>;
+  /** Self-reported System Operations compliance (optional) */
+  systemOps?: SystemOpsCompliance;
+  /** Self-reported Brand compliance (optional) */
+  brand?: BrandCompliance;
+  /** Self-reported Layout compliance (optional) */
+  layout?: LayoutCompliance;
   /** List of known non-conformant patterns */
   knownViolations: string[];
   /** RAG overall status */

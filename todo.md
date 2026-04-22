@@ -45,3 +45,8 @@
 - [x] Fix skill Gap 2: C6 — add trust and bds to Contact Us Registered Source IDs table in skill
 - [x] Add Project Alignment Checklist section to eri-bds-reference skill (S1-S3, B1-B5, C1-C7)
 - [x] Add Project Alignment Checklist section to /tracker page with human-readable what/why for each item
+- [x] Extend bds-meta.json schema: add systemOps, brand, layout self-reported compliance fields
+- [x] Update bds-meta-spec.md with new schema fields
+- [x] Update eri-bds-reference skill: add new fields to schema example and checklist
+- [x] Update AlignmentTracker: Checklist score column, self-reporting note, updated canonical template and seed template
+- [x] Update BDS site's own bds-meta.json with new fields
