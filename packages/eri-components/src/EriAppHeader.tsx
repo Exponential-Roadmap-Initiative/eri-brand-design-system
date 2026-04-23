@@ -1,5 +1,5 @@
 /**
- * EriAppHeader — ERI Brand Design System v2.9.2
+ * EriAppHeader — ERI Brand Design System v2.12.0
  *
  * Canonical 64px header for all ERI applications.
  * Renders once in EriPageLayout — never duplicated across page files.
@@ -16,11 +16,18 @@
  *     onMenuClick={() => setMenuOpen(true)}
  *   />
  *
+ *   // With dark/light mode toggle (opt-in):
+ *   <EriAppHeader
+ *     appName="Exponential Taxonomy"
+ *     showThemeToggle={true}
+ *     ...
+ *   />
+ *
  * RULES (do not override):
- *   - Background: #232323 always
+ *   - Background: #232323 always (dark mode default; light mode changes the content area, not the header)
  *   - Height: 64px (h-16) always
  *   - Left zone: ERI logo → pipe divider → app name
- *   - Right zone: status badge → version string → CTA (if showCTA) → hamburger
+ *   - Right zone: status badge → version string → theme toggle (if showThemeToggle) → CTA (if showCTA) → hamburger
  *   - showCTA: always pass true — the Contact Us CTA is visible on ALL surfaces (public and authenticated).
  *     Only pass showCTA={false} if the specific app explicitly has no Contact Us entry point
  *     (e.g. a purely internal admin tool). Do NOT use showCTA={!isAuthenticated}.
@@ -28,6 +35,23 @@
  *   - onMenuClick: provide () => setMenuOpen(true) — defaults to no-op (hamburger always visible)
  *   - Horizontal padding: var(--eri-content-inset) — aligns with hero text block
  *   - No navigation links in the header — use the hamburger drawer
+ *
+ * THEME TOGGLE (showThemeToggle):
+ *   - Dark mode is the ERI default — it saves display energy on OLED screens
+ *   - Set showThemeToggle={true} to let users opt in to light mode
+ *   - The toggle is self-contained: reads/writes localStorage key "eri-theme"
+ *   - The consuming app must apply the "dark" class to <html> on load to prevent
+ *     flash of light content (FOLC). Add this to your index.html <head>:
+ *
+ *     <script>
+ *       (function() {
+ *         var t = localStorage.getItem('eri-theme');
+ *         if (!t || t === 'dark') document.documentElement.classList.add('dark');
+ *       })();
+ *     </script>
+ *
+ *   - The toggle applies/removes the "dark" class on <html> and persists to localStorage.
+ *   - Tailwind dark: variants in the consuming app will respond automatically.
  *
  * COMMON MISTAKES:
  *   - Passing showCTA={!isAuthenticated}: incorrect — CTA should be visible on authenticated surfaces too.
@@ -37,12 +61,45 @@
  * BDS reference: https://eri-brand-design-system.manus.space/#standard-components
  */
 
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { EriStatusBadge, EriStatusValue } from './EriStatusBadge';
 import { EriContactUsButton } from './EriContactUsButton';
 
 // ERI wordmark — CDN hosted, inverted to white via CSS filter on dark background
 const ERI_LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp';
+
+const STORAGE_KEY = 'eri-theme';
+
+/** Read the current theme from localStorage, defaulting to 'dark' */
+function readStoredTheme(): 'dark' | 'light' {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored === 'light' ? 'light' : 'dark';
+  } catch {
+    return 'dark';
+  }
+}
+
+/** Apply the theme class to <html> and persist to localStorage */
+function applyTheme(theme: 'dark' | 'light') {
+  try {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+    localStorage.setItem(STORAGE_KEY, theme);
+  } catch {
+    // localStorage unavailable — apply class only
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+}
 
 interface EriAppHeaderProps {
   /** App display name shown after the pipe divider */
@@ -75,6 +132,15 @@ interface EriAppHeaderProps {
   onMenuClick?: () => void;
   /** Logo href — defaults to "/" */
   logoHref?: string;
+  /**
+   * Show the dark/light mode toggle button.
+   * Dark mode is the ERI default — it saves display energy on OLED screens.
+   * Set to true to let users opt in to light mode.
+   * The toggle reads/writes localStorage key "eri-theme" and applies the
+   * "dark" class to <html>. Add the FOLC-prevention script to index.html.
+   * Defaults to false.
+   */
+  showThemeToggle?: boolean;
 }
 
 export function EriAppHeader({
@@ -88,6 +154,7 @@ export function EriAppHeader({
   contactSubject,
   onMenuClick = () => {},
   logoHref = '/',
+  showThemeToggle = false,
 }: EriAppHeaderProps) {
   // Dev-mode warning: CTA requested but missing required props
   if (process.env.NODE_ENV !== 'production' && showCTA && (!source || !sourceLabel || !returnUrl)) {
@@ -96,6 +163,22 @@ export function EriAppHeader({
       'The Contact Us button will not render. Provide all three props to show the CTA.'
     );
   }
+
+  // Theme toggle state — initialised from localStorage, defaults to dark
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => readStoredTheme());
+
+  // Sync to DOM on mount (in case the FOLC script wasn't present)
+  useEffect(() => {
+    applyTheme(theme);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const toggleTheme = useCallback(() => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    applyTheme(next);
+  }, [theme]);
+
+  const isDark = theme === 'dark';
 
   return (
     <header
@@ -116,10 +199,58 @@ export function EriAppHeader({
         <span className="text-white text-sm font-medium truncate">{appName}</span>
       </div>
 
-      {/* Right zone: badge + version + CTA + hamburger */}
+      {/* Right zone: badge + version + theme toggle + CTA + hamburger */}
       <div className="flex items-center gap-3 shrink-0">
         {status && <EriStatusBadge status={status} theme="dark" />}
         <span className="text-gray-400 text-xs font-mono hidden sm:block">{version}</span>
+
+        {/* Theme toggle — dark is ERI default; sun = switch to light, moon = switch to dark */}
+        {showThemeToggle && (
+          <button
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={
+              isDark
+                ? 'Switch to light mode — dark mode saves display energy on OLED screens'
+                : 'Switch to dark mode — saves display energy on OLED screens'
+            }
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '32px',
+              height: '32px',
+              borderRadius: '6px',
+              border: 'none',
+              background: 'transparent',
+              color: '#9ca3af',
+              cursor: 'pointer',
+              transition: 'color 0.15s, background 0.15s',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.color = '#ffffff';
+              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.08)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.color = '#9ca3af';
+              (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+            }}
+          >
+            {isDark ? (
+              /* Sun icon — shown in dark mode, click to go light */
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+              </svg>
+            ) : (
+              /* Moon icon — shown in light mode, click to go dark */
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+              </svg>
+            )}
+          </button>
+        )}
+
         {showCTA && source && sourceLabel && returnUrl && (
           <EriContactUsButton
             source={source}

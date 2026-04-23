@@ -117,6 +117,42 @@
   --ring: oklch(0.59 0.14 145);
 }
 
+/*
+ * ERI DARK MODE TOKENS
+ * html.dark is set by ThemeContext when theme === 'dark'.
+ * Dark is the ERI default — these values are the canonical dark surface colours.
+ * The :root block above defines light mode (opt-in via toggle).
+ *
+ * Surface hierarchy:
+ *   --background:  #111111  (page canvas — true near-black for OLED efficiency)
+ *   --card:        #1a1a1a  (card / panel surface)
+ *   --popover:     #1a1a1a  (popover / dropdown surface)
+ *   --border:      #2e2e2e  (subtle separator)
+ *   --muted:       #1f1f1f  (muted section background)
+ *   --accent:      #1f2e23  (accent surface — dark green tint)
+ */
+.dark {
+  --background: oklch(0.09 0 0);           /* #111111 — near-black, OLED-efficient */
+  --foreground: oklch(0.94 0.005 247);     /* #ECEEF2 — off-white body text */
+  --card: oklch(0.13 0 0);                 /* #1a1a1a — card surface */
+  --card-foreground: oklch(0.94 0.005 247);
+  --popover: oklch(0.13 0 0);
+  --popover-foreground: oklch(0.94 0.005 247);
+  --primary: oklch(0.59 0.14 145);         /* ERI green — unchanged */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.16 0 0);            /* #282828 */
+  --secondary-foreground: oklch(0.85 0.005 247);
+  --muted: oklch(0.14 0 0);               /* #1f1f1f */
+  --muted-foreground: oklch(0.55 0.01 247); /* subdued text */
+  --accent: oklch(0.17 0.03 145);          /* dark green tint */
+  --accent-foreground: oklch(0.94 0.005 247);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.22 0 0);              /* #2e2e2e */
+  --input: oklch(0.22 0 0);
+  --ring: oklch(0.59 0.14 145);            /* ERI green focus ring */
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

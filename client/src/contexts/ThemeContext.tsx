@@ -1,55 +1,71 @@
+/**
+ * ERI Brand Design System — ThemeContext
+ *
+ * Dark mode is the ERI default — a deliberate energy-efficiency statement.
+ * OLED displays consume near-zero power for black pixels; defaulting to dark
+ * reduces display energy consumption without any user effort required.
+ *
+ * Storage key: "eri-theme" (localStorage)
+ * Default: "dark"
+ * OS preference (prefers-color-scheme): intentionally ignored — ERI always
+ * defaults to dark regardless of OS setting.
+ *
+ * Flash of light content (FOLC) prevention: the CSS default (`:root`) is dark,
+ * so the page is dark before any JavaScript runs. Switching to light requires
+ * an explicit user action.
+ */
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
+
+const STORAGE_KEY = "eri-theme";
+const DEFAULT_THEME: Theme = "dark";
 
 interface ThemeContextType {
   theme: Theme;
-  toggleTheme?: () => void;
-  switchable: boolean;
+  toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
   children: React.ReactNode;
-  defaultTheme?: Theme;
-  switchable?: boolean;
 }
 
-export function ThemeProvider({
-  children,
-  defaultTheme = "light",
-  switchable = false,
-}: ThemeProviderProps) {
+export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (switchable) {
-      const stored = localStorage.getItem("theme");
-      return (stored as Theme) || defaultTheme;
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === "light" || stored === "dark") return stored;
+    } catch {
+      // localStorage may be unavailable in some environments
     }
-    return defaultTheme;
+    return DEFAULT_THEME;
   });
 
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") {
       root.classList.add("dark");
+      root.classList.remove("light");
     } else {
+      root.classList.add("light");
       root.classList.remove("dark");
     }
-
-    if (switchable) {
-      localStorage.setItem("theme", theme);
+    try {
+      localStorage.setItem(STORAGE_KEY, theme);
+    } catch {
+      // localStorage may be unavailable in some environments
     }
-  }, [theme, switchable]);
+  }, [theme]);
 
-  const toggleTheme = switchable
-    ? () => {
-        setTheme(prev => (prev === "light" ? "dark" : "light"));
-      }
-    : undefined;
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "dark" ? "light" : "dark"));
+  };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, switchable }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

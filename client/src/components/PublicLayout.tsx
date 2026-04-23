@@ -19,6 +19,7 @@
 
 import { useState, useEffect } from "react";
 import { logos } from "@/lib/assets";
+import { ThemeToggleButton } from "@/components/ThemeToggleButton";
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -295,13 +296,47 @@ export default function PublicLayout({ children, transparentHeader = false, hide
               </div>
             </div>
 
-            <div className="mt-10 pt-6 border-t border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-2">
-              <p className="text-sm text-gray-500">
-                © {new Date().getFullYear()} Exponential Roadmap Initiative. All rights reserved.
-              </p>
-              <p className="text-sm text-gray-500">
-                Based on Exponential Business Playbook v5.0
-              </p>
+            {/* ── ENERGY STATEMENT ── */}
+            {/* Placeholder copy — will be updated with specific figures from updated research report */}
+            <div className="mt-10 pt-6 border-t border-gray-700">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3 max-w-2xl">
+                  {/* Leaf icon */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 text-[#3ba559] shrink-0 mt-0.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                  </svg>
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    <span className="text-gray-300 font-medium">Dark by default.</span>{" "}
+                    OLED screens consume near-zero power for dark pixels — switching to dark mode
+                    saves meaningful display energy at scale.{" "}
+                    {/* Specific global figures will be added once updated research is confirmed */}
+                    Light mode is available for those who need it.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-xs text-gray-500">Theme:</span>
+                  <ThemeToggleButton size="sm" />
+                </div>
+              </div>
+              <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+                <p className="text-sm text-gray-500">
+                  © {new Date().getFullYear()} Exponential Roadmap Initiative. All rights reserved.
+                </p>
+                <p className="text-sm text-gray-500">
+                  Based on Exponential Business Playbook v5.0
+                </p>
+              </div>
             </div>
           </div>
         </footer>

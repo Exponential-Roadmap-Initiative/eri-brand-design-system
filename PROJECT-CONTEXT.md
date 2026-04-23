@@ -67,7 +67,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Standard components — canonical names and current version
 
-Package: `@eri/components` — current pin: **v2.11.1**
+Package: `@eri/components` — current pin: **v2.12.0**
 
 The six canonical component names are:
 
@@ -169,6 +169,21 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
 - [ ] Update Framework site's `bds-meta.json` to v1.0 schema (currently uses legacy format, shows as Unreachable)
 - [x] Apply PSM feedback: added explicit live-fetch instruction to skill Step 2 and Manus agent update rule — "Always fetch and read the live tracker template before writing or updating bds-meta.json — do not rely on the template reproduced in this skill, which may be stale" — 2026-04-22
+- [x] Implement dark/light mode toggle — v2.12.0 — 2026-04-23
+  - ThemeContext updated: key `eri-theme`, default `dark`, switchable=true
+  - CSS token system: `:root` = light tokens, `html.dark` = dark overrides
+  - ThemeToggleButton component: sun/moon icon, tooltip with energy message, aria-label
+  - SiteHeader (App.tsx): dark-aware classes, ThemeToggleButton in right zone
+  - TabNav (App.tsx): dark-aware classes
+  - PublicLayout footer: energy statement + toggle (placeholder copy pending updated research)
+  - EriAppHeader: new `showThemeToggle` prop (default false) — self-contained toggle logic
+  - EriPageLayout: new `showThemeToggle` prop — passes through to EriAppHeader
+  - BDS site Surface Modes section: new "Dark by Default" subsection with implementation guide
+  - FOLC prevention script documented in EriAppHeader JSDoc and BDS site
+- [ ] Update BDS site version strings to v2.12.0 (Standard Components section)
+- [ ] Push v2.12.0 git tag
+- [ ] Update energy statement copy (footer + Surface Modes section) once updated research report arrives
+- [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
 
 ---
 

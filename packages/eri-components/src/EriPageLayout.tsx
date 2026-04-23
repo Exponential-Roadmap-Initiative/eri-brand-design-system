@@ -1,5 +1,5 @@
 /**
- * EriPageLayout — ERI Brand Design System v2.9.2
+ * EriPageLayout — ERI Brand Design System v2.12.0
  *
  * Canonical layout wrapper for all ERI applications.
  * Renders EriAppHeader and EriAppFooter ONCE, wrapping all page content.
@@ -21,6 +21,7 @@
  *         sourceLabel="Exponential Taxonomy"
  *         returnUrl="https://taxonomy.exponentialroadmap.org"
  *         footerTagline="The definitive framework for corporate climate action."
+ *         showThemeToggle={true}
  *         onMenuClick={() => setMenuOpen(true)}
  *       >
  *         <NavDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
@@ -42,6 +43,18 @@
  *   - Each page's outermost div must set its own background (e.g. bg-[#F9FAFB]) — the layout wrapper
  *     sets #232323 on the outer shell; pages must override this for their own content area
  *   - EriPageLayout does NOT add pt-16 — pages must clear the fixed 64px header themselves
+ *
+ * THEME TOGGLE (showThemeToggle):
+ *   - Dark mode is the ERI default — it saves display energy on OLED screens
+ *   - Set showThemeToggle={true} to let users opt in to light mode
+ *   - Add the FOLC-prevention script to index.html <head> to avoid flash of light content:
+ *
+ *     <script>
+ *       (function() {
+ *         var t = localStorage.getItem('eri-theme');
+ *         if (!t || t === 'dark') document.documentElement.classList.add('dark');
+ *       })();
+ *     </script>
  *
  * Required in index.css:
  *   :root {
@@ -99,6 +112,14 @@ interface EriPageLayoutProps {
   onMenuClick?: () => void;
   /** Logo href — defaults to "/" */
   logoHref?: string;
+  /**
+   * Show the dark/light mode toggle button in the header.
+   * Dark mode is the ERI default — it saves display energy on OLED screens.
+   * Set to true to let users opt in to light mode.
+   * Add the FOLC-prevention script to index.html <head> (see component JSDoc above).
+   * Defaults to false.
+   */
+  showThemeToggle?: boolean;
   /** Page content — include your drawer component here as a sibling to Router */
   children: React.ReactNode;
 }
@@ -117,6 +138,7 @@ export function EriPageLayout({
   footerLinks,
   onMenuClick,
   logoHref = '/',
+  showThemeToggle = false,
   children,
 }: EriPageLayoutProps) {
   // Clean delegation — no internal menuOpen state (that belongs to the consuming app)
@@ -137,6 +159,7 @@ export function EriPageLayout({
         contactSubject={contactSubject}
         onMenuClick={handleMenuClick}
         logoHref={logoHref}
+        showThemeToggle={showThemeToggle}
       />
 
       {/* Page content — each page must add its own top padding to clear the fixed 64px header */}

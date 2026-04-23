@@ -3173,7 +3173,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-gray-400 mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.11.1&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.12.0&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-gray-400 mb-2">
@@ -4502,6 +4502,74 @@ const tabs: TabConfig[] = [
             </div>
           </div>
 
+          {/* ── DARK BY DEFAULT ── */}
+          <div id="dark-by-default" className="bg-[#111111] rounded-xl p-6 mb-10 border border-[#2e2e2e]">
+            <div className="flex items-start gap-4">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-[#1a2e1a] border border-[#3ba559]/30 flex items-center justify-center">
+                {/* Leaf icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#3ba559]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <h3 className="font-archivo font-bold text-white text-lg">Dark by Default</h3>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3ba559]/20 text-[#93cda3] border border-[#3ba559]/30">v2.12.0</span>
+                </div>
+                <p className="text-sm text-gray-300 mb-4 max-w-2xl leading-relaxed">
+                  From v2.12.0, dark mode is the <strong className="text-white">ERI default</strong> for all applications — not just marketing pages.
+                  OLED screens consume near-zero power for dark pixels; switching to dark mode saves meaningful display energy at scale.
+                  Light mode remains available for users who need it, but it is opt-in, not the starting point.
+                </p>
+                {/* Placeholder energy stat — will be updated with specific figures from updated research */}
+                <div className="bg-[#0d2828] border border-[#1a4a4a] rounded-lg p-4 mb-4">
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    <span className="text-[#93E07D] font-semibold">Energy context (OLED screens):</span>{" "}
+                    Dark pixels on OLED displays require near-zero power compared to light pixels.
+                    Specific global figures will be added once updated research is confirmed.
+                    Light mode is available for those who need it — the toggle is in the header and footer.
+                  </p>
+                </div>
+                <h4 className="text-sm font-semibold text-white mb-3">Implementation</h4>
+                <div className="grid md:grid-cols-2 gap-4 text-xs">
+                  <div className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-4">
+                    <p className="text-[#93E07D] font-semibold mb-2">1. FOLC prevention script (index.html)</p>
+                    <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<script>
+(function() {
+  var t = localStorage.getItem('eri-theme');
+  if (!t || t === 'dark')
+    document.documentElement.classList.add('dark');
+})();
+</script>`}</pre>
+                    <p className="text-gray-500 mt-2">Add to {'<head>'} before any CSS. Prevents flash of light content on page load.</p>
+                  </div>
+                  <div className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-4">
+                    <p className="text-[#93E07D] font-semibold mb-2">2. EriPageLayout prop</p>
+                    <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<EriPageLayout
+  appName="Your App"
+  showThemeToggle={true}
+  ...
+/>`}</pre>
+                    <p className="text-gray-500 mt-2">The toggle reads/writes <code className="text-gray-400">localStorage</code> key <code className="text-gray-400">eri-theme</code> and applies the <code className="text-gray-400">dark</code> class to <code className="text-gray-400">&lt;html&gt;</code>.</p>
+                  </div>
+                </div>
+                <div className="mt-4 grid md:grid-cols-3 gap-3 text-xs">
+                  {[
+                    { q: "Default theme?", a: "Dark — always" },
+                    { q: "Storage?",       a: "localStorage key eri-theme" },
+                    { q: "OS preference?", a: "Ignored — dark is the ERI statement" },
+                  ].map((r) => (
+                    <div key={r.q} className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-3">
+                      <p className="text-gray-500 mb-1">{r.q}</p>
+                      <p className="font-semibold text-[#93E07D]">{r.a}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Hero image gallery */}
           <h3 className="font-archivo font-bold text-lg text-[#232323] mb-2">Dark Hero Background Images</h3>
           <p className="text-gray-600 text-sm mb-6 max-w-2xl">
@@ -5026,7 +5094,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <div>{'{'}</div>
                 <div className="pl-4">{`"appName": "Your App Name",`}</div>
                 <div className="pl-4">{`"version": "V.YYYY.MM.DD",`}</div>
-                <div className="pl-4">{`"eriComponentsPin": "v2.11.1",`}</div>
+                <div className="pl-4">{`"eriComponentsPin": "v2.12.0",`}</div>
                 <div className="pl-4">{`"overallStatus": "green",`}</div>
                 <div className="pl-4">{`"components": { ... }`}</div>
                 <div>{'}'}</div>

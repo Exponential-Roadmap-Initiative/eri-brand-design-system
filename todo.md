@@ -54,3 +54,21 @@
 - [x] Move Checklist column to appear after CSS Import column in /tracker project table
 - [x] Update Skills card in BrandDesignSystem.tsx: version v1.1.0 → v2.0.0, date → 23 Apr 2026, feature tags, CDN URLs, asset table version
 - [x] Add Skill release process section to PROJECT-CONTEXT.md with upload command and current CDN URL
+
+## Dark / Light Mode — v2.12.0
+- [x] Update ThemeContext: key eri-theme, default dark, switchable=true
+- [x] Add dark CSS token block to index.css (html.dark override)
+- [x] Update App.tsx ThemeProvider: defaultTheme=dark, switchable=true
+- [x] Add ThemeToggleButton component (sun/moon icon, tooltip, aria-label)
+- [x] Wire ThemeToggleButton into SiteHeader in App.tsx
+- [x] Add energy statement + toggle to PublicLayout footer (placeholder copy)
+- [x] Add showThemeToggle prop to EriAppHeader in @eri/components
+- [x] Add showThemeToggle prop to EriPageLayout in @eri/components (pass-through)
+- [x] Bump @eri/components to v2.12.0
+- [x] Update BDS site version strings and install command
+- [x] Add 'Dark by Default' subsection to Surface Modes section (placeholder energy copy)
+- [x] Update PROJECT-CONTEXT.md with dark mode decisions
+- [ ] Push v2.12.0 git tag
+- [ ] Save checkpoint
+- [ ] Update energy statement copy once updated research report arrives
+- [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
