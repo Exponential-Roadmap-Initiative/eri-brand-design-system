@@ -168,6 +168,7 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [ ] Add `bds-meta.json` to Trust site — it is the only registered project still missing the file
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
 - [ ] Update Framework site's `bds-meta.json` to v1.0 schema (currently uses legacy format, shows as Unreachable)
+- [x] Apply PSM feedback: added explicit live-fetch instruction to skill Step 2 and Manus agent update rule — "Always fetch and read the live tracker template before writing or updating bds-meta.json — do not rely on the template reproduced in this skill, which may be stale" — 2026-04-22
 
 ---
 
