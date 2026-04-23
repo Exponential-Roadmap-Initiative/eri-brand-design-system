@@ -52,3 +52,5 @@
 - [x] Update BDS site's own bds-meta.json with new fields
 - [x] Apply PSM feedback: add explicit live-fetch instruction to skill — always fetch live tracker template before writing bds-meta.json, do not rely on skill's reproduced template
 - [x] Move Checklist column to appear after CSS Import column in /tracker project table
+- [x] Update Skills card in BrandDesignSystem.tsx: version v1.1.0 → v2.0.0, date → 23 Apr 2026, feature tags, CDN URLs, asset table version
+- [x] Add Skill release process section to PROJECT-CONTEXT.md with upload command and current CDN URL

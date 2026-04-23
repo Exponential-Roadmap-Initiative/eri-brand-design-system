@@ -253,6 +253,19 @@ If any answer is "no" or "unsure", fix it before closing the task.
 
 ---
 
+## Skill release process — update when skill changes
+
+Whenever the `eri-bds-reference` skill is updated, the following must also be updated:
+
+1. Upload the updated `SKILL.md` to CDN: `cp /home/ubuntu/skills/eri-bds-reference/SKILL.md /home/ubuntu/webdev-static-assets/eri-bds-reference-vX.Y.Z.skill && manus-upload-file --webdev /home/ubuntu/webdev-static-assets/eri-bds-reference-vX.Y.Z.skill`
+2. Update the Skills card in `BrandDesignSystem.tsx`: version badge, updated date, feature tags, CDN URLs (Download Skill button, CDN URL button, filename label), and asset URL table row.
+3. Update the skill description metadata (`Version: X.Y.Z`) in `SKILL.md` if the version changed.
+4. Save checkpoint.
+
+**Current skill version:** v2.0.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.0.0_d996bc45.skill`
+
+---
+
 ## Release process for @eri/components version bumps
 
 1. Update `packages/eri-components/package.json` version field

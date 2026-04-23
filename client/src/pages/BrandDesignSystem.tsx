@@ -4652,16 +4652,16 @@ const tabs: TabConfig[] = [
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
-                    <span className="text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">v1.1.0</span>
-                    <span className="text-[10px] text-gray-400">Updated 12 Apr 2026</span>
+                    <span className="text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">v2.0.0</span>
+                    <span className="text-[10px] text-gray-400">Updated 23 Apr 2026</span>
                   </div>
                   <p className="text-sm text-gray-600 mb-3 max-w-2xl">
                     A portable Manus skill that embeds the ERI brand reference directly into any AI project.
                     Once installed, the agent automatically consults the correct colour tokens, typography rules,
-                    navigation tiers, and CDN asset URLs before acting — without needing a manual prompt.
+                    component summaries, bds-meta.json spec, and the full Project Alignment Checklist before acting — without needing a manual prompt.
                   </p>
                   <div className="flex flex-wrap gap-2 mb-3">
-                    {["Pre-action checklist", "Colour tokens", "Typography rules", "Navigation tiers", "Favicon spec", "CDN asset URLs", "Language rules", "Section index"].map((tag) => (
+                    {["Pre-action checklist", "System Operations", "Colour tokens", "Typography rules", "Navigation tiers", "Component summaries", "bds-meta.json spec", "Project Alignment Checklist", "Contact Us integration", "CDN asset URLs", "Language rules"].map((tag) => (
                       <span key={tag} className="text-[11px] bg-[#f0faf3] text-[#3ba559] border border-[#c6e8d0] px-2 py-0.5 rounded font-medium">{tag}</span>
                     ))}
                   </div>
@@ -4676,15 +4676,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.2.0_dc90d54c.skill"
-                    download="eri-bds-reference-v1.2.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.0.0_d996bc45.skill"
+                    download="eri-bds-reference-v2.0.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.2.0_dc90d54c.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.0.0_d996bc45.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-gray-300 text-gray-600 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
@@ -4692,7 +4692,7 @@ const tabs: TabConfig[] = [
                     <ExternalLink className="w-3.5 h-3.5" />
                     CDN URL
                   </a>
-                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v1.2.0</p>
+                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v2.0.0</p>
                 </div>
               </div>
             </CardContent>
@@ -5082,14 +5082,14 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <tbody className="font-mono text-[11px]">
                   <tr className="border-b border-gray-100">
                     <td className="py-1.5 pr-3 font-sans font-medium text-gray-700">eri-bds-reference</td>
-                    <td className="py-1.5 pr-3 text-gray-500">v1.0.0</td>
+                    <td className="py-1.5 pr-3 text-gray-500">v2.0.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v1.2.0_dc90d54c.skill"
-                        download="eri-bds-reference-v1.2.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.0.0_d996bc45.skill"
+                        download="eri-bds-reference-v2.0.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v1.2.0_dc90d54c.skill
+                        eri-bds-reference-v2.0.0_d996bc45.skill
                       </a>
                     </td>
                   </tr>
