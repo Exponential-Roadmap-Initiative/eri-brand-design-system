@@ -387,9 +387,9 @@ export default function AlignmentTracker() {
                   { label: "Status",       w: "" },
                   { label: "Package Pin",  w: "" },
                   { label: "CSS Import",   w: "" },
+                  { label: "Checklist",    w: "" },
                   ...COMPONENT_NAMES.map((c) => ({ label: c.replace("Eri", ""), w: "" })),
                   { label: "Violations",   w: "" },
-                  { label: "Checklist",    w: "" },
                   { label: "Updated",      w: "" },
                 ].map(({ label, w }) => (
                   <th
@@ -451,6 +451,10 @@ export default function AlignmentTracker() {
                         : <CssCell method={meta?.cssImportMethod} />}
                     </td>
 
+                     {/* Checklist score */}
+                    <td className="px-4 py-4">
+                      <ChecklistScoreCell meta={meta} isLoading={isLoading} isError={isError} />
+                    </td>
                     {/* Component columns */}
                     {COMPONENT_NAMES.map((c) => (
                       <td key={c} className="px-4 py-4">
@@ -465,17 +469,11 @@ export default function AlignmentTracker() {
                             })()}
                       </td>
                     ))}
-
                     {/* Violations */}
                     <td className="px-4 py-4 max-w-[200px]">
                       {isLoading ? <span className="text-xs animate-pulse" style={{ color: "#e5e7eb" }}>…</span>
                         : isError ? <ViolationsCell error={result.error} />
                         : <ViolationsCell violations={activeViolations(meta)} />}
-                    </td>
-
-                    {/* Checklist score */}
-                    <td className="px-4 py-4">
-                      <ChecklistScoreCell meta={meta} isLoading={isLoading} isError={isError} />
                     </td>
 
                     {/* Updated */}

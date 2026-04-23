@@ -51,3 +51,4 @@
 - [x] Update AlignmentTracker: Checklist score column, self-reporting note, updated canonical template and seed template
 - [x] Update BDS site's own bds-meta.json with new fields
 - [x] Apply PSM feedback: add explicit live-fetch instruction to skill — always fetch live tracker template before writing bds-meta.json, do not rely on skill's reproduced template
+- [x] Move Checklist column to appear after CSS Import column in /tracker project table
