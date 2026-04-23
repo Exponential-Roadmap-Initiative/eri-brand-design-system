@@ -68,7 +68,21 @@
 - [x] Update BDS site version strings and install command
 - [x] Add 'Dark by Default' subsection to Surface Modes section (placeholder energy copy)
 - [x] Update PROJECT-CONTEXT.md with dark mode decisions
-- [ ] Push v2.12.0 git tag
-- [ ] Save checkpoint
+- [x] Push v2.12.0 git tag
+- [x] Save checkpoint
 - [ ] Update energy statement copy once updated research report arrives
 - [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
+
+## Dark Mode — Full Implementation (Learning Exercise) v2.12.1
+
+- [ ] Define complete semantic token set in index.css (:root light, html.dark overrides)
+- [ ] Configure Tailwind dark variant (@custom-variant dark) in index.css
+- [ ] Replace structural bg/text/border colours in PublicLayout.tsx
+- [ ] Replace structural bg/text/border colours in App.tsx SiteHeader and TabNav
+- [ ] Replace structural bg/text/border colours in BrandDesignSystem.tsx layout wrappers (not doc swatches)
+- [ ] Replace structural bg/text/border colours in AlignmentTracker.tsx
+- [ ] Verify full-page dark mode visually in browser
+- [ ] Verify full-page light mode visually in browser
+- [ ] Iterate on colour issues found during visual testing
+- [ ] Document learnings in PROJECT-CONTEXT.md as canonical pattern
+- [ ] Checkpoint v2.12.1

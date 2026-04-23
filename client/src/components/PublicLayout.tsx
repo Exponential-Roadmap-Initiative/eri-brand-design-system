@@ -2,16 +2,14 @@
  * ERI Brand Design System — PublicLayout
  * Design: Faithful Documentation Mirror
  *
- * Header follows the established ERI web app pattern (AppHeader.tsx in PSM / Exp Playbook apps):
- *   TOP STRIP: 4px dark teal border (#2c3f43) across the full header width
- *   LEFT:  ERI logo (h-8) → 1px gray-300 vertical divider → single-line app title
- *            App title: 18px / 600 / #384151 (dark blue-slate)
- *            NO supertitle — the logo already identifies ERI
- *   RIGHT: BETA badge (outlined pill) → version string → hamburger icon
+ * Dark/light mode: all structural colours use Tailwind semantic tokens
+ * (bg-background, text-foreground, border-border, etc.) so the entire
+ * page adapts when the html.dark class is toggled.
  *
- * Footer follows the public website pattern (exponentialroadmap.org):
- *   Background: #232323 (dark charcoal — NOT dark green)
- *   Text: white; accent links: brand green-300 (#93cda3)
+ * What stays hardcoded (intentionally):
+ *   - ERI footer (#232323) — always dark, this is the brand
+ *   - 4px top strip (#2c3f43) — always dark, this is the brand
+ *   - ERI green accents (#3ba559, #93cda3) — brand colours, not theme colours
  *
  * hideHeader prop: when true, the fixed header is suppressed so the shared
  * SiteHeader in App.tsx renders instead (used by AlignmentTracker tab).
@@ -39,11 +37,11 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
 }) {
   const headerBg = transparentHeader && !scrolled
     ? "bg-transparent border-transparent"
-    : "bg-white border-b border-gray-200";
+    : "bg-background border-b border-border";
 
   return (
     <>
-      {/* Dark teal top strip — 4px, colour #2c3f43, always visible */}
+      {/* Dark teal top strip — 4px, colour #2c3f43, always visible regardless of theme */}
       <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[#2c3f43]" />
 
       <header className={`fixed top-1 left-0 right-0 z-50 h-16 transition-all duration-200 ${headerBg}`}>
@@ -55,36 +53,39 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
               <img
                 src={logos.eriLogoFullColor}
                 alt="Exponential Roadmap Initiative logo"
-                className="h-8 w-auto"
+                className="h-8 w-auto dark:brightness-0 dark:invert"
               />
             </a>
 
             {/* Vertical divider — hidden on mobile */}
-            <div className="hidden sm:block h-6 w-px bg-gray-300 shrink-0" />
+            <div className="hidden sm:block h-6 w-px bg-border shrink-0" />
 
-            {/* App title — single line, 18px / 600 / #384151 dark blue-slate — hidden on mobile */}
-            <span className="hidden sm:inline text-[18px] font-semibold text-[#384151] truncate">
+            {/* App title — single line, 18px / 600 */}
+            <span className="hidden sm:inline text-[18px] font-semibold text-foreground truncate">
               Brand Design System
             </span>
           </div>
 
-          {/* RIGHT: BETA badge + version + hamburger */}
+          {/* RIGHT: BETA badge + version + theme toggle + hamburger */}
           <div className="flex items-center gap-2 shrink-0">
 
-            {/* BETA badge — outlined pill, matches PSM app style */}
-            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full border border-gray-400 text-[11px] font-medium text-gray-600 tracking-wide">
+            {/* BETA badge — outlined pill */}
+            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full border border-border text-[11px] font-medium text-muted-foreground tracking-wide">
               BETA
             </span>
 
             {/* Version string — V.YYYY.MM.DD convention */}
-            <span className="hidden sm:inline text-[11px] font-medium text-gray-500 tracking-wide">
+            <span className="hidden sm:inline text-[11px] font-medium text-muted-foreground tracking-wide">
               {APP_VERSION}
             </span>
+
+            {/* Theme toggle */}
+            <ThemeToggleButton size="sm" />
 
             {/* Hamburger menu — visible on mobile only (lg+ uses the left panel) */}
             <button
               onClick={() => setMenuOpen(true)}
-              className="lg:hidden inline-flex items-center justify-center size-9 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
+              className="lg:hidden inline-flex items-center justify-center size-9 rounded-md text-foreground hover:bg-muted transition-colors"
               aria-label="Open navigation menu"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -99,20 +100,20 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
 
       {/* ── MOBILE NAVIGATION OVERLAY ── */}
       {menuOpen && (
-        <div className="fixed inset-0 z-[60] bg-white flex flex-col">
+        <div className="fixed inset-0 z-[60] bg-background flex flex-col">
           {/* Overlay header */}
-          <div className="flex items-center justify-between px-4 h-16 border-b border-gray-200">
+          <div className="flex items-center justify-between px-4 h-16 border-b border-border">
             <div className="flex items-center gap-3">
-              <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto" />
-              <div className="hidden sm:block h-6 w-px bg-gray-300" />
+              <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto dark:brightness-0 dark:invert" />
+              <div className="hidden sm:block h-6 w-px bg-border" />
               <div className="hidden sm:flex flex-col leading-tight">
-                <span className="text-[11px] font-medium text-gray-400 uppercase tracking-widest">Exponential Roadmap Initiative</span>
-                <span className="text-base font-semibold text-gray-700">Brand Design System</span>
+                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">Exponential Roadmap Initiative</span>
+                <span className="text-base font-semibold text-foreground">Brand Design System</span>
               </div>
             </div>
             <button
               onClick={() => setMenuOpen(false)}
-              className="inline-flex items-center justify-center size-9 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center justify-center size-9 rounded-md text-foreground hover:bg-muted transition-colors"
               aria-label="Close menu"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -123,7 +124,7 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
 
           {/* Section links — mobile only (lg+ uses the left panel instead) */}
           <nav className="flex flex-col gap-0.5 p-4 overflow-y-auto flex-1">
-            <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-3 px-3">On this page</p>
+            <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3 px-3">On this page</p>
             {[
               { href: "#introduction",          label: "Introduction" },
             ].map(({ href, label }) => (
@@ -131,12 +132,12 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#3ba559] hover:bg-gray-50 rounded-md transition-colors"
+                className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
               >
                 {label}
               </a>
             ))}
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">Communications &amp; Brand</p>
+            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-border">Communications &amp; Brand</p>
             {[
               { href: "#brand-proposition",     label: "Brand Proposition" },
               { href: "#visual-identity",        label: "Visual Identity" },
@@ -155,12 +156,12 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#3ba559] hover:bg-gray-50 rounded-md transition-colors"
+                className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
               >
                 {label}
               </a>
             ))}
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">Web &amp; Development</p>
+            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-border">Web &amp; Development</p>
             {[
               { href: "#navigation",         label: "Navigation & Layout" },
               { href: "#spacing",            label: "Spacing & Layout" },
@@ -176,18 +177,18 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#3ba559] hover:bg-gray-50 rounded-md transition-colors"
+                className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
               >
                 {label}
               </a>
             ))}
             {/* External links */}
-            <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="mt-4 pt-4 border-t border-border">
               <a
                 href="https://exponentialroadmap.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-2 text-sm font-medium text-[#3ba559] hover:text-[#2d8a47] flex items-center gap-2 transition-colors rounded-md hover:bg-gray-50"
+                className="px-3 py-2 text-sm font-medium text-[#3ba559] hover:text-[#2d8a47] flex items-center gap-2 transition-colors rounded-md hover:bg-muted"
               >
                 ERI Website <span aria-hidden>→</span>
               </a>
@@ -215,7 +216,7 @@ export default function PublicLayout({ children, transparentHeader = false, hide
   }, [menuOpen]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F9FAFB]">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
 
       {/* ── FIXED HEADER — suppressed when hideHeader=true ── */}
       {!hideHeader && (
@@ -233,7 +234,7 @@ export default function PublicLayout({ children, transparentHeader = false, hide
         {children}
       </main>
 
-      {/* ── FOOTER — public website pattern ── */}
+      {/* ── FOOTER — always dark, this is the ERI brand ── */}
       {!hideFooter && (
         <footer className="bg-[#232323] text-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -257,7 +258,6 @@ export default function PublicLayout({ children, transparentHeader = false, hide
                 <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Resources</h3>
                 <ul className="space-y-2">
                   {[
-                    { label: "Brand Guidelines", href: "#brand-proposition" },
                     { label: "Component Library", href: "#components" },
                     { label: "Colour Tokens", href: "#visual-identity" },
                     { label: "Typography", href: "#typography" },

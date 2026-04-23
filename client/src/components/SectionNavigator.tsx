@@ -103,7 +103,7 @@ export default function SectionNavigator({ className = "" }: SectionNavigatorPro
       className={`hidden lg:flex flex-col gap-0.5 ${className}`}
     >
       {/* "On this page" header */}
-      <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-3 px-3">
+      <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3 px-3">
         On this page
       </p>
 
@@ -115,12 +115,12 @@ export default function SectionNavigator({ className = "" }: SectionNavigatorPro
         return (
           <React.Fragment key={id}>
             {isZone1Start && (
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-border">
                 Communications &amp; Brand
               </p>
             )}
             {isZone2Start && (
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-gray-200">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 pt-4 pb-1 mt-2 border-t border-border">
                 Web &amp; Development
               </p>
             )}
@@ -130,20 +130,20 @@ export default function SectionNavigator({ className = "" }: SectionNavigatorPro
                 "group text-left px-3 py-2 rounded-md transition-all duration-150 cursor-pointer",
                 isActive
                   ? "bg-[#3ba559]/10 border-l-2 border-[#3ba559]"
-                  : "border-l-2 border-transparent hover:bg-gray-100 hover:border-gray-300",
+                  : "border-l-2 border-transparent hover:bg-muted hover:border-border",
               ].join(" ")}
               aria-current={isActive ? "location" : undefined}
             >
               <span
                 className={[
                   "block text-[13px] leading-tight font-medium transition-colors",
-                  isActive ? "text-[#3ba559]" : "text-gray-600 group-hover:text-gray-900",
+                  isActive ? "text-[#3ba559]" : "text-muted-foreground group-hover:text-foreground",
                 ].join(" ")}
               >
                 {label}
               </span>
               {sublabel && (
-                <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">
+                <span className="block text-[11px] text-muted-foreground mt-0.5 leading-tight">
                   {sublabel}
                 </span>
               )}

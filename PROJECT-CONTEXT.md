@@ -180,7 +180,15 @@ Full spec: see `bds-meta-spec.md` in this project root.
   - EriPageLayout: new `showThemeToggle` prop — passes through to EriAppHeader
   - BDS site Surface Modes section: new "Dark by Default" subsection with implementation guide
   - FOLC prevention script documented in EriAppHeader JSDoc and BDS site
-- [ ] Update BDS site version strings to v2.12.0 (Standard Components section)
+- [x] Full-page dark mode implemented on BDS site — 2026-04-23
+  - All structural backgrounds replaced with semantic tokens (`bg-background`, `bg-card`, `bg-muted`)
+  - All structural text colours replaced with semantic tokens (`text-foreground`, `text-muted-foreground`)
+  - Documentation swatches (colour system, brand spec tables) intentionally remain hardcoded
+  - Tailwind dark variant fixed: `(&:where(.dark, .dark *))` — covers both html.dark and descendants
+  - PublicLayout: `bg-[#F9FAFB]` → `bg-background`; all structural colours semantic
+  - SectionNavigator: all hardcoded colours replaced with semantic tokens
+  - BrandDesignSystem.tsx: 3 passes of targeted replacements (structural only, not documentation)
+  - AlignmentTracker.tsx: structural backgrounds updated
 - [ ] Push v2.12.0 git tag
 - [ ] Update energy statement copy (footer + Surface Modes section) once updated research report arrives
 - [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern

@@ -288,7 +288,7 @@ function ColorSwatch({ name, hex, rgb, context, tones }: { name: string; hex: st
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-card border border-border rounded-lg overflow-hidden">
       {/* Tint background block — full-saturation colour dot + tint bg */}
       <div
         className="h-20 w-full flex items-center justify-center"
@@ -417,7 +417,7 @@ export default function BrandDesignSystem() {
         {/* ── INTRODUCTION ────────────────────────────────────────────────── */}
         {/* ================================================================ */}
         <section className="mb-16" id="introduction">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-3">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-3">
             Introduction
           </h2>
           {/* What is the BDS */}
@@ -478,18 +478,18 @@ export default function BrandDesignSystem() {
           {/* Two paths */}
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">TWO PATHS THROUGH THE BDS</p>
           <div className="grid sm:grid-cols-2 gap-4 mb-8">
-            <div className="rounded-lg p-5 border border-gray-200 bg-white">
+            <div className="rounded-lg p-5 border border-gray-200 bg-card">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-6 h-6 rounded-full bg-[#3ba559] text-white text-xs font-bold flex items-center justify-center">A</span>
-                <p className="text-sm font-bold text-[#232323]">Brand &amp; Communications only</p>
+                <p className="text-sm font-bold text-foreground">Brand &amp; Communications only</p>
               </div>
               <p className="text-xs text-gray-600 leading-relaxed mb-3">Use the <strong>Communications &amp; Brand zone</strong> for colour, typography, logo, and verbal identity. No code or package installation required.</p>
               <p className="text-[10px] text-gray-400 font-mono">Sections: Visual Identity → Verbal Identity</p>
             </div>
-            <div className="rounded-lg p-5 border-2 border-[#3ba559] bg-white">
+            <div className="rounded-lg p-5 border-2 border-[#3ba559] bg-card">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-6 h-6 rounded-full bg-[#3ba559] text-white text-xs font-bold flex items-center justify-center">B</span>
-                <p className="text-sm font-bold text-[#232323]">Building an ERI application</p>
+                <p className="text-sm font-bold text-foreground">Building an ERI application</p>
               </div>
               <p className="text-xs text-gray-600 leading-relaxed mb-3">Install <code className="font-mono bg-gray-100 px-1 rounded">@eri/components</code> and follow the <strong>Standard Components</strong> section. This is the mandatory starting point for all ERI public-facing applications.</p>
               <p className="text-[10px] text-gray-400 font-mono">Sections: Standard Components → UI Components</p>
@@ -498,7 +498,7 @@ export default function BrandDesignSystem() {
 
           {/* Standard Components quick-start callout */}
           <div className="rounded-lg p-6 mb-6 border-l-4" style={{ backgroundColor: '#f0fdf4', borderLeftColor: '#3ba559' }}>
-            <p className="text-sm font-bold text-[#232323] mb-1">Building an ERI app? Start with Standard Components.</p>
+            <p className="text-sm font-bold text-foreground mb-1">Building an ERI app? Start with Standard Components.</p>
             <p className="text-xs text-gray-600 leading-relaxed mb-4">
               The <code className="font-mono bg-green-100 px-1 rounded">@eri/components</code> package ships six canonical components that every ERI public-facing application must use verbatim.
               Install once, import, and the layout, header, hero, footer, status badges, and contact button are all handled.
@@ -553,7 +553,7 @@ export default function BrandDesignSystem() {
         {/* SECTION 1: BRAND PROPOSITION */}
         {/* ================================================================ */}
         <section className="mb-16" id="brand-proposition">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-8">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-8">
             Brand Proposition
           </h2>
 
@@ -574,11 +574,11 @@ export default function BrandDesignSystem() {
           {/* Core Values */}
           <Card className="shadow-sm mb-8">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-6 text-lg">Core Values</h3>
+              <h3 className="font-bold text-foreground mb-6 text-lg">Core Values</h3>
               <div className="grid md:grid-cols-4 gap-6">
                 {brandProposition.values.map((value) => (
                   <div key={value.name} className="border-t-4 border-[#3ba559] pt-4">
-                    <h4 className="font-archivo font-extrabold text-[#232323] text-base mb-2">{value.name}</h4>
+                    <h4 className="font-archivo font-extrabold text-foreground text-base mb-2">{value.name}</h4>
                     <p className="text-sm text-gray-600 leading-relaxed">{value.description}</p>
                   </div>
                 ))}
@@ -588,8 +588,8 @@ export default function BrandDesignSystem() {
 
           {/* Brand Personality */}
           <div className="rounded-lg p-8 bg-[#F9FAFB] border border-gray-200">
-            <h3 className="font-bold text-[#232323] mb-3 text-lg">Brand Personality</h3>
-            <p className="font-archivo font-bold text-[#232323] text-xl italic leading-relaxed">"{brandProposition.personality}"</p>
+            <h3 className="font-bold text-foreground mb-3 text-lg">Brand Personality</h3>
+            <p className="font-archivo font-bold text-foreground text-xl italic leading-relaxed">"{brandProposition.personality}"</p>
           </div>
         </section>
 
@@ -597,7 +597,7 @@ export default function BrandDesignSystem() {
         {/* SECTION 2: VISUAL IDENTITY — COLOURS */}
         {/* ================================================================ */}
         <section className="mb-16" id="visual-identity">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Visual Identity
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -605,7 +605,7 @@ export default function BrandDesignSystem() {
             that creates instant recognition and helps users navigate complex climate information.
           </p>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Brand Colours</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Brand Colours</h3>
           <p className="text-gray-600 mb-6 text-sm">
             Core brand colours for UI elements, text, and backgrounds. These provide the foundation for all interfaces.
           </p>
@@ -615,7 +615,7 @@ export default function BrandDesignSystem() {
             ))}
           </div>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Pillar Colours</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Pillar Colours</h3>
           <p className="text-gray-600 mb-6 text-sm">
             These colours represent the five dimensions of organisational climate impact. Use them consistently
             to reinforce the framework structure.
@@ -627,7 +627,7 @@ export default function BrandDesignSystem() {
           </div>
 
           {/* Dark Image Hero */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg mt-12">Dark Image Hero — Standard</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg mt-12">Dark Image Hero — Standard</h3>
           <p className="text-gray-600 mb-6 text-sm max-w-3xl">
             The standard hero pattern for all ERI web applications and marketing sites. A full-bleed background image
             is overlaid with a semi-transparent <code className="font-mono bg-gray-100 px-1 rounded">#232323</code> at 80–85% opacity.
@@ -662,15 +662,15 @@ export default function BrandDesignSystem() {
                 <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">Hero Anatomy</p>
                 <table className="w-full text-xs">
                   <tbody>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Background</td><td className="py-1.5 font-mono text-[#232323]">Full-bleed image + <span className="text-[#232323] font-bold">#232323</span> at 80–85% opacity</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Text alignment</td><td className="py-1.5 font-mono text-[#232323]">text-left — NEVER text-center</td></tr>
-                     <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Left edge</td><td className="py-1.5 font-mono text-[#232323]">Anchored to logotype via <code className="text-xs text-[#3ba559] bg-green-50 px-1 rounded">--eri-content-inset</code> — wrap text block in <code className="text-xs">max-w-screen-xl mx-auto</code> container with <code className="text-xs">paddingInline: var(--eri-content-inset)</code>. Do NOT use raw <code className="text-xs">pl-*</code> padding.</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Content width</td><td className="py-1.5 font-mono text-[#232323]">max-w-xl (~540px) — right half reserved for image</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Eyebrow label</td><td className="py-1.5 font-mono text-[#232323]">Required — <span className="text-[#93E07D] font-bold">#93E07D</span> uppercase tracking-widest · "BRAND NAME ——— BETA"</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Heading</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · white · 4xl–6xl</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Accent word</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime — NEVER <span className="text-[#3ba559] font-bold">#3ba559</span> on dark bg</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · white/80 · 16–18px</td></tr>
-                    <tr><td className="py-1.5 pr-3 text-gray-500">CTA button</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime · dark text <code className="text-xs">#1a1a1a</code> · rounded-lg</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Background</td><td className="py-1.5 font-mono text-[#232323]">Full-bleed image + <span className="text-[#232323] font-bold">#232323</span> at 80–85% opacity</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Text alignment</td><td className="py-1.5 font-mono text-[#232323]">text-left — NEVER text-center</td></tr>
+                     <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Left edge</td><td className="py-1.5 font-mono text-[#232323]">Anchored to logotype via <code className="text-xs text-[#3ba559] bg-green-50 px-1 rounded">--eri-content-inset</code> — wrap text block in <code className="text-xs">max-w-screen-xl mx-auto</code> container with <code className="text-xs">paddingInline: var(--eri-content-inset)</code>. Do NOT use raw <code className="text-xs">pl-*</code> padding.</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Content width</td><td className="py-1.5 font-mono text-[#232323]">max-w-xl (~540px) — right half reserved for image</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Eyebrow label</td><td className="py-1.5 font-mono text-[#232323]">Required — <span className="text-[#93E07D] font-bold">#93E07D</span> uppercase tracking-widest · "BRAND NAME ——— BETA"</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Heading</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · white · 4xl–6xl</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Accent word</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime — NEVER <span className="text-[#3ba559] font-bold">#3ba559</span> on dark bg</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · white/80 · 16–18px</td></tr>
+                    <tr><td className="py-1.5 pr-3 text-muted-foreground">CTA button</td><td className="py-1.5 font-mono"><span className="text-[#93E07D] font-bold">#93E07D</span> Accent Lime · dark text <code className="text-xs">#1a1a1a</code> · rounded-lg</td></tr>
                   </tbody>
                 </table>
               </CardContent>
@@ -681,7 +681,7 @@ export default function BrandDesignSystem() {
         {/* SECTION 3: LOGO USAGE */}
         {/* ================================================================ */}
         <section className="mb-16" id="logo-usage">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Logo Usage
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -734,7 +734,7 @@ export default function BrandDesignSystem() {
                     {/* Name + download button row */}
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-[#232323] text-base mb-1">{v.name}</h3>
+                        <h3 className="font-bold text-foreground text-base mb-1">{v.name}</h3>
                         {/* File identifier chip */}
                         {vx.fileId && (
                           <div className="flex items-center gap-1.5 flex-wrap">
@@ -952,7 +952,7 @@ export default function BrandDesignSystem() {
         {/* SECTION 5: TYPOGRAPHY */}
         {/* ================================================================ */}
         <section className="mb-16" id="typography">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Typography
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -1026,7 +1026,7 @@ export default function BrandDesignSystem() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm bg-gray-50 border-gray-200">
+          <Card className="shadow-sm bg-muted border-border">
             <CardContent className="p-5">
               <h4 className="font-bold text-[#232323] mb-2 text-sm">Italic Variant</h4>
               <p className="text-sm text-gray-600 mb-3">Archivo supports italic. Used sparingly for hero accent phrases and pull quotes.</p>
@@ -1053,7 +1053,7 @@ export default function BrandDesignSystem() {
               </div>
               {/* Incorrect usage — on white background */}
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">❌ Do not use — on white/light background</p>
-              <div className="rounded-lg p-5 mb-4 bg-white border border-gray-200">
+              <div className="rounded-lg p-5 mb-4 bg-card border border-border">
                 <p className="font-archivo font-extrabold text-2xl text-[#232323]">
                   About the Exponential Roadmap <span className="text-[#93E07D] opacity-80">Initiative</span>
                 </p>
@@ -1069,7 +1069,7 @@ export default function BrandDesignSystem() {
             </CardContent>
           </Card>
           {/* Marketing vs. Application note */}
-          <Card className="shadow-sm border-gray-200 bg-gray-50 mt-6">
+          <Card className="shadow-sm border-border bg-muted mt-6">
             <CardContent className="p-5">
               <h4 className="font-bold text-[#232323] mb-3 text-sm">Typography on Light vs. Dark Backgrounds</h4>
               <div className="grid md:grid-cols-2 gap-6">
@@ -1077,11 +1077,11 @@ export default function BrandDesignSystem() {
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Dark Background (hero sections, dark cards)</p>
                   <table className="w-full text-xs">
                     <tbody>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–6xl · white</td></tr>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">H2 section</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · ~36px · #232323</td></tr>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#93E07D] font-bold">#93E07D</span> lime highlight</td></tr>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · 16px · #383838</td></tr>
-                      <tr><td className="py-1.5 pr-3 text-gray-500">Links</td><td className="py-1.5 font-mono text-[#232323]">Open Sans · <span className="text-[#93E07D]">#93E07D</span> Accent Lime</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–6xl · white</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">H2 section</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · ~36px · #232323</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#93E07D] font-bold">#93E07D</span> lime highlight</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · 16px · #383838</td></tr>
+                      <tr><td className="py-1.5 pr-3 text-muted-foreground">Links</td><td className="py-1.5 font-mono text-[#232323]">Open Sans · <span className="text-[#93E07D]">#93E07D</span> Accent Lime</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1089,11 +1089,11 @@ export default function BrandDesignSystem() {
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Light Background (white / #F9FAFB sections)</p>
                   <table className="w-full text-xs">
                     <tbody>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–5xl · #232323</td></tr>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">H2 section</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 3xl–4xl · #232323</td></tr>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#3ba559]">#3ba559</span> on white bg</td></tr>
-                      <tr className="border-b border-gray-100"><td className="py-1.5 pr-3 text-gray-500">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · 16px · #383838</td></tr>
-                      <tr><td className="py-1.5 pr-3 text-gray-500">Links</td><td className="py-1.5 font-mono text-[#232323]">Open Sans · <span className="text-[#3ba559]">#3ba559</span> primary green</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–5xl · #232323</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">H2 section</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 3xl–4xl · #232323</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Heading accent</td><td className="py-1.5 font-mono text-[#232323]">Archivo 700 · <span className="text-[#3ba559]">#3ba559</span> on white bg</td></tr>
+                      <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Body text</td><td className="py-1.5 font-mono text-[#232323]">Open Sans 400 · 16px · #383838</td></tr>
+                      <tr><td className="py-1.5 pr-3 text-muted-foreground">Links</td><td className="py-1.5 font-mono text-[#232323]">Open Sans · <span className="text-[#3ba559]">#3ba559</span> primary green</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1106,7 +1106,7 @@ export default function BrandDesignSystem() {
         {/* SECTION 6: VERBAL IDENTITY */}
         {/* ================================================================ */}
         <section className="mb-16" id="verbal-identity">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Verbal Identity
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -1244,7 +1244,7 @@ export default function BrandDesignSystem() {
         {/* ================================================================ */}
 
         <section id="photography" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Photography
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -1253,14 +1253,14 @@ export default function BrandDesignSystem() {
 
           {/* Philosophy */}
           <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Photography Philosophy</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-4">Photography Philosophy</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
                 { title: "Systemic, not aspirational", desc: "Show the systems that need to change — factories, ports, cities, energy grids — not idealised green futures. The scale of transformation must be visible." },
                 { title: "Documentary, not decorative", desc: "Photography carries editorial weight. Every image should communicate something specific about climate action, not simply illustrate a mood or fill space." },
                 { title: "Human scale within systems", desc: "Where people appear, they are interacting with infrastructure or technology — engineers, workers, cyclists. People ground the systemic narrative in lived experience." },
               ].map((item) => (
-                <div key={item.title} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div key={item.title} className="bg-card border border-border rounded-lg overflow-hidden">
                   <div className="px-5 py-3 bg-[#3ba559]">
                     <h4 className="font-archivo font-extrabold text-white text-base">{item.title}</h4>
                   </div>
@@ -1274,7 +1274,7 @@ export default function BrandDesignSystem() {
 
           {/* Subject Matter by Pillar */}
           <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Subject Matter by Pillar</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-4">Subject Matter by Pillar</h3>
             <p className="text-gray-500 text-sm mb-4">Photography subject matter maps directly to the five pillars. Use these categories when sourcing images for pillar-specific content.</p>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
@@ -1294,7 +1294,7 @@ export default function BrandDesignSystem() {
                     { pillar: "4 — Mobilize Finance & Investment", color: "#ff8b00", tint: pillarTints.pillar4, category: "Urban infrastructure & capital", examples: "City skylines, financial districts, construction sites", terms: "aerial city financial district, urban construction aerial, smart city" },
                     { pillar: "5 — Shape Policy & Narrative", color: "#ff5133", tint: pillarTints.pillar5, category: "People & governance", examples: "Cyclists, public transport, civic infrastructure", terms: "cyclists city commuting, public transport tram, urban planning aerial" },
                   ].map((row) => (
-                    <tr key={row.pillar} className="border-b border-gray-100">
+                    <tr key={row.pillar} className="border-b border-border/50">
                       <td className="px-4 py-3">
                         <span
                           className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-xs font-semibold"
@@ -1318,7 +1318,7 @@ export default function BrandDesignSystem() {
 
           {/* Composition Principles */}
           <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Composition Principles</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-4">Composition Principles</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
                 {
@@ -1343,7 +1343,7 @@ export default function BrandDesignSystem() {
                   alt: "Wind turbine engineer — Solutions pillar example",
                 },
               ].map((comp) => (
-                <div key={comp.type} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div key={comp.type} className="bg-card border border-border rounded-lg overflow-hidden">
                   <div className="aspect-video overflow-hidden bg-gray-100">
                     <img src={comp.example} alt={comp.alt} className="w-full h-full object-cover" />
                   </div>
@@ -1359,7 +1359,7 @@ export default function BrandDesignSystem() {
 
           {/* Colour Treatment */}
           <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Colour Treatment Rules</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-4">Colour Treatment Rules</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
@@ -1405,7 +1405,7 @@ export default function BrandDesignSystem() {
 
           {/* Approved Sources */}
           <div className="mb-10">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-4">Approved Sources</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-4">Approved Sources</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {[
                 { name: "Unsplash", url: "https://unsplash.com", type: "Free", note: "Best for aerial, urban, and technology subjects. Search by subject + 'aerial' for overhead shots." },
@@ -1413,7 +1413,7 @@ export default function BrandDesignSystem() {
                 { name: "Shutterstock", url: "https://shutterstock.com", type: "Licensed", note: "Used for supplementary imagery. Prefer editorial collections over generic stock." },
                 { name: "Company-provided", url: "", type: "Case studies", note: "Partner organisations (Ericsson, Skanska, Telia, etc.) can provide images for case studies with attribution." },
               ].map((src) => (
-                <div key={src.name} className="bg-white border border-gray-200 rounded-lg p-4">
+                <div key={src.name} className="bg-card border border-border rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-archivo font-bold text-[#232323] text-sm">{src.name}</span>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
@@ -1436,7 +1436,7 @@ export default function BrandDesignSystem() {
 
           {/* Curated Photo Library */}
           <div>
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Curated Photo Library</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Curated Photo Library</h3>
             <p className="text-gray-500 text-sm mb-4">
               29 curated images across all five pillars and brand. Each image has a stable reference ID
               (e.g. <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">ERI-OPS-001</code>) that
@@ -1451,7 +1451,7 @@ export default function BrandDesignSystem() {
         {/* SECTION: BRAND GRAPHICS & ILLUSTRATIONS */}
         {/* ================================================================ */}
         <section id="brand-graphics" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Brand Graphics &amp; Illustrations
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -1462,7 +1462,7 @@ export default function BrandDesignSystem() {
 
           {/* Hands Touching Hero — PRIMARY */}
           <div className="mb-12">
-            <h3 className="font-archivo text-lg font-bold text-[#232323] mb-2">Human-AI Lab Hero — Hands Touching (Primary)</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Human-AI Lab Hero — Hands Touching (Primary)</h3>
             <p className="text-gray-600 mb-6 max-w-3xl text-sm">
               The primary hero background for the Human-AI Lab and any human + AI collaboration narrative. Two translucent
               wireframe hands reach toward each other across the S-curve crossing point, fingertips meeting in a golden
@@ -1499,15 +1499,15 @@ export default function BrandDesignSystem() {
 
             {/* Asset details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-white border border-gray-200 rounded-xl p-5">
+              <div className="bg-card border border-border rounded-xl p-5">
                 <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Asset Details</h4>
                 <table className="w-full text-sm">
                   <tbody>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hal-hero-human-v2-hands.png</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Dimensions</td><td className="py-1.5 text-[#232323]">1456 × 816 px</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Format</td><td className="py-1.5 text-[#232323]">PNG</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Aspect ratio</td><td className="py-1.5 text-[#232323]">16:9</td></tr>
-                    <tr className="border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal grid · Wireframe hands</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hal-hero-human-v2-hands.png</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Dimensions</td><td className="py-1.5 text-[#232323]">1456 × 816 px</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Format</td><td className="py-1.5 text-[#232323]">PNG</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Aspect ratio</td><td className="py-1.5 text-[#232323]">16:9</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal grid · Wireframe hands</td></tr>
                     <tr><td className="py-1.5 text-gray-500 pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halHandsTouching</td></tr>
                   </tbody>
                 </table>
@@ -1524,7 +1524,7 @@ export default function BrandDesignSystem() {
                   </a>
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-xl p-5">
+              <div className="bg-card border border-border rounded-xl p-5">
                 <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Usage Rules</h4>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Always use full-bleed — the image must fill the entire hero section width.</span></li>
@@ -1588,7 +1588,7 @@ export default function BrandDesignSystem() {
         {/* SECTION 15: TESTIMONIALS */}
         {/* ================================================================ */}
         <section id="testimonials" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Testimonials &amp; Pull-Quotes
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -1601,7 +1601,7 @@ export default function BrandDesignSystem() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <Card className="shadow-sm">
               <CardContent className="p-6">
-                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Layout Anatomy</h3>
+                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-foreground mb-4">Layout Anatomy</h3>
                 <ul className="space-y-3 text-sm text-gray-600">
                   <li className="flex gap-3">
                     <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
@@ -1629,7 +1629,7 @@ export default function BrandDesignSystem() {
 
             <Card className="shadow-sm">
               <CardContent className="p-6">
-                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-[#232323] mb-4">Typography &amp; Spacing</h3>
+                <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-foreground mb-4">Typography &amp; Spacing</h3>
                 <div className="font-mono text-xs space-y-2 text-gray-600">
                   <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
                     <span className="text-gray-400">Section heading</span>
@@ -1665,7 +1665,7 @@ export default function BrandDesignSystem() {
           </div>
 
           {/* Live example */}
-          <h3 className="font-archivo font-bold text-base text-[#232323] mb-4">Live Example</h3>
+          <h3 className="font-archivo font-bold text-base text-foreground mb-4">Live Example</h3>
           <div className="bg-[#F9FAFB] rounded-xl p-8 md:p-12 mb-6">
             <h2
               className="font-archivo text-2xl md:text-3xl font-extrabold text-[#3ba559] mb-10"
@@ -1743,7 +1743,7 @@ export default function BrandDesignSystem() {
           </div>
 
           {/* Multiple testimonials note */}
-          <Card className="shadow-sm bg-gray-50 border-gray-200">
+          <Card className="shadow-sm bg-muted border-border">
             <CardContent className="p-4">
               <p className="text-sm text-gray-700">
                 <strong>Multiple testimonials:</strong> When displaying more than one testimonial, stack them vertically
@@ -1758,7 +1758,7 @@ export default function BrandDesignSystem() {
         {/* SECTION 8: EXPONENTIAL FRAMEWORK (unified) */}
         {/* ================================================================ */}
         <section className="mb-16" id="exponential-framework">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Exponential Framework
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -1767,7 +1767,7 @@ export default function BrandDesignSystem() {
           </p>
 
           {/* ── SUB-SECTION: PILLAR ICON ASSETS ── */}
-          <h3 className="font-archivo font-bold text-[#232323] text-xl mb-3 mt-2 border-b border-gray-200 pb-2">Pillar Icon Assets</h3>
+          <h3 className="font-archivo font-bold text-foreground text-xl mb-3 mt-2 border-b border-gray-200 pb-2">Pillar Icon Assets</h3>
           <p className="text-gray-600 mb-6 max-w-3xl text-sm">
             Five WebP images represent the Exponential Framework pillars. They appear in the full-screen navigation overlay, pillar detail pages, and framework diagrams. Import from{" "}
             <code className="text-sm font-mono bg-gray-100 px-1.5 py-0.5 rounded">client/src/lib/pillarColors.ts</code> for the canonical hex colours — never hard-code pillar colours inline.
@@ -1825,7 +1825,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           {/* ── SUB-SECTION: FRAMEWORK DIAGRAMS ── */}
           <div id="framework-diagrams" className="pt-4">
           <div className="flex items-center gap-3 mb-3 border-b border-gray-200 pb-2">
-            <h3 className="font-archivo font-bold text-[#232323] text-xl">Framework Diagrams</h3>
+            <h3 className="font-archivo font-bold text-foreground text-xl">Framework Diagrams</h3>
             <Badge className="bg-[#3ba559] text-white text-[10px] tracking-widest uppercase hover:bg-[#3ba559]">v5 New</Badge>
           </div>
           <p className="text-gray-600 mb-2 max-w-3xl text-sm">
@@ -1917,7 +1917,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           {/* ── SUB-SECTION: PILLAR ELEMENTS ── */}
           <div id="pillar-elements" className="pt-4">
           <div className="flex items-center gap-3 mb-3 border-b border-gray-200 pb-2 mt-6">
-            <h3 className="font-archivo font-bold text-[#232323] text-xl">Pillar Elements</h3>
+            <h3 className="font-archivo font-bold text-foreground text-xl">Pillar Elements</h3>
             <Badge className="bg-[#3ba559] text-white text-[10px] tracking-widest uppercase hover:bg-[#3ba559]">v5 New</Badge>
           </div>
           <p className="text-gray-600 mb-2 max-w-3xl text-sm">
@@ -2057,7 +2057,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION 13: CHARTS & DATA VISUALISATION */}
         {/* ================================================================ */}
         <section id="charts" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Charts &amp; Data Visualisation
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -2155,7 +2155,7 @@ import { pillarBottomIcons } from "@/lib/assets";
               <CardContent className="p-4">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-gray-100">
+                    <tr className="border-b border-border/50">
                       <th className="text-left py-1 text-gray-400 font-normal">Element</th>
                       <th className="text-left py-1 text-gray-400 font-normal">Style</th>
                     </tr>
@@ -2202,7 +2202,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION 16: MEMBER COMPANY LOGOTYPES */}
         {/* ================================================================ */}
         <section id="member-logos" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Member Company Logotypes
           </h2>
           <p className="text-gray-600 mb-2 max-w-3xl">
@@ -2233,7 +2233,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             {Object.entries(memberLogos).map(([key, { name, url, sector }]) => (
               <div
                 key={key}
-                className="group relative bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-shadow min-h-[100px]"
+                className="group relative bg-card border border-border rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-shadow min-h-[100px]"
               >
                 <img
                   src={url}
@@ -2267,7 +2267,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION 18: DATA SOURCE LOGOS */}
         {/* ================================================================ */}
         <section id="data-source-logos" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Data Source &amp; Partner Logos
           </h2>
           <p className="text-gray-600 mb-2 max-w-3xl">
@@ -2293,7 +2293,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION: NAVIGATION & LAYOUT STANDARDS */}
         {/* ================================================================ */}
         <section className="mb-16" id="navigation">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Navigation &amp; Layout Standards
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl font-open-sans">
@@ -2309,7 +2309,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION 4: SPACING & LAYOUT TOKENS */}
         {/* ================================================================ */}
         <section className="mb-16" id="spacing">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Spacing &amp; Layout Tokens
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -2418,7 +2418,7 @@ import { pillarBottomIcons } from "@/lib/assets";
               const pxVal = parseInt(row.token);
               const barW = Math.min(pxVal, 48);
               return (
-                <div key={row.token} className="flex items-center gap-4 bg-white border border-gray-200 rounded-lg p-4">
+                <div key={row.token} className="flex items-center gap-4 bg-card border border-border rounded-lg p-4">
                   <div className="flex-shrink-0 bg-[#3ba559] rounded" style={{ width: barW, height: 20 }} />
                   <div className="min-w-0">
                     <div className="flex items-center gap-3 mb-1">
@@ -2437,7 +2437,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION 7: COMPONENT LIBRARY (ChartContainer) */}
         {/* ================================================================ */}
         <section className="mb-16" id="component-library">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Component Library
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -2483,7 +2483,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION 10: BADGE REFERENCE */}
         {/* ================================================================ */}
         <section className="mb-16" id="badges">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Badge Reference
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -2689,7 +2689,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION: CTA BUTTONS */}
         {/* ================================================================ */}
         <section className="mb-16" id="cta-buttons">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             CTA Buttons
           </h2>
           <p className="text-gray-600 mb-2 max-w-3xl">
@@ -2861,7 +2861,7 @@ import { pillarBottomIcons } from "@/lib/assets";
         {/* SECTION 11: INTERACTIVE STATES */}
         {/* ================================================================ */}
         <section className="mb-16" id="interactive-states">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Interactive States
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -2942,7 +2942,7 @@ className="transition-all duration-300 ease-in-out"`}</pre>
         {/* SECTION: CONTACT US INTEGRATION */}
         {/* ================================================================ */}
         <section className="mb-16" id="contact-us">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Contact Us Integration
           </h2>
           <p className="text-gray-500 text-sm mb-6">Version 2026.04.16 · Service URL: contact-us.exponentialroadmap.org</p>
@@ -3149,7 +3149,7 @@ const contactUrl =
         {/* STANDARD COMPONENTS */}
         {/* ================================================================ */}
         <section className="mb-16" id="standard-components">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-2">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Standard Components
           </h2>
           <p className="text-gray-500 text-sm mb-6">Version 2.0.0 · 6 canonical files · Copy verbatim — do not reconstruct</p>
@@ -3272,7 +3272,7 @@ const contactUrl =
                 ))}
               </div>
               {/* Light theme — real component */}
-              <div className="rounded-lg px-6 py-4 flex items-center gap-3 bg-white border border-gray-200">
+              <div className="rounded-lg px-6 py-4 flex items-center gap-3 bg-card border border-border">
                 <span className="text-xs text-gray-400 mr-1">light:</span>
                 {(['ALPHA','BETA','PREVIEW','LIVE'] as const).map(s => (
                   <EriStatusBadge key={s} status={s} theme="light" />
@@ -3328,9 +3328,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["theme",     "'dark' | 'light'?",        "Defaults to 'dark'. Use 'dark' on dark/transparent headers, 'light' on white/light headers."],
                     ["className", "string?",                  "Optional extra Tailwind classes — only for spacing overrides. Never override colour or shape."],
                   ].map(([prop, type, note]) => (
-                    <tr key={prop} className="border-b border-gray-100">
+                    <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
-                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
                       <td className="py-1.5 text-gray-600 font-sans">{note}</td>
                     </tr>
                   ))}
@@ -3403,7 +3403,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                   size="sm"
                 />
               </div>
-              <div className="rounded-lg px-6 py-4 flex items-center gap-4 bg-white border border-gray-200">
+              <div className="rounded-lg px-6 py-4 flex items-center gap-4 bg-card border border-border">
                 <span className="text-xs text-gray-400">light bg:</span>
                 <EriContactUsButton
                   source="bds-demo"
@@ -3460,9 +3460,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["size",        "'md'|'sm'?","Defaults to 'md'. Use 'sm' for compact headers or inline contexts."],
                     ["className",   "string?",  "Optional extra Tailwind classes — only for spacing overrides. Never override colour or shape."],
                   ].map(([prop, type, note]) => (
-                    <tr key={prop} className="border-b border-gray-100">
+                    <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
-                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
                       <td className="py-1.5 text-gray-600 font-sans">{note}</td>
                     </tr>
                   ))}
@@ -3541,9 +3541,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["footerTagline",     "string?",         "(EriPageLayout only) One-line tagline shown in the footer below the logo (max 80 chars)"],
                     ["footerAttribution", "string?",         "(EriPageLayout only) Right-aligned attribution string in the footer bottom bar"],
                   ].map(([prop, type, note]) => (
-                    <tr key={prop} className="border-b border-gray-100">
+                    <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
-                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
                       <td className="py-1.5 text-gray-600 font-sans">{note}</td>
                     </tr>
                   ))}
@@ -3675,9 +3675,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["attribution", "string?",        "Optional right-aligned attribution string in the footer bottom bar."],
                     ["footerLinks", "FooterLink[]?",  "Links shown in the right zone between the ERI homepage and Contact Us. Defaults to Trust Centre + Human-AI Lab. Pass [] to show no additional links."],
                   ].map(([prop, type, note]) => (
-                    <tr key={prop} className="border-b border-gray-100">
+                    <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
-                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
                       <td className="py-1.5 text-gray-600 font-sans">{note}</td>
                     </tr>
                   ))}
@@ -3815,10 +3815,10 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["showScrollIndicator", "boolean?",  "No",   "Renders a subtle animated scroll indicator at the bottom-centre of the hero: a short vertical line above a single open chevron. The whole element drifts gently up and down via an inlined CSS keyframe (no external dependency). Defaults to false."],
                     ["children",            "ReactNode?", "No",   "Optional slot below CTAs — for stat counters, attribution lines, etc."],
                   ].map(([prop, type, req, note]) => (
-                    <tr key={prop} className="border-b border-gray-100">
+                    <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
-                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
-                      <td className="py-1.5 pr-3 text-gray-500">{req}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{req}</td>
                       <td className="py-1.5 text-gray-600 font-sans">{note}</td>
                     </tr>
                   ))}
@@ -4040,9 +4040,9 @@ function App() {
                     ["logoHref",          "string?",           'Logo link destination. Defaults to "/".'],
                     ["children",          "React.ReactNode",   "Page content — include your drawer as a sibling to Router"],
                   ].map(([prop, type, note]) => (
-                    <tr key={prop} className="border-b border-gray-100">
+                    <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
-                      <td className="py-1.5 pr-3 text-gray-500">{type}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
                       <td className="py-1.5 text-gray-600 font-sans">{note}</td>
                     </tr>
                   ))}
@@ -4078,7 +4078,7 @@ function App() {
         {/* SECTION 12: UI COMPONENTS */}
         {/* ================================================================ */}
         <section className="mb-16" id="components">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             UI Components
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -4241,7 +4241,7 @@ const tabs: TabConfig[] = [
                   <p className="text-sm text-gray-600">shadow-sm hover:shadow-md · use for clickable items</p>
                 </CardContent>
               </Card>
-              <Card className="shadow-sm bg-gray-50 border-gray-200">
+              <Card className="shadow-sm bg-muted border-border">
                 <CardContent className="p-5">
                   <h4 className="font-bold text-[#232323] mb-1">Subtle Card</h4>
                   <p className="text-sm text-gray-600">bg-gray-50 · use for secondary info, notes, callouts</p>
@@ -4261,7 +4261,7 @@ const tabs: TabConfig[] = [
 <Card className="shadow-sm hover:shadow-md transition-shadow cursor-pointer">...</Card>
 
 // Subtle callout card
-<Card className="shadow-sm bg-gray-50 border-gray-200">...</Card>`}</pre>
+<Card className="shadow-sm bg-muted border-border">...</Card>`}</pre>
             </CardContent>
           </Card>
 
@@ -4420,7 +4420,7 @@ const tabs: TabConfig[] = [
         {/* SECTION 18: SURFACE MODES */}
         {/* ================================================================ */}
         <section id="surface-modes" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Surface Modes
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -4494,7 +4494,7 @@ const tabs: TabConfig[] = [
                 { q: "Authenticated app interior?",       a: "Light mode" },
                 { q: "App with both landing + interior?", a: "Dark hero → Light app (switch at login)" },
               ].map((r) => (
-                <div key={r.q} className="bg-white rounded-lg p-4 border border-[#d1fae5]">
+                <div key={r.q} className="bg-card rounded-lg p-4 border border-[#d1fae5]">
                   <p className="text-gray-600 mb-2">{r.q}</p>
                   <p className="font-semibold text-[#3ba559]">{r.a}</p>
                 </div>
@@ -4571,7 +4571,7 @@ const tabs: TabConfig[] = [
           </div>
 
           {/* Hero image gallery */}
-          <h3 className="font-archivo font-bold text-lg text-[#232323] mb-2">Dark Hero Background Images</h3>
+          <h3 className="font-archivo font-bold text-lg text-foreground mb-2">Dark Hero Background Images</h3>
           <p className="text-gray-600 text-sm mb-6 max-w-2xl">
             Pre-approved hero backgrounds for dark-mode landing pages. Always overlay with white or Accent Lime <code className="bg-gray-100 px-1 rounded text-xs">#93E07D</code> text. The left quarter of each image is kept dark for text placement.
           </p>
@@ -4665,7 +4665,7 @@ const tabs: TabConfig[] = [
         {/* SECTION 19: RESOURCES */}
         {/* ================================================================ */}
         <section id="resources" className="mb-16">
-          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323] mb-4">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Resources
           </h2>
           <p className="text-gray-600 mb-8 max-w-3xl">
@@ -4701,7 +4701,7 @@ const tabs: TabConfig[] = [
         {/* ================================================================ */}
         <section id="ai-instructions" className="mb-16 mt-4">
           <div className="flex items-center gap-3 mb-2">
-            <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-[#232323]">
+            <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground">
               Machine Instructions
             </h2>
             <Badge className="bg-[#232323] text-white text-[10px] tracking-widest uppercase hover:bg-[#232323]">For AI Tasks</Badge>
@@ -4817,7 +4817,7 @@ const tabs: TabConfig[] = [
                     rule: "Two-font system: Archivo for headings (font-extrabold 800), Open Sans for body text (400). Both from Google Fonts CDN only.",
                   },
                 ].map(({ trigger, action, anchor, rule }) => (
-                  <div key={trigger} className="bg-white rounded-lg border border-[#c6e8d0] p-3">
+                  <div key={trigger} className="bg-card rounded-lg border border-[#c6e8d0] p-3">
                     <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">When you are…</p>
                     <p className="text-sm font-medium text-[#232323] mb-1">{trigger}</p>
                     <p className="text-xs text-[#3ba559] font-semibold mb-1">
@@ -4872,7 +4872,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                         ["green-300",       "#93cda3", "Accent links in footer"],
                         ["highlight-yellow","#F5C842", "Data highlights, chart callouts — Playbook v5"],
                       ].map(([token, hex, usage]) => (
-                        <tr key={token} className="border-b border-gray-100">
+                        <tr key={token} className="border-b border-border/50">
                           <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
                           <td className="py-1.5 pr-3">
                             <span className="inline-flex items-center gap-1.5">
@@ -4904,7 +4904,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                         ["P4 Finance",      "#ff8b00", pillarTints.pillar4],
                         ["P5 Policy",       "#ff5133", pillarTints.pillar5],
                       ].map(([name, hex, tint]) => (
-                        <tr key={name} className="border-b border-gray-100">
+                        <tr key={name} className="border-b border-border/50">
                           <td className="py-1.5 pr-3">
                             <span
                               className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold"
@@ -4954,7 +4954,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Header Anatomy — Web App Pattern</h3>
               <p className="text-xs text-gray-500 mb-4">All ERI web applications use this exact header structure. Implement it using <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build the header directly.</p>
-              <div className="bg-white border border-gray-200 rounded-md p-3 mb-4 flex items-center justify-between text-xs">
+              <div className="bg-card border border-border rounded-md p-3 mb-4 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
                   <span className="font-bold text-[#232323] text-sm">EXPONENTIAL<br/>ROADMAP <span className="font-normal text-[10px]">INITIATIVE</span></span>
                   <span className="w-px h-8 bg-gray-300" />
@@ -4986,7 +4986,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["Version string",         "text-[11px] font-medium text-gray-500 tracking-wide", "Format: V.YYYY.MM.DD"],
                     ["Hamburger menu",         "size-9 rounded-md",                       "Lucide Menu icon. Opens full-screen overlay."],
                   ].map(([el, classes, notes]) => (
-                    <tr key={el} className="border-b border-gray-100">
+                    <tr key={el} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 font-sans text-gray-700">{el}</td>
                       <td className="py-1.5 pr-3 text-[#3ba559]">{classes}</td>
                       <td className="py-1.5 font-sans text-gray-500">{notes}</td>
@@ -5130,7 +5130,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["logos.faviconWhiteRounded180", "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],
                     ["logos.faviconWhiteRounded192", "favicon-white-rounded-192_54fb4338.png", "192px Android / PWA manifest icon"],
                   ] as [string, string, string][]).map(([token, file, usage]) => (
-                    <tr key={token} className="border-b border-gray-100">
+                    <tr key={token} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
                       <td className="py-1.5 pr-3 text-gray-600">{file}</td>
                       <td className="py-1.5 font-sans text-gray-500">{usage}</td>
@@ -5148,9 +5148,9 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   <th className="text-left py-1 font-semibold text-gray-600">CDN URL</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
-                  <tr className="border-b border-gray-100">
+                  <tr className="border-b border-border/50">
                     <td className="py-1.5 pr-3 font-sans font-medium text-gray-700">eri-bds-reference</td>
-                    <td className="py-1.5 pr-3 text-gray-500">v2.0.0</td>
+                    <td className="py-1.5 pr-3 text-muted-foreground">v2.0.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
                         href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.0.0_d996bc45.skill"
@@ -5173,13 +5173,13 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {([1,2,3,4,5] as const).map((n) => (
-                    <tr key={n} className="border-b border-gray-100">
+                    <tr key={n} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">pillarBottomIcons.pillar{n}</td>
                       <td className="py-1.5 font-sans text-gray-500">P{n} bottom icon (navigation overlay)</td>
                     </tr>
                   ))}
                   {([1,2,3,4,5] as const).map((n) => (
-                    <tr key={`mark${n}`} className="border-b border-gray-100">
+                    <tr key={`mark${n}`} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">pillarMarks.pillar{n}</td>
                       <td className="py-1.5 font-sans text-gray-500">P{n} pillar mark (compact identifier)</td>
                     </tr>
@@ -5209,7 +5209,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["frameworkV5.pillarsLinear",          "Pillars linear layout"],
                     ["frameworkV5.reducingEnabling",       "Reducing & enabling diagram"],
                   ] as [string, string][]).map(([token, desc]) => (
-                    <tr key={token} className="border-b border-gray-100">
+                    <tr key={token} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
                       <td className="py-1.5 font-sans text-gray-500">{desc}</td>
                     </tr>
@@ -5233,7 +5233,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["pillarsExtended", "1–5", "solid, transparent"],
                     ["pillarsShort",    "1–5", "symbol, symbolTransp, text, textTransp"],
                   ] as [string, string, string][]).map(([ns, pillars, variants]) => (
-                    <tr key={ns} className="border-b border-gray-100">
+                    <tr key={ns} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{ns}</td>
                       <td className="py-1.5 pr-3 font-sans text-gray-600">{pillars}</td>
                       <td className="py-1.5 font-sans text-gray-500">{variants}</td>
@@ -5253,7 +5253,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {Object.entries(dataSourceLogos).map(([key, { name, category, url }]) => (
-                    <tr key={key} className="border-b border-gray-100">
+                    <tr key={key} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 font-sans font-medium text-gray-700 whitespace-nowrap">{name}</td>
                       <td className="py-1.5 pr-3 font-sans text-gray-500 whitespace-nowrap">{category}</td>
                       <td className="py-1.5 text-[#3ba559] break-all">{url}</td>
@@ -5273,7 +5273,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {Object.entries(memberLogos).map(([key, { name, sector, url }]) => (
-                    <tr key={key} className="border-b border-gray-100">
+                    <tr key={key} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 font-sans font-medium text-gray-700 whitespace-nowrap">{name}</td>
                       <td className="py-1.5 pr-3 font-sans text-gray-500 whitespace-nowrap">{sector}</td>
                       <td className="py-1.5 text-[#3ba559] break-all">{url}</td>
@@ -5324,7 +5324,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["23", "Resources",                   "resources"],
                     ["24", "Machine Instructions",        "ai-instructions"],
                   ].map(([num, label, id]) => (
-                    <tr key={id} className="border-b border-gray-100">
+                    <tr key={id} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
                       <td className="py-1.5 pr-3 font-sans text-gray-700">{label}</td>
                       <td className="py-1.5 text-[#3ba559]">#{id}</td>
