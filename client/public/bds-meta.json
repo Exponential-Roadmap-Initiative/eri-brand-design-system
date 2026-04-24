@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "project": "bds",
   "displayName": "ERI Brand Design System",
   "url": "https://bds.exponentialroadmap.org",
@@ -40,6 +40,6 @@
     }
   ],
   "overallStatus": "amber",
-  "lastUpdated": "2026-04-23",
+  "lastUpdated": "2026-04-24",
   "updatedBy": "Manus"
 }

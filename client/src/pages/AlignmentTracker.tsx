@@ -583,7 +583,7 @@ export default function AlignmentTracker() {
                 onClick={() => {
                   const today = new Date().toISOString().slice(0, 10);
                   navigator.clipboard.writeText(
-`{\n  "schemaVersion": "1.0",\n  "project": "your-project-id",\n  "displayName": "Your Project Name",\n  "url": "https://your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "systemOps": {\n    "projectContextExists":          false,\n    "manusPlatformInstructionsRead": false\n  },\n  "brand": {\n    "hexTokensOnly":     false,\n    "archivoHeadings":   false,\n    "openSansBody":      false,\n    "bodyTextHex383838": false,\n    "ctaAccentLime":     false,\n    "noHardcodedGreys":  false\n  },\n  "layout": {\n    "eriPageLayoutInAppTsx": false,\n    "showCtaExplicit":       false,\n    "sourcePropsPresent":    false,\n    "noStaleComponentNames": false\n  },\n  "knownViolations": [],\n  "overallStatus": "red",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
+`{\n  "schemaVersion": "1.1",\n  "project": "your-project-id",\n  "displayName": "Your Project Name",\n  "url": "https://your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "systemOps": {\n    "projectContextExists":          false,\n    "manusPlatformInstructionsRead": false\n  },\n  "brand": {\n    "hexTokensOnly":     false,\n    "archivoHeadings":   false,\n    "openSansBody":      false,\n    "bodyTextHex383838": false,\n    "ctaAccentLime":     false,\n    "noHardcodedGreys":  false\n  },\n  "layout": {\n    "eriPageLayoutInAppTsx": false,\n    "showCtaExplicit":       false,\n    "sourcePropsPresent":    false,\n    "noStaleComponentNames": false\n  },\n  "knownViolations": [],\n  "overallStatus": "red",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
                   );
                 }}
                 className="text-[11px] px-3 py-1.5 rounded font-semibold transition-opacity hover:opacity-80"
@@ -594,7 +594,7 @@ export default function AlignmentTracker() {
             </div>
             <div className="rounded-lg p-4 font-mono text-xs overflow-x-auto leading-relaxed" style={{ backgroundColor: T.dark, color: T.lime }}>
 {`{
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "project": "your-project-id",
   "displayName": "Your Project Name",
   "url": "https://your-project.exponentialroadmap.org",
@@ -642,7 +642,7 @@ export default function AlignmentTracker() {
               <h3 className="font-semibold mb-3 text-foreground">Field reference</h3>
               <div className="space-y-2">
                 {([
-                  ["schemaVersion", '"1.0"',                        'Always "1.0" — do not change.'],
+                  ["schemaVersion", '"1.1"',                        'Current schema version. Fetch /bds-meta-changelog.json from bds.exponentialroadmap.org to check for new fields since your last update.'],
                   ["project",       '"hal"',                         'Short lowercase project code. Examples: hal, psm, playbook, taxonomy.'],
                   ["projectName",   '"Human-AI Lab"',                'Full human-readable project name.'],
                   ["domain",        '"hal.exponentialroadmap.org"',  'Canonical deployed domain (no https://).'],

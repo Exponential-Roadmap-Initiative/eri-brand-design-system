@@ -153,3 +153,16 @@
 - [ ] Add noHardcodedGreys: true to Taxonomy bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/taxonomy-bds-meta.json)
 - [ ] Add noHardcodedGreys: true to Framework bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/framework-bds-meta.json; also needs systemOps/brand/layout blocks added)
 - [ ] Save checkpoint
+
+## Schema versioning + changelog endpoint (2026-04-24)
+
+- [x] Bump schemaVersion to 1.1 in bds-meta-spec.md
+- [x] Bump schemaVersion to 1.1 in BDS site's own bds-meta.json
+- [x] Bump schemaVersion to 1.1 in AlignmentTracker.tsx clipboard template and visible code block
+- [x] Publish bds-meta-changelog.json to client/public/ on BDS site
+- [x] Update eri-bds-reference skill Step 2 with changelog check instruction
+- [x] Bump skill to v2.2.0 and upload to CDN
+- [x] Update BDS site Skills card to v2.2.0
+- [x] Update bds-meta-spec.md with schemaVersion increment rule and changelog reference
+- [x] TypeScript check — 0 errors
+- [x] Save checkpoint

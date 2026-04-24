@@ -1,0 +1,68 @@
+{
+  "_comment": "Machine-readable changelog for the bds-meta.json schema. AI agents should fetch this file, compare the latestVersion against their project's schemaVersion, and add any fields listed under versions newer than their current schemaVersion.",
+  "latestVersion": "1.1",
+  "updateInstructions": "Fetch this file. If your bds-meta.json schemaVersion is older than latestVersion, add all fields listed in the versions between your current version and latestVersion (inclusive). Set schemaVersion to latestVersion and update lastUpdated to today's date.",
+  "versions": [
+    {
+      "version": "1.0",
+      "date": "2026-04-19",
+      "description": "Initial schema. Core project identity, component compliance, and known violations.",
+      "fieldsAdded": [
+        "schemaVersion",
+        "project",
+        "displayName",
+        "url",
+        "eriComponentsPin",
+        "cssImportMethod",
+        "components",
+        "knownViolations",
+        "overallStatus",
+        "lastUpdated",
+        "updatedBy"
+      ]
+    },
+    {
+      "version": "1.1",
+      "date": "2026-04-24",
+      "description": "Added self-reported compliance fields for system operations, brand, and layout. These allow the Alignment Tracker to display a checklist score for each project.",
+      "fieldsAdded": [
+        "systemOps",
+        "systemOps.projectContextExists",
+        "systemOps.manusPlatformInstructionsRead",
+        "brand",
+        "brand.hexTokensOnly",
+        "brand.archivoHeadings",
+        "brand.openSansBody",
+        "brand.bodyTextHex383838",
+        "brand.ctaAccentLime",
+        "brand.noHardcodedGreys",
+        "layout",
+        "layout.eriPageLayoutInAppTsx",
+        "layout.showCtaExplicit",
+        "layout.sourcePropsPresent",
+        "layout.noStaleComponentNames"
+      ],
+      "defaultValues": {
+        "systemOps": {
+          "projectContextExists": false,
+          "manusPlatformInstructionsRead": false
+        },
+        "brand": {
+          "hexTokensOnly": false,
+          "archivoHeadings": false,
+          "openSansBody": false,
+          "bodyTextHex383838": false,
+          "ctaAccentLime": false,
+          "noHardcodedGreys": false
+        },
+        "layout": {
+          "eriPageLayoutInAppTsx": false,
+          "showCtaExplicit": false,
+          "sourcePropsPresent": false,
+          "noStaleComponentNames": false
+        }
+      },
+      "migrationNote": "Add the systemOps, brand, and layout blocks with all values set to false, then audit your project and set each field to true when the condition is met. See https://bds.exponentialroadmap.org/tracker for the full checklist with what/why for each field."
+    }
+  ]
+}

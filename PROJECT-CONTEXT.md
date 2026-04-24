@@ -296,7 +296,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 3. Update the skill description metadata (`Version: X.Y.Z`) in `SKILL.md` if the version changed.
 4. Save checkpoint.
 
-**Current skill version:** v2.1.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.1.0_50838fc0.skill`
+**Current skill version:** v2.2.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.2.0_cd14344a.skill`
+
+**v2.2.0 changes (2026-04-24):** Added `bds-meta-changelog.json` endpoint check to Step 2 of the pre-action checklist. Agents now fetch `/bds-meta-changelog.json` to compare their `schemaVersion` and self-update their `bds-meta.json` without human prompts. `bds-meta.json` schemaVersion bumped to `"1.1"`. `bds-meta-changelog.json` published at `client/public/bds-meta-changelog.json`. `bds-meta-spec.md` updated with schemaVersion increment rule and changelog reference. BDS site Skills card updated to v2.2.0.
 
 **v2.1.0 changes (2026-04-24):** Added B6 to Project Alignment Checklist (no structural Tailwind grey classes); added `brand.noHardcodedGreys` to bds-meta.json schema example and field reference; added `noHardcodedGreys` to `BrandCompliance` TypeScript interface; updated BDS site Skills card to v2.1.0.
 

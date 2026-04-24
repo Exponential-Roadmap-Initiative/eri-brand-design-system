@@ -1,5 +1,5 @@
 # bds-meta.json — ERI Project BDS Alignment Metadata Spec
-# Version: 1.1 | 2026-04-22
+# Version: 1.1 | 2026-04-24
 
 ## Purpose
 Each ERI project publishes a static `bds-meta.json` file at the root of its deployed site
@@ -16,7 +16,7 @@ static file serving.
 
 ```json
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "project": "hal",
   "displayName": "Human-AI Lab",
   "url": "https://human-ai-lab.exponentialroadmap.org",
@@ -39,7 +39,8 @@ static file serving.
     "archivoHeadings":   true,
     "openSansBody":      true,
     "bodyTextHex383838": true,
-    "ctaAccentLime":     true
+    "ctaAccentLime":     true,
+    "noHardcodedGreys":  true
   },
   "layout": {
     "eriPageLayoutInAppTsx": true,
@@ -60,7 +61,7 @@ static file serving.
 
 | Field | Type | Description |
 |---|---|---|
-| `schemaVersion` | string | Always `"1.0"` — do not change |
+| `schemaVersion` | string | Current schema version (`"1.1"`). Increment when new fields are added. Check `https://bds.exponentialroadmap.org/bds-meta-changelog.json` for the latest version. |
 | `project` | string | Short project code, e.g. `"hal"`, `"psm"`, `"taxonomy"` |
 | `displayName` | string | Full human-readable project name |
 | `url` | string | Canonical deployed URL |
@@ -100,6 +101,7 @@ Missing fields are shown as "—" in the tracker (not as failures).
 | `brand.openSansBody` | boolean | Body font is Open Sans loaded from Google Fonts CDN |
 | `brand.bodyTextHex383838` | boolean | Body paragraph text uses `#383838` (not `#232323`) on white/light backgrounds |
 | `brand.ctaAccentLime` | boolean | All filled CTA buttons use `#93E07D` (Accent Lime) |
+| `brand.noHardcodedGreys` | boolean | No structural `text-gray-*`, `bg-gray-*`, or `bg-white` Tailwind classes used for text or backgrounds outside intentional documentation specimens |
 
 ### layout fields (optional — self-reported)
 
@@ -133,3 +135,22 @@ Update `lastUpdated` to today's date and `updatedBy` to `"Manus"`.
 After running the Project Alignment Checklist, set each field to `true` if the check passes,
 `false` if it fails (and add an entry to `knownViolations` explaining the failure), or omit
 the field if it is not applicable to this project.
+
+## Schema versioning
+
+The `schemaVersion` field tracks which version of this spec the file conforms to. When new
+fields are added to the schema, the version is incremented (e.g. `"1.0"` → `"1.1"`).
+
+A machine-readable changelog is published at:
+`https://bds.exponentialroadmap.org/bds-meta-changelog.json`
+
+This file lists every schema version, its date, the fields added, and default values for
+those fields. AI agents should fetch this changelog at Step 2 of the pre-action checklist
+and apply any missing fields automatically.
+
+**Rule for BDS maintainers:** Whenever a new field is added to this spec, you MUST:
+1. Increment `schemaVersion` in this spec and in the BDS site’s own `bds-meta.json`.
+2. Add a new entry to `client/public/bds-meta-changelog.json` with the new version, date,
+   `fieldsAdded` list, and `defaultValues`.
+3. Bump the `eri-bds-reference` skill version and upload the updated skill to CDN.
+4. Update the `AlignmentTracker.tsx` clipboard template and field reference to the new version.
