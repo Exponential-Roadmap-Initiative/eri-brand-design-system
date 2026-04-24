@@ -296,7 +296,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 3. Update the skill description metadata (`Version: X.Y.Z`) in `SKILL.md` if the version changed.
 4. Save checkpoint.
 
-**Current skill version:** v2.0.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.0.0_d996bc45.skill`
+**Current skill version:** v2.1.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.1.0_50838fc0.skill`
+
+**v2.1.0 changes (2026-04-24):** Added B6 to Project Alignment Checklist (no structural Tailwind grey classes); added `brand.noHardcodedGreys` to bds-meta.json schema example and field reference; added `noHardcodedGreys` to `BrandCompliance` TypeScript interface; updated BDS site Skills card to v2.1.0.
 
 ---
 

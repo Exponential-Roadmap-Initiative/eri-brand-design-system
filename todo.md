@@ -133,3 +133,14 @@
 - [x] Update bds-meta.json on BDS site itself to include noHardcodedGreys: true
 - [x] Update BrandCompliance TypeScript interface in bdsMetaTypes.ts
 - [x] Save checkpoint after B6 addition
+
+## eri-bds-reference skill update — B6 and dark mode enforcement (2026-04-24)
+
+- [x] Read skill-creator skill and current eri-bds-reference SKILL.md
+- [x] Add B6 to Project Alignment Checklist table in skill
+- [x] Add noHardcodedGreys field to bds-meta.json schema example in skill
+- [x] Dark Mode Enforcement section already existed in skill (comprehensive — no new content needed)
+- [x] Bump skill version to v2.1.0
+- [x] Upload updated skill to CDN (https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.1.0_50838fc0.skill)
+- [x] Update BDS site Skills card (version badge v2.1.0, CDN URLs, date 24 Apr 2026)
+- [x] Save checkpoint after skill update
