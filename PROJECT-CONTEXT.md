@@ -301,3 +301,84 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 8. Update `PROJECT-CONTEXT.md` canonical version pin
 
 Do NOT skip step 6. The install command in the BDS site is `github:Exponential-Roadmap-Initiative/eri-brand-design-system#vX.Y.Z&path:packages/eri-components` — if the tag does not exist, the install command fails silently for all downstream projects.
+
+---
+
+## Dark Mode Enforcement Rule — CRITICAL
+
+> **This is the single most common source of dark mode failures in AI-generated code. Read this before writing any structural colour.**
+
+### How dark mode works in this project
+
+The BDS uses a semantic CSS variable token system. `ThemeContext` applies `.dark` to `document.documentElement`. The `.dark {}` block in `index.css` overrides the `:root` token values. This only works if structural elements reference CSS variables — not hardcoded hex.
+
+### The rule: NEVER use these for structural backgrounds, text, or borders
+
+- `bg-white`, `bg-gray-50`, `bg-gray-100`, `bg-[#F9FAFB]`, `bg-[#FFFFFF]`
+- `text-gray-900`, `text-gray-800`, `text-[#232323]` on body text, `text-[#383838]`
+- `border-gray-200`, `border-gray-300`
+- `style={{ backgroundColor: '#F9FAFB' }}`, `style={{ color: '#383838' }}`
+
+### ALWAYS use these semantic tokens for structural elements
+
+| Purpose | Tailwind class |
+|---|---|
+| Page background | `bg-background` |
+| Card / panel surface | `bg-card text-card-foreground` |
+| Muted / alternate row | `bg-muted` |
+| Primary body text | `text-foreground` |
+| Secondary / muted text | `text-muted-foreground` |
+| Borders | `border-border` |
+
+### Brand colours that CAN remain hardcoded
+
+- `#232323` — ERI Primary Dark (hero sections, footer background)
+- `#93E07D` — ERI Accent Lime (CTA buttons)
+- `#3ba559` — ERI Primary Green (links, active states)
+
+### The T object anti-pattern
+
+```tsx
+// ❌ NEVER — inline styles with hardcoded hex break dark mode
+const T = { offWhite: '#F9FAFB', bodyText: '#383838', border: '#e5e7eb' };
+<div style={{ backgroundColor: T.offWhite }}>...</div>
+
+// ✅ CORRECT — semantic Tailwind classes
+<div className="bg-background text-foreground border-border">...</div>
+```
+
+### Canonical page template
+
+Copy `client/src/pages/NewPage.tsx` as the starting point for every new page. It contains the full token reference as a comment block and a working structural skeleton.
+
+### Pages fixed (as of v2.12.0)
+
+- `BrandDesignSystem.tsx` — structural `bg-white`/`bg-gray-*` replaced with semantic tokens (documentation swatches remain hardcoded intentionally)
+- `AlignmentTracker.tsx` — `T` object structural colours replaced with semantic tokens; brand colours (`T.lime`, `T.green`, `T.dark` on hero) remain hardcoded
+- `NotFound.tsx` — hardcoded gradient and card background replaced with semantic tokens
+- `PublicLayout.tsx` — `bg-[#F9FAFB]` wrapper replaced with `bg-background`
+- `SectionNavigator.tsx` — all structural colours replaced with semantic tokens
+
+### Dark mode token definitions
+
+Defined in `client/src/index.css`:
+- `:root {}` — light mode values (default)
+- `.dark {}` — dark mode overrides applied to `html` element by `ThemeContext`
+
+---
+
+## Dark Mode — v2.12.0 decisions
+
+| Decision | Value |
+|---|---|
+| Default mode | Dark |
+| Persistence | `localStorage` key `eri-theme` |
+| OS preference respected | No — always default to dark (energy-efficiency statement) |
+| Toggle placement | Header right zone (sun/moon icon) + footer energy statement |
+| Icon convention | Destination mode — sun in dark mode, moon in light mode |
+| Three-mode (AMOLED black) | Decided against — 1–3% energy gain swamped by rebound effect |
+| Footer copy | Honest v2 report framing — no specific TWh figures (VERY LOW confidence) |
+| Energy copy location | `ThemeToggleButton.tsx` (tooltip) and `PublicLayout.tsx` (footer) |
+| `@eri/components` prop | `showThemeToggle` on `EriAppHeader` and `EriPageLayout` (v2.12.0) |
+
+---

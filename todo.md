@@ -70,19 +70,37 @@
 - [x] Update PROJECT-CONTEXT.md with dark mode decisions
 - [x] Push v2.12.0 git tag
 - [x] Save checkpoint
-- [ ] Update energy statement copy once updated research report arrives
-- [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
+- [x] Update energy statement copy once updated research report arrives
+- [x] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
 
 ## Dark Mode — Full Implementation (Learning Exercise) v2.12.1
 
-- [ ] Define complete semantic token set in index.css (:root light, html.dark overrides)
-- [ ] Configure Tailwind dark variant (@custom-variant dark) in index.css
-- [ ] Replace structural bg/text/border colours in PublicLayout.tsx
-- [ ] Replace structural bg/text/border colours in App.tsx SiteHeader and TabNav
-- [ ] Replace structural bg/text/border colours in BrandDesignSystem.tsx layout wrappers (not doc swatches)
-- [ ] Replace structural bg/text/border colours in AlignmentTracker.tsx
-- [ ] Verify full-page dark mode visually in browser
-- [ ] Verify full-page light mode visually in browser
-- [ ] Iterate on colour issues found during visual testing
-- [ ] Document learnings in PROJECT-CONTEXT.md as canonical pattern
-- [ ] Checkpoint v2.12.1
+- [x] Define complete semantic token set in index.css (:root light, html.dark overrides)
+- [x] Configure Tailwind dark variant (@custom-variant dark) in index.css
+- [x] Replace structural bg/text/border colours in PublicLayout.tsx
+- [x] Replace structural bg/text/border colours in App.tsx SiteHeader and TabNav
+- [x] Replace structural bg/text/border colours in BrandDesignSystem.tsx layout wrappers (not doc swatches)
+- [x] Replace structural bg/text/border colours in AlignmentTracker.tsx
+- [x] Verify full-page dark mode visually in browser
+- [x] Verify full-page light mode visually in browser
+- [x] Iterate on colour issues found during visual testing
+- [x] Document learnings in PROJECT-CONTEXT.md as canonical pattern
+- [x] Checkpoint v2.12.1
+
+## Dark Mode — Systematic Fix (All Pages)
+
+- [x] Fix AlignmentTracker.tsx — replace T object structural colours (offWhite, bodyText, muted, border) with semantic Tailwind classes
+- [x] Fix NotFound.tsx — replace hardcoded gradient and card background with semantic tokens
+- [x] Update PROJECT-CONTEXT.md with dark mode rule: never use inline style for theme-sensitive colours
+- [x] Verify dark mode works on all pages visually
+- [x] Checkpoint
+
+## Dark Mode Enforcement — Three-Layer System
+
+- [x] Fix AlignmentTracker.tsx — replace T object structural colours with semantic Tailwind classes; fix pre-existing JSX error at line 477
+- [x] Fix NotFound.tsx — replace hardcoded gradient and card background
+- [x] Create client/src/pages/NewPage.tsx — canonical page template with semantic classes and warning comment
+- [x] Update eri-bds-reference skill — add dark mode enforcement rule and semantic token mapping table
+- [x] Update PROJECT-CONTEXT.md — add dark mode rule section with mapping table
+- [x] Verify all pages in dark and light mode visually
+- [x] Checkpoint

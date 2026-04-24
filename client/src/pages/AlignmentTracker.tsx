@@ -27,14 +27,29 @@ const LATEST_VERSION = "v2.12.0";
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 
+// Brand colours — hardcoded ERI hex values, intentional, do not change
 const T = {
-  dark:      "#232323",
-  lime:      "#93E07D",
-  green:     "#3ba559",
-  offWhite:  "#F9FAFB",
-  bodyText:  "#383838",
-  muted:     "#6b7280",
-  border:    "#e5e7eb",
+  dark:      "#232323",   // ERI Primary Dark — intentional dark surfaces
+  lime:      "#93E07D",   // ERI Accent Lime — CTAs, highlights
+  green:     "#3ba559",   // ERI Primary Green — links, active states
+  // ⚠️ Structural colours below are CSS variables — use className instead of style={{}}
+  // offWhite → bg-background or bg-muted
+  // bodyText → text-foreground
+  // muted    → text-muted-foreground
+  // border   → border-border
+};
+
+// CSS variable helpers for inline styles where className is not practical
+function cssVar(name: string) {
+  return `var(--${name})`;
+}
+const TV = {
+  background:  cssVar("background"),
+  card:        cssVar("card"),
+  muted:       cssVar("muted"),
+  foreground:  cssVar("foreground"),
+  mutedFg:     cssVar("muted-foreground"),
+  border:      cssVar("border"),
 };
 
 // ── Status helpers ────────────────────────────────────────────────────────────
@@ -47,8 +62,8 @@ function statusCfg(s: RowStatus) {
     case "amber":   return { dot: "#f59e0b", label: "Needs update",text: "#92400e" };
     case "red":     return { dot: "#ef4444", label: "Violations",  text: "#991b1b" };
     case "error":   return { dot: "#ef4444", label: "Unreachable", text: "#991b1b" };
-    case "loading": return { dot: "#9ca3af", label: "Fetching…",   text: T.muted   };
-    default:        return { dot: "#d1d5db", label: "No response", text: T.muted   };
+    case "loading": return { dot: "#9ca3af", label: "Fetching…",   text: "var(--muted-foreground)" };
+    default:        return { dot: "#d1d5db", label: "No response", text: "var(--muted-foreground)" };
   }
 }
 
@@ -135,7 +150,7 @@ function Dash() {
 
 function ComponentCell({ used, compliant }: { used?: boolean; compliant?: boolean }) {
   if (used === undefined) return <Dash />;
-  if (!used) return <span style={{ color: T.muted, fontSize: 12 }}>—</span>;
+  if (!used) return <span style={{ color: TV.mutedFg, fontSize: 12 }}>—</span>;
   if (compliant) return <span style={{ color: T.green, fontSize: 13, fontWeight: 700 }}>✓</span>;
   return <span style={{ color: "#ef4444", fontSize: 13, fontWeight: 700 }}>✗</span>;
 }
@@ -149,7 +164,7 @@ function VersionBadge({ pin }: { pin?: string }) {
       className="inline-flex items-center font-mono text-[11px] font-semibold px-1.5 py-0.5 rounded"
       style={{
         backgroundColor: latest ? "#dcfce7" : behind ? "#fef9c3" : "#f3f4f6",
-        color:           latest ? "#166534" : behind ? "#854d0e" : T.muted,
+        color:           latest ? "#166534" : behind ? "#854d0e" : "var(--muted-foreground)",
       }}
     >
       {pin}
@@ -210,7 +225,7 @@ function ChecklistScoreCell({ meta, isLoading, isError }: { meta?: BdsMeta; isLo
   if (isLoading) return <span className="text-xs animate-pulse" style={{ color: "#d1d5db" }}>…</span>;
   if (isError)   return <Dash />;
   const result = checklistScore(meta);
-  if (!result)   return <span className="text-[11px]" style={{ color: T.muted }}>—</span>;
+  if (!result)   return <span className="text-[11px]" style={{ color: TV.mutedFg }}>—</span>;
   const { score, total } = result;
   const pct = total > 0 ? score / total : 0;
   const bg  = pct === 1 ? "#dcfce7" : pct >= 0.7 ? "#fef9c3" : "#fee2e2";
@@ -314,7 +329,7 @@ export default function AlignmentTracker() {
 
   return (
     // pt-[108px] clears the fixed SiteHeader (68px) + TabNav (40px)
-    <div className="min-h-screen pt-[108px]" style={{ backgroundColor: T.offWhite }}>
+    <div className="min-h-screen pt-[108px] bg-background">
 
        {/* ── Dark header band — full viewport width ───────────────────── */}
       <div style={{ backgroundColor: T.dark }}>
@@ -351,23 +366,23 @@ export default function AlignmentTracker() {
       </div>
 
       {/* ── Stats strip — below hero, same alignment as header logo ─────── */}
-      <div className="border-b" style={{ backgroundColor: "#fff", borderColor: T.border }}>
+      <div className="bg-card border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-0 divide-x" style={{ borderColor: T.border }}>
+          <div className="flex flex-wrap gap-0 divide-x" style={{ borderColor: TV.border }}>
             {[
-              { count: PROJECT_REGISTRY.length, label: "Projects tracked", color: T.bodyText },
+              { count: PROJECT_REGISTRY.length, label: "Projects tracked", color: TV.foreground },
               { count: greenCount,              label: "Compliant",         color: T.green },
               { count: amberCount,              label: "Needs update",      color: "#d97706" },
               { count: redCount,                label: "Violations / unreachable", color: "#dc2626" },
             ].map(({ count, label, color }) => (
               <div key={label} className="flex items-center gap-3 px-6 py-4 first:pl-0">
                 <span className="font-archivo text-2xl font-extrabold leading-none" style={{ color }}>{count}</span>
-                <span className="text-xs" style={{ color: T.muted }}>{label}</span>
+                <span className="text-xs" style={{ color: TV.mutedFg }}>{label}</span>
               </div>
             ))}
             {lastRefreshed && (
               <div className="flex items-center px-6 py-4 ml-auto">
-                <span className="text-[11px]" style={{ color: T.muted }}>Refreshed {lastRefreshed.toLocaleTimeString()}</span>
+                <span className="text-[11px]" style={{ color: TV.mutedFg }}>Refreshed {lastRefreshed.toLocaleTimeString()}</span>
               </div>
             )}
           </div>
@@ -378,8 +393,8 @@ export default function AlignmentTracker() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Desktop */}
-        <div className="hidden lg:block overflow-x-auto rounded-xl shadow-sm" style={{ border: `1px solid ${T.border}` }}>
-          <table className="w-full text-sm bg-white">
+        <div className="hidden lg:block overflow-x-auto rounded-xl shadow-sm" style={{ border: `1px solid ${TV.border}` }}>
+          <table className="w-full text-sm bg-card text-foreground">
             <thead>
               <tr style={{ backgroundColor: T.dark }}>
                 {[
@@ -412,8 +427,8 @@ export default function AlignmentTracker() {
                 return (
                   <tr
                     key={project.id}
-                    className="transition-colors hover:bg-[#f9fafb]"
-                    style={{ borderTop: idx === 0 ? "none" : `1px solid ${T.border}` }}
+                    className="transition-colors hover:bg-muted/50"
+                    style={{ borderTop: idx === 0 ? "none" : `1px solid ${TV.border}` }}
                   >
                     {/* Project */}
                     <td className="px-4 py-4">
@@ -423,7 +438,7 @@ export default function AlignmentTracker() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[11px] hover:underline"
-                        style={{ color: T.muted }}
+                        style={{ color: TV.mutedFg }}
                       >
                         {project.url.replace("https://", "")} ↗
                       </a>
@@ -471,17 +486,19 @@ export default function AlignmentTracker() {
                     ))}
                     {/* Violations */}
                     <td className="px-4 py-4 max-w-[200px]">
-                      {isLoading ? <span className="text-xs animate-pulse" style={{ color: "#e5e7eb" }}>…</span>
-                        : isError ? <ViolationsCell error={result.error} />
-                        : <ViolationsCell violations={activeViolations(meta)} />}
+                      {isLoading
+                        ? <span className="text-xs animate-pulse text-muted-foreground">…</span>
+                        : isError
+                          ? <ViolationsCell error={result.error} />
+                          : <ViolationsCell violations={activeViolations(meta)} />}
                     </td>
 
                     {/* Updated */}
                     <td className="px-4 py-4">
                       {meta ? (
                         <>
-                          <div className="text-xs" style={{ color: T.bodyText }}>{meta.lastUpdated}</div>
-                          <div className="text-[11px]" style={{ color: T.muted }}>{meta.updatedBy}</div>
+                          <div className="text-xs" style={{ color: TV.foreground }}>{meta.lastUpdated}</div>
+                          <div className="text-[11px]" style={{ color: TV.mutedFg }}>{meta.updatedBy}</div>
                         </>
                       ) : <Dash />}
                     </td>
@@ -501,11 +518,11 @@ export default function AlignmentTracker() {
             const isError   = result?.status === "error";
             const rowStatus: RowStatus = isLoading ? "loading" : isError ? "error" : deriveStatus(meta);
             return (
-              <div key={project.id} className="rounded-xl p-4 bg-white" style={{ border: `1px solid ${T.border}` }}>
+              <div key={project.id} className="rounded-xl p-4 bg-card" style={{ border: `1px solid ${TV.border}` }}>
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div className="font-semibold text-sm mb-0.5" style={{ color: T.dark }}>{project.displayName}</div>
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-[11px] hover:underline" style={{ color: T.muted }}>
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-[11px] hover:underline" style={{ color: TV.mutedFg }}>
                       {project.url.replace("https://", "")} ↗
                     </a>
                   </div>
@@ -515,11 +532,11 @@ export default function AlignmentTracker() {
                   <>
                     <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                       <div className="flex items-center gap-1.5">
-                        <span style={{ color: T.muted }}>Package:</span>
+                        <span style={{ color: TV.mutedFg }}>Package:</span>
                         <VersionBadge pin={meta.eriComponentsPin} />
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span style={{ color: T.muted }}>CSS:</span>
+                        <span style={{ color: TV.mutedFg }}>CSS:</span>
                         <CssCell method={meta.cssImportMethod} />
                       </div>
                     </div>
@@ -530,7 +547,7 @@ export default function AlignmentTracker() {
                         ))}
                       </div>
                     )}
-                    <p className="text-[11px] mt-2" style={{ color: T.muted }}>Updated {meta.lastUpdated} · {meta.updatedBy}</p>
+                    <p className="text-[11px] mt-2" style={{ color: TV.mutedFg }}>Updated {meta.lastUpdated} · {meta.updatedBy}</p>
                   </>
                 )}
                 {isError && <p className="text-xs mt-1" style={{ color: "#ef4444" }}>Could not fetch bds-meta.json</p>}
@@ -540,12 +557,12 @@ export default function AlignmentTracker() {
         </div>
 
         {/* ── How it works ─────────────────────────────────────────────────── */}
-        <div className="mt-8 rounded-xl p-6 bg-white" style={{ border: `1px solid ${T.border}` }}>
+        <div className="mt-8 rounded-xl p-6 bg-card" style={{ border: `1px solid ${TV.border}` }}>
           <h2 className="font-archivo font-bold text-lg mb-1" style={{ color: T.dark }}>How this tracker works</h2>
           <div className="mb-4 px-3 py-2 rounded text-xs font-medium" style={{ backgroundColor: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
             ⚠️ <strong>This file is NOT part of the <code className="font-mono">@eri/components</code> package.</strong> You create it yourself in each consuming project. The package ships only component source and <code className="font-mono">dist/eri-components.css</code> — nothing else. Copy the template below and commit it to <code className="font-mono">client/public/bds-meta.json</code> in your project.
           </div>
-          <p className="text-sm mb-6" style={{ color: T.muted }}>
+          <p className="text-sm mb-6" style={{ color: TV.mutedFg }}>
             Every ERI project must publish a static{" "}
             <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>{" "}
             file at <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>client/public/bds-meta.json</code>{" "}
@@ -635,12 +652,12 @@ export default function AlignmentTracker() {
                   ["lastUpdated",   '"2026-04-19"',                  'ISO date (YYYY-MM-DD) of last update.'],
                   ["updatedBy",     '"Manus"',                       'Who last updated this file — "Manus" or your name.'],
                 ] as [string, string, string][]).map(([field, example, desc]) => (
-                  <div key={field} className="rounded-lg p-3" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                  <div key={field} className="rounded-lg p-3" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                     <div className="flex items-baseline gap-2 mb-0.5 flex-wrap">
                       <code className="font-mono text-[11px] font-bold" style={{ color: T.dark }}>{field}</code>
-                      <code className="font-mono text-[10px]" style={{ color: T.muted }}>{example}</code>
+                      <code className="font-mono text-[10px]" style={{ color: TV.mutedFg }}>{example}</code>
                     </div>
-                    <p className="text-[11px]" style={{ color: T.muted }}>{desc}</p>
+                    <p className="text-[11px]" style={{ color: TV.mutedFg }}>{desc}</p>
                   </div>
                 ))}
               </div>
@@ -663,7 +680,7 @@ export default function AlignmentTracker() {
                       <span className="inline-block rounded-full mt-1 shrink-0" style={{ width: 8, height: 8, backgroundColor: dot, boxShadow: `0 0 0 2px ${dot}33` }} />
                       <div>
                         <span className="font-semibold text-xs" style={{ color: T.dark }}>{label} — </span>
-                        <span className="text-xs" style={{ color: T.muted }}>{desc[s]}</span>
+                        <span className="text-xs" style={{ color: TV.mutedFg }}>{desc[s]}</span>
                       </div>
                     </div>
                   );
@@ -671,24 +688,24 @@ export default function AlignmentTracker() {
               </div>
 
               <h3 className="font-semibold mb-3" style={{ color: T.dark }}>Component values guide</h3>
-              <div className="space-y-2 text-[11px] mb-6" style={{ color: T.muted }}>
-                <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+              <div className="space-y-2 text-[11px] mb-6" style={{ color: TV.mutedFg }}>
+                <div className="p-2 rounded" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                   <code className="font-mono" style={{ color: T.dark }}>used: true, compliant: true</code>
                   <p className="mt-0.5">Component is used and follows the BDS spec.</p>
                 </div>
-                <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                <div className="p-2 rounded" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                   <code className="font-mono" style={{ color: T.dark }}>used: true, compliant: false</code>
                   <p className="mt-0.5">Component is used but deviates from the BDS spec. Add an entry to <code className="font-mono">knownViolations</code> with <code className="font-mono">component</code>, <code className="font-mono">reason</code>, <code className="font-mono">approvedBy</code>, and <code className="font-mono">bdsRef</code>.</p>
                 </div>
-                <div className="p-2 rounded" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                <div className="p-2 rounded" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                   <code className="font-mono" style={{ color: T.dark }}>used: false, compliant: false</code>
                   <p className="mt-0.5">Component is not applicable to this project (e.g. <code className="font-mono">EriContactUsButton</code> on the Contact Us page itself). No <code className="font-mono">knownViolations</code> entry is needed — <code className="font-mono">used: false</code> is sufficient. Do not add a violation note for unused components.</p>
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+              <div className="p-4 rounded-lg" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                 <p className="text-[11px] font-semibold mb-2" style={{ color: T.dark }}>Quick checklist before setting overallStatus: "green"</p>
-                <ul className="text-[11px] space-y-1" style={{ color: T.muted }}>
+                <ul className="text-[11px] space-y-1" style={{ color: TV.mutedFg }}>
                   <li>✓ <code className="font-mono">@eri/components</code> pinned to {LATEST_VERSION}</li>
                   <li>✓ CSS imported from <code className="font-mono">dist/eri-components.css</code></li>
                   <li>✓ All used components have <code className="font-mono">compliant: true</code></li>
@@ -701,7 +718,7 @@ export default function AlignmentTracker() {
         </div>
 
         {/* ── System Operations ──────────────────────────────────────────────── */}
-        <div className="mt-8 rounded-xl p-6 bg-white" style={{ border: `1px solid ${T.border}` }}>
+        <div className="mt-8 rounded-xl p-6 bg-card" style={{ border: `1px solid ${TV.border}` }}>
           <div className="flex items-center gap-2 mb-4">
             <span className="inline-flex items-center justify-center rounded-full text-xs font-bold px-2 py-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>SYS OPS</span>
             <h2 className="font-archivo font-bold text-lg" style={{ color: T.dark }}>System Operations — AI context continuity</h2>
@@ -710,7 +727,7 @@ export default function AlignmentTracker() {
           {/* What */}
           <div className="mb-6">
             <p className="text-[11px] font-semibold uppercase tracking-widest mb-2" style={{ color: T.lime }}>WHAT</p>
-            <p className="text-sm mb-3" style={{ color: T.bodyText }}>
+            <p className="text-sm mb-3" style={{ color: TV.foreground }}>
               Every ERI Manus project must follow three mandatory steps at the start of every AI task session. Together they form the <strong>System Operations</strong> pattern — a lightweight protocol that prevents recurring errors caused by context compaction and sandbox resets.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -734,12 +751,12 @@ export default function AlignmentTracker() {
                   color: T.lime,
                 },
               ].map(({ step, title, body, color }) => (
-                <div key={step} className="rounded-lg p-4" style={{ backgroundColor: T.offWhite, border: `1px solid ${T.border}` }}>
+                <div key={step} className="rounded-lg p-4" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: T.dark, color }}>{step}</span>
                     <span className="text-xs font-semibold" style={{ color: T.dark }}>{title}</span>
                   </div>
-                  <p className="text-[11px] leading-relaxed" style={{ color: T.muted }}>{body}</p>
+                  <p className="text-[11px] leading-relaxed" style={{ color: TV.mutedFg }}>{body}</p>
                 </div>
               ))}
             </div>
@@ -748,10 +765,10 @@ export default function AlignmentTracker() {
           {/* Why */}
           <div className="mb-6">
             <p className="text-[11px] font-semibold uppercase tracking-widest mb-2" style={{ color: T.lime }}>WHY</p>
-            <p className="text-sm mb-3" style={{ color: T.bodyText }}>
+            <p className="text-sm mb-3" style={{ color: TV.foreground }}>
               AI agents operating in long-running projects suffer from two failure modes: <strong>context compaction</strong> (earlier conversation history is summarised and key details are lost) and <strong>sandbox resets</strong> (the agent's working memory is wiped between sessions). Without a structured recovery mechanism, the agent reverts to defaults — re-introducing errors that were previously fixed, using stale component names, or missing required files.
             </p>
-            <p className="text-sm" style={{ color: T.bodyText }}>
+            <p className="text-sm" style={{ color: TV.foreground }}>
               The System Operations pattern solves this by externalising memory into two durable artefacts: the Manus platform project instructions (set once by the project owner, always present) and the <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> file (updated after every task, read before every task). Together they give the agent a reliable starting point regardless of what was lost from session memory.
             </p>
           </div>
@@ -759,7 +776,7 @@ export default function AlignmentTracker() {
           {/* How */}
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-widest mb-2" style={{ color: T.lime }}>HOW — Set up a new ERI project</p>
-            <ol className="text-sm space-y-3" style={{ color: T.bodyText }}>
+            <ol className="text-sm space-y-3" style={{ color: TV.foreground }}>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>1</span>
                 <span><strong>Set Manus project instructions.</strong> In the Manus platform, open the project settings and add instructions that include: the ERI development workflow (Research → Design → Plan → Implement → Test → Iterate), the active skills to apply (<code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>eri-bds-reference</code>, <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>exponential-human-ai-collaboration</code>), and any project-specific constraints.</span>
@@ -775,7 +792,7 @@ export default function AlignmentTracker() {
             </ol>
 
             {/* PROJECT-CONTEXT.md seed template */}
-            <div className="mt-6 rounded-lg overflow-hidden" style={{ border: `1px solid ${T.border}` }}>
+            <div className="mt-6 rounded-lg overflow-hidden" style={{ border: `1px solid ${TV.border}` }}>
               <div className="flex items-center justify-between px-4 py-2.5" style={{ backgroundColor: T.dark }}>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: T.lime, color: T.dark }}>SEED TEMPLATE</span>
@@ -871,7 +888,7 @@ Overall status: [green / amber / red]
               </div>
             </div>
 
-            <ol className="text-sm space-y-3 mt-4" style={{ color: T.bodyText }}>
+            <ol className="text-sm space-y-3 mt-4" style={{ color: TV.foreground }}>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>4</span>
                 <span><strong>Maintain both files.</strong> After every AI task session, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> with new decisions and corrected errors. After every component upgrade or compliance change, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>.</span>
@@ -883,14 +900,14 @@ Overall status: [green / amber / red]
       {/* ================================================================ */}
       {/* PROJECT ALIGNMENT CHECKLIST */}
       {/* ================================================================ */}
-      <div className="mt-16 rounded-xl overflow-hidden" style={{ border: `1px solid ${T.border}` }}>
+      <div className="mt-16 rounded-xl overflow-hidden" style={{ border: `1px solid ${TV.border}` }}>
         {/* Header */}
         <div className="px-6 py-4 flex items-center gap-3" style={{ backgroundColor: T.dark }}>
           <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded tracking-widest uppercase" style={{ backgroundColor: T.lime, color: T.dark }}>CHECKLIST</span>
           <h2 className="font-archivo text-lg font-extrabold" style={{ color: '#ffffff' }}>Project Alignment Checklist</h2>
         </div>
         <div className="px-6 py-5" style={{ backgroundColor: '#ffffff' }}>
-          <p className="text-sm mb-6" style={{ color: T.bodyText }}>
+          <p className="text-sm mb-6" style={{ color: TV.foreground }}>
             Run this checklist before saving a checkpoint or marking any task complete on an ERI project. Each item maps to a specific section of the <a href="/" className="underline" style={{ color: '#3ba559' }}>BDS reference</a> or the <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system" className="underline" style={{ color: '#3ba559' }}>eri-bds-reference skill</a>. If any item fails, fix it before closing.
           </p>
 
@@ -904,9 +921,9 @@ Overall status: [green / amber / red]
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr style={{ backgroundColor: '#f9fafb' }}>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>#</th>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Check</th>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Pass condition</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>#</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Check</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Pass condition</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -915,10 +932,10 @@ Overall status: [green / amber / red]
                     { id: 'S2', check: 'client/public/bds-meta.json exists', pass: 'File is present and served at https://{domain}/bds-meta.json' },
                     { id: 'S3', check: 'bds-meta.json has schemaVersion: "1.0" and overallStatus reflects actual state', pass: 'Field present; status is green, amber, or red per the overallStatus rules' },
                   ].map((row, i) => (
-                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? '#ffffff' : '#f9fafb', borderBottom: `1px solid ${T.border}` }}>
+                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? TV.card : TV.muted, borderBottom: `1px solid ${TV.border}` }}>
                       <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: T.lime, backgroundColor: T.dark }}>{row.id}</td>
-                      <td className="px-3 py-2" style={{ color: T.bodyText }}>{row.check}</td>
-                      <td className="px-3 py-2 text-xs" style={{ color: T.muted }}>{row.pass}</td>
+                      <td className="px-3 py-2" style={{ color: TV.foreground }}>{row.check}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: TV.mutedFg }}>{row.pass}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -936,9 +953,9 @@ Overall status: [green / amber / red]
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr style={{ backgroundColor: '#f9fafb' }}>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>#</th>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Check</th>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Pass condition</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>#</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Check</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Pass condition</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -949,10 +966,10 @@ Overall status: [green / amber / red]
                     { id: 'B4', check: 'Body text colour is #383838, not #232323', pass: '#383838 for paragraph text on white/light backgrounds; #232323 reserved for headings and footer background only' },
                     { id: 'B5', check: 'Filled CTA buttons use #93E07D (Accent Lime) and rounded-lg shape', pass: 'No rounded-full on CTAs; no bg-[#3ba559] for filled buttons' },
                   ].map((row, i) => (
-                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? '#ffffff' : '#f9fafb', borderBottom: `1px solid ${T.border}` }}>
+                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? TV.card : TV.muted, borderBottom: `1px solid ${TV.border}` }}>
                       <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: '#1e40af', backgroundColor: '#dbeafe' }}>{row.id}</td>
-                      <td className="px-3 py-2" style={{ color: T.bodyText }}>{row.check}</td>
-                      <td className="px-3 py-2 text-xs" style={{ color: T.muted }}>{row.pass}</td>
+                      <td className="px-3 py-2" style={{ color: TV.foreground }}>{row.check}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: TV.mutedFg }}>{row.pass}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -970,9 +987,9 @@ Overall status: [green / amber / red]
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr style={{ backgroundColor: '#f9fafb' }}>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>#</th>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Check</th>
-                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: T.muted, borderBottom: `1px solid ${T.border}` }}>Pass condition</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>#</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Check</th>
+                    <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Pass condition</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -985,10 +1002,10 @@ Overall status: [green / amber / red]
                     { id: 'C6', check: 'source, sourceLabel, and returnUrl are all passed when showCTA={true}', pass: 'All three props present; values match the Registered Source IDs table exactly' },
                     { id: 'C7', check: 'No stale component names (EriNavDrawer, EriFooter) anywhere in the codebase', pass: 'grep -r "EriNavDrawer|EriFooter" client/src/ returns no results' },
                   ].map((row, i) => (
-                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? '#ffffff' : '#f9fafb', borderBottom: `1px solid ${T.border}` }}>
+                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? TV.card : TV.muted, borderBottom: `1px solid ${TV.border}` }}>
                       <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: '#166534', backgroundColor: '#dcfce7' }}>{row.id}</td>
-                      <td className="px-3 py-2" style={{ color: T.bodyText }}>{row.check}</td>
-                      <td className="px-3 py-2 text-xs" style={{ color: T.muted }}>{row.pass}</td>
+                      <td className="px-3 py-2" style={{ color: TV.foreground }}>{row.check}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: TV.mutedFg }}>{row.pass}</td>
                     </tr>
                   ))}
                 </tbody>
