@@ -198,7 +198,10 @@ Full spec: see `bds-meta-spec.md` in this project root.
   - **Root cause found 2026-04-24**: AlignmentTracker project name cells used `style={{ color: T.dark }}` (#232323 hardcoded) — invisible on dark bg. All 18 standalone `color: T.dark` text usages replaced with `text-foreground` Tailwind class. The 5 combined `backgroundColor: T.lime, color: T.dark` usages were intentionally left (lime button text — correct on lime bg).
 - [ ] Push v2.12.0 git tag
 - [ ] Update energy statement copy (footer + Surface Modes section) once updated research report arrives
-- [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
+- [x] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern (v2.3.0)
+- [x] Add Cross-Site Theme System section to skill (v2.3.0) — canonical CSS tokens, ThemeContext verbatim, FOLC script, localStorage key rule
+- [ ] Fix HAL site dark mode — revert dark green, apply canonical token block, use eri-theme key
+- [ ] Push v2.12.0 git tag
 
 ---
 
@@ -296,7 +299,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 3. Update the skill description metadata (`Version: X.Y.Z`) in `SKILL.md` if the version changed.
 4. Save checkpoint.
 
-**Current skill version:** v2.2.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.2.0_cd14344a.skill`
+**Current skill version:** v2.3.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill`
+
+**v2.3.0 changes (2026-04-24):** Added **Cross-Site Theme System** section with: canonical CSS token block (`:root` light + `.dark` dark with exact OKLCH values), `ThemeContext.tsx` verbatim copy, FOLC-prevention script, `localStorage` key `"eri-theme"` cross-site persistence rule. Fixed `bg-white`/`bg-card` contradiction in Component & Layout Rules. Updated pre-action checklist row with token resolution values. Updated integration note 8. Added cross-site persistence callout card to BDS site Surface Modes section. Added "Cross-site theme system" tag to Skills card. Root cause: HAL agent misinterpreted dark mode rules and invented dark green values because canonical CSS token values were not in the skill.
 
 **v2.2.0 changes (2026-04-24):** Added `bds-meta-changelog.json` endpoint check to Step 2 of the pre-action checklist. Agents now fetch `/bds-meta-changelog.json` to compare their `schemaVersion` and self-update their `bds-meta.json` without human prompts. `bds-meta.json` schemaVersion bumped to `"1.1"`. `bds-meta-changelog.json` published at `client/public/bds-meta-changelog.json`. `bds-meta-spec.md` updated with schemaVersion increment rule and changelog reference. BDS site Skills card updated to v2.2.0.
 

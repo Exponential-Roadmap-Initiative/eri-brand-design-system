@@ -166,3 +166,20 @@
 - [x] Update bds-meta-spec.md with schemaVersion increment rule and changelog reference
 - [x] TypeScript check — 0 errors
 - [x] Save checkpoint
+
+## Cross-site theme system skill fix — v2.3.0 (2026-04-24)
+
+- [x] Add Cross-Site Theme System section to eri-bds-reference skill
+- [x] Include canonical CSS token block (OKLCH values for :root light and .dark dark)
+- [x] Include ThemeContext.tsx verbatim copy with localStorage key "eri-theme"
+- [x] Include FOLC-prevention script for index.html
+- [x] Fix bg-white / bg-card contradiction in Component & Layout Rules
+- [x] Update pre-action checklist row with token resolution values
+- [x] Update integration note 8 with bg-background resolution values
+- [x] Add cross-site persistence callout card to BDS site Surface Modes section
+- [x] Add "Cross-site theme system" tag to Skills card
+- [x] Bump skill to v2.3.0 and upload to CDN
+- [x] Update Skills card and asset table to v2.3.0
+- [x] Update PROJECT-CONTEXT.md with v2.3.0 changelog
+- [x] TypeScript check — 0 errors
+- [x] Save checkpoint

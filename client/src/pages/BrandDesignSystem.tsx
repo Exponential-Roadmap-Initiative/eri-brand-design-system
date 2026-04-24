@@ -4566,6 +4566,21 @@ const tabs: TabConfig[] = [
                     </div>
                   ))}
                 </div>
+                {/* Cross-site persistence callout */}
+                <div className="mt-4 bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-4">
+                  <p className="text-xs font-semibold text-[#93E07D] mb-2">Cross-site persistence — why the localStorage key matters</p>
+                  <p className="text-xs text-gray-300 leading-relaxed mb-3">
+                    The ERI website ecosystem is designed to feel like a single product. When a user selects light mode on HAL,
+                    that preference carries over automatically to PSM, Taxonomy, Framework, and every other ERI app — without any
+                    login or sync mechanism. This works because every ERI app reads from and writes to the same{' '}
+                    <code className="text-gray-400">localStorage</code> key: <code className="text-[#93E07D] font-mono">&quot;eri-theme&quot;</code>.
+                  </p>
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    <span className="text-white font-semibold">Rule:</span> Never use a different key name (<code className="text-gray-500">&quot;theme&quot;</code>,{' '}
+                    <code className="text-gray-500">&quot;hal-theme&quot;</code>, <code className="text-gray-500">&quot;app-theme&quot;</code>).
+                    Changing the key silently breaks cross-site persistence for every user who has already set their preference.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -4720,7 +4735,7 @@ const tabs: TabConfig[] = [
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
-                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.2.0</span>
+                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.3.0</span>
                     <span className="text-[10px] text-muted-foreground">Updated 24 Apr 2026</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3 max-w-2xl">
@@ -4729,7 +4744,7 @@ const tabs: TabConfig[] = [
                     component summaries, bds-meta.json spec, and the full Project Alignment Checklist before acting — without needing a manual prompt.
                   </p>
                   <div className="flex flex-wrap gap-2 mb-3">
-                    {["Pre-action checklist", "System Operations", "Colour tokens", "Typography rules", "Navigation tiers", "Component summaries", "bds-meta.json spec", "Project Alignment Checklist", "Contact Us integration", "CDN asset URLs", "Language rules"].map((tag) => (
+                    {["Pre-action checklist", "System Operations", "Colour tokens", "Typography rules", "Navigation tiers", "Component summaries", "bds-meta.json spec", "Project Alignment Checklist", "Contact Us integration", "CDN asset URLs", "Language rules", "Cross-site theme system"].map((tag) => (
                       <span key={tag} className="text-[11px] bg-[#f0faf3] text-[#3ba559] border border-[#c6e8d0] px-2 py-0.5 rounded font-medium">{tag}</span>
                     ))}
                   </div>
@@ -4744,15 +4759,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.2.0_cd14344a.skill"
-                    download="eri-bds-reference-v2.2.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill"
+                    download="eri-bds-reference-v2.3.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.2.0_cd14344a.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
@@ -4760,7 +4775,7 @@ const tabs: TabConfig[] = [
                     <ExternalLink className="w-3.5 h-3.5" />
                     CDN URL
                   </a>
-                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v2.2.0</p>
+                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v2.3.0</p>
                 </div>
               </div>
             </CardContent>
@@ -5150,14 +5165,14 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <tbody className="font-mono text-[11px]">
                   <tr className="border-b border-border/50">
                     <td className="py-1.5 pr-3 font-sans font-medium text-foreground">eri-bds-reference</td>
-                    <td className="py-1.5 pr-3 text-muted-foreground">v2.2.0</td>
+                    <td className="py-1.5 pr-3 text-muted-foreground">v2.3.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.2.0_cd14344a.skill"
-                        download="eri-bds-reference-v2.2.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill"
+                        download="eri-bds-reference-v2.3.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v2.2.0_cd14344a.skill
+                        eri-bds-reference-v2.3.0_3e9ee443.skill
                       </a>
                     </td>
                   </tr>
