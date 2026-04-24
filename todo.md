@@ -127,8 +127,9 @@
 
 ## B6 Checklist Item — No Hardcoded Grey Classes (2026-04-24)
 
-- [ ] Add B6 check to Project Alignment Checklist in AlignmentTracker.tsx
-- [ ] Update bds-meta.json schema template to include brand.noHardcodedGreys field
-- [ ] Update checklistScore() function to score noHardcodedGreys
-- [ ] Update bds-meta.json on BDS site itself to include noHardcodedGreys: true
-- [ ] Save checkpoint after B6 addition
+- [x] Add B6 check to Project Alignment Checklist in AlignmentTracker.tsx
+- [x] Update bds-meta.json schema template to include brand.noHardcodedGreys field
+- [x] Update checklistScore() function to score noHardcodedGreys
+- [x] Update bds-meta.json on BDS site itself to include noHardcodedGreys: true
+- [x] Update BrandCompliance TypeScript interface in bdsMetaTypes.ts
+- [x] Save checkpoint after B6 addition

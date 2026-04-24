@@ -62,6 +62,8 @@ export interface BrandCompliance {
   bodyTextHex383838?: boolean;
   /** All filled CTA buttons use #93E07D (Accent Lime) */
   ctaAccentLime?: boolean;
+  /** No structural Tailwind grey classes (text-gray-*, bg-white, bg-gray-*) used for text or backgrounds — semantic tokens only */
+  noHardcodedGreys?: boolean;
 }
 
 /**

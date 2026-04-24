@@ -169,6 +169,8 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [ ] Update HAL's `bds-meta.json` to canonical object format (currently using legacy string format)
 - [ ] Update Framework site's `bds-meta.json` to v1.0 schema (currently uses legacy format, shows as Unreachable)
 - [x] Apply PSM feedback: added explicit live-fetch instruction to skill Step 2 and Manus agent update rule — "Always fetch and read the live tracker template before writing or updating bds-meta.json — do not rely on the template reproduced in this skill, which may be stale" — 2026-04-22
+- [x] BrandDesignSystem.tsx full dark mode structural fix — 2026-04-24: all structural text-gray-*/bg-white/bg-gray-* replaced with semantic tokens in 5 passes; documentation specimens preserved; contrast verified ≥ 4.90:1 WCAG AA
+- [x] Added B6 check to Project Alignment Checklist — 2026-04-24: "No structural Tailwind grey classes used for text or backgrounds outside documentation specimens"; added noHardcodedGreys field to BrandCompliance interface, bds-meta.json schema template, checklistScore(), and BDS site's own bds-meta.json (noHardcodedGreys: true)
 - [x] Implement dark/light mode toggle — v2.12.0 — 2026-04-23
   - ThemeContext updated: key `eri-theme`, default `dark`, switchable=true
   - CSS token system: `:root` = light tokens, `html.dark` = dark overrides
@@ -231,6 +233,8 @@ The following errors have been found and fixed multiple times. If you see them a
 13. **BDS site's own `client/public/bds-meta.json` was missing** — the BDS site had no `bds-meta.json` file at all, causing it to appear as "Unreachable" in its own tracker. Created 2026-04-21 with `overallStatus: "amber"` (exempt from standard layout requirements).
 
 14. **`T.dark` used as text colour in AlignmentTracker** — the `T` object in AlignmentTracker.tsx contains `T.dark = "#232323"` which is ERI Primary Dark (near-black). This was used as `style={{ color: T.dark }}` on project names, headings, and labels throughout the page — completely invisible on a dark background. Fixed 2026-04-24: all 18 standalone `color: T.dark` text usages replaced with `text-foreground` Tailwind class. The 5 combined `backgroundColor: T.lime, color: T.dark` usages (lime buttons with dark text) are intentional and correct. **Rule**: `T.dark` must only be used as a background colour or as text on a lime/light background. Never as text on a dark surface.
+
+15. **Structural `text-gray-*` / `bg-white` / `bg-gray-*` in BrandDesignSystem.tsx** — the main BDS page had hundreds of structural `text-gray-600`, `text-gray-500`, `bg-white`, `bg-gray-50`, `bg-[#F9FAFB]`, and `border-gray-200` classes on section descriptions, navigation items, card wrappers, and table cells. These are completely invisible or wrong in dark mode. Fixed 2026-04-24 in five passes: all structural usages replaced with `text-muted-foreground`, `text-foreground`, `bg-card`, `bg-muted`, `border-border`. Documentation specimens (colour swatches, code examples, live previews) intentionally preserved with hardcoded values. Contrast verified: all structural text ≥ 4.90:1 (WCAG AA pass). **Rule**: Never use `text-gray-*`, `bg-white`, or `bg-gray-*` for structural UI — only for intentional documentation specimens.
 
 ---
 

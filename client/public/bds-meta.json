@@ -22,7 +22,8 @@
     "archivoHeadings":   true,
     "openSansBody":      true,
     "bodyTextHex383838": true,
-    "ctaAccentLime":     true
+    "ctaAccentLime":     true,
+    "noHardcodedGreys":  true
   },
   "layout": {
     "eriPageLayoutInAppTsx": false,
