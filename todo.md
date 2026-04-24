@@ -104,3 +104,12 @@
 - [x] Update PROJECT-CONTEXT.md — add dark mode rule section with mapping table
 - [x] Verify all pages in dark and light mode visually
 - [x] Checkpoint
+
+## Contrast Fixes (approved 2026-04-24)
+
+- [x] Fix --muted-foreground in index.css dark block: oklch(0.55 0.01 247) → oklch(0.65 0.01 247)
+- [x] Fix --border in index.css dark block: oklch(0.22 0 0) → oklch(0.28 0 0)
+- [x] Replace hardcoded text-gray-500 in AlignmentTracker.tsx with text-muted-foreground (already done in previous session)
+- [x] Verify visually in dark mode (BrandDesignSystem + AlignmentTracker pages)
+- [x] Run TypeScript check (tsc --noEmit) — confirm 0 errors
+- [x] Save checkpoint after contrast fixes confirmed

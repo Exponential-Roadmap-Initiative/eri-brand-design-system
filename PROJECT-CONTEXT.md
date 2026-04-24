@@ -189,6 +189,10 @@ Full spec: see `bds-meta-spec.md` in this project root.
   - SectionNavigator: all hardcoded colours replaced with semantic tokens
   - BrandDesignSystem.tsx: 3 passes of targeted replacements (structural only, not documentation)
   - AlignmentTracker.tsx: structural backgrounds updated
+- [x] Dark mode contrast fixes applied — 2026-04-24
+  - --muted-foreground raised: oklch(0.55 0.01 247) → oklch(0.65 0.01 247) ≈ #9A9EAA (7.05:1 on bg, 6.50:1 on card — AAA/AA)
+  - --border raised: oklch(0.22 0 0) → oklch(0.28 0 0) ≈ #3d3d3d (visible separators without washing out hierarchy)
+  - text-gray-500 in AlignmentTracker URL cells was already replaced with text-muted-foreground in previous session
 - [ ] Push v2.12.0 git tag
 - [ ] Update energy statement copy (footer + Surface Modes section) once updated research report arrives
 - [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
