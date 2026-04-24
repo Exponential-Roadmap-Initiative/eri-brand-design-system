@@ -113,3 +113,22 @@
 - [x] Verify visually in dark mode (BrandDesignSystem + AlignmentTracker pages)
 - [x] Run TypeScript check (tsc --noEmit) — confirm 0 errors
 - [x] Save checkpoint after contrast fixes confirmed
+
+## BrandDesignSystem.tsx — Full Dark Mode Fix (2026-04-24)
+
+- [x] Replace all structural text-gray-600/500/400/300 with text-muted-foreground / text-foreground
+- [x] Replace all structural bg-white / bg-[#F9FAFB] / bg-gray-50 with bg-card / bg-muted
+- [x] Replace all structural border-gray-200/300 with border-border
+- [x] Fix SectionNavigator sidebar navigation contrast (section titles and subsection labels)
+- [x] Preserve intentional documentation specimens (colour swatches, code blocks, live previews)
+- [x] Visual verification in dark mode — all structural text passes WCAG AA (min 4.90:1, primary 14.98:1)
+- [x] TypeScript check — 0 errors
+- [x] Save checkpoint after BDS dark mode fix
+
+## B6 Checklist Item — No Hardcoded Grey Classes (2026-04-24)
+
+- [ ] Add B6 check to Project Alignment Checklist in AlignmentTracker.tsx
+- [ ] Update bds-meta.json schema template to include brand.noHardcodedGreys field
+- [ ] Update checklistScore() function to score noHardcodedGreys
+- [ ] Update bds-meta.json on BDS site itself to include noHardcodedGreys: true
+- [ ] Save checkpoint after B6 addition

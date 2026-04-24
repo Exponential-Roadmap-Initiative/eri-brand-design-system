@@ -307,10 +307,10 @@ function ColorSwatch({ name, hex, rgb, context, tones }: { name: string; hex: st
       </div>
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="font-bold text-[#232323] text-sm">{name}</span>
+          <span className="font-bold text-foreground text-sm">{name}</span>
           <button
             onClick={copyToClipboard}
-            className="p-1.5 hover:bg-gray-100 rounded transition-colors"
+            className="p-1.5 hover:bg-muted rounded transition-colors"
             title="Copy hex code"
           >
             {copied ? <Check className="w-4 h-4 text-[#3ba559]" /> : <Copy className="w-4 h-4 text-gray-400" />}
@@ -318,15 +318,15 @@ function ColorSwatch({ name, hex, rgb, context, tones }: { name: string; hex: st
         </div>
         <div className="space-y-1 text-xs">
           <div className="flex gap-2">
-            <span className="text-gray-500 w-10">HEX</span>
+            <span className="text-muted-foreground w-10">HEX</span>
             <code className="font-mono" style={{ color: hex }}>{hex}</code>
           </div>
           <div className="flex gap-2">
-            <span className="text-gray-500 w-10">RGB</span>
-            <code className="text-gray-700 font-mono">{rgb}</code>
+            <span className="text-muted-foreground w-10">RGB</span>
+            <code className="text-foreground font-mono">{rgb}</code>
           </div>
         </div>
-        <p className="text-xs text-gray-500 mt-3 border-t pt-3">{context}</p>
+        <p className="text-xs text-muted-foreground mt-3 border-t border-border pt-3">{context}</p>
       </div>
     </div>
   );
@@ -349,12 +349,12 @@ function ChartContainer({ title, subtitle, headerColor = "green", children }: {
 }) {
   const bg = chartHeaderColors[headerColor] || chartHeaderColors.green;
   return (
-    <div className="rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+    <div className="rounded-lg border border-border overflow-hidden shadow-sm">
       <div className="px-4 py-3 text-white" style={{ backgroundColor: bg }}>
         <p className="font-bold text-sm">{title}</p>
         {subtitle && <p className="text-xs opacity-80 mt-0.5">{subtitle}</p>}
       </div>
-      <div className="bg-white">{children}</div>
+      <div className="bg-card">{children}</div>
     </div>
   );
 }
@@ -434,7 +434,7 @@ export default function BrandDesignSystem() {
           </div>
 
           {/* Who is it for — four audience cards */}
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">WHO IS IT FOR?</p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">WHO IS IT FOR?</p>
           <div className="grid sm:grid-cols-2 gap-4 mb-8">
             {[
               {
@@ -463,9 +463,9 @@ export default function BrandDesignSystem() {
                 sections: ["Standard Components → Release Workflow"],
               },
             ].map(({ role, colour, desc, sections, dark }) => (
-              <div key={role} className={`rounded-lg p-5 border ${dark ? 'border-[#93E07D]/30' : 'border-gray-200'}`} style={{ backgroundColor: dark ? '#1a1a1a' : '#F9FAFB' }}>
+              <div key={role} className={`rounded-lg p-5 border ${dark ? 'border-[#93E07D]/30 bg-[#1a1a1a]' : 'border-border bg-card'}`}>
                 <p className="text-sm font-bold mb-2" style={{ color: colour }}>{role}</p>
-                <p className={`text-xs leading-relaxed mb-3 ${dark ? 'text-gray-300' : 'text-gray-600'}`}>{desc}</p>
+                <p className={`text-xs leading-relaxed mb-3 ${dark ? 'text-gray-300' : 'text-muted-foreground'}`}>{desc}</p>
                 <div className="flex flex-wrap gap-1">
                   {sections.map(s => (
                     <span key={s} className={`text-[10px] font-mono px-2 py-0.5 rounded ${dark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-500'}`}>{s}</span>
@@ -476,30 +476,30 @@ export default function BrandDesignSystem() {
           </div>
 
           {/* Two paths */}
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">TWO PATHS THROUGH THE BDS</p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">TWO PATHS THROUGH THE BDS</p>
           <div className="grid sm:grid-cols-2 gap-4 mb-8">
-            <div className="rounded-lg p-5 border border-gray-200 bg-card">
+            <div className="rounded-lg p-5 border border-border bg-card">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-6 h-6 rounded-full bg-[#3ba559] text-white text-xs font-bold flex items-center justify-center">A</span>
                 <p className="text-sm font-bold text-foreground">Brand &amp; Communications only</p>
               </div>
-              <p className="text-xs text-gray-600 leading-relaxed mb-3">Use the <strong>Communications &amp; Brand zone</strong> for colour, typography, logo, and verbal identity. No code or package installation required.</p>
-              <p className="text-[10px] text-gray-400 font-mono">Sections: Visual Identity → Verbal Identity</p>
+              <p className="text-xs text-muted-foreground leading-relaxed mb-3">Use the <strong>Communications &amp; Brand zone</strong> for colour, typography, logo, and verbal identity. No code or package installation required.</p>
+              <p className="text-[10px] text-muted-foreground font-mono">Sections: Visual Identity → Verbal Identity</p>
             </div>
             <div className="rounded-lg p-5 border-2 border-[#3ba559] bg-card">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-6 h-6 rounded-full bg-[#3ba559] text-white text-xs font-bold flex items-center justify-center">B</span>
                 <p className="text-sm font-bold text-foreground">Building an ERI application</p>
               </div>
-              <p className="text-xs text-gray-600 leading-relaxed mb-3">Install <code className="font-mono bg-gray-100 px-1 rounded">@eri/components</code> and follow the <strong>Standard Components</strong> section. This is the mandatory starting point for all ERI public-facing applications.</p>
-              <p className="text-[10px] text-gray-400 font-mono">Sections: Standard Components → UI Components</p>
+              <p className="text-xs text-muted-foreground leading-relaxed mb-3">Install <code className="font-mono bg-gray-100 px-1 rounded">@eri/components</code> and follow the <strong>Standard Components</strong> section. This is the mandatory starting point for all ERI public-facing applications.</p>
+              <p className="text-[10px] text-muted-foreground font-mono">Sections: Standard Components → UI Components</p>
             </div>
           </div>
 
           {/* Standard Components quick-start callout */}
-          <div className="rounded-lg p-6 mb-6 border-l-4" style={{ backgroundColor: '#f0fdf4', borderLeftColor: '#3ba559' }}>
+          <div className="rounded-lg p-6 mb-6 border-l-4 bg-card" style={{ borderLeftColor: '#3ba559' }}>
             <p className="text-sm font-bold text-foreground mb-1">Building an ERI app? Start with Standard Components.</p>
-            <p className="text-xs text-gray-600 leading-relaxed mb-4">
+            <p className="text-xs text-muted-foreground leading-relaxed mb-4">
               The <code className="font-mono bg-green-100 px-1 rounded">@eri/components</code> package ships six canonical components that every ERI public-facing application must use verbatim.
               Install once, import, and the layout, header, hero, footer, status badges, and contact button are all handled.
             </p>
@@ -514,7 +514,7 @@ export default function BrandDesignSystem() {
               ].map(([name, desc]) => (
                 <div key={name} className="flex gap-2 items-start">
                   <span className="text-[#3ba559] font-mono text-[10px] shrink-0 mt-0.5">{name}</span>
-                  <span className="text-[10px] text-gray-500 leading-tight">{desc}</span>
+                  <span className="text-[10px] text-muted-foreground leading-tight">{desc}</span>
                 </div>
               ))}
             </div>
@@ -579,7 +579,7 @@ export default function BrandDesignSystem() {
                 {brandProposition.values.map((value) => (
                   <div key={value.name} className="border-t-4 border-[#3ba559] pt-4">
                     <h4 className="font-archivo font-extrabold text-foreground text-base mb-2">{value.name}</h4>
-                    <p className="text-sm text-gray-600 leading-relaxed">{value.description}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{value.description}</p>
                   </div>
                 ))}
               </div>
@@ -587,7 +587,7 @@ export default function BrandDesignSystem() {
           </Card>
 
           {/* Brand Personality */}
-          <div className="rounded-lg p-8 bg-[#F9FAFB] border border-gray-200">
+          <div className="rounded-lg p-8 bg-card border border-border">
             <h3 className="font-bold text-foreground mb-3 text-lg">Brand Personality</h3>
             <p className="font-archivo font-bold text-foreground text-xl italic leading-relaxed">"{brandProposition.personality}"</p>
           </div>
@@ -600,13 +600,13 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Visual Identity
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Our colour system is built around the Five Pillars framework. Each pillar has a dedicated colour
             that creates instant recognition and helps users navigate complex climate information.
           </p>
 
           <h3 className="font-bold text-foreground mb-4 text-lg">Brand Colours</h3>
-          <p className="text-gray-600 mb-6 text-sm">
+          <p className="text-muted-foreground mb-6 text-sm">
             Core brand colours for UI elements, text, and backgrounds. These provide the foundation for all interfaces.
           </p>
           <div className="grid md:grid-cols-4 gap-4 mb-12">
@@ -616,7 +616,7 @@ export default function BrandDesignSystem() {
           </div>
 
           <h3 className="font-bold text-foreground mb-4 text-lg">Pillar Colours</h3>
-          <p className="text-gray-600 mb-6 text-sm">
+          <p className="text-muted-foreground mb-6 text-sm">
             These colours represent the five dimensions of organisational climate impact. Use them consistently
             to reinforce the framework structure.
           </p>
@@ -628,7 +628,7 @@ export default function BrandDesignSystem() {
 
           {/* Dark Image Hero */}
           <h3 className="font-bold text-foreground mb-4 text-lg mt-12">Dark Image Hero — Standard</h3>
-          <p className="text-gray-600 mb-6 text-sm max-w-3xl">
+          <p className="text-muted-foreground mb-6 text-sm max-w-3xl">
             The standard hero pattern for all ERI web applications and marketing sites. A full-bleed background image
             is overlaid with a semi-transparent <code className="font-mono bg-gray-100 px-1 rounded">#232323</code> at 80–85% opacity.
             Text is <strong>always left-aligned</strong>, with the left edge aligned with the ERI logotype in the header (same container padding).
@@ -653,13 +653,13 @@ export default function BrandDesignSystem() {
                 </div>
               </div>
               <CardContent className="p-4">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Dark Image Hero — Correct Layout</p>
-                <p className="text-xs text-gray-500">Left-aligned text, left edge aligned with header logotype. Eyebrow label above H1. Accent Lime <code className="bg-gray-100 px-1 rounded">#93E07D</code> accent word. Accent Lime CTA button (rounded-lg, dark text). Right half reserved for image.</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Dark Image Hero — Correct Layout</p>
+                <p className="text-xs text-muted-foreground">Left-aligned text, left edge aligned with header logotype. Eyebrow label above H1. Accent Lime <code className="bg-gray-100 px-1 rounded">#93E07D</code> accent word. Accent Lime CTA button (rounded-lg, dark text). Right half reserved for image.</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-5">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">Hero Anatomy</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3">Hero Anatomy</p>
                 <table className="w-full text-xs">
                   <tbody>
                     <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">Background</td><td className="py-1.5 font-mono text-[#232323]">Full-bleed image + <span className="text-[#232323] font-bold">#232323</span> at 80–85% opacity</td></tr>
@@ -684,7 +684,7 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Logo Usage
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Three logo assets are available. Each card shows the asset on both a light and dark background so you can verify contrast before use. Each card includes a file identifier and a direct download button. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
           </p>
 
@@ -712,7 +712,7 @@ export default function BrandDesignSystem() {
                         alt={v.name}
                         className="max-h-14 max-w-[160px] object-contain"
                       />
-                      <span className="text-[10px] text-gray-400 font-medium tracking-wide uppercase">Light background</span>
+                      <span className="text-[10px] text-muted-foreground font-medium tracking-wide uppercase">Light background</span>
                     </div>
                     {/* Dark side */}
                     <div
@@ -725,7 +725,7 @@ export default function BrandDesignSystem() {
                         className="max-h-14 max-w-[160px] object-contain"
                         style={vx.darkFilter ? { filter: vx.darkFilter } : undefined}
                       />
-                      <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase">
+                      <span className="text-[10px] text-muted-foreground font-medium tracking-wide uppercase">
                         {vx.darkLabel || "Dark background"}
                       </span>
                     </div>
@@ -738,12 +738,12 @@ export default function BrandDesignSystem() {
                         {/* File identifier chip */}
                         {vx.fileId && (
                           <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
                               <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z" /></svg>
                               {vx.fileId}
                             </span>
                             {vx.svgFileId && (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">
+                              <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
                                 <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z" /></svg>
                               {vx.svgFileId}
                             </span>
@@ -767,7 +767,7 @@ export default function BrandDesignSystem() {
                           <a
                             href={vx.svgUrl}
                             download="eri-logo-full-color.svg"
-                            className="inline-flex items-center gap-1.5 border border-gray-300 text-gray-600 text-[11px] font-medium px-3 py-1.5 rounded-md hover:bg-gray-50 transition-colors whitespace-nowrap"
+                            className="inline-flex items-center gap-1.5 border border-border text-muted-foreground text-[11px] font-medium px-3 py-1.5 rounded-md hover:bg-muted transition-colors whitespace-nowrap"
                           >
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                             SVG
@@ -778,19 +778,19 @@ export default function BrandDesignSystem() {
 
                     <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                       <div>
-                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Min Width</span>
-                        <span className="text-gray-700 font-mono text-xs">{v.minWidth}</span>
+                        <span className="text-muted-foreground text-xs uppercase tracking-wide block mb-0.5">Min Width</span>
+                        <span className="text-foreground font-mono text-xs">{v.minWidth}</span>
                       </div>
                       <div>
-                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">Clear Space</span>
-                        <span className="text-gray-600 text-xs">{v.clearSpace}</span>
+                        <span className="text-muted-foreground text-xs uppercase tracking-wide block mb-0.5">Clear Space</span>
+                        <span className="text-muted-foreground text-xs">{v.clearSpace}</span>
                       </div>
                       <div className="col-span-2">
-                        <span className="text-gray-400 text-xs uppercase tracking-wide block mb-0.5">When to use</span>
-                        <span className="text-gray-600 text-xs">{v.when}</span>
+                        <span className="text-muted-foreground text-xs uppercase tracking-wide block mb-0.5">When to use</span>
+                        <span className="text-muted-foreground text-xs">{v.when}</span>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-500 border-t pt-3">{v.usage}</p>
+                    <p className="text-xs text-muted-foreground border-t pt-3">{v.usage}</p>
                     {vx.darkFilter && (
                       <div className="bg-gray-900 rounded p-2">
                         <code className="text-xs text-gray-300 font-mono">filter: {vx.darkFilter}</code>
@@ -798,10 +798,10 @@ export default function BrandDesignSystem() {
                     )}
                     {/* App icon sub-section for icon mark */}
                     {vx.appIcon && (
-                      <div className="border border-gray-200 rounded overflow-hidden">
-                        <div className="bg-gray-50 px-3 py-1.5 border-b border-gray-200 flex items-center justify-between">
-                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">App Icon Variants</span>
-                          <span className="text-[10px] text-gray-400">{vx.appIcon.sizes}</span>
+                      <div className="border border-border rounded overflow-hidden">
+                        <div className="bg-muted px-3 py-1.5 border-b border-border flex items-center justify-between">
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">App Icon Variants</span>
+                          <span className="text-[10px] text-muted-foreground">{vx.appIcon.sizes}</span>
                         </div>
                         <div className="px-3 py-3 flex items-start gap-4">
                           <div className="flex flex-col items-center gap-1">
@@ -819,10 +819,10 @@ export default function BrandDesignSystem() {
                             <span className="text-[9px] text-gray-400">Dark contexts</span>
                             {vx.appIcon.darkDownloadName && (
                               <a href={vx.appIcon.dark} download={vx.appIcon.darkDownloadName}
-                                className="text-[9px] text-gray-400 underline hover:text-gray-600">↓ PNG</a>
+                                className="text-[9px] text-muted-foreground underline hover:text-foreground">↓ PNG</a>
                             )}
                           </div>
-                          <p className="text-xs text-gray-500 flex-1">{vx.appIcon.note}</p>
+                          <p className="text-xs text-muted-foreground flex-1">{vx.appIcon.note}</p>
                         </div>
                         {/* File IDs for app icon variants */}
                         {(vx.appIcon.lightFileId || vx.appIcon.darkFileId) && (
@@ -833,7 +833,7 @@ export default function BrandDesignSystem() {
                               </span>
                             )}
                             {vx.appIcon.darkFileId && (
-                              <span className="inline-flex items-center gap-1 text-[9px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">
+                              <span className="inline-flex items-center gap-1 text-[9px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
                                 {vx.appIcon.darkFileId}
                               </span>
                             )}
@@ -843,18 +843,18 @@ export default function BrandDesignSystem() {
                     )}
                     {/* Favicon sizes sub-section */}
                     {vx.faviconSizes && (
-                      <div className="border border-gray-200 rounded overflow-hidden">
-                        <div className="bg-gray-50 px-3 py-1.5 border-b border-gray-200">
-                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Available Sizes</span>
+                      <div className="border border-border rounded overflow-hidden">
+                        <div className="bg-muted px-3 py-1.5 border-b border-border">
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Available Sizes</span>
                         </div>
                         <div className="divide-y divide-gray-100">
                           {vx.faviconSizes.map((fs) => (
                             <div key={fs.label} className="px-3 py-2 flex items-center justify-between gap-3">
                               <div className="flex-1 min-w-0">
-                                <span className="text-xs font-medium text-gray-700">{fs.label}</span>
-                                <span className="text-[10px] text-gray-400 ml-2">{fs.note}</span>
+                                <span className="text-xs font-medium text-foreground">{fs.label}</span>
+                                <span className="text-[10px] text-muted-foreground ml-2">{fs.note}</span>
                                 <div className="mt-0.5">
-                                  <span className="text-[9px] font-mono bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded border border-gray-200">{fs.fileId}</span>
+                                  <span className="text-[9px] font-mono bg-muted text-muted-foreground px-1.5 py-0.5 rounded border border-border">{fs.fileId}</span>
                                 </div>
                               </div>
                               <a
@@ -883,7 +883,7 @@ export default function BrandDesignSystem() {
                 <span className="inline-flex items-center gap-1.5 bg-[#3ba559] text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Mandatory</span>
                 <h3 className="font-bold text-[#232323] text-base">Favicon — Correct <code className="font-mono text-sm">&lt;head&gt;</code> Implementation</h3>
               </div>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 Copy these exact three lines into <code className="bg-gray-100 px-1 rounded text-xs">client/index.html</code> inside <code className="bg-gray-100 px-1 rounded text-xs">&lt;head&gt;</code>.
                 Remove any existing <code className="bg-gray-100 px-1 rounded text-xs">&lt;link rel="icon"&gt;</code> or <code className="bg-gray-100 px-1 rounded text-xs">&lt;link rel="shortcut icon"&gt;</code> tags first.
                 Do <strong>not</strong> copy any file into <code className="bg-gray-100 px-1 rounded text-xs">client/public/</code> — use the CDN URLs directly.
@@ -896,7 +896,7 @@ export default function BrandDesignSystem() {
   href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/favicon-white-rounded-180_2daaa7d4.png" />
 <link rel="icon" type="image/png" sizes="192x192"
   href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/favicon-white-rounded-192_54fb4338.png" />`}</pre>
-              <p className="text-xs text-gray-500 mb-1 font-semibold">Why 32px? That is the correct and intentional size for a browser tab favicon. Do not search for a larger file to use as the tab icon.</p>
+              <p className="text-xs text-muted-foreground mb-1 font-semibold">Why 32px? That is the correct and intentional size for a browser tab favicon. Do not search for a larger file to use as the tab icon.</p>
             </CardContent>
           </Card>
 
@@ -955,7 +955,7 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Typography
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             ERI uses a two-font system. <strong>Archivo</strong> is the heading and display typeface — used at weight 700–800 for all H1–H3 and marketing hero text.{" "}
             <strong>Open Sans</strong> is the body typeface — used for all paragraph text, UI labels, navigation, and captions. Both are loaded via Google Fonts CDN.
             The web applications map <code className="font-mono text-xs bg-gray-100 px-1 rounded">font-sans</code> to Archivo for consistency with the design system.
@@ -964,9 +964,9 @@ export default function BrandDesignSystem() {
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             <Card className="shadow-sm">
               <CardContent className="p-6">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Heading &amp; Display Font</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Heading &amp; Display Font</p>
                 <p className="font-archivo font-extrabold text-3xl text-[#232323] mb-3">Archivo</p>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm text-muted-foreground mb-3">
                   Used for all H1–H3, hero text, section titles, and card headings. Weights: 400, 500, 600, 700, 800, 900.
                   Loaded via Google Fonts CDN.
                 </p>
@@ -978,9 +978,9 @@ export default function BrandDesignSystem() {
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-6">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Body &amp; UI Font</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Body &amp; UI Font</p>
                 <p style={{ fontFamily: "'Open Sans', sans-serif" }} className="font-semibold text-3xl text-[#232323] mb-3">Open Sans</p>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm text-muted-foreground mb-3">
                   Used for all body text, paragraphs, UI labels, navigation items, captions, and form fields.
                   Weights: 400, 500, 600, 700. Loaded via Google Fonts CDN.
                 </p>
@@ -993,7 +993,7 @@ export default function BrandDesignSystem() {
           </div>
 
           <h3 className="font-bold text-[#232323] mb-4 text-lg">Type Scale Specimen</h3>
-          <p className="text-gray-600 mb-6 text-sm">Each row shows the rendered text, the exact Tailwind classes used on live pages, and the intended context.</p>
+          <p className="text-muted-foreground mb-6 text-sm">Each row shows the rendered text, the exact Tailwind classes used on live pages, and the intended context.</p>
           <Card className="shadow-sm mb-10">
             <CardContent className="p-0">
               <div className="divide-y divide-gray-100">
@@ -1009,7 +1009,7 @@ export default function BrandDesignSystem() {
                   { label: "Overline",       classes: "text-xs font-semibold text-gray-400 uppercase tracking-wider",    previewClass: "text-xs font-semibold text-gray-400 uppercase tracking-wider", text: "Five Pillars · Navigation · Resources",                            context: "Section category labels above headings or nav groups." },
                   { label: "Code / Mono",    classes: "text-xs font-mono text-gray-700 bg-gray-100 px-1.5 py-0.5 rounded", previewClass: "text-xs font-mono text-gray-700 bg-gray-100 px-1.5 py-0.5 rounded", text: "font-archivo text-4xl font-extrabold",                         context: "Inline code, Tailwind class references, API keys, identifiers." },
                 ].map((row, i) => (
-                  <div key={row.label} className={`grid md:grid-cols-[140px_1fr_1fr] gap-4 p-5 items-start ${i % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
+                  <div key={row.label} className={`grid md:grid-cols-[140px_1fr_1fr] gap-4 p-5 items-start ${i % 2 === 0 ? "bg-card" : "bg-muted"}`}>
                     <div className="flex-shrink-0">
                       <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">{row.label}</span>
                       <code className="text-[10px] font-mono text-gray-400 break-all leading-relaxed">{row.classes}</code>
@@ -1018,7 +1018,7 @@ export default function BrandDesignSystem() {
                       <p className={row.previewClass}>{row.text}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">{row.context}</p>
+                      <p className="text-xs text-muted-foreground">{row.context}</p>
                     </div>
                   </div>
                 ))}
@@ -1029,20 +1029,20 @@ export default function BrandDesignSystem() {
           <Card className="shadow-sm bg-muted border-border">
             <CardContent className="p-5">
               <h4 className="font-bold text-[#232323] mb-2 text-sm">Italic Variant</h4>
-              <p className="text-sm text-gray-600 mb-3">Archivo supports italic. Used sparingly for hero accent phrases and pull quotes.</p>
+              <p className="text-sm text-muted-foreground mb-3">Archivo supports italic. Used sparingly for hero accent phrases and pull quotes.</p>
               <p className="font-archivo font-extrabold text-2xl text-[#232323] italic">"The fastest economic transition in history"</p>
-               <code className="text-xs font-mono text-gray-500 mt-2 block">font-archivo font-extrabold italic text-2xl text-[#232323]</code>
+               <code className="text-xs font-mono text-muted-foreground mt-2 block">font-archivo font-extrabold italic text-2xl text-[#232323]</code>
             </CardContent>
           </Card>
           {/* Accent Word Heading Pattern */}
           <Card className="shadow-sm mt-6">
             <CardContent className="p-5">
               <h4 className="font-bold text-[#232323] mb-2 text-sm">Heading Accent Word Pattern</h4>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 Accent Lime <code className="bg-gray-100 px-1 rounded text-xs">#93E07D</code> is used for one or two accent words in a heading, <strong>exclusively on dark or green backgrounds</strong> — hero sections, dark cards, and dark section backgrounds. On white or light backgrounds, use Primary Green <code className="bg-gray-100 px-1 rounded text-xs">#3ba559</code> instead. Accent Lime has insufficient contrast on light surfaces.
               </p>
               {/* Correct usage — on dark background */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">✅ Correct — on dark background</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">✅ Correct — on dark background</p>
               <div className="rounded-lg p-5 mb-4" style={{ background: "linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)" }}>
                 <p className="font-archivo font-extrabold text-2xl text-white">
                   About the Exponential Roadmap <span className="text-[#93E07D]">Initiative</span>
@@ -1052,20 +1052,20 @@ export default function BrandDesignSystem() {
                 </p>
               </div>
               {/* Incorrect usage — on white background */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">❌ Do not use — on white/light background</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">❌ Do not use — on white/light background</p>
               <div className="rounded-lg p-5 mb-4 bg-card border border-border">
                 <p className="font-archivo font-extrabold text-2xl text-[#232323]">
                   About the Exponential Roadmap <span className="text-[#93E07D] opacity-80">Initiative</span>
                 </p>
                 <p className="text-xs text-red-500 mt-2">Accent Lime on white has insufficient contrast. Use <span className="font-mono">#3ba559</span> Primary Green on light backgrounds instead.</p>
               </div>
-              <code className="text-xs font-mono text-gray-600 block bg-gray-50 border border-gray-200 rounded p-2">
+              <code className="text-xs font-mono text-muted-foreground block bg-muted border border-border rounded p-2">
                 {`<h1 className="font-archivo font-extrabold text-white">
   About the Exponential Roadmap{" "}
   <span className="text-[#93E07D]">Initiative</span>  {/* dark bg only */}
 </h1>`}
               </code>
-              <p className="text-xs text-gray-500 mt-2">Use sparingly — one or two accent words per heading maximum. Never apply to body text or on light backgrounds.</p>
+              <p className="text-xs text-muted-foreground mt-2">Use sparingly — one or two accent words per heading maximum. Never apply to body text or on light backgrounds.</p>
             </CardContent>
           </Card>
           {/* Marketing vs. Application note */}
@@ -1074,7 +1074,7 @@ export default function BrandDesignSystem() {
               <h4 className="font-bold text-[#232323] mb-3 text-sm">Typography on Light vs. Dark Backgrounds</h4>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Dark Background (hero sections, dark cards)</p>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Dark Background (hero sections, dark cards)</p>
                   <table className="w-full text-xs">
                     <tbody>
                       <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–6xl · white</td></tr>
@@ -1086,7 +1086,7 @@ export default function BrandDesignSystem() {
                   </table>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Light Background (white / #F9FAFB sections)</p>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Light Background (white / #F9FAFB sections)</p>
                   <table className="w-full text-xs">
                     <tbody>
                       <tr className="border-b border-border/50"><td className="py-1.5 pr-3 text-muted-foreground">H1 hero</td><td className="py-1.5 font-mono text-[#232323]">Archivo 800 · 4xl–5xl · #232323</td></tr>
@@ -1098,7 +1098,7 @@ export default function BrandDesignSystem() {
                   </table>
                 </div>
               </div>
-              <p className="text-xs text-gray-700 mt-3"><strong>Unified standard (all ERI surfaces):</strong> Archivo for headings · Open Sans for body text · #383838 for body copy · #3ba559 for links. Use lime <code className="bg-gray-100 px-1 rounded">#93E07D</code> for heading accents on dark/green backgrounds only; use <code className="bg-gray-100 px-1 rounded">#3ba559</code> on white backgrounds.</p>
+              <p className="text-xs text-foreground mt-3"><strong>Unified standard (all ERI surfaces):</strong> Archivo for headings · Open Sans for body text · #383838 for body copy · #3ba559 for links. Use lime <code className="bg-gray-100 px-1 rounded">#93E07D</code> for heading accents on dark/green backgrounds only; use <code className="bg-gray-100 px-1 rounded">#3ba559</code> on white backgrounds.</p>
             </CardContent>
           </Card>
         </section>
@@ -1109,7 +1109,7 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Verbal Identity
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             How we communicate is as important as what we communicate. Our voice reflects our values
             and builds trust with our audience.
           </p>
@@ -1141,7 +1141,7 @@ export default function BrandDesignSystem() {
                   <h4 className="font-archivo font-extrabold text-white text-base">{item.principle}</h4>
                 </div>
                 <CardContent className="p-5">
-                  <p className="text-sm text-gray-600 italic">{item.example}</p>
+                  <p className="text-sm text-muted-foreground italic">{item.example}</p>
                 </CardContent>
               </Card>
             ))}
@@ -1159,9 +1159,9 @@ export default function BrandDesignSystem() {
                 </thead>
                 <tbody>
                   {verbalIdentity.terminology.map((item, index) => (
-                    <tr key={item.term} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={item.term} className={index % 2 === 0 ? "bg-card" : "bg-muted"}>
                       <td className="p-4 text-[#3ba559] font-medium">{item.term}</td>
-                      <td className="p-4 text-gray-500 line-through">{item.avoid}</td>
+                      <td className="p-4 text-muted-foreground line-through">{item.avoid}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1176,7 +1176,7 @@ export default function BrandDesignSystem() {
               {verbalIdentity.languageRules.standard}
             </span>
           </div>
-          <p className="text-gray-600 mb-8 max-w-3xl text-sm">{verbalIdentity.languageRules.rationale}</p>
+          <p className="text-muted-foreground mb-8 max-w-3xl text-sm">{verbalIdentity.languageRules.rationale}</p>
 
           <h4 className="font-bold text-[#232323] mb-4">Spelling Rules</h4>
           <Card className="shadow-sm mb-8">
@@ -1191,7 +1191,7 @@ export default function BrandDesignSystem() {
                 </thead>
                 <tbody>
                   {verbalIdentity.languageRules.spellingRules.map((row, i) => (
-                    <tr key={row.rule} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={row.rule} className={i % 2 === 0 ? "bg-card" : "bg-muted"}>
                       <td className="p-4 font-mono font-bold text-[#232323] text-xs">{row.rule}</td>
                       <td className="p-4 text-[#3ba559] font-medium">{row.british}</td>
                       <td className="p-4 text-gray-400 line-through">{row.avoid}</td>
@@ -1208,7 +1208,7 @@ export default function BrandDesignSystem() {
               <Card key={item.rule} className="shadow-sm">
                 <CardContent className="p-5">
                   <h5 className="font-bold text-[#232323] mb-2 text-sm">{item.rule}</h5>
-                  <p className="text-sm text-gray-600">{item.detail}</p>
+                  <p className="text-sm text-muted-foreground">{item.detail}</p>
                 </CardContent>
               </Card>
             ))}
@@ -1227,10 +1227,10 @@ export default function BrandDesignSystem() {
                 </thead>
                 <tbody>
                   {verbalIdentity.languageRules.commonPitfalls.map((item, i) => (
-                    <tr key={item.pitfall} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={item.pitfall} className={i % 2 === 0 ? "bg-card" : "bg-muted"}>
                       <td className="p-4 font-mono font-bold text-[#232323] text-xs">{item.pitfall}</td>
-                      <td className="p-4 text-gray-700 text-xs">{item.correct}</td>
-                      <td className="p-4 text-gray-500 italic text-xs">{item.example}</td>
+                      <td className="p-4 text-foreground text-xs">{item.correct}</td>
+                      <td className="p-4 text-muted-foreground italic text-xs">{item.example}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1247,7 +1247,7 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Photography
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             ERI photography is documentary and systemic — it shows the infrastructure, industries, and cities that need to transform, not aspirational outcomes. These principles are derived from the Exponential Roadmap 1.5.1 report and apply across all ERI publications and digital products.
           </p>
 
@@ -1265,7 +1265,7 @@ export default function BrandDesignSystem() {
                     <h4 className="font-archivo font-extrabold text-white text-base">{item.title}</h4>
                   </div>
                   <div className="p-5">
-                    <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -1275,11 +1275,11 @@ export default function BrandDesignSystem() {
           {/* Subject Matter by Pillar */}
           <div className="mb-10">
             <h3 className="font-archivo text-lg font-bold text-foreground mb-4">Subject Matter by Pillar</h3>
-            <p className="text-gray-500 text-sm mb-4">Photography subject matter maps directly to the five pillars. Use these categories when sourcing images for pillar-specific content.</p>
+            <p className="text-muted-foreground text-sm mb-4">Photography subject matter maps directly to the five pillars. Use these categories when sourcing images for pillar-specific content.</p>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
+                  <tr className="bg-muted border-b border-border">
                     <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Pillar</th>
                     <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Subject Category</th>
                     <th className="text-left px-4 py-3 font-archivo font-bold text-[#232323]">Example Subjects</th>
@@ -1304,10 +1304,10 @@ export default function BrandDesignSystem() {
                           {row.pillar}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-700">{row.category}</td>
-                      <td className="px-4 py-3 text-gray-600">{row.examples}</td>
+                      <td className="px-4 py-3 text-foreground">{row.category}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{row.examples}</td>
                       <td className="px-4 py-3">
-                        <code className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{row.terms}</code>
+                        <code className="text-xs bg-muted px-2 py-1 rounded text-foreground">{row.terms}</code>
                       </td>
                     </tr>
                   ))}
@@ -1349,8 +1349,8 @@ export default function BrandDesignSystem() {
                   </div>
                   <div className="p-4">
                     <h4 className="font-archivo font-bold text-[#232323] text-sm mb-1.5">{comp.type}</h4>
-                    <span className="inline-block text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded mb-3">{comp.usage}</span>
-                    <p className="text-gray-600 text-sm leading-relaxed">{comp.desc}</p>
+                    <span className="inline-block text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded mb-3">{comp.usage}</span>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{comp.desc}</p>
                   </div>
                 </div>
               ))}
@@ -1373,7 +1373,7 @@ export default function BrandDesignSystem() {
                     "Use the green underline bar or swirl shape as the brand accent on chapter openers",
                     "Credit all photography sources — Unsplash, Alamy, Shutterstock, or company-provided",
                   ].map((rule) => (
-                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
+                    <li key={rule} className="flex items-start gap-2 text-sm text-foreground">
                       <span className="text-[#3ba559] mt-0.5 flex-shrink-0">✓</span>
                       {rule}
                     </li>
@@ -1393,7 +1393,7 @@ export default function BrandDesignSystem() {
                     "Use nature/landscape photography decoratively — forests, mountains, or oceans without systemic context",
                     "Use close-up portrait photography as a primary image (only for case study headshots)",
                   ].map((rule) => (
-                    <li key={rule} className="flex items-start gap-2 text-sm text-gray-700">
+                    <li key={rule} className="flex items-start gap-2 text-sm text-foreground">
                       <span className="text-red-500 mt-0.5 flex-shrink-0">✗</span>
                       {rule}
                     </li>
@@ -1418,11 +1418,11 @@ export default function BrandDesignSystem() {
                     <span className="font-archivo font-bold text-[#232323] text-sm">{src.name}</span>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                       src.type === 'Free' ? 'bg-green-100 text-green-700' :
-                      src.type === 'Licensed' ? 'bg-blue-100 text-gray-700' :
+                      src.type === 'Licensed' ? 'bg-blue-100 text-foreground' :
                       'bg-gray-100 text-gray-600'
                     }`}>{src.type}</span>
                   </div>
-                  <p className="text-gray-600 text-xs leading-relaxed">{src.note}</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed">{src.note}</p>
                   {src.url && (
                     <a href={src.url} target="_blank" rel="noopener noreferrer"
                       className="text-[#3ba559] text-xs font-medium mt-2 inline-flex items-center gap-1 hover:underline">
@@ -1437,7 +1437,7 @@ export default function BrandDesignSystem() {
           {/* Curated Photo Library */}
           <div>
             <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Curated Photo Library</h3>
-            <p className="text-gray-500 text-sm mb-4">
+            <p className="text-muted-foreground text-sm mb-4">
               29 curated images across all five pillars and brand. Each image has a stable reference ID
               (e.g. <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">ERI-OPS-001</code>) that
               can be used in Manus AI task prompts or shared with colleagues. Filter by pillar, copy the
@@ -1454,7 +1454,7 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Brand Graphics &amp; Illustrations
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Designed visual assets that represent ERI concepts and are approved for use across web applications,
             reports, presentations, and social media. These are distinct from photography — they are purpose-built
             illustrations and graphic compositions that carry specific conceptual meaning.
@@ -1463,7 +1463,7 @@ export default function BrandDesignSystem() {
           {/* Hands Touching Hero — PRIMARY */}
           <div className="mb-12">
             <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Human-AI Lab Hero — Hands Touching (Primary)</h3>
-            <p className="text-gray-600 mb-6 max-w-3xl text-sm">
+            <p className="text-muted-foreground mb-6 max-w-3xl text-sm">
               The primary hero background for the Human-AI Lab and any human + AI collaboration narrative. Two translucent
               wireframe hands reach toward each other across the S-curve crossing point, fingertips meeting in a golden
               burst of light — a Michelangelo-inspired composition set against a deep teal grid. The crossing point of
@@ -1500,18 +1500,18 @@ export default function BrandDesignSystem() {
             {/* Asset details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="bg-card border border-border rounded-xl p-5">
-                <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Asset Details</h4>
+                <h4 className="font-archivo font-bold text-foreground text-sm mb-3">Asset Details</h4>
                 <table className="w-full text-sm">
                   <tbody>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">File name</td><td className="py-1.5 font-mono text-[#232323] text-xs">hal-hero-human-v2-hands.png</td></tr>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Dimensions</td><td className="py-1.5 text-[#232323]">1456 × 816 px</td></tr>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Format</td><td className="py-1.5 text-[#232323]">PNG</td></tr>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Aspect ratio</td><td className="py-1.5 text-[#232323]">16:9</td></tr>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-gray-500 pr-4">Colours</td><td className="py-1.5 text-[#232323]">Amber curve · Accent Lime curve · Dark teal grid · Wireframe hands</td></tr>
-                    <tr><td className="py-1.5 text-gray-500 pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halHandsTouching</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">File name</td><td className="py-1.5 font-mono text-foreground text-xs">hal-hero-human-v2-hands.png</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Dimensions</td><td className="py-1.5 text-foreground">1456 × 816 px</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Format</td><td className="py-1.5 text-foreground">PNG</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Aspect ratio</td><td className="py-1.5 text-foreground">16:9</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Colours</td><td className="py-1.5 text-foreground">Amber curve · Accent Lime curve · Dark teal grid · Wireframe hands</td></tr>
+                    <tr><td className="py-1.5 text-muted-foreground pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halHandsTouching</td></tr>
                   </tbody>
                 </table>
-                <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="mt-4 pt-4 border-t border-border">
                   <a
                     href={heroImages.halHandsTouching}
                     download="hal-hero-human-v2-hands.png"
@@ -1526,7 +1526,7 @@ export default function BrandDesignSystem() {
               </div>
               <div className="bg-card border border-border rounded-xl p-5">
                 <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Usage Rules</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Always use full-bleed — the image must fill the entire hero section width.</span></li>
                   <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Always apply a <code className="bg-gray-100 px-1 rounded text-xs">#232323</code> overlay at 80–85% opacity over the image before placing text.</span></li>
                   <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use white Archivo for the main heading; Accent Lime <code className="bg-gray-100 px-1 rounded text-xs">#93E07D</code> for the accent word.</span></li>
@@ -1540,7 +1540,7 @@ export default function BrandDesignSystem() {
             {/* Conceptual meaning */}
             <div className="bg-[#f0f7f2] border border-[#c8e6d0] rounded-xl p-5 max-w-3xl mb-6">
               <h4 className="font-archivo font-bold text-[#232323] text-sm mb-2">Conceptual Meaning</h4>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-foreground">
                 The two S-curves crossing represent the central ERI insight: legacy fossil-fuel systems are on a
                 declining S-curve while clean-technology systems are on a rising S-curve. The crossing point is
                 the transition moment — the moment of connection between human and AI. The amber curve represents
@@ -1554,7 +1554,7 @@ export default function BrandDesignSystem() {
             {/* Alternate versions */}
             <div className="max-w-3xl">
               <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Alternate Versions</h4>
-              <p className="text-xs text-gray-500 mb-4">Three alternate hero compositions share the same S-curve structure and are documented in full in the <a href="#surface-modes" className="text-[#3ba559] underline hover:text-[#2e8a47]">Surface Modes</a> section.</p>
+              <p className="text-xs text-muted-foreground mb-4">Three alternate hero compositions share the same S-curve structure and are documented in full in the <a href="#surface-modes" className="text-[#3ba559] underline hover:text-[#2e8a47]">Surface Modes</a> section.</p>
               <div className="grid grid-cols-3 gap-3">
                 {[
                   { url: heroImages.halHumanNetwork, label: "Human Network",     badge: "Alternate", anchor: "#halHumanNetwork" },
@@ -1575,7 +1575,7 @@ export default function BrandDesignSystem() {
                       <img src={alt.url} alt={alt.label} className="w-full h-20 object-cover" />
                       <span className="absolute top-1.5 left-1.5 bg-black/60 text-white text-[10px] font-semibold px-1.5 py-0.5 rounded">{alt.badge}</span>
                     </div>
-                    <div className="px-2.5 py-2 bg-white">
+                    <div className="px-2.5 py-2 bg-card">
                       <p className="text-xs font-semibold text-[#232323] group-hover:text-[#3ba559] transition-colors">{alt.label} →</p>
                     </div>
                   </a>
@@ -1591,7 +1591,7 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Testimonials &amp; Pull-Quotes
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Testimonials appear on ERI web applications and in reports to convey third-party credibility. The layout
             pairs a rounded-rectangle portrait with a left-aligned block-quote and a bold attribution line. Heading copy uses the
             standard ERI accent-word treatment: one or two key words set in Primary Green on a light background.
@@ -1602,7 +1602,7 @@ export default function BrandDesignSystem() {
             <Card className="shadow-sm">
               <CardContent className="p-6">
                 <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-foreground mb-4">Layout Anatomy</h3>
-                <ul className="space-y-3 text-sm text-gray-600">
+                <ul className="space-y-3 text-sm text-muted-foreground">
                   <li className="flex gap-3">
                     <span className="w-5 h-5 rounded-full bg-[#3ba559] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
                     <span><strong>Section heading</strong> — Archivo 700–800, left-aligned. One or two key words use Primary Green <code className="text-xs bg-gray-100 px-1 rounded">#3ba559</code> (or Accent Lime <code className="text-xs bg-gray-100 px-1 rounded">#93E07D</code> on dark backgrounds). Use either black or green — do not mix both in the same heading.</span>
@@ -1630,28 +1630,28 @@ export default function BrandDesignSystem() {
             <Card className="shadow-sm">
               <CardContent className="p-6">
                 <h3 className="font-archivo font-bold text-sm uppercase tracking-wider text-foreground mb-4">Typography &amp; Spacing</h3>
-                <div className="font-mono text-xs space-y-2 text-gray-600">
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                <div className="font-mono text-xs space-y-2 text-muted-foreground">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-border pb-2">
                     <span className="text-gray-400">Section heading</span>
                     <span>Archivo 700–800 · left-aligned</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-border pb-2">
                     <span className="text-gray-400">Accent word(s)</span>
                     <span>#3ba559 (light bg) / #93E07D (dark bg)</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-border pb-2">
                     <span className="text-gray-400">Portrait size</span>
                     <span>120–160 px · rounded-rect (border-radius: 8px)</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-border pb-2">
                     <span className="text-gray-400">Quote body</span>
                     <span>Open Sans 400 · 15–17 px · left-aligned</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-border pb-2">
                     <span className="text-gray-400">Attribution name</span>
                     <span>Open Sans 700 · #232323</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 border-b border-gray-100 pb-2">
+                  <div className="grid grid-cols-2 gap-x-4 border-b border-border pb-2">
                     <span className="text-gray-400">Attribution role</span>
                     <span>Open Sans 400 · #232323</span>
                   </div>
@@ -1666,7 +1666,7 @@ export default function BrandDesignSystem() {
 
           {/* Live example */}
           <h3 className="font-archivo font-bold text-base text-foreground mb-4">Live Example</h3>
-          <div className="bg-[#F9FAFB] rounded-xl p-8 md:p-12 mb-6">
+          <div className="bg-card rounded-xl p-8 md:p-12 mb-6">
             <h2
               className="font-archivo text-2xl md:text-3xl font-extrabold text-[#3ba559] mb-10"
               style={{ letterSpacing: "-0.01em" }}
@@ -1717,7 +1717,7 @@ export default function BrandDesignSystem() {
             <Card className="shadow-sm border-l-4 border-[#3ba559]">
               <CardContent className="p-5">
                 <p className="font-archivo font-bold text-xs uppercase tracking-wider text-[#3ba559] mb-3">&#10003; Do</p>
-                <ul className="text-sm text-gray-600 space-y-2">
+                <ul className="text-sm text-muted-foreground space-y-2">
                   <li>Use a rounded-rectangle portrait crop (border-radius: 8px) — the ERI brand does not use circular elements.</li>
                   <li>Left-align the quote body text.</li>
                   <li>Bold the speaker's name; use regular weight for role and organisation.</li>
@@ -1730,7 +1730,7 @@ export default function BrandDesignSystem() {
             <Card className="shadow-sm border-l-4 border-red-400">
               <CardContent className="p-5">
                 <p className="font-archivo font-bold text-xs uppercase tracking-wider text-red-500 mb-3">&#10007; Don't</p>
-                <ul className="text-sm text-gray-600 space-y-2">
+                <ul className="text-sm text-muted-foreground space-y-2">
                   <li>Don't add decorative quotation mark glyphs (" ") — the layout implies the quote.</li>
                   <li>Don't use a coloured or gradient background behind the testimonial block.</li>
                   <li>Don't justify the quote body text — justified alignment creates uneven word spacing. Left-align is the ERI standard.</li>
@@ -1745,7 +1745,7 @@ export default function BrandDesignSystem() {
           {/* Multiple testimonials note */}
           <Card className="shadow-sm bg-muted border-border">
             <CardContent className="p-4">
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-foreground">
                 <strong>Multiple testimonials:</strong> When displaying more than one testimonial, stack them vertically
                 with 40–48 px gap between entries. Do not use a carousel or slider — all testimonials should be
                 visible without interaction. Each entry follows the same portrait-left / quote-right layout.
@@ -1761,14 +1761,14 @@ export default function BrandDesignSystem() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Exponential Framework
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             All visual assets for the Exponential Roadmap framework — pillar icons, framework diagrams, and pillar elements — are documented here.
             Always use the provided assets; never recreate or approximate them.
           </p>
 
           {/* ── SUB-SECTION: PILLAR ICON ASSETS ── */}
           <h3 className="font-archivo font-bold text-foreground text-xl mb-3 mt-2 border-b border-gray-200 pb-2">Pillar Icon Assets</h3>
-          <p className="text-gray-600 mb-6 max-w-3xl text-sm">
+          <p className="text-muted-foreground mb-6 max-w-3xl text-sm">
             Five WebP images represent the Exponential Framework pillars. They appear in the full-screen navigation overlay, pillar detail pages, and framework diagrams. Import from{" "}
             <code className="text-sm font-mono bg-gray-100 px-1.5 py-0.5 rounded">client/src/lib/pillarColors.ts</code> for the canonical hex colours — never hard-code pillar colours inline.
           </p>
@@ -1791,7 +1791,7 @@ export default function BrandDesignSystem() {
                     <span className="inline-block w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: p.color }} />
                     <span className="text-xs font-semibold" style={{ color: p.color }}>Pillar {p.num}</span>
                   </div>
-                  <p className="text-xs text-gray-600 leading-snug mb-2">{p.name}</p>
+                  <p className="text-xs text-muted-foreground leading-snug mb-2">{p.name}</p>
                   <code className="text-[10px] font-mono text-gray-400 block">pillar-{p.num}-icon.webp</code>
                   <div className="mt-2 flex items-center gap-1.5">
                     <span className="inline-block w-4 h-4 rounded flex-shrink-0" style={{ backgroundColor: p.tint, border: `2px solid ${p.color}` }} />
@@ -1828,11 +1828,11 @@ import { pillarBottomIcons } from "@/lib/assets";
             <h3 className="font-archivo font-bold text-foreground text-xl">Framework Diagrams</h3>
             <Badge className="bg-[#3ba559] text-white text-[10px] tracking-widest uppercase hover:bg-[#3ba559]">v5 New</Badge>
           </div>
-          <p className="text-gray-600 mb-2 max-w-3xl text-sm">
+          <p className="text-muted-foreground mb-2 max-w-3xl text-sm">
             The Five Pillars radial diagram is the central visual identity of the Exponential Roadmap framework.
             Eight approved variants exist for different placement contexts. Always use the provided assets — never recreate the diagram.
           </p>
-          <p className="text-gray-500 text-sm mb-8 max-w-3xl">
+          <p className="text-muted-foreground text-sm mb-8 max-w-3xl">
             Source: <em>ERI Styleguide 1.0 — Framework (pp. 5–8) and Framework Integration (pp. 9–12)</em>.
           </p>
 
@@ -1850,12 +1850,12 @@ import { pillarBottomIcons } from "@/lib/assets";
               { key: "fivePillarsText",         label: "Text (Transp)",         desc: "Full text labels, transparent",          file: "framework-5pillars-text-transparent.webp" },
             ].map(({ key, label, desc, file }) => (
               <div key={key} className="flex flex-col gap-2">
-                <div className="bg-gray-50 rounded-lg p-3 flex items-center justify-center" style={{minHeight: 160}}>
+                <div className="bg-muted rounded-lg p-3 flex items-center justify-center" style={{minHeight: 160}}>
                   <img src={frameworkV5[key as keyof typeof frameworkV5]} alt={label} className="max-h-36 w-auto object-contain" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[#232323]">{label}</p>
-                  <p className="text-[11px] text-gray-500">{desc}</p>
+                  <p className="text-xs font-semibold text-foreground">{label}</p>
+                  <p className="text-[11px] text-muted-foreground">{desc}</p>
                   <code className="text-[10px] font-mono text-gray-400 block mt-1">{file}</code>
                 </div>
               </div>
@@ -1868,19 +1868,19 @@ import { pillarBottomIcons } from "@/lib/assets";
             <Card className="shadow-sm">
               <CardContent className="p-5">
                 <h4 className="font-bold text-[#232323] mb-2 text-sm">Clear Space</h4>
-                <p className="text-sm text-gray-600">Minimum clear space around the diagram equals <strong>x</strong> — one unit defined as the width of the “E” in EXPONENTIAL. Never crowd the diagram with other elements.</p>
+                <p className="text-sm text-muted-foreground">Minimum clear space around the diagram equals <strong>x</strong> — one unit defined as the width of the “E” in EXPONENTIAL. Never crowd the diagram with other elements.</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-5">
                 <h4 className="font-bold text-[#232323] mb-2 text-sm">Background Combinations</h4>
-                <p className="text-sm text-gray-600">Use the <strong>solid BG variant</strong> on white/light backgrounds. Use the <strong>Transparent variant</strong> on dark or coloured backgrounds. Never place the solid variant on a dark background.</p>
+                <p className="text-sm text-muted-foreground">Use the <strong>solid BG variant</strong> on white/light backgrounds. Use the <strong>Transparent variant</strong> on dark or coloured backgrounds. Never place the solid variant on a dark background.</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-5">
                 <h4 className="font-bold text-[#232323] mb-2 text-sm">Never Do</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
+                <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Do not distort, rotate, or recolour the diagram</li>
                   <li>• Do not add extra elements inside the diagram</li>
                   <li>• Do not use unofficial variants or recreations</li>
@@ -1892,7 +1892,7 @@ import { pillarBottomIcons } from "@/lib/assets";
 
           {/* Supporting Diagrams */}
           <h3 className="font-bold text-[#232323] mb-4 text-lg">Supporting Diagrams</h3>
-          <p className="text-gray-600 mb-4 text-sm max-w-3xl">Four additional diagrams support the framework narrative. Use these in context — do not mix them with the Five Pillars radial diagram on the same slide.</p>
+          <p className="text-muted-foreground mb-4 text-sm max-w-3xl">Four additional diagrams support the framework narrative. Use these in context — do not mix them with the Five Pillars radial diagram on the same slide.</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { key: "leadershipA",     label: "Leadership A",         desc: "Leadership categories diagram (variant A)", file: "framework-leadership-a.webp" },
@@ -1901,12 +1901,12 @@ import { pillarBottomIcons } from "@/lib/assets";
               { key: "reducingEnabling",label: "Reducing / Enabling",  desc: "Reducing vs. enabling emissions framework",  file: "framework-reducing-enabling.webp" },
             ].map(({ key, label, desc, file }) => (
               <div key={key} className="flex flex-col gap-2">
-                <div className="bg-gray-50 rounded-lg p-3 flex items-center justify-center" style={{minHeight: 140}}>
+                <div className="bg-muted rounded-lg p-3 flex items-center justify-center" style={{minHeight: 140}}>
                   <img src={frameworkV5[key as keyof typeof frameworkV5]} alt={label} className="max-h-32 w-auto object-contain" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[#232323]">{label}</p>
-                  <p className="text-[11px] text-gray-500">{desc}</p>
+                  <p className="text-xs font-semibold text-foreground">{label}</p>
+                  <p className="text-[11px] text-muted-foreground">{desc}</p>
                   <code className="text-[10px] font-mono text-gray-400 block mt-1">{file}</code>
                 </div>
               </div>
@@ -1920,18 +1920,18 @@ import { pillarBottomIcons } from "@/lib/assets";
             <h3 className="font-archivo font-bold text-foreground text-xl">Pillar Elements</h3>
             <Badge className="bg-[#3ba559] text-white text-[10px] tracking-widest uppercase hover:bg-[#3ba559]">v5 New</Badge>
           </div>
-          <p className="text-gray-600 mb-2 max-w-3xl text-sm">
+          <p className="text-muted-foreground mb-2 max-w-3xl text-sm">
             The pillar element is a vertical graphic unit that anchors each pillar in presentations, reports, and digital interfaces.
             It always appears on the <strong>left side</strong> of a slide or frame. Four variants exist — choose based on available space and content depth.
             All assets are available in solid (white background) and transparent versions.
           </p>
-          <p className="text-gray-500 text-sm mb-8 max-w-3xl">
+          <p className="text-muted-foreground text-sm mb-8 max-w-3xl">
             Source: <em>ERI Styleguide 1.0 — Framework Integration (pp. 13–18)</em>.
           </p>
 
           {/* Long */}
-          <h4 className="font-bold text-[#232323] text-base mb-1 mt-6">Long Pillar <span className="text-xs font-normal text-gray-500 ml-2">(Primary)</span></h4>
-          <p className="text-sm text-gray-600 mb-4 max-w-3xl">The primary integration element for company presentations. Placed on the left side of the frame. Use <code className="bg-gray-100 px-1 rounded text-xs">x</code> (width of the "E" in EXPONENTIAL) as minimum clear space from pillar to frame edge.</p>
+          <h4 className="font-bold text-foreground text-base mb-1 mt-6">Long Pillar <span className="text-xs font-normal text-muted-foreground ml-2">(Primary)</span></h4>
+          <p className="text-sm text-muted-foreground mb-4 max-w-3xl">The primary integration element for company presentations. Placed on the left side of the frame. Use <code className="bg-gray-100 px-1 rounded text-xs">x</code> (width of the "E" in EXPONENTIAL) as minimum clear space from pillar to frame edge.</p>
           <div className="grid grid-cols-5 gap-4 mb-3">
             {([1,2,3,4,5] as const).map(n => {
               const tintKey = `pillar${n}` as keyof typeof pillarTints;
@@ -1940,7 +1940,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 200, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsLong[n].solid} alt={`Pillar ${n} Long`} className="max-h-48 w-auto object-contain" />
                 </div>
-                <span className="text-xs font-semibold text-gray-600">Pillar {n}</span>
+                <span className="text-xs font-semibold text-muted-foreground">Pillar {n}</span>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-long-solid.webp</code>
               </div>
             )})}
@@ -1952,14 +1952,14 @@ import { pillarBottomIcons } from "@/lib/assets";
                           <img src={pillarsLong[n].transparent} alt={`Pillar ${n} Long Transparent`} className="max-h-48 w-auto object-contain" />
                 </div>
                 <span className="text-xs text-gray-400 font-medium">Pillar {n}</span>
-                <code className="text-[10px] font-mono text-gray-500 text-center leading-tight">pillar-{n}-long-transparent.webp</code>
+                <code className="text-[10px] font-mono text-muted-foreground text-center leading-tight">pillar-{n}-long-transparent.webp</code>
               </div>
             ))}
           </div>
 
           {/* Regular */}
           <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Regular Pillar</h4>
-          <p className="text-sm text-gray-600 mb-4 max-w-3xl">Scaled-down version for data slides where more horizontal space is needed. Can be placed over images. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
+          <p className="text-sm text-muted-foreground mb-4 max-w-3xl">Scaled-down version for data slides where more horizontal space is needed. Can be placed over images. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
           <div className="grid grid-cols-5 gap-4 mb-10">
             {([1,2,3,4,5] as const).map(n => {
               const tintKey = `pillar${n}` as keyof typeof pillarTints;
@@ -1968,15 +1968,15 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 160, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsRegular[n].solid} alt={`Pillar ${n} Regular`} className="max-h-40 w-auto object-contain" />
                 </div>
-                <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
+                <span className="text-xs text-muted-foreground font-medium">Pillar {n}</span>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-regular-solid.webp</code>
               </div>
             )})}
           </div>
 
           {/* Extended */}
-          <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Extended Pillar <span className="text-xs font-normal text-gray-500 ml-2">(with Action Blocks)</span></h4>
-          <p className="text-sm text-gray-600 mb-4 max-w-3xl">The most detailed variant — pillar extended downward with labelled Action Blocks (e.g. "Supplier Engagement"). The pillar icon appears at the bottom of the stack. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
+          <h4 className="font-bold text-foreground text-base mb-1 mt-2">Extended Pillar <span className="text-xs font-normal text-muted-foreground ml-2">(with Action Blocks)</span></h4>
+          <p className="text-sm text-muted-foreground mb-4 max-w-3xl">The most detailed variant — pillar extended downward with labelled Action Blocks (e.g. "Supplier Engagement"). The pillar icon appears at the bottom of the stack. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
           <div className="grid grid-cols-5 gap-4 mb-4">
             {([1,2,3,4,5] as const).map(n => {
               const tintKey = `pillar${n}` as keyof typeof pillarTints;
@@ -1985,12 +1985,12 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div className="rounded-lg p-2 w-full flex items-center justify-center" style={{minHeight: 240, backgroundColor: pillarTints[tintKey]}}>
                   <img src={pillarsExtended[n].solid} alt={`Pillar ${n} Extended`} className="max-h-56 w-auto object-contain" />
                 </div>
-                <span className="text-xs text-gray-500 font-medium">Pillar {n}</span>
+                <span className="text-xs text-muted-foreground font-medium">Pillar {n}</span>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-extended-solid.webp</code>
               </div>
             )})}
           </div>
-          <div className="mb-10 bg-gray-50 rounded-lg p-4">
+          <div className="mb-10 bg-muted rounded-lg p-4">
             <h5 className="font-bold text-[#232323] text-sm mb-2">Action Block Specification</h5>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
               <div><span className="text-gray-500">Background</span><br/><span className="font-mono font-bold">Pillar colour</span></div>
@@ -2001,8 +2001,8 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* Short */}
-          <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Short Pillar <span className="text-xs font-normal text-gray-500 ml-2">(Symbol &amp; Text variants)</span></h4>
-          <p className="text-sm text-gray-600 mb-4 max-w-3xl">Minimal variant — symbol only (icon mark) or text only (pillar number + name). Used where space is very limited or as a compact reference marker.</p>
+          <h4 className="font-bold text-foreground text-base mb-1 mt-2">Short Pillar <span className="text-xs font-normal text-muted-foreground ml-2">(Symbol &amp; Text variants)</span></h4>
+          <p className="text-sm text-muted-foreground mb-4 max-w-3xl">Minimal variant — symbol only (icon mark) or text only (pillar number + name). Used where space is very limited or as a compact reference marker.</p>
           <div className="grid grid-cols-5 gap-6 mb-3">
             {([1,2,3,4,5] as const).map(n => {
               const tintKey = `pillar${n}` as keyof typeof pillarTints;
@@ -2016,7 +2016,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                   <img src={pillarsShort[n].text} alt={`Pillar ${n} Text`} className="max-h-16 w-auto object-contain" />
                 </div>
                 <code className="text-[10px] font-mono text-gray-400 text-center leading-tight">pillar-{n}-text-solid.webp</code>
-                <span className="text-xs text-gray-500 font-medium text-center">Pillar {n}</span>
+                <span className="text-xs text-muted-foreground font-medium text-center">Pillar {n}</span>
               </div>
             )})}
           </div>
@@ -2027,7 +2027,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             <Card className="shadow-sm border-l-4 border-l-[#3ba559]">
               <CardContent className="p-5">
                 <h4 className="font-bold text-[#232323] mb-3 text-sm">✓ Correct Usage</h4>
-                <ul className="text-sm text-gray-600 space-y-1.5">
+                <ul className="text-sm text-muted-foreground space-y-1.5">
                   <li>Always place on the <strong>left side</strong> of the slide or frame</li>
                   <li>Maintain minimum clear space: <strong>x</strong> from pillar to frame edge (basic), <strong>3x</strong> for alternate</li>
                   <li>Use solid version on light backgrounds; transparent on dark</li>
@@ -2039,7 +2039,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             <Card className="shadow-sm border-l-4 border-l-[#ff5133]">
               <CardContent className="p-5">
                 <h4 className="font-bold text-[#232323] mb-3 text-sm">✗ Never Do</h4>
-                <ul className="text-sm text-gray-600 space-y-1.5">
+                <ul className="text-sm text-muted-foreground space-y-1.5">
                   <li>Do not place the pillar on the right, centre, or bottom of the frame</li>
                   <li>Do not distort, stretch, or rotate the pillar element</li>
                   <li>Do not change pillar colours or mix pillar colours across elements</li>
@@ -2060,14 +2060,14 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Charts &amp; Data Visualisation
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             ERI data visualisation follows a consistent visual language across publications, the Crocodile Economy whitepaper, and digital products.
             The chart style is minimal, editorial, and high-contrast — designed for print and screen alike.
           </p>
 
           {/* ── Crocodile Economy Chart Style ── */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">The Crocodile Economy Chart Style</h3>
-          <p className="text-gray-600 mb-6 text-sm max-w-3xl">
+          <p className="text-muted-foreground mb-6 text-sm max-w-3xl">
             The Crocodile Economy charts show the decoupling of emissions from economic growth over time.
             Two lines form the "crocodile jaw" — the upper line (GDP or revenue growth) diverges upward from the lower line (CO₂ emissions).
             The fill colour between the lines encodes the <strong>entity type</strong>: green for companies, salmon for nations/regions.
@@ -2082,10 +2082,10 @@ import { pillarBottomIcons } from "@/lib/assets";
                   <div className="w-10 h-10 rounded" style={{ backgroundColor: "#7DD87A" }} />
                   <div>
                     <p className="font-archivo font-bold text-[#232323] text-sm">Company / Corporate</p>
-                    <code className="text-xs font-mono text-gray-500">#7DD87A</code>
+                    <code className="text-xs font-mono text-muted-foreground">#7DD87A</code>
                   </div>
                 </div>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-muted-foreground">
                   Green fill between the GDP/revenue line and the CO₂ line. Used for all corporate entities (e.g. Astra Zeneca, Scania, Volvo).
                   Signals that the entity is a private-sector actor.
                 </p>
@@ -2097,10 +2097,10 @@ import { pillarBottomIcons } from "@/lib/assets";
                   <div className="w-10 h-10 rounded" style={{ backgroundColor: "#F08070" }} />
                   <div>
                     <p className="font-archivo font-bold text-[#232323] text-sm">Nation / Region</p>
-                    <code className="text-xs font-mono text-gray-500">#F08070</code>
+                    <code className="text-xs font-mono text-muted-foreground">#F08070</code>
                   </div>
                 </div>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-muted-foreground">
                   Salmon/coral fill between the GDP line and the CO₂ line. Used for all national and supranational entities (e.g. European Union, Sweden, Australia).
                   Signals that the entity is a public-sector actor.
                 </p>
@@ -2116,8 +2116,8 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div className="w-8 h-2 rounded-full" style={{ backgroundColor: "#00B4D8" }} />
                 <div>
                   <p className="font-archivo font-semibold text-[#232323] text-sm">GDP / Revenue line</p>
-                  <code className="text-xs font-mono text-gray-500">#00B4D8 — Cyan</code>
-                  <p className="text-xs text-gray-500 mt-1">Upper trajectory. Represents economic growth (GDP for nations, revenue for companies).</p>
+                  <code className="text-xs font-mono text-muted-foreground">#00B4D8 — Cyan</code>
+                  <p className="text-xs text-muted-foreground mt-1">Upper trajectory. Represents economic growth (GDP for nations, revenue for companies).</p>
                 </div>
               </CardContent>
             </Card>
@@ -2126,8 +2126,8 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div className="w-8 h-2 rounded-full bg-[#1A1A1A]" />
                 <div>
                   <p className="font-archivo font-semibold text-[#232323] text-sm">CO₂ Emissions line</p>
-                  <code className="text-xs font-mono text-gray-500">#1A1A1A — Near-black</code>
-                  <p className="text-xs text-gray-500 mt-1">Lower trajectory. Represents territorial or Scope 1+2 CO₂ emissions over time.</p>
+                  <code className="text-xs font-mono text-muted-foreground">#1A1A1A — Near-black</code>
+                  <p className="text-xs text-muted-foreground mt-1">Lower trajectory. Represents territorial or Scope 1+2 CO₂ emissions over time.</p>
                 </div>
               </CardContent>
             </Card>
@@ -2136,8 +2136,8 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <div className="w-8 h-2 rounded-full bg-[#CCCCCC]" />
                 <div>
                   <p className="font-archivo font-semibold text-[#232323] text-sm">Grid lines / Axes</p>
-                  <code className="text-xs font-mono text-gray-500">#CCCCCC — Light grey</code>
-                  <p className="text-xs text-gray-500 mt-1">Horizontal gridlines and axis ticks. Minimal — no border box around the chart.</p>
+                  <code className="text-xs font-mono text-muted-foreground">#CCCCCC — Light grey</code>
+                  <p className="text-xs text-muted-foreground mt-1">Horizontal gridlines and axis ticks. Minimal — no border box around the chart.</p>
                 </div>
               </CardContent>
             </Card>
@@ -2145,7 +2145,7 @@ import { pillarBottomIcons } from "@/lib/assets";
 
           {/* Live chart example */}
           <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Live Examples</h4>
-          <p className="text-gray-600 mb-4 text-sm">Interactive recreations of the Crocodile Economy chart style using ERI brand colours.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Interactive recreations of the Crocodile Economy chart style using ERI brand colours.</p>
           <CrocodileChartExamples />
 
           {/* Typography in charts */}
@@ -2160,7 +2160,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                       <th className="text-left py-1 text-gray-400 font-normal">Style</th>
                     </tr>
                   </thead>
-                  <tbody className="font-mono text-gray-600">
+                  <tbody className="font-mono text-muted-foreground">
                     <tr className="border-b border-gray-50"><td className="py-1.5">Chart title</td><td>Archivo 700 uppercase · #232323</td></tr>
                     <tr className="border-b border-gray-50"><td className="py-1.5">Axis labels</td><td>Open Sans 400 · #666666 · 11–12px</td></tr>
                     <tr className="border-b border-gray-50"><td className="py-1.5">Tick values</td><td>Open Sans 400 · #888888 · 10–11px</td></tr>
@@ -2173,7 +2173,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             <Card className="shadow-sm">
               <CardContent className="p-4">
                 <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">Chart Anatomy Rules</p>
-                <ul className="text-xs text-gray-600 space-y-2">
+                <ul className="text-xs text-muted-foreground space-y-2">
                   <li>• No border box around the chart area — only horizontal gridlines</li>
                   <li>• Y-axis on the left only; no right-side axis</li>
                   <li>• Zero line is slightly thicker (1.5px) than other gridlines (0.5px)</li>
@@ -2190,7 +2190,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <Card className="shadow-sm border-l-4 border-[#3ba559]">
             <CardContent className="p-4">
               <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Data Sources</p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted-foreground">
                 Country charts use <strong>World Bank GDP data</strong> and <strong>Global Carbon Budget CO₂ data</strong>.
                 Company charts use <strong>Klimatkollen</strong> and <strong>ERI-compiled Scope 1+2 emissions</strong> with publicly reported revenue.
                 Always cite the data source beneath the chart.
@@ -2205,7 +2205,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Member Company Logotypes
           </h2>
-          <p className="text-gray-600 mb-2 max-w-3xl">
+          <p className="text-muted-foreground mb-2 max-w-3xl">
             Official logotypes for ERI member companies. Use these assets when referencing member organisations
             in ERI publications, case studies, and digital products. Each logo has a stable CDN URL for use in
             Manus AI task prompts.
@@ -2218,7 +2218,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           {/* Usage note card */}
           <Card className="shadow-sm mb-6 border-l-4 border-l-[#F5C842]">
             <CardContent className="p-4">
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-foreground">
                 <strong>Using member logos in AI tasks:</strong> Reference a logo by its token name, e.g.
                 <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono mx-1">memberLogos.scania.url</code>
                 from <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">assets.ts</code>,
@@ -2240,13 +2240,13 @@ import { pillarBottomIcons } from "@/lib/assets";
                   alt={`${name} logo`}
                   className="max-h-12 max-w-full w-auto object-contain"
                 />
-                <span className="text-[11px] text-gray-500 text-center leading-tight">{name}</span>
+                <span className="text-[11px] text-muted-foreground text-center leading-tight">{name}</span>
                 {sector && (
                   <span className="text-[10px] text-gray-400 text-center leading-tight">{sector}</span>
                 )}
                 {/* Hover overlay with CDN URL copy */}
                 <div className="absolute inset-0 bg-white/95 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
-                  <span className="text-[10px] font-mono text-gray-500 text-center break-all leading-tight">{key}</span>
+                  <span className="text-[10px] font-mono text-muted-foreground text-center break-all leading-tight">{key}</span>
                   <a
                     href={url}
                     download
@@ -2270,7 +2270,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Data Source &amp; Partner Logos
           </h2>
-          <p className="text-gray-600 mb-2 max-w-3xl">
+          <p className="text-muted-foreground mb-2 max-w-3xl">
             Logos for data providers, research institutions, standards bodies, and partner organisations
             used across ERI products and publications. Use these when citing data sources or acknowledging
             partners in reports, dashboards, and presentations.
@@ -2296,7 +2296,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Navigation &amp; Layout Standards
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl font-open-sans">
+          <p className="text-muted-foreground mb-8 max-w-3xl font-open-sans">
             All ERI web applications follow one of two layout tiers. <strong>Most apps have both a public marketing surface and an authenticated application surface</strong> — the tier determines the header behaviour for each surface, not the app as a whole. Choose the correct tier based on the surface being rendered, not the app type.
           </p>
           <NavigationPatterns />
@@ -2312,7 +2312,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Spacing &amp; Layout Tokens
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             All spacing uses the standard Tailwind 4px base scale. Container widths and grid patterns
             are defined here so every page shares the same spatial rhythm.
           </p>
@@ -2375,12 +2375,12 @@ import { pillarBottomIcons } from "@/lib/assets";
                 </thead>
                 <tbody>
                   {containerTokens.map((row, i) => (
-                    <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={row.name} className={i % 2 === 0 ? "bg-card" : "bg-muted"}>
                       <td className="p-4 font-medium text-[#232323]">{row.name}</td>
                       <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.class}</code></td>
-                      <td className="p-4 font-mono text-gray-700">{row.maxWidth}</td>
-                      <td className="p-4 font-mono text-gray-700 text-xs">{row.padding}</td>
-                      <td className="p-4 text-gray-500 text-xs">{row.notes}</td>
+                      <td className="p-4 font-mono text-foreground">{row.maxWidth}</td>
+                      <td className="p-4 font-mono text-foreground text-xs">{row.padding}</td>
+                      <td className="p-4 text-muted-foreground text-xs">{row.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -2401,10 +2401,10 @@ import { pillarBottomIcons } from "@/lib/assets";
                 </thead>
                 <tbody>
                   {gridPatterns.map((row, i) => (
-                    <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={row.name} className={i % 2 === 0 ? "bg-card" : "bg-muted"}>
                       <td className="p-4 font-medium text-[#232323]">{row.name}</td>
                       <td className="p-4"><code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.class}</code></td>
-                      <td className="p-4 text-gray-600 text-xs">{row.usage}</td>
+                      <td className="p-4 text-muted-foreground text-xs">{row.usage}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -2425,7 +2425,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                       <span className="font-mono text-sm font-bold text-[#232323]">{row.token}</span>
                       <code className="text-xs font-mono text-[#3ba559] bg-green-50 px-1.5 py-0.5 rounded">{row.tailwind}</code>
                     </div>
-                    <p className="text-xs text-gray-500">{row.usage}</p>
+                    <p className="text-xs text-muted-foreground">{row.usage}</p>
                   </div>
                 </div>
               );
@@ -2440,26 +2440,26 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Component Library
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Reusable components that enforce brand standards through their API. These components ensure
             consistency and prevent styling violations.
           </p>
 
 
           <h3 className="font-bold text-[#232323] mb-4 text-lg">ChartContainer</h3>
-          <p className="text-gray-600 mb-6 text-sm">
+          <p className="text-muted-foreground mb-6 text-sm">
             Use for any section requiring a coloured header. The component restricts colours to the approved palette.
           </p>
 
           <div className="grid md:grid-cols-3 gap-4 mb-8">
             <ChartContainer title="P1/P3 Content" subtitle="Operations or Solutions" headerColor="green">
-              <p className="text-gray-600 text-sm p-4">Green header for Pillar 1 (Operations) or Pillar 3 (Solutions) content.</p>
+              <p className="text-muted-foreground text-sm p-4">Green header for Pillar 1 (Operations) or Pillar 3 (Solutions) content.</p>
             </ChartContainer>
             <ChartContainer title="P2 Content" subtitle="Value Chain" headerColor="cyan">
-              <p className="text-gray-600 text-sm p-4">Cyan header for Pillar 2 (Value Chain) content.</p>
+              <p className="text-muted-foreground text-sm p-4">Cyan header for Pillar 2 (Value Chain) content.</p>
             </ChartContainer>
             <ChartContainer title="P4 Content" subtitle="Finance" headerColor="orange">
-              <p className="text-gray-600 text-sm p-4">Orange header for Pillar 4 (Finance) content.</p>
+              <p className="text-muted-foreground text-sm p-4">Orange header for Pillar 4 (Finance) content.</p>
             </ChartContainer>
           </div>
 
@@ -2486,13 +2486,13 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Badge Reference
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Badges are used throughout the platform to communicate status, tier, priority, data type, and qualification. Always use the canonical classes below — never invent new badge colours.
           </p>
 
           {/* 1. Tier Badges */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">1. Tier Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in the header, workspace hub, and assessment pages to indicate a company's transformation tier.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Used in the header, workspace hub, and assessment pages to indicate a company's transformation tier.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
@@ -2509,13 +2509,13 @@ import { pillarBottomIcons } from "@/lib/assets";
                   <code className="text-[10px] font-mono text-gray-400">bg-purple-100 text-purple-800</code>
                 </div>
               </div>
-              <p className="text-xs text-gray-500">Shape: <code className="font-mono">rounded</code> (not rounded-full) · Size: <code className="font-mono">text-[10px] px-1.5 py-0.5</code> · Weight: <code className="font-mono">font-medium capitalize</code></p>
+              <p className="text-xs text-muted-foreground">Shape: <code className="font-mono">rounded</code> (not rounded-full) · Size: <code className="font-mono">text-[10px] px-1.5 py-0.5</code> · Weight: <code className="font-mono">font-medium capitalize</code></p>
             </CardContent>
           </Card>
 
           {/* 2. System & Experimental Badges (was section 3 — App Status Badges moved to Standard Components › EriStatusBadge) */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">2. System &amp; Experimental Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in the header and on feature flags to signal development status.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Used in the header and on feature flags to signal development status.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
@@ -2528,7 +2528,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                   <code className="text-[10px] font-mono text-gray-400">bg-[#3ba559]/15 text-[#3ba559] border-[#3ba559]/30</code>
                 </div>
                 <div className="flex flex-col items-start gap-1.5">
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Inactive</span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">Inactive</span>
                   <code className="text-[10px] font-mono text-gray-400">bg-gray-100 text-gray-600</code>
                 </div>
               </div>
@@ -2537,7 +2537,7 @@ import { pillarBottomIcons } from "@/lib/assets";
 
           {/* 3. Priority Badges */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">3. Priority Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in CPR Recommendations and action lists to indicate urgency level.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Used in CPR Recommendations and action lists to indicate urgency level.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
@@ -2553,13 +2553,13 @@ import { pillarBottomIcons } from "@/lib/assets";
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500">Shape: <code className="font-mono">rounded-full</code> · Size: <code className="font-mono">text-xs px-2 py-0.5</code> · Always include <code className="font-mono">border</code></p>
+              <p className="text-xs text-muted-foreground">Shape: <code className="font-mono">rounded-full</code> · Size: <code className="font-mono">text-xs px-2 py-0.5</code> · Always include <code className="font-mono">border</code></p>
             </CardContent>
           </Card>
 
           {/* 5. KPI & Framework Badges */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">4. KPI &amp; Framework Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in KPI sections and action themes to classify framework items.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Used in KPI sections and action themes to classify framework items.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
@@ -2575,13 +2575,13 @@ import { pillarBottomIcons } from "@/lib/assets";
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500">Shape: <code className="font-mono">rounded</code> (square corners) · Size: <code className="font-mono">text-xs px-2 py-0.5</code> · Text UPPERCASE in display</p>
+              <p className="text-xs text-muted-foreground">Shape: <code className="font-mono">rounded</code> (square corners) · Size: <code className="font-mono">text-xs px-2 py-0.5</code> · Text UPPERCASE in display</p>
             </CardContent>
           </Card>
 
           {/* 6. Qualification & Status Badges */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">5. Qualification &amp; Status Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in Climate Solutions qualification, case study cards, and pillar content.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Used in Climate Solutions qualification, case study cards, and pillar content.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
@@ -2597,13 +2597,13 @@ import { pillarBottomIcons } from "@/lib/assets";
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500">Shape: <code className="font-mono">rounded-full</code> · Size: <code className="font-mono">text-xs px-3 py-1</code> · Always include <code className="font-mono">border</code></p>
+              <p className="text-xs text-muted-foreground">Shape: <code className="font-mono">rounded-full</code> · Size: <code className="font-mono">text-xs px-3 py-1</code> · Always include <code className="font-mono">border</code></p>
             </CardContent>
           </Card>
 
           {/* 7. Data Source Badges */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Data Source &amp; API Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in DataSourceCard, DataSourcesTable, and widget headers to show data freshness and source type.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Used in DataSourceCard, DataSourcesTable, and widget headers to show data freshness and source type.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
@@ -2611,9 +2611,9 @@ import { pillarBottomIcons } from "@/lib/assets";
                   { label: "Healthy",  cls: "bg-[#3ba559] text-white" },
                   { label: "Stale",    cls: "bg-yellow-500 text-white" },
                   { label: "Error",    cls: "bg-red-600 text-white" },
-                  { label: "Unknown",  cls: "border border-gray-200 text-gray-600" },
+                  { label: "Unknown",  cls: "border border-border text-muted-foreground" },
                   { label: "Live API", cls: "bg-[#3ba559]/10 text-[#3ba559] border border-[#3ba559]/30" },
-                  { label: "REST",     cls: "border border-gray-200 text-gray-600 font-mono" },
+                  { label: "REST",     cls: "border border-border text-muted-foreground font-mono" },
                 ].map(({ label, cls }) => (
                   <div key={label} className="flex flex-col items-start gap-1.5">
                     <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${cls}`}>{label}</span>
@@ -2621,13 +2621,13 @@ import { pillarBottomIcons } from "@/lib/assets";
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500">Use shadcn <code className="font-mono">&lt;Badge&gt;</code> component from <code className="font-mono">@/components/ui/badge</code> for these.</p>
+              <p className="text-xs text-muted-foreground">Use shadcn <code className="font-mono">&lt;Badge&gt;</code> component from <code className="font-mono">@/components/ui/badge</code> for these.</p>
             </CardContent>
           </Card>
 
           {/* 8. Opportunity Badges */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">7. Opportunity &amp; Category Badges</h3>
-          <p className="text-gray-600 mb-4 text-sm">Used in CPR Opportunities and impact portfolio to categorise opportunity types.</p>
+          <p className="text-muted-foreground mb-4 text-sm">Used in CPR Opportunities and impact portfolio to categorise opportunity types.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
@@ -2642,7 +2642,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500">Shape: <code className="font-mono">rounded-full</code> · Size: <code className="font-mono">text-xs px-2 py-0.5</code> · No border on these</p>
+              <p className="text-xs text-muted-foreground">Shape: <code className="font-mono">rounded-full</code> · Size: <code className="font-mono">text-xs px-2 py-0.5</code> · No border on these</p>
             </CardContent>
           </Card>
 
@@ -2671,12 +2671,12 @@ import { pillarBottomIcons } from "@/lib/assets";
                     { family: "Data Source",   shape: "rounded",      size: "text-xs px-2 py-0.5",        border: "Varies", where: "DataSourceCard, widget headers, data lake" },
                     { family: "Opportunity",   shape: "rounded-full", size: "text-xs px-2 py-0.5",        border: "No",     where: "CPR Opportunities, impact portfolio" },
                   ].map((row, i) => (
-                    <tr key={row.family} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={row.family} className={i % 2 === 0 ? "bg-card" : "bg-muted"}>
                       <td className="p-3 font-medium text-[#232323]">{row.family}</td>
-                      <td className="p-3 font-mono text-gray-600">{row.shape}</td>
-                      <td className="p-3 font-mono text-gray-600">{row.size}</td>
-                      <td className="p-3 text-gray-600">{row.border}</td>
-                      <td className="p-3 text-gray-500">{row.where}</td>
+                      <td className="p-3 font-mono text-muted-foreground">{row.shape}</td>
+                      <td className="p-3 font-mono text-muted-foreground">{row.size}</td>
+                      <td className="p-3 text-muted-foreground">{row.border}</td>
+                      <td className="p-3 text-muted-foreground">{row.where}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -2692,7 +2692,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             CTA Buttons
           </h2>
-          <p className="text-gray-600 mb-2 max-w-3xl">
+          <p className="text-muted-foreground mb-2 max-w-3xl">
             ERI uses <strong>one CTA button style</strong> across all products and surfaces. There are no exceptions.
             The shape is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-lg</code> — never a pill (<code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-full</code>).
             The fill colour is always <strong>Accent Lime <code className="font-mono text-xs bg-[#93E07D]/20 text-[#1a6b30] px-1 rounded">#93E07D</code></strong> — never Primary Green.
@@ -2759,7 +2759,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <div className="mb-6">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">On white / light background — interior pages, cards</p>
             <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
-              <div className="bg-white px-8 py-10 flex flex-wrap items-center gap-5">
+              <div className="bg-card px-8 py-10 flex flex-wrap items-center gap-5">
                 {/* Primary */}
                 <a
                   href="#"
@@ -2778,7 +2778,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                   Learn More
                 </a>
               </div>
-              <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">
+              <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">
                 Primary: <span className="text-[#3ba559]">bg-[#93E07D] text-[#1a1a1a] rounded-lg</span> · Secondary: <span className="text-gray-600">border-2 border-[#232323] text-[#232323] rounded-lg</span>
               </div>
             </div>
@@ -2853,7 +2853,7 @@ import { pillarBottomIcons } from "@/lib/assets";
               <a href="#" className="inline-block px-6 py-3 rounded-lg font-archivo font-semibold text-base text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>Default — hero / section</a>
               <a href="#" className="inline-block px-8 py-4 rounded-lg font-archivo font-semibold text-lg text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>Large — hero primary</a>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Small: px-4 py-2 text-sm · Default: px-6 py-3 text-base · Large: px-8 py-4 text-lg · All use rounded-lg</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">Small: px-4 py-2 text-sm · Default: px-6 py-3 text-base · Large: px-8 py-4 text-lg · All use rounded-lg</div>
           </div>
         </section>
 
@@ -2864,7 +2864,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Interactive States
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Consistent hover, active, and focus states reinforce the brand colour system and improve usability.
           </p>
 
@@ -2884,7 +2884,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                   ].map((item) => (
                     <div key={item.label} className="flex items-center gap-3">
                       <span className={`text-sm font-medium w-36 flex-shrink-0 ${item.preview}`}>{item.label}</span>
-                      <code className="text-xs font-mono text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded flex-shrink-0">{item.cls}</code>
+                      <code className="text-xs font-mono text-muted-foreground bg-muted px-1.5 py-0.5 rounded flex-shrink-0">{item.cls}</code>
                       <span className="text-xs text-gray-400">{item.desc}</span>
                     </div>
                   ))}
@@ -2907,7 +2907,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                   ].map((item) => (
                     <div key={item.label} className="flex items-center gap-3">
                       <div className={`w-8 h-5 rounded flex-shrink-0 ${item.preview}`} />
-                      <code className="text-xs font-mono text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded flex-shrink-0">{item.cls}</code>
+                      <code className="text-xs font-mono text-muted-foreground bg-muted px-1.5 py-0.5 rounded flex-shrink-0">{item.cls}</code>
                       <span className="text-xs text-gray-400">{item.desc}</span>
                     </div>
                   ))}
@@ -2945,7 +2945,7 @@ className="transition-all duration-300 ease-in-out"`}</pre>
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Contact Us Integration
           </h2>
-          <p className="text-gray-500 text-sm mb-6">Version 2026.04.16 · Service URL: contact-us.exponentialroadmap.org</p>
+          <p className="text-muted-foreground text-sm mb-6">Version 2026.04.16 · Service URL: contact-us.exponentialroadmap.org</p>
 
           {/* Critical rule banner */}
           <Card className="shadow-sm bg-amber-50 border border-amber-300 mb-8">
@@ -2981,11 +2981,11 @@ className="transition-all duration-300 ease-in-out"`}</pre>
                   ["return", "Recommended", "Full URL to return to after form submission. URL-encode the value.", "https%3A%2F%2Fpsm.exponentialroadmap.org"],
                   ["subject", "Optional", "Subject hint for the owner alert email. URL-encode spaces as +.", "PSM+Partnership+Enquiry"],
                 ].map(([param, req, desc, ex], i) => (
-                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                  <tr key={i} className={i % 2 === 0 ? "bg-card" : "bg-muted"}>
                     <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-[#3ba559]">{param}</td>
-                    <td className="px-4 py-2 border border-gray-200 text-gray-600">{req}</td>
-                    <td className="px-4 py-2 border border-gray-200 text-gray-700">{desc}</td>
-                    <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-gray-500">{ex}</td>
+                    <td className="px-4 py-2 border border-border text-muted-foreground">{req}</td>
+                    <td className="px-4 py-2 border border-border text-foreground">{desc}</td>
+                    <td className="px-4 py-2 border border-border font-mono text-xs text-muted-foreground">{ex}</td>
                   </tr>
                 ))}
               </tbody>
@@ -3020,7 +3020,7 @@ className="transition-all duration-300 ease-in-out"`}</pre>
                 Contact Us
               </a>
             </div>
-            <div className="flex items-center gap-3 px-6 py-3 rounded-lg border border-gray-200 bg-white">
+            <div className="flex items-center gap-3 px-6 py-3 rounded-lg border border-border bg-card">
               <span className="text-xs text-gray-400 uppercase tracking-widest">On white header:</span>
               <a
                 href="https://contact-us.exponentialroadmap.org/?source=bds-demo&sourceLabel=Brand+Design+System&return=https%3A%2F%2Feri-brand-design-system.manus.space"
@@ -3069,7 +3069,7 @@ const contactUrl =
               { label: 'Icon', value: 'None — text only', ok: true },
             ].map(({ label, value, ok }) => (
               <div key={label} className={`rounded-lg p-3 border ${ok ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-1">{label}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">{label}</p>
                 <p className="text-xs font-mono text-gray-800">{value}</p>
               </div>
             ))}
@@ -3077,7 +3077,7 @@ const contactUrl =
 
           {/* Registered source IDs */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">Registered Source IDs</h3>
-          <p className="text-sm text-gray-500 mb-4">Source IDs are self-registering — no manual setup required. This table is maintained here for human reference. Add your app's row when integrating.</p>
+          <p className="text-sm text-muted-foreground mb-4">Source IDs are self-registering — no manual setup required. This table is maintained here for human reference. Add your app's row when integrating.</p>
           <div className="overflow-x-auto mb-8">
             <table className="w-full text-sm border-collapse">
               <thead>
@@ -3094,10 +3094,10 @@ const contactUrl =
                   ["taxonomy", "ERI Taxonomy", "https://taxonomy.exponentialroadmap.org"],
                   ["platform", "ERI Platform", "https://exponentialroadmap.org"],
                 ].map(([id, name, url], i) => (
-                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                  <tr key={i} className={i % 2 === 0 ? "bg-card" : "bg-muted"}>
                     <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-[#3ba559]">{id}</td>
-                    <td className="px-4 py-2 border border-gray-200 text-gray-700">{name}</td>
-                    <td className="px-4 py-2 border border-gray-200 font-mono text-xs text-gray-500">{url}</td>
+                    <td className="px-4 py-2 border border-border text-foreground">{name}</td>
+                    <td className="px-4 py-2 border border-border font-mono text-xs text-muted-foreground">{url}</td>
                   </tr>
                 ))}
               </tbody>
@@ -3106,9 +3106,9 @@ const contactUrl =
 
           {/* Source ID naming rules */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">Choosing a Source ID</h3>
-          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-8">
+          <Card className="shadow-sm bg-card border border-border mb-8">
             <CardContent className="p-5">
-              <ul className="text-sm text-gray-700 space-y-2">
+              <ul className="text-sm text-foreground space-y-2">
                 <li>• Use <strong>lowercase letters, numbers, and hyphens only</strong> — no spaces or special characters.</li>
                 <li>• Keep it <strong>short and stable</strong>. It is stored in the database and used in analytics — do not change it after launch.</li>
                 <li>• Use the product's short name or abbreviation. Examples: <code className="font-mono text-xs bg-gray-200 px-1 rounded">hal</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">psm</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">playbook</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">data-hub</code>, <code className="font-mono text-xs bg-gray-200 px-1 rounded">climate-tracker</code>.</li>
@@ -3120,7 +3120,7 @@ const contactUrl =
           <h3 className="font-bold text-[#232323] mb-3 text-lg">Implementation Checklist</h3>
           <Card className="shadow-sm bg-green-50 border border-green-200 mb-8">
             <CardContent className="p-5">
-              <ul className="text-sm text-gray-700 space-y-2">
+              <ul className="text-sm text-foreground space-y-2">
                 {[
                   "Choose a unique source ID following the naming conventions above.",
                   "Add the ID and app name to the Registered Source IDs table in this BDS.",
@@ -3136,11 +3136,11 @@ const contactUrl =
 
           {/* Admin dashboard */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">Admin Dashboard</h3>
-          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-6">
+          <Card className="shadow-sm bg-card border border-border mb-6">
             <CardContent className="p-5">
-              <p className="text-sm text-gray-700 mb-2">All enquiries across all apps are visible at:</p>
+              <p className="text-sm text-foreground mb-2">All enquiries across all apps are visible at:</p>
               <code className="font-mono text-sm text-[#3ba559]">https://contact-us.exponentialroadmap.org/admin</code>
-              <p className="text-xs text-gray-500 mt-2">Requires a Manus account with the <code className="font-mono text-xs bg-gray-200 px-1 rounded">admin</code> role on the contact service. Provides a Submissions tab (all enquiries, filterable by source app) and a Registered Apps tab (submission counts, first/last seen, return URL).</p>
+              <p className="text-xs text-muted-foreground mt-2">Requires a Manus account with the <code className="font-mono text-xs bg-gray-200 px-1 rounded">admin</code> role on the contact service. Provides a Submissions tab (all enquiries, filterable by source app) and a Registered Apps tab (submission counts, first/last seen, return URL).</p>
             </CardContent>
           </Card>
         </section>
@@ -3152,12 +3152,12 @@ const contactUrl =
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Standard Components
           </h2>
-          <p className="text-gray-500 text-sm mb-6">Version 2.0.0 · 6 canonical files · Copy verbatim — do not reconstruct</p>
+          <p className="text-muted-foreground text-sm mb-6">Version 2.0.0 · 6 canonical files · Copy verbatim — do not reconstruct</p>
 
           {/* Scope note */}
           <div className="rounded-lg p-4 mb-6 border" style={{ backgroundColor: '#f9fafb', borderColor: '#e5e7eb' }}>
             <p className="text-sm font-bold text-[#232323] mb-1">Scope: Public-Facing ERI Apps Only</p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               These components apply to <strong>public-facing ERI product apps</strong> — such as Taxonomy, Professional Services Matrix, and HAL.
               They are <strong>not</strong> intended for internal or documentation tools (such as this BDS site itself, which uses its own{" "}
               <code className="font-mono text-xs bg-gray-200 px-1 rounded">PublicLayout</code> with a white header appropriate for a reference document).
@@ -3189,7 +3189,7 @@ const contactUrl =
               <p className="text-xs text-gray-400 mb-1"><span style={{ color: '#93E07D' }}>Release workflow (BDS maintainer):</span> After updating a component, bump the version in <code className="font-mono bg-gray-800 px-1 rounded">packages/eri-components/package.json</code>, run <code className="font-mono bg-gray-800 px-1 rounded">pnpm build:css</code> in <code className="font-mono bg-gray-800 px-1 rounded">packages/eri-components/</code> to rebuild the CSS, save a checkpoint (auto-pushes to GitHub), then run:</p>
               <pre className="text-xs text-green-400 bg-gray-900 rounded p-2 overflow-x-auto font-mono">{`cd /home/ubuntu/eri-brand-design-system && TOKEN=$(gh auth token) && git remote set-url user_github "https://x-access-token:\${TOKEN}@github.com/Exponential-Roadmap-Initiative/eri-brand-design-system.git" && git tag vX.Y.Z && git push user_github vX.Y.Z`}</pre>
             </div>
-            <p className="text-xs text-gray-500 mt-3">
+            <p className="text-xs text-muted-foreground mt-3">
               Source: <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/tree/main/packages/eri-components" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300 transition-colors">github.com/Exponential-Roadmap-Initiative/eri-brand-design-system</a>
             </p>
           </div>
@@ -3221,9 +3221,9 @@ const contactUrl =
           </div>
 
           {/* CDN fallback banner */}
-          <div className="rounded-lg p-5 mb-8 border border-gray-200 bg-gray-50">
-            <p className="text-sm font-bold text-gray-700 mb-1">FALLBACK: DOWNLOAD FILES DIRECTLY</p>
-            <p className="text-sm text-gray-500 mb-3">
+          <div className="rounded-lg p-5 mb-8 border border-border bg-muted">
+            <p className="text-sm font-bold text-foreground mb-1">FALLBACK: DOWNLOAD FILES DIRECTLY</p>
+            <p className="text-sm text-muted-foreground mb-3">
               If the npm package cannot be used, copy all 6 files into{" "}
               <code className="font-mono text-xs bg-gray-200 px-1 rounded">client/src/components/eri/</code>.
               Note: these copies will <strong>not</strong> receive automatic updates — you must re-download when the BDS is updated.
@@ -3242,7 +3242,7 @@ const contactUrl =
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Download className="w-3 h-3 shrink-0" />
                   <span>{name}</span>
@@ -3252,7 +3252,7 @@ const contactUrl =
           </div>
           {/* ── Component 1: EriStatusBadge ──────────────────────────────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">1. EriStatusBadge</h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Transparent outlined pill badge for app status. Four values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code>{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code>{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code>{" "}
@@ -3261,8 +3261,8 @@ const contactUrl =
           </p>
 
           {/* Live preview */}
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 border-b border-border">LIVE PREVIEW</div>
             <div className="p-6 flex flex-wrap gap-6 items-center">
               {/* Dark theme — real component */}
               <div className="rounded-lg px-6 py-4 flex items-center gap-3" style={{ backgroundColor: '#232323' }}>
@@ -3294,7 +3294,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
   const colours =
     theme === 'dark'
       ? 'border-white/60 text-white'
-      : 'border-gray-400 text-gray-500';
+      : 'border-border text-muted-foreground';
   return (
     <span className={\`inline-flex items-center rounded-full border
       px-2.5 py-0.5 text-[11px] font-semibold tracking-widest
@@ -3319,9 +3319,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {/* ── EriStatusBadge Props ── */}
           <Card className="shadow-sm mb-6">
             <CardContent className="p-5">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Props</p>
               <table className="w-full text-xs">
-                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
                     ["status",    "EriStatusValue",           "Required. One of: ALPHA | BETA | PREVIEW | LIVE"],
@@ -3331,7 +3331,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
                       <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
-                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                      <td className="py-1.5 text-muted-foreground font-sans">{note}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -3357,18 +3357,18 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                           <span className="rounded-full border border-white/60 text-white text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
                         </div>
                         <div className="bg-white border border-gray-200 px-3 py-1.5 rounded">
-                          <span className="rounded-full border border-gray-400 text-gray-500 text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
+                          <span className="rounded-full border border-border text-muted-foreground text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5">{label}</span>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500">{desc}</p>
+                      <p className="text-xs text-muted-foreground">{desc}</p>
                     </div>
                   ))}
                 </div>
-                <div className="bg-gray-50 rounded p-3 text-xs space-y-1.5">
+                <div className="bg-muted rounded p-3 text-xs space-y-1.5">
                   <p className="font-semibold text-[#232323] mb-1">Canonical class string</p>
-                  <code className="font-mono text-gray-700 block">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>
-                  <p className="text-gray-500 mt-2"><strong>On dark/transparent headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-white border-white/60</code></p>
-                  <p className="text-gray-500"><strong>On white/light headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-gray-500 border-gray-400</code></p>
+                  <code className="font-mono text-foreground block">rounded-full border border-current text-[11px] font-semibold tracking-widest uppercase px-2.5 py-0.5</code>
+                  <p className="text-muted-foreground mt-2"><strong>On dark/transparent headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-white border-white/60</code></p>
+                  <p className="text-muted-foreground"><strong>On white/light headers:</strong> add <code className="font-mono bg-white px-1 rounded">text-gray-500 border-gray-400</code></p>
                   <p className="text-red-500 mt-1">Never use a filled background colour. Never use a status dot alongside the badge.</p>
                 </div>
               </CardContent>
@@ -3377,7 +3377,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
           {/* ── Component 2: EriContactUsButton ─────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">2. EriContactUsButton</h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Accent Lime CTA button that links to the shared ERI contact service. Constructs the URL automatically from{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">source</code>,{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">sourceLabel</code>, and{" "}
@@ -3385,8 +3385,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </p>
 
           {/* Live preview */}
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 border-b border-border">LIVE PREVIEW</div>
             <div className="p-6 flex flex-wrap gap-6 items-center">
               <div className="rounded-lg px-6 py-4 flex items-center gap-4" style={{ backgroundColor: '#232323' }}>
                 <span className="text-xs text-gray-400">dark bg:</span>
@@ -3448,9 +3448,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {/* ── EriContactUsButton Props ── */}
           <Card className="shadow-sm mb-3">
             <CardContent className="p-5">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Props</p>
               <table className="w-full text-xs">
-                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
                     ["source",      "string",   "Required. Short identifier for the originating app (e.g. \"taxonomy\", \"hal\", \"psm\"). Passed as a query param to the contact service."],
@@ -3463,7 +3463,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
                       <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
-                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                      <td className="py-1.5 text-muted-foreground font-sans">{note}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -3484,15 +3484,15 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
           {/* ── Component 3: EriAppHeader ────────────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">3. EriAppHeader</h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Canonical 64px fixed header. Left zone: ERI logo → pipe divider → app name. Right zone: status badge → version → optional CTA → hamburger.
             The <code className="font-mono text-xs bg-gray-100 px-1 rounded">showCTA</code> prop is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">true</code> — the Contact Us CTA is visible on all surfaces.
             Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
           </p>
 
           {/* Live preview — real EriAppHeader component */}
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — public surface (showCTA=true)</div>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 border-b border-border">LIVE PREVIEW — public surface (showCTA=true)</div>
             {/* isolation:isolate + transform creates a new stacking context, trapping the fixed-position EriAppHeader inside this container */}
             <div style={{ height: '64px', isolation: 'isolate', transform: 'translateZ(0)', position: 'relative', overflow: 'hidden' }}>
               <EriAppHeader
@@ -3507,8 +3507,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               />
             </div>
           </div>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW — internal tool (showCTA=false)</div>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 border-b border-border">LIVE PREVIEW — internal tool (showCTA=false)</div>
             <div style={{ height: '64px', isolation: 'isolate', transform: 'translateZ(0)', position: 'relative', overflow: 'hidden' }}>
               <EriAppHeader
                 appName="Internal Admin Tool"
@@ -3521,11 +3521,11 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </div>
 
           {/* Props table */}
-          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-3">
+          <Card className="shadow-sm bg-card border border-border mb-3">
             <CardContent className="p-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Props</p>
               <table className="w-full text-xs">
-                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
                     ["appName",        "string",          "App display name shown after the pipe divider"],
@@ -3544,7 +3544,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
                       <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
-                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                      <td className="py-1.5 text-muted-foreground font-sans">{note}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -3599,12 +3599,12 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {/* ── Header Anatomy Detail ── */}
           <div className="mb-10">
             <h4 className="font-bold text-[#232323] mb-3 text-base">Header Anatomy</h4>
-            <p className="text-gray-600 mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> background. Inner container uses <code className="font-mono text-xs bg-gray-100 px-1 rounded">max-w-screen-xl mx-auto</code> with <code className="font-mono text-xs bg-[#93E07D]/10 text-[#3ba559] px-1 rounded">paddingInline: var(--eri-content-inset)</code> — this aligns the logotype with the hero text block.</p>
+            <p className="text-muted-foreground mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> background. Inner container uses <code className="font-mono text-xs bg-gray-100 px-1 rounded">max-w-screen-xl mx-auto</code> with <code className="font-mono text-xs bg-[#93E07D]/10 text-[#3ba559] px-1 rounded">paddingInline: var(--eri-content-inset)</code> — this aligns the logotype with the hero text block.</p>
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <Card className="shadow-sm">
                 <CardContent className="p-5">
                   <h4 className="font-bold text-[#232323] mb-3">Left Zone — Logo + Divider + Title Block</h4>
-                  <div className="space-y-3 text-sm text-gray-600">
+                  <div className="space-y-3 text-sm text-muted-foreground">
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI wordmark — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, <code className="font-mono text-xs bg-gray-100 px-1 rounded">filter: brightness(0) invert(1)</code>, links to <code className="font-mono text-xs">/</code></span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Vertical divider — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-6 w-px bg-white/20 shrink-0</code></span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>App title — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-sm font-medium text-white truncate</code></span></div>
@@ -3614,7 +3614,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               <Card className="shadow-sm">
                 <CardContent className="p-5">
                   <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Version + CTA + Menu</h4>
-                  <div className="space-y-3 text-sm text-gray-600">
+                  <div className="space-y-3 text-sm text-muted-foreground">
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span><code className="font-mono text-xs bg-gray-100 px-1 rounded">EriStatusBadge</code> — transparent outlined pill, white on dark</span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — format <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.YYYY.MM.DD</code> (e.g. <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.2026.04.15</code>). <em className="text-red-400">Never date-only, never lowercase v.</em></span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span><strong>All surfaces</strong> — <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriContactUsButton</code>. Always pass <code className="font-mono text-xs bg-gray-100 px-1 rounded">{"showCTA={true}"}</code>. The CTA is visible on both public and authenticated surfaces.</span></div>
@@ -3627,15 +3627,15 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
              {/* ── Component 4: EriAppFooter ──────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">4. EriAppFooter</h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Canonical two-zone dark footer. Left zone: ERI logo + optional tagline. Right zone: copyright string.
             Background is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> — never dark green, white, or any other colour.
             Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
           </p>
 
           {/* Live preview — real EriAppFooter component */}
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200">LIVE PREVIEW</div>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 border-b border-border">LIVE PREVIEW</div>
             <EriAppFooter
               appName="Professional Services Matrix"
               tagline="Making Pillar 3 climate impact measurable and actionable."
@@ -3665,9 +3665,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {/* ── EriAppFooter Props ── */}
           <Card className="shadow-sm mb-3">
             <CardContent className="p-5">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Props</p>
               <table className="w-full text-xs">
-                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
                     ["appName",     "string",         "Required. App display name shown in the footer left zone alongside the ERI logo."],
@@ -3678,7 +3678,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
                       <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
-                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                      <td className="py-1.5 text-muted-foreground font-sans">{note}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -3719,9 +3719,9 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ['© Bottom bar', '© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-gray-500'],
                     ['Link columns', 'Only show links with confirmed URLs — no placeholder columns'],
                   ].map(([prop, val]) => (
-                    <tr key={prop} className="border-b border-gray-100 hover:bg-gray-50">
+                    <tr key={prop} className="border-b border-border hover:bg-muted">
                       <td className="px-4 py-3 font-mono text-xs text-[#232323] font-medium w-48">{prop}</td>
-                      <td className="px-4 py-3 text-gray-600 text-sm">{val}</td>
+                      <td className="px-4 py-3 text-muted-foreground text-sm">{val}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -3729,11 +3729,11 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             </div>
 
             <h4 className="font-bold text-[#232323] mb-3 text-base">Permitted Variation — Tier C (White Background)</h4>
-            <p className="text-gray-500 text-sm mb-4">Admin tools with a persistent sidebar. No logo (sidebar already shows it). Same two-zone layout, light surface.</p>
+            <p className="text-muted-foreground text-sm mb-4">Admin tools with a persistent sidebar. No logo (sidebar already shows it). Same two-zone layout, light surface.</p>
             <div className="rounded-lg overflow-hidden border border-gray-200 mb-6">
-              <footer className="border-t border-gray-200 bg-white">
+              <footer className="border-t border-border bg-card">
                 <div className="max-w-screen-xl mx-auto w-full py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ paddingInline: 'var(--eri-content-inset)' }}>
-                  <p className="text-sm text-gray-500">Professional Services Matrix — Admin</p>
+                  <p className="text-sm text-muted-foreground">Professional Services Matrix — Admin</p>
                   <p className="text-sm text-gray-400 sm:text-right">© {new Date().getFullYear()} Exponential Roadmap Initiative.</p>
                 </div>
               </footer>
@@ -3751,7 +3751,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
           {/* ── Component 5: EriHeroSection ──────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">5. EriHeroSection</h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Canonical full-viewport hero section. Matches the live pattern on{" "}
             <a href="https://human-ai-lab.exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-[#3ba559] underline">human-ai-lab.exponentialroadmap.org</a>.{" "}
             Text block is always left-aligned and vertically centred, anchored to{" "}
@@ -3766,15 +3766,15 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {(() => {
             const [showScrollIndicator, setShowScrollIndicator] = useState(false);
             return (
-              <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-                <div className="text-[10px] font-mono text-gray-400 bg-gray-50 px-3 py-1.5 border-b border-gray-200 flex items-center justify-between">
+              <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+                <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 border-b border-border flex items-center justify-between">
                   <span>LIVE PREVIEW (condensed — full height in production)</span>
                   <button
                     onClick={() => setShowScrollIndicator(v => !v)}
                     className={`text-[10px] font-mono px-2 py-0.5 rounded border transition-colors ${
                       showScrollIndicator
                         ? 'bg-[#3ba559] text-white border-[#3ba559]'
-                        : 'bg-white text-gray-500 border-gray-300 hover:border-[#3ba559] hover:text-[#3ba559]'
+                        : 'bg-card text-muted-foreground border-border hover:border-[#3ba559] hover:text-[#3ba559]'
                     }`}
                   >
                     showScrollIndicator={showScrollIndicator ? 'true' : 'false'}
@@ -3797,11 +3797,11 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           })()}
 
           {/* Props table */}
-          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-3">
+          <Card className="shadow-sm bg-card border border-border mb-3">
             <CardContent className="p-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Props</p>
               <table className="w-full text-xs">
-                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Required</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground pr-3">Required</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
                     ["eyebrow",         "string",           "Yes",  "Full eyebrow string e.g. \"APP NAME ——— BETA\""],
@@ -3819,7 +3819,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
                       <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
                       <td className="py-1.5 pr-3 text-muted-foreground">{req}</td>
-                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                      <td className="py-1.5 text-muted-foreground font-sans">{note}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -3916,9 +3916,9 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
           </div>
 
           {/* ── Trust Hero Variant ─────────────────────────────────────────── */}
-          <div className="rounded-lg border border-gray-200 bg-gray-50 p-5 mb-10">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">Trust &amp; Security Variant — <code className="font-mono normal-case">ERI_HERO_IMAGE_TRUST</code></p>
-            <p className="text-sm text-gray-700 mb-4">
+          <div className="rounded-lg border border-border bg-muted p-5 mb-10">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Trust &amp; Security Variant — <code className="font-mono normal-case">ERI_HERO_IMAGE_TRUST</code></p>
+            <p className="text-sm text-foreground mb-4">
               For trust, security, data integrity, and compliance contexts, use <code className="font-mono text-xs bg-gray-100 px-1 rounded">ERI_HERO_IMAGE_TRUST</code> instead
               of the default hands image. The Trust image uses an abstract dark texture with interconnected nodes, a hexagonal grid,
               and a subtle shield motif — conveying rigour and institutional credibility rather than human-AI collaboration.
@@ -3952,7 +3952,7 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
 
           {/* ── Component 6: EriPageLayout ───────────────────────────────── */}
           <h3 className="font-bold text-[#232323] mb-1 text-lg">6. EriPageLayout</h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Canonical layout wrapper. Renders <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriAppHeader</code> and{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriAppFooter</code> exactly once, wrapping all page content.
             Use this in <code className="font-mono text-xs bg-gray-100 px-1 rounded">App.tsx</code> — never import header or footer directly in page files.
@@ -4019,11 +4019,11 @@ function App() {
             </CardContent>
           </Card>
           {/* Props table */}
-          <Card className="shadow-sm bg-gray-50 border border-gray-200 mb-3">
+          <Card className="shadow-sm bg-card border border-border mb-3">
             <CardContent className="p-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Props</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Props</p>
               <table className="w-full text-xs">
-                <thead><tr className="border-b border-gray-200"><th className="text-left py-1 font-semibold text-gray-600 pr-3">Prop</th><th className="text-left py-1 font-semibold text-gray-600 pr-3">Type</th><th className="text-left py-1 font-semibold text-gray-600">Notes</th></tr></thead>
+                <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
                     ["appName",           "string",            "App display name — used in header and footer copyright"],
@@ -4043,7 +4043,7 @@ function App() {
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
                       <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
-                      <td className="py-1.5 text-gray-600 font-sans">{note}</td>
+                      <td className="py-1.5 text-muted-foreground font-sans">{note}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -4081,7 +4081,7 @@ function App() {
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             UI Components
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             All interactive components use <strong>shadcn/ui</strong> as the base. Two tab patterns exist — use the right one for the right context. Always import from{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">@/components/ui/*</code> or{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">@/components/SimpleTabNav</code>.
@@ -4089,9 +4089,9 @@ function App() {
 
           {/* 1. Page Navigation Tabs */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">1. Page Navigation Tabs — <code className="font-mono text-base font-normal">SimpleTabNav</code></h3>
-          <p className="text-gray-600 mb-4 text-sm">Used for <strong>page-level navigation</strong> where each tab changes the URL. Features: URL-driven active state, icon + label + count, green underline indicator, no background fill.</p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="flex items-center gap-1 border-b border-gray-200 bg-white overflow-x-auto">
+          <p className="text-muted-foreground mb-4 text-sm">Used for <strong>page-level navigation</strong> where each tab changes the URL. Features: URL-driven active state, icon + label + count, green underline indicator, no background fill.</p>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="flex items-center gap-1 border-b border-border bg-card overflow-x-auto">
               {[
                 { id: "file",      label: "File",      count: 7,  icon: <FileText className="w-4 h-4" /> },
                 { id: "api",       label: "API",       count: 5,  icon: <Plug className="w-4 h-4" /> },
@@ -4102,7 +4102,7 @@ function App() {
                 <div
                   key={tab.id}
                   className={`relative px-4 py-2.5 text-sm font-medium transition-colors cursor-pointer flex-shrink-0 ${
-                    i === 0 ? "text-[#232323]" : "text-gray-500 hover:text-[#232323]"
+                    i === 0 ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -4114,7 +4114,7 @@ function App() {
                 </div>
               ))}
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">SimpleTabNav · URL-driven · bg-[#3ba559] bottom border · icon + label + count</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">SimpleTabNav · URL-driven · bg-[#3ba559] bottom border · icon + label + count</div>
           </div>
           <Card className="shadow-sm bg-gray-900 mb-10">
             <CardContent className="p-5">
@@ -4131,9 +4131,9 @@ const tabs: TabConfig[] = [
 
           {/* 2. In-Page Content Tabs */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">2. In-Page Content Tabs — <code className="font-mono text-base font-normal">&lt;Tabs&gt;</code></h3>
-          <p className="text-gray-600 mb-4 text-sm">Used for <strong>in-page content switching</strong> where the URL does not change. Uses shadcn pill/background style.</p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="p-5 bg-white">
+          <p className="text-muted-foreground mb-4 text-sm">Used for <strong>in-page content switching</strong> where the URL does not change. Uses shadcn pill/background style.</p>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="p-5 bg-card">
               <Tabs defaultValue="silver">
                 <TabsList>
                   <TabsTrigger value="silver" className="flex items-center gap-2">
@@ -4146,12 +4146,12 @@ const tabs: TabConfig[] = [
                     <span className="w-2 h-2 rounded-full bg-purple-400 inline-block" /> Platinum
                   </TabsTrigger>
                 </TabsList>
-                <TabsContent value="silver" className="mt-4 text-sm text-gray-600">Silver tier content renders here.</TabsContent>
-                <TabsContent value="gold" className="mt-4 text-sm text-gray-600">Gold tier content renders here.</TabsContent>
-                <TabsContent value="platinum" className="mt-4 text-sm text-gray-600">Platinum tier content renders here.</TabsContent>
+                <TabsContent value="silver" className="mt-4 text-sm text-muted-foreground">Silver tier content renders here.</TabsContent>
+                <TabsContent value="gold" className="mt-4 text-sm text-muted-foreground">Gold tier content renders here.</TabsContent>
+                <TabsContent value="platinum" className="mt-4 text-sm text-muted-foreground">Platinum tier content renders here.</TabsContent>
               </Tabs>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">shadcn Tabs · state-driven · pill background active state · no URL change</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">shadcn Tabs · state-driven · pill background active state · no URL change</div>
           </div>
           <Card className="shadow-sm bg-amber-50 border-amber-200 mb-10">
             <CardContent className="p-4">
@@ -4161,9 +4161,9 @@ const tabs: TabConfig[] = [
 
           {/* 3. Buttons */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">3. Buttons</h3>
-          <p className="text-gray-600 mb-4 text-sm">Import from <code className="font-mono text-xs bg-gray-100 px-1 rounded">@/components/ui/button</code>. The <code className="font-mono text-xs">outline</code> variant uses a transparent background — add a bg class manually if needed.</p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="p-6 bg-white flex flex-wrap gap-3 items-center">
+          <p className="text-muted-foreground mb-4 text-sm">Import from <code className="font-mono text-xs bg-gray-100 px-1 rounded">@/components/ui/button</code>. The <code className="font-mono text-xs">outline</code> variant uses a transparent background — add a bg class manually if needed.</p>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="p-6 bg-card flex flex-wrap gap-3 items-center">
               <Button variant="default">Default (Primary)</Button>
               <Button variant="outline">Outline</Button>
               <Button variant="secondary">Secondary</Button>
@@ -4174,7 +4174,7 @@ const tabs: TabConfig[] = [
               <Button variant="default" size="lg">Large</Button>
               <Button variant="default" disabled>Disabled</Button>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">variant: default | outline | secondary | ghost | destructive | link · size: sm | default | lg</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">variant: default | outline | secondary | ghost | destructive | link · size: sm | default | lg</div>
           </div>
           <Card className="shadow-sm bg-gray-900 mb-10">
             <CardContent className="p-5">
@@ -4193,9 +4193,9 @@ const tabs: TabConfig[] = [
 
           {/* 4. Inputs & Selects */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">4. Inputs &amp; Selects</h3>
-          <p className="text-gray-600 mb-4 text-sm">Always pair with a <code className="font-mono text-xs bg-gray-100 px-1 rounded">&lt;label&gt;</code>. Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">placeholder</code> as a hint, not as a label substitute.</p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="p-6 bg-white grid md:grid-cols-2 gap-4">
+          <p className="text-muted-foreground mb-4 text-sm">Always pair with a <code className="font-mono text-xs bg-gray-100 px-1 rounded">&lt;label&gt;</code>. Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">placeholder</code> as a hint, not as a label substitute.</p>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="p-6 bg-card grid md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-[#232323]">Text Input</label>
                 <Input placeholder="e.g. Volvo Cars" />
@@ -4221,34 +4221,34 @@ const tabs: TabConfig[] = [
                 <Input placeholder="Read only" disabled />
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Input · Select · always label · error: border-red-400 + text-xs text-red-600 below</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">Input · Select · always label · error: border-red-400 + text-xs text-red-600 below</div>
           </div>
 
           {/* 5. Cards */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">5. Cards</h3>
-          <p className="text-gray-600 mb-4 text-sm">Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-sm</code> as the default elevation. Add <code className="font-mono text-xs bg-gray-100 px-1 rounded">hover:shadow-md transition-shadow</code> for interactive cards. Never use <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-lg</code> or <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-xl</code>.</p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+          <p className="text-muted-foreground mb-4 text-sm">Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-sm</code> as the default elevation. Add <code className="font-mono text-xs bg-gray-100 px-1 rounded">hover:shadow-md transition-shadow</code> for interactive cards. Never use <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-lg</code> or <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-xl</code>.</p>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="p-6 bg-[#F9FAFB] grid md:grid-cols-3 gap-4">
               <Card className="shadow-sm">
                 <CardContent className="p-5">
                   <h4 className="font-bold text-[#232323] mb-1">Static Card</h4>
-                  <p className="text-sm text-gray-600">shadow-sm · no hover · use for data display</p>
+                  <p className="text-sm text-muted-foreground">shadow-sm · no hover · use for data display</p>
                 </CardContent>
               </Card>
               <Card className="shadow-sm hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-5">
                   <h4 className="font-bold text-[#232323] mb-1">Interactive Card</h4>
-                  <p className="text-sm text-gray-600">shadow-sm hover:shadow-md · use for clickable items</p>
+                  <p className="text-sm text-muted-foreground">shadow-sm hover:shadow-md · use for clickable items</p>
                 </CardContent>
               </Card>
               <Card className="shadow-sm bg-muted border-border">
                 <CardContent className="p-5">
                   <h4 className="font-bold text-[#232323] mb-1">Subtle Card</h4>
-                  <p className="text-sm text-gray-600">bg-gray-50 · use for secondary info, notes, callouts</p>
+                  <p className="text-sm text-muted-foreground">bg-gray-50 · use for secondary info, notes, callouts</p>
                 </CardContent>
               </Card>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Card · CardContent · shadow-sm (default) · hover:shadow-md (interactive) · bg-gray-50 (subtle)</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">Card · CardContent · shadow-sm (default) · hover:shadow-md (interactive) · bg-gray-50 (subtle)</div>
           </div>
           <Card className="shadow-sm bg-gray-900 mb-10">
             <CardContent className="p-5">
@@ -4267,8 +4267,8 @@ const tabs: TabConfig[] = [
 
           {/* 6. Data Tables */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Data Tables</h3>
-          <p className="text-gray-600 mb-4 text-sm">Use plain HTML tables inside a <code className="font-mono text-xs bg-gray-100 px-1 rounded">Card</code> with <code className="font-mono text-xs bg-gray-100 px-1 rounded">p-0</code> padding. Alternate row colours with <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-white / bg-gray-50</code>.</p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
+          <p className="text-muted-foreground mb-4 text-sm">Use plain HTML tables inside a <code className="font-mono text-xs bg-gray-100 px-1 rounded">Card</code> with <code className="font-mono text-xs bg-gray-100 px-1 rounded">p-0</code> padding. Alternate row colours with <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-white / bg-gray-50</code>.</p>
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <Card className="shadow-sm">
               <CardContent className="p-0">
                 <table className="w-full text-sm">
@@ -4286,7 +4286,7 @@ const tabs: TabConfig[] = [
                       { name: "IKEA",       tier: "Platinum", status: "Active",  score: 94 },
                       { name: "H&M Group",  tier: "Silver",   status: "Pending", score: 61 },
                     ].map((row, i) => (
-                      <tr key={row.name} className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100 transition-colors cursor-pointer`}>
+                      <tr key={row.name} className={`${i % 2 === 0 ? "bg-card" : "bg-muted"} hover:bg-gray-100 transition-colors cursor-pointer`}>
                         <td className="p-4 font-medium text-[#232323]">{row.name}</td>
                         <td className="p-4">
                           <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
@@ -4300,23 +4300,23 @@ const tabs: TabConfig[] = [
                             row.status === "Active" ? "bg-[#3ba559]/15 text-[#3ba559]" : "bg-amber-100 text-amber-700"
                           }`}>{row.status}</span>
                         </td>
-                        <td className="p-4 text-gray-600">{row.score}%</td>
+                        <td className="p-4 text-muted-foreground">{row.score}%</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </CardContent>
             </Card>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">Card p-0 · thead bg-gray-50 · tr alternating bg-white/bg-gray-50 · hover:bg-gray-100 · th font-bold text-[#232323]</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">Card p-0 · thead bg-gray-50 · tr alternating bg-white/bg-gray-50 · hover:bg-gray-100 · th font-bold text-[#232323]</div>
           </div>
 
           {/* ── CTA Buttons ── */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">3. CTA Buttons</h3>
-          <p className="text-gray-600 mb-4 text-sm">
+          <p className="text-muted-foreground mb-4 text-sm">
             The canonical call-to-action button for <strong>all ERI surfaces</strong> — hero sections, landing pages, interior pages, and footers. Accent Lime background (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#93E07D</code>), dark text (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#1a1a1a</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-lg</code> shape. This is the <strong>single CTA button style</strong> across all ERI products — do not use Primary Green (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#3ba559</code>) for filled buttons. Primary Green is reserved for links, active states, and text accents only.
           </p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-3">
-            <div className="p-6 bg-white flex flex-wrap gap-4 items-center">
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
+            <div className="p-6 bg-card flex flex-wrap gap-4 items-center">
               {["Our members and partners", "Read more about our impact", "Sign up to our newsletter"].map(label => (
                 <a
                   key={label}
@@ -4329,7 +4329,7 @@ const tabs: TabConfig[] = [
                 </a>
               ))}
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#93E07D] · text-[#1a1a1a] · rounded-lg · font-archivo font-semibold · text-base · px-6 py-3 · no icon prefix</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">bg-[#93E07D] · text-[#1a1a1a] · rounded-lg · font-archivo font-semibold · text-base · px-6 py-3 · no icon prefix</div>
           </div>
           <Card className="shadow-sm bg-gray-900 mb-10">
             <CardContent className="p-5">
@@ -4369,10 +4369,10 @@ const tabs: TabConfig[] = [
 
           {/* ── Footer ── */}
           <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">5. Footer</h3>
-          <p className="text-gray-600 mb-4 text-sm">
+          <p className="text-muted-foreground mb-4 text-sm">
             The standard ERI dark footer. Four columns: <strong>About</strong> (nav links), <strong>Newsletter</strong> (subscribe CTA), <strong>Follow us</strong> (social links as text), <strong>Contact us</strong> (email). Column headings: Archivo weight 500, 18px, white. All links in Accent Lime <code className="font-mono text-xs bg-gray-100 px-1 rounded">#93E07D</code>, Open Sans 14px. Bottom bar: Open Sans 16px, white/40.
           </p>
-          <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-6">
+          <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-6">
             <div className="bg-[#232323] px-6 py-8">
               <div className="grid grid-cols-4 gap-6 mb-6">
                 {/* Column 1: About */}
@@ -4410,7 +4410,7 @@ const tabs: TabConfig[] = [
                 <a href="#" className="text-white/40 hover:text-[#93E07D]" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '16px' }} onClick={e => e.preventDefault()}>Privacy policy</a>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-2 text-xs text-gray-500 font-mono">bg-[#232323] · 4 cols: About · Newsletter · Follow us · Contact us · headings: Archivo weight-500 18px white · body/links: Open Sans 14px text-[#93E07D] · newsletter btn: Open Sans 15px weight-500 white ghost rounded-full · social: text links not icon squares · bottom bar: Open Sans 16px text-white/40</div>
+            <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">bg-[#232323] · 4 cols: About · Newsletter · Follow us · Contact us · headings: Archivo weight-500 18px white · body/links: Open Sans 14px text-[#93E07D] · newsletter btn: Open Sans 15px weight-500 white ghost rounded-full · social: text links not icon squares · bottom bar: Open Sans 16px text-white/40</div>
           </div>
         </section>
 
@@ -4423,7 +4423,7 @@ const tabs: TabConfig[] = [
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Surface Modes
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             ERI products use two named surface modes — <strong>Light</strong> and <strong>Dark</strong>. These are not competing themes; they are two contexts within the same brand. Light mode is the default for application interiors. Dark mode is used for marketing landing pages and hero sections.
           </p>
 
@@ -4478,7 +4478,7 @@ const tabs: TabConfig[] = [
                     </div>
                   ))}
                 </div>
-                <p className={`text-xs mt-4 pt-4 border-t ${m.mode === 'Dark Mode' ? 'border-[#1a4a4a] text-gray-400' : 'border-gray-100 text-gray-500'}`}>
+                <p className={`text-xs mt-4 pt-4 border-t ${m.mode === 'Dark Mode' ? 'border-[#1a4a4a] text-muted-foreground' : 'border-border text-muted-foreground'}`}>
                   <strong className={m.mode === 'Dark Mode' ? 'text-gray-300' : 'text-gray-600'}>Use for:</strong> {m.use}
                 </p>
               </div>
@@ -4495,7 +4495,7 @@ const tabs: TabConfig[] = [
                 { q: "App with both landing + interior?", a: "Dark hero → Light app (switch at login)" },
               ].map((r) => (
                 <div key={r.q} className="bg-card rounded-lg p-4 border border-[#d1fae5]">
-                  <p className="text-gray-600 mb-2">{r.q}</p>
+                  <p className="text-muted-foreground mb-2">{r.q}</p>
                   <p className="font-semibold text-[#3ba559]">{r.a}</p>
                 </div>
               ))}
@@ -4542,7 +4542,7 @@ const tabs: TabConfig[] = [
     document.documentElement.classList.add('dark');
 })();
 </script>`}</pre>
-                    <p className="text-gray-500 mt-2">Add to {'<head>'} before any CSS. Prevents flash of light content on page load.</p>
+                    <p className="text-muted-foreground mt-2">Add to {'<head>'} before any CSS. Prevents flash of light content on page load.</p>
                   </div>
                   <div className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-4">
                     <p className="text-[#93E07D] font-semibold mb-2">2. EriPageLayout prop</p>
@@ -4551,7 +4551,7 @@ const tabs: TabConfig[] = [
   showThemeToggle={true}
   ...
 />`}</pre>
-                    <p className="text-gray-500 mt-2">The toggle reads/writes <code className="text-gray-400">localStorage</code> key <code className="text-gray-400">eri-theme</code> and applies the <code className="text-gray-400">dark</code> class to <code className="text-gray-400">&lt;html&gt;</code>.</p>
+                    <p className="text-muted-foreground mt-2">The toggle reads/writes <code className="text-gray-400">localStorage</code> key <code className="text-gray-400">eri-theme</code> and applies the <code className="text-gray-400">dark</code> class to <code className="text-gray-400">&lt;html&gt;</code>.</p>
                   </div>
                 </div>
                 <div className="mt-4 grid md:grid-cols-3 gap-3 text-xs">
@@ -4561,7 +4561,7 @@ const tabs: TabConfig[] = [
                     { q: "OS preference?", a: "Ignored — dark is the ERI statement" },
                   ].map((r) => (
                     <div key={r.q} className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-3">
-                      <p className="text-gray-500 mb-1">{r.q}</p>
+                      <p className="text-muted-foreground mb-1">{r.q}</p>
                       <p className="font-semibold text-[#93E07D]">{r.a}</p>
                     </div>
                   ))}
@@ -4572,7 +4572,7 @@ const tabs: TabConfig[] = [
 
           {/* Hero image gallery */}
           <h3 className="font-archivo font-bold text-lg text-foreground mb-2">Dark Hero Background Images</h3>
-          <p className="text-gray-600 text-sm mb-6 max-w-2xl">
+          <p className="text-muted-foreground text-sm mb-6 max-w-2xl">
             Pre-approved hero backgrounds for dark-mode landing pages. Always overlay with white or Accent Lime <code className="bg-gray-100 px-1 rounded text-xs">#93E07D</code> text. The left quarter of each image is kept dark for text placement.
           </p>
 
@@ -4649,12 +4649,12 @@ const tabs: TabConfig[] = [
                     <Download className="w-3 h-3" /> Download
                   </a>
                 </div>
-                <div className="p-4 bg-white">
+                <div className="p-4 bg-card">
                   <div className="flex items-start justify-between gap-4 mb-2">
                     <h4 className="font-semibold text-[#232323] text-sm">{img.label}</h4>
-                    <code className="text-xs font-mono bg-gray-100 px-2 py-0.5 rounded text-gray-600 flex-shrink-0">{img.token}</code>
+                    <code className="text-xs font-mono bg-muted px-2 py-0.5 rounded text-muted-foreground flex-shrink-0">{img.token}</code>
                   </div>
-                  <p className="text-xs text-gray-500">{img.use}</p>
+                  <p className="text-xs text-muted-foreground">{img.use}</p>
                 </div>
               </div>
             ))}
@@ -4668,7 +4668,7 @@ const tabs: TabConfig[] = [
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
             Resources
           </h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             Additional materials and tools to support brand-consistent design and development.
           </p>
 
@@ -4681,7 +4681,7 @@ const tabs: TabConfig[] = [
               <Card key={r.title} className="shadow-sm hover:shadow-md transition-shadow flex flex-col">
                 <CardContent className="p-6 flex flex-col flex-1">
                   <h3 className="font-bold text-[#232323] mb-2">{r.title}</h3>
-                  <p className="text-sm text-gray-600 mb-4 flex-1">{r.desc}</p>
+                  <p className="text-sm text-muted-foreground mb-4 flex-1">{r.desc}</p>
                   <a
                     href={r.href}
                     target="_blank"
@@ -4706,7 +4706,7 @@ const tabs: TabConfig[] = [
             </h2>
             <Badge className="bg-[#232323] text-white text-[10px] tracking-widest uppercase hover:bg-[#232323]">For AI Tasks</Badge>
           </div>
-          <p className="text-gray-600 mb-8 max-w-3xl">
+          <p className="text-muted-foreground mb-8 max-w-3xl">
             This section is the canonical reference for Manus AI tasks building ERI products.
             When instructed to follow the ERI brand, read this section first. All values are
             authoritative — do not infer, approximate, or substitute.
@@ -4720,10 +4720,10 @@ const tabs: TabConfig[] = [
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
-                    <span className="text-[10px] font-mono bg-gray-100 text-gray-500 px-2 py-0.5 rounded border border-gray-200">v2.0.0</span>
-                    <span className="text-[10px] text-gray-400">Updated 23 Apr 2026</span>
+                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.0.0</span>
+                    <span className="text-[10px] text-muted-foreground">Updated 23 Apr 2026</span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-3 max-w-2xl">
+                  <p className="text-sm text-muted-foreground mb-3 max-w-2xl">
                     A portable Manus skill that embeds the ERI brand reference directly into any AI project.
                     Once installed, the agent automatically consults the correct colour tokens, typography rules,
                     component summaries, bds-meta.json spec, and the full Project Alignment Checklist before acting — without needing a manual prompt.
@@ -4733,7 +4733,7 @@ const tabs: TabConfig[] = [
                       <span key={tag} className="text-[11px] bg-[#f0faf3] text-[#3ba559] border border-[#c6e8d0] px-2 py-0.5 rounded font-medium">{tag}</span>
                     ))}
                   </div>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-muted-foreground">
                     <strong className="text-gray-500">For AI agents:</strong> Download and install via Manus Skills UI, or add the CDN URL to your project instructions.
                     The skill auto-triggers for any task tagged as an ERI product build.
                   </p>
@@ -4755,7 +4755,7 @@ const tabs: TabConfig[] = [
                     href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.0.0_d996bc45.skill"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border border-gray-300 text-gray-600 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     CDN URL
@@ -4773,7 +4773,7 @@ const tabs: TabConfig[] = [
                 <span className="text-[#3ba559] text-xl">⚑</span>
                 <h3 className="font-bold text-[#232323] text-base">Before You Act — Pre-Action Checklist</h3>
               </div>
-              <p className="text-sm text-gray-700 mb-4">
+              <p className="text-sm text-foreground mb-4">
                 Before generating any asset, writing any colour value, or building any UI component for an ERI product,
                 you <strong>must</strong> consult the relevant section of this Brand Design System. Do not rely on memory,
                 approximation, or inference — always look up the authoritative value.
@@ -4818,12 +4818,12 @@ const tabs: TabConfig[] = [
                   },
                 ].map(({ trigger, action, anchor, rule }) => (
                   <div key={trigger} className="bg-card rounded-lg border border-[#c6e8d0] p-3">
-                    <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">When you are…</p>
+                    <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide mb-1">When you are…</p>
                     <p className="text-sm font-medium text-[#232323] mb-1">{trigger}</p>
                     <p className="text-xs text-[#3ba559] font-semibold mb-1">
                       → <a href={`#${anchor}`} className="underline underline-offset-2 hover:text-[#2c6d3e]">{action}</a>
                     </p>
-                    <p className="text-xs text-gray-500 leading-relaxed">{rule}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{rule}</p>
                   </div>
                 ))}
               </div>
@@ -4834,7 +4834,7 @@ const tabs: TabConfig[] = [
           <Card className="shadow-sm mb-6 border-l-4 border-l-[#3ba559]">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-3">How to reference this page in a Manus task prompt</h3>
-              <p className="text-sm text-gray-700 mb-3">
+              <p className="text-sm text-foreground mb-3">
                 Add the following instruction to any task prompt that requires ERI brand compliance:
               </p>
               <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed">{`Before building, read the ERI Brand Design System at:
@@ -4849,16 +4849,16 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Colour Tokens</h3>
-              <p className="text-xs text-gray-500 mb-4">Use these exact hex values. Never approximate with Tailwind colour names.</p>
+              <p className="text-xs text-muted-foreground mb-4">Use these exact hex values. Never approximate with Tailwind colour names.</p>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Brand Colours</p>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Brand Colours</p>
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-1 font-semibold text-gray-600">Token</th>
-                        <th className="text-left py-1 font-semibold text-gray-600">Hex</th>
-                        <th className="text-left py-1 font-semibold text-gray-600">Usage</th>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-1 font-semibold text-foreground">Token</th>
+                        <th className="text-left py-1 font-semibold text-foreground">Hex</th>
+                        <th className="text-left py-1 font-semibold text-foreground">Usage</th>
                       </tr>
                     </thead>
                     <tbody className="font-mono">
@@ -4880,20 +4880,20 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                               {hex}
                             </span>
                           </td>
-                          <td className="py-1.5 text-gray-500 font-sans">{usage}</td>
+                          <td className="py-1.5 text-muted-foreground font-sans">{usage}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Pillar Colours</p>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Pillar Colours</p>
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-1 font-semibold text-gray-600">Pillar</th>
-                        <th className="text-left py-1 font-semibold text-gray-600">Hex (500)</th>
-                        <th className="text-left py-1 font-semibold text-gray-600">Name</th>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-1 font-semibold text-foreground">Pillar</th>
+                        <th className="text-left py-1 font-semibold text-foreground">Hex (500)</th>
+                        <th className="text-left py-1 font-semibold text-foreground">Name</th>
                       </tr>
                     </thead>
                     <tbody className="font-mono">
@@ -4931,7 +4931,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Typography Rules</h3>
-              <p className="text-xs text-gray-500 mb-4">Mandatory. Do not substitute Inter, Roboto, or any other font.</p>
+              <p className="text-xs text-muted-foreground mb-4">Mandatory. Do not substitute Inter, Roboto, or any other font.</p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Two-font system:</strong> Archivo (headings) + Open Sans (body text) — both loaded via Google Fonts CDN. Map Archivo to <code className="bg-gray-100 px-1 rounded text-xs">font-sans</code> and <code className="bg-gray-100 px-1 rounded text-xs">font-archivo</code>.</span></div>
@@ -4953,28 +4953,28 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Header Anatomy — Web App Pattern</h3>
-              <p className="text-xs text-gray-500 mb-4">All ERI web applications use this exact header structure. Implement it using <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build the header directly.</p>
+              <p className="text-xs text-muted-foreground mb-4">All ERI web applications use this exact header structure. Implement it using <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build the header directly.</p>
               <div className="bg-card border border-border rounded-md p-3 mb-4 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
                   <span className="font-bold text-[#232323] text-sm">EXPONENTIAL<br/>ROADMAP <span className="font-normal text-[10px]">INITIATIVE</span></span>
                   <span className="w-px h-8 bg-gray-300" />
                   <div>
                     <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">EXPONENTIAL ROADMAP INITIATIVE</p>
-                    <p className="text-sm font-semibold text-gray-700">[App Title]</p>
+                    <p className="text-sm font-semibold text-foreground">[App Title]</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="border border-gray-400 text-gray-600 rounded-full px-2 py-0.5 text-[10px]">BETA</span>
-                  <span className="text-gray-500 text-[11px]">V.YYYY.MM.DD</span>
-                  <span className="text-gray-500 text-lg">≡</span>
+                  <span className="text-muted-foreground text-[11px]">V.YYYY.MM.DD</span>
+                  <span className="text-muted-foreground text-lg">≡</span>
                 </div>
               </div>
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-1 font-semibold text-gray-600">Element</th>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-1 font-semibold text-foreground">Element</th>
                     <th className="text-left py-1 font-semibold text-gray-600">Tailwind Classes</th>
-                    <th className="text-left py-1 font-semibold text-gray-600">Notes</th>
+                    <th className="text-left py-1 font-semibold text-foreground">Notes</th>
                   </tr>
                 </thead>
                 <tbody className="font-mono text-[11px]">
@@ -4987,9 +4987,9 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     ["Hamburger menu",         "size-9 rounded-md",                       "Lucide Menu icon. Opens full-screen overlay."],
                   ].map(([el, classes, notes]) => (
                     <tr key={el} className="border-b border-border/50">
-                      <td className="py-1.5 pr-3 font-sans text-gray-700">{el}</td>
+                      <td className="py-1.5 pr-3 font-sans text-foreground">{el}</td>
                       <td className="py-1.5 pr-3 text-[#3ba559]">{classes}</td>
-                      <td className="py-1.5 font-sans text-gray-500">{notes}</td>
+                      <td className="py-1.5 font-sans text-muted-foreground">{notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -5001,7 +5001,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Language Rules</h3>
-              <p className="text-xs text-gray-500 mb-4">All copy generated for ERI products must follow these rules without exception.</p>
+              <p className="text-xs text-muted-foreground mb-4">All copy generated for ERI products must follow these rules without exception.</p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>British English</strong> spelling throughout — -ise not -ize, -our not -or, -re not -er.</span></div>
@@ -5024,7 +5024,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Component & Layout Rules</h3>
-              <p className="text-xs text-gray-500 mb-4">Follow these rules when building any ERI UI component or page.</p>
+              <p className="text-xs text-muted-foreground mb-4">Follow these rules when building any ERI UI component or page.</p>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> as the wrapper for all public-facing pages in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build a custom header or footer, and never import <code className="bg-gray-100 px-1 rounded text-xs">EriAppHeader</code> or <code className="bg-gray-100 px-1 rounded text-xs">EriAppFooter</code> directly in page files.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
@@ -5072,25 +5072,25 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             </CardContent>
           </Card>
           {/* ── REQUIRED PROJECT FILE: bds-meta.json ── */}
-          <Card className="shadow-sm mb-6 border-2 border-amber-400 bg-amber-50">
+          <Card className="shadow-sm mb-6 border-2 border-amber-400 bg-amber-950/20">
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-amber-600 text-lg">⚠️</span>
                 <h3 className="font-bold text-[#232323] text-base">Required Project File: <code className="font-mono text-sm bg-amber-100 px-1 rounded">bds-meta.json</code></h3>
               </div>
-              <p className="text-sm text-gray-700 mb-3">
+              <p className="text-sm text-foreground mb-3">
                 Every ERI application <strong>must</strong> publish a <code className="bg-gray-100 px-1 rounded text-xs font-mono">client/public/bds-meta.json</code> file at its root.
                 This file is <strong>not</strong> part of the <code className="bg-gray-100 px-1 rounded text-xs font-mono">@eri/components</code> package — you create it yourself in the consuming project.
                 The BDS Project Alignment Tracker fetches it from <code className="bg-gray-100 px-1 rounded text-xs font-mono">https://&#123;domain&#125;/bds-meta.json</code> to compute live compliance status.
                 Failure to publish this file causes the project to appear as &ldquo;Unreachable&rdquo; in the tracker.
               </p>
-              <p className="text-sm text-gray-700 mb-3">
+              <p className="text-sm text-foreground mb-3">
                 <strong>Where to find the canonical template and schema:</strong> Go to the{" "}
                 <a href="/tracker" className="text-[#3ba559] underline underline-offset-2 font-medium">Project Alignment Tracker</a>{" "}
                 page on this site. The tracker page contains the full schema, a copy-paste template, and field-by-field documentation.
               </p>
-              <div className="bg-white border border-amber-200 rounded p-3 text-xs font-mono text-gray-600">
-                <div className="text-gray-400 mb-1">{"// Minimum required structure — see /tracker for full schema"}</div>
+              <div className="bg-card border border-amber-400/50 rounded p-3 text-xs font-mono text-muted-foreground">
+                <div className="text-muted-foreground mb-1">{"// Minimum required structure — see /tracker for full schema"}</div>
                 <div>{'{'}</div>
                 <div className="pl-4">{`"appName": "Your App Name",`}</div>
                 <div className="pl-4">{`"version": "V.YYYY.MM.DD",`}</div>
@@ -5106,19 +5106,19 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Asset URL Reference</h3>
-              <p className="text-xs text-gray-500 mb-4">
+              <p className="text-xs text-muted-foreground mb-4">
                 All brand assets are hosted on the same CloudFront CDN. Use these direct URLs in AI task prompts
                 or code. The base CDN path is{" "}
                 <code className="bg-gray-100 px-1 rounded text-xs font-mono">https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/</code>.
               </p>
 
               {/* Logos */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Logos</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 mt-4">Logos</p>
               <table className="w-full text-xs mb-4">
-                <thead><tr className="border-b border-gray-200">
-                  <th className="text-left py-1 font-semibold text-gray-600">Token</th>
+                <thead><tr className="border-b border-border">
+                  <th className="text-left py-1 font-semibold text-foreground">Token</th>
                   <th className="text-left py-1 font-semibold text-gray-600">File</th>
-                  <th className="text-left py-1 font-semibold text-gray-600">Usage</th>
+                  <th className="text-left py-1 font-semibold text-foreground">Usage</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {([
@@ -5133,23 +5133,23 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     <tr key={token} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
                       <td className="py-1.5 pr-3 text-gray-600">{file}</td>
-                      <td className="py-1.5 font-sans text-gray-500">{usage}</td>
+                      <td className="py-1.5 font-sans text-muted-foreground">{usage}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
               {/* Skills */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Manus Skills</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 mt-4">Manus Skills</p>
               <table className="w-full text-xs mb-4">
-                <thead><tr className="border-b border-gray-200">
+                <thead><tr className="border-b border-border">
                   <th className="text-left py-1 font-semibold text-gray-600">Skill</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Version</th>
                   <th className="text-left py-1 font-semibold text-gray-600">CDN URL</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   <tr className="border-b border-border/50">
-                    <td className="py-1.5 pr-3 font-sans font-medium text-gray-700">eri-bds-reference</td>
+                    <td className="py-1.5 pr-3 font-sans font-medium text-foreground">eri-bds-reference</td>
                     <td className="py-1.5 pr-3 text-muted-foreground">v2.0.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
@@ -5165,33 +5165,33 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               </table>
 
               {/* Pillar icons */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Pillar Icons (WebP)</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 mt-4">Pillar Icons (WebP)</p>
               <table className="w-full text-xs mb-4">
-                <thead><tr className="border-b border-gray-200">
-                  <th className="text-left py-1 font-semibold text-gray-600">Token</th>
-                  <th className="text-left py-1 font-semibold text-gray-600">Pillar</th>
+                <thead><tr className="border-b border-border">
+                  <th className="text-left py-1 font-semibold text-foreground">Token</th>
+                  <th className="text-left py-1 font-semibold text-foreground">Pillar</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {([1,2,3,4,5] as const).map((n) => (
                     <tr key={n} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">pillarBottomIcons.pillar{n}</td>
-                      <td className="py-1.5 font-sans text-gray-500">P{n} bottom icon (navigation overlay)</td>
+                      <td className="py-1.5 font-sans text-muted-foreground">P{n} bottom icon (navigation overlay)</td>
                     </tr>
                   ))}
                   {([1,2,3,4,5] as const).map((n) => (
                     <tr key={`mark${n}`} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">pillarMarks.pillar{n}</td>
-                      <td className="py-1.5 font-sans text-gray-500">P{n} pillar mark (compact identifier)</td>
+                      <td className="py-1.5 font-sans text-muted-foreground">P{n} pillar mark (compact identifier)</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
               {/* Framework diagrams */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Framework Diagrams (PNG) — v5</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 mt-4">Framework Diagrams (PNG) — v5</p>
               <table className="w-full text-xs mb-4">
-                <thead><tr className="border-b border-gray-200">
-                  <th className="text-left py-1 font-semibold text-gray-600">Token</th>
+                <thead><tr className="border-b border-border">
+                  <th className="text-left py-1 font-semibold text-foreground">Token</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Description</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
@@ -5211,17 +5211,17 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   ] as [string, string][]).map(([token, desc]) => (
                     <tr key={token} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{token}</td>
-                      <td className="py-1.5 font-sans text-gray-500">{desc}</td>
+                      <td className="py-1.5 font-sans text-muted-foreground">{desc}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
               {/* Pillar elements */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Pillar Elements (WebP) — v5</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 mt-4">Pillar Elements (WebP) — v5</p>
               <p className="text-xs text-gray-400 mb-2">Pattern: <code className="bg-gray-100 px-1 rounded">pillarsLong[1].solid</code> → filename <code className="bg-gray-100 px-1 rounded">pillar-1-long-solid.webp</code>. Same for pillarsRegular, pillarsExtended. For pillarsShort: .symbol → <code className="bg-gray-100 px-1 rounded">pillar-N-symbol-solid.webp</code> / .text → <code className="bg-gray-100 px-1 rounded">pillar-N-text-solid.webp</code></p>
               <table className="w-full text-xs mb-4">
-                <thead><tr className="border-b border-gray-200">
+                <thead><tr className="border-b border-border">
                   <th className="text-left py-1 font-semibold text-gray-600">Namespace</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Pillars</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Variants</th>
@@ -5236,26 +5236,26 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     <tr key={ns} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{ns}</td>
                       <td className="py-1.5 pr-3 font-sans text-gray-600">{pillars}</td>
-                      <td className="py-1.5 font-sans text-gray-500">{variants}</td>
+                      <td className="py-1.5 font-sans text-muted-foreground">{variants}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
               {/* Data source logos */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Data Source &amp; Partner Logos — Direct CDN URLs</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 mt-4">Data Source &amp; Partner Logos — Direct CDN URLs</p>
               <p className="text-xs text-gray-400 mb-2">Use the CDN URL directly in <code className="bg-gray-100 px-1 rounded">&lt;img src&gt;</code>. Token pattern: <code className="bg-gray-100 px-1 rounded">dataSourceLogos.cdp.url</code></p>
               <table className="w-full text-xs mb-4">
-                <thead><tr className="border-b border-gray-200">
-                  <th className="text-left py-1 font-semibold text-gray-600">Name</th>
+                <thead><tr className="border-b border-border">
+                  <th className="text-left py-1 font-semibold text-foreground">Name</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Category</th>
                   <th className="text-left py-1 font-semibold text-gray-600">CDN URL</th>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {Object.entries(dataSourceLogos).map(([key, { name, category, url }]) => (
                     <tr key={key} className="border-b border-border/50">
-                      <td className="py-1.5 pr-3 font-sans font-medium text-gray-700 whitespace-nowrap">{name}</td>
-                      <td className="py-1.5 pr-3 font-sans text-gray-500 whitespace-nowrap">{category}</td>
+                      <td className="py-1.5 pr-3 font-sans font-medium text-foreground whitespace-nowrap">{name}</td>
+                      <td className="py-1.5 pr-3 font-sans text-muted-foreground whitespace-nowrap">{category}</td>
                       <td className="py-1.5 text-[#3ba559] break-all">{url}</td>
                     </tr>
                   ))}
@@ -5263,10 +5263,10 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               </table>
 
               {/* Member logos */}
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 mt-4">Member Company Logotypes — Direct CDN URLs</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 mt-4">Member Company Logotypes — Direct CDN URLs</p>
               <p className="text-xs text-gray-400 mb-2">Use the CDN URL directly in <code className="bg-gray-100 px-1 rounded">&lt;img src&gt;</code>. Token pattern: <code className="bg-gray-100 px-1 rounded">memberLogos.scania.url</code></p>
               <table className="w-full text-xs mb-2">
-                <thead><tr className="border-b border-gray-200">
+                <thead><tr className="border-b border-border">
                   <th className="text-left py-1 font-semibold text-gray-600">Company</th>
                   <th className="text-left py-1 font-semibold text-gray-600">Sector</th>
                   <th className="text-left py-1 font-semibold text-gray-600">CDN URL</th>
@@ -5274,8 +5274,8 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <tbody className="font-mono text-[11px]">
                   {Object.entries(memberLogos).map(([key, { name, sector, url }]) => (
                     <tr key={key} className="border-b border-border/50">
-                      <td className="py-1.5 pr-3 font-sans font-medium text-gray-700 whitespace-nowrap">{name}</td>
-                      <td className="py-1.5 pr-3 font-sans text-gray-500 whitespace-nowrap">{sector}</td>
+                      <td className="py-1.5 pr-3 font-sans font-medium text-foreground whitespace-nowrap">{name}</td>
+                      <td className="py-1.5 pr-3 font-sans text-muted-foreground whitespace-nowrap">{sector}</td>
                       <td className="py-1.5 text-[#3ba559] break-all">{url}</td>
                     </tr>
                   ))}
@@ -5288,10 +5288,10 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           <Card className="shadow-sm">
             <CardContent className="p-6">
               <h3 className="font-bold text-[#232323] mb-1">Section Index</h3>
-              <p className="text-xs text-gray-500 mb-4">Canonical section IDs and their anchor URLs for programmatic reference.</p>
+              <p className="text-xs text-muted-foreground mb-4">Canonical section IDs and their anchor URLs for programmatic reference.</p>
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-border">
                     <th className="text-left py-1 font-semibold text-gray-600">#</th>
                     <th className="text-left py-1 font-semibold text-gray-600">Section</th>
                     <th className="text-left py-1 font-semibold text-gray-600 font-mono">Anchor ID</th>
@@ -5326,7 +5326,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
-                      <td className="py-1.5 pr-3 font-sans text-gray-700">{label}</td>
+                      <td className="py-1.5 pr-3 font-sans text-foreground">{label}</td>
                       <td className="py-1.5 text-[#3ba559]">#{id}</td>
                     </tr>
                   ))}
