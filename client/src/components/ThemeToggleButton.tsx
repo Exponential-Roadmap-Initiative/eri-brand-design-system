@@ -11,9 +11,18 @@
  * most developer-facing design systems.
  *
  * The tooltip surfaces the energy-efficiency rationale — the invisible cost
- * that users are never normally shown. Copy is intentionally brief and
- * non-preachy. The specific energy figure will be updated once the
- * updated research report is available.
+ * that users are never normally shown. Copy is intentionally brief,
+ * non-preachy, and honest about what the evidence does and does not show.
+ *
+ * Key messages from the v2 research report (April 2026):
+ *   - Direction is HIGH confidence: dark mode saves energy on OLED screens
+ *   - Magnitude is LOW confidence: specific % figures are from 2019–2021 hardware
+ *   - LCD/IPS screens save zero energy from dark mode (always-on backlight)
+ *   - ~76–82% of smartphone users already prefer dark mode (MEDIUM-HIGH confidence)
+ *   - The gap to universal adoption is largely default inertia (HIGH confidence)
+ *
+ * We do NOT use specific TWh or % figures in the tooltip — those are VERY LOW
+ * confidence and would undermine ERI's credibility if challenged.
  *
  * aria-label is dynamic and describes the action, not the current state,
  * which is the WCAG-compliant approach.
@@ -43,8 +52,8 @@ export function ThemeToggleButton({ className = "", size = "md" }: ThemeToggleBu
   const ariaLabel = isDark ? "Switch to light mode" : "Switch to dark mode";
 
   const tooltipText = isDark
-    ? "Dark mode is on — saves up to 47% display energy on OLED screens. Switch to light if you need it."
-    : "Light mode is on. Switch back to dark mode to save display energy on OLED screens.";
+    ? "Dark mode is on. On OLED screens, dark pixels draw near-zero power — the direction is clear, even if the exact saving depends on your device. LCD screens save nothing. Switch to light if you need it."
+    : "Light mode is on. Switch back to dark mode to reduce display energy on OLED screens — now more than half of all smartphones."
 
   return (
     <Tooltip>

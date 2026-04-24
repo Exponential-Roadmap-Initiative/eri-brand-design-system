@@ -296,8 +296,13 @@ export default function PublicLayout({ children, transparentHeader = false, hide
               </div>
             </div>
 
-            {/* ── ENERGY STATEMENT ── */}
-            {/* Placeholder copy — will be updated with specific figures from updated research report */}
+            {/* —— ENERGY STATEMENT —— */}
+            {/* Copy based on v2 research report (April 2026). Key evidence:
+                 - Direction HIGH confidence: OLED dark pixels draw near-zero power
+                 - ~76–82% of smartphone users already prefer dark mode (MEDIUM-HIGH)
+                 - Gap to universal adoption is largely default inertia (HIGH)
+                 - Specific TWh figures are VERY LOW confidence — not used
+                 - LCD/IPS screens save zero energy (always-on backlight) — noted honestly */}
             <div className="mt-10 pt-6 border-t border-gray-700">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3 max-w-2xl">
@@ -318,10 +323,10 @@ export default function PublicLayout({ children, transparentHeader = false, hide
                   </svg>
                   <p className="text-xs text-gray-400 leading-relaxed">
                     <span className="text-gray-300 font-medium">Dark by default.</span>{" "}
-                    OLED screens consume near-zero power for dark pixels — switching to dark mode
-                    saves meaningful display energy at scale.{" "}
-                    {/* Specific global figures will be added once updated research is confirmed */}
-                    Light mode is available for those who need it.
+                    On OLED screens — now more than half of all smartphones — dark pixels draw near-zero power.
+                    Around 76–82% of smartphone users already prefer dark mode; the remaining gap is largely default inertia.
+                    LCD and IPS screens save no energy from dark mode.
+                    {" "}Light mode is here if you need it.
                   </p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
