@@ -432,7 +432,7 @@ export default function AlignmentTracker() {
                   >
                     {/* Project */}
                     <td className="px-4 py-4">
-                      <div className="font-semibold text-sm mb-0.5" style={{ color: T.dark }}>{project.displayName}</div>
+                      <div className="font-semibold text-sm mb-0.5 text-foreground">{project.displayName}</div>
                       <a
                         href={project.url}
                         target="_blank"
@@ -521,7 +521,7 @@ export default function AlignmentTracker() {
               <div key={project.id} className="rounded-xl p-4 bg-card" style={{ border: `1px solid ${TV.border}` }}>
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <div className="font-semibold text-sm mb-0.5" style={{ color: T.dark }}>{project.displayName}</div>
+                    <div className="font-semibold text-sm mb-0.5 text-foreground">{project.displayName}</div>
                     <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-[11px] hover:underline" style={{ color: TV.mutedFg }}>
                       {project.url.replace("https://", "")} ↗
                     </a>
@@ -558,7 +558,7 @@ export default function AlignmentTracker() {
 
         {/* ── How it works ─────────────────────────────────────────────────── */}
         <div className="mt-8 rounded-xl p-6 bg-card" style={{ border: `1px solid ${TV.border}` }}>
-          <h2 className="font-archivo font-bold text-lg mb-1" style={{ color: T.dark }}>How this tracker works</h2>
+          <h2 className="font-archivo font-bold text-lg mb-1 text-foreground">How this tracker works</h2>
           <div className="mb-4 px-3 py-2 rounded text-xs font-medium" style={{ backgroundColor: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
             ⚠️ <strong>This file is NOT part of the <code className="font-mono">@eri/components</code> package.</strong> You create it yourself in each consuming project. The package ships only component source and <code className="font-mono">dist/eri-components.css</code> — nothing else. Copy the template below and commit it to <code className="font-mono">client/public/bds-meta.json</code> in your project.
           </div>
@@ -575,7 +575,7 @@ export default function AlignmentTracker() {
           {/* Canonical template */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-semibold text-sm" style={{ color: T.dark }}>
+              <h3 className="font-semibold text-sm text-foreground">
                 Canonical template — copy into <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>client/public/bds-meta.json</code>
               </h3>
               <button
@@ -637,7 +637,7 @@ export default function AlignmentTracker() {
 
             {/* Field reference */}
             <div>
-              <h3 className="font-semibold mb-3" style={{ color: T.dark }}>Field reference</h3>
+              <h3 className="font-semibold mb-3 text-foreground">Field reference</h3>
               <div className="space-y-2">
                 {([
                   ["schemaVersion", '"1.0"',                        'Always "1.0" — do not change.'],
@@ -654,7 +654,7 @@ export default function AlignmentTracker() {
                 ] as [string, string, string][]).map(([field, example, desc]) => (
                   <div key={field} className="rounded-lg p-3" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                     <div className="flex items-baseline gap-2 mb-0.5 flex-wrap">
-                      <code className="font-mono text-[11px] font-bold" style={{ color: T.dark }}>{field}</code>
+                      <code className="font-mono text-[11px] font-bold text-foreground">{field}</code>
                       <code className="font-mono text-[10px]" style={{ color: TV.mutedFg }}>{example}</code>
                     </div>
                     <p className="text-[11px]" style={{ color: TV.mutedFg }}>{desc}</p>
@@ -665,7 +665,7 @@ export default function AlignmentTracker() {
 
             {/* Status rules + component guide + checklist */}
             <div>
-              <h3 className="font-semibold mb-3" style={{ color: T.dark }}>Status rules</h3>
+              <h3 className="font-semibold mb-3 text-foreground">Status rules</h3>
               <div className="space-y-3 mb-6">
                 {(["green","amber","red","error"] as RowStatus[]).map((s) => {
                   const { dot, label } = statusCfg(s);
@@ -679,7 +679,7 @@ export default function AlignmentTracker() {
                     <div key={s} className="flex items-start gap-3">
                       <span className="inline-block rounded-full mt-1 shrink-0" style={{ width: 8, height: 8, backgroundColor: dot, boxShadow: `0 0 0 2px ${dot}33` }} />
                       <div>
-                        <span className="font-semibold text-xs" style={{ color: T.dark }}>{label} — </span>
+                        <span className="font-semibold text-xs text-foreground">{label} — </span>
                         <span className="text-xs" style={{ color: TV.mutedFg }}>{desc[s]}</span>
                       </div>
                     </div>
@@ -687,24 +687,24 @@ export default function AlignmentTracker() {
                 })}
               </div>
 
-              <h3 className="font-semibold mb-3" style={{ color: T.dark }}>Component values guide</h3>
+              <h3 className="font-semibold mb-3 text-foreground">Component values guide</h3>
               <div className="space-y-2 text-[11px] mb-6" style={{ color: TV.mutedFg }}>
                 <div className="p-2 rounded" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
-                  <code className="font-mono" style={{ color: T.dark }}>used: true, compliant: true</code>
+                  <code className="font-mono text-foreground">used: true, compliant: true</code>
                   <p className="mt-0.5">Component is used and follows the BDS spec.</p>
                 </div>
                 <div className="p-2 rounded" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
-                  <code className="font-mono" style={{ color: T.dark }}>used: true, compliant: false</code>
+                  <code className="font-mono text-foreground">used: true, compliant: false</code>
                   <p className="mt-0.5">Component is used but deviates from the BDS spec. Add an entry to <code className="font-mono">knownViolations</code> with <code className="font-mono">component</code>, <code className="font-mono">reason</code>, <code className="font-mono">approvedBy</code>, and <code className="font-mono">bdsRef</code>.</p>
                 </div>
                 <div className="p-2 rounded" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
-                  <code className="font-mono" style={{ color: T.dark }}>used: false, compliant: false</code>
+                  <code className="font-mono text-foreground">used: false, compliant: false</code>
                   <p className="mt-0.5">Component is not applicable to this project (e.g. <code className="font-mono">EriContactUsButton</code> on the Contact Us page itself). No <code className="font-mono">knownViolations</code> entry is needed — <code className="font-mono">used: false</code> is sufficient. Do not add a violation note for unused components.</p>
                 </div>
               </div>
 
               <div className="p-4 rounded-lg" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
-                <p className="text-[11px] font-semibold mb-2" style={{ color: T.dark }}>Quick checklist before setting overallStatus: "green"</p>
+                <p className="text-[11px] font-semibold mb-2 text-foreground">Quick checklist before setting overallStatus: "green"</p>
                 <ul className="text-[11px] space-y-1" style={{ color: TV.mutedFg }}>
                   <li>✓ <code className="font-mono">@eri/components</code> pinned to {LATEST_VERSION}</li>
                   <li>✓ CSS imported from <code className="font-mono">dist/eri-components.css</code></li>
@@ -721,7 +721,7 @@ export default function AlignmentTracker() {
         <div className="mt-8 rounded-xl p-6 bg-card" style={{ border: `1px solid ${TV.border}` }}>
           <div className="flex items-center gap-2 mb-4">
             <span className="inline-flex items-center justify-center rounded-full text-xs font-bold px-2 py-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>SYS OPS</span>
-            <h2 className="font-archivo font-bold text-lg" style={{ color: T.dark }}>System Operations — AI context continuity</h2>
+            <h2 className="font-archivo font-bold text-lg text-foreground">System Operations — AI context continuity</h2>
           </div>
 
           {/* What */}
@@ -754,7 +754,7 @@ export default function AlignmentTracker() {
                 <div key={step} className="rounded-lg p-4" style={{ backgroundColor: TV.muted, border: `1px solid ${TV.border}` }}>
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: T.dark, color }}>{step}</span>
-                    <span className="text-xs font-semibold" style={{ color: T.dark }}>{title}</span>
+                    <span className="text-xs font-semibold text-foreground">{title}</span>
                   </div>
                   <p className="text-[11px] leading-relaxed" style={{ color: TV.mutedFg }}>{body}</p>
                 </div>
@@ -915,7 +915,7 @@ Overall status: [green / amber / red]
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-3">
               <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>S</span>
-              <h3 className="font-archivo text-base font-extrabold" style={{ color: T.dark }}>System Operations</h3>
+              <h3 className="font-archivo text-base font-extrabold text-foreground">System Operations</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
@@ -947,7 +947,7 @@ Overall status: [green / amber / red]
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-3">
               <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#dbeafe', color: '#1e40af' }}>B</span>
-              <h3 className="font-archivo text-base font-extrabold" style={{ color: T.dark }}>Brand</h3>
+              <h3 className="font-archivo text-base font-extrabold text-foreground">Brand</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
@@ -981,7 +981,7 @@ Overall status: [green / amber / red]
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#dcfce7', color: '#166534' }}>C</span>
-              <h3 className="font-archivo text-base font-extrabold" style={{ color: T.dark }}>Components</h3>
+              <h3 className="font-archivo text-base font-extrabold text-foreground">Components</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">

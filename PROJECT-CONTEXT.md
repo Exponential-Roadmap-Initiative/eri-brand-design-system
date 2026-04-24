@@ -193,6 +193,7 @@ Full spec: see `bds-meta-spec.md` in this project root.
   - --muted-foreground raised: oklch(0.55 0.01 247) → oklch(0.65 0.01 247) ≈ #9A9EAA (7.05:1 on bg, 6.50:1 on card — AAA/AA)
   - --border raised: oklch(0.22 0 0) → oklch(0.28 0 0) ≈ #3d3d3d (visible separators without washing out hierarchy)
   - text-gray-500 in AlignmentTracker URL cells was already replaced with text-muted-foreground in previous session
+  - **Root cause found 2026-04-24**: AlignmentTracker project name cells used `style={{ color: T.dark }}` (#232323 hardcoded) — invisible on dark bg. All 18 standalone `color: T.dark` text usages replaced with `text-foreground` Tailwind class. The 5 combined `backgroundColor: T.lime, color: T.dark` usages were intentionally left (lime button text — correct on lime bg).
 - [ ] Push v2.12.0 git tag
 - [ ] Update energy statement copy (footer + Surface Modes section) once updated research report arrives
 - [ ] Update eri-bds-reference skill with showThemeToggle prop and dark-by-default pattern
@@ -228,6 +229,8 @@ The following errors have been found and fixed multiple times. If you see them a
 12. **Skill pre-action checklist item 5 did not link to /tracker** — item 5 referenced the bds-meta.json section at the bottom of the skill but not the canonical template URL on the BDS site. An AI following the checklist would not know to visit `/tracker`. Fixed 2026-04-21: item 5 now includes a direct link to `https://bds.exponentialroadmap.org/tracker`.
 
 13. **BDS site's own `client/public/bds-meta.json` was missing** — the BDS site had no `bds-meta.json` file at all, causing it to appear as "Unreachable" in its own tracker. Created 2026-04-21 with `overallStatus: "amber"` (exempt from standard layout requirements).
+
+14. **`T.dark` used as text colour in AlignmentTracker** — the `T` object in AlignmentTracker.tsx contains `T.dark = "#232323"` which is ERI Primary Dark (near-black). This was used as `style={{ color: T.dark }}` on project names, headings, and labels throughout the page — completely invisible on a dark background. Fixed 2026-04-24: all 18 standalone `color: T.dark` text usages replaced with `text-foreground` Tailwind class. The 5 combined `backgroundColor: T.lime, color: T.dark` usages (lime buttons with dark text) are intentional and correct. **Rule**: `T.dark` must only be used as a background colour or as text on a lime/light background. Never as text on a dark surface.
 
 ---
 
