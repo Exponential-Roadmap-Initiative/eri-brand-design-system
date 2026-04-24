@@ -144,3 +144,12 @@
 - [x] Upload updated skill to CDN (https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.1.0_50838fc0.skill)
 - [x] Update BDS site Skills card (version badge v2.1.0, CDN URLs, date 24 Apr 2026)
 - [x] Save checkpoint after skill update
+
+## Project instructions + bds-meta.json updates (2026-04-24)
+
+- [ ] Update Manus project instructions to reference eri-bds-reference v2.1.0 (requires manual UI update — no project.update API endpoint)
+- [ ] Add noHardcodedGreys: true to HAL bds-meta.json (HAL fetch failed — site may be down; JSON prepared at /home/ubuntu/bds-meta-updates/hal-bds-meta.json)
+- [ ] Add noHardcodedGreys: true to PSM bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/psm-bds-meta.json)
+- [ ] Add noHardcodedGreys: true to Taxonomy bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/taxonomy-bds-meta.json)
+- [ ] Add noHardcodedGreys: true to Framework bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/framework-bds-meta.json; also needs systemOps/brand/layout blocks added)
+- [ ] Save checkpoint
