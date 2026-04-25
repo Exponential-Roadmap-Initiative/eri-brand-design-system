@@ -4751,9 +4751,9 @@ const tabs: TabConfig[] = [
                   <p className="text-xs text-muted-foreground">
                     <strong className="text-gray-500">For AI agents:</strong> Add this line to every ERI project's Manus instructions:
                   </p>
-                  <pre className="text-[10px] bg-muted text-foreground border border-border rounded p-2 mt-1 mb-2 whitespace-pre-wrap break-all font-mono">{`Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.`}</pre>
+                  <pre className="text-[10px] bg-muted text-foreground border border-border rounded p-2 mt-1 mb-2 whitespace-pre-wrap break-all font-mono">{`Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.`}</pre>
                   <p className="text-xs text-gray-400 mt-1">
-                    <strong className="text-gray-500">For project leads:</strong> The stable URL <code className="font-mono text-[10px]">https://bds.exponentialroadmap.org/skill/latest</code> always serves the current version. Update only the redirect target in the BDS server when releasing a new version — project instructions never need to change.
+                    <strong className="text-gray-500">For project leads:</strong> The stable URL <code className="font-mono text-[10px]">https://bds.exponentialroadmap.org/api/skill/latest</code> always serves the current version. Update only the redirect target in the BDS server when releasing a new version — project instructions never need to change.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
@@ -4775,7 +4775,7 @@ const tabs: TabConfig[] = [
                     CDN URL
                   </a>
                   <a
-                    href="https://bds.exponentialroadmap.org/skill/latest"
+                    href="https://bds.exponentialroadmap.org/api/skill/latest"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-[#3ba559] text-[#3ba559] text-sm font-medium px-4 py-2 rounded-lg hover:bg-[#f0faf3] transition-colors"
@@ -4783,7 +4783,7 @@ const tabs: TabConfig[] = [
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                     Stable URL
                   </a>
-                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">bds.exponentialroadmap.org/skill/latest</p>
+                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">bds.exponentialroadmap.org/api/skill/latest</p>
                 </div>
               </div>
             </CardContent>
@@ -5074,7 +5074,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               </p>
               <div className="grid md:grid-cols-3 gap-3 mb-4">
                 {[
-                  { step: 'Step 0', title: 'Update and read the eri-bds-reference skill', body: 'Run: curl -sL https://bds.exponentialroadmap.org/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md — then read the file in full. This ensures you have the current version, not the stale sandbox copy.' },
+                  { step: 'Step 0', title: 'Update and read the eri-bds-reference skill', body: 'Run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md — then read the file in full. This ensures you have the current version, not the stale sandbox copy.' },
                   { step: 'Step 1', title: 'Read or create PROJECT-CONTEXT.md', body: 'Every ERI project must have a PROJECT-CONTEXT.md at its root. Read it first if it exists. If not, create it — seed it with canonical values from the eri-bds-reference skill.' },
                   { step: 'Step 2', title: 'Check bds-meta.json exists', body: 'Every ERI project must publish client/public/bds-meta.json. This file is not part of @eri/components — you create it. If missing, create it before closing the task.' },
                 ].map(({ step, title, body }) => (

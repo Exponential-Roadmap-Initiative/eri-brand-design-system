@@ -207,4 +207,12 @@
 - [x] Update BDS site Machine Instructions with stable URL
 - [x] Update PROJECT-CONTEXT.md with new distribution mechanism and instruction text for all ERI projects
 - [x] Bump skill to v2.6.0
+- [x] Save checkpoint
+
+## Add curl skill-update to Machine Instructions (2026-04-25)
+
+- [x] Add curl command as first item in Machine Instructions "Before You Act" checklist on BDS site
+- [x] Fix /skill/latest route — moved to /api/skill/latest to avoid SPA catch-all shadowing
+- [x] Update all references in BrandDesignSystem.tsx, SKILL.md, PROJECT-CONTEXT.md
+- [x] TypeScript check — 0 errors
 - [ ] Save checkpoint

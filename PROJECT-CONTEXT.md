@@ -300,18 +300,18 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 4. Update the Skills card in `BrandDesignSystem.tsx`: version badge, updated date, CDN URLs (Download Skill button, CDN URL button, filename label), and asset URL table row.
 5. Save checkpoint and deploy (Publish button). The `/skill/latest` redirect only works when deployed.
 
-**Stable URL:** `https://bds.exponentialroadmap.org/skill/latest` — always redirects to the current CDN URL. **This URL never changes.** All ERI project instructions reference this URL. Update only `SKILL_LATEST_URL` in `server/_core/index.ts` when releasing a new version.
+**Stable URL:** `https://bds.exponentialroadmap.org/api/skill/latest` — always redirects to the current CDN URL. **This URL never changes.** All ERI project instructions reference this URL. Update only `SKILL_LATEST_URL` in `server/_core/index.ts` when releasing a new version.
 
-**JSON discovery endpoint:** `https://bds.exponentialroadmap.org/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
+**JSON discovery endpoint:** `https://bds.exponentialroadmap.org/api/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
 
 **Current skill version:** v2.6.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.6.0_11724023.skill`
 
 **Instruction text for every ERI project's Manus project instructions:**
 ```
-Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.
+Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.
 ```
 
-**v2.6.0 changes (2026-04-25):** Added stable skill distribution URL. `/skill/latest` route on BDS server redirects to current CDN URL. `/skill/latest.json` exposes `{ url, version }` for programmatic discovery. Step 0 of pre-action checklist now instructs agents to run `curl -sL https://bds.exponentialroadmap.org/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md` before reading. Skills card updated with stable URL button and project instruction text. Root cause: each project sandbox has a stale snapshot of the skill from project creation — agents were reading old versions.
+**v2.6.0 changes (2026-04-25):** Added stable skill distribution URL. `/skill/latest` route on BDS server redirects to current CDN URL. `/skill/latest.json` exposes `{ url, version }` for programmatic discovery. Step 0 of pre-action checklist now instructs agents to run `curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md` before reading. Skills card updated with stable URL button and project instruction text. Root cause: each project sandbox has a stale snapshot of the skill from project creation — agents were reading old versions.
 
 **v2.5.0 changes (2026-04-25):** Added `showThemeToggle={true}` to Setup Checklist (step 6), Canonical App.tsx pattern, and `EriPageLayout` prop table. Step 10 of checklist now directs agents to read the Cross-Site Theme System section. Root cause: agents implementing EriPageLayout from the checklist omitted the theme toggle prop.
 

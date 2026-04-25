@@ -46,14 +46,14 @@ async function startServer() {
   // ── Skill latest redirect ────────────────────────────────────────────────────
   // Stable URL for the current eri-bds-reference skill.
   // Update SKILL_LATEST_URL when releasing a new skill version.
-  // All ERI project instructions reference /skill/latest — this URL never changes.
+  // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
     "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.6.0_11724023.skill";
-  app.get("/skill/latest", (_req, res) => {
+  app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
-  app.get("/skill/latest.json", (_req, res) => {
+  app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
     res.json({ url: SKILL_LATEST_URL, version: "2.6.0" });
   });
