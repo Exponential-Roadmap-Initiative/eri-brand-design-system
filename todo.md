@@ -152,7 +152,7 @@
 - [ ] Add noHardcodedGreys: true to PSM bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/psm-bds-meta.json)
 - [ ] Add noHardcodedGreys: true to Taxonomy bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/taxonomy-bds-meta.json)
 - [ ] Add noHardcodedGreys: true to Framework bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/framework-bds-meta.json; also needs systemOps/brand/layout blocks added)
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Schema versioning + changelog endpoint (2026-04-24)
 
@@ -197,4 +197,4 @@
 - [x] C6: Fix Machine Instructions Component Rules card — "Card background: white" → bg-card
 - [x] TypeScript check — 0 errors
 - [x] Bump skill to v2.4.0, upload to CDN, update Skills card
-- [ ] Save checkpoint
+- [x] Save checkpoint
