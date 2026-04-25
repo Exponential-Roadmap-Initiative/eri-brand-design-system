@@ -198,3 +198,13 @@
 - [x] TypeScript check — 0 errors
 - [x] Bump skill to v2.4.0, upload to CDN, update Skills card
 - [x] Save checkpoint
+
+## Stable skill distribution URL — v2.6.0 (2026-04-25)
+
+- [x] Upload skill to stable latest URL (eri-bds-reference-latest.skill) — overwrites on every release
+- [x] Update skill release process to overwrite latest URL on every release
+- [x] Update BDS site Skills card with stable URL and download-first instruction
+- [x] Update BDS site Machine Instructions with stable URL
+- [x] Update PROJECT-CONTEXT.md with new distribution mechanism and instruction text for all ERI projects
+- [x] Bump skill to v2.6.0
+- [ ] Save checkpoint

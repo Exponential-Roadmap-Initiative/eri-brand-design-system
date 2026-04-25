@@ -294,12 +294,28 @@ If any answer is "no" or "unsure", fix it before closing the task.
 
 Whenever the `eri-bds-reference` skill is updated, the following must also be updated:
 
-1. Upload the updated `SKILL.md` to CDN: `cp /home/ubuntu/skills/eri-bds-reference/SKILL.md /home/ubuntu/webdev-static-assets/eri-bds-reference-vX.Y.Z.skill && manus-upload-file --webdev /home/ubuntu/webdev-static-assets/eri-bds-reference-vX.Y.Z.skill`
-2. Update the Skills card in `BrandDesignSystem.tsx`: version badge, updated date, feature tags, CDN URLs (Download Skill button, CDN URL button, filename label), and asset URL table row.
-3. Update the skill description metadata (`Version: X.Y.Z`) in `SKILL.md` if the version changed.
-4. Save checkpoint.
+1. Bump `Version: X.Y.Z` in `SKILL.md` metadata.
+2. Upload versioned file: `cp /home/ubuntu/skills/eri-bds-reference/SKILL.md /home/ubuntu/webdev-static-assets/eri-bds-reference-vX.Y.Z.skill && manus-upload-file --webdev /home/ubuntu/webdev-static-assets/eri-bds-reference-vX.Y.Z.skill`
+3. Update `SKILL_LATEST_URL` in `server/_core/index.ts` to the new CDN URL. Also update the version string in the `/skill/latest.json` response.
+4. Update the Skills card in `BrandDesignSystem.tsx`: version badge, updated date, CDN URLs (Download Skill button, CDN URL button, filename label), and asset URL table row.
+5. Save checkpoint and deploy (Publish button). The `/skill/latest` redirect only works when deployed.
 
-**Current skill version:** v2.3.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill`
+**Stable URL:** `https://bds.exponentialroadmap.org/skill/latest` — always redirects to the current CDN URL. **This URL never changes.** All ERI project instructions reference this URL. Update only `SKILL_LATEST_URL` in `server/_core/index.ts` when releasing a new version.
+
+**JSON discovery endpoint:** `https://bds.exponentialroadmap.org/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
+
+**Current skill version:** v2.6.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.6.0_11724023.skill`
+
+**Instruction text for every ERI project's Manus project instructions:**
+```
+Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.
+```
+
+**v2.6.0 changes (2026-04-25):** Added stable skill distribution URL. `/skill/latest` route on BDS server redirects to current CDN URL. `/skill/latest.json` exposes `{ url, version }` for programmatic discovery. Step 0 of pre-action checklist now instructs agents to run `curl -sL https://bds.exponentialroadmap.org/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md` before reading. Skills card updated with stable URL button and project instruction text. Root cause: each project sandbox has a stale snapshot of the skill from project creation — agents were reading old versions.
+
+**v2.5.0 changes (2026-04-25):** Added `showThemeToggle={true}` to Setup Checklist (step 6), Canonical App.tsx pattern, and `EriPageLayout` prop table. Step 10 of checklist now directs agents to read the Cross-Site Theme System section. Root cause: agents implementing EriPageLayout from the checklist omitted the theme toggle prop.
+
+**v2.4.0 changes (2026-04-25):** Fixed 6 contradictions found in full audit: (C1) Surface Modes dark card tokens corrected from `#0d2828`/`#1a3a3a` to `#111111`/`#1a1a1a`; (C2) Surface Modes intro paragraph corrected — dark mode is ERI default for all apps; (C3) "When to use which mode" decision rule replaced — removed authenticated=light rule; (C4a–d) All `bg-[#F9FAFB]` prescriptive instructions replaced with `bg-background` in BDS site and skill; (C5) Dark by Default decorative boxes corrected; (C6) Machine Instructions card — "Card background: white" replaced with `bg-card`.
 
 **v2.3.0 changes (2026-04-24):** Added **Cross-Site Theme System** section with: canonical CSS token block (`:root` light + `.dark` dark with exact OKLCH values), `ThemeContext.tsx` verbatim copy, FOLC-prevention script, `localStorage` key `"eri-theme"` cross-site persistence rule. Fixed `bg-white`/`bg-card` contradiction in Component & Layout Rules. Updated pre-action checklist row with token resolution values. Updated integration note 8. Added cross-site persistence callout card to BDS site Surface Modes section. Added "Cross-site theme system" tag to Skills card. Root cause: HAL agent misinterpreted dark mode rules and invented dark green values because canonical CSS token values were not in the skill.
 
