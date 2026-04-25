@@ -183,3 +183,18 @@
 - [x] Update PROJECT-CONTEXT.md with v2.3.0 changelog
 - [x] TypeScript check — 0 errors
 - [x] Save checkpoint
+
+## Contradiction audit fixes — v2.4.0 (2026-04-25)
+
+- [x] C1: Fix Surface Modes dark card tokens from #0d2828/#1a3a3a to #111111/#1a1a1a; change badge from "Marketing" to "Default"
+- [x] C2: Fix Surface Modes intro paragraph — dark mode is ERI default for all apps, not just marketing
+- [x] C3: Replace "When to use which mode" decision rule — remove authenticated=light and dark-hero→light-app rules
+- [x] C4a: Fix BDS EriPageLayout integration note — bg-[#F9FAFB] → bg-background
+- [x] C4b: Fix BDS Machine Instructions Component Rules card — bg-[#F9FAFB] → bg-background
+- [x] C4c: Fix Skill Tier A + Landing Hero interior page rule — #F9FAFB → bg-background
+- [x] C4d: Fix Skill EriPageLayout note — typically bg-[#F9FAFB] → bg-background
+- [x] C5: Fix Dark by Default section decorative boxes — bg-[#0d2828]/bg-[#0d1a0d] → bg-[#111111]/bg-[#1a1a1a]
+- [x] C6: Fix Machine Instructions Component Rules card — "Card background: white" → bg-card
+- [x] TypeScript check — 0 errors
+- [x] Bump skill to v2.4.0, upload to CDN, update Skills card
+- [ ] Save checkpoint

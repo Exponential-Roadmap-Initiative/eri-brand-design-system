@@ -4056,7 +4056,7 @@ function App() {
             <ul className="text-xs text-amber-900 space-y-2 list-disc list-inside">
               <li><strong>Hamburger is always visible — wire <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> to your drawer</strong> — the hamburger button is always rendered and cannot be hidden via props. <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> defaults to a no-op, so the button is never missing, but it does nothing unless you pass <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick={'{() => setMenuOpen(true)}'}</code>. If you do not want a hamburger, do not use <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code>.</li>
               <li><strong>Your app owns the drawer — render it as a child of <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code></strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> fires <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> but never renders a drawer itself. Your app must manage <code className="font-mono bg-amber-100 px-1 rounded">menuOpen</code> state and render its own <code className="font-mono bg-amber-100 px-1 rounded">&lt;NavDrawer&gt;</code> or <code className="font-mono bg-amber-100 px-1 rounded">&lt;Sheet&gt;</code> as a sibling to <code className="font-mono bg-amber-100 px-1 rounded">&lt;Router /&gt;</code> inside the layout children.</li>
-              <li><strong>Outer background is <code className="font-mono bg-amber-100 px-1 rounded">#232323</code></strong> — the layout wrapper sets a dark background on the outermost div. Each page component must set its own background colour (typically <code className="font-mono bg-amber-100 px-1 rounded">bg-[#F9FAFB]</code>) on its outermost div, otherwise the page will appear dark.</li>
+              <li><strong>Outer background is <code className="font-mono bg-amber-100 px-1 rounded">#232323</code></strong> — the layout wrapper sets a dark background on the outermost div. Each page component must set its own background colour using <code className="font-mono bg-amber-100 px-1 rounded">bg-background</code> (semantic token — resolves to <code className="font-mono bg-amber-100 px-1 rounded">#111111</code> in dark mode, <code className="font-mono bg-amber-100 px-1 rounded">#F9FAFB</code> in light mode) on its outermost div. Do <strong>not</strong> use <code className="font-mono bg-amber-100 px-1 rounded">bg-[#F9FAFB]</code> — this is hardcoded and breaks dark mode.</li>
               <li><strong>No automatic top padding</strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> does not add <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> to the content area. The header is <code className="font-mono bg-amber-100 px-1 rounded">fixed</code> at 64px — each page's first section must add enough top padding to clear it (e.g. <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> or <code className="font-mono bg-amber-100 px-1 rounded">pt-24</code> for hero sections).</li>
               <li><strong>showCTA — always true</strong> — the Contact Us CTA must be visible on <strong>all</strong> surfaces (public and authenticated). Always pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{true}'}</code>. Only pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{false}'}</code> if the app has no Contact Us entry point (e.g. a purely internal admin tool). <strong>Do not use <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{!isAuthenticated}'}</code></strong> — this incorrectly hides the CTA from logged-in users.</li>
               <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> are all provided. Omitting any of the three source props silently hides the button with a dev-mode console warning.</li>
@@ -4424,7 +4424,7 @@ const tabs: TabConfig[] = [
             Surface Modes
           </h2>
           <p className="text-muted-foreground mb-8 max-w-3xl">
-            ERI products use two named surface modes — <strong>Light</strong> and <strong>Dark</strong>. These are not competing themes; they are two contexts within the same brand. Light mode is the default for application interiors. Dark mode is used for marketing landing pages and hero sections.
+            ERI products use two named surface modes — <strong>Dark</strong> (the ERI default) and <strong>Light</strong> (opt-in via toggle). These are not competing themes; they are two contexts within the same brand. Dark mode is the default for all ERI applications — a deliberate energy-efficiency decision. Light mode is available to users who prefer it, and their preference persists across the entire ERI ecosystem via a shared <code className="text-sm font-mono">localStorage</code> key.
           </p>
 
           {/* Mode comparison table */}
@@ -4432,8 +4432,8 @@ const tabs: TabConfig[] = [
             {[
               {
                 mode: "Light Mode",
-                badge: "Default",
-                badgeColor: "bg-[#3ba559] text-white",
+                badge: "Opt-in",
+                badgeColor: "bg-[#6b7280] text-white",
                 bg: "bg-white border border-gray-200",
                 tokens: [
                   { name: "Page background", value: "#F9FAFB", swatch: "#F9FAFB", border: true },
@@ -4443,22 +4443,22 @@ const tabs: TabConfig[] = [
                   { name: "Border",          value: "#E5E7EB",  swatch: "#E5E7EB",  border: true },
                   { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
                 ],
-                use: "Application interiors — PSM, Crocodile data views, user management, dashboards",
+                use: "Available via the toggle in the header. User preference persists across all ERI apps.",
               },
               {
                 mode: "Dark Mode",
-                badge: "Marketing",
-                badgeColor: "bg-[#232323] text-[#93E07D]",
-                bg: "bg-[#0d2828] border border-[#1a3a3a]",
+                badge: "Default",
+                badgeColor: "bg-[#3ba559] text-white",
+                bg: "bg-[#111111] border border-[#2e2e2e]",
                 tokens: [
-                  { name: "Page background", value: "#0d2828",  swatch: "#0d2828" },
-                  { name: "Card / panel",    value: "#1a3a3a",  swatch: "#1a3a3a" },
-                  { name: "Primary text",    value: "#FFFFFF",  swatch: "#FFFFFF",  border: true },
+                  { name: "Page background", value: "#111111",  swatch: "#111111" },
+                  { name: "Card / panel",    value: "#1a1a1a",  swatch: "#1a1a1a" },
+                  { name: "Primary text",    value: "#ECEEF2",  swatch: "#ECEEF2",  border: true },
                   { name: "Secondary text",  value: "#9CA3AF",  swatch: "#9CA3AF" },
                   { name: "Accent text",     value: "#93E07D",  swatch: "#93E07D" },
                   { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
                 ],
-                use: "Marketing landing pages, hero sections, Human-AI Lab, public-facing app entry points",
+                use: "All ERI apps — dark is the ERI default. Light mode is available via the toggle in the header.",
               },
             ].map((m) => (
               <div key={m.mode} className={`rounded-xl p-6 ${m.bg}`}>
@@ -4487,12 +4487,12 @@ const tabs: TabConfig[] = [
 
           {/* Decision rule */}
           <div className="bg-[#f0faf4] border border-[#b7e4c7] rounded-xl p-5 mb-10">
-            <h3 className="font-semibold text-[#232323] mb-3">When to use which mode</h3>
+            <h3 className="font-semibold text-[#232323] mb-3">How the mode system works</h3>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               {[
-                { q: "Public marketing / landing page?", a: "Dark mode" },
-                { q: "Authenticated app interior?",       a: "Light mode" },
-                { q: "App with both landing + interior?", a: "Dark hero → Light app (switch at login)" },
+                { q: "What is the default?", a: "Dark — always, for all apps" },
+                { q: "How does a user change it?", a: "Toggle in the header (sun/moon icon)" },
+                { q: "Does it persist across apps?", a: "Yes — shared localStorage key eri-theme" },
               ].map((r) => (
                 <div key={r.q} className="bg-card rounded-lg p-4 border border-[#d1fae5]">
                   <p className="text-muted-foreground mb-2">{r.q}</p>
@@ -4523,7 +4523,7 @@ const tabs: TabConfig[] = [
                   Light mode remains available for users who need it, but it is opt-in, not the starting point.
                 </p>
                 {/* Placeholder energy stat — will be updated with specific figures from updated research */}
-                <div className="bg-[#0d2828] border border-[#1a4a4a] rounded-lg p-4 mb-4">
+                <div className="bg-[#1a1a1a] border border-[#2e2e2e] rounded-lg p-4 mb-4">
                   <p className="text-xs text-gray-400 leading-relaxed">
                     <span className="text-[#93E07D] font-semibold">Energy context (OLED screens):</span>{" "}
                     Dark pixels on OLED displays require near-zero power compared to light pixels.
@@ -4533,7 +4533,7 @@ const tabs: TabConfig[] = [
                 </div>
                 <h4 className="text-sm font-semibold text-white mb-3">Implementation</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-xs">
-                  <div className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-4">
+                  <div className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
                     <p className="text-[#93E07D] font-semibold mb-2">1. FOLC prevention script (index.html)</p>
                     <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<script>
 (function() {
@@ -4544,7 +4544,7 @@ const tabs: TabConfig[] = [
 </script>`}</pre>
                     <p className="text-muted-foreground mt-2">Add to {'<head>'} before any CSS. Prevents flash of light content on page load.</p>
                   </div>
-                  <div className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-4">
+                  <div className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
                     <p className="text-[#93E07D] font-semibold mb-2">2. EriPageLayout prop</p>
                     <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<EriPageLayout
   appName="Your App"
@@ -4560,14 +4560,14 @@ const tabs: TabConfig[] = [
                     { q: "Storage?",       a: "localStorage key eri-theme" },
                     { q: "OS preference?", a: "Ignored — dark is the ERI statement" },
                   ].map((r) => (
-                    <div key={r.q} className="bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-3">
+                    <div key={r.q} className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-3">
                       <p className="text-muted-foreground mb-1">{r.q}</p>
                       <p className="font-semibold text-[#93E07D]">{r.a}</p>
                     </div>
                   ))}
                 </div>
                 {/* Cross-site persistence callout */}
-                <div className="mt-4 bg-[#0d1a0d] border border-[#1a3a1a] rounded-lg p-4">
+                <div className="mt-4 bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
                   <p className="text-xs font-semibold text-[#93E07D] mb-2">Cross-site persistence — why the localStorage key matters</p>
                   <p className="text-xs text-gray-300 leading-relaxed mb-3">
                     The ERI website ecosystem is designed to feel like a single product. When a user selects light mode on HAL,
@@ -4735,8 +4735,8 @@ const tabs: TabConfig[] = [
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
-                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.3.0</span>
-                    <span className="text-[10px] text-muted-foreground">Updated 24 Apr 2026</span>
+                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.4.0</span>
+                    <span className="text-[10px] text-muted-foreground">Updated 25 Apr 2026</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3 max-w-2xl">
                     A portable Manus skill that embeds the ERI brand reference directly into any AI project.
@@ -4759,15 +4759,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill"
-                    download="eri-bds-reference-v2.3.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.4.0_5e2949ba.skill"
+                    download="eri-bds-reference-v2.4.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.4.0_5e2949ba.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
@@ -4775,7 +4775,7 @@ const tabs: TabConfig[] = [
                     <ExternalLink className="w-3.5 h-3.5" />
                     CDN URL
                   </a>
-                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v2.3.0</p>
+                  <p className="text-[10px] text-gray-400 text-center font-mono break-all max-w-[200px]">eri-bds-reference-v2.4.0</p>
                 </div>
               </div>
             </CardContent>
@@ -5042,9 +5042,9 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <p className="text-xs text-muted-foreground mb-4">Follow these rules when building any ERI UI component or page.</p>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> as the wrapper for all public-facing pages in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build a custom header or footer, and never import <code className="bg-gray-100 px-1 rounded text-xs">EriAppHeader</code> or <code className="bg-gray-100 px-1 rounded text-xs">EriAppFooter</code> directly in page files.</span></div>
-                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#F9FAFB]</code>. Card background: white. Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code>.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Page background: <code className="bg-gray-100 px-1 rounded text-xs">bg-background</code> (semantic token — <code className="bg-gray-100 px-1 rounded text-xs">#111111</code> dark / <code className="bg-gray-100 px-1 rounded text-xs">#F9FAFB</code> light). Card background: <code className="bg-gray-100 px-1 rounded text-xs">bg-card</code> (<code className="bg-gray-100 px-1 rounded text-xs">#1a1a1a</code> dark / <code className="bg-gray-100 px-1 rounded text-xs">#FFFFFF</code> light). Footer background: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#232323]</code> always.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>CTA buttons: <code className="bg-gray-100 px-1 rounded text-xs">bg-[#93E07D] text-[#1a1a1a] rounded-lg font-semibold hover:opacity-90</code>. No icon prefix. One Contact Us CTA in the header right zone on <strong>all surfaces</strong> (public and authenticated). Always pass <code className="bg-gray-100 px-1 rounded text-xs">showCTA={"{"}true{"}"}</code>.</span></div>
-                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, white background, <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
+                <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Cards: <code className="bg-gray-100 px-1 rounded text-xs">shadow-sm</code>, <code className="bg-gray-100 px-1 rounded text-xs">bg-card</code> background (not <code className="bg-gray-100 px-1 rounded text-xs">bg-white</code> — use the semantic token so cards adapt to dark mode), <code className="bg-gray-100 px-1 rounded text-xs">rounded-lg</code>. Use <code className="bg-gray-100 px-1 rounded text-xs">hover:shadow-md transition-shadow</code> for interactive cards.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Max content width: <code className="bg-gray-100 px-1 rounded text-xs">max-w-6xl mx-auto px-4</code>. Never exceed 1152px for content.</span></div>
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Pillar colours must always be used in their correct pillar context — do not reassign P1 colour to P3 content.</span></div>
                 <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use purple, teal, or pink as accent colours — they are not part of the ERI brand.</span></div>
@@ -5165,14 +5165,14 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <tbody className="font-mono text-[11px]">
                   <tr className="border-b border-border/50">
                     <td className="py-1.5 pr-3 font-sans font-medium text-foreground">eri-bds-reference</td>
-                    <td className="py-1.5 pr-3 text-muted-foreground">v2.3.0</td>
+                    <td className="py-1.5 pr-3 text-muted-foreground">v2.4.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.3.0_3e9ee443.skill"
-                        download="eri-bds-reference-v2.3.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.4.0_5e2949ba.skill"
+                        download="eri-bds-reference-v2.4.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v2.3.0_3e9ee443.skill
+                        eri-bds-reference-v2.4.0_5e2949ba.skill
                       </a>
                     </td>
                   </tr>
