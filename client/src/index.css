@@ -2,7 +2,7 @@
  * ERI Brand Design System — Global Styles
  * Design Philosophy: Faithful Documentation Mirror
  * Primary font: Archivo (400, 700, 800) via @font-face → Google Fonts CDN
- * Primary green: #3ba559 | Dark heading: #232323 | Page bg: #F9FAFB
+ * Primary green: #3ba559 | Dark heading: #232323 | Body text: #383838 | Page bg: #F9FAFB
  */
 
 @import "@eri/components/dist/eri-components.css";
@@ -99,17 +99,17 @@
 
   --radius: 0.5rem;
   --background: oklch(0.984 0.002 247.839);  /* #F9FAFB */
-  --foreground: oklch(0.17 0.005 285);        /* #232323 */
+  --foreground: oklch(0.24 0.005 285);        /* #383838 — ERI body text on light backgrounds */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.17 0.005 285);
+  --card-foreground: oklch(0.24 0.005 285);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.17 0.005 285);
+  --popover-foreground: oklch(0.24 0.005 285);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.4 0.015 65);
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
   --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.17 0.005 285);
+  --accent-foreground: oklch(0.24 0.005 285);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.92 0.004 286.32);

@@ -26,7 +26,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 |---|---|---|
 | Primary Green | `#3ba559` | Links, active states, text accents — **NOT for filled buttons or CTAs** |
 | Primary Dark | `#232323` | **Headings (H1–H4)**, footer background, dark section backgrounds, hero overlay base colour |
-| **Dark Gray** | **`#383838`** | **Standard body paragraph text on white/light backgrounds** — this is NOT `#232323` |
+| **Dark Gray** | **`#383838`** | **Standard body paragraph text on white/light backgrounds** — this is NOT `#232323`. This is the canonical value of `--foreground` in light mode (`oklch(0.24 0.005 285)`). |
 | Neutral Gray | `#6b7280` | Secondary text, borders, disabled states |
 | Off White | `#F9FAFB` | Page background, card background, light section background |
 | Accent Lime | `#93E07D` | **All filled CTA buttons** on every surface; heading accent words on dark/hero backgrounds |
@@ -36,8 +36,9 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 **The `#232323` / `#383838` distinction is intentional and must be preserved everywhere:**
 - `#232323` = headings, footer background, dark section backgrounds, hero overlay
-- `#383838` = body paragraph text on white/light backgrounds
+- `#383838` = body paragraph text on white/light backgrounds — this is the canonical value of `--foreground` in light mode
 - Any rule that says "use `#232323` for body text" is a stale error and must be corrected immediately.
+- `text-foreground` in light mode now resolves to `#383838` (updated v2.7.0). Projects using `text-foreground` correctly satisfy the `bodyTextHex383838` checklist item.
 
 ---
 
@@ -304,7 +305,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 
 **JSON discovery endpoint:** `https://bds.exponentialroadmap.org/api/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
 
-**Current skill version:** v2.6.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.6.0_11724023.skill`
+**Current skill version:** v2.7.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.7.0_02ba3fcc.skill`
+
+**v2.7.0 changes (2026-04-26):** Updated canonical light mode `--foreground` token from `oklch(0.17 0.005 285)` (#232323) to `oklch(0.24 0.005 285)` (#383838). This aligns the semantic token `text-foreground` with the ERI brand spec for body text on light backgrounds. Projects using `text-foreground` now correctly satisfy the `bodyTextHex383838` checklist item. Also updated `--card-foreground`, `--popover-foreground`, and `--accent-foreground` in `:root` to match. Dark mode tokens unchanged.
 
 **Instruction text for every ERI project's Manus project instructions:**
 ```

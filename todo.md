@@ -215,4 +215,28 @@
 - [x] Fix /skill/latest route — moved to /api/skill/latest to avoid SPA catch-all shadowing
 - [x] Update all references in BrandDesignSystem.tsx, SKILL.md, PROJECT-CONTEXT.md
 - [x] TypeScript check — 0 errors
+- [x] Save checkpoint
+
+## Canonical dark mode token update — v2.7.0 (2026-04-25)
+
+- [ ] Update index.css .dark token block — improved card/border/foreground OKLCH values
+- [ ] Update skill Cross-Site Theme System token block to match
+- [ ] Update BDS site Surface Modes dark card token display
+- [ ] TypeScript check — 0 errors
+- [ ] Bump skill to v2.7.0, upload to CDN, update /api/skill/latest redirect
+- [ ] Update Skills card and asset table to v2.7.0
 - [ ] Save checkpoint
+
+## Light mode --foreground token fix — v2.7.0 (2026-04-26)
+
+- [x] Update --foreground in index.css :root from oklch(0.17 0.005 285) (#232323) to oklch(0.24 0.005 285) (#383838)
+- [x] Update --card-foreground, --popover-foreground, --accent-foreground in :root to match
+- [x] Update skill canonical :root token block to match
+- [x] Update skill token resolution reference table (--foreground light mode: #232323 → #383838)
+- [x] Bump skill to v2.7.0 and upload to CDN
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts to v2.7.0 CDN URL
+- [x] Update Skills card in BrandDesignSystem.tsx to v2.7.0
+- [x] Update asset table row in BrandDesignSystem.tsx to v2.7.0
+- [x] Update PROJECT-CONTEXT.md canonical colour table and skill release section
+- [x] TypeScript check — 0 errors
+- [x] Save checkpoint
