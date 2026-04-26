@@ -1328,6 +1328,148 @@ export function NavigationPatterns() {
         </div>
       </div>
 
+      {/* ── Universal Overlay / Nav Drawer Rules ── */}
+      <div>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="bg-red-600 text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">UNIVERSAL RULE</span>
+          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Overlay &amp; Nav Drawer — Canonical Spec</h3>
+        </div>
+        <p className="text-gray-600 font-open-sans text-sm mb-5 max-w-3xl">
+          These rules apply to <strong>every</strong> overlay and nav drawer across all tiers. There are no exceptions.
+          The most common error is using pure black (<code className="bg-gray-100 px-1 rounded text-xs">#000000</code>) or a
+          shadcn/ui default near-black instead of <code className="bg-gray-100 px-1 rounded text-xs">#232323</code>.
+          Always set the panel background explicitly — never rely on a component library default.
+        </p>
+
+        {/* Universal spec table */}
+        <div className="overflow-x-auto mb-6">
+          <table className="w-full text-sm font-open-sans border-collapse">
+            <thead>
+              <tr className="border-b-2 border-[#232323]">
+                <th className="text-left py-3 pr-6 font-archivo font-bold text-[#232323] w-40">Property</th>
+                <th className="text-left py-3 font-archivo font-bold text-[#232323]">Canonical value</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {([
+                ["Background", "bg-[#232323] — NEVER pure black (#000000), never dark green, never tinted, never bg-background"],
+                ["Panel width", "w-80 (320px)"],
+                ["Panel position", "Fixed, full height, slides in from right"],
+                ["Transition", "translate-x-full → translate-x-0, duration-300 ease-in-out"],
+                ["Backdrop", "bg-black/50 behind the panel — always present, click to close"],
+                ["Close button", "Top-right corner: size-9 rounded-md hover:bg-white/10, Lucide X icon in text-white"],
+                ["Inactive nav item", "text-white/80 hover:text-white hover:bg-white/5 rounded-md px-3 py-2 text-sm"],
+                ["Active nav item", "bg-[#3ba559]/10 text-[#3ba559] font-medium rounded-md px-3 py-2 text-sm"],
+                ["Admin / elevated links", "text-[#3ba559] + Lucide ExternalLink icon (size 14) — only shown when user.role === 'admin'"],
+                ["Group separator", "border-t border-white/10 my-2 between nav groups"],
+                ["User identity footer", "Pinned to bottom: name (text-white text-sm font-medium), email (text-white/60 text-xs), role label (text-[#3ba559] text-xs font-medium), Log Out button (border border-white/20 text-white/80 rounded-md px-3 py-2 text-sm w-full mt-2)"],
+              ] as [string, string][]).map(([prop, value]) => (
+                <tr key={prop} className="hover:bg-gray-50">
+                  <td className="py-2.5 pr-6 font-archivo font-bold text-xs text-[#232323] align-top">{prop}</td>
+                  <td className="py-2.5 font-open-sans text-xs text-gray-700 align-top">
+                    <code className="bg-gray-100 px-1.5 py-0.5 rounded text-[11px] font-mono">{value}</code>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Error callout */}
+        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 mb-6 flex gap-3">
+          <span className="text-red-600 font-bold text-sm shrink-0">✗</span>
+          <div>
+            <p className="text-xs font-archivo font-bold text-red-800 mb-1">The most common error — pure black panel background</p>
+            <p className="text-xs font-open-sans text-red-700">
+              shadcn/ui <code className="bg-red-100 px-1 rounded">Sheet</code> and <code className="bg-red-100 px-1 rounded">Dialog</code> default to <code className="bg-red-100 px-1 rounded">bg-background</code>,
+              which resolves to <code className="bg-red-100 px-1 rounded">#111111</code> in dark mode — close to black but not the correct ERI surface colour.
+              Always override with <code className="bg-red-100 px-1 rounded">bg-[#232323]</code> explicitly.
+            </p>
+          </div>
+        </div>
+
+        {/* Tier A Workflow grouping */}
+        <div className="bg-[#F9FAFB] rounded-xl p-6 border border-gray-200 mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider">TIER A WORKFLOW</span>
+            <h4 className="font-archivo font-bold text-sm text-[#232323]">Nav Group Structure (PSM pattern)</h4>
+          </div>
+          <p className="text-xs font-open-sans text-gray-600 mb-4">
+            Tier A Workflow apps use the same visual spec as Tier B App overlays. The difference is the
+            grouped content structure — four groups separated by <code className="bg-gray-100 px-1 rounded">border-t border-white/10 my-2</code>:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+            {([
+              ["1 — Primary", "Home, My Workspace, core workflow entry point (e.g. Assess a Client)"],
+              ["2 — Account & App info", "My Account, About the [App]"],
+              ["3 — External / cross-ERI", "Trust & Security (external), Exponential Taxonomy (external), Contact Us"],
+              ["4 — Admin", "Admin Panel (Primary Green, external icon) — only shown if user.role === 'admin'"],
+            ] as [string, string][]).map(([group, items]) => (
+              <div key={group} className="bg-white rounded-lg p-3 border border-gray-200">
+                <p className="text-[10px] font-archivo font-bold uppercase tracking-wider text-[#3ba559] mb-1">{group}</p>
+                <p className="text-[11px] font-open-sans text-gray-600">{items}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Code example */}
+        <div>
+          <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-2">Canonical implementation — NavDrawer.tsx</p>
+          <pre className="bg-[#232323] rounded-xl p-5 text-gray-300 font-mono text-xs overflow-x-auto leading-relaxed">{`// NavDrawer.tsx — canonical pattern for all ERI apps
+import { X, ExternalLink } from 'lucide-react';
+
+export function NavDrawer({ open, onClose, currentPath, user, onLogout }) {
+  return (
+    <>
+      {/* Backdrop */}
+      {open && (
+        <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
+      )}
+      {/* Panel — bg-[#232323] is mandatory */}
+      <div className={\`fixed top-0 right-0 h-full w-80 bg-[#232323] z-50 flex flex-col
+        transform transition-transform duration-300 ease-in-out
+        \${open ? 'translate-x-0' : 'translate-x-full'}\`}>
+
+        {/* Close button */}
+        <div className="flex justify-end p-3">
+          <button onClick={onClose}
+            className="size-9 rounded-md hover:bg-white/10 flex items-center justify-center text-white">
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Nav items */}
+        <nav className="flex-1 overflow-y-auto px-3 pb-4">
+          <NavItem href="/" label="Home" current={currentPath} onClose={onClose} />
+          <div className="border-t border-white/10 my-2" />
+          <NavItem href="https://trust.exponentialroadmap.org"
+            label="Trust & Security" external onClose={onClose} />
+          <div className="border-t border-white/10 my-2" />
+          {user?.role === 'admin' && (
+            <NavItem href="/admin" label="Admin Panel" admin onClose={onClose} />
+          )}
+        </nav>
+
+        {/* User identity footer */}
+        {user && (
+          <div className="border-t border-white/10 p-4">
+            <p className="text-white text-sm font-medium">{user.name}</p>
+            <p className="text-white/60 text-xs mt-0.5">{user.email}</p>
+            <p className="text-[#3ba559] text-xs font-medium mt-1">{user.role}</p>
+            <button onClick={onLogout}
+              className="border border-white/20 text-white/80 rounded-md px-3 py-2 text-sm w-full mt-3 hover:bg-white/5">
+              Log Out
+            </button>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}`}</pre>
+        </div>
+      </div>
+
       {/* ── Mobile behaviour ── */}
       <div>
         <h3 className="font-archivo font-extrabold text-lg text-[#232323] mb-4">Mobile Behaviour</h3>

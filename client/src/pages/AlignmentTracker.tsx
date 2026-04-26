@@ -218,6 +218,7 @@ function checklistScore(meta: BdsMeta | undefined): { score: number; total: numb
     layout?.showCtaExplicit,
     layout?.sourcePropsPresent,
     layout?.noStaleComponentNames,
+    layout?.overlayBackground,
   ];
   const reported = fields.filter((f) => f !== undefined && f !== null);
   const passing  = reported.filter((f) => f === true);
@@ -585,7 +586,47 @@ export default function AlignmentTracker() {
                 onClick={() => {
                   const today = new Date().toISOString().slice(0, 10);
                   navigator.clipboard.writeText(
-`{\n  "schemaVersion": "1.1",\n  "project": "your-project-id",\n  "displayName": "Your Project Name",\n  "url": "https://your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "systemOps": {\n    "projectContextExists":          false,\n    "manusPlatformInstructionsRead": false\n  },\n  "brand": {\n    "hexTokensOnly":       false,\n    "archivoHeadings":     false,\n    "openSansBody":        false,\n    "bodyTextHex383838":   false,\n    "ctaAccentLime":       false,\n    "noHardcodedGreys":    false,\n    "cardAccentPattern":   false,\n    "eyebrowAccentLime":   false\n  },\n  "layout": {\n    "eriPageLayoutInAppTsx": false,\n    "showCtaExplicit":       false,\n    "sourcePropsPresent":    false,\n    "noStaleComponentNames": false\n  },\n  "knownViolations": [],\n  "overallStatus": "red",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
+                    JSON.stringify({
+                      schemaVersion: "1.1",
+                      project: "your-project-id",
+                      displayName: "Your Project Name",
+                      url: "https://your-project.exponentialroadmap.org",
+                      eriComponentsPin: LATEST_VERSION,
+                      cssImportMethod: "dist",
+                      components: {
+                        EriAppHeader:       { used: true, compliant: true },
+                        EriPageLayout:      { used: true, compliant: true },
+                        EriHeroSection:     { used: true, compliant: true },
+                        EriAppFooter:       { used: true, compliant: true },
+                        EriStatusBadge:     { used: true, compliant: true },
+                        EriContactUsButton: { used: true, compliant: true },
+                      },
+                      systemOps: {
+                        projectContextExists:          false,
+                        manusPlatformInstructionsRead: false,
+                      },
+                      brand: {
+                        hexTokensOnly:       false,
+                        archivoHeadings:     false,
+                        openSansBody:        false,
+                        bodyTextHex383838:   false,
+                        ctaAccentLime:       false,
+                        noHardcodedGreys:    false,
+                        cardAccentPattern:   false,
+                        eyebrowAccentLime:   false,
+                      },
+                      layout: {
+                        eriPageLayoutInAppTsx: false,
+                        showCtaExplicit:       false,
+                        sourcePropsPresent:    false,
+                        noStaleComponentNames: false,
+                        overlayBackground:     false,
+                      },
+                      knownViolations: [],
+                      overallStatus: "red",
+                      lastUpdated: today,
+                      updatedBy: "Manus",
+                    }, null, 2)
                   );
                 }}
                 className="text-[11px] px-3 py-1.5 rounded font-semibold transition-opacity hover:opacity-80"
@@ -628,11 +669,12 @@ export default function AlignmentTracker() {
     "eriPageLayoutInAppTsx": false,
     "showCtaExplicit":       false,
     "sourcePropsPresent":    false,
-    "noStaleComponentNames": false
+    "noStaleComponentNames": false,
+    "overlayBackground":     false
   },
   "knownViolations": [],
   "overallStatus": "red",
-  "lastUpdated": "2026-04-24",
+  "lastUpdated": "2026-04-27",
   "updatedBy": "Manus"
 }`}
             </div>
@@ -1010,6 +1052,7 @@ Overall status: [green / amber / red]
                     { id: 'C5', check: 'showCTA={true} is passed explicitly on EriPageLayout', pass: 'The prop is written out — do not rely on the default' },
                     { id: 'C6', check: 'source, sourceLabel, and returnUrl are all passed when showCTA={true}', pass: 'All three props present; values match the Registered Source IDs table exactly' },
                     { id: 'C7', check: 'No stale component names (EriNavDrawer, EriFooter) anywhere in the codebase', pass: 'grep -r "EriNavDrawer|EriFooter" client/src/ returns no results' },
+                    { id: 'C8', check: 'Nav drawer / overlay panel background is bg-[#232323] — not pure black, not bg-background', pass: 'Inspect NavDrawer or Sheet component: className includes bg-[#232323] explicitly' },
                   ].map((row, i) => (
                     <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? TV.card : TV.muted, borderBottom: `1px solid ${TV.border}` }}>
                       <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: '#166534', backgroundColor: '#dcfce7' }}>{row.id}</td>

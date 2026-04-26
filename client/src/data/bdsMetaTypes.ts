@@ -83,6 +83,8 @@ export interface LayoutCompliance {
   sourcePropsPresent?: boolean;
   /** No stale component names (EriNavDrawer, EriFooter) anywhere in the codebase */
   noStaleComponentNames?: boolean;
+  /** Nav drawer / overlay panel background is bg-[#232323] — not pure black (#000000), not bg-background */
+  overlayBackground?: boolean;
 }
 
 export interface BdsMeta {

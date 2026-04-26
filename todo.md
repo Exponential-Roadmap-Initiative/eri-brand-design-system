@@ -225,7 +225,7 @@
 - [ ] TypeScript check — 0 errors
 - [ ] Bump skill to v2.7.0, upload to CDN, update /api/skill/latest redirect
 - [ ] Update Skills card and asset table to v2.7.0
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Light mode --foreground token fix — v2.7.0 (2026-04-26)
 
@@ -255,5 +255,23 @@
 - [x] Update SKILL_LATEST_URL in server/_core/index.ts
 - [x] Update Skills card in BrandDesignSystem.tsx to v2.8.0
 - [x] Update PROJECT-CONTEXT.md with v2.8.0 changelog
+- [x] TypeScript check — 0 errors
+- [ ] Save checkpoint
+
+## Complete Overlay / Nav Drawer Spec — v2.9.0 (2026-04-27)
+
+- [x] Update skill Navigation section: add Universal Overlay Rules table
+- [x] Update skill Navigation section: add Tier A Workflow overlay spec (PSM pattern)
+- [x] Update skill Navigation section: add code example for overlay implementation
+- [x] Update skill Navigation section: add backdrop, close button, group separator specs
+- [x] Add overlay spec section to BDS site Navigation & Layout section
+- [x] Add C8 checklist item: overlayBackground (bg-[#232323] not pure black)
+- [x] Update LayoutCompliance TypeScript interface with overlayBackground field
+- [x] Update AlignmentTracker with C8 checklist row
+- [x] Update bds-meta.json templates with overlayBackground field
+- [x] Update BDS site bds-meta.json with overlayBackground: true
+- [x] Bump skill to v2.9.0 and upload to CDN
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts
+- [x] Update PROJECT-CONTEXT.md with v2.9.0 changelog
 - [x] TypeScript check — 0 errors
 - [ ] Save checkpoint
