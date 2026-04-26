@@ -212,6 +212,8 @@ function checklistScore(meta: BdsMeta | undefined): { score: number; total: numb
     brand?.bodyTextHex383838,
     brand?.ctaAccentLime,
     brand?.noHardcodedGreys,
+    brand?.cardAccentPattern,
+    brand?.eyebrowAccentLime,
     layout?.eriPageLayoutInAppTsx,
     layout?.showCtaExplicit,
     layout?.sourcePropsPresent,
@@ -583,7 +585,7 @@ export default function AlignmentTracker() {
                 onClick={() => {
                   const today = new Date().toISOString().slice(0, 10);
                   navigator.clipboard.writeText(
-`{\n  "schemaVersion": "1.1",\n  "project": "your-project-id",\n  "displayName": "Your Project Name",\n  "url": "https://your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "systemOps": {\n    "projectContextExists":          false,\n    "manusPlatformInstructionsRead": false\n  },\n  "brand": {\n    "hexTokensOnly":     false,\n    "archivoHeadings":   false,\n    "openSansBody":      false,\n    "bodyTextHex383838": false,\n    "ctaAccentLime":     false,\n    "noHardcodedGreys":  false\n  },\n  "layout": {\n    "eriPageLayoutInAppTsx": false,\n    "showCtaExplicit":       false,\n    "sourcePropsPresent":    false,\n    "noStaleComponentNames": false\n  },\n  "knownViolations": [],\n  "overallStatus": "red",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
+`{\n  "schemaVersion": "1.1",\n  "project": "your-project-id",\n  "displayName": "Your Project Name",\n  "url": "https://your-project.exponentialroadmap.org",\n  "eriComponentsPin": "${LATEST_VERSION}",\n  "cssImportMethod": "dist",\n  "components": {\n    "EriAppHeader":       { "used": true,  "compliant": true  },\n    "EriPageLayout":      { "used": true,  "compliant": true  },\n    "EriHeroSection":     { "used": true,  "compliant": true  },\n    "EriAppFooter":       { "used": true,  "compliant": true  },\n    "EriStatusBadge":     { "used": true,  "compliant": true  },\n    "EriContactUsButton": { "used": true,  "compliant": true  }\n  },\n  "systemOps": {\n    "projectContextExists":          false,\n    "manusPlatformInstructionsRead": false\n  },\n  "brand": {\n    "hexTokensOnly":       false,\n    "archivoHeadings":     false,\n    "openSansBody":        false,\n    "bodyTextHex383838":   false,\n    "ctaAccentLime":       false,\n    "noHardcodedGreys":    false,\n    "cardAccentPattern":   false,\n    "eyebrowAccentLime":   false\n  },\n  "layout": {\n    "eriPageLayoutInAppTsx": false,\n    "showCtaExplicit":       false,\n    "sourcePropsPresent":    false,\n    "noStaleComponentNames": false\n  },\n  "knownViolations": [],\n  "overallStatus": "red",\n  "lastUpdated": "${today}",\n  "updatedBy": "Manus"\n}`
                   );
                 }}
                 className="text-[11px] px-3 py-1.5 rounded font-semibold transition-opacity hover:opacity-80"
@@ -613,12 +615,14 @@ export default function AlignmentTracker() {
     "manusPlatformInstructionsRead": false
   },
   "brand": {
-    "hexTokensOnly":     false,
-    "archivoHeadings":   false,
-    "openSansBody":      false,
-    "bodyTextHex383838": false,
-    "ctaAccentLime":     false,
-    "noHardcodedGreys":  false
+    "hexTokensOnly":       false,
+    "archivoHeadings":     false,
+    "openSansBody":        false,
+    "bodyTextHex383838":   false,
+    "ctaAccentLime":       false,
+    "noHardcodedGreys":    false,
+    "cardAccentPattern":   false,
+    "eyebrowAccentLime":   false
   },
   "layout": {
     "eriPageLayoutInAppTsx": false,
@@ -968,6 +972,8 @@ Overall status: [green / amber / red]
                     { id: 'B4', check: 'Body text colour is #383838, not #232323', pass: '#383838 for paragraph text on white/light backgrounds; #232323 reserved for headings and footer background only' },
                     { id: 'B5', check: 'Filled CTA buttons use #93E07D (Accent Lime) and rounded-lg shape', pass: 'No rounded-full on CTAs; no bg-[#3ba559] for filled buttons' },
                     { id: 'B6', check: 'No structural Tailwind grey classes used for text or backgrounds', pass: 'No text-gray-*, bg-white, bg-gray-* on structural elements — use text-foreground, text-muted-foreground, bg-card, bg-muted, bg-background. Hardcoded greys in documentation specimens (colour swatches, code examples, live previews) are exempt.' },
+                    { id: 'B7', check: 'Card category accents use left border + tint pattern only', pass: 'No full four-side coloured borders on cards (border-[#hex]). Category accent cards use border-l-4 with borderLeftColor inline style + rgba() tint at ≤10% opacity on backgroundColor.' },
+                    { id: 'B8', check: 'Section eyebrow labels use #93E07D regardless of card accent colour', pass: 'All uppercase tracking-widest section labels use text-[#93E07D] — never the card accent colour.' },
                   ].map((row, i) => (
                     <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? TV.card : TV.muted, borderBottom: `1px solid ${TV.border}` }}>
                       <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: '#1e40af', backgroundColor: '#dbeafe' }}>{row.id}</td>

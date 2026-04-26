@@ -305,7 +305,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 
 **JSON discovery endpoint:** `https://bds.exponentialroadmap.org/api/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
 
-**Current skill version:** v2.7.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.7.0_02ba3fcc.skill`
+**Current skill version:** v2.8.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.8.0_a333afd9.skill`
+
+**v2.8.0 changes (2026-04-26):** Added Card Accent Colour System section to skill and BDS site. Six-slot category accent palette (Green `#3ba559`, Blue `#17b7dd`, Orange `#ff8b00`, Red `#ff5133`, Sage `#9aa08c`, Teal `#00ac58`). Canonical pattern: `border-l-4` + `rgba()` tint at 8% opacity — never full four-side coloured outline. Section eyebrow labels always `#93E07D` regardless of card accent colour. Added B7 (`cardAccentPattern`) and B8 (`eyebrowAccentLime`) to Project Alignment Checklist. Updated `BrandCompliance` TypeScript interface, AlignmentTracker clipboard template, and BDS site `bds-meta.json` (14/14 passing). Root cause: HAL site used `border-2 border-[#00B8D4]` full outline on cards — jarring neon-box effect in dark mode. The correct pattern was undocumented.
 
 **v2.7.0 changes (2026-04-26):** Updated canonical light mode `--foreground` token from `oklch(0.17 0.005 285)` (#232323) to `oklch(0.24 0.005 285)` (#383838). This aligns the semantic token `text-foreground` with the ERI brand spec for body text on light backgrounds. Projects using `text-foreground` now correctly satisfy the `bodyTextHex383838` checklist item. Also updated `--card-foreground`, `--popover-foreground`, and `--accent-foreground` in `:root` to match. Dark mode tokens unchanged.
 

@@ -18,12 +18,14 @@
     "manusPlatformInstructionsRead": true
   },
   "brand": {
-    "hexTokensOnly":     true,
-    "archivoHeadings":   true,
-    "openSansBody":      true,
-    "bodyTextHex383838": true,
-    "ctaAccentLime":     true,
-    "noHardcodedGreys":  true
+    "hexTokensOnly":       true,
+    "archivoHeadings":     true,
+    "openSansBody":        true,
+    "bodyTextHex383838":   true,
+    "ctaAccentLime":       true,
+    "noHardcodedGreys":    true,
+    "cardAccentPattern":   true,
+    "eyebrowAccentLime":   true
   },
   "layout": {
     "eriPageLayoutInAppTsx": false,
@@ -40,6 +42,6 @@
     }
   ],
   "overallStatus": "amber",
-  "lastUpdated": "2026-04-24",
+  "lastUpdated": "2026-04-26",
   "updatedBy": "Manus"
 }

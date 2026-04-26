@@ -626,6 +626,122 @@ export default function BrandDesignSystem() {
             ))}
           </div>
 
+          {/* Card Accent Colours */}
+          <h3 className="font-bold text-foreground mb-4 text-lg mt-12" id="card-accent-colours">Card Accent Colours</h3>
+          <p className="text-muted-foreground mb-4 text-sm max-w-3xl">
+            ERI applications often group cards into categories (e.g. “Applications”, “Strategic Frameworks”, “Data Sources”).
+            The canonical pattern for expressing this differentiation uses a <strong className="text-foreground">left accent border</strong> (4px)
+            combined with a <strong className="text-foreground">tinted background</strong> at 8% opacity. This works correctly in both dark and
+            light mode because the tint layers over <code className="font-mono text-xs bg-muted px-1 rounded">bg-card</code> rather than replacing it.
+          </p>
+
+          {/* Anti-pattern callout */}
+          <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 rounded-lg p-4 mb-6 max-w-3xl">
+            <p className="text-sm font-semibold text-red-700 dark:text-red-400 mb-1">❌ Anti-pattern: full four-side coloured border</p>
+            <p className="text-sm text-red-600 dark:text-red-500">
+              Using <code className="font-mono text-xs bg-red-100 dark:bg-red-950/40 px-1 rounded">border-2 border-[#17b7dd]</code> on a dark background creates a jarring neon-box effect.
+              The high-saturation colour against <code className="font-mono text-xs bg-red-100 dark:bg-red-950/40 px-1 rounded">#111111</code> has excessive contrast that overwhelms the card content.
+              Never use a full four-side coloured outline for card category accents.
+            </p>
+          </div>
+
+          {/* Live demo: correct vs incorrect */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Correct */}
+            <div>
+              <p className="text-xs font-semibold text-[#3ba559] uppercase tracking-wider mb-3">✅ Correct — left border + tint</p>
+              <div
+                className="bg-card rounded-lg border border-border border-l-4 p-5"
+                style={{ borderLeftColor: '#17b7dd', backgroundColor: 'rgba(23,183,221,0.08)' }}
+              >
+                <p className="text-[#93E07D] text-[10px] font-semibold tracking-widest uppercase mb-2">STRATEGIC FRAMEWORKS</p>
+                <h4 className="font-archivo font-extrabold text-foreground text-base mb-1">Methodology Hub</h4>
+                <p className="text-muted-foreground text-xs">The science-based assessment frameworks behind the Exponential Playbook.</p>
+              </div>
+            </div>
+            {/* Incorrect */}
+            <div>
+              <p className="text-xs font-semibold text-red-500 uppercase tracking-wider mb-3">❌ Incorrect — full outline</p>
+              <div className="bg-card rounded-lg border-2 p-5" style={{ borderColor: '#17b7dd' }}>
+                <p className="text-[#17b7dd] text-[10px] font-semibold tracking-widest uppercase mb-2">STRATEGIC FRAMEWORKS</p>
+                <h4 className="font-archivo font-extrabold text-foreground text-base mb-1">Methodology Hub</h4>
+                <p className="text-muted-foreground text-xs">The science-based assessment frameworks behind the Exponential Playbook.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Palette table */}
+          <h4 className="font-bold text-foreground mb-3 text-sm">Six-slot category accent palette</h4>
+          <p className="text-muted-foreground text-xs mb-4 max-w-2xl">
+            Use only these colours for card category accents. They are drawn from the existing ERI pillar palette — no new colours are introduced.
+            The section eyebrow label above a group of cards is <strong className="text-foreground">always <span className="text-[#93E07D]">#93E07D</span> Accent Lime</strong> regardless of which card accent colour is used below it.
+          </p>
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-2 pr-4 font-semibold text-foreground">Slot</th>
+                  <th className="text-left py-2 pr-4 font-semibold text-foreground">Full-saturation</th>
+                  <th className="text-left py-2 pr-4 font-semibold text-foreground">Dark mode tint</th>
+                  <th className="text-left py-2 pr-4 font-semibold text-foreground">Light mode tint</th>
+                  <th className="text-left py-2 font-semibold text-foreground">Suggested use</th>
+                </tr>
+              </thead>
+              <tbody className="font-mono">
+                {[
+                  { slot: 'Green',  hex: '#3ba559', dark: 'rgba(59,165,89,0.08)',   light: 'rgba(59,165,89,0.06)',   use: 'Primary / featured / default' },
+                  { slot: 'Blue',   hex: '#17b7dd', dark: 'rgba(23,183,221,0.08)',  light: 'rgba(23,183,221,0.06)',  use: 'Strategic / framework / data' },
+                  { slot: 'Orange', hex: '#ff8b00', dark: 'rgba(255,139,0,0.08)',   light: 'rgba(255,139,0,0.06)',   use: 'Finance / commercial' },
+                  { slot: 'Red',    hex: '#ff5133', dark: 'rgba(255,81,51,0.08)',   light: 'rgba(255,81,51,0.06)',   use: 'Policy / risk / alert' },
+                  { slot: 'Sage',   hex: '#9aa08c', dark: 'rgba(154,160,140,0.08)', light: 'rgba(154,160,140,0.06)', use: 'Operations / neutral' },
+                  { slot: 'Teal',   hex: '#00ac58', dark: 'rgba(0,172,88,0.08)',    light: 'rgba(0,172,88,0.06)',    use: 'Solutions / impact' },
+                ].map(({ slot, hex, dark, light, use }) => (
+                  <tr key={slot} className="border-b border-border/50">
+                    <td className="py-2 pr-4 font-sans font-semibold text-foreground flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full inline-block shrink-0" style={{ backgroundColor: hex }} />
+                      {slot}
+                    </td>
+                    <td className="py-2 pr-4" style={{ color: hex }}>{hex}</td>
+                    <td className="py-2 pr-4 text-muted-foreground">{dark}</td>
+                    <td className="py-2 pr-4 text-muted-foreground">{light}</td>
+                    <td className="py-2 text-muted-foreground font-sans">{use}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Code example */}
+          <h4 className="font-bold text-foreground mb-3 text-sm">Canonical code pattern</h4>
+          <pre className="text-[11px] bg-muted text-foreground border border-border rounded p-4 overflow-x-auto font-mono leading-relaxed mb-4">{`{/* ✅ Canonical category accent card */}
+<div
+  className="bg-card rounded-lg border border-border border-l-4 p-6"
+  style={{ borderLeftColor: '#17b7dd', backgroundColor: 'rgba(23,183,221,0.08)' }}
+>
+  {/* Section eyebrow — ALWAYS Accent Lime, never the card accent colour */}
+  <p className="text-[#93E07D] text-xs font-semibold tracking-widest uppercase mb-2">
+    STRATEGIC FRAMEWORKS
+  </p>
+  <h3 className="font-archivo font-extrabold text-foreground text-lg mb-2">Card Title</h3>
+  <p className="text-muted-foreground text-sm">Card body text.</p>
+</div>
+
+{/* ❌ Never use a full four-side accent outline */}
+<div className="border-2 border-[#17b7dd] rounded-lg p-6"> ... </div>`}</pre>
+
+          {/* Rules summary */}
+          <div className="bg-muted rounded-lg p-4 max-w-3xl">
+            <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-3">Rules</p>
+            <div className="space-y-2">
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span className="text-xs text-foreground"><strong>Left border only</strong> — <code className="font-mono text-[10px] bg-card px-1 rounded">border-l-4</code> with <code className="font-mono text-[10px] bg-card px-1 rounded">borderLeftColor</code>. Never a full four-side coloured outline.</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span className="text-xs text-foreground"><strong>Tint at ≤10% opacity</strong> — <code className="font-mono text-[10px] bg-card px-1 rounded">rgba(r,g,b,0.08)</code> is the canonical value.</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span className="text-xs text-foreground"><strong>Keep <code className="font-mono text-[10px] bg-card px-1 rounded">border-border</code> on the remaining three sides</strong> — the default <code className="font-mono text-[10px] bg-card px-1 rounded">border</code> class provides the subtle structural border.</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span className="text-xs text-foreground"><strong>Section eyebrow labels are always <span className="text-[#93E07D]">#93E07D</span></strong> — the accent colour belongs to the card, not the label above it.</span></div>
+              <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span className="text-xs text-foreground"><strong>Card icons may use the accent colour at full saturation</strong> — e.g. <code className="font-mono text-[10px] bg-card px-1 rounded">{"style={{ color: '#17b7dd' }}"}</code>.</span></div>
+              <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span className="text-xs text-foreground">Do not use <code className="font-mono text-[10px] bg-card px-1 rounded">#00B8D4</code> (ERI Blue alias) — the canonical blue is <code className="font-mono text-[10px] bg-card px-1 rounded">#17b7dd</code> (P2 Value Chain).</span></div>
+            </div>
+          </div>
+
           {/* Dark Image Hero */}
           <h3 className="font-bold text-foreground mb-4 text-lg mt-12">Dark Image Hero — Standard</h3>
           <p className="text-muted-foreground mb-6 text-sm max-w-3xl">
@@ -4735,7 +4851,7 @@ const tabs: TabConfig[] = [
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
-                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.7.0</span>
+                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.8.0</span>
                     <span className="text-[10px] text-muted-foreground">Updated 26 Apr 2026</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3 max-w-2xl">
@@ -4758,15 +4874,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.7.0_02ba3fcc.skill"
-                    download="eri-bds-reference-v2.7.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.8.0_a333afd9.skill"
+                    download="eri-bds-reference-v2.8.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.7.0_02ba3fcc.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.8.0_a333afd9.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
@@ -5173,14 +5289,14 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <tbody className="font-mono text-[11px]">
                   <tr className="border-b border-border/50">
                     <td className="py-1.5 pr-3 font-sans font-medium text-foreground">eri-bds-reference</td>
-                    <td className="py-1.5 pr-3 text-muted-foreground">v2.7.0</td>
+                    <td className="py-1.5 pr-3 text-muted-foreground">v2.8.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.7.0_02ba3fcc.skill"
-                        download="eri-bds-reference-v2.7.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.8.0_a333afd9.skill"
+                        download="eri-bds-reference-v2.8.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v2.7.0_02ba3fcc.skill
+                        eri-bds-reference-v2.8.0_a333afd9.skill
                       </a>
                     </td>
                   </tr>

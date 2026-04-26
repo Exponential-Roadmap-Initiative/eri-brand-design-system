@@ -240,3 +240,20 @@
 - [x] Update PROJECT-CONTEXT.md canonical colour table and skill release section
 - [x] TypeScript check — 0 errors
 - [x] Save checkpoint
+
+## Card Accent Colour System — v2.8.0 (2026-04-26)
+
+- [x] Add "Card Accent Colours" section to eri-bds-reference skill (palette table, canonical pattern, rules)
+- [x] Add cardAccentPattern checklist item (B7) to skill Project Alignment Checklist
+- [x] Add eyebrowAccentLime checklist item (B8) to skill Project Alignment Checklist
+- [x] Update bds-meta.json schema example in skill with new brand fields
+- [x] Add "Card Accent Colours" section to BrandDesignSystem.tsx (after Pillar Colours)
+- [x] Add B7/B8 rows to AlignmentTracker.tsx checklist table
+- [x] Update BDS site's own bds-meta.json with new fields (14/14 passing)
+- [x] Update AlignmentTracker clipboard template and visible seed template with new fields
+- [x] Bump skill to v2.8.0 and upload to CDN
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts
+- [x] Update Skills card in BrandDesignSystem.tsx to v2.8.0
+- [x] Update PROJECT-CONTEXT.md with v2.8.0 changelog
+- [x] TypeScript check — 0 errors
+- [ ] Save checkpoint

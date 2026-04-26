@@ -64,6 +64,10 @@ export interface BrandCompliance {
   ctaAccentLime?: boolean;
   /** No structural Tailwind grey classes (text-gray-*, bg-white, bg-gray-*) used for text or backgrounds — semantic tokens only */
   noHardcodedGreys?: boolean;
+  /** Card category accents use left border + tint pattern only (no full four-side coloured outlines) */
+  cardAccentPattern?: boolean;
+  /** Section eyebrow / category labels use #93E07D (Accent Lime) — never the card accent colour */
+  eyebrowAccentLime?: boolean;
 }
 
 /**
