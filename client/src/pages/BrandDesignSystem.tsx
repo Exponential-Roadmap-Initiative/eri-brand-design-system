@@ -997,7 +997,7 @@ export default function BrandDesignSystem() {
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-3">
                 <span className="inline-flex items-center gap-1.5 bg-[#3ba559] text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Mandatory</span>
-                <h3 className="font-bold text-[#232323] text-base">Favicon — Correct <code className="font-mono text-sm">&lt;head&gt;</code> Implementation</h3>
+                <h3 className="font-bold text-foreground text-base">Favicon — Correct <code className="font-mono text-sm">&lt;head&gt;</code> Implementation</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Copy these exact three lines into <code className="bg-gray-100 px-1 rounded text-xs">client/index.html</code> inside <code className="bg-gray-100 px-1 rounded text-xs">&lt;head&gt;</code>.
@@ -1048,7 +1048,7 @@ export default function BrandDesignSystem() {
 
           <Card className="shadow-sm border-red-100 bg-red-50">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-4 text-base flex items-center gap-2">
+              <h3 className="font-bold text-foreground mb-4 text-base flex items-center gap-2">
                 <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-bold">!</span>
                 Logo Don'ts
               </h3>
@@ -1108,7 +1108,7 @@ export default function BrandDesignSystem() {
             </Card>
           </div>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Type Scale Specimen</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Type Scale Specimen</h3>
           <p className="text-muted-foreground mb-6 text-sm">Each row shows the rendered text, the exact Tailwind classes used on live pages, and the intended context.</p>
           <Card className="shadow-sm mb-10">
             <CardContent className="p-0">
@@ -1144,7 +1144,7 @@ export default function BrandDesignSystem() {
 
           <Card className="shadow-sm bg-muted border-border">
             <CardContent className="p-5">
-              <h4 className="font-bold text-[#232323] mb-2 text-sm">Italic Variant</h4>
+              <h4 className="font-bold text-foreground mb-2 text-sm">Italic Variant</h4>
               <p className="text-sm text-muted-foreground mb-3">Archivo supports italic. Used sparingly for hero accent phrases and pull quotes.</p>
               <p className="font-archivo font-extrabold text-2xl text-[#232323] italic">"The fastest economic transition in history"</p>
                <code className="text-xs font-mono text-muted-foreground mt-2 block">font-archivo font-extrabold italic text-2xl text-[#232323]</code>
@@ -1153,7 +1153,7 @@ export default function BrandDesignSystem() {
           {/* Accent Word Heading Pattern */}
           <Card className="shadow-sm mt-6">
             <CardContent className="p-5">
-              <h4 className="font-bold text-[#232323] mb-2 text-sm">Heading Accent Word Pattern</h4>
+              <h4 className="font-bold text-foreground mb-2 text-sm">Heading Accent Word Pattern</h4>
               <p className="text-sm text-muted-foreground mb-4">
                 Accent Lime <code className="bg-gray-100 px-1 rounded text-xs">#93E07D</code> is used for one or two accent words in a heading, <strong>exclusively on dark or green backgrounds</strong> — hero sections, dark cards, and dark section backgrounds. On white or light backgrounds, use Primary Green <code className="bg-gray-100 px-1 rounded text-xs">#3ba559</code> instead. Accent Lime has insufficient contrast on light surfaces.
               </p>
@@ -1187,7 +1187,7 @@ export default function BrandDesignSystem() {
           {/* Marketing vs. Application note */}
           <Card className="shadow-sm border-border bg-muted mt-6">
             <CardContent className="p-5">
-              <h4 className="font-bold text-[#232323] mb-3 text-sm">Typography on Light vs. Dark Backgrounds</h4>
+              <h4 className="font-bold text-foreground mb-3 text-sm">Typography on Light vs. Dark Backgrounds</h4>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Dark Background (hero sections, dark cards)</p>
@@ -1230,7 +1230,7 @@ export default function BrandDesignSystem() {
             and builds trust with our audience.
           </p>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Tone of Voice</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Tone of Voice</h3>
           <div className="grid md:grid-cols-4 gap-4 mb-12">
             {verbalIdentity.toneOfVoice.map((item, i) => {
               const styles = [
@@ -1249,7 +1249,7 @@ export default function BrandDesignSystem() {
             })}
           </div>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Writing Principles</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Writing Principles</h3>
           <div className="grid md:grid-cols-2 gap-4 mb-12">
             {verbalIdentity.writingPrinciples.map((item) => (
               <Card key={item.principle} className="shadow-sm overflow-hidden">
@@ -1263,7 +1263,7 @@ export default function BrandDesignSystem() {
             ))}
           </div>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Preferred Terminology</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Preferred Terminology</h3>
           <Card className="shadow-sm mb-12">
             <CardContent className="p-0">
               <table className="w-full">
@@ -1286,7 +1286,7 @@ export default function BrandDesignSystem() {
           </Card>
 
           {/* ── LANGUAGE RULES ── */}
-          <h3 className="font-bold text-[#232323] mb-2 text-lg">Language</h3>
+          <h3 className="font-bold text-foreground mb-2 text-lg">Language</h3>
           <div className="flex items-center gap-3 mb-4">
             <span className="inline-flex items-center gap-1.5 bg-[#3ba559] text-white text-xs font-bold px-3 py-1 rounded-full">
               {verbalIdentity.languageRules.standard}
@@ -1294,7 +1294,7 @@ export default function BrandDesignSystem() {
           </div>
           <p className="text-muted-foreground mb-8 max-w-3xl text-sm">{verbalIdentity.languageRules.rationale}</p>
 
-          <h4 className="font-bold text-[#232323] mb-4">Spelling Rules</h4>
+          <h4 className="font-bold text-foreground mb-4">Spelling Rules</h4>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-0">
               <table className="w-full text-sm">
@@ -1318,7 +1318,7 @@ export default function BrandDesignSystem() {
             </CardContent>
           </Card>
 
-          <h4 className="font-bold text-[#232323] mb-4">Punctuation &amp; Formatting</h4>
+          <h4 className="font-bold text-foreground mb-4">Punctuation &amp; Formatting</h4>
           <div className="grid md:grid-cols-2 gap-4 mb-8">
             {verbalIdentity.languageRules.punctuationRules.map((item) => (
               <Card key={item.rule} className="shadow-sm">
@@ -1330,7 +1330,7 @@ export default function BrandDesignSystem() {
             ))}
           </div>
 
-          <h4 className="font-bold text-[#232323] mb-4">Common Pitfalls</h4>
+          <h4 className="font-bold text-foreground mb-4">Common Pitfalls</h4>
           <Card className="shadow-sm">
             <CardContent className="p-0">
               <table className="w-full text-sm">
@@ -1464,7 +1464,7 @@ export default function BrandDesignSystem() {
                     <img src={comp.example} alt={comp.alt} className="w-full h-full object-cover" />
                   </div>
                   <div className="p-4">
-                    <h4 className="font-archivo font-bold text-[#232323] text-sm mb-1.5">{comp.type}</h4>
+                    <h4 className="font-archivo font-bold text-foreground text-sm mb-1.5">{comp.type}</h4>
                     <span className="inline-block text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded mb-3">{comp.usage}</span>
                     <p className="text-muted-foreground text-sm leading-relaxed">{comp.desc}</p>
                   </div>
@@ -1478,7 +1478,7 @@ export default function BrandDesignSystem() {
             <h3 className="font-archivo text-lg font-bold text-foreground mb-4">Colour Treatment Rules</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
+                <h4 className="font-archivo font-semibold text-foreground text-sm mb-3 flex items-center gap-2">
                   <span className="w-4 h-4 rounded-full bg-[#3ba559] flex items-center justify-center text-white text-xs">✓</span>
                   Do
                 </h4>
@@ -1497,7 +1497,7 @@ export default function BrandDesignSystem() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-archivo font-semibold text-[#232323] text-sm mb-3 flex items-center gap-2">
+                <h4 className="font-archivo font-semibold text-foreground text-sm mb-3 flex items-center gap-2">
                   <span className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-white text-xs">✗</span>
                   Don't
                 </h4>
@@ -1641,7 +1641,7 @@ export default function BrandDesignSystem() {
                 </div>
               </div>
               <div className="bg-card border border-border rounded-xl p-5">
-                <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Usage Rules</h4>
+                <h4 className="font-archivo font-bold text-foreground text-sm mb-3">Usage Rules</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Always use full-bleed — the image must fill the entire hero section width.</span></li>
                   <li className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Always apply a <code className="bg-gray-100 px-1 rounded text-xs">#232323</code> overlay at 80–85% opacity over the image before placing text.</span></li>
@@ -1655,7 +1655,7 @@ export default function BrandDesignSystem() {
 
             {/* Conceptual meaning */}
             <div className="bg-[#f0f7f2] border border-[#c8e6d0] rounded-xl p-5 max-w-3xl mb-6">
-              <h4 className="font-archivo font-bold text-[#232323] text-sm mb-2">Conceptual Meaning</h4>
+              <h4 className="font-archivo font-bold text-foreground text-sm mb-2">Conceptual Meaning</h4>
               <p className="text-sm text-foreground">
                 The two S-curves crossing represent the central ERI insight: legacy fossil-fuel systems are on a
                 declining S-curve while clean-technology systems are on a rising S-curve. The crossing point is
@@ -1669,7 +1669,7 @@ export default function BrandDesignSystem() {
 
             {/* Alternate versions */}
             <div className="max-w-3xl">
-              <h4 className="font-archivo font-bold text-[#232323] text-sm mb-3">Alternate Versions</h4>
+              <h4 className="font-archivo font-bold text-foreground text-sm mb-3">Alternate Versions</h4>
               <p className="text-xs text-muted-foreground mb-4">Three alternate hero compositions share the same S-curve structure and are documented in full in the <a href="#surface-modes" className="text-[#3ba559] underline hover:text-[#2e8a47]">Surface Modes</a> section.</p>
               <div className="grid grid-cols-3 gap-3">
                 {[
@@ -1921,7 +1921,7 @@ export default function BrandDesignSystem() {
 
           <Card className="shadow-sm">
             <CardContent className="p-5">
-              <h4 className="font-bold text-[#232323] mb-3 text-sm">Usage Pattern</h4>
+              <h4 className="font-bold text-foreground mb-3 text-sm">Usage Pattern</h4>
               <pre className="text-xs font-mono bg-gray-50 p-4 rounded overflow-x-auto text-gray-700 leading-relaxed">{`// Always import canonical colours from pillarColors.ts
 import { pillarColors, pillarMeta } from "@/lib/pillarColors";
 import { pillarBottomIcons } from "@/lib/assets";
@@ -1953,7 +1953,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </p>
 
           {/* Five Pillars Diagram Variants */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Five Pillars Diagram — 8 Variants</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Five Pillars Diagram — 8 Variants</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
               { key: "fivePillarsBg",          label: "BG",                   desc: "Background only (no logo/text)",         file: "framework-5pillars-bg.webp" },
@@ -1979,23 +1979,23 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* Placement Rules */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Placement Rules</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Placement Rules</h3>
           <div className="grid md:grid-cols-3 gap-4 mb-8">
             <Card className="shadow-sm">
               <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-2 text-sm">Clear Space</h4>
+                <h4 className="font-bold text-foreground mb-2 text-sm">Clear Space</h4>
                 <p className="text-sm text-muted-foreground">Minimum clear space around the diagram equals <strong>x</strong> — one unit defined as the width of the “E” in EXPONENTIAL. Never crowd the diagram with other elements.</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-2 text-sm">Background Combinations</h4>
+                <h4 className="font-bold text-foreground mb-2 text-sm">Background Combinations</h4>
                 <p className="text-sm text-muted-foreground">Use the <strong>solid BG variant</strong> on white/light backgrounds. Use the <strong>Transparent variant</strong> on dark or coloured backgrounds. Never place the solid variant on a dark background.</p>
               </CardContent>
             </Card>
             <Card className="shadow-sm">
               <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-2 text-sm">Never Do</h4>
+                <h4 className="font-bold text-foreground mb-2 text-sm">Never Do</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Do not distort, rotate, or recolour the diagram</li>
                   <li>• Do not add extra elements inside the diagram</li>
@@ -2007,7 +2007,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* Supporting Diagrams */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Supporting Diagrams</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Supporting Diagrams</h3>
           <p className="text-muted-foreground mb-4 text-sm max-w-3xl">Four additional diagrams support the framework narrative. Use these in context — do not mix them with the Five Pillars radial diagram on the same slide.</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
@@ -2074,7 +2074,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* Regular */}
-          <h4 className="font-bold text-[#232323] text-base mb-1 mt-2">Regular Pillar</h4>
+          <h4 className="font-bold text-foreground text-base mb-1 mt-2">Regular Pillar</h4>
           <p className="text-sm text-muted-foreground mb-4 max-w-3xl">Scaled-down version for data slides where more horizontal space is needed. Can be placed over images. Use <code className="bg-gray-100 px-1 rounded text-xs">3x</code> as the distance from pillar to frame edge.</p>
           <div className="grid grid-cols-5 gap-4 mb-10">
             {([1,2,3,4,5] as const).map(n => {
@@ -2142,7 +2142,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           <div className="grid md:grid-cols-2 gap-4">
             <Card className="shadow-sm border-l-4 border-l-[#3ba559]">
               <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3 text-sm">✓ Correct Usage</h4>
+                <h4 className="font-bold text-foreground mb-3 text-sm">✓ Correct Usage</h4>
                 <ul className="text-sm text-muted-foreground space-y-1.5">
                   <li>Always place on the <strong>left side</strong> of the slide or frame</li>
                   <li>Maintain minimum clear space: <strong>x</strong> from pillar to frame edge (basic), <strong>3x</strong> for alternate</li>
@@ -2154,7 +2154,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             </Card>
             <Card className="shadow-sm border-l-4 border-l-[#ff5133]">
               <CardContent className="p-5">
-                <h4 className="font-bold text-[#232323] mb-3 text-sm">✗ Never Do</h4>
+                <h4 className="font-bold text-foreground mb-3 text-sm">✗ Never Do</h4>
                 <ul className="text-sm text-muted-foreground space-y-1.5">
                   <li>Do not place the pillar on the right, centre, or bottom of the frame</li>
                   <li>Do not distort, stretch, or rotate the pillar element</li>
@@ -2182,7 +2182,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </p>
 
           {/* ── Crocodile Economy Chart Style ── */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">The Crocodile Economy Chart Style</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">The Crocodile Economy Chart Style</h3>
           <p className="text-muted-foreground mb-6 text-sm max-w-3xl">
             The Crocodile Economy charts show the decoupling of emissions from economic growth over time.
             Two lines form the "crocodile jaw" — the upper line (GDP or revenue growth) diverges upward from the lower line (CO₂ emissions).
@@ -2225,7 +2225,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* Line colours */}
-          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Line Colours</h4>
+          <h4 className="font-bold text-foreground mb-3 text-sm uppercase tracking-wider">Line Colours</h4>
           <div className="grid md:grid-cols-3 gap-4 mb-8">
             <Card className="shadow-sm">
               <CardContent className="p-4 flex items-center gap-3">
@@ -2260,12 +2260,12 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* Live chart example */}
-          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider">Live Examples</h4>
+          <h4 className="font-bold text-foreground mb-3 text-sm uppercase tracking-wider">Live Examples</h4>
           <p className="text-muted-foreground mb-4 text-sm">Interactive recreations of the Crocodile Economy chart style using ERI brand colours.</p>
           <CrocodileChartExamples />
 
           {/* Typography in charts */}
-          <h4 className="font-bold text-[#232323] mb-3 text-sm uppercase tracking-wider mt-8">Chart Typography</h4>
+          <h4 className="font-bold text-foreground mb-3 text-sm uppercase tracking-wider mt-8">Chart Typography</h4>
           <div className="grid md:grid-cols-2 gap-4 mb-8">
             <Card className="shadow-sm">
               <CardContent className="p-4">
@@ -2476,7 +2476,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             </div>
           </div>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Container Widths</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Container Widths</h3>
           <Card className="shadow-sm mb-10">
             <CardContent className="p-0">
               <table className="w-full text-sm">
@@ -2504,7 +2504,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             </CardContent>
           </Card>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Standard Grid Patterns</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Standard Grid Patterns</h3>
           <Card className="shadow-sm mb-10">
             <CardContent className="p-0">
               <table className="w-full text-sm">
@@ -2528,7 +2528,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             </CardContent>
           </Card>
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Spacing Scale</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Spacing Scale</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {spacingScale.map((row) => {
               const pxVal = parseInt(row.token);
@@ -2562,7 +2562,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </p>
 
 
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">ChartContainer</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">ChartContainer</h3>
           <p className="text-muted-foreground mb-6 text-sm">
             Use for any section requiring a coloured header. The component restricts colours to the approved palette.
           </p>
@@ -2607,7 +2607,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </p>
 
           {/* 1. Tier Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">1. Tier Badges</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">1. Tier Badges</h3>
           <p className="text-muted-foreground mb-4 text-sm">Used in the header, workspace hub, and assessment pages to indicate a company's transformation tier.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2630,7 +2630,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* 2. System & Experimental Badges (was section 3 — App Status Badges moved to Standard Components › EriStatusBadge) */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">2. System &amp; Experimental Badges</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">2. System &amp; Experimental Badges</h3>
           <p className="text-muted-foreground mb-4 text-sm">Used in the header and on feature flags to signal development status.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2652,7 +2652,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* 3. Priority Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">3. Priority Badges</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">3. Priority Badges</h3>
           <p className="text-muted-foreground mb-4 text-sm">Used in CPR Recommendations and action lists to indicate urgency level.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2674,7 +2674,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* 5. KPI & Framework Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">4. KPI &amp; Framework Badges</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">4. KPI &amp; Framework Badges</h3>
           <p className="text-muted-foreground mb-4 text-sm">Used in KPI sections and action themes to classify framework items.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2696,7 +2696,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* 6. Qualification & Status Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">5. Qualification &amp; Status Badges</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">5. Qualification &amp; Status Badges</h3>
           <p className="text-muted-foreground mb-4 text-sm">Used in Climate Solutions qualification, case study cards, and pillar content.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2718,7 +2718,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* 7. Data Source Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Data Source &amp; API Badges</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">6. Data Source &amp; API Badges</h3>
           <p className="text-muted-foreground mb-4 text-sm">Used in DataSourceCard, DataSourcesTable, and widget headers to show data freshness and source type.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2742,7 +2742,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* 8. Opportunity Badges */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">7. Opportunity &amp; Category Badges</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">7. Opportunity &amp; Category Badges</h3>
           <p className="text-muted-foreground mb-4 text-sm">Used in CPR Opportunities and impact portfolio to categorise opportunity types.</p>
           <Card className="shadow-sm mb-8">
             <CardContent className="p-5">
@@ -2763,7 +2763,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* Badge Anatomy Quick Reference */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Badge Anatomy Quick Reference</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Badge Anatomy Quick Reference</h3>
           <Card className="shadow-sm">
             <CardContent className="p-0">
               <table className="w-full text-xs">
@@ -2840,7 +2840,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* ── LIVE DEMOS ── */}
-          <h3 className="font-bold text-[#232323] mb-4 text-lg">Live Examples</h3>
+          <h3 className="font-bold text-foreground mb-4 text-lg">Live Examples</h3>
 
           {/* Demo 1: Dark background (hero context) */}
           <div className="mb-6">
@@ -2926,7 +2926,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </div>
 
           {/* ── CODE REFERENCE ── */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Code Reference</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Code Reference</h3>
           <Card className="shadow-sm bg-gray-900 mb-4">
             <CardContent className="p-5">
               <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`{/* ✅ Primary CTA — use on ALL surfaces */}
@@ -2962,7 +2962,7 @@ import { pillarBottomIcons } from "@/lib/assets";
           </Card>
 
           {/* Size variants */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Size Variants</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Size Variants</h3>
           <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm mb-8">
             <div className="bg-[#232323] px-8 py-8 flex flex-wrap items-center gap-5">
               <a href="#" className="inline-block px-4 py-2 rounded-lg font-archivo font-semibold text-sm text-[#1a1a1a] no-underline" style={{ backgroundColor: "#93E07D" }} onClick={e => e.preventDefault()}>Small — header</a>
@@ -2988,7 +2988,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             {/* Link & Text Colours */}
             <Card className="shadow-sm">
               <CardContent className="p-6">
-                <h3 className="font-bold text-[#232323] mb-4">Link &amp; Text Colours</h3>
+                <h3 className="font-bold text-foreground mb-4">Link &amp; Text Colours</h3>
                 <div className="space-y-3">
                   {[
                     { label: "Primary link",  cls: "text-[#3ba559]",  preview: "text-[#3ba559]",  desc: "Default interactive colour for links, active nav items, icons" },
@@ -3011,7 +3011,7 @@ import { pillarBottomIcons } from "@/lib/assets";
             {/* Background & Border States */}
             <Card className="shadow-sm">
               <CardContent className="p-6">
-                <h3 className="font-bold text-[#232323] mb-4">Background &amp; Border States</h3>
+                <h3 className="font-bold text-foreground mb-4">Background &amp; Border States</h3>
                 <div className="space-y-3">
                   {[
                     { label: "Page background", cls: "bg-[#F9FAFB]",       preview: "bg-[#F9FAFB] border border-gray-200",   desc: "Default page background" },
@@ -3072,7 +3072,7 @@ className="transition-all duration-300 ease-in-out"`}</pre>
           </Card>
 
           {/* URL pattern */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">URL Pattern</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">URL Pattern</h3>
           <Card className="shadow-sm bg-gray-900 mb-6">
             <CardContent className="p-5">
               <pre className="text-sm text-gray-300 overflow-x-auto whitespace-pre-wrap">{`https://contact-us.exponentialroadmap.org/?source=<id>&sourceLabel=<name>&return=<url>`}</pre>
@@ -3080,7 +3080,7 @@ className="transition-all duration-300 ease-in-out"`}</pre>
           </Card>
 
           {/* Parameters table */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Parameters</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Parameters</h3>
           <div className="overflow-x-auto mb-8">
             <table className="w-full text-sm border-collapse">
               <thead>
@@ -3109,7 +3109,7 @@ className="transition-all duration-300 ease-in-out"`}</pre>
           </div>
 
           {/* Full example */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Full Example — Professional Services Matrix</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Full Example — Professional Services Matrix</h3>
           <Card className="shadow-sm bg-gray-900 mb-8">
             <CardContent className="p-5">
               <pre className="text-sm text-[#93E07D] overflow-x-auto whitespace-pre-wrap">{`https://contact-us.exponentialroadmap.org/?source=psm&sourceLabel=Professional+Services+Matrix&return=https%3A%2F%2Fpsm.exponentialroadmap.org&subject=PSM+Enquiry`}</pre>
@@ -3117,7 +3117,7 @@ className="transition-all duration-300 ease-in-out"`}</pre>
           </Card>
 
           {/* Button implementation — CRITICAL */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Button Implementation — Mandatory Style</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Button Implementation — Mandatory Style</h3>
           <div className="rounded-lg border-2 border-red-400 bg-red-50 p-4 mb-4">
             <p className="text-sm font-bold text-red-700 mb-1">CRITICAL — Do not style this button yourself.</p>
             <p className="text-sm text-red-600">The Contact Us button MUST use Accent Lime fill, <code className="font-mono text-xs bg-red-100 px-1 rounded">rounded-lg</code>, dark text, and no icon. Any other style is non-conformant.</p>
@@ -3192,7 +3192,7 @@ const contactUrl =
           </div>
 
           {/* Registered source IDs */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Registered Source IDs</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Registered Source IDs</h3>
           <p className="text-sm text-muted-foreground mb-4">Source IDs are self-registering — no manual setup required. This table is maintained here for human reference. Add your app's row when integrating.</p>
           <div className="overflow-x-auto mb-8">
             <table className="w-full text-sm border-collapse">
@@ -3221,7 +3221,7 @@ const contactUrl =
           </div>
 
           {/* Source ID naming rules */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Choosing a Source ID</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Choosing a Source ID</h3>
           <Card className="shadow-sm bg-card border border-border mb-8">
             <CardContent className="p-5">
               <ul className="text-sm text-foreground space-y-2">
@@ -3233,7 +3233,7 @@ const contactUrl =
           </Card>
 
           {/* Implementation checklist */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Implementation Checklist</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Implementation Checklist</h3>
           <Card className="shadow-sm bg-green-50 border border-green-200 mb-8">
             <CardContent className="p-5">
               <ul className="text-sm text-foreground space-y-2">
@@ -3251,7 +3251,7 @@ const contactUrl =
           </Card>
 
           {/* Admin dashboard */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">Admin Dashboard</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">Admin Dashboard</h3>
           <Card className="shadow-sm bg-card border border-border mb-6">
             <CardContent className="p-5">
               <p className="text-sm text-foreground mb-2">All enquiries across all apps are visible at:</p>
@@ -3367,7 +3367,7 @@ const contactUrl =
             </div>
           </div>
           {/* ── Component 1: EriStatusBadge ──────────────────────────────────────────────────── */}
-          <h3 className="font-bold text-[#232323] mb-1 text-lg">1. EriStatusBadge</h3>
+          <h3 className="font-bold text-foreground mb-1 text-lg">1. EriStatusBadge</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Transparent outlined pill badge for app status. Four values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code>{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code>{" "}
@@ -3457,7 +3457,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
           {/* ── Status Badge Anatomy ── */}
           <div className="mb-10">
-            <h4 className="font-bold text-[#232323] mb-3 text-base">Anatomy &amp; Canonical Class String</h4>
+            <h4 className="font-bold text-foreground mb-3 text-base">Anatomy &amp; Canonical Class String</h4>
             <Card className="shadow-sm mb-4">
               <CardContent className="p-5">
                 <div className="flex flex-wrap gap-6 mb-5">
@@ -3492,7 +3492,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </div>
 
           {/* ── Component 2: EriContactUsButton ─────────────────────────── */}
-          <h3 className="font-bold text-[#232323] mb-1 text-lg">2. EriContactUsButton</h3>
+          <h3 className="font-bold text-foreground mb-1 text-lg">2. EriContactUsButton</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Accent Lime CTA button that links to the shared ERI contact service. Constructs the URL automatically from{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">source</code>,{" "}
@@ -3599,7 +3599,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </div>
 
           {/* ── Component 3: EriAppHeader ────────────────────────────────── */}
-          <h3 className="font-bold text-[#232323] mb-1 text-lg">3. EriAppHeader</h3>
+          <h3 className="font-bold text-foreground mb-1 text-lg">3. EriAppHeader</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Canonical 64px fixed header. Left zone: ERI logo → pipe divider → app name. Right zone: status badge → version → optional CTA → hamburger.
             The <code className="font-mono text-xs bg-gray-100 px-1 rounded">showCTA</code> prop is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">true</code> — the Contact Us CTA is visible on all surfaces.
@@ -3714,12 +3714,12 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
           {/* ── Header Anatomy Detail ── */}
           <div className="mb-10">
-            <h4 className="font-bold text-[#232323] mb-3 text-base">Header Anatomy</h4>
+            <h4 className="font-bold text-foreground mb-3 text-base">Header Anatomy</h4>
             <p className="text-muted-foreground mb-4 text-sm">Fixed (<code className="font-mono text-xs bg-gray-100 px-1 rounded">sticky top-0 z-50</code>), 64px tall (<code className="font-mono text-xs bg-gray-100 px-1 rounded">h-16</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> background. Inner container uses <code className="font-mono text-xs bg-gray-100 px-1 rounded">max-w-screen-xl mx-auto</code> with <code className="font-mono text-xs bg-[#93E07D]/10 text-[#3ba559] px-1 rounded">paddingInline: var(--eri-content-inset)</code> — this aligns the logotype with the hero text block.</p>
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <Card className="shadow-sm">
                 <CardContent className="p-5">
-                  <h4 className="font-bold text-[#232323] mb-3">Left Zone — Logo + Divider + Title Block</h4>
+                  <h4 className="font-bold text-foreground mb-3">Left Zone — Logo + Divider + Title Block</h4>
                   <div className="space-y-3 text-sm text-muted-foreground">
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI wordmark — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, <code className="font-mono text-xs bg-gray-100 px-1 rounded">filter: brightness(0) invert(1)</code>, links to <code className="font-mono text-xs">/</code></span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Vertical divider — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-6 w-px bg-white/20 shrink-0</code></span></div>
@@ -3729,7 +3729,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               </Card>
               <Card className="shadow-sm">
                 <CardContent className="p-5">
-                  <h4 className="font-bold text-[#232323] mb-3">Right Zone — Status + Version + CTA + Menu</h4>
+                  <h4 className="font-bold text-foreground mb-3">Right Zone — Status + Version + CTA + Menu</h4>
                   <div className="space-y-3 text-sm text-muted-foreground">
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span><code className="font-mono text-xs bg-gray-100 px-1 rounded">EriStatusBadge</code> — transparent outlined pill, white on dark</span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Version string — format <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.YYYY.MM.DD</code> (e.g. <code className="font-mono text-xs bg-gray-100 px-1 rounded">V.2026.04.15</code>). <em className="text-red-400">Never date-only, never lowercase v.</em></span></div>
@@ -3742,7 +3742,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </div>
 
              {/* ── Component 4: EriAppFooter ──────────────────────── */}
-          <h3 className="font-bold text-[#232323] mb-1 text-lg">4. EriAppFooter</h3>
+          <h3 className="font-bold text-foreground mb-1 text-lg">4. EriAppFooter</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Canonical two-zone dark footer. Left zone: ERI logo + optional tagline. Right zone: copyright string.
             Background is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> — never dark green, white, or any other colour.
@@ -3815,7 +3815,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
             {/* ── Footer Rules Table ── */}
           <div className="mb-10">
-            <h4 className="font-bold text-[#232323] mb-3 text-base">Footer Rules</h4>
+            <h4 className="font-bold text-foreground mb-3 text-base">Footer Rules</h4>
             <div className="overflow-x-auto mb-6">
               <table className="w-full text-sm border-collapse">
                 <thead>
@@ -3844,7 +3844,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               </table>
             </div>
 
-            <h4 className="font-bold text-[#232323] mb-3 text-base">Permitted Variation — Tier C (White Background)</h4>
+            <h4 className="font-bold text-foreground mb-3 text-base">Permitted Variation — Tier C (White Background)</h4>
             <p className="text-muted-foreground text-sm mb-4">Admin tools with a persistent sidebar. No logo (sidebar already shows it). Same two-zone layout, light surface.</p>
             <div className="rounded-lg overflow-hidden border border-gray-200 mb-6">
               <footer className="border-t border-border bg-card">
@@ -3866,7 +3866,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </div>
 
           {/* ── Component 5: EriHeroSection ──────────────────────────── */}
-          <h3 className="font-bold text-[#232323] mb-1 text-lg">5. EriHeroSection</h3>
+          <h3 className="font-bold text-foreground mb-1 text-lg">5. EriHeroSection</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Canonical full-viewport hero section. Matches the live pattern on{" "}
             <a href="https://human-ai-lab.exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-[#3ba559] underline">human-ai-lab.exponentialroadmap.org</a>.{" "}
@@ -4067,7 +4067,7 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
           </div>
 
           {/* ── Component 6: EriPageLayout ───────────────────────────────── */}
-          <h3 className="font-bold text-[#232323] mb-1 text-lg">6. EriPageLayout</h3>
+          <h3 className="font-bold text-foreground mb-1 text-lg">6. EriPageLayout</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Canonical layout wrapper. Renders <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriAppHeader</code> and{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriAppFooter</code> exactly once, wrapping all page content.
@@ -4204,7 +4204,7 @@ function App() {
           </p>
 
           {/* 1. Page Navigation Tabs */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">1. Page Navigation Tabs — <code className="font-mono text-base font-normal">SimpleTabNav</code></h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">1. Page Navigation Tabs — <code className="font-mono text-base font-normal">SimpleTabNav</code></h3>
           <p className="text-muted-foreground mb-4 text-sm">Used for <strong>page-level navigation</strong> where each tab changes the URL. Features: URL-driven active state, icon + label + count, green underline indicator, no background fill.</p>
           <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="flex items-center gap-1 border-b border-border bg-card overflow-x-auto">
@@ -4246,7 +4246,7 @@ const tabs: TabConfig[] = [
           </Card>
 
           {/* 2. In-Page Content Tabs */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">2. In-Page Content Tabs — <code className="font-mono text-base font-normal">&lt;Tabs&gt;</code></h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">2. In-Page Content Tabs — <code className="font-mono text-base font-normal">&lt;Tabs&gt;</code></h3>
           <p className="text-muted-foreground mb-4 text-sm">Used for <strong>in-page content switching</strong> where the URL does not change. Uses shadcn pill/background style.</p>
           <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="p-5 bg-card">
@@ -4276,7 +4276,7 @@ const tabs: TabConfig[] = [
           </Card>
 
           {/* 3. Buttons */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">3. Buttons</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">3. Buttons</h3>
           <p className="text-muted-foreground mb-4 text-sm">Import from <code className="font-mono text-xs bg-gray-100 px-1 rounded">@/components/ui/button</code>. The <code className="font-mono text-xs">outline</code> variant uses a transparent background — add a bg class manually if needed.</p>
           <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="p-6 bg-card flex flex-wrap gap-3 items-center">
@@ -4308,7 +4308,7 @@ const tabs: TabConfig[] = [
           </Card>
 
           {/* 4. Inputs & Selects */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">4. Inputs &amp; Selects</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">4. Inputs &amp; Selects</h3>
           <p className="text-muted-foreground mb-4 text-sm">Always pair with a <code className="font-mono text-xs bg-gray-100 px-1 rounded">&lt;label&gt;</code>. Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">placeholder</code> as a hint, not as a label substitute.</p>
           <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="p-6 bg-card grid md:grid-cols-2 gap-4">
@@ -4341,25 +4341,25 @@ const tabs: TabConfig[] = [
           </div>
 
           {/* 5. Cards */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">5. Cards</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">5. Cards</h3>
           <p className="text-muted-foreground mb-4 text-sm">Use <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-sm</code> as the default elevation. Add <code className="font-mono text-xs bg-gray-100 px-1 rounded">hover:shadow-md transition-shadow</code> for interactive cards. Never use <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-lg</code> or <code className="font-mono text-xs bg-gray-100 px-1 rounded">shadow-xl</code>.</p>
           <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="p-6 bg-[#F9FAFB] grid md:grid-cols-3 gap-4">
               <Card className="shadow-sm">
                 <CardContent className="p-5">
-                  <h4 className="font-bold text-[#232323] mb-1">Static Card</h4>
+                  <h4 className="font-bold text-foreground mb-1">Static Card</h4>
                   <p className="text-sm text-muted-foreground">shadow-sm · no hover · use for data display</p>
                 </CardContent>
               </Card>
               <Card className="shadow-sm hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-5">
-                  <h4 className="font-bold text-[#232323] mb-1">Interactive Card</h4>
+                  <h4 className="font-bold text-foreground mb-1">Interactive Card</h4>
                   <p className="text-sm text-muted-foreground">shadow-sm hover:shadow-md · use for clickable items</p>
                 </CardContent>
               </Card>
               <Card className="shadow-sm bg-muted border-border">
                 <CardContent className="p-5">
-                  <h4 className="font-bold text-[#232323] mb-1">Subtle Card</h4>
+                  <h4 className="font-bold text-foreground mb-1">Subtle Card</h4>
                   <p className="text-sm text-muted-foreground">bg-gray-50 · use for secondary info, notes, callouts</p>
                 </CardContent>
               </Card>
@@ -4382,7 +4382,7 @@ const tabs: TabConfig[] = [
           </Card>
 
           {/* 6. Data Tables */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg">6. Data Tables</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg">6. Data Tables</h3>
           <p className="text-muted-foreground mb-4 text-sm">Use plain HTML tables inside a <code className="font-mono text-xs bg-gray-100 px-1 rounded">Card</code> with <code className="font-mono text-xs bg-gray-100 px-1 rounded">p-0</code> padding. Alternate row colours with <code className="font-mono text-xs bg-gray-100 px-1 rounded">bg-white / bg-gray-50</code>.</p>
           <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <Card className="shadow-sm">
@@ -4427,7 +4427,7 @@ const tabs: TabConfig[] = [
           </div>
 
           {/* ── CTA Buttons ── */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">3. CTA Buttons</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg mt-10">3. CTA Buttons</h3>
           <p className="text-muted-foreground mb-4 text-sm">
             The canonical call-to-action button for <strong>all ERI surfaces</strong> — hero sections, landing pages, interior pages, and footers. Accent Lime background (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#93E07D</code>), dark text (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#1a1a1a</code>), <code className="font-mono text-xs bg-gray-100 px-1 rounded">rounded-lg</code> shape. This is the <strong>single CTA button style</strong> across all ERI products — do not use Primary Green (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#3ba559</code>) for filled buttons. Primary Green is reserved for links, active states, and text accents only.
           </p>
@@ -4484,7 +4484,7 @@ const tabs: TabConfig[] = [
 
 
           {/* ── Footer ── */}
-          <h3 className="font-bold text-[#232323] mb-3 text-lg mt-10">5. Footer</h3>
+          <h3 className="font-bold text-foreground mb-3 text-lg mt-10">5. Footer</h3>
           <p className="text-muted-foreground mb-4 text-sm">
             The standard ERI dark footer. Four columns: <strong>About</strong> (nav links), <strong>Newsletter</strong> (subscribe CTA), <strong>Follow us</strong> (social links as text), <strong>Contact us</strong> (email). Column headings: Archivo weight 500, 18px, white. All links in Accent Lime <code className="font-mono text-xs bg-gray-100 px-1 rounded">#93E07D</code>, Open Sans 14px. Bottom bar: Open Sans 16px, white/40.
           </p>
@@ -4579,7 +4579,7 @@ const tabs: TabConfig[] = [
             ].map((m) => (
               <div key={m.mode} className={`rounded-xl p-6 ${m.bg}`}>
                 <div className="flex items-center gap-3 mb-4">
-                  <h3 className={`font-archivo font-bold text-lg ${m.mode === 'Dark Mode' ? 'text-white' : 'text-[#232323]'}`}>{m.mode}</h3>
+                  <h3 className={`font-archivo font-bold text-lg ${m.mode === 'Dark Mode' ? 'text-white' : 'text-foreground'}`}>{m.mode}</h3>
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
                 </div>
                 <div className="space-y-2 mb-4">
@@ -4603,7 +4603,7 @@ const tabs: TabConfig[] = [
 
           {/* Decision rule */}
           <div className="bg-[#f0faf4] border border-[#b7e4c7] rounded-xl p-5 mb-10">
-            <h3 className="font-semibold text-[#232323] mb-3">How the mode system works</h3>
+            <h3 className="font-semibold text-foreground mb-3">How the mode system works</h3>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               {[
                 { q: "What is the default?", a: "Dark — always, for all apps" },
@@ -4782,7 +4782,7 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="p-4 bg-card">
                   <div className="flex items-start justify-between gap-4 mb-2">
-                    <h4 className="font-semibold text-[#232323] text-sm">{img.label}</h4>
+                    <h4 className="font-semibold text-foreground text-sm">{img.label}</h4>
                     <code className="text-xs font-mono bg-muted px-2 py-0.5 rounded text-muted-foreground flex-shrink-0">{img.token}</code>
                   </div>
                   <p className="text-xs text-muted-foreground">{img.use}</p>
@@ -4848,7 +4848,7 @@ const tabs: TabConfig[] = [
                   </div>
                 </div>
                 <div className="p-4 flex flex-col flex-1">
-                  <h3 className="font-archivo font-extrabold text-[#232323] text-sm mb-1">{app.name}</h3>
+                  <h3 className="font-archivo font-extrabold text-foreground text-sm mb-1">{app.name}</h3>
                   <p className="text-xs font-open-sans text-gray-500 mb-3 flex-1">{app.desc}</p>
                   <a
                     href={app.url}
@@ -4865,7 +4865,7 @@ const tabs: TabConfig[] = [
           </div>
 
           {/* ── Navigation overlay gallery ── */}
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323] mb-2">Navigation Overlays in Context</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground mb-2">Navigation Overlays in Context</h3>
           <p className="text-muted-foreground text-sm mb-5 max-w-3xl">
             The two navigation overlay patterns (Hub two-column and App single-column) as they appear in production.
           </p>
@@ -4914,7 +4914,7 @@ const tabs: TabConfig[] = [
             ].map((r) => (
               <Card key={r.title} className="shadow-sm hover:shadow-md transition-shadow flex flex-col">
                 <CardContent className="p-6 flex flex-col flex-1">
-                  <h3 className="font-bold text-[#232323] mb-2">{r.title}</h3>
+                  <h3 className="font-bold text-foreground mb-2">{r.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4 flex-1">{r.desc}</p>
                   <a
                     href={r.href}
@@ -4971,7 +4971,7 @@ const tabs: TabConfig[] = [
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
-                    <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
+                    <h3 className="font-bold text-foreground text-base">ERI BDS Reference Skill</h3>
                     <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v3.0.1</span>
                     <span className="text-[10px] text-muted-foreground">Updated 29 Apr 2026</span>
                   </div>
@@ -5031,7 +5031,7 @@ const tabs: TabConfig[] = [
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-[#3ba559] text-xl">⚑</span>
-                <h3 className="font-bold text-[#232323] text-base">Before You Act — Pre-Action Checklist</h3>
+                <h3 className="font-bold text-foreground text-base">Before You Act — Pre-Action Checklist</h3>
               </div>
               <p className="text-sm text-foreground mb-4">
                 Before generating any asset, writing any colour value, or building any UI component for an ERI product,
@@ -5093,7 +5093,7 @@ const tabs: TabConfig[] = [
           {/* ── HOW TO USE ── */}
           <Card className="shadow-sm mb-6 border-l-4 border-l-[#3ba559]">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-3">How to reference this page in a Manus task prompt</h3>
+              <h3 className="font-bold text-foreground mb-3">How to reference this page in a Manus task prompt</h3>
               <p className="text-sm text-foreground mb-3">
                 Add the following instruction to any task prompt that requires ERI brand compliance:
               </p>
@@ -5108,7 +5108,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           {/* ── COLOUR TOKENS ── */}
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Colour Tokens</h3>
+              <h3 className="font-bold text-foreground mb-1">Colour Tokens</h3>
               <p className="text-xs text-muted-foreground mb-4">Use these exact hex values. Never approximate with Tailwind colour names.</p>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -5190,7 +5190,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           {/* ── TYPOGRAPHY RULES ── */}
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Typography Rules</h3>
+              <h3 className="font-bold text-foreground mb-1">Typography Rules</h3>
               <p className="text-xs text-muted-foreground mb-4">Mandatory. Do not substitute Inter, Roboto, or any other font.</p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
@@ -5212,7 +5212,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           {/* ── HEADER ANATOMY ── */}
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Header Anatomy — Web App Pattern</h3>
+              <h3 className="font-bold text-foreground mb-1">Header Anatomy — Web App Pattern</h3>
               <p className="text-xs text-muted-foreground mb-4">All ERI web applications use this exact header structure. Implement it using <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build the header directly.</p>
               <div className="bg-card border border-border rounded-md p-3 mb-4 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
@@ -5260,7 +5260,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           {/* ── LANGUAGE RULES ── */}
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Language Rules</h3>
+              <h3 className="font-bold text-foreground mb-1">Language Rules</h3>
               <p className="text-xs text-muted-foreground mb-4">All copy generated for ERI products must follow these rules without exception.</p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
@@ -5283,7 +5283,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           {/* ── COMPONENT RULES ── */}
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Component & Layout Rules</h3>
+              <h3 className="font-bold text-foreground mb-1">Component & Layout Rules</h3>
               <p className="text-xs text-muted-foreground mb-4">Follow these rules when building any ERI UI component or page.</p>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span>Use <code className="bg-gray-100 px-1 rounded text-xs">EriPageLayout</code> as the wrapper for all public-facing pages in <code className="bg-gray-100 px-1 rounded text-xs">App.tsx</code> — never build a custom header or footer, and never import <code className="bg-gray-100 px-1 rounded text-xs">EriAppHeader</code> or <code className="bg-gray-100 px-1 rounded text-xs">EriAppFooter</code> directly in page files.</span></div>
@@ -5336,7 +5336,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-amber-600 text-lg">⚠️</span>
-                <h3 className="font-bold text-[#232323] text-base">Required Project File: <code className="font-mono text-sm bg-amber-100 px-1 rounded">bds-meta.json</code></h3>
+                <h3 className="font-bold text-foreground text-base">Required Project File: <code className="font-mono text-sm bg-amber-100 px-1 rounded">bds-meta.json</code></h3>
               </div>
               <p className="text-sm text-foreground mb-3">
                 Every ERI application <strong>must</strong> publish a <code className="bg-gray-100 px-1 rounded text-xs font-mono">client/public/bds-meta.json</code> file at its root.
@@ -5365,7 +5365,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
           {/* ── ASSET URL REFERENCE ── */}
           <Card className="shadow-sm mb-6">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Asset URL Reference</h3>
+              <h3 className="font-bold text-foreground mb-1">Asset URL Reference</h3>
               <p className="text-xs text-muted-foreground mb-4">
                 All brand assets are hosted on the same CloudFront CDN. Use these direct URLs in AI task prompts
                 or code. The base CDN path is{" "}
@@ -5549,7 +5549,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">⚡</span>
-                <h3 className="font-bold text-[#232323] text-base">Machine-Readable Spec Endpoint</h3>
+                <h3 className="font-bold text-foreground text-base">Machine-Readable Spec Endpoint</h3>
                 <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v3.0.1</span>
               </div>
               <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
@@ -5611,7 +5611,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">🔒</span>
-                <h3 className="font-bold text-[#232323] text-base">GDPR-Compliant Font Self-Hosting</h3>
+                <h3 className="font-bold text-foreground text-base">GDPR-Compliant Font Self-Hosting</h3>
                 <span className="text-[10px] bg-amber-100 text-amber-700 border border-amber-300 px-2 py-0.5 rounded font-semibold uppercase tracking-wide">Required</span>
               </div>
               <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
@@ -5663,7 +5663,7 @@ curl -sA "Mozilla/5.0" \
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">📁</span>
-                <h3 className="font-bold text-[#232323] text-base">Canonical Source Files</h3>
+                <h3 className="font-bold text-foreground text-base">Canonical Source Files</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
                 These five files in the BDS repository are the ground-truth reference implementations.
@@ -5709,7 +5709,7 @@ curl -sA "Mozilla/5.0" \
           {/* ── SECTION INDEX ── */}
           <Card className="shadow-sm">
             <CardContent className="p-6">
-              <h3 className="font-bold text-[#232323] mb-1">Section Index</h3>
+              <h3 className="font-bold text-foreground mb-1">Section Index</h3>
               <p className="text-xs text-muted-foreground mb-4">Canonical section IDs and their anchor URLs for programmatic reference.</p>
               <table className="w-full text-xs">
                 <thead>

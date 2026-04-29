@@ -962,7 +962,7 @@ export function NavigationPatterns() {
 
       {/* ── Tier overview table ── */}
       <div>
-        <h3 className="font-archivo font-extrabold text-lg text-[#232323] mb-4">Layout & Navigation Tiers</h3>
+        <h3 className="font-archivo font-extrabold text-lg text-foreground mb-4">Layout & Navigation Tiers</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm font-open-sans border-collapse">
             <thead>
@@ -1017,18 +1017,18 @@ export function NavigationPatterns() {
 
       {/* ── Shared header spec ── */}
       <div>
-        <h3 className="font-archivo font-extrabold text-lg text-[#232323] mb-2">Shared Header Specification</h3>
+        <h3 className="font-archivo font-extrabold text-lg text-foreground mb-2">Shared Header Specification</h3>
         <p className="text-gray-600 font-open-sans text-sm mb-6">These rules apply to <strong>all</strong> ERI web applications regardless of tier.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Header Anatomy</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Header Anatomy</h4>
             <AnatomyRow label="Top strip" height="4px" colour="#2C3F43" description="Dark teal (#2C3F43) — always present, full width" />
             <AnatomyRow label="Header" height="64px" colour="#232323" description="Dark (#232323) for Tier B; white for Tier A & C; transparent over hero for Tier A + Landing Hero (landing page only)" />
             <AnatomyRow label="Logo" height="—" colour="#3ba559" description="ERI logo left, vertical divider, app title right — single line, no supertitle" />
             <AnatomyRow label="Hamburger" height="—" colour="#6b7280" description="Top right — always present, even when tabs or sidebar exist" />
           </div>
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Header Rules</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Header Rules</h4>
             <div className="space-y-2 text-xs font-open-sans text-gray-700">
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Logo is always the ERI wordmark — never replaced with an app-specific logo</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>App title uses Archivo Bold, single line — no supertitle above it</span></div>
@@ -1047,7 +1047,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <span className="bg-[#232323] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER B — HUB OVERLAY</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Marketing — Full Two-Column Overlay</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Marketing — Full Two-Column Overlay</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5 max-w-3xl">
           Used for content-led sites and the ERI Hub. The hamburger opens a full-screen overlay with two
@@ -1110,7 +1110,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <span className="bg-[#232323] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER B — APP OVERLAY</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Application — Single-Column Hamburger Overlay</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Application — Single-Column Hamburger Overlay</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5 max-w-3xl">
           Used for authenticated application pages (e.g. PSM). The hamburger opens a compact floating panel
@@ -1172,7 +1172,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <span className="bg-[#3ba559] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER C</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Admin / Tool — Persistent Left Sidebar</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Admin / Tool — Persistent Left Sidebar</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5 max-w-3xl">
           Used for admin dashboards and multi-section tools where the user needs persistent access to all
@@ -1183,7 +1183,7 @@ export function NavigationPatterns() {
         <TierCSidebarMock />
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Sidebar Anatomy</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Sidebar Anatomy</h4>
             <AnatomyRow label="App identity" height="48px" colour="#f3f4f6" description="App icon + truncated app name — top of sidebar" />
             <AnatomyRow label="Nav item" height="36px" colour="#ffffff" description="Icon + label, Open Sans 12px — inactive state" />
             <AnatomyRow label="Active item" height="36px" colour="#f0fdf4" description="Green-50 bg + 2px left border (#3ba559) + green text + green icon" />
@@ -1191,7 +1191,7 @@ export function NavigationPatterns() {
             <AnatomyRow label="User footer" height="52px" colour="#f9fafb" description="Avatar initial + display name + truncated email — always at bottom" />
           </div>
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Sidebar Rules</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Sidebar Rules</h4>
             <div className="space-y-2 text-xs font-open-sans text-gray-700">
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Sidebar width: 224px (14rem / w-56) — fixed, never resizable</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Active item: green-50 background + 2px left border in #3ba559 + green text + green icon</span></div>
@@ -1210,7 +1210,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <span className="bg-[#3ba559] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER C</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Mobile — Hamburger-Triggered Slide-In Drawer</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Mobile — Hamburger-Triggered Slide-In Drawer</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5 max-w-3xl">
           Below the <code className="bg-gray-100 px-1 rounded text-xs">lg</code> breakpoint (1024px) the persistent sidebar is hidden entirely.
@@ -1225,7 +1225,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <span className="bg-[#3ba559] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER A SIMPLE</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Application — Header + Tab Bar</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Application — Header + Tab Bar</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5">
           Used for data tools and single-workflow apps with no public landing page. White header with the tab bar directly below.
@@ -1253,7 +1253,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <span className="bg-[#3ba559] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER A + LANDING HERO</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Application with Public Landing Page — Dark Hero → White App Interior</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Application with Public Landing Page — Dark Hero → White App Interior</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-3 max-w-3xl">
           Used when a Tier A data application has a public-facing landing page that benefits from a visual hero.
@@ -1272,7 +1272,7 @@ export function NavigationPatterns() {
         <TierALandingHeroMock />
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Landing Page Rules</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Landing Page Rules</h4>
             <div className="space-y-2 text-xs font-open-sans text-gray-700">
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Use <code className="bg-gray-100 px-1 rounded">transparentHeader</code> prop on the landing page only — header becomes transparent until scrolled</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Hero image: <code className="bg-gray-100 px-1 rounded">heroImages.halHandsTouching</code> (primary) — full-bleed, <code className="bg-gray-100 px-1 rounded">#232323</code> overlay at 80–85% opacity</span></div>
@@ -1284,7 +1284,7 @@ export function NavigationPatterns() {
             </div>
           </div>
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Interior Page Rules</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Interior Page Rules</h4>
             <div className="space-y-2 text-xs font-open-sans text-gray-700">
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>All interior pages use the standard white Tier A Simple header — no transparency</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Tab bar appears immediately below the white header — same as Tier A Simple</span></div>
@@ -1299,7 +1299,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <span className="bg-[#3ba559] text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">TIER A WORKFLOW</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Application — Header + Context Bar + Stepper + Tab Bar</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Application — Header + Context Bar + Stepper + Tab Bar</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5">
           Used for multi-step workflow tools. Four navigation layers sit between the top strip and the page
@@ -1308,14 +1308,14 @@ export function NavigationPatterns() {
         <TierAWorkflowHeaderMock />
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-[#F9FAFB] rounded-lg p-4 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Four Navigation Layers</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Four Navigation Layers</h4>
             <AnatomyRow label="Header" height="64px" colour="#ffffff" description="Logo + app title + Beta badge + version + hamburger" />
             <AnatomyRow label="Context bar" height="36px" colour="#f3f4f6" description="Breadcrumb (workspace / user / credits) + utility links" />
             <AnatomyRow label="Stepper" height="80px" colour="#f9fafb" description="Numbered stage circles with connecting lines — sequential" />
             <AnatomyRow label="Tab bar" height="44px" colour="#ffffff" description="Tabs for the selected stage — updates when stage changes" />
           </div>
           <div className="bg-[#F9FAFB] rounded-lg p-4 border border-gray-200">
-            <h4 className="font-archivo font-bold text-sm text-[#232323] mb-3">Stepper Rules</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground mb-3">Stepper Rules</h4>
             <div className="space-y-2 text-xs font-open-sans text-gray-700">
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Active step: filled green circle (#3ba559), white icon/number</span></div>
               <div className="flex gap-2"><span className="text-[#3ba559] font-bold mt-0.5">✓</span><span>Completed steps: green outline circle, green number — user can navigate back</span></div>
@@ -1332,7 +1332,7 @@ export function NavigationPatterns() {
       <div>
         <div className="flex items-center gap-3 mb-4">
           <span className="bg-red-600 text-white text-xs font-archivo font-bold px-2 py-0.5 rounded">UNIVERSAL RULE</span>
-          <h3 className="font-archivo font-extrabold text-lg text-[#232323]">Overlay &amp; Nav Drawer — Canonical Spec</h3>
+          <h3 className="font-archivo font-extrabold text-lg text-foreground">Overlay &amp; Nav Drawer — Canonical Spec</h3>
         </div>
         <p className="text-gray-600 font-open-sans text-sm mb-5 max-w-3xl">
           These rules apply to <strong>every</strong> overlay and nav drawer across all tiers. There are no exceptions.
@@ -1392,7 +1392,7 @@ export function NavigationPatterns() {
         <div className="bg-[#F9FAFB] rounded-xl p-6 border border-gray-200 mb-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider">TIER A WORKFLOW</span>
-            <h4 className="font-archivo font-bold text-sm text-[#232323]">Nav Group Structure (PSM pattern)</h4>
+            <h4 className="font-archivo font-bold text-sm text-foreground">Nav Group Structure (PSM pattern)</h4>
           </div>
           <p className="text-xs font-open-sans text-gray-600 mb-4">
             Tier A Workflow apps use the same visual spec as Tier B App overlays. The difference is the
@@ -1472,7 +1472,7 @@ export function NavDrawer({ open, onClose, currentPath, user, onLogout }) {
 
       {/* ── Mobile behaviour ── */}
       <div>
-        <h3 className="font-archivo font-extrabold text-lg text-[#232323] mb-4">Mobile Behaviour</h3>
+        <h3 className="font-archivo font-extrabold text-lg text-foreground mb-4">Mobile Behaviour</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-[#F9FAFB] rounded-lg p-5 border border-gray-200">
             <div className="flex items-center gap-2 mb-3">

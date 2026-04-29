@@ -330,3 +330,11 @@
 - [x] Update version number to V.2026.04.29 across all EriAppHeader examples
 - [x] TypeScript check — 0 errors
 - [x] Save checkpoint
+
+## Dark mode — section/sub-section title contrast fix (2026-04-29)
+
+- [x] Audit BrandDesignSystem.tsx: find all h3/h4 sub-section titles using hardcoded text-gray-* classes
+- [x] Replace structural title classes with text-foreground / text-muted-foreground (101 lines in BrandDesignSystem.tsx + 20 lines in NavigationPatterns.tsx)
+- [x] Verify visually in dark mode — titles must be clearly readable
+- [x] TypeScript check — 0 errors
+- [x] Save checkpoint
