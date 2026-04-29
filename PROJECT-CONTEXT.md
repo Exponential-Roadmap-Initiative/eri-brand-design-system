@@ -44,8 +44,8 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Canonical typography rules
 
-- **Heading font:** Archivo — Google Fonts CDN only, never local files
-- **Body font:** Open Sans — Google Fonts CDN
+- **Heading font:** Archivo — self-hosted WOFF2 in `client/public/fonts/` (GDPR requirement — no Google Fonts CDN)
+- **Body font:** Open Sans — self-hosted WOFF2 in `client/public/fonts/` (GDPR requirement)
 - **Heading weight:** `font-extrabold` (800) for all H1–H3
 - **Body:** 16px / Open Sans 400 / line-height 1.6 / colour `#383838` on white/light backgrounds
 - **Do not use:** `text-gray-900` for body text — use `#383838`
@@ -305,7 +305,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 
 **JSON discovery endpoint:** `https://bds.exponentialroadmap.org/api/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
 
-**Current skill version:** v2.9.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.9.0_353ac7cf.skill`
+**Current skill version:** v3.0.0 — CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-skill-v3.0.0_ddaf7414.skill`
+
+**v3.0.0 changes (2026-04-29):** Breaking change — GDPR font compliance. (1) **GDPR Self-Hosted Fonts:** Google Fonts CDN prohibited for all ERI projects. All projects must self-host Archivo + Open Sans WOFF2 files in `client/public/fonts/`. `@font-face` declarations replace CDN `<link>` tags in `index.html`. BDS site migrated as reference implementation. New checklist item B9 `gdprFonts`. (2) **Machine-readable JSON spec endpoint:** `https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec` — full brand spec as structured JSON including `handoff_prompt`, `fontFaceTemplate`, `darkModeRules` array, `cardAccentPalette`, `overlaySpec`. Inspired by Holocen brand identity system. (3) **Dark mode rules table:** Reformatted as two-column rule/correct/anti-pattern table in skill and BDS site for faster AI agent scanning. (4) **AI Agent section on BDS site:** Three new cards — JSON Spec Endpoint (with live-fetch example), GDPR Font Self-Hosting guide (with `@font-face` template), Canonical Source Files panel. (5) **bds-meta.json schema v1.2:** Added `brand.gdprFonts` field. `BrandCompliance` TypeScript interface updated. `BdsMeta.schemaVersion` union extended to `"1.0" | "1.1" | "1.2"`. AlignmentTracker B9 row added, clipboard and visible seed templates updated to schema v1.2.
 
 **v2.9.0 changes (2026-04-27):** Added canonical Overlay / Nav Drawer spec to NavigationPatterns.tsx and skill Navigation section. Universal rules: `bg-[#232323]` mandatory (never pure black `#000000`, never `bg-background`), `w-80`, `bg-black/50` backdrop, slide-in from right `duration-300`. Per-item colours: inactive `text-white/80 hover:text-white hover:bg-white/5`, active `bg-[#3ba559]/10 text-[#3ba559]`. Tier A Workflow (PSM) four-group nav structure documented. Full `NavDrawer.tsx` code example added to BDS site. New checklist item C8: `overlayBackground` (`layout.overlayBackground` in bds-meta.json). `LayoutCompliance` TypeScript interface updated. AlignmentTracker clipboard template rewritten as `JSON.stringify` (eliminates template literal corruption risk). BDS site `bds-meta.json`: `overlayBackground: true`. Root cause: PSM nav drawer used pure black (`#000000`) instead of `#232323` — the shadcn/ui `Sheet` default resolves to near-black in dark mode and was not overridden.
 

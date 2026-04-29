@@ -4874,15 +4874,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.8.0_a333afd9.skill"
-                    download="eri-bds-reference-v2.8.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-skill-v3.0.0_ddaf7414.skill"
+                    download="eri-bds-skill-v3.0.0.skill"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.8.0_a333afd9.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-skill-v3.0.0_ddaf7414.skill"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
@@ -4953,7 +4953,7 @@ const tabs: TabConfig[] = [
                     trigger: "Choosing a font",
                     action: "Check Typography Rules below",
                     anchor: "ai-instructions",
-                    rule: "Two-font system: Archivo for headings (font-extrabold 800), Open Sans for body text (400). Both from Google Fonts CDN only.",
+                    rule: "Two-font system: Archivo for headings (font-extrabold 800), Open Sans for body text (400). Self-hosted WOFF2 in client/public/fonts/ — no Google Fonts CDN (GDPR).",
                   },
                 ].map(({ trigger, action, anchor, rule }) => (
                   <div key={trigger} className="bg-card rounded-lg border border-[#c6e8d0] p-3">
@@ -5073,7 +5073,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <p className="text-xs text-muted-foreground mb-4">Mandatory. Do not substitute Inter, Roboto, or any other font.</p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
-                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Two-font system:</strong> Archivo (headings) + Open Sans (body text) — both loaded via Google Fonts CDN. Map Archivo to <code className="bg-gray-100 px-1 rounded text-xs">font-sans</code> and <code className="bg-gray-100 px-1 rounded text-xs">font-archivo</code>.</span></div>
+                  <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Two-font system:</strong> Archivo (headings) + Open Sans (body text) — self-hosted WOFF2 in <code className="bg-gray-100 px-1 rounded text-xs">client/public/fonts/</code> via <code className="bg-gray-100 px-1 rounded text-xs">@font-face</code> in <code className="bg-gray-100 px-1 rounded text-xs">index.css</code>. Map Archivo to <code className="bg-gray-100 px-1 rounded text-xs">font-sans</code> and <code className="bg-gray-100 px-1 rounded text-xs">font-archivo</code>.</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Weights:</strong> Archivo 800 (headings/extrabold), Archivo 700 (semibold), Open Sans 400 (body).</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Headings:</strong> Archivo <code className="bg-gray-100 px-1 rounded text-xs">font-extrabold</code> (800) for all h1–h3.</span></div>
                   <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">✓</span><span><strong>Body:</strong> Open Sans 400, 16px, line-height 1.6, colour <code className="bg-gray-100 px-1 rounded text-xs">#383838</code> on white/light backgrounds.</span></div>
@@ -5082,7 +5082,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use Inter as the primary font.</span></div>
                   <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use font-weight 600 for headings — use 800.</span></div>
                   <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use <code className="bg-gray-100 px-1 rounded text-xs">text-gray-900</code> for body text — use <code className="bg-gray-100 px-1 rounded text-xs">#383838</code> on white/light backgrounds. Reserve <code className="bg-gray-100 px-1 rounded text-xs">#232323</code> for headings and the footer background.</span></div>
-                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not load Archivo from local files — use Google Fonts CDN only.</span></div>
+                  <div className="flex gap-2"><span className="text-red-500 font-bold shrink-0">✗</span><span>Do not use Google Fonts CDN — it transmits visitor IPs to US servers (GDPR violation for EU organisations). Use self-hosted WOFF2 only.</span></div>
                 </div>
               </div>
             </CardContent>
@@ -5289,14 +5289,14 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <tbody className="font-mono text-[11px]">
                   <tr className="border-b border-border/50">
                     <td className="py-1.5 pr-3 font-sans font-medium text-foreground">eri-bds-reference</td>
-                    <td className="py-1.5 pr-3 text-muted-foreground">v2.8.0</td>
+                    <td className="py-1.5 pr-3 text-muted-foreground">v3.0.0</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-reference-v2.8.0_a333afd9.skill"
-                        download="eri-bds-reference-v2.8.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-skill-v3.0.0_ddaf7414.skill"
+                        download="eri-bds-skill-v3.0.0.skill"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-reference-v2.8.0_a333afd9.skill
+                        eri-bds-skill-v3.0.0_ddaf7414.skill
                       </a>
                     </td>
                   </tr>
@@ -5416,6 +5416,168 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                       <td className="py-1.5 pr-3 font-sans font-medium text-foreground whitespace-nowrap">{name}</td>
                       <td className="py-1.5 pr-3 font-sans text-muted-foreground whitespace-nowrap">{sector}</td>
                       <td className="py-1.5 text-[#3ba559] break-all">{url}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          {/* ── JSON SPEC ENDPOINT ── */}
+          <Card className="shadow-sm mb-6 border border-[#3ba559]/40">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">⚡</span>
+                <h3 className="font-bold text-[#232323] text-base">Machine-Readable Spec Endpoint</h3>
+                <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v3.0.0</span>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+                The full ERI brand spec is available as structured JSON. AI agents can fetch this endpoint
+                programmatically to extract exact hex values, CSS variables, Tailwind classes, and the
+                complete <code className="bg-gray-100 px-1 rounded text-xs">handoff_prompt</code> field — a pre-composed project instruction block.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Endpoint</p>
+                  <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-3 overflow-x-auto">{`GET https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec`}</pre>
+                  <p className="text-xs text-muted-foreground mt-2">Public — no authentication required. Returns JSON with all brand tokens, typography rules, dark mode rules, card accent palette, and navigation specs.</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Key fields</p>
+                  <div className="space-y-1 text-xs font-mono">
+                    {[
+                      ["version",              "Current BDS version string"],
+                      ["handoff_prompt",        "Copy-pasteable AI project instruction block"],
+                      ["colors.brand",          "All brand hex values with roles"],
+                      ["typography.fontFaceTemplate", "@font-face declarations (copy verbatim)"],
+                      ["semanticTokens.cssBlock", "Full CSS variable block for index.css"],
+                      ["darkModeRules",         "Rule + correct + antiPattern for each rule"],
+                      ["cardAccentColors",      "Six-slot palette with tint values"],
+                      ["canonicalSourceFiles",  "GitHub links to reference implementations"],
+                    ].map(([field, desc]) => (
+                      <div key={field} className="flex gap-2">
+                        <span className="text-[#3ba559] shrink-0">{field}</span>
+                        <span className="text-muted-foreground font-sans">{desc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href="https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  Open Spec Endpoint
+                </a>
+                <a
+                  href="https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec"
+                  download="eri-bds-spec-v3.0.0.json"
+                  className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                  Download JSON
+                </a>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── GDPR FONT SELF-HOSTING ── */}
+          <Card className="shadow-sm mb-6 border-l-4 border-l-amber-500">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">🔒</span>
+                <h3 className="font-bold text-[#232323] text-base">GDPR-Compliant Font Self-Hosting</h3>
+                <span className="text-[10px] bg-amber-100 text-amber-700 border border-amber-300 px-2 py-0.5 rounded font-semibold uppercase tracking-wide">Required</span>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+                Google Fonts CDN transmits visitor IP addresses to US servers on every page load — a GDPR violation
+                for EU-based organisations. All ERI projects must self-host Archivo and Open Sans WOFF2 files.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Step 1 — Download font files</p>
+                  <pre className="bg-gray-900 text-green-400 text-[11px] rounded-md p-3 overflow-x-auto leading-relaxed">{`mkdir -p client/public/fonts
+# Download from Google Fonts API with browser UA:
+curl -sA "Mozilla/5.0" \
+  "https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800" \
+  | grep -o 'https://[^)]*\.woff2' \
+  | xargs -I{} sh -c 'curl -sL "{}" -o \
+    client/public/fonts/Archivo-$(echo "{}" | \
+    grep -o "wght@[0-9]*" | cut -d@ -f2).woff2'`}</pre>
+                  <p className="text-xs text-muted-foreground mt-2">Repeat for Open Sans. Files: Archivo-400/500/600/700/800.woff2, OpenSans-400/600/700.woff2</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Step 2 — Add @font-face to index.css</p>
+                  <pre className="bg-gray-900 text-green-400 text-[11px] rounded-md p-3 overflow-x-auto leading-relaxed">{`/* Remove Google Fonts <link> from index.html */
+/* Add to top of client/src/index.css: */
+@font-face {
+  font-family: 'Archivo';
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/Archivo-800.woff2') format('woff2');
+}
+/* Repeat for each weight */
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/OpenSans-400.woff2') format('woff2');
+}`}</pre>
+                  <p className="text-xs text-muted-foreground mt-2">Full template available at <code className="font-mono text-[10px]">typography.fontFaceTemplate</code> in the spec endpoint above.</p>
+                </div>
+              </div>
+              <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs">
+                <p className="font-semibold text-amber-800 mb-1">Checklist item: <code className="font-mono">brand.gdprFonts</code></p>
+                <p className="text-amber-700">Set <code className="font-mono">"gdprFonts": true</code> in your <code className="font-mono">bds-meta.json</code> once Google Fonts CDN is removed and WOFF2 files are in <code className="font-mono">client/public/fonts/</code>.</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── CANONICAL SOURCE FILES ── */}
+          <Card className="shadow-sm mb-6">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">📁</span>
+                <h3 className="font-bold text-[#232323] text-base">Canonical Source Files</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+                These five files in the BDS repository are the ground-truth reference implementations.
+                When in doubt about how a pattern should be implemented, read the source file directly.
+              </p>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-1 font-semibold text-foreground">File</th>
+                    <th className="text-left py-1 font-semibold text-foreground">Purpose</th>
+                    <th className="text-left py-1 font-semibold text-foreground">Link</th>
+                  </tr>
+                </thead>
+                <tbody className="text-[11px]">
+                  {([
+                    ["BrandDesignSystem.tsx",    "Canonical reference page — every BDS rule applied in practice",     "https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/blob/main/client/src/pages/BrandDesignSystem.tsx"],
+                    ["NavigationPatterns.tsx",   "Canonical nav overlay — all tier specs with code examples",         "https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/blob/main/client/src/components/NavigationPatterns.tsx"],
+                    ["index.css",                "CSS variables — semantic tokens, dark mode, @font-face declarations", "https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/blob/main/client/src/index.css"],
+                    ["EriPageLayout.tsx",        "Full-page layout wrapper — header, footer, theme toggle",            "https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/blob/main/packages/eri-components/src/EriPageLayout.tsx"],
+                    ["EriAppHeader.tsx",         "64px fixed header — logo, nav, hamburger, theme toggle",             "https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system/blob/main/packages/eri-components/src/EriAppHeader.tsx"],
+                  ] as [string, string, string][]).map(([file, desc, url]) => (
+                    <tr key={file} className="border-b border-border/50">
+                      <td className="py-2 pr-3 font-mono text-[#3ba559] whitespace-nowrap">{file}</td>
+                      <td className="py-2 pr-3 font-sans text-muted-foreground">{desc}</td>
+                      <td className="py-2">
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[#3ba559] hover:text-[#2c6d3e] underline underline-offset-2"
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          GitHub
+                        </a>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

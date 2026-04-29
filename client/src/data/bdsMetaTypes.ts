@@ -54,10 +54,12 @@ export interface SystemOpsCompliance {
 export interface BrandCompliance {
   /** All brand colour values use exact hex tokens — no Tailwind colour names */
   hexTokensOnly?: boolean;
-  /** Heading font is Archivo loaded from Google Fonts CDN */
+  /** Heading font is Archivo, self-hosted WOFF2 in client/public/fonts/ */
   archivoHeadings?: boolean;
-  /** Body font is Open Sans loaded from Google Fonts CDN */
+  /** Body font is Open Sans, self-hosted WOFF2 in client/public/fonts/ */
   openSansBody?: boolean;
+  /** GDPR compliance: no Google Fonts CDN requests; all fonts self-hosted WOFF2 */
+  gdprFonts?: boolean;
   /** Body paragraph text uses #383838 (not #232323) on white/light backgrounds */
   bodyTextHex383838?: boolean;
   /** All filled CTA buttons use #93E07D (Accent Lime) */
@@ -88,7 +90,7 @@ export interface LayoutCompliance {
 }
 
 export interface BdsMeta {
-  schemaVersion: "1.0";
+  schemaVersion: "1.0" | "1.1" | "1.2";
   /** Short project code matching PROJECT_REGISTRY id */
   project: string;
   /** Full human-readable project name */

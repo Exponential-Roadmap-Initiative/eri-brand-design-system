@@ -214,6 +214,7 @@ function checklistScore(meta: BdsMeta | undefined): { score: number; total: numb
     brand?.noHardcodedGreys,
     brand?.cardAccentPattern,
     brand?.eyebrowAccentLime,
+    brand?.gdprFonts,
     layout?.eriPageLayoutInAppTsx,
     layout?.showCtaExplicit,
     layout?.sourcePropsPresent,
@@ -609,6 +610,7 @@ export default function AlignmentTracker() {
                         hexTokensOnly:       false,
                         archivoHeadings:     false,
                         openSansBody:        false,
+                        gdprFonts:           false,
                         bodyTextHex383838:   false,
                         ctaAccentLime:       false,
                         noHardcodedGreys:    false,
@@ -637,7 +639,7 @@ export default function AlignmentTracker() {
             </div>
             <div className="rounded-lg p-4 font-mono text-xs overflow-x-auto leading-relaxed" style={{ backgroundColor: T.dark, color: T.lime }}>
 {`{
-  "schemaVersion": "1.1",
+  "schemaVersion": "1.2",
   "project": "your-project-id",
   "displayName": "Your Project Name",
   "url": "https://your-project.exponentialroadmap.org",
@@ -659,6 +661,7 @@ export default function AlignmentTracker() {
     "hexTokensOnly":       false,
     "archivoHeadings":     false,
     "openSansBody":        false,
+    "gdprFonts":           false,
     "bodyTextHex383838":   false,
     "ctaAccentLime":       false,
     "noHardcodedGreys":    false,
@@ -674,7 +677,7 @@ export default function AlignmentTracker() {
   },
   "knownViolations": [],
   "overallStatus": "red",
-  "lastUpdated": "2026-04-27",
+  "lastUpdated": "2026-04-29",
   "updatedBy": "Manus"
 }`}
             </div>
@@ -1009,8 +1012,9 @@ Overall status: [green / amber / red]
                 <tbody>
                   {[
                     { id: 'B1', check: 'All colour values use exact hex tokens', pass: 'No Tailwind colour names (text-green-500, bg-gray-900) for brand colours — only exact hex values' },
-                    { id: 'B2', check: 'Heading font is Archivo, loaded via Google Fonts CDN', pass: 'family=Archivo in the <link> tag in index.html; no local font files' },
-                    { id: 'B3', check: 'Body font is Open Sans, loaded via Google Fonts CDN', pass: 'family=Open+Sans in the <link> tag in index.html' },
+                    { id: 'B2', check: 'Heading font is Archivo, self-hosted WOFF2', pass: 'Archivo-400/500/600/700/800.woff2 in client/public/fonts/; @font-face in index.css; NO Google Fonts <link> tag in index.html' },
+                    { id: 'B3', check: 'Body font is Open Sans, self-hosted WOFF2', pass: 'OpenSans-400/600/700.woff2 in client/public/fonts/; @font-face in index.css; NO Google Fonts <link> tag in index.html' },
+                    { id: 'B9', check: 'GDPR font compliance — no Google Fonts CDN requests', pass: 'grep -r "fonts.googleapis.com" client/ returns no results; client/public/fonts/ contains all WOFF2 files; bds-meta.json has brand.gdprFonts: true' },
                     { id: 'B4', check: 'Body text colour is #383838, not #232323', pass: '#383838 for paragraph text on white/light backgrounds; #232323 reserved for headings and footer background only' },
                     { id: 'B5', check: 'Filled CTA buttons use #93E07D (Accent Lime) and rounded-lg shape', pass: 'No rounded-full on CTAs; no bg-[#3ba559] for filled buttons' },
                     { id: 'B6', check: 'No structural Tailwind grey classes used for text or backgrounds', pass: 'No text-gray-*, bg-white, bg-gray-* on structural elements — use text-foreground, text-muted-foreground, bg-card, bg-muted, bg-background. Hardcoded greys in documentation specimens (colour swatches, code examples, live previews) are exempt.' },

@@ -256,7 +256,7 @@
 - [x] Update Skills card in BrandDesignSystem.tsx to v2.8.0
 - [x] Update PROJECT-CONTEXT.md with v2.8.0 changelog
 - [x] TypeScript check — 0 errors
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Complete Overlay / Nav Drawer Spec — v2.9.0 (2026-04-27)
 
@@ -273,5 +273,28 @@
 - [x] Bump skill to v2.9.0 and upload to CDN
 - [x] Update SKILL_LATEST_URL in server/_core/index.ts
 - [x] Update PROJECT-CONTEXT.md with v2.9.0 changelog
+- [x] TypeScript check — 0 errors
+- [ ] Save checkpoint
+
+## BDS v3.0.0 — Holocen-inspired upgrades (2026-04-29)
+
+- [x] Download Archivo WOFF2 files (400, 600, 700, 800) to client/public/fonts/
+- [x] Download Open Sans WOFF2 files (400, 600, 700, 800) to client/public/fonts/
+- [x] Add @font-face declarations to client/src/index.css
+- [x] Remove Google Fonts <link> tags from client/index.html
+- [x] Add bdsSpec.getSpec tRPC procedure to server/routers/bdsSpec.ts + registered in routers.ts
+- [x] Add AI Agent section cards to BDS site (JSON Spec Endpoint, GDPR Font Self-Hosting, Canonical Source Files)
+- [x] Reformat dark mode rules as two-column table in skill
+- [x] Update skill Typography Rules: replace Google Fonts CDN snippet with @font-face template + GDPR note
+- [x] Update skill B2/B3 checklist items to reflect self-hosted fonts
+- [x] Add B9 gdprFonts to skill Project Alignment Checklist
+- [x] Add B9 gdprFonts row to AlignmentTracker.tsx
+- [x] Add gdprFonts to BrandCompliance TypeScript interface
+- [x] Update AlignmentTracker clipboard template and visible seed template to schema v1.2
+- [x] Update BDS site bds-meta.json to schema v1.2 with gdprFonts: true
+- [x] Bump skill to v3.0.0 and upload to CDN
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts
+- [x] Update Skills card in BrandDesignSystem.tsx to v3.0.0
+- [x] Update PROJECT-CONTEXT.md with v3.0.0 changelog and GDPR font rule
 - [x] TypeScript check — 0 errors
 - [ ] Save checkpoint
