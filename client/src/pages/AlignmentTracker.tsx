@@ -957,7 +957,7 @@ Overall status: [green / amber / red]
           <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded tracking-widest uppercase" style={{ backgroundColor: T.lime, color: T.dark }}>CHECKLIST</span>
           <h2 className="font-archivo text-lg font-extrabold" style={{ color: '#ffffff' }}>Project Alignment Checklist</h2>
         </div>
-        <div className="px-6 py-5" style={{ backgroundColor: '#ffffff' }}>
+        <div className="px-6 py-5 bg-card">
           <p className="text-sm mb-6" style={{ color: TV.foreground }}>
             Run this checklist before saving a checkpoint or marking any task complete on an ERI project. Each item maps to a specific section of the <a href="/" className="underline" style={{ color: '#3ba559' }}>BDS reference</a> or the <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system" className="underline" style={{ color: '#3ba559' }}>eri-bds-reference skill</a>. If any item fails, fix it before closing.
           </p>
@@ -971,7 +971,7 @@ Overall status: [green / amber / red]
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr style={{ backgroundColor: '#f9fafb' }}>
+                  <tr className="bg-muted">
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>#</th>
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Check</th>
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Pass condition</th>
@@ -1003,7 +1003,7 @@ Overall status: [green / amber / red]
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr style={{ backgroundColor: '#f9fafb' }}>
+                  <tr className="bg-muted">
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>#</th>
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Check</th>
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Pass condition</th>
@@ -1041,7 +1041,7 @@ Overall status: [green / amber / red]
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr style={{ backgroundColor: '#f9fafb' }}>
+                  <tr className="bg-muted">
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>#</th>
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Check</th>
                     <th className="text-left px-3 py-2 font-semibold text-xs uppercase tracking-wide" style={{ color: TV.mutedFg, borderBottom: `1px solid ${TV.border}` }}>Pass condition</th>

@@ -350,3 +350,15 @@
 - [x] TypeScript check — 0 errors
 - [x] Visual verification in dark mode — Tone of Voice, Writing Principles, Preferred Terminology titles now visible
 - [x] Save checkpoint
+
+## Systematic light mode sweep (2026-04-29)
+
+- [x] Audit all source files for hardcoded dark colours that break light mode (84 flagged, 17 genuine violations)
+- [x] Fix structural violations in BrandDesignSystem.tsx (scope note card bg-[#f9fafb] → bg-muted)
+- [x] Fix AlignmentTracker.tsx table header rows with hardcoded #f9fafb → bg-muted
+- [x] Add dark: variants to all semantic colour callout boxes (bg-red-50, bg-amber-50, bg-blue-50, bg-green-50) — 17 boxes, 123 class changes
+- [x] Add dark: text variants to callout box headings (text-red-700, text-red-600, text-amber-900, text-amber-800, text-blue-700, text-blue-800)
+- [x] Preserve intentional dark specimens (hero overlays, footer, dark cards, live previews, NavigationPatterns mockups)
+- [x] TypeScript check — 0 errors
+- [x] Visual verification in light mode — layout correct, callout boxes readable in both modes
+- [x] Save checkpoint

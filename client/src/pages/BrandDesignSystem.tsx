@@ -500,7 +500,7 @@ export default function BrandDesignSystem() {
           <div className="rounded-lg p-6 mb-6 border-l-4 bg-card" style={{ borderLeftColor: '#3ba559' }}>
             <p className="text-sm font-bold text-foreground mb-1">Building an ERI app? Start with Standard Components.</p>
             <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-              The <code className="font-mono bg-green-100 px-1 rounded">@eri/components</code> package ships six canonical components that every ERI public-facing application must use verbatim.
+              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships six canonical components that every ERI public-facing application must use verbatim.
               Install once, import, and the layout, header, hero, footer, status badges, and contact button are all handled.
             </p>
             <div className="grid sm:grid-cols-2 gap-2 mb-4">
@@ -639,8 +639,8 @@ export default function BrandDesignSystem() {
           <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 rounded-lg p-4 mb-6 max-w-3xl">
             <p className="text-sm font-semibold text-red-700 dark:text-red-400 mb-1">❌ Anti-pattern: full four-side coloured border</p>
             <p className="text-sm text-red-600 dark:text-red-500">
-              Using <code className="font-mono text-xs bg-red-100 dark:bg-red-950/40 px-1 rounded">border-2 border-[#17b7dd]</code> on a dark background creates a jarring neon-box effect.
-              The high-saturation colour against <code className="font-mono text-xs bg-red-100 dark:bg-red-950/40 px-1 rounded">#111111</code> has excessive contrast that overwhelms the card content.
+              Using <code className="font-mono text-xs bg-red-100 dark:bg-red-900/40 dark:bg-red-950/40 px-1 rounded">border-2 border-[#17b7dd]</code> on a dark background creates a jarring neon-box effect.
+              The high-saturation colour against <code className="font-mono text-xs bg-red-100 dark:bg-red-900/40 dark:bg-red-950/40 px-1 rounded">#111111</code> has excessive contrast that overwhelms the card content.
               Never use a full four-side coloured outline for card category accents.
             </p>
           </div>
@@ -1017,7 +1017,7 @@ export default function BrandDesignSystem() {
           </Card>
 
           {/* What NOT to use warning */}
-          <Card className="shadow-sm mb-6 border border-red-200 bg-red-50">
+          <Card className="shadow-sm mb-6 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
             <CardContent className="p-5">
               <h4 className="font-bold text-red-800 mb-3 flex items-center gap-2">
                 <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-bold flex-shrink-0">!</span>
@@ -1533,8 +1533,8 @@ export default function BrandDesignSystem() {
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-archivo font-bold text-[#232323] text-sm">{src.name}</span>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                      src.type === 'Free' ? 'bg-green-100 text-green-700' :
-                      src.type === 'Licensed' ? 'bg-blue-100 text-foreground' :
+                      src.type === 'Free' ? 'bg-green-100 dark:bg-green-900/40 text-green-700' :
+                      src.type === 'Licensed' ? 'bg-blue-100 dark:bg-blue-900/40 text-foreground' :
                       'bg-muted text-muted-foreground'
                     }`}>{src.type}</span>
                   </div>
@@ -2658,8 +2658,8 @@ import { pillarBottomIcons } from "@/lib/assets";
             <CardContent className="p-5">
               <div className="flex flex-wrap gap-4 mb-4">
                 {[
-                  { label: "Critical", cls: "bg-red-100 text-red-700 border-red-200" },
-                  { label: "High",     cls: "bg-amber-100 text-amber-700 border-amber-200" },
+                  { label: "Critical", cls: "bg-red-100 dark:bg-red-900/40 text-red-700 border-red-200" },
+                  { label: "High",     cls: "bg-amber-100 dark:bg-amber-900/40 text-amber-700 border-amber-200" },
                   { label: "Medium",   cls: "bg-[#17b7dd]/10 text-[#17b7dd] border-[#17b7dd]/30" },
                   { label: "Low",      cls: "bg-gray-100 text-gray-600 border-gray-200" },
                 ].map(({ label, cls }) => (
@@ -2703,8 +2703,8 @@ import { pillarBottomIcons } from "@/lib/assets";
               <div className="flex flex-wrap gap-4 mb-4">
                 {[
                   { label: "Qualified",     cls: "bg-[#3ba559]/15 text-[#3ba559] border-[#3ba559]/40" },
-                  { label: "Partial",       cls: "bg-amber-100 text-amber-800 border-amber-300" },
-                  { label: "Not Qualified", cls: "bg-red-100 text-red-800 border-red-300" },
+                  { label: "Partial",       cls: "bg-amber-100 dark:bg-amber-900/40 text-amber-800 border-amber-300" },
+                  { label: "Not Qualified", cls: "bg-red-100 dark:bg-red-900/40 text-red-800 border-red-300" },
                   { label: "Unknown",       cls: "bg-gray-100 text-gray-600 border-gray-200" },
                 ].map(({ label, cls }) => (
                   <div key={label} className="flex flex-col items-start gap-1.5">
@@ -2996,7 +2996,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                     { label: "Body text",     cls: "text-muted-foreground",   preview: "text-muted-foreground",   desc: "Standard body copy, descriptions, secondary labels" },
                     { label: "Muted text",    cls: "text-muted-foreground",   preview: "text-muted-foreground",   desc: "Captions, timestamps, placeholder text" },
                     { label: "Heading text",  cls: "text-[#232323]",  preview: "text-[#232323]",  desc: "All headings and primary labels" },
-                    { label: "Destructive",   cls: "text-red-600",    preview: "text-red-600",    desc: "Logout, delete, error states" },
+                    { label: "Destructive",   cls: "text-red-600 dark:text-red-400",    preview: "text-red-600 dark:text-red-400",    desc: "Logout, delete, error states" },
                   ].map((item) => (
                     <div key={item.label} className="flex items-center gap-3">
                       <span className={`text-sm font-medium w-36 flex-shrink-0 ${item.preview}`}>{item.label}</span>
@@ -3064,10 +3064,10 @@ className="transition-all duration-300 ease-in-out"`}</pre>
           <p className="text-muted-foreground text-sm mb-6">Version 2026.04.16 · Service URL: contact-us.exponentialroadmap.org</p>
 
           {/* Critical rule banner */}
-          <Card className="shadow-sm bg-amber-50 border border-amber-300 mb-8">
+          <Card className="shadow-sm bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-900/50 mb-8">
             <CardContent className="p-5">
-              <p className="font-semibold text-amber-900 mb-1">⚠ Never build a custom contact form</p>
-              <p className="text-sm text-amber-800">All ERI applications link to the single shared contact service at <code className="font-mono text-xs bg-amber-100 px-1 rounded">https://contact-us.exponentialroadmap.org</code>. The service is self-registering — no configuration is needed on the contact service side. The app simply passes its identity in the URL.</p>
+              <p className="font-semibold text-amber-900 dark:text-amber-200 mb-1">⚠ Never build a custom contact form</p>
+              <p className="text-sm text-amber-800 dark:text-amber-300">All ERI applications link to the single shared contact service at <code className="font-mono text-xs bg-amber-100 dark:bg-amber-900/40 px-1 rounded">https://contact-us.exponentialroadmap.org</code>. The service is self-registering — no configuration is needed on the contact service side. The app simply passes its identity in the URL.</p>
             </CardContent>
           </Card>
 
@@ -3118,9 +3118,9 @@ className="transition-all duration-300 ease-in-out"`}</pre>
 
           {/* Button implementation — CRITICAL */}
           <h3 className="font-bold text-foreground mb-3 text-lg">Button Implementation — Mandatory Style</h3>
-          <div className="rounded-lg border-2 border-red-400 bg-red-50 p-4 mb-4">
-            <p className="text-sm font-bold text-red-700 mb-1">CRITICAL — Do not style this button yourself.</p>
-            <p className="text-sm text-red-600">The Contact Us button MUST use Accent Lime fill, <code className="font-mono text-xs bg-red-100 px-1 rounded">rounded-lg</code>, dark text, and no icon. Any other style is non-conformant.</p>
+          <div className="rounded-lg border-2 border-red-400 dark:border-red-700 bg-red-50 dark:bg-red-950/30 p-4 mb-4">
+            <p className="text-sm font-bold text-red-700 dark:text-red-300 mb-1">CRITICAL — Do not style this button yourself.</p>
+            <p className="text-sm text-red-600 dark:text-red-400">The Contact Us button MUST use Accent Lime fill, <code className="font-mono text-xs bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-lg</code>, dark text, and no icon. Any other style is non-conformant.</p>
           </div>
 
           {/* Live demo */}
@@ -3184,7 +3184,7 @@ const contactUrl =
               { label: 'Shape', value: 'rounded-lg', ok: true },
               { label: 'Icon', value: 'None — text only', ok: true },
             ].map(({ label, value, ok }) => (
-              <div key={label} className={`rounded-lg p-3 border ${ok ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+              <div key={label} className={`rounded-lg p-3 border ${ok ? 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-900/50' : 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900/50'}`}>
                 <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">{label}</p>
                 <p className="text-xs font-mono text-gray-800">{value}</p>
               </div>
@@ -3234,7 +3234,7 @@ const contactUrl =
 
           {/* Implementation checklist */}
           <h3 className="font-bold text-foreground mb-3 text-lg">Implementation Checklist</h3>
-          <Card className="shadow-sm bg-green-50 border border-green-200 mb-8">
+          <Card className="shadow-sm bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/50 mb-8">
             <CardContent className="p-5">
               <ul className="text-sm text-foreground space-y-2">
                 {[
@@ -3271,12 +3271,12 @@ const contactUrl =
           <p className="text-muted-foreground text-sm mb-6">Version 2.0.0 · 6 canonical files · Copy verbatim — do not reconstruct</p>
 
           {/* Scope note */}
-          <div className="rounded-lg p-4 mb-6 border" style={{ backgroundColor: '#f9fafb', borderColor: '#e5e7eb' }}>
-            <p className="text-sm font-bold text-[#232323] mb-1">Scope: Public-Facing ERI Apps Only</p>
+          <div className="rounded-lg p-4 mb-6 border bg-muted border-border">
+            <p className="text-sm font-bold text-foreground mb-1">Scope: Public-Facing ERI Apps Only</p>
             <p className="text-sm text-muted-foreground">
               These components apply to <strong>public-facing ERI product apps</strong> — such as Taxonomy, Professional Services Matrix, and HAL.
               They are <strong>not</strong> intended for internal or documentation tools (such as this BDS site itself, which uses its own{" "}
-              <code className="font-mono text-xs bg-gray-200 px-1 rounded">PublicLayout</code> with a white header appropriate for a reference document).
+              <code className="font-mono text-xs bg-muted-foreground/20 px-1 rounded">PublicLayout</code> with a white header appropriate for a reference document).
               If a project has a fundamentally different surface — for example a white header, an admin panel, or an embedded widget — it is exempt and should use its own layout.
             </p>
           </div>
@@ -3314,22 +3314,22 @@ const contactUrl =
           <div className="rounded-lg p-5 mb-4 border-l-4 border-l-blue-500" style={{ backgroundColor: '#eff6ff' }}>
             <p className="text-sm font-bold text-blue-900 mb-1">REQUIRED: IMPORT THE PRE-BUILT CSS (Tailwind 4)</p>
             <p className="text-sm text-blue-800 mb-3">
-              Tailwind 4 does not scan <code className="font-mono text-xs bg-blue-100 px-1 rounded">node_modules</code> by default.
+              Tailwind 4 does not scan <code className="font-mono text-xs bg-blue-100 dark:bg-blue-900/40 px-1 rounded">node_modules</code> by default.
               Without this import, all component styles are stripped at build time — components render in the DOM but are completely invisible.
-              Add this line to <code className="font-mono text-xs bg-blue-100 px-1 rounded">client/src/index.css</code>{" "}
+              Add this line to <code className="font-mono text-xs bg-blue-100 dark:bg-blue-900/40 px-1 rounded">client/src/index.css</code>{" "}
               <strong>before</strong> your own styles:
             </p>
-            <pre className="text-xs text-blue-900 bg-blue-100 rounded p-3 mb-3 overflow-x-auto font-mono">{`@import "@eri/components/dist/eri-components.css";`}</pre>
+            <pre className="text-xs text-blue-900 bg-blue-100 dark:bg-blue-900/40 rounded p-3 mb-3 overflow-x-auto font-mono">{`@import "@eri/components/dist/eri-components.css";`}</pre>
             <div className="mt-3 pt-3 border-t border-blue-200">
               <p className="text-xs text-blue-700 font-semibold mb-1">Temporary workaround (pre-v2.9.1 only)</p>
-              <p className="text-xs text-blue-700 mb-2">If pinned to an older version, add this line immediately after <code className="font-mono bg-blue-100 px-1 rounded">@import "tailwindcss";</code> in <code className="font-mono bg-blue-100 px-1 rounded">client/src/index.css</code>. Remove it once upgraded to v2.9.1+.</p>
-              <pre className="text-xs text-blue-900 bg-blue-100 rounded p-2 overflow-x-auto font-mono">{`@source "../../node_modules/@eri/components/src";`}</pre>
+              <p className="text-xs text-blue-700 mb-2">If pinned to an older version, add this line immediately after <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">@import "tailwindcss";</code> in <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">client/src/index.css</code>. Remove it once upgraded to v2.9.1+.</p>
+              <pre className="text-xs text-blue-900 bg-blue-100 dark:bg-blue-900/40 rounded p-2 overflow-x-auto font-mono">{`@source "../../node_modules/@eri/components/src";`}</pre>
               <div className="mt-3">
                 <p className="text-xs text-blue-700 font-semibold mb-1">Projects with workaround applied</p>
                 <table className="text-xs w-full">
                   <thead><tr className="text-blue-600"><th className="text-left py-1 pr-4">Project</th><th className="text-left py-1">Status</th></tr></thead>
                   <tbody>
-                    <tr className="border-t border-blue-200"><td className="py-1 pr-4 text-blue-800">Exponential Taxonomy</td><td className="py-1 text-blue-800">Temporary <code className="font-mono bg-blue-100 px-1 rounded">@source</code> workaround applied — upgrade to v2.9.1 and switch to <code className="font-mono bg-blue-100 px-1 rounded">@import</code></td></tr>
+                    <tr className="border-t border-blue-200"><td className="py-1 pr-4 text-blue-800">Exponential Taxonomy</td><td className="py-1 text-blue-800">Temporary <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">@source</code> workaround applied — upgrade to v2.9.1 and switch to <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">@import</code></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -3423,11 +3423,11 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </Card>
 
           {/* Non-conformant callout */}
-          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
-            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
-            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
-              <li>Filled background (e.g. <code className="font-mono bg-red-100 px-1 rounded">bg-muted</code> or <code className="font-mono bg-red-100 px-1 rounded">bg-green-500</code>) — always transparent</li>
-              <li>Rounded rectangle (<code className="font-mono bg-red-100 px-1 rounded">rounded-md</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-full</code></li>
+          <div className="rounded-lg p-4 mb-10 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <p className="text-xs font-semibold text-red-700 dark:text-red-300 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 dark:text-red-400 space-y-1 list-disc list-inside">
+              <li>Filled background (e.g. <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">bg-muted</code> or <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">bg-green-500</code>) — always transparent</li>
+              <li>Rounded rectangle (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-md</code>) — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-full</code></li>
               <li>Coloured text (e.g. green or amber) — always white on dark, gray on light</li>
             </ul>
           </div>
@@ -3588,11 +3588,11 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </Card>
 
           {/* Non-conformant callout */}
-          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
-            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
-            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
-              <li>White or gray button fill — always Accent Lime <code className="font-mono bg-red-100 px-1 rounded">#93E07D</code></li>
-              <li>Pill shape (<code className="font-mono bg-red-100 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-lg</code></li>
+          <div className="rounded-lg p-4 mb-10 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <p className="text-xs font-semibold text-red-700 dark:text-red-300 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 dark:text-red-400 space-y-1 list-disc list-inside">
+              <li>White or gray button fill — always Accent Lime <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">#93E07D</code></li>
+              <li>Pill shape (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-lg</code></li>
               <li>Custom label ("Get in touch", "Send message") — always "Contact Us"</li>
               <li>Custom contact form — always link to the shared service</li>
             </ul>
@@ -3691,21 +3691,21 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 
           {/* Integration Notes */}
           <div className="rounded-lg p-4 mb-4 border border-amber-200 bg-amber-50">
-            <p className="text-xs font-semibold text-amber-800 mb-2">INTEGRATION NOTES — read before implementing</p>
+            <p className="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-2">INTEGRATION NOTES — read before implementing</p>
             <ul className="text-xs text-amber-900 space-y-2 list-disc list-inside">
-              <li><strong>Use via <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code>, not directly</strong> — do not import <code className="font-mono bg-amber-100 px-1 rounded">EriAppHeader</code> in page files. It is rendered once inside <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> in <code className="font-mono bg-amber-100 px-1 rounded">App.tsx</code>. All header props (<code className="font-mono bg-amber-100 px-1 rounded">appName</code>, <code className="font-mono bg-amber-100 px-1 rounded">status</code>, <code className="font-mono bg-amber-100 px-1 rounded">version</code>, <code className="font-mono bg-amber-100 px-1 rounded">showCTA</code>, etc.) are passed to <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> and forwarded internally.</li>
-              <li><strong>showCTA — always true</strong> — the Contact Us CTA must be visible on <strong>all</strong> surfaces (public and authenticated). Always pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{true}'}</code>. Only pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{false}'}</code> if the app has no Contact Us entry point (e.g. a purely internal admin tool). <strong>Do not use <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{!isAuthenticated}'}</code></strong> — this incorrectly hides the CTA from logged-in users.</li>
-              <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> are all provided. Omitting any one of them silently hides the button. A dev-mode console warning fires if <code className="font-mono bg-amber-100 px-1 rounded">showCTA=true</code> but props are missing.</li>
-              <li><strong>Hamburger — always visible, wire <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> to your drawer</strong> — the hamburger button is always rendered. <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> is optional (defaults to no-op) so the button never disappears, but it will do nothing unless you pass <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick={'{() => setMenuOpen(true)}'}</code>. The header does not manage a drawer — your app must render its own drawer component.</li>
-              <li><strong>Scope: public-facing apps only</strong> — this dark (<code className="font-mono bg-amber-100 px-1 rounded">#232323</code>) header is for Taxonomy, PSM, HAL, and future public ERI product apps. Internal tools (e.g. the BDS site itself) use their own layout and are exempt.</li>
+              <li><strong>Use via <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code>, not directly</strong> — do not import <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriAppHeader</code> in page files. It is rendered once inside <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code> in <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">App.tsx</code>. All header props (<code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">appName</code>, <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">status</code>, <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">version</code>, <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA</code>, etc.) are passed to <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code> and forwarded internally.</li>
+              <li><strong>showCTA — always true</strong> — the Contact Us CTA must be visible on <strong>all</strong> surfaces (public and authenticated). Always pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{true}'}</code>. Only pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{false}'}</code> if the app has no Contact Us entry point (e.g. a purely internal admin tool). <strong>Do not use <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{!isAuthenticated}'}</code></strong> — this incorrectly hides the CTA from logged-in users.</li>
+              <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">returnUrl</code> are all provided. Omitting any one of them silently hides the button. A dev-mode console warning fires if <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA=true</code> but props are missing.</li>
+              <li><strong>Hamburger — always visible, wire <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick</code> to your drawer</strong> — the hamburger button is always rendered. <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick</code> is optional (defaults to no-op) so the button never disappears, but it will do nothing unless you pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick={'{() => setMenuOpen(true)}'}</code>. The header does not manage a drawer — your app must render its own drawer component.</li>
+              <li><strong>Scope: public-facing apps only</strong> — this dark (<code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#232323</code>) header is for Taxonomy, PSM, HAL, and future public ERI product apps. Internal tools (e.g. the BDS site itself) use their own layout and are exempt.</li>
             </ul>
           </div>
           {/* Non-conformant callout */}
-          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
-            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
-            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
-              <li>Background other than <code className="font-mono bg-red-100 px-1 rounded">#232323</code> — never white, green, or transparent</li>
-              <li>Height other than 64px — always <code className="font-mono bg-red-100 px-1 rounded">h-16</code></li>
+          <div className="rounded-lg p-4 mb-10 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <p className="text-xs font-semibold text-red-700 dark:text-red-300 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 dark:text-red-400 space-y-1 list-disc list-inside">
+              <li>Background other than <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">#232323</code> — never white, green, or transparent</li>
+              <li>Height other than 64px — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">h-16</code></li>
               <li>Status dot (coloured circle) in the right zone — removed in v1.8.0, do not re-add</li>
               <li>Navigation links in the header — use the hamburger drawer</li>
               <li>Importing EriAppHeader directly in page files — use EriPageLayout</li>
@@ -3803,10 +3803,10 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           </Card>
 
           {/* Non-conformant callout */}
-          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
-            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
-            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
-              <li>Dark green background (e.g. PSM v1) — always <code className="font-mono bg-red-100 px-1 rounded">#232323</code></li>
+          <div className="rounded-lg p-4 mb-10 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <p className="text-xs font-semibold text-red-700 dark:text-red-300 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 dark:text-red-400 space-y-1 list-disc list-inside">
+              <li>Dark green background (e.g. PSM v1) — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">#232323</code></li>
               <li>White footer (Tier C variation) — only for public marketing sites, not apps</li>
               <li>Placeholder link columns with unconfirmed URLs — only show links with a confirmed destination</li>
               <li>Importing EriAppFooter directly in page files — use EriPageLayout</li>
@@ -3855,7 +3855,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               </footer>
             </div>
 
-            <div className="border border-red-200 bg-red-50 rounded-lg p-4">
+            <div className="border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30 rounded-lg p-4">
               <p className="text-sm font-semibold text-red-700 mb-2">Known violations to correct</p>
               <ul className="text-sm text-red-600 space-y-1 list-disc list-inside">
                 <li>ERI Platform footer: <code className="font-mono text-xs">bg-[#1a3a2a]</code> dark green — replace with <code className="font-mono text-xs">#232323</code></li>
@@ -3994,40 +3994,40 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
           </Card>
 
           {/* Integration notes */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-3">
-            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wider mb-3">Integration Notes</p>
-            <div className="space-y-2 text-xs text-blue-800">
-              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">1.</span><span><strong>No pt-16 wrapper needed.</strong> <code className="font-mono bg-blue-100 px-1 rounded">EriHeroSection</code> adds <code className="font-mono bg-blue-100 px-1 rounded">paddingTop: 64px</code> internally to clear the fixed header. Do NOT wrap it in a div with <code className="font-mono bg-blue-100 px-1 rounded">pt-16</code> — that doubles the clearance.</span></div>
+          <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50 rounded-lg p-5 mb-3">
+            <p className="text-xs font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wider mb-3">Integration Notes</p>
+            <div className="space-y-2 text-xs text-blue-800 dark:text-blue-200">
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">1.</span><span><strong>No pt-16 wrapper needed.</strong> <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">EriHeroSection</code> adds <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">paddingTop: 64px</code> internally to clear the fixed header. Do NOT wrap it in a div with <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">pt-16</code> — that doubles the clearance.</span></div>
               <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">2.</span><span><strong>No background colour needed on the page wrapper.</strong> The component sets its own background via the image and overlay.</span></div>
-              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">3.</span><span><strong><code className="font-mono bg-blue-100 px-1 rounded">--eri-content-inset</code> is optional</strong> — the component falls back to <code className="font-mono bg-blue-100 px-1 rounded">clamp(1rem, 3vw, 2rem)</code> if the variable is absent. Define it in <code className="font-mono bg-blue-100 px-1 rounded">index.css :root</code> for alignment with the header logotype.</span></div>
-              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">4.</span><span><strong>CSS import required.</strong> Ensure <code className="font-mono bg-blue-100 px-1 rounded">@import "@eri/components/dist/eri-components.css"</code> is at the top of <code className="font-mono bg-blue-100 px-1 rounded">index.css</code> (v2.9.1+) to prevent Tailwind 4 from purging component classes.</span></div>
-              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">5.</span><span><strong>Default image is baked in.</strong> The canonical hands image (<code className="font-mono bg-blue-100 px-1 rounded">ERI_HERO_IMAGE_HANDS</code>) is the default. Only pass <code className="font-mono bg-blue-100 px-1 rounded">backgroundImage</code> for app-specific hero images. Never regenerate the hands image.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">3.</span><span><strong><code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">--eri-content-inset</code> is optional</strong> — the component falls back to <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">clamp(1rem, 3vw, 2rem)</code> if the variable is absent. Define it in <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">index.css :root</code> for alignment with the header logotype.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">4.</span><span><strong>CSS import required.</strong> Ensure <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">@import "@eri/components/dist/eri-components.css"</code> is at the top of <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">index.css</code> (v2.9.1+) to prevent Tailwind 4 from purging component classes.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">5.</span><span><strong>Default image is baked in.</strong> The canonical hands image (<code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">ERI_HERO_IMAGE_HANDS</code>) is the default. Only pass <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">backgroundImage</code> for app-specific hero images. Never regenerate the hands image.</span></div>
             </div>
           </div>
           {/* Mandatory per-project assignment */}
           <div className="rounded-lg p-4 mb-6 border border-amber-300 bg-amber-50">
-            <p className="text-xs font-semibold text-amber-800 mb-2">MANDATORY PER-PROJECT HERO IMAGE ASSIGNMENT</p>
+            <p className="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-2">MANDATORY PER-PROJECT HERO IMAGE ASSIGNMENT</p>
             <table className="text-xs w-full">
               <thead><tr className="text-amber-700"><th className="text-left pr-4 pb-1">Project</th><th className="text-left pr-4 pb-1">backgroundImage prop</th></tr></thead>
-              <tbody className="text-amber-900">
+              <tbody className="text-amber-900 dark:text-amber-200">
                 <tr><td className="pr-4 py-0.5 font-semibold">Trust Centre (trust.exponentialroadmap.org)</td><td className="py-0.5 font-mono">backgroundImage={'{'}ERI_HERO_IMAGE_TRUST{'}'} — MANDATORY</td></tr>
                 <tr><td className="pr-4 py-0.5">All other ERI apps (HAL, PSM, Taxonomy, etc.)</td><td className="py-0.5">Omit prop — defaults to ERI_HERO_IMAGE_HANDS automatically</td></tr>
               </tbody>
             </table>
           </div>
           {/* Non-conformant callout */}
-          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
-            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
-            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
-              <li>Centred text (<code className="font-mono bg-red-100 px-1 rounded">text-center</code>) — always left-aligned</li>
-              <li>Top-anchored text (no <code className="font-mono bg-red-100 px-1 rounded">flex flex-col justify-center</code>) — text must be vertically centred</li>
-              <li>Pure black overlay (<code className="font-mono bg-red-100 px-1 rounded">bg-black/40</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rgba(35,35,35,0.82)</code></li>
-              <li>Accent word in Primary Green (<code className="font-mono bg-red-100 px-1 rounded">#3ba559</code>) — always Accent Lime (<code className="font-mono bg-red-100 px-1 rounded">#93E07D</code>) on dark backgrounds</li>
-              <li>Pill-shaped CTA (<code className="font-mono bg-red-100 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 px-1 rounded">rounded-lg</code></li>
+          <div className="rounded-lg p-4 mb-10 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <p className="text-xs font-semibold text-red-700 dark:text-red-300 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 dark:text-red-400 space-y-1 list-disc list-inside">
+              <li>Centred text (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">text-center</code>) — always left-aligned</li>
+              <li>Top-anchored text (no <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">flex flex-col justify-center</code>) — text must be vertically centred</li>
+              <li>Pure black overlay (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">bg-black/40</code>) — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rgba(35,35,35,0.82)</code></li>
+              <li>Accent word in Primary Green (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">#3ba559</code>) — always Accent Lime (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">#93E07D</code>) on dark backgrounds</li>
+              <li>Pill-shaped CTA (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-lg</code></li>
               <li>Icon prefix on CTA buttons — text only</li>
-              <li>Wrapping <code className="font-mono bg-red-100 px-1 rounded">EriHeroSection</code> in a <code className="font-mono bg-red-100 px-1 rounded">pt-16</code> div — the component handles its own header clearance</li>
-              <li>Passing <code className="font-mono bg-red-100 px-1 rounded">backgroundImage</code> with the hands URL manually — import <code className="font-mono bg-red-100 px-1 rounded">ERI_HERO_IMAGE_HANDS</code> or omit the prop entirely</li>
-              <li>Using the hands image on a Trust / Security / Compliance page — use <code className="font-mono bg-red-100 px-1 rounded">ERI_HERO_IMAGE_TRUST</code> instead</li>
+              <li>Wrapping <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">EriHeroSection</code> in a <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">pt-16</code> div — the component handles its own header clearance</li>
+              <li>Passing <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">backgroundImage</code> with the hands URL manually — import <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">ERI_HERO_IMAGE_HANDS</code> or omit the prop entirely</li>
+              <li>Using the hands image on a Trust / Security / Compliance page — use <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">ERI_HERO_IMAGE_TRUST</code> instead</li>
             </ul>
           </div>
 
@@ -4077,12 +4077,12 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
           </p>
 
           {/* Why it matters */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-6">
+          <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg p-5 mb-6">
             <div className="flex items-start gap-3">
               <span className="text-amber-600 text-lg mt-0.5">⚠</span>
               <div>
-                <p className="font-semibold text-amber-900 mb-1">Why this matters</p>
-                <p className="text-sm text-amber-800">
+                <p className="font-semibold text-amber-900 dark:text-amber-200 mb-1">Why this matters</p>
+                <p className="text-sm text-amber-800 dark:text-amber-300">
                   If the header or footer markup is duplicated across page files, a change to one copy does not propagate to the others.
                   A single component in a layout wrapper means <strong>one change updates every page simultaneously</strong>.
                   This is a structural requirement, not a preference.
@@ -4168,23 +4168,23 @@ function App() {
           </Card>
           {/* Integration Notes */}
           <div className="rounded-lg p-4 mb-4 border border-amber-200 bg-amber-50">
-            <p className="text-xs font-semibold text-amber-800 mb-2">INTEGRATION NOTES — read before implementing</p>
+            <p className="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-2">INTEGRATION NOTES — read before implementing</p>
             <ul className="text-xs text-amber-900 space-y-2 list-disc list-inside">
-              <li><strong>Hamburger is always visible — wire <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> to your drawer</strong> — the hamburger button is always rendered and cannot be hidden via props. <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> defaults to a no-op, so the button is never missing, but it does nothing unless you pass <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick={'{() => setMenuOpen(true)}'}</code>. If you do not want a hamburger, do not use <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code>.</li>
-              <li><strong>Your app owns the drawer — render it as a child of <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code></strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> fires <code className="font-mono bg-amber-100 px-1 rounded">onMenuClick</code> but never renders a drawer itself. Your app must manage <code className="font-mono bg-amber-100 px-1 rounded">menuOpen</code> state and render its own <code className="font-mono bg-amber-100 px-1 rounded">&lt;NavDrawer&gt;</code> or <code className="font-mono bg-amber-100 px-1 rounded">&lt;Sheet&gt;</code> as a sibling to <code className="font-mono bg-amber-100 px-1 rounded">&lt;Router /&gt;</code> inside the layout children.</li>
-              <li><strong>Outer background is <code className="font-mono bg-amber-100 px-1 rounded">#232323</code></strong> — the layout wrapper sets a dark background on the outermost div. Each page component must set its own background colour using <code className="font-mono bg-amber-100 px-1 rounded">bg-background</code> (semantic token — resolves to <code className="font-mono bg-amber-100 px-1 rounded">#111111</code> in dark mode, <code className="font-mono bg-amber-100 px-1 rounded">#F9FAFB</code> in light mode) on its outermost div. Do <strong>not</strong> use <code className="font-mono bg-amber-100 px-1 rounded">bg-card</code> — this is hardcoded and breaks dark mode.</li>
-              <li><strong>No automatic top padding</strong> — <code className="font-mono bg-amber-100 px-1 rounded">EriPageLayout</code> does not add <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> to the content area. The header is <code className="font-mono bg-amber-100 px-1 rounded">fixed</code> at 64px — each page's first section must add enough top padding to clear it (e.g. <code className="font-mono bg-amber-100 px-1 rounded">pt-16</code> or <code className="font-mono bg-amber-100 px-1 rounded">pt-24</code> for hero sections).</li>
-              <li><strong>showCTA — always true</strong> — the Contact Us CTA must be visible on <strong>all</strong> surfaces (public and authenticated). Always pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{true}'}</code>. Only pass <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{false}'}</code> if the app has no Contact Us entry point (e.g. a purely internal admin tool). <strong>Do not use <code className="font-mono bg-amber-100 px-1 rounded">showCTA={'{!isAuthenticated}'}</code></strong> — this incorrectly hides the CTA from logged-in users.</li>
-              <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 px-1 rounded">returnUrl</code> are all provided. Omitting any of the three source props silently hides the button with a dev-mode console warning.</li>
+              <li><strong>Hamburger is always visible — wire <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick</code> to your drawer</strong> — the hamburger button is always rendered and cannot be hidden via props. <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick</code> defaults to a no-op, so the button is never missing, but it does nothing unless you pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick={'{() => setMenuOpen(true)}'}</code>. If you do not want a hamburger, do not use <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code>.</li>
+              <li><strong>Your app owns the drawer — render it as a child of <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code></strong> — <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code> fires <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick</code> but never renders a drawer itself. Your app must manage <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">menuOpen</code> state and render its own <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">&lt;NavDrawer&gt;</code> or <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">&lt;Sheet&gt;</code> as a sibling to <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">&lt;Router /&gt;</code> inside the layout children.</li>
+              <li><strong>Outer background is <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#232323</code></strong> — the layout wrapper sets a dark background on the outermost div. Each page component must set its own background colour using <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">bg-background</code> (semantic token — resolves to <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#111111</code> in dark mode, <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#F9FAFB</code> in light mode) on its outermost div. Do <strong>not</strong> use <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">bg-card</code> — this is hardcoded and breaks dark mode.</li>
+              <li><strong>No automatic top padding</strong> — <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code> does not add <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">pt-16</code> to the content area. The header is <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">fixed</code> at 64px — each page's first section must add enough top padding to clear it (e.g. <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">pt-16</code> or <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">pt-24</code> for hero sections).</li>
+              <li><strong>showCTA — always true</strong> — the Contact Us CTA must be visible on <strong>all</strong> surfaces (public and authenticated). Always pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{true}'}</code>. Only pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{false}'}</code> if the app has no Contact Us entry point (e.g. a purely internal admin tool). <strong>Do not use <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{!isAuthenticated}'}</code></strong> — this incorrectly hides the CTA from logged-in users.</li>
+              <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">returnUrl</code> are all provided. Omitting any of the three source props silently hides the button with a dev-mode console warning.</li>
             </ul>
           </div>
           {/* Non-conformant callout */}
-          <div className="rounded-lg p-4 mb-10 border border-red-200 bg-red-50">
-            <p className="text-xs font-semibold text-red-700 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
-            <ul className="text-xs text-red-600 space-y-1 list-disc list-inside">
+          <div className="rounded-lg p-4 mb-10 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30">
+            <p className="text-xs font-semibold text-red-700 dark:text-red-300 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
+            <ul className="text-xs text-red-600 dark:text-red-400 space-y-1 list-disc list-inside">
               <li>Importing EriAppHeader or EriAppFooter directly in page files — always use EriPageLayout in App.tsx</li>
               <li>Rendering the header inside a page component — leads to duplicate headers on navigation</li>
-              <li>Missing <code className="font-mono bg-red-100 px-1 rounded">--eri-content-inset</code> in index.css — header and hero text will not align</li>
+              <li>Missing <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">--eri-content-inset</code> in index.css — header and hero text will not align</li>
             </ul>
           </div>
 
@@ -4269,9 +4269,9 @@ const tabs: TabConfig[] = [
             </div>
             <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono">shadcn Tabs · state-driven · pill background active state · no URL change</div>
           </div>
-          <Card className="shadow-sm bg-amber-50 border-amber-200 mb-10">
+          <Card className="shadow-sm bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/50 mb-10">
             <CardContent className="p-4">
-              <p className="text-sm text-amber-800"><strong>Rule:</strong> Use <code className="font-mono text-xs">SimpleTabNav</code> when tabs change the page/URL. Use shadcn <code className="font-mono text-xs">&lt;Tabs&gt;</code> for in-page content switching only. Never mix the two patterns on the same page.</p>
+              <p className="text-sm text-amber-800 dark:text-amber-300"><strong>Rule:</strong> Use <code className="font-mono text-xs">SimpleTabNav</code> when tabs change the page/URL. Use shadcn <code className="font-mono text-xs">&lt;Tabs&gt;</code> for in-page content switching only. Never mix the two patterns on the same page.</p>
             </CardContent>
           </Card>
 
@@ -4413,7 +4413,7 @@ const tabs: TabConfig[] = [
                         </td>
                         <td className="p-4">
                           <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                            row.status === "Active" ? "bg-[#3ba559]/15 text-[#3ba559]" : "bg-amber-100 text-amber-700"
+                            row.status === "Active" ? "bg-[#3ba559]/15 text-[#3ba559]" : "bg-amber-100 dark:bg-amber-900/40 text-amber-700"
                           }`}>{row.status}</span>
                         </td>
                         <td className="p-4 text-muted-foreground">{row.score}%</td>
@@ -5336,7 +5336,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-amber-600 text-lg">⚠️</span>
-                <h3 className="font-bold text-foreground text-base">Required Project File: <code className="font-mono text-sm bg-amber-100 px-1 rounded">bds-meta.json</code></h3>
+                <h3 className="font-bold text-foreground text-base">Required Project File: <code className="font-mono text-sm bg-amber-100 dark:bg-amber-900/40 px-1 rounded">bds-meta.json</code></h3>
               </div>
               <p className="text-sm text-foreground mb-3">
                 Every ERI application <strong>must</strong> publish a <code className="bg-gray-100 px-1 rounded text-xs font-mono">client/public/bds-meta.json</code> file at its root.
@@ -5612,7 +5612,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">🔒</span>
                 <h3 className="font-bold text-foreground text-base">GDPR-Compliant Font Self-Hosting</h3>
-                <span className="text-[10px] bg-amber-100 text-amber-700 border border-amber-300 px-2 py-0.5 rounded font-semibold uppercase tracking-wide">Required</span>
+                <span className="text-[10px] bg-amber-100 dark:bg-amber-900/40 text-amber-700 border border-amber-300 px-2 py-0.5 rounded font-semibold uppercase tracking-wide">Required</span>
               </div>
               <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
                 Google Fonts CDN transmits visitor IP addresses to US servers on every page load — a GDPR violation
@@ -5651,7 +5651,7 @@ curl -sA "Mozilla/5.0" \
                   <p className="text-xs text-muted-foreground mt-2">Full template available at <code className="font-mono text-[10px]">typography.fontFaceTemplate</code> in the spec endpoint above.</p>
                 </div>
               </div>
-              <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs">
+              <div className="mt-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg p-3 text-xs">
                 <p className="font-semibold text-amber-800 mb-1">Checklist item: <code className="font-mono">brand.gdprFonts</code></p>
                 <p className="text-amber-700">Set <code className="font-mono">"gdprFonts": true</code> in your <code className="font-mono">bds-meta.json</code> once Google Fonts CDN is removed and WOFF2 files are in <code className="font-mono">client/public/fonts/</code>.</p>
               </div>
