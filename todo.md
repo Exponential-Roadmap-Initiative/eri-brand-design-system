@@ -313,3 +313,20 @@
 - [x] Update PROJECT-CONTEXT.md with v3.0.1 changelog
 - [x] TypeScript check — 0 errors
 - [x] Save checkpoint
+
+## v3.1.0 — Screenshot refresh & In the Wild gallery
+
+- [x] Capture fresh HAL hero screenshot
+- [x] Capture fresh Taxonomy hero screenshot
+- [x] Capture fresh PSM hero screenshot
+- [x] Capture fresh HAL Hub Overlay screenshot (hamburger open)
+- [x] Capture fresh Taxonomy App Overlay screenshot (hamburger open)
+- [x] Upload all 5 screenshots to CDN
+- [x] Replace stale HAL Hub Overlay screenshot in NavigationPatterns.tsx
+- [x] Replace stale Taxonomy App Overlay screenshot in NavigationPatterns.tsx
+- [x] Add "In the Wild" gallery section to BrandDesignSystem.tsx
+- [x] Add "In the Wild" to SectionNavigator SECTIONS array
+- [x] Add "In the Wild" to Machine Instructions section index table
+- [x] Update version number to V.2026.04.29 across all EriAppHeader examples
+- [x] TypeScript check — 0 errors
+- [x] Save checkpoint

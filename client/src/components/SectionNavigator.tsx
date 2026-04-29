@@ -46,6 +46,7 @@ export const SECTIONS: NavSection[] = [
   { id: "standard-components",    label: "Standard Components",     sublabel: "6 canonical files · copy verbatim" },
   { id: "interactive-states",     label: "Interactive States" },
   { id: "components",             label: "UI Components" },
+  { id: "in-the-wild",            label: "In the Wild",            sublabel: "Live app screenshots" },
   { id: "resources",              label: "Resources" },
   { id: "surface-modes",          label: "Surface Modes",          sublabel: "Light · Dark · Hero images" },
   { id: "ai-instructions",        label: "Machine Instructions",   sublabel: "For AI tasks" },

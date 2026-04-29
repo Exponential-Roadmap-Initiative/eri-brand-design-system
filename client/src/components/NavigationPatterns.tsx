@@ -1080,7 +1080,7 @@ export function NavigationPatterns() {
           </div>
           <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hub-overlay-example_e5772e0c.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hub-overlay-new_1d389fa7.png"
               alt="Human-AI Lab Hub Overlay — full-screen dark #232323 background, two-column layout with Navigation on the left and numbered Application cards on the right, Contact Us in Primary Green, External Resources section at the bottom left"
               className="w-full block"
             />
@@ -1142,7 +1142,7 @@ export function NavigationPatterns() {
           </div>
           <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/taxonomy-app-overlay-example_19a0f51f.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/taxonomy-app-overlay-new_e543abd3.png"
               alt="Exponential Taxonomy app overlay open — dark floating panel anchored top-right, showing nav items, Admin Workspace in green, user identity footer, and Log Out button, with the hero image and content visible behind it"
               className="w-full block"
             />

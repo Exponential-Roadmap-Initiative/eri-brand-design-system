@@ -3614,7 +3614,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               <EriAppHeader
                 appName="Professional Services Matrix"
                 status="BETA"
-                version="V.2026.04.21"
+                version="V.2026.04.29"
                 showCTA={true}
                 source="bds-demo"
                 sourceLabel="Brand Design System"
@@ -3629,7 +3629,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               <EriAppHeader
                 appName="Internal Admin Tool"
                 status="ALPHA"
-                version="V.2026.04.21"
+                version="V.2026.04.29"
                 showCTA={false}
                 onMenuClick={() => {}}
               />
@@ -3679,7 +3679,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 <EriAppHeader
   appName="Professional Services Matrix"
   status="BETA"
-  version="V.2026.04.21"
+  version="V.2026.04.29"
   showCTA={true}
   source="psm"
   sourceLabel="Professional Services Matrix"
@@ -4119,7 +4119,7 @@ function App() {
     <EriPageLayout
       appName="Professional Services Matrix"
       status="BETA"
-      version="V.2026.04.21"
+      version="V.2026.04.29"
       showCTA={true}
       source="psm"
       sourceLabel="Professional Services Matrix"
@@ -4143,7 +4143,7 @@ function App() {
                 <tbody className="font-mono">
                   {[
                     ["appName",           "string",            "App display name — used in header and footer copyright"],
-                    ["version",           "string",            'e.g. "V.2026.04.21" — format V.YYYY.MM.DD'],
+                    ["version",           "string",            'e.g. "V.2026.04.29" — format V.YYYY.MM.DD'],
                     ["status",            "EriStatusValue?",   "Omit to hide the status badge"],
                     ["showCTA",           "boolean?",          "Defaults to true — always pass true. Only false for purely internal tools with no contact entry point."],
                     ["source",            "string?",           'Required if showCTA is true (e.g. "psm", "hal")'],
@@ -4789,6 +4789,109 @@ const tabs: TabConfig[] = [
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* SECTION: IN THE WILD */}
+        {/* ================================================================ */}
+        <section id="in-the-wild" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-4">
+            In the Wild
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-3xl">
+            The ERI Brand Design System applied across live products. Each application shares the same
+            canonical components, colour tokens, and navigation patterns — differentiated only by purpose
+            and content.
+          </p>
+
+          {/* ── App gallery ── */}
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {[
+              {
+                name: "Exponential Human-AI Lab",
+                url: "https://human-ai-lab.exponentialroadmap.org",
+                img: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hero_2ad5f074.png",
+                badge: "BETA",
+                desc: "Hub application — Tier B Marketing navigation, dark hero with S-curve image, lime CTA buttons, status badge.",
+                tier: "Tier B — Hub",
+              },
+              {
+                name: "The Exponential Taxonomy",
+                url: "https://taxonomy.exponentialroadmap.org",
+                img: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/taxonomy-hero-new_793a9e59.png",
+                badge: "BETA",
+                desc: "Application — Tier B App navigation, dark hero, lime primary CTA + outlined secondary CTA, stat line below CTAs.",
+                tier: "Tier B — App",
+              },
+              {
+                name: "Professional Services Matrix",
+                url: "https://psm.exponentialroadmap.org",
+                img: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/psm-hero-new_e37d0d9f.png",
+                badge: "BETA",
+                desc: "Application — Tier B App navigation, dark hero with landscape image, lime primary CTA + outlined secondary CTA.",
+                tier: "Tier B — App",
+              },
+            ].map((app) => (
+              <div key={app.name} className="group rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col">
+                <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
+                  <img
+                    src={app.img}
+                    alt={`${app.name} — homepage screenshot`}
+                    className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-[#232323]/80 text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">{app.badge}</span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <span className="bg-[#3ba559]/90 text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">{app.tier}</span>
+                  </div>
+                </div>
+                <div className="p-4 flex flex-col flex-1">
+                  <h3 className="font-archivo font-extrabold text-[#232323] text-sm mb-1">{app.name}</h3>
+                  <p className="text-xs font-open-sans text-gray-500 mb-3 flex-1">{app.desc}</p>
+                  <a
+                    href={app.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[#3ba559] text-xs font-medium hover:underline mt-auto"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    Visit live site
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Navigation overlay gallery ── */}
+          <h3 className="font-archivo font-extrabold text-lg text-[#232323] mb-2">Navigation Overlays in Context</h3>
+          <p className="text-muted-foreground text-sm mb-5 max-w-3xl">
+            The two navigation overlay patterns (Hub two-column and App single-column) as they appear in production.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <div className="px-4 py-2.5 bg-[#F9FAFB] border-b border-gray-200 flex items-center gap-2">
+                <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider">Hub Overlay</span>
+                <span className="text-xs font-archivo font-bold text-[#232323]">Human-AI Lab — Tier B Hub pattern</span>
+              </div>
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hub-overlay-new_1d389fa7.png"
+                alt="Human-AI Lab Hub Overlay — two-column dark overlay with Navigation on the left and numbered Application cards on the right"
+                className="w-full block"
+              />
+            </div>
+            <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <div className="px-4 py-2.5 bg-[#F9FAFB] border-b border-gray-200 flex items-center gap-2">
+                <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider">App Overlay</span>
+                <span className="text-xs font-archivo font-bold text-[#232323]">Exponential Taxonomy — Tier B App pattern</span>
+              </div>
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/taxonomy-app-overlay-new_e543abd3.png"
+                alt="Exponential Taxonomy app overlay — single-column dark panel anchored top-right with nav items and active state"
+                className="w-full block"
+              />
+            </div>
           </div>
         </section>
 
@@ -5640,8 +5743,9 @@ curl -sA "Mozilla/5.0" \
                     ["20", "Standard Components",         "standard-components"],
                     ["21", "UI Components",               "components"],
                     ["22", "Surface Modes",               "surface-modes"],
-                    ["23", "Resources",                   "resources"],
-                    ["24", "Machine Instructions",        "ai-instructions"],
+                    ["23", "In the Wild",                 "in-the-wild"],
+                    ["24", "Resources",                   "resources"],
+                    ["25", "Machine Instructions",        "ai-instructions"],
                   ].map(([num, label, id]) => (
                     <tr key={id} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-gray-400 font-sans">{num}</td>
