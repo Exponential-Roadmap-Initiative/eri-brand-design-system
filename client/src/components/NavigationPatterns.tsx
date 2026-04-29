@@ -66,7 +66,7 @@ function TierCMobileDrawerMock() {
     <div className="flex gap-8 items-start flex-wrap">
       {/* Phone frame */}
       <div className="flex-shrink-0">
-        <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-gray-400 mb-3">Mobile — drawer closed</p>
+        <p className="text-[11px] font-archivo font-bold uppercase tracking-wider text-muted-foreground mb-3">Mobile — drawer closed</p>
         <div
           className="relative rounded-[28px] overflow-hidden border-4 border-[#232323] shadow-xl bg-[#F9FAFB]"
           style={{ width: 220, height: 400 }}

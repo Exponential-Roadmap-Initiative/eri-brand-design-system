@@ -66,7 +66,7 @@ export function ThemeToggleButton({ className = "", size = "md" }: ThemeToggleBu
             sizeClass,
             isDark
               ? "text-gray-400 hover:text-yellow-300 hover:bg-white/10"
-              : "text-gray-500 hover:text-[#232323] hover:bg-gray-100",
+              : "text-gray-500 hover:text-[#232323] hover:bg-muted",
             className,
           ].join(" ")}
         >

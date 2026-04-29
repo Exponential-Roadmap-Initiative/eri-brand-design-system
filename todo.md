@@ -338,3 +338,15 @@
 - [x] Verify visually in dark mode — titles must be clearly readable
 - [x] TypeScript check — 0 errors
 - [x] Save checkpoint
+
+## Full dark mode sweep — both pages (2026-04-29)
+
+- [x] Audit all source files for hardcoded colour classes that break dark mode (491 violations across 8 files)
+- [x] Fix structural violations in BrandDesignSystem.tsx (193 lines changed)
+- [x] Fix structural violations in AlignmentTracker.tsx (1 line changed)
+- [x] Fix ThemeToggleButton.tsx hover state
+- [x] Fix NavigationPatterns.tsx outer structural labels (preserve mock internals)
+- [x] Preserve intentional documentation specimens (colour swatches, code blocks, live previews)
+- [x] TypeScript check — 0 errors
+- [x] Visual verification in dark mode — Tone of Voice, Writing Principles, Preferred Terminology titles now visible
+- [x] Save checkpoint
