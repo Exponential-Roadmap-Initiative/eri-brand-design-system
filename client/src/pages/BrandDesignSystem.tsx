@@ -4843,6 +4843,24 @@ const tabs: TabConfig[] = [
             authoritative — do not infer, approximate, or substitute.
           </p>
 
+          {/* ── START HERE CARD ── */}
+          <div className="mb-8 rounded-xl border-2 border-[#93E07D] bg-[#93E07D]/5 p-5">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl mt-0.5">🚀</span>
+              <div className="flex-1">
+                <h3 className="font-archivo font-extrabold text-foreground text-base mb-1">Start here — mandatory for every ERI task</h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Before writing any code, CSS, or component, run this command in the sandbox terminal and read the skill file in full:
+                </p>
+                <pre className="text-[11px] bg-[#232323] text-[#93E07D] rounded-md p-3 mb-3 font-mono whitespace-pre-wrap break-all">{`curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"`}</pre>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Then fetch the machine-readable spec for programmatic access to all token values, the <code className="font-mono text-xs bg-muted px-1 rounded">handoff_prompt</code>, and the GDPR font template:
+                </p>
+                <pre className="text-[11px] bg-[#232323] text-[#93E07D] rounded-md p-3 font-mono">{`https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec`}</pre>
+              </div>
+            </div>
+          </div>
+
           {/* ── PORTABLE SKILL CARD ── */}
           <Card className="shadow-sm mb-6 border border-gray-200">
             <CardContent className="p-6">
@@ -4851,8 +4869,8 @@ const tabs: TabConfig[] = [
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-[#232323] text-base">ERI BDS Reference Skill</h3>
-                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v2.8.0</span>
-                    <span className="text-[10px] text-muted-foreground">Updated 26 Apr 2026</span>
+                    <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v3.0.1</span>
+                    <span className="text-[10px] text-muted-foreground">Updated 29 Apr 2026</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3 max-w-2xl">
                     A portable Manus skill that embeds the ERI brand reference directly into any AI project.
@@ -4874,15 +4892,15 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-skill-v3.0.0_ddaf7414.skill"
-                    download="eri-bds-skill-v3.0.0.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_bad8a650.md"
+                    download="eri-bds-skill-v3.0.1.md"
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-skill-v3.0.0_ddaf7414.skill"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_bad8a650.md"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
@@ -5289,14 +5307,14 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <tbody className="font-mono text-[11px]">
                   <tr className="border-b border-border/50">
                     <td className="py-1.5 pr-3 font-sans font-medium text-foreground">eri-bds-reference</td>
-                    <td className="py-1.5 pr-3 text-muted-foreground">v3.0.0</td>
+                    <td className="py-1.5 pr-3 text-muted-foreground">v3.0.1</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-bds-skill-v3.0.0_ddaf7414.skill"
-                        download="eri-bds-skill-v3.0.0.skill"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_bad8a650.md"
+                        download="eri-bds-skill-v3.0.1.md"
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >
-                        eri-bds-skill-v3.0.0_ddaf7414.skill
+                        eri-bds-skill-v3.0.1.md
                       </a>
                     </td>
                   </tr>
@@ -5429,7 +5447,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">⚡</span>
                 <h3 className="font-bold text-[#232323] text-base">Machine-Readable Spec Endpoint</h3>
-                <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v3.0.0</span>
+                <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">v3.0.1</span>
               </div>
               <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
                 The full ERI brand spec is available as structured JSON. AI agents can fetch this endpoint
@@ -5475,7 +5493,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </a>
                 <a
                   href="https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec"
-                  download="eri-bds-spec-v3.0.0.json"
+                  download="eri-bds-spec-v3.0.1.json"
                   className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>

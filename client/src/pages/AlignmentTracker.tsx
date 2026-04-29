@@ -1032,11 +1032,11 @@ Overall status: [green / amber / red]
             </div>
           </div>
 
-          {/* C — Components */}
+          {/* C — Components & Layout */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#dcfce7', color: '#166534' }}>C</span>
-              <h3 className="font-archivo text-base font-extrabold text-foreground">Components</h3>
+              <h3 className="font-archivo text-base font-extrabold text-foreground">Components &amp; Layout</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">

@@ -10,7 +10,7 @@
 
 import { publicProcedure, router } from "../_core/trpc";
 
-const BDS_VERSION = "3.0.0";
+const BDS_VERSION = "3.0.1";
 const LAST_UPDATED = "2026-04-29";
 
 export const bdsSpecRouter = router({
@@ -42,6 +42,14 @@ Fetch the live template from https://bds.exponentialroadmap.org/tracker
 
 STEP 3 — Install @eri/components
   pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.11.1&path:packages/eri-components"
+  (Check components.latestVersion in this spec for the current pin before running.)
+
+STEP 3b — Add the @eri/components CSS import to index.css
+This is the single most common failure point. Add this as the FIRST line in
+client/src/index.css, before any @tailwind or @theme directives:
+  @import "@eri/components/dist/eri-components.css";
+If this line is missing or placed after other directives, components will render
+without ERI styles. Verify it is present before proceeding.
 
 STEP 4 — Use EriPageLayout as the top-level wrapper in App.tsx
 Import: import { EriPageLayout } from '@eri/components';

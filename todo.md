@@ -222,7 +222,7 @@
 - [ ] Update index.css .dark token block — improved card/border/foreground OKLCH values
 - [ ] Update skill Cross-Site Theme System token block to match
 - [ ] Update BDS site Surface Modes dark card token display
-- [ ] TypeScript check — 0 errors
+- [x] TypeScript check — 0 errors
 - [ ] Bump skill to v2.7.0, upload to CDN, update /api/skill/latest redirect
 - [ ] Update Skills card and asset table to v2.7.0
 - [x] Save checkpoint
@@ -274,7 +274,7 @@
 - [x] Update SKILL_LATEST_URL in server/_core/index.ts
 - [x] Update PROJECT-CONTEXT.md with v2.9.0 changelog
 - [x] TypeScript check — 0 errors
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## BDS v3.0.0 — Holocen-inspired upgrades (2026-04-29)
 
@@ -297,4 +297,19 @@
 - [x] Update Skills card in BrandDesignSystem.tsx to v3.0.0
 - [x] Update PROJECT-CONTEXT.md with v3.0.0 changelog and GDPR font rule
 - [x] TypeScript check — 0 errors
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+## BDS v3.0.1 — AI Agent instruction gap fixes (2026-04-29)
+
+- [x] Gap 1: Update bds-meta.json schema example in skill to v1.2 (add gdprFonts, cardAccentPattern, eyebrowAccentLime, overlayBackground)
+- [x] Gap 3: Add CSS import step (Step 3b) to handoff_prompt in bdsSpec.ts
+- [x] Gap 5: Add "Start Here" card to Machine Instructions section in BrandDesignSystem.tsx
+- [x] Gap 4: Rename C section to "Components & Layout" in AlignmentTracker.tsx
+- [x] Gap 2: Update hardcoded version tag in handoff_prompt to reference components.latestPin
+- [x] Bump skill to v3.0.1 and upload to CDN
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts
+- [x] Update Skills card in BrandDesignSystem.tsx to v3.0.1
+- [x] Update bds-meta.json date
+- [x] Update PROJECT-CONTEXT.md with v3.0.1 changelog
+- [x] TypeScript check — 0 errors
+- [x] Save checkpoint
