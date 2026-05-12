@@ -422,9 +422,9 @@
 - [x] Bump package version in packages/eri-components/package.json to 2.13.0
 - [x] Run pnpm build:css in packages/eri-components/
 - [x] TypeScript check — 0 errors
-- [ ] Save checkpoint (auto-pushes to GitHub)
-- [ ] Push new git tag v2.13.0
-- [ ] Update CDN download URLs in BDS site Standard Components section
-- [ ] Update CDN download URLs in eri-bds-reference skill
-- [ ] Update consuming projects (eri-playbook-team) to new tag
-- [ ] Update PROJECT-CONTEXT.md
+- [x] Save checkpoint (auto-pushes to GitHub)
+- [x] Push new git tag v2.13.0
+- [x] Update CDN download URLs in BDS site Standard Components section
+- [x] Update CDN download URLs in eri-bds-reference skill
+- [ ] Update consuming projects (HAL, Taxonomy, Trust, PSM, Playbook) to v2.13.0 — PENDING (requires access to each project)
+- [x] Update PROJECT-CONTEXT.md

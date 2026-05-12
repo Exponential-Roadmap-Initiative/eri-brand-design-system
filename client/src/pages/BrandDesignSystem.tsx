@@ -3397,12 +3397,12 @@ const contactUrl =
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
               {[
-                { name: "EriStatusBadge.tsx",      url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriStatusBadge_d862f741.tsx" },
-                { name: "EriContactUsButton.tsx",  url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriContactUsButton_55080863.tsx" },
-                { name: "EriAppHeader.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppHeader_541af54c.tsx" },
-                { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriAppFooter_1dd350ec.tsx" },
-                { name: "EriHeroSection.tsx",       url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriHeroSection_48155b1d.tsx" },
-                { name: "EriPageLayout.tsx",        url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriPageLayout_78d3d824.tsx" },
+                { name: "EriStatusBadge.tsx",      url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriStatusBadge.tsx" },
+                { name: "EriContactUsButton.tsx",  url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriContactUsButton.tsx" },
+                { name: "EriAppHeader.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriAppHeader.tsx" },
+                { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriAppFooter.tsx" },
+                { name: "EriHeroSection.tsx",       url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriHeroSection.tsx" },
+                { name: "EriPageLayout.tsx",        url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriPageLayout.tsx" },
               ].map(({ name, url }) => (
                 <a
                   key={name}
