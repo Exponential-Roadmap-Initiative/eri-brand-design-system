@@ -834,7 +834,7 @@ export default function BrandDesignSystem() {
                         alt={v.name}
                         className="max-h-14 max-w-[160px] object-contain"
                       />
-                      <span className="text-[10px] text-muted-foreground font-medium tracking-wide uppercase">Light background</span>
+                      <span className="text-[10px] text-black/50 font-medium tracking-wide uppercase">Light background</span>
                     </div>
                     {/* Dark side */}
                     <div
@@ -847,7 +847,7 @@ export default function BrandDesignSystem() {
                         className="max-h-14 max-w-[160px] object-contain"
                         style={vx.darkFilter ? { filter: vx.darkFilter } : undefined}
                       />
-                      <span className="text-[10px] text-muted-foreground font-medium tracking-wide uppercase">
+                      <span className="text-[10px] text-white/70 font-medium tracking-wide uppercase">
                         {vx.darkLabel || "Dark background"}
                       </span>
                     </div>
