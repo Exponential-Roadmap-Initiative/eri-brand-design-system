@@ -362,3 +362,21 @@
 - [x] TypeScript check — 0 errors
 - [x] Visual verification in light mode — layout correct, callout boxes readable in both modes
 - [x] Save checkpoint
+
+## Dark-mode logo integration (2026-05-12)
+
+- [x] Create eri-logo-dark-mode.svg — white wordmark text + green (#87e873) X mark
+- [x] Create eri-icon-mark-dark-mode.svg — white curve + green curve
+- [x] Upload both SVGs to CDN
+- [x] Add eriLogoDarkMode and eriLogoFullColorSvg to client/src/lib/assets.ts
+- [x] Update PublicLayout.tsx: import useTheme, compute logoSrc based on theme
+- [x] Header logo: use logoSrc (no more dark:brightness-0 dark:invert)
+- [x] Mobile overlay header logo: use logoSrc
+- [x] Footer logo: use logos.eriLogoDarkMode directly (always dark background)
+- [x] TypeScript check — 0 errors
+- [x] Visual verification in light mode — full-colour wordmark visible on white header ✓
+- [x] Visual verification in dark mode — white wordmark visible on dark header ✓
+- [ ] Save checkpoint
+- [ ] Update Logo Usage section in BrandDesignSystem.tsx to document the two-variant approach
+- [ ] Update Standard Components section to reference theme-aware logo pattern
+- [ ] Update eri-bds-reference skill with dark-mode logo CDN URL and deprecate CSS filter workaround

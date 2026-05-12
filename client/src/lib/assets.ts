@@ -19,7 +19,12 @@ const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sM
 export const logos = {
   eriLogoFullColor:       `${CDN}/eri-logo-full-color_64e5c7db.webp`,
   eriLogoFullColorSvg:    `${CDN}/eri-logo-full-color_775a0122.svg`,
+  // Dark-mode variant: near-black (#1d1d1b) → white (#ffffff); green (#87e873) preserved.
+  // Use on dark backgrounds instead of the CSS filter: brightness(0) invert(1) workaround.
+  eriLogoDarkMode:        `${CDN}/eri-logo-dark-mode_25fd4f4c.svg`,
   eriIconMark:            `${CDN}/eri-icon-mark_6c872e6b.webp`,
+  // Dark-mode icon mark variant: near-black curve → white; green curve preserved.
+  eriIconMarkDarkMode:    `${CDN}/eri-icon-mark-dark-mode_3d581249.svg`,
   exponentialRoadmapLogo: `${CDN}/exponential-roadmap-logo_6ca65904.webp`,
   // Canonical browser favicon — white background, 12% corner radius, PNG only
   faviconWhiteRounded32:  `${CDN}/favicon-white-rounded-32_05ba5ceb.png`,

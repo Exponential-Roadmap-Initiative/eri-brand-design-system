@@ -18,6 +18,7 @@
 import { useState, useEffect } from "react";
 import { logos } from "@/lib/assets";
 import { ThemeToggleButton } from "@/components/ThemeToggleButton";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -35,6 +36,8 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
   menuOpen: boolean;
   setMenuOpen: (v: boolean) => void;
 }) {
+  const { theme } = useTheme();
+  const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColorSvg;
   const headerBg = transparentHeader && !scrolled
     ? "bg-transparent border-transparent"
     : "bg-background border-b border-border";
@@ -51,9 +54,9 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
           <div className="flex items-center gap-3 min-w-0">
             <a href="/" aria-label="Go to homepage" className="shrink-0">
               <img
-                src={logos.eriLogoFullColor}
+                src={logoSrc}
                 alt="Exponential Roadmap Initiative logo"
-                className="h-8 w-auto dark:brightness-0 dark:invert"
+                className="h-8 w-auto"
               />
             </a>
 
@@ -104,7 +107,7 @@ function LayoutHeader({ transparentHeader, scrolled, menuOpen, setMenuOpen }: {
           {/* Overlay header */}
           <div className="flex items-center justify-between px-4 h-16 border-b border-border">
             <div className="flex items-center gap-3">
-              <img src={logos.eriLogoFullColor} alt="ERI" className="h-8 w-auto dark:brightness-0 dark:invert" />
+              <img src={logoSrc} alt="ERI" className="h-8 w-auto" />
               <div className="hidden sm:block h-6 w-px bg-border" />
               <div className="hidden sm:flex flex-col leading-tight">
                 <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">Exponential Roadmap Initiative</span>
@@ -243,10 +246,9 @@ export default function PublicLayout({ children, transparentHeader = false, hide
               {/* Col 1: Brand */}
               <div>
                 <img
-                  src={logos.eriLogoFullColor}
+                  src={logos.eriLogoDarkMode}
                   alt="Exponential Roadmap Initiative"
                   className="h-8 mb-4"
-                  style={{ filter: "brightness(0) invert(1)" }}
                 />
                 <p className="text-sm text-gray-400 leading-relaxed">
                   The official brand design system for all Exponential Roadmap Initiative digital products.
