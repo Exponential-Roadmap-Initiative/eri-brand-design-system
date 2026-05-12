@@ -157,35 +157,20 @@ const verbalIdentity = {
 const logoVariants = [
   {
     id: "full-color",
-    name: "Full Colour Wordmark",
-    file: logos.eriLogoFullColor,
-    filePath: "eri-logo-full-color.webp",
-    fileId: "eri-logo-full-color_64e5c7db",
-    cdnUrl: logos.eriLogoFullColor,
-    downloadName: "eri-logo-full-color.webp",
-    svgUrl: logos.eriLogoFullColorSvg,
-    svgFileId: "eri-logo-full-color_775a0122",
+    name: "ERI Wordmark",
+    file: logos.eriLogoFullColorSvg,
+    filePath: "eri-logo-full-color.svg",
+    fileId: "eri-logo-full-color",
+    cdnUrl: logos.eriLogoFullColorSvg,
+    downloadName: "eri-logo-full-color.svg",
     darkBg: "#232323",
     darkFile: logos.eriLogoDarkMode,
+    darkFileId: "eri-logo-dark-mode",
+    darkDownloadName: "eri-logo-dark-mode.svg",
+    darkDlUrl: logos.eriLogoDarkMode,
     darkLabel: "Dark background",
-    usage: "Primary logo for light-background contexts: website headers, documents, presentations. The dark side preview uses the dedicated dark-mode SVG variant (white wordmark, green X) — this is what your app header should render in dark mode.",
-    when: "Use on white or light-grey backgrounds. In app headers, switch to eriLogoDarkMode when dark mode is active — see the Theme-Aware Switching card below.",
-    minWidth: "160px",
-    clearSpace: "Equal to the height of the 'E' letterform on all four sides.",
-  },
-  {
-    id: "dark-mode-wordmark",
-    name: "Dark-Mode Wordmark",
-    file: logos.eriLogoDarkMode,
-    filePath: "eri-logo-dark-mode.svg",
-    fileId: "eri-logo-dark-mode_25fd4f4c",
-    cdnUrl: logos.eriLogoDarkMode,
-    downloadName: "eri-logo-dark-mode.svg",
-    darkBg: "#232323",
-    darkFile: logos.eriLogoDarkMode,
-    darkLabel: "Dark background",
-    usage: "Dedicated dark-mode wordmark SVG. Near-black (#1d1d1b) text replaced with white (#ffffff); green X mark (#87e873) preserved. Use this asset directly — do not apply CSS filter: brightness(0) invert(1) to the full-colour version, as that incorrectly inverts the green accent.",
-    when: "Use on dark backgrounds (#111111, #232323, hero overlays). In theme-aware apps, render this when useTheme() returns 'dark'. Always used in the footer (which is always dark).",
+    usage: "Two variants cover all surfaces. Left: full-colour SVG for light backgrounds (white or light-grey). Right: dark-mode SVG (white wordmark, green X) for dark backgrounds (#111111, #232323, hero overlays). In theme-aware apps, switch between them using useTheme() — see the Theme-Aware Switching card below. The footer always uses the dark-mode variant.",
+    when: "Always use the correct variant for the surface. Never apply CSS filter: brightness(0) invert(1) to the full-colour version — it incorrectly inverts the green accent.",
     minWidth: "160px",
     clearSpace: "Equal to the height of the 'E' letterform on all four sides.",
   },
@@ -194,7 +179,7 @@ const logoVariants = [
     name: "ERI Icon Mark",
     file: logos.eriIconMark,
     filePath: "eri-icon-mark.webp",
-    fileId: "eri-icon-mark_6c872e6b",
+    fileId: "eri-icon-mark",
     cdnUrl: logos.eriIconMark,
     downloadName: "eri-icon-mark.webp",
     darkBg: "#2c3f43",
@@ -821,13 +806,14 @@ export default function BrandDesignSystem() {
             Logo Usage
           </h2>
           <p className="text-muted-foreground mb-8 max-w-3xl">
-            Five logo assets are available across two surface modes. Each card shows the asset on both a light and dark background so you can verify contrast before use. Each card includes a file identifier and a direct download button. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
+            Four logo assets are available across two surface modes. Each card shows the asset on both a light and dark background so you can verify contrast before use. The ERI Wordmark card provides both light and dark variants in a single card. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             {logoVariants.map((v) => {
               const vx = v as {
                 darkBg?: string; darkFilter?: string; darkFile?: string; darkLabel?: string;
+                darkFileId?: string; darkDownloadName?: string; darkDlUrl?: string;
                 cdnUrl?: string; fileId?: string; downloadName?: string;
                 svgUrl?: string; svgFileId?: string;
                 appIcon?: {
@@ -841,8 +827,8 @@ export default function BrandDesignSystem() {
                 <Card key={v.id} className="shadow-sm overflow-hidden">
                   {/* Dual background preview: white left / dark right */}
                   <div className="flex items-stretch h-36 rounded-t-lg overflow-hidden divide-x divide-gray-200">
-                    {/* Light side */}
-                    <div className="flex-1 flex flex-col items-center justify-center gap-1.5 bg-card px-4">
+                    {/* Light side — always white regardless of site theme, to demonstrate contrast */}
+                    <div className="flex-1 flex flex-col items-center justify-center gap-1.5 px-4" style={{ backgroundColor: '#ffffff' }}>
                       <img
                         src={v.file}
                         alt={v.name}
@@ -878,10 +864,10 @@ export default function BrandDesignSystem() {
                               <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z" /></svg>
                               {vx.fileId}
                             </span>
-                            {vx.svgFileId && (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">
+                            {vx.darkFileId && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-[#1a1a1a] text-gray-300 px-2 py-0.5 rounded border border-gray-600">
                                 <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z" /></svg>
-                              {vx.svgFileId}
+                              {vx.darkFileId} <span className="text-gray-500">(dark)</span>
                             </span>
                             )}
                           </div>
@@ -899,14 +885,14 @@ export default function BrandDesignSystem() {
                             Download
                           </a>
                         )}
-                        {vx.svgUrl && (
+                        {vx.darkDlUrl && vx.darkDownloadName && (
                           <a
-                            href={vx.svgUrl}
-                            download="eri-logo-full-color.svg"
+                            href={vx.darkDlUrl}
+                            download={vx.darkDownloadName}
                             className="inline-flex items-center gap-1.5 border border-border text-muted-foreground text-[11px] font-medium px-3 py-1.5 rounded-md hover:bg-muted transition-colors whitespace-nowrap"
                           >
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                            SVG
+                            Dark SVG
                           </a>
                         )}
                       </div>
@@ -5447,11 +5433,11 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {([
-                    ["logos.eriLogoFullColor",    "eri-logo-full-color_64e5c7db.webp",    "Primary wordmark (PNG/WebP) — light backgrounds only"],
-                    ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — light backgrounds; use for download links"],
-                    ["logos.eriLogoDarkMode",     "eri-logo-dark-mode_25fd4f4c.svg",      "Dark-mode wordmark SVG — white text, green X. Use on dark backgrounds instead of CSS filter."],
-                    ["logos.eriIconMark",         "eri-icon-mark_6c872e6b.webp",          "Compact ERI mark — light backgrounds"],
-                    ["logos.eriIconMarkDarkMode", "eri-icon-mark-dark-mode_3d581249.svg", "Dark-mode icon mark SVG — white curve + green curve"],
+                    ["logos.eriLogoFullColor",    "eri-logo-full-color.webp",    "Primary wordmark (WebP) — light backgrounds only"],
+                    ["logos.eriLogoFullColorSvg", "eri-logo-full-color.svg",     "SVG wordmark — light backgrounds; preferred for display"],
+                    ["logos.eriLogoDarkMode",     "eri-logo-dark-mode.svg",      "Dark-mode wordmark SVG — white text, green X. Use on dark backgrounds instead of CSS filter."],
+                    ["logos.eriIconMark",         "eri-icon-mark.webp",          "Compact ERI mark — light backgrounds"],
+                    ["logos.eriIconMarkDarkMode", "eri-icon-mark-dark-mode.svg", "Dark-mode icon mark SVG — white curve + green curve"],
                     ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon — raw source file (no rounded corners). Use favicon variants for production."],
                     ["logos.faviconWhiteRounded32",  "favicon-white-rounded-32_05ba5ceb.png",  "✅ CORRECT browser tab favicon — 32px white-bg rounded PNG (PNG only on Manus)"],
                     ["logos.faviconWhiteRounded180", "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],

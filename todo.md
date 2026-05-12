@@ -390,4 +390,24 @@
 - [x] Update Standard Components EriAppHeader docs to reference theme-aware logo
 - [x] Update eri-bds-reference skill: add dark-mode logo CDN URLs to asset table, deprecate CSS filter
 - [x] TypeScript check — 0 errors
+- [x] Save checkpoint
+
+## Logo Usage section bug fixes (2026-05-12)
+
+- [ ] Fix broken image URLs in dark-mode logo preview panels (Dark-Mode Wordmark dark side, Full Colour Wordmark dark side)
+- [ ] Fix light-background preview panels: hardcode bg-white so they show white in dark mode
+- [ ] TypeScript check — 0 errors
+- [ ] Save checkpoint
+
+## Logo Usage redesign — single wordmark card (2026-05-12)
+
+- [x] Verify new CDN URLs return image/svg+xml content type
+- [x] Remove standalone Dark-Mode Wordmark entry from logoVariants
+- [x] Update Full Colour Wordmark entry: use new CDN URLs for darkFile, update fileId references
+- [x] Fix light-background preview panel: hardcode bg-white (not bg-card) so it shows white in dark mode
+- [x] Update Theme-Aware Switching card to reflect simplified two-asset system
+- [x] Update assets.ts: replace old dark-mode SVG file IDs with new ones (clean filenames, all assets)
+- [x] Update skill asset table with new file IDs
+- [x] Update PROJECT-CONTEXT.md with new file IDs
+- [x] TypeScript check — 0 errors
 - [ ] Save checkpoint
