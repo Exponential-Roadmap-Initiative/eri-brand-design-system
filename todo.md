@@ -376,7 +376,18 @@
 - [x] TypeScript check — 0 errors
 - [x] Visual verification in light mode — full-colour wordmark visible on white header ✓
 - [x] Visual verification in dark mode — white wordmark visible on dark header ✓
+- [x] Save checkpoint
+- [x] Update Logo Usage section in BrandDesignSystem.tsx to document the two-variant approach
+- [x] Update Standard Components section to reference theme-aware logo pattern
+- [x] Update eri-bds-reference skill with dark-mode logo CDN URL and deprecate CSS filter workaround
+
+## Logo Usage section update — dark-mode variants (2026-05-12)
+
+- [x] Add dark-mode wordmark card to Logo Usage section (eriLogoDarkMode SVG, CDN URL, use-case note)
+- [x] Add dark-mode icon mark card to Logo Usage section (eriIconMarkDarkMode SVG, CDN URL)
+- [x] Add "Theme-Aware Logo Switching" subsection documenting the useTheme() pattern
+- [x] Deprecate / replace the brightness(0) invert(1) workaround note with the proper approach
+- [x] Update Standard Components EriAppHeader docs to reference theme-aware logo
+- [x] Update eri-bds-reference skill: add dark-mode logo CDN URLs to asset table, deprecate CSS filter
+- [x] TypeScript check — 0 errors
 - [ ] Save checkpoint
-- [ ] Update Logo Usage section in BrandDesignSystem.tsx to document the two-variant approach
-- [ ] Update Standard Components section to reference theme-aware logo pattern
-- [ ] Update eri-bds-reference skill with dark-mode logo CDN URL and deprecate CSS filter workaround

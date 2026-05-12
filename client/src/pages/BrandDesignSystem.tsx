@@ -166,9 +166,26 @@ const logoVariants = [
     svgUrl: logos.eriLogoFullColorSvg,
     svgFileId: "eri-logo-full-color_775a0122",
     darkBg: "#232323",
-    darkFilter: "brightness(0) invert(1)",
-    usage: "Primary logo for all light-background contexts: website headers, footers, documents, presentations. On dark backgrounds, apply CSS filter: brightness(0) invert(1) to render the logo in white.",
-    when: "Default choice. Use whenever background is white or light grey. Use the inverted (white) version on dark backgrounds.",
+    darkFile: logos.eriLogoDarkMode,
+    darkLabel: "Dark background",
+    usage: "Primary logo for light-background contexts: website headers, documents, presentations. The dark side preview uses the dedicated dark-mode SVG variant (white wordmark, green X) — this is what your app header should render in dark mode.",
+    when: "Use on white or light-grey backgrounds. In app headers, switch to eriLogoDarkMode when dark mode is active — see the Theme-Aware Switching card below.",
+    minWidth: "160px",
+    clearSpace: "Equal to the height of the 'E' letterform on all four sides.",
+  },
+  {
+    id: "dark-mode-wordmark",
+    name: "Dark-Mode Wordmark",
+    file: logos.eriLogoDarkMode,
+    filePath: "eri-logo-dark-mode.svg",
+    fileId: "eri-logo-dark-mode_25fd4f4c",
+    cdnUrl: logos.eriLogoDarkMode,
+    downloadName: "eri-logo-dark-mode.svg",
+    darkBg: "#232323",
+    darkFile: logos.eriLogoDarkMode,
+    darkLabel: "Dark background",
+    usage: "Dedicated dark-mode wordmark SVG. Near-black (#1d1d1b) text replaced with white (#ffffff); green X mark (#87e873) preserved. Use this asset directly — do not apply CSS filter: brightness(0) invert(1) to the full-colour version, as that incorrectly inverts the green accent.",
+    when: "Use on dark backgrounds (#111111, #232323, hero overlays). In theme-aware apps, render this when useTheme() returns 'dark'. Always used in the footer (which is always dark).",
     minWidth: "160px",
     clearSpace: "Equal to the height of the 'E' letterform on all four sides.",
   },
@@ -181,7 +198,9 @@ const logoVariants = [
     cdnUrl: logos.eriIconMark,
     downloadName: "eri-icon-mark.webp",
     darkBg: "#2c3f43",
-    usage: "Compact ERI mark for use in navigation menus, compact UI elements, and alongside pillar icons. The mark uses original green and black colours — do not recolour.",
+    darkFile: logos.eriIconMarkDarkMode,
+    darkLabel: "Dark background",
+    usage: "Compact ERI mark for navigation menus, compact UI elements, and alongside pillar icons. The light-side preview shows the original full-colour mark; the dark-side preview shows the dedicated dark-mode SVG variant (white curve + green curve). Do not recolour.",
     when: "When a compact ERI identifier is needed without the full wordmark.",
     minWidth: "32px",
     clearSpace: "4px on all sides minimum.",
@@ -211,8 +230,9 @@ const logoVariants = [
 
 const logoDonts = [
   "Do not stretch, skew, or distort the logo in any dimension.",
-  "Do not recolour the wordmark — use the full-colour version or the CSS-inverted white version only.",
-  "Do not place the colour wordmark on dark or busy photographic backgrounds without a white backing.",
+  "Do not recolour the wordmark — use the full-colour version on light backgrounds and the dark-mode SVG variant on dark backgrounds.",
+  "Do not apply CSS filter: brightness(0) invert(1) to the full-colour wordmark — this incorrectly inverts the green accent colour. Use the dedicated dark-mode SVG instead.",
+  "Do not place the full-colour wordmark directly on dark or busy photographic backgrounds without a white backing — use the dark-mode SVG variant.",
   "Do not add drop shadows, outlines, or decorative effects to the logo.",
   "Do not use the icon mark as the sole brand identifier on external-facing pages.",
   "Do not place the logo below minimum size (160px wide for wordmark, 32px for icon).",
@@ -801,7 +821,7 @@ export default function BrandDesignSystem() {
             Logo Usage
           </h2>
           <p className="text-muted-foreground mb-8 max-w-3xl">
-            Three logo assets are available. Each card shows the asset on both a light and dark background so you can verify contrast before use. Each card includes a file identifier and a direct download button. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
+            Five logo assets are available across two surface modes. Each card shows the asset on both a light and dark background so you can verify contrast before use. Each card includes a file identifier and a direct download button. Always respect minimum sizes and clear-space rules to maintain legibility and brand integrity.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -991,6 +1011,51 @@ export default function BrandDesignSystem() {
               );
             })}
           </div>
+
+          {/* Theme-Aware Logo Switching */}
+          <Card className="shadow-sm mb-6 border-2 border-[#3ba559]">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 bg-[#3ba559] text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Required</span>
+                <h3 className="font-bold text-foreground text-base">Theme-Aware Logo Switching</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                ERI apps default to dark mode. The header logo must switch between the full-colour wordmark (light mode) and the dedicated dark-mode SVG (dark mode). Use the <code className="bg-muted px-1 rounded text-xs">useTheme()</code> hook — never a CSS filter.
+              </p>
+              <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed mb-4">{`import { useTheme } from "@/contexts/ThemeContext";
+import { logos } from "@/lib/assets";
+
+// Inside your component:
+const { theme } = useTheme();
+const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColorSvg;
+
+// In JSX:
+<img src={logoSrc} alt="Exponential Roadmap Initiative logo" className="h-8 w-auto" />`}</pre>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className="bg-muted rounded-lg p-4">
+                  <p className="font-semibold text-foreground mb-1">Light mode header</p>
+                  <p className="text-muted-foreground text-xs mb-2">White background (#F9FAFB / bg-background)</p>
+                  <div className="bg-white rounded p-3 flex items-center justify-center border border-border">
+                    <img src={logos.eriLogoFullColorSvg} alt="Full colour wordmark" className="h-8 w-auto" />
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-1.5 font-mono">logos.eriLogoFullColorSvg</p>
+                </div>
+                <div className="bg-muted rounded-lg p-4">
+                  <p className="font-semibold text-foreground mb-1">Dark mode header</p>
+                  <p className="text-muted-foreground text-xs mb-2">Dark background (#111111 / bg-background in dark)</p>
+                  <div className="bg-[#111111] rounded p-3 flex items-center justify-center border border-border">
+                    <img src={logos.eriLogoDarkMode} alt="Dark-mode wordmark" className="h-8 w-auto" />
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-1.5 font-mono">logos.eriLogoDarkMode</p>
+                </div>
+              </div>
+              <div className="mt-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 rounded-lg p-3">
+                <p className="text-xs text-amber-800 dark:text-amber-200">
+                  <strong>Deprecated:</strong> <code className="font-mono">filter: brightness(0) invert(1)</code> incorrectly inverts the green accent colour. Remove any existing filter usage and replace with the dedicated <code className="font-mono">eriLogoDarkMode</code> SVG.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Favicon head code snippet */}
           <Card className="shadow-sm mb-4 border-2 border-[#3ba559]">
@@ -3721,7 +3786,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                 <CardContent className="p-5">
                   <h4 className="font-bold text-foreground mb-3">Left Zone — Logo + Divider + Title Block</h4>
                   <div className="space-y-3 text-sm text-muted-foreground">
-                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI wordmark — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, <code className="font-mono text-xs bg-gray-100 px-1 rounded">filter: brightness(0) invert(1)</code>, links to <code className="font-mono text-xs">/</code></span></div>
+                    <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">1.</span><span>ERI wordmark — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-8 w-auto shrink-0</code>, use <code className="font-mono text-xs bg-gray-100 px-1 rounded">logos.eriLogoDarkMode</code> SVG (white wordmark, green X) — do not apply <code className="font-mono text-xs bg-gray-100 px-1 rounded">filter: brightness(0) invert(1)</code>, links to <code className="font-mono text-xs">/</code></span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">2.</span><span>Vertical divider — <code className="font-mono text-xs bg-gray-100 px-1 rounded">h-6 w-px bg-white/20 shrink-0</code></span></div>
                     <div className="flex gap-2"><span className="text-[#3ba559] font-bold shrink-0">3.</span><span>App title — <code className="font-mono text-xs bg-gray-100 px-1 rounded">text-sm font-medium text-white truncate</code></span></div>
                   </div>
@@ -3830,7 +3895,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ['Top border', 'border-t border-gray-700'],
                     ['Padding', 'py-8 vertical · paddingInline: var(--eri-content-inset) horizontal'],
                     ['Layout', 'flex items-center justify-between — two zones, single row'],
-                    ['Left zone', 'ERI white wordmark (h-7, filter brightness(0) invert(1)) + optional tagline below (text-sm text-muted-foreground, max 80 chars)'],
+                    ['Left zone', 'ERI dark-mode wordmark SVG (logos.eriLogoDarkMode, h-7) + optional tagline below (text-sm text-muted-foreground, max 80 chars). Footer background is always #232323 — always use eriLogoDarkMode here.'],
                     ['Right nav zone', 'Confirmed links only: ERI homepage (https://exponentialroadmap.org/) + Contact Us (https://contact-us.exponentialroadmap.org?source=footer&app=...) — text-sm text-muted-foreground hover:text-white'],
                     ['© Bottom bar', '© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-muted-foreground'],
                     ['Link columns', 'Only show links with confirmed URLs — no placeholder columns'],
@@ -5382,9 +5447,11 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 </tr></thead>
                 <tbody className="font-mono text-[11px]">
                   {([
-                    ["logos.eriLogoFullColor",    "eri-logo-full-color_f5763508.png",     "Primary wordmark (PNG) — use in <img> tags"],
-                    ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — use for download links only"],
-                    ["logos.eriIconMark",         "eri-icon-mark_08cd328f.webp",          "Compact ERI mark"],
+                    ["logos.eriLogoFullColor",    "eri-logo-full-color_64e5c7db.webp",    "Primary wordmark (PNG/WebP) — light backgrounds only"],
+                    ["logos.eriLogoFullColorSvg", "eri-logo-full-color_775a0122.svg",     "SVG wordmark — light backgrounds; use for download links"],
+                    ["logos.eriLogoDarkMode",     "eri-logo-dark-mode_25fd4f4c.svg",      "Dark-mode wordmark SVG — white text, green X. Use on dark backgrounds instead of CSS filter."],
+                    ["logos.eriIconMark",         "eri-icon-mark_6c872e6b.webp",          "Compact ERI mark — light backgrounds"],
+                    ["logos.eriIconMarkDarkMode", "eri-icon-mark-dark-mode_3d581249.svg", "Dark-mode icon mark SVG — white curve + green curve"],
                     ["logos.exponentialRoadmapLogo",     "exponential-logo_0cda439e.webp",       "Exponential swirl icon — raw source file (no rounded corners). Use favicon variants for production."],
                     ["logos.faviconWhiteRounded32",  "favicon-white-rounded-32_05ba5ceb.png",  "✅ CORRECT browser tab favicon — 32px white-bg rounded PNG (PNG only on Manus)"],
                     ["logos.faviconWhiteRounded180", "favicon-white-rounded-180_2daaa7d4.png", "180px Apple Touch Icon (iOS home screen)"],
