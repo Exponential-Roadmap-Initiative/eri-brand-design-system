@@ -65,8 +65,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { EriStatusBadge, EriStatusValue } from './EriStatusBadge';
 import { EriContactUsButton } from './EriContactUsButton';
 
-// ERI wordmark — CDN hosted, inverted to white via CSS filter on dark background
-const ERI_LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp';
+// ERI wordmark — dark-mode SVG variant (white text + green X).
+// The header background is always #232323, so the dark-mode SVG is always correct here.
+// Do NOT use the full-colour WebP + CSS filter: brightness(0) invert(1) — that incorrectly inverts the green accent.
+const ERI_LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-dark-mode.svg';
 
 const STORAGE_KEY = 'eri-theme';
 
@@ -192,7 +194,6 @@ export function EriAppHeader({
             src={ERI_LOGO_URL}
             alt="Exponential Roadmap Initiative"
             className="h-8 w-auto"
-            style={{ filter: 'brightness(0) invert(1)' }}
           />
         </a>
         <div className="w-px h-6 bg-white/20 shrink-0" aria-hidden="true" />

@@ -411,3 +411,20 @@
 - [x] Update PROJECT-CONTEXT.md with new file IDs
 - [x] TypeScript check — 0 errors
 - [x] Save checkpoint
+
+## @eri/components logo update (2026-05-12)
+
+- [x] Dependency assessment: grep all ERI projects for old logo URLs and CSS filter
+- [x] Hard Stop 2: confirm exact files owning the logo rendering
+- [x] Hard Stop 6: confirm solution is general (works for all consuming projects via package update)
+- [x] Update EriAppHeader.tsx: replace old webp URL + CSS filter with eri-logo-dark-mode.svg
+- [x] Update EriAppFooter.tsx: replace old webp URL + CSS filter with eri-logo-dark-mode.svg
+- [x] Bump package version in packages/eri-components/package.json to 2.13.0
+- [x] Run pnpm build:css in packages/eri-components/
+- [x] TypeScript check — 0 errors
+- [ ] Save checkpoint (auto-pushes to GitHub)
+- [ ] Push new git tag v2.13.0
+- [ ] Update CDN download URLs in BDS site Standard Components section
+- [ ] Update CDN download URLs in eri-bds-reference skill
+- [ ] Update consuming projects (eri-playbook-team) to new tag
+- [ ] Update PROJECT-CONTEXT.md

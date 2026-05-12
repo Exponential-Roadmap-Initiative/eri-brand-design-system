@@ -81,10 +81,9 @@ export function EriAppFooter({ appName, tagline, attribution, footerLinks = DEFA
             aria-label="Exponential Roadmap Initiative"
           >
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-full-color_64e5c7db.webp"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-dark-mode.svg"
               alt="Exponential Roadmap Initiative"
               className="h-7 w-auto"
-              style={{ filter: 'brightness(0) invert(1)' }}
             />
           </a>
           {tagline && (
