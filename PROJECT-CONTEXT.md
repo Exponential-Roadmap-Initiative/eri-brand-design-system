@@ -437,3 +437,52 @@ Defined in `client/src/index.css`:
 | `@eri/components` prop | `showThemeToggle` on `EriAppHeader` and `EriPageLayout` (v2.12.0) |
 
 ---
+
+---
+
+## BDS Site Header/Footer Migration — v2.13.0 (2026-05-13)
+
+The BDS site now uses `EriAppHeader` and `EriAppFooter` from `@eri/components` directly.
+The old `SiteHeader` component (custom header in `App.tsx`) was replaced.
+
+### Architecture after migration
+
+| Zone | Component | Notes |
+|---|---|---|
+| Header | `EriAppHeader` from `@eri/components` | Fixed 64px, `#232323`, dark-mode SVG logo, BETA badge, theme toggle, Contact Us CTA, hamburger |
+| Tab bar | `TabNav` (local, in `App.tsx`) | BDS-specific — sits at `top: 64px`, height 40px, `#232323` background |
+| Mobile drawer | `BdsNavDrawer` (local) | Triggered by `onMenuClick` from `EriAppHeader` |
+| Content | `PublicLayout.tsx` | Adds `paddingTop: 104px` (64px header + 40px TabNav) |
+| Footer | `EriAppFooter` from `@eri/components` | Always `#232323`, ERI logo (dark-mode SVG), tagline, links |
+
+### Key layout values
+
+- `EriAppHeader` height: **64px** (fixed, `top: 0`)
+- `TabNav` height: **40px** (fixed, `top: 64px`)
+- Total fixed chrome: **104px**
+- `PublicLayout` `paddingTop`: **104px**
+- Sticky section nav `top`: **104px** (was 68px — corrected in this migration)
+- `AlignmentTracker` `pt-[104px]` (was `pt-[108px]` — corrected in this migration)
+
+### Skill update
+
+The `eri-bds-reference` skill scope note was updated: the BDS site is no longer "exempt" from using `@eri/components`. The scope statement now reads:
+
+> **Scope — All Public-Facing ERI Apps:** These components apply to all public-facing ERI product apps, including the BDS site itself.
+
+The BDS row in the EriAppHeader props table was also updated to note that it uses `EriAppHeader` + `EriAppFooter` directly (no `EriHeroSection`).
+
+### Theme toggle behaviour
+
+The `EriAppHeader` `showThemeToggle={true}` prop is set. The toggle reads/writes `localStorage` key `eri-theme`. The `ThemeContext` in `App.tsx` listens for `storage` events to stay in sync. The FOLC-prevention script in `client/index.html` ensures the page is dark before React hydrates.
+
+### Background colour rule confirmed
+
+The user confirmed: **the background should always be `#232323`**. This applies to:
+- `EriAppHeader` (always `#232323` — hardcoded in component)
+- `TabNav` (always `#232323` — hardcoded in `App.tsx`)
+- Hero sections (always `#232323` — hardcoded in page components)
+- `EriAppFooter` (always `#232323` — hardcoded in component)
+- Dark content cards (always `#232323` — hardcoded in content)
+
+The content area (`bg-background`) remains theme-aware (dark/light switchable).

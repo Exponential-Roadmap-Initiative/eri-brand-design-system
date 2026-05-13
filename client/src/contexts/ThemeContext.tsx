@@ -13,6 +13,9 @@
  * Flash of light content (FOLC) prevention: the CSS default (`:root`) is dark,
  * so the page is dark before any JavaScript runs. Switching to light requires
  * an explicit user action.
+ *
+ * Cross-component sync: listens for `storage` events so that external theme
+ * writers (e.g. EriAppHeader's self-contained toggle) keep this context in sync.
  */
 
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -44,6 +47,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     return DEFAULT_THEME;
   });
 
+  // Apply theme class to <html> and persist to localStorage
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") {
@@ -59,6 +63,22 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       // localStorage may be unavailable in some environments
     }
   }, [theme]);
+
+  // Sync with external theme changes — e.g. EriAppHeader's self-contained toggle
+  // writes to the same localStorage key. The `storage` event fires in the same
+  // tab when another script writes to localStorage directly (not via setItem on
+  // the same React state). This keeps useTheme() accurate for all consumers.
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key !== STORAGE_KEY) return;
+      const next = e.newValue;
+      if (next === "light" || next === "dark") {
+        setTheme(next);
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(prev => (prev === "dark" ? "light" : "dark"));

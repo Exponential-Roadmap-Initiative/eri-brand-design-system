@@ -4,72 +4,33 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch, Link, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { ThemeToggleButton } from "./components/ThemeToggleButton";
 import BrandDesignSystem from "./pages/BrandDesignSystem";
 import AlignmentTracker from "./pages/AlignmentTracker";
-import { logos } from "@/lib/assets";
+import BdsNavDrawer from "./components/BdsNavDrawer";
+import { EriAppHeader } from "@eri/components";
+import { useState } from "react";
 
 const APP_VERSION = "V.2026.04.21";
 
-/// ── Shared fixed header ──────────────────────────────────────────────────────
-// Renders on every tab. Mirrors the PublicLayout header exactly so the
-// AlignmentTracker page (which does not use PublicLayout) also gets the header.
-// PublicLayout suppresses its own header when this is present via the
-// hideHeader prop.
-//
-// Theme-aware: uses Tailwind's dark: variant so the header adapts to
-// the user's chosen mode. Dark mode is the ERI default.
-function SiteHeader() {
-  return (
-    <>
-      {/* 4px dark teal top strip — same in both modes */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[#2c3f43]" />
-      {/* Main header bar */}
-      <header className="fixed top-1 left-0 right-0 z-50 h-16 bg-white dark:bg-[#111111] border-b border-gray-200 dark:border-[#2e2e2e] transition-colors duration-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <a href="/" aria-label="Go to homepage" className="shrink-0">
-              <img
-                src={logos.eriLogoFullColor}
-                alt="Exponential Roadmap Initiative logo"
-                className="h-8 w-auto dark:brightness-0 dark:invert"
-              />
-            </a>
-            <div className="hidden sm:block h-6 w-px bg-gray-300 dark:bg-[#2e2e2e] shrink-0" />
-            <span className="hidden sm:inline text-[18px] font-semibold text-[#384151] dark:text-[#ECEEF2] truncate">
-              Brand Design System
-            </span>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full border border-gray-400 dark:border-gray-600 text-[11px] font-medium text-gray-600 dark:text-gray-400 tracking-wide">
-              BETA
-            </span>
-            <span className="hidden sm:inline text-[11px] font-medium text-gray-500 dark:text-gray-500 tracking-wide">
-              {APP_VERSION}
-            </span>
-            {/* Theme toggle — dark is ERI default */}
-            <ThemeToggleButton size="sm" />
-          </div>
-        </div>
-      </header>
-    </>
-  );
-}
-
 // ── Tab navigation bar ────────────────────────────────────────────────────────
+// Positioned directly below the standard 64px EriAppHeader.
+// This is a BDS-specific feature (two pages: BDS + Tracker) — not part of the
+// standard EriAppHeader spec, so it lives here as a separate component.
 function TabNav() {
   const [location] = useLocation();
   const tabs = [
     { href: "/",        label: "Brand Design System" },
     { href: "/tracker", label: "Project Alignment Tracker" },
   ];
-
   return (
     <div
-      className="fixed left-0 right-0 z-40 bg-white dark:bg-[#111111] border-b border-gray-200 dark:border-[#2e2e2e] transition-colors duration-200"
-      style={{ top: "68px" }}
+      className="fixed left-0 right-0 z-40 bg-[#232323] border-b border-gray-700 transition-colors duration-200"
+      style={{ top: "64px" }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-0 h-10">
+      <div
+        className="flex items-center gap-0 h-10"
+        style={{ paddingInline: "var(--eri-content-inset, clamp(1rem, 3vw, 2rem))" }}
+      >
         {tabs.map(({ href, label }) => {
           const isActive = href === "/" ? location === "/" : location.startsWith(href);
           return (
@@ -80,7 +41,7 @@ function TabNav() {
                 "px-4 h-full flex items-center text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
                 isActive
                   ? "border-[#3ba559] text-[#3ba559]"
-                  : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600",
+                  : "border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600",
               ].join(" ")}
             >
               {label}
@@ -93,11 +54,30 @@ function TabNav() {
 }
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <>
-      <SiteHeader />
+      {/* Standard ERI header — #232323 background, dark-mode SVG logo, BETA badge */}
+      <EriAppHeader
+        appName="Brand Design System"
+        status="BETA"
+        version={APP_VERSION}
+        showThemeToggle={true}
+        showCTA={true}
+        source="bds"
+        sourceLabel="Brand Design System"
+        returnUrl="https://bds.exponentialroadmap.org"
+        onMenuClick={() => setMenuOpen(true)}
+        logoHref="/"
+      />
+
+      {/* BDS-specific tab navigation — sits below the standard 64px header */}
       <TabNav />
+
+      {/* Mobile navigation drawer — triggered by EriAppHeader hamburger */}
+      <BdsNavDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
+
       <Switch>
         <Route path={"/"} component={BrandDesignSystem} />
         <Route path={"/tracker"} component={AlignmentTracker} />

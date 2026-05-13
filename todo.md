@@ -428,3 +428,17 @@
 - [x] Update CDN download URLs in eri-bds-reference skill
 - [ ] Update consuming projects (HAL, Taxonomy, Trust, PSM, Playbook) to v2.13.0 — PENDING (requires access to each project)
 - [x] Update PROJECT-CONTEXT.md
+
+## BDS site header/footer migration to @eri/components (2026-05-13)
+
+- [x] Research: audit current PublicLayout.tsx header/footer vs EriAppHeader/EriAppFooter capabilities
+- [x] Design: define migration plan and identify component gaps
+- [x] Implement: migrate App.tsx to use EriAppHeader from @eri/components; PublicLayout.tsx uses EriAppFooter
+- [x] Handle BDS-specific features: tab navigation (TabNav component), theme toggle (showThemeToggle=true), BETA badge, version string
+- [x] Fix sticky nav top offset: 68px → 104px (64px EriAppHeader + 40px TabNav)
+- [x] Fix AlignmentTracker.tsx top padding: pt-[108px] → pt-[104px]
+- [x] TypeScript check — 0 errors
+- [x] Visual verification in both light and dark mode (hamburger drawer, theme toggle, footer)
+- [x] Update skill: remove "BDS site is exempt" note, update scope statement; bump to v3.0.2
+- [x] Update PROJECT-CONTEXT.md
+- [ ] Save checkpoint

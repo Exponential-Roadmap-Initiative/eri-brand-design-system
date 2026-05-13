@@ -2,7 +2,7 @@
  * ERI BDS Alignment Tracker
  *
  * Design: ERI Brand Design System
- * - pt-[108px] to clear the fixed SiteHeader (68px) + TabNav (40px)
+ * - pt-[104px] to clear the fixed EriAppHeader (64px) + TabNav (40px)
  * - Full-width dark #232323 header band with Accent Lime eyebrow + stat cards
  * - Archivo headings, dot status indicators, no Bootstrap pills
  * - Dark #232323 table header row, white body rows
@@ -333,8 +333,8 @@ export default function AlignmentTracker() {
   const redCount   = live.filter((r) => deriveStatus(r.meta) === "red" || r.status === "error").length;
 
   return (
-    // pt-[108px] clears the fixed SiteHeader (68px) + TabNav (40px)
-    <div className="min-h-screen pt-[108px] bg-background">
+    // pt-[104px] clears the fixed EriAppHeader (64px) + TabNav (40px)
+    <div className="min-h-screen pt-[104px] bg-background">
 
        {/* ── Dark header band — full viewport width ───────────────────── */}
       <div style={{ backgroundColor: T.dark }}>

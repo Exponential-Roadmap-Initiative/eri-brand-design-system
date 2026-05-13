@@ -369,7 +369,7 @@ function ChartContainer({ title, subtitle, headerColor = "green", children }: {
 // ============================================================================
 export default function BrandDesignSystem() {
   return (
-    <PublicLayout hideHeader>
+    <PublicLayout>
       {/* ── HERO ── */}
       <section className="bg-[#232323] text-white pt-28 pb-16 md:pb-24" id="top">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -396,7 +396,7 @@ export default function BrandDesignSystem() {
         <div style={{ display: "flex", gap: "2.5rem", alignItems: "flex-start" }}>
 
           {/* ── STICKY SECTION NAVIGATOR (desktop only) ── */}
-          {/* top: 68px = 4px top strip + 64px header.
+          {/* top: 104px = 64px EriAppHeader + 40px TabNav.
                The outer div uses position:sticky directly (no wrapper needed).
                max-height + overflow-y-auto lets the nav scroll independently
                on very long pages so it never disappears. */}
@@ -404,10 +404,10 @@ export default function BrandDesignSystem() {
             className="hidden lg:block overflow-y-auto"
             style={{
               position: "sticky",
-              top: "68px",
+              top: "104px",
               width: "13rem",
               flexShrink: 0,
-              maxHeight: "calc(100vh - 68px - 2rem)",
+              maxHeight: "calc(100vh - 104px - 2rem)",
               alignSelf: "flex-start",
               paddingBottom: "2rem",
             }}
