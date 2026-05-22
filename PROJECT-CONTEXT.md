@@ -486,3 +486,34 @@ The user confirmed: **the background should always be `#232323`**. This applies 
 - Dark content cards (always `#232323` — hardcoded in content)
 
 The content area (`bg-background`) remains theme-aware (dark/light switchable).
+
+---
+
+## EriCrocodileChart — @eri/components v2.14.0 (2026-05-22)
+
+`EriCrocodileChart` was added to `@eri/components` as canonical component 7. It is a pure SVG component with zero external dependencies (no Recharts, no Chart.js, no D3).
+
+### Key decisions
+
+- **Pure SVG** — the existing `CrocodileChartExamples.tsx` in the BDS site already used pure SVG. The component was extracted and generalised into `packages/eri-components/src/EriCrocodileChart.tsx`.
+- **`entityType` prop** — enforces the semantic colour rule automatically. `'company'` → green `#7DD87A`. `'nation'` → salmon `#F08070`. This encoding is semantic and must never be swapped.
+- **`CrocodileDataPoint` type** — exported from `@eri/components`. Format: `{ year: string; upper: number; lower: number }`. `upper` = positive % change from baseline (GDP/Revenue). `lower` = negative % change from baseline (CO₂ emissions). First data point must be `{ upper: 0, lower: 0 }`.
+- **BDS site** — `CrocodileChartExamples.tsx` was updated to import from `@eri/components` instead of duplicating the SVG logic.
+- **Standard Components section** — updated to list 7 components (was 6). Component 7 subsection added with live preview, usage code, props table, and semantic colour rule callout.
+- **Skill** — `eri-bds-reference` updated with: EriCrocodileChart in component summaries, prop table, CDN fallback table, import line, and a new dedicated "Crocodile Economy Chart" section with anatomy, semantic colour rule, data format, usage examples, and non-conformant patterns.
+
+### CDN URL
+
+`EriCrocodileChart.tsx` (canonical source file):
+`https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriCrocodileChart_3ff07184.tsx`
+
+### Why this solves the replication problem
+
+Previous Manus agents failed to replicate the chart because the skill had only one line about it (`#F5C842 = data highlights, chart callouts`). The agent had to guess the library, colours, anatomy rules, and data format — and guessed wrong. The new skill section provides:
+1. Exact anatomy (line colours, fill colours, opacity, gridlines, axis style)
+2. Semantic colour encoding rule (green = company, salmon = nation — never swap)
+3. Exact data format with baseline year convention
+4. Copy-paste usage example for both company and nation charts
+5. Non-conformant patterns list (do not use Recharts/Chart.js/D3)
+
+Any agent reading the skill before starting work will now have everything needed to use the component correctly without guessing.

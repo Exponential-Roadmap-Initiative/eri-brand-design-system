@@ -505,8 +505,8 @@ export default function BrandDesignSystem() {
           <div className="rounded-lg p-6 mb-6 border-l-4 bg-card" style={{ borderLeftColor: '#3ba559' }}>
             <p className="text-sm font-bold text-foreground mb-1">Building an ERI app? Start with Standard Components.</p>
             <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships six canonical components that every ERI public-facing application must use verbatim.
-              Install once, import, and the layout, header, hero, footer, status badges, and contact button are all handled.
+              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships seven canonical components that every ERI public-facing application must use verbatim.
+              Install once, import, and the layout, header, hero, footer, status badges, contact button, and Crocodile Economy charts are all handled.
             </p>
             <div className="grid sm:grid-cols-2 gap-2 mb-4">
               {[
@@ -516,6 +516,7 @@ export default function BrandDesignSystem() {
                 ["EriAppFooter",       "Standard dark footer with ERI branding and links"],
                 ["EriStatusBadge",     "Pill badge for BETA / PILOT / PROTOTYPE labels"],
                 ["EriContactUsButton", "Standalone Contact Us CTA linking to the shared service"],
+                ["EriCrocodileChart",  "Crocodile Economy decoupling chart — pure SVG, zero deps"],
               ].map(([name, desc]) => (
                 <div key={name} className="flex gap-2 items-start">
                   <span className="text-[#3ba559] font-mono text-[10px] shrink-0 mt-0.5">{name}</span>
@@ -542,7 +543,7 @@ export default function BrandDesignSystem() {
             </p>
             <div className="space-y-2 text-xs text-muted-foreground">
               <div className="flex gap-2"><span style={{ color: '#93E07D' }}>1.</span><span>Read <code className="font-mono bg-gray-800 px-1 rounded">/home/ubuntu/skills/eri-bds-reference/SKILL.md</code> — this is your primary reference for all ERI brand and component decisions.</span></div>
-              <div className="flex gap-2"><span style={{ color: '#93E07D' }}>2.</span><span>For building ERI apps: follow the{" "}<a href="#standard-components" className="underline underline-offset-2" style={{ color: '#93E07D' }}>Standard Components</a>{" "}section of this BDS site. Install <code className="font-mono bg-gray-800 px-1 rounded">@eri/components</code> and use the six canonical components verbatim.</span></div>
+              <div className="flex gap-2"><span style={{ color: '#93E07D' }}>2.</span><span>For building ERI apps: follow the{" "}<a href="#standard-components" className="underline underline-offset-2" style={{ color: '#93E07D' }}>Standard Components</a>{" "}section of this BDS site. Install <code className="font-mono bg-gray-800 px-1 rounded">@eri/components</code> and use the seven canonical components verbatim.</span></div>
               <div className="flex gap-2"><span style={{ color: '#93E07D' }}>3.</span><span>For brand decisions (colour, typography, logo): use the{" "}<a href="#ai-instructions" className="underline underline-offset-2" style={{ color: '#93E07D' }}>Machine Instructions</a>{" "}section at the bottom of this page — it provides structured, AI-readable specs.</span></div>
               <div className="flex gap-2"><span style={{ color: '#93E07D' }}>4.</span><span>Never regenerate the ERI logo, the hands hero image, or brand assets. Use the CDN URLs documented in the skill and in the Logo Usage section of this site.</span></div>
               <div className="flex gap-2"><span style={{ color: '#93E07D' }}>5.</span><span>When in doubt about a brand decision, refer to this BDS site — it is the authoritative source. The skill is a portable summary; the BDS site is the full specification.</span></div>
@@ -2310,6 +2311,35 @@ import { pillarBottomIcons } from "@/lib/assets";
             </Card>
           </div>
 
+          {/* EriCrocodileChart — reusable component callout */}
+          <Card className="shadow-sm border-l-4 border-[#00B4D8] mb-8">
+            <CardContent className="p-5">
+              <div className="flex items-start gap-3">
+                <div className="flex-1">
+                  <p className="font-archivo font-bold text-foreground text-sm mb-1">EriCrocodileChart — reusable component</p>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Available in <code className="bg-muted px-1 rounded">@eri/components</code> v2.14.0+. Zero external dependencies — pure SVG.
+                    The <code className="bg-muted px-1 rounded">entityType</code> prop enforces the semantic colour rule automatically.
+                  </p>
+                  <pre className="bg-[#1a1a1a] text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed">{`import { EriCrocodileChart } from "@eri/components";
+
+<EriCrocodileChart
+  title="Company"
+  entityType="company"          // "company" → green fill | "nation" → salmon fill
+  data={[
+    { year: "2013", upper: 0,  lower: 0   },
+    { year: "2018", upper: 8,  lower: -18 },
+    { year: "2024", upper: 65, lower: -52 },
+  ]}
+  upperLabel="Revenue (% change)"
+  lowerLabel="CO\u2082 emissions (% change)"
+  sourceNote="Sources: company annual reports, Klimatkollen."
+/>`}</pre>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Live chart example */}
           <h4 className="font-bold text-foreground mb-3 text-sm uppercase tracking-wider">Live Examples</h4>
           <p className="text-muted-foreground mb-4 text-sm">Interactive recreations of the Crocodile Economy chart style using ERI brand colours.</p>
@@ -3319,16 +3349,15 @@ const contactUrl =
           <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
             Standard Components
           </h2>
-          <p className="text-muted-foreground text-sm mb-6">Version 2.0.0 · 6 canonical files · Copy verbatim — do not reconstruct</p>
+          <p className="text-muted-foreground text-sm mb-6">Version 2.14.0 · 7 canonical files · Copy verbatim — do not reconstruct</p>
 
           {/* Scope note */}
           <div className="rounded-lg p-4 mb-6 border bg-muted border-border">
-            <p className="text-sm font-bold text-foreground mb-1">Scope: Public-Facing ERI Apps Only</p>
+            <p className="text-sm font-bold text-foreground mb-1">Scope: All Public-Facing ERI Apps</p>
             <p className="text-sm text-muted-foreground">
-              These components apply to <strong>public-facing ERI product apps</strong> — such as Taxonomy, Professional Services Matrix, and HAL.
-              They are <strong>not</strong> intended for internal or documentation tools (such as this BDS site itself, which uses its own{" "}
-              <code className="font-mono text-xs bg-muted-foreground/20 px-1 rounded">PublicLayout</code> with a white header appropriate for a reference document).
-              If a project has a fundamentally different surface — for example a white header, an admin panel, or an embedded widget — it is exempt and should use its own layout.
+              These components apply to <strong>all public-facing ERI product apps</strong> — including this BDS site itself, Taxonomy, Professional Services Matrix, HAL, and any future app.
+              The BDS site uses <code className="font-mono text-xs bg-muted-foreground/20 px-1 rounded">EriAppHeader</code> and <code className="font-mono text-xs bg-muted-foreground/20 px-1 rounded">EriAppFooter</code> directly (with a BDS-specific tab bar below the header).
+              If a project has a fundamentally different surface — for example an admin panel or an embedded widget — it may use its own layout.
             </p>
           </div>
 
@@ -3351,7 +3380,7 @@ const contactUrl =
             <p className="text-xs text-muted-foreground mb-2">
               Then import in <code className="font-mono bg-gray-800 px-1 rounded">App.tsx</code>:
             </p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`import { EriPageLayout, EriHeroSection, EriStatusBadge, EriContactUsButton } from '@eri/components';`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`import { EriPageLayout, EriHeroSection, EriStatusBadge, EriContactUsButton, EriCrocodileChart } from '@eri/components';`}</pre>
             <div className="mt-3 pt-3 border-t border-gray-700">
               <p className="text-xs text-gray-400 mb-1"><span style={{ color: '#93E07D' }}>Release workflow (BDS maintainer):</span> After updating a component, bump the version in <code className="font-mono bg-gray-800 px-1 rounded">packages/eri-components/package.json</code>, run <code className="font-mono bg-gray-800 px-1 rounded">pnpm build:css</code> in <code className="font-mono bg-gray-800 px-1 rounded">packages/eri-components/</code> to rebuild the CSS, save a checkpoint (auto-pushes to GitHub), then run:</p>
               <pre className="text-xs text-green-400 bg-gray-900 rounded p-2 overflow-x-auto font-mono">{`cd /home/ubuntu/eri-brand-design-system && TOKEN=$(gh auth token) && git remote set-url user_github "https://x-access-token:\${TOKEN}@github.com/Exponential-Roadmap-Initiative/eri-brand-design-system.git" && git tag vX.Y.Z && git push user_github vX.Y.Z`}</pre>
@@ -3391,7 +3420,7 @@ const contactUrl =
           <div className="rounded-lg p-5 mb-8 border border-border bg-muted">
             <p className="text-sm font-bold text-foreground mb-1">FALLBACK: DOWNLOAD FILES DIRECTLY</p>
             <p className="text-sm text-muted-foreground mb-3">
-              If the npm package cannot be used, copy all 6 files into{" "}
+              If the npm package cannot be used, copy all 7 files into{" "}
               <code className="font-mono text-xs bg-gray-200 px-1 rounded">client/src/components/eri/</code>.
               Note: these copies will <strong>not</strong> receive automatic updates — you must re-download when the BDS is updated.
             </p>
@@ -3403,6 +3432,7 @@ const contactUrl =
                 { name: "EriAppFooter.tsx",         url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriAppFooter.tsx" },
                 { name: "EriHeroSection.tsx",       url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriHeroSection.tsx" },
                 { name: "EriPageLayout.tsx",        url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/components/EriPageLayout.tsx" },
+                { name: "EriCrocodileChart.tsx",    url: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriCrocodileChart_3ff07184.tsx" },
               ].map(({ name, url }) => (
                 <a
                   key={name}
@@ -4236,6 +4266,86 @@ function App() {
               <li>Importing EriAppHeader or EriAppFooter directly in page files — always use EriPageLayout in App.tsx</li>
               <li>Rendering the header inside a page component — leads to duplicate headers on navigation</li>
               <li>Missing <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">--eri-content-inset</code> in index.css — header and hero text will not align</li>
+            </ul>
+          </div>
+
+          {/* ── Component 7: EriCrocodileChart ──────────────────────────────── */}
+          <h3 className="font-bold text-foreground mb-1 text-lg">7. EriCrocodileChart</h3>
+          <p className="text-muted-foreground text-sm mb-4">
+            Canonical Crocodile Economy decoupling chart. Pure SVG — zero external dependencies (no Recharts, no Chart.js, no D3).
+            The <code className="font-mono text-xs bg-gray-100 px-1 rounded">entityType</code> prop enforces the semantic fill colour rule automatically:
+            green (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#7DD87A</code>) for companies, salmon (<code className="font-mono text-xs bg-gray-100 px-1 rounded">#F08070</code>) for nations.
+            This encoding is semantic — it must never be swapped.
+          </p>
+
+          {/* Live preview */}
+          <div className="mb-6">
+            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3">Live Preview</p>
+            <CrocodileChartExamples />
+          </div>
+
+          {/* Source code */}
+          <Card className="shadow-sm mb-3" style={{ backgroundColor: '#1a1a1a' }}>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                <span className="text-xs font-mono text-muted-foreground">Usage example</span>
+                <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriCrocodileChart_3ff07184.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-muted-foreground hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
+              </div>
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`import { EriCrocodileChart } from '@eri/components';
+import type { CrocodileDataPoint } from '@eri/components';
+
+const data: CrocodileDataPoint[] = [
+  { year: "2013", upper: 0,  lower: 0   },
+  { year: "2018", upper: 8,  lower: -18 },
+  { year: "2024", upper: 65, lower: -52 },
+];
+
+<EriCrocodileChart
+  title="Company"
+  entityType="company"   // "company" → green fill | "nation" → salmon fill
+  data={data}
+  upperLabel="Revenue (% change)"
+  lowerLabel="CO\u2082 emissions (% change)"
+  sourceNote="Sources: company annual reports, Klimatkollen."
+/>`}</pre>
+            </CardContent>
+          </Card>
+
+          {/* Props table */}
+          <Card className="shadow-sm bg-card border border-border mb-3">
+            <CardContent className="p-4">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Props</p>
+              <table className="w-full text-xs">
+                <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
+                <tbody className="font-mono">
+                  {[
+                    ["title",       "string",                      "Chart title — rendered Archivo 700 uppercase above the SVG"],
+                    ["entityType",  '"company" | "nation"',         "Controls fill colour. company → #7DD87A (green). nation → #F08070 (salmon). Semantic — never swap."],
+                    ["data",        "CrocodileDataPoint[]",         "Array of { year: string; upper: number; lower: number }. upper = positive % change; lower = negative % change."],
+                    ["upperLabel",  "string",                      "Legend label for the upper (GDP / Revenue) line"],
+                    ["lowerLabel",  "string",                      "Legend label for the lower (CO\u2082 emissions) line"],
+                    ["sourceNote",  "string?",                     "Optional data source attribution shown below the chart"],
+                    ["className",   "string?",                     "Optional CSS class applied to the outermost container div"],
+                  ].map(([prop, type, note]) => (
+                    <tr key={prop} className="border-b border-border/50">
+                      <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{type}</td>
+                      <td className="py-1.5 text-muted-foreground font-sans">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+
+          {/* Semantic colour rule */}
+          <div className="rounded-lg p-4 mb-10 border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30">
+            <p className="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-2">SEMANTIC COLOUR RULE — mandatory</p>
+            <ul className="text-xs text-amber-900 dark:text-amber-300 space-y-1 list-disc list-inside">
+              <li>Green fill <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#7DD87A</code> is reserved for <strong>company / corporate entities</strong> (private-sector actors). Never use it for nations.</li>
+              <li>Salmon fill <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#F08070</code> is reserved for <strong>nation / region / supranational entities</strong>. Never use it for companies.</li>
+              <li>This encoding is consistent across all ERI publications, the Crocodile Economy whitepaper, and digital products. Swapping the colours is a brand violation.</li>
+              <li>The <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">entityType</code> prop enforces this automatically — do not override the fill colour via <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">className</code>.</li>
             </ul>
           </div>
 

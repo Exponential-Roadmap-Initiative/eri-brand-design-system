@@ -441,4 +441,20 @@
 - [x] Visual verification in both light and dark mode (hamburger drawer, theme toggle, footer)
 - [x] Update skill: remove "BDS site is exempt" note, update scope statement; bump to v3.0.2
 - [x] Update PROJECT-CONTEXT.md
+- [x] Save checkpoint (v3.0.2 — 3a182c2d)
+
+## EriCrocodileChart — reusable component + skill spec (2026-05-22)
+
+- [x] Create packages/eri-components/src/EriCrocodileChart.tsx (pure SVG, typed props)
+- [x] Export EriCrocodileChart from packages/eri-components/src/index.ts
+- [x] Bump @eri/components to v2.14.0
+- [x] Run pnpm build:css in packages/eri-components/
+- [x] Update BDS site: replace CrocodileChartExamples.tsx with import from @eri/components
+- [x] Add code example + CDN URL to Charts section in BrandDesignSystem.tsx
+- [x] Add Crocodile Economy Chart spec section to eri-bds-reference skill
+- [x] Upload EriCrocodileChart.tsx to CDN (https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriCrocodileChart_3ff07184.tsx)
+- [x] Update Standard Components section in BrandDesignSystem.tsx with EriCrocodileChart (component 7)
+- [x] Update skill Standard Components table with EriCrocodileChart
+- [x] Update PROJECT-CONTEXT.md
+- [x] TypeScript check — 0 errors
 - [ ] Save checkpoint
