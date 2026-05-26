@@ -64,10 +64,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
   }, [theme]);
 
-  // Sync with external theme changes — e.g. EriAppHeader's self-contained toggle
-  // writes to the same localStorage key. The `storage` event fires in the same
-  // tab when another script writes to localStorage directly (not via setItem on
-  // the same React state). This keeps useTheme() accurate for all consumers.
+  // Sync with external theme changes — e.g. EriAppHeader's self-contained toggle.
+  // Two listeners are needed:
+  //   1. `storage` event — fires when ANOTHER tab writes to localStorage.
+  //   2. `eri-theme-change` CustomEvent — dispatched by EriAppHeader.applyTheme()
+  //      in the SAME tab (the native `storage` event does NOT fire in the originating tab).
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key !== STORAGE_KEY) return;
@@ -76,8 +77,18 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         setTheme(next);
       }
     };
+    const handleCustomChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ theme: string }>).detail;
+      if (detail?.theme === "light" || detail?.theme === "dark") {
+        setTheme(detail.theme as Theme);
+      }
+    };
     window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+    window.addEventListener("eri-theme-change", handleCustomChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("eri-theme-change", handleCustomChange);
+    };
   }, []);
 
   const toggleTheme = () => {

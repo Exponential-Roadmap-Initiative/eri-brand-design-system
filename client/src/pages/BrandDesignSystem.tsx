@@ -1643,7 +1643,7 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
               <div
                 className="relative w-full"
                 style={{
-                  backgroundImage: `url(${heroImages.halHandsTouching})`,
+                  backgroundImage: `url(${heroImages.halSCurveDual})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   aspectRatio: '16/9',
@@ -1653,7 +1653,7 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
                 <div className="absolute inset-0 flex flex-col justify-center px-12 py-10">
                   <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-3">EXPONENTIAL ROADMAP INITIATIVE — EXAMPLE</p>
                   <h1 className="font-archivo font-extrabold text-white text-4xl md:text-5xl leading-tight mb-4">
-                    <span className="text-[#93E07D]">Exponential</span><br />Earth-Aligned AI Lab
+                    <span className="text-[#93E07D]">Earth-Aligned</span><br />AI Lab
                   </h1>
                   <p className="text-muted-foreground text-base max-w-md mb-6">
                     One place for everything ERI builds at the intersection of human expertise and AI.
@@ -1671,24 +1671,24 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
                 <h4 className="font-archivo font-bold text-foreground text-sm mb-3">Asset Details</h4>
                 <table className="w-full text-sm">
                   <tbody>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">File name</td><td className="py-1.5 font-mono text-foreground text-xs">hal-hero-human-v2-hands.png</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">File name</td><td className="py-1.5 font-mono text-foreground text-xs">hero-scurve-dual-rich.webp</td></tr>
                     <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Dimensions</td><td className="py-1.5 text-foreground">1456 × 816 px</td></tr>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Format</td><td className="py-1.5 text-foreground">PNG</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Format</td><td className="py-1.5 text-foreground">WebP</td></tr>
                     <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Aspect ratio</td><td className="py-1.5 text-foreground">16:9</td></tr>
-                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Colours</td><td className="py-1.5 text-foreground">Amber curve · Accent Lime curve · Dark teal grid · Wireframe hands</td></tr>
-                    <tr><td className="py-1.5 text-muted-foreground pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halHandsTouching</td></tr>
+                    <tr className="border-b border-border/50"><td className="py-1.5 text-muted-foreground pr-4">Colours</td><td className="py-1.5 text-foreground">Amber curve · Accent Lime curve · Dark teal grid · Particle bokeh</td></tr>
+                    <tr><td className="py-1.5 text-muted-foreground pr-4">CDN token</td><td className="py-1.5 font-mono text-[#3ba559] text-xs break-all">heroImages.halSCurveDual</td></tr>
                   </tbody>
                 </table>
                 <div className="mt-4 pt-4 border-t border-border">
                   <a
-                    href={heroImages.halHandsTouching}
-                    download="hal-hero-human-v2-hands.png"
+                    href={heroImages.halSCurveDual}
+                    download="hero-scurve-dual-rich.webp"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-[#3ba559] hover:bg-[#2e8a47] text-white text-sm font-semibold px-4 py-2 rounded transition-colors"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download PNG (1456 × 816)
+                    Download WebP (1456 × 816)
                   </a>
                 </div>
               </div>
@@ -1711,11 +1711,10 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
               <p className="text-sm text-foreground">
                 The two S-curves crossing represent the central ERI insight: legacy fossil-fuel systems are on a
                 declining S-curve while clean-technology systems are on a rising S-curve. The crossing point is
-                the transition moment — the moment of connection between human and AI. The amber curve represents
-                the old economy; the lime curve represents the new. The wireframe hands reaching toward each other
-                evoke the Michelangelo “Creation of Adam” — a universal symbol of the spark of intelligence passing
-                between two entities. This image should only be used in contexts where this meaning is relevant —
-                it is not a generic technology background.
+                the transition moment. The amber curve represents the old economy; the lime curve represents the
+                new. The dark teal grid and particle bokeh evoke a data-rich, Earth-aligned scientific environment.
+                This image is the canonical default hero for all ERI applications. It should only be used in
+                contexts where the S-curve transition narrative is relevant — it is not a generic technology background.
               </p>
             </div>
 
@@ -1727,7 +1726,7 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
                 {[
                   { url: heroImages.halHumanNetwork, label: "Human Network",     badge: "Alternate", anchor: "#halHumanNetwork" },
                   { url: heroImages.halMFReaching,    label: "Reaching Duo",      badge: "Alternate", anchor: "#halMFReaching" },
-                  { url: heroImages.halSCurveDual,    label: "Dual S-Curve",      badge: "Minimal",   anchor: "#halSCurveDual" },
+                  { url: heroImages.halHandsTouching, label: "Hands Touching",    badge: "Legacy",    anchor: "#halHandsTouching" },
                 ].map((alt) => (
                   <a
                     key={alt.anchor}
@@ -4871,13 +4870,13 @@ const tabs: TabConfig[] = [
           <div className="grid md:grid-cols-1 gap-6">
             {[
               {
-                id: "halHandsTouching",
-                label: "Earth-Aligned AI Lab — Hands Touching (Primary)",
+                id: "halSCurveDual",
+                label: "ERI Default — Dual S-Curve Rich (Primary)",
                 badge: "Primary",
                 badgeColor: "bg-[#3ba559] text-white",
-                url: heroImages.halHandsTouching,
-                token: "heroImages.halHandsTouching",
-                use: "Earth-Aligned AI Lab landing page, any human + AI collaboration narrative. Two translucent wireframe hands reaching toward each other, fingertips meeting at the S-curve crossing point with a golden burst of light. Michelangelo-inspired composition. Currently live on earth-aligned-ai-lab.exponentialroadmap.org.",
+                url: heroImages.halSCurveDual,
+                token: "heroImages.halSCurveDual",
+                use: "The canonical default hero image for all ERI applications. Use this unless a more specific narrative requires an alternate. Dark teal grid, amber and lime S-curves crossing, particle bokeh. Import ERI_HERO_IMAGE_DEFAULT from @eri/components (or use heroImages.halSCurveDual). Updated 2026-05-26 — replaces the Hands Touching image as the default.",
               },
               {
                 id: "halHumanNetwork",
@@ -4889,13 +4888,13 @@ const tabs: TabConfig[] = [
                 use: "Earth-Aligned AI Lab, any human + AI collaboration narrative. Features the dual S-curves with a distributed network of connected person icons representing global human collaboration.",
               },
               {
-                id: "halSCurveDual",
-                label: "Earth-Aligned AI Lab — Dual S-Curve (Minimal)",
-                badge: "Minimal",
-                badgeColor: "bg-gray-500 text-white",
-                url: heroImages.halSCurveDual,
-                token: "heroImages.halSCurveDual",
-                use: "Generic ERI dark hero, any dual-transition narrative without an explicit human network element.",
+                id: "halHandsTouching",
+                label: "Earth-Aligned AI Lab — Hands Touching (Legacy)",
+                badge: "Legacy",
+                badgeColor: "bg-amber-600 text-white",
+                url: heroImages.halHandsTouching,
+                token: "heroImages.halHandsTouching",
+                use: "Legacy image — no longer the default. Two translucent wireframe hands reaching toward each other at the S-curve crossing. Retained in the library for projects that have already adopted it. New projects should use the Dual S-Curve Rich image instead.",
               },
               {
                 id: "halMFReaching",

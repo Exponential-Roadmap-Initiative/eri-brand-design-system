@@ -6,7 +6,7 @@ export { default as EriStatusBadge } from './EriStatusBadge';
 export { default as EriContactUsButton } from './EriContactUsButton';
 export { default as EriAppHeader } from './EriAppHeader';
 export { default as EriAppFooter } from './EriAppFooter';
-export { default as EriHeroSection, ERI_HERO_IMAGE_HANDS, ERI_HERO_IMAGE_TRUST } from './EriHeroSection';
+export { default as EriHeroSection, ERI_HERO_IMAGE_HANDS, ERI_HERO_IMAGE_DEFAULT, ERI_HERO_IMAGE_TRUST } from './EriHeroSection';
 export { default as EriPageLayout } from './EriPageLayout';
 
 export { default as EriCrocodileChart } from './EriCrocodileChart';

@@ -1,5 +1,5 @@
 /**
- * EriAppHeader — ERI Brand Design System v2.12.0
+ * EriAppHeader — ERI Brand Design System v2.15.0
  *
  * Canonical 64px header for all ERI applications.
  * Renders once in EriPageLayout — never duplicated across page files.
@@ -16,15 +16,16 @@
  *     onMenuClick={() => setMenuOpen(true)}
  *   />
  *
- *   // With dark/light mode toggle (opt-in):
+ *   // With dark/light mode toggle and auto header theming (opt-in):
  *   <EriAppHeader
  *     appName="Exponential Taxonomy"
  *     showThemeToggle={true}
+ *     headerTheme="auto"
  *     ...
  *   />
  *
  * RULES (do not override):
- *   - Background: #232323 always (dark mode default; light mode changes the content area, not the header)
+ *   - Background: #232323 always in dark mode; #FFFFFF in light mode when headerTheme="auto"
  *   - Height: 64px (h-16) always
  *   - Left zone: ERI logo → pipe divider → app name
  *   - Right zone: status badge → version string → theme toggle (if showThemeToggle) → CTA (if showCTA) → hamburger
@@ -53,10 +54,20 @@
  *   - The toggle applies/removes the "dark" class on <html> and persists to localStorage.
  *   - Tailwind dark: variants in the consuming app will respond automatically.
  *
+ * HEADER THEMING (headerTheme):
+ *   - 'dark' (default): header is always #232323 — the ERI standard. White logo, white text.
+ *   - 'auto': header responds to the active theme.
+ *       Dark mode → #232323 background, white logo (eri-logo-dark-mode.svg), white text
+ *       Light mode → #FFFFFF background, full-colour logo (eri-logo-full-color.svg), #1A1A1A text
+ *     Use 'auto' when showThemeToggle={true} so the header visually matches the content area.
+ *     Requires showThemeToggle={true} — otherwise the user cannot switch to light mode.
+ *
  * COMMON MISTAKES:
  *   - Passing showCTA={!isAuthenticated}: incorrect — CTA should be visible on authenticated surfaces too.
  *   - Omitting source/sourceLabel/returnUrl with showCTA=true: CTA will be hidden. All three required.
  *   - Omitting onMenuClick: hamburger renders but does nothing. Always wire to your drawer open handler.
+ *   - Using headerTheme="auto" without showThemeToggle={true}: the header will be stuck in dark mode
+ *     because the user has no way to switch themes.
  *
  * BDS reference: https://eri-brand-design-system.manus.space/#standard-components
  */
@@ -65,10 +76,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { EriStatusBadge, EriStatusValue } from './EriStatusBadge';
 import { EriContactUsButton } from './EriContactUsButton';
 
-// ERI wordmark — dark-mode SVG variant (white text + green X).
-// The header background is always #232323, so the dark-mode SVG is always correct here.
-// Do NOT use the full-colour WebP + CSS filter: brightness(0) invert(1) — that incorrectly inverts the green accent.
-const ERI_LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-dark-mode.svg';
+const CDN = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ';
+
+// ERI wordmark — dark-mode SVG variant (white text + green X). Used on dark (#232323) backgrounds.
+const ERI_LOGO_DARK = `${CDN}/eri-logo-dark-mode.svg`;
+
+// ERI wordmark — full-colour SVG variant (dark text + green X). Used on light (#FFFFFF) backgrounds.
+const ERI_LOGO_LIGHT = `${CDN}/eri-logo-full-color.svg`;
 
 const STORAGE_KEY = 'eri-theme';
 
@@ -82,7 +96,7 @@ function readStoredTheme(): 'dark' | 'light' {
   }
 }
 
-/** Apply the theme class to <html> and persist to localStorage */
+/** Apply the theme class to <html>, persist to localStorage, and notify same-tab listeners */
 function applyTheme(theme: 'dark' | 'light') {
   try {
     if (theme === 'dark') {
@@ -93,6 +107,9 @@ function applyTheme(theme: 'dark' | 'light') {
       document.documentElement.classList.add('light');
     }
     localStorage.setItem(STORAGE_KEY, theme);
+    // Dispatch a CustomEvent so same-tab listeners (e.g. ThemeContext) can sync.
+    // The native `storage` event only fires in OTHER tabs — not the originating tab.
+    window.dispatchEvent(new CustomEvent('eri-theme-change', { detail: { theme } }));
   } catch {
     // localStorage unavailable — apply class only
     if (theme === 'dark') {
@@ -143,6 +160,17 @@ interface EriAppHeaderProps {
    * Defaults to false.
    */
   showThemeToggle?: boolean;
+  /**
+   * Header background theming mode.
+   * - 'dark' (default): header is always #232323 regardless of active theme.
+   *   White logo, white text. The ERI standard for all apps.
+   * - 'auto': header responds to the active theme.
+   *   Dark mode → #232323 background, white logo, white text.
+   *   Light mode → #FFFFFF background, full-colour logo, #1A1A1A text.
+   *   Use 'auto' together with showThemeToggle={true} so the header matches the content area.
+   * Defaults to 'dark'.
+   */
+  headerTheme?: 'dark' | 'auto';
 }
 
 export function EriAppHeader({
@@ -157,12 +185,22 @@ export function EriAppHeader({
   onMenuClick = () => {},
   logoHref = '/',
   showThemeToggle = false,
+  headerTheme = 'dark',
 }: EriAppHeaderProps) {
   // Dev-mode warning: CTA requested but missing required props
   if (process.env.NODE_ENV !== 'production' && showCTA && (!source || !sourceLabel || !returnUrl)) {
     console.warn(
       '[EriAppHeader] showCTA is true but source, sourceLabel, or returnUrl is missing. ' +
       'The Contact Us button will not render. Provide all three props to show the CTA.'
+    );
+  }
+
+  // Dev-mode warning: headerTheme="auto" without showThemeToggle
+  if (process.env.NODE_ENV !== 'production' && headerTheme === 'auto' && !showThemeToggle) {
+    console.warn(
+      '[EriAppHeader] headerTheme="auto" is set but showThemeToggle={false}. ' +
+      'The user cannot switch themes, so the header will always appear in dark mode. ' +
+      'Pass showThemeToggle={true} to enable the toggle.'
     );
   }
 
@@ -182,28 +220,63 @@ export function EriAppHeader({
 
   const isDark = theme === 'dark';
 
+  // Resolve header appearance based on headerTheme prop and active theme
+  const isHeaderDark = headerTheme === 'dark' || isDark;
+  const headerBg = isHeaderDark ? '#232323' : '#FFFFFF';
+  const logoSrc = isHeaderDark ? ERI_LOGO_DARK : ERI_LOGO_LIGHT;
+  const appNameColor = isHeaderDark ? '#FFFFFF' : '#1A1A1A';
+  const pipeDividerColor = isHeaderDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)';
+  const versionColor = isHeaderDark ? '#9ca3af' : '#6b7280';
+  const hamburgerColor = isHeaderDark ? '#FFFFFF' : '#1A1A1A';
+  // Theme toggle icon colours
+  const toggleIconColor = isHeaderDark ? '#9ca3af' : '#6b7280';
+  const toggleHoverColor = isHeaderDark ? '#ffffff' : '#1A1A1A';
+  const toggleHoverBg = isHeaderDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+  // Bottom border in light mode to separate header from content
+  const headerBorderBottom = isHeaderDark ? 'none' : '1px solid rgba(0,0,0,0.08)';
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 flex items-center h-16"
-      style={{ backgroundColor: '#232323', paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))' }}
+      style={{
+        backgroundColor: headerBg,
+        paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))',
+        borderBottom: headerBorderBottom,
+        transition: 'background-color 0.2s ease, border-color 0.2s ease',
+      }}
     >
       {/* Left zone: logo + pipe + app name */}
       <div className="flex items-center gap-3 flex-1 min-w-0">
         <a href={logoHref} className="shrink-0" aria-label="Exponential Roadmap Initiative home">
           <img
-            src={ERI_LOGO_URL}
+            src={logoSrc}
             alt="Exponential Roadmap Initiative"
             className="h-8 w-auto"
+            style={{ transition: 'opacity 0.2s ease' }}
           />
         </a>
-        <div className="w-px h-6 bg-white/20 shrink-0" aria-hidden="true" />
-        <span className="text-white text-sm font-medium truncate">{appName}</span>
+        <div
+          className="w-px h-6 shrink-0"
+          style={{ backgroundColor: pipeDividerColor }}
+          aria-hidden="true"
+        />
+        <span
+          className="text-sm font-medium truncate"
+          style={{ color: appNameColor, transition: 'color 0.2s ease' }}
+        >
+          {appName}
+        </span>
       </div>
 
       {/* Right zone: badge + version + theme toggle + CTA + hamburger */}
       <div className="flex items-center gap-3 shrink-0">
-        {status && <EriStatusBadge status={status} theme="dark" />}
-        <span className="text-gray-400 text-xs font-mono hidden sm:block">{version}</span>
+        {status && <EriStatusBadge status={status} theme={isHeaderDark ? 'dark' : 'light'} />}
+        <span
+          className="text-xs font-mono hidden sm:block"
+          style={{ color: versionColor, transition: 'color 0.2s ease' }}
+        >
+          {version}
+        </span>
 
         {/* Theme toggle — dark is ERI default; sun = switch to light, moon = switch to dark */}
         {showThemeToggle && (
@@ -224,16 +297,16 @@ export function EriAppHeader({
               borderRadius: '6px',
               border: 'none',
               background: 'transparent',
-              color: '#9ca3af',
+              color: toggleIconColor,
               cursor: 'pointer',
               transition: 'color 0.15s, background 0.15s',
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.color = '#ffffff';
-              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.08)';
+              (e.currentTarget as HTMLButtonElement).style.color = toggleHoverColor;
+              (e.currentTarget as HTMLButtonElement).style.background = toggleHoverBg;
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.color = '#9ca3af';
+              (e.currentTarget as HTMLButtonElement).style.color = toggleIconColor;
               (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
             }}
           >
@@ -264,8 +337,9 @@ export function EriAppHeader({
         {/* Hamburger — always rendered; wire onMenuClick to your drawer open handler */}
         <button
           onClick={onMenuClick}
-          className="flex flex-col gap-1.5 p-2 text-white hover:opacity-70 transition-opacity"
+          className="flex flex-col gap-1.5 p-2 hover:opacity-70 transition-opacity"
           aria-label="Open menu"
+          style={{ color: hamburgerColor }}
         >
           <span className="block w-5 h-0.5 bg-current" />
           <span className="block w-5 h-0.5 bg-current" />

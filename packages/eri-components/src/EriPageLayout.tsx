@@ -1,5 +1,5 @@
 /**
- * EriPageLayout — ERI Brand Design System v2.12.0
+ * EriPageLayout — ERI Brand Design System v2.15.0
  *
  * Canonical layout wrapper for all ERI applications.
  * Renders EriAppHeader and EriAppFooter ONCE, wrapping all page content.
@@ -22,6 +22,7 @@
  *         returnUrl="https://taxonomy.exponentialroadmap.org"
  *         footerTagline="The definitive framework for corporate climate action."
  *         showThemeToggle={true}
+ *         headerTheme="auto"
  *         onMenuClick={() => setMenuOpen(true)}
  *       >
  *         <NavDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
@@ -55,6 +56,11 @@
  *         if (!t || t === 'dark') document.documentElement.classList.add('dark');
  *       })();
  *     </script>
+ *
+ * HEADER THEMING (headerTheme):
+ *   - 'dark' (default): header is always #232323 — the ERI standard.
+ *   - 'auto': header responds to active theme. White background + full-colour logo in light mode.
+ *     Use together with showThemeToggle={true}.
  *
  * Required in index.css:
  *   :root {
@@ -98,9 +104,9 @@ interface EriPageLayoutProps {
   footerAttribution?: string;
   /**
    * Links shown in the footer right zone between ERI homepage and Contact Us.
-   * Defaults to Trust Centre + Human-AI Lab.
+   * Defaults to Trust Centre + Earth-Aligned AI Lab.
    * Pass an empty array to show no additional links.
-   * The Trust Centre should pass footerLinks={[{ label: 'Human-AI Lab', href: 'https://human-ai-lab.exponentialroadmap.org' }]}
+   * The Trust Centre should pass footerLinks={[{ label: 'Earth-Aligned AI Lab', href: 'https://earth-aligned-ai-lab.exponentialroadmap.org' }]}
    * to avoid a self-referential link in its own footer.
    */
   footerLinks?: FooterLink[];
@@ -120,6 +126,14 @@ interface EriPageLayoutProps {
    * Defaults to false.
    */
   showThemeToggle?: boolean;
+  /**
+   * Header background theming mode.
+   * - 'dark' (default): header is always #232323 regardless of active theme.
+   * - 'auto': header responds to the active theme — white background in light mode.
+   *   Use together with showThemeToggle={true}.
+   * Defaults to 'dark'.
+   */
+  headerTheme?: 'dark' | 'auto';
   /** Page content — include your drawer component here as a sibling to Router */
   children: React.ReactNode;
 }
@@ -139,6 +153,7 @@ export function EriPageLayout({
   onMenuClick,
   logoHref = '/',
   showThemeToggle = false,
+  headerTheme = 'dark',
   children,
 }: EriPageLayoutProps) {
   // Clean delegation — no internal menuOpen state (that belongs to the consuming app)
@@ -160,6 +175,7 @@ export function EriPageLayout({
         onMenuClick={handleMenuClick}
         logoHref={logoHref}
         showThemeToggle={showThemeToggle}
+        headerTheme={headerTheme}
       />
 
       {/* Page content — each page must add its own top padding to clear the fixed 64px header */}

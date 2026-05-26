@@ -56,12 +56,19 @@
 import React from 'react';
 
 /**
- * Canonical ERI hero background image — Michelangelo-inspired wireframe hands reaching toward
- * each other, fingertips meeting at the S-curve crossing point with a golden burst of light.
- * Use this constant directly rather than hard-coding the URL.
+ * Canonical ERI hero background image — dual S-curves (green + amber) crossing at the
+ * exponential inflection point, on a dark teal grid background with ambient bokeh.
+ * No human figures. Use this constant directly rather than hard-coding the URL.
+ * @since v2.15.0  Previously pointed to the wireframe hands image.
  */
 export const ERI_HERO_IMAGE_HANDS =
-  'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hero-human-v2-hands_75d155b6.png';
+  'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hero-scurve-dual-rich_775e47cf.webp';
+
+/**
+ * Alias for ERI_HERO_IMAGE_HANDS — preferred name going forward.
+ * Use either constant; they resolve to the same URL.
+ */
+export const ERI_HERO_IMAGE_DEFAULT = ERI_HERO_IMAGE_HANDS;
 
 /**
  * Trust & Security hero background image — abstract dark texture with interconnected node

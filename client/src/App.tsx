@@ -24,7 +24,7 @@ function TabNav() {
   ];
   return (
     <div
-      className="fixed left-0 right-0 z-40 bg-[#232323] border-b border-gray-700 transition-colors duration-200"
+      className="fixed left-0 right-0 z-40 bg-white dark:bg-[#232323] border-b border-gray-200 dark:border-gray-700 transition-colors duration-200"
       style={{ top: "64px" }}
     >
       <div
@@ -41,7 +41,7 @@ function TabNav() {
                 "px-4 h-full flex items-center text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
                 isActive
                   ? "border-[#3ba559] text-[#3ba559]"
-                  : "border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600",
+                  : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600",
               ].join(" ")}
             >
               {label}
@@ -64,6 +64,7 @@ function Router() {
         status="BETA"
         version={APP_VERSION}
         showThemeToggle={true}
+        headerTheme="auto"
         showCTA={true}
         source="bds"
         sourceLabel="Brand Design System"

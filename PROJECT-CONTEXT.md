@@ -517,3 +517,32 @@ Previous Manus agents failed to replicate the chart because the skill had only o
 5. Non-conformant patterns list (do not use Recharts/Chart.js/D3)
 
 Any agent reading the skill before starting work will now have everything needed to use the component correctly without guessing.
+
+---
+
+## v2.15.0 — Hero image + light-mode header (2026-05-26)
+
+### Hero image change
+- **New default hero:** `hero-scurve-dual-rich.webp` — dual S-curves (amber + lime) crossing on dark teal grid with particle bokeh. No human figures.
+- CDN URL: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hero-scurve-dual-rich_775e47cf.webp`
+- `ERI_HERO_IMAGE_DEFAULT` is the new canonical export (points to the rich S-curve image)
+- `ERI_HERO_IMAGE_HANDS` is now a deprecated alias for `ERI_HERO_IMAGE_DEFAULT` — still works, but prefer `ERI_HERO_IMAGE_DEFAULT` for new code
+- Old hands image retained in CDN for backward compatibility
+
+### Light-mode header (headerTheme prop)
+- New prop `headerTheme?: 'dark' | 'auto'` added to `EriAppHeader` and `EriPageLayout`
+- Default: `'dark'` (always `#232323` — backward compatible, no breaking change)
+- `'auto'`: white (`#FFFFFF`) header in light mode, `#232323` in dark mode; logo switches between white wordmark (dark) and full-colour wordmark (light); all text/icons adapt
+- BDS site uses `headerTheme="auto"` — first adopter
+- Other projects should migrate to `'auto'` when they update to v2.15.0+
+
+### ThemeContext sync fix
+- `EriAppHeader.applyTheme()` now dispatches `window.dispatchEvent(new CustomEvent('eri-theme-change', { detail: { theme } }))` after setting localStorage
+- `ThemeContext.tsx` listens for `eri-theme-change` CustomEvent in addition to `storage` event
+- This fixes same-tab theme sync (the `storage` event only fires in other tabs/windows)
+
+### TabNav light-mode fix
+- `TabNav` in `App.tsx` updated from `bg-[#232323]` to `bg-white dark:bg-[#232323]` so it adapts to light mode
+
+### Skill version
+- Skill bumped to v3.1.0 with all above changes documented

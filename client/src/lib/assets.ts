@@ -43,9 +43,11 @@ export const heroImages = {
   // Use for: Human-AI Lab, any human+AI collaboration narrative.
   halHumanNetwork: `${CDN}/hal-hero-human-v3-network_9ab07ca2.png`,
 
-  // Human-AI Lab — MINIMAL: same S-curves without human network overlay.
-  // Use for: generic ERI dark hero, any dual-transition narrative without explicit human element.
-  halSCurveDual: `${CDN}/hero-scurve-dual_823ed0f9.webp`,
+  // ERI DEFAULT hero — dual S-curves (amber + lime) on deep teal grid with bokeh. No human figures.
+  // Updated 2026-05-26: replaced with richer scurve-dual-rich variant.
+  // Use for: any ERI app hero section, dual-transition narrative, default background.
+  // In code: ERI_HERO_IMAGE_HANDS / ERI_HERO_IMAGE_DEFAULT from @eri/components resolves to this URL.
+  halSCurveDual: `${CDN}/hero-scurve-dual-rich_775e47cf.webp`,
 
   // Crocodile Economics: diverging jaw (cyan GDP up + amber emissions down),
   // atmospheric teal bg with grid and particle effects.

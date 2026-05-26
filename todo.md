@@ -473,4 +473,22 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update PROJECT-CONTEXT.md — registered projects table
 - [x] Prepare corrected bds-meta.json for Earth-Aligned AI Lab project (references/earth-aligned-ai-lab-bds-meta.json)
 - [x] TypeScript check — 0 errors
-- [ ] Save checkpoint
+- [x] Save checkpoint (d20d536b)
+
+## Hero image + light-mode header (2026-05-26)
+
+- [x] Upload hero-scurve-dual-rich.webp to CDN (https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hero-scurve-dual-rich_775e47cf.webp)
+- [x] Update ERI_HERO_IMAGE_HANDS in EriHeroSection.tsx to new CDN URL; add ERI_HERO_IMAGE_DEFAULT alias
+- [x] Update assets.ts halSCurveDual token to new rich image URL
+- [x] Add headerTheme prop to EriAppHeader ('dark' | 'auto'); implement full light-mode variant (white bg, full-colour logo, dark text/icons)
+- [x] Update EriPageLayout to forward headerTheme prop
+- [x] Update BDS site App.tsx to pass headerTheme="auto" to EriAppHeader
+- [x] BdsNavDrawer.tsx already uses semantic tokens — no changes needed
+- [x] Fix ThemeContext: dispatch eri-theme-change CustomEvent for same-tab sync (storage event only fires cross-tab)
+- [x] Fix TabNav in App.tsx: bg-white dark:bg-[#232323] for light-mode compatibility
+- [x] Bump @eri/components to v2.15.0
+- [x] TypeScript check — 0 errors
+- [x] Visual verification: dark mode header (dark bg, white logo) + light mode header (white bg, full-colour logo) ✔
+- [x] Update skill v3.1.0: new hero image, headerTheme prop, light-mode header rules, updated registered apps table
+- [x] Update PROJECT-CONTEXT.md
+- [ ] Save checkpoint (v2.15.0)
