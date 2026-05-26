@@ -3,8 +3,8 @@
   "project": "bds",
   "displayName": "ERI Brand Design System",
   "url": "https://bds.exponentialroadmap.org",
-  "eriComponentsPin": "v2.15.3",
-  "cssImportMethod": "source-workaround",
+  "eriComponentsPin": "v2.16.0",
+  "cssImportMethod": "dist",
   "components": {
     "EriAppHeader":       { "used": true,  "compliant": true,  "note": "Used in App.tsx with showThemeToggle=true, showCTA=true, source/sourceLabel/returnUrl props set" },
     "EriPageLayout":      { "used": false, "compliant": false, "note": "BDS site uses EriAppHeader + EriAppFooter directly (not EriPageLayout) due to custom TabNav between header and content" },

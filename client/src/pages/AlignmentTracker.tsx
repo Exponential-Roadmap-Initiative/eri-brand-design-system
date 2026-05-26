@@ -23,7 +23,7 @@ const COMPONENT_NAMES: ComponentName[] = [
   "EriContactUsButton",
 ];
 
-const LATEST_VERSION = "v2.15.0";
+const LATEST_VERSION = "v2.16.0";
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 
