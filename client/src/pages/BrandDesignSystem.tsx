@@ -5041,6 +5041,313 @@ const tabs: TabConfig[] = [
         </section>
 
         {/* ================================================================ */}
+        {/* SECTION: ANTI-AI DESIGN PATTERNS */}
+        {/* ================================================================ */}
+        <section id="anti-ai-patterns" className="mb-16">
+          <h2 className="font-archivo text-2xl md:text-3xl font-extrabold text-foreground mb-2">
+            Anti-AI Design Patterns
+          </h2>
+          <p className="text-muted-foreground mb-2 max-w-3xl text-sm">
+            AI models learn the statistical average of good design — not what is rare, considered, or emotionally resonant.
+            The result is output that is technically coherent but instantly recognisable as machine-made: the same purple
+            gradients, the same three-card feature grids, the same hollow copy. The patterns below are the most common
+            tells observed across hundreds of vibe-coded products. Each one has a direct fix.
+          </p>
+          <p className="text-muted-foreground mb-8 max-w-3xl text-sm">
+            The strongest signal of AI design is not any single element — it is the{" "}
+            <strong className="text-foreground">absence of a system</strong>. Inconsistency, randomness, and the
+            lack of restraint that holds a design together. Human designers make deliberate decisions and hold them
+            consistently. AI makes statistically safe decisions and repeats them indiscriminately.
+          </p>
+
+          {/* ── Category 1: Visual & Layout ── */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-block px-2.5 py-1 rounded text-[11px] font-archivo font-bold uppercase tracking-widest" style={{ backgroundColor: 'rgba(147,224,125,0.12)', color: '#93E07D' }}>Visual &amp; Layout</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-1/4">Pattern</th>
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-2/5">What it looks like</th>
+                    <th className="text-left py-2.5 font-archivo font-bold text-foreground text-xs uppercase tracking-wider">The fix</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {[
+                    {
+                      pattern: "Purple gradient default",
+                      tell: "bg-indigo-500 / violet-to-purple gradient hero — the unofficial flag of AI-generated interfaces. Appears even on products with no brand connection to purple, because it dominates Tailwind defaults and Dribbble training data.",
+                      fix: "Choose a deliberate brand colour palette before prompting. Specify exact hex values. ERI uses #232323 dark backgrounds and #93E07D Accent Lime — never purple.",
+                    },
+                    {
+                      pattern: "Glowing everything",
+                      tell: "Glowing cards, glowing hover states, glowing borders on every element simultaneously. Each element competes for attention; nothing wins.",
+                      fix: "One dominant visual treatment per section. Everything else recedes. Glow is a spotlight — use it on one thing.",
+                    },
+                    {
+                      pattern: "Sparkles and emoji in headings",
+                      tell: "✨ sparkle emoji in hero headings is a near-universal AI tell. Emoji icons used as feature bullets instead of a consistent icon system.",
+                      fix: "Never use decorative emoji in headings. Use a consistent icon library (Lucide, Phosphor) at a consistent size and colour.",
+                    },
+                    {
+                      pattern: "The identical section sequence",
+                      tell: "Hero → three feature cards → testimonials → CTA → footer. This exact sequence appears on roughly 80% of AI-generated sites. Left-rail sidebar + rounded card grid for every dashboard.",
+                      fix: "Break the sequence. Lead with a specific problem statement. Move social proof earlier. Use asymmetric layouts. Vary column counts between sections.",
+                    },
+                    {
+                      pattern: "No visual restraint",
+                      tell: "Gradients + shadows + glows + entrance animations all applied simultaneously. Each component looks fine in isolation (it was trained on Dribbble shots); together they create visual noise.",
+                      fix: "One dominant visual treatment per page. Define which element is the hero and let everything else support it.",
+                    },
+                    {
+                      pattern: "Inconsistent component system",
+                      tell: "Border radii that don't match across components (4px here, 12px there, 24px somewhere else). Cards with 8px+ shadow jump on hover. Icons disproportionately large relative to surrounding text.",
+                      fix: "Define 2–3 border radius values and apply them consistently. Hover lift maximum 2–4px. Icons sized relative to the adjacent text baseline.",
+                    },
+                    {
+                      pattern: "Rainbow icon sets",
+                      tell: "Each icon in a feature grid a different accent colour — teal, coral, amber, violet. Looks festive; signals no design system.",
+                      fix: "Monochrome icons, or a single accent colour for active/highlighted states only. Colour should carry meaning, not decoration.",
+                    },
+                    {
+                      pattern: "The symmetric section grid",
+                      tell: "Every section has identical visual weight: same padding, same card size, same column count, same heading size. No variation in density or rhythm.",
+                      fix: "Vary section density deliberately. Some sections should breathe (generous whitespace, single focal point); others should be dense (data tables, feature comparisons).",
+                    },
+                  ].map(({ pattern, tell, fix }) => (
+                    <tr key={pattern}>
+                      <td className="py-3 pr-6 font-archivo font-semibold text-foreground text-sm align-top">{pattern}</td>
+                      <td className="py-3 pr-6 text-muted-foreground text-sm align-top">{tell}</td>
+                      <td className="py-3 text-sm align-top" style={{ color: '#93E07D' }}>{fix}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* ── Category 2: Typography ── */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-block px-2.5 py-1 rounded text-[11px] font-archivo font-bold uppercase tracking-widest" style={{ backgroundColor: 'rgba(147,224,125,0.12)', color: '#93E07D' }}>Typography</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-1/4">Pattern</th>
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-2/5">What it looks like</th>
+                    <th className="text-left py-2.5 font-archivo font-bold text-foreground text-xs uppercase tracking-wider">The fix</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {[
+                    {
+                      pattern: "Oversized heading + ultra-thin body",
+                      tell: "H1 at 96px+ paired with body text at font-weight 300. Dramatic contrast in size but illegible at the body level. Inconsistent line heights and paragraph spacing throughout.",
+                      fix: "Define a type scale. Maximum 2–3 font weights across the entire product. Body text minimum weight 400. Line height 1.5–1.7 for body copy.",
+                    },
+                    {
+                      pattern: "Uniform sentence length",
+                      tell: "Every sentence is 15–20 words with the same Subject-Verb-Object structure. Paragraphs look like perfect rectangles on the page. The brain enters skim mode and nothing sticks.",
+                      fix: "Vary sentence length intentionally. Follow a long explanatory sentence with a short punch. Like this. The rhythm change forces re-engagement.",
+                    },
+                    {
+                      pattern: "The Rule-of-Three overuse",
+                      tell: "Three feature cards. Three benefit bullets. Three testimonials. Three pricing tiers. The 'No X. No Y. Just Z.' headline structure in every section. Effective once; robotic when repeated.",
+                      fix: "Use the Rule of Three maximum once per page. Vary counts: two items can be more powerful than three. Four can signal thoroughness.",
+                    },
+                    {
+                      pattern: "Em dash as a crutch",
+                      tell: "AI uses em dashes — constantly — as a parenthetical device — in nearly every sentence — because it learned them from well-written prose but applies them without restraint.",
+                      fix: "One em dash per paragraph maximum. If you need more, rewrite the sentence.",
+                    },
+                  ].map(({ pattern, tell, fix }) => (
+                    <tr key={pattern}>
+                      <td className="py-3 pr-6 font-archivo font-semibold text-foreground text-sm align-top">{pattern}</td>
+                      <td className="py-3 pr-6 text-muted-foreground text-sm align-top">{tell}</td>
+                      <td className="py-3 text-sm align-top" style={{ color: '#93E07D' }}>{fix}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* ── Category 3: Copywriting ── */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-block px-2.5 py-1 rounded text-[11px] font-archivo font-bold uppercase tracking-widest" style={{ backgroundColor: 'rgba(147,224,125,0.12)', color: '#93E07D' }}>Copywriting</span>
+            </div>
+
+            {/* Blacklist table */}
+            <p className="text-muted-foreground text-sm mb-4 max-w-3xl">
+              The following words and phrases appear with statistically anomalous frequency in AI-generated copy.
+              Their usage has increased by orders of magnitude since 2023. Readers in 2026 recognise them
+              subconsciously as low-value signals and disengage. Avoid all of them.
+            </p>
+            <div className="grid md:grid-cols-3 gap-4 mb-8">
+              {[
+                {
+                  label: "Verbs to avoid",
+                  items: ["Unlock", "Empower", "Leverage", "Foster", "Ignite", "Unleash", "Streamline", "Elevate", "Revolutionise", "Optimise", "Underscore", "Delve"],
+                },
+                {
+                  label: "Adjectives to avoid",
+                  items: ["Seamless", "Robust", "Cutting-edge", "Future-ready", "Multifaceted", "Pivotal", "Dynamic", "Holistic", "Comprehensive", "Transformative", "Nuanced"],
+                },
+                {
+                  label: "Metaphors to avoid",
+                  items: ["Landscape", "Realm", "Tapestry", "Beacon", "Symphony", "Testament", "Ecosystem", "Journey", "Embark", "Navigate", "Dive in"],
+                },
+              ].map(({ label, items }) => (
+                <div key={label} className="rounded-lg border border-border bg-card p-4">
+                  <p className="text-xs font-archivo font-bold text-muted-foreground uppercase tracking-widest mb-3">{label}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {items.map((item) => (
+                      <span key={item} className="inline-block px-2 py-0.5 rounded text-xs font-mono" style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: '#f87171' }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Copy pattern table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-1/4">Pattern</th>
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-2/5">What it looks like</th>
+                    <th className="text-left py-2.5 font-archivo font-bold text-foreground text-xs uppercase tracking-wider">The fix</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {[
+                    {
+                      pattern: "The global opener",
+                      tell: '"In today\'s fast-paced digital world..." or "In the ever-evolving landscape of [Industry]..." These are filler phrases AI uses while predicting the next token. They mean nothing.',
+                      fix: "Delete the first paragraph. The real content starts in paragraph two. Start with the conflict, the problem, or the specific claim.",
+                    },
+                    {
+                      pattern: "Vague hero copy",
+                      tell: '"Launch faster." "Build your dreams." "Create without limits." "The future of X." Copy so generic it could describe any product in any category.',
+                      fix: "Name the specific problem you solve. Quantify it where possible. \"Cut your reporting time from three hours to twenty minutes\" beats \"Streamline your workflow\" every time.",
+                    },
+                    {
+                      pattern: "The safety hedge",
+                      tell: '"It is important to consider," "While it is true that," "It could be argued that," "Generally speaking." AI is trained to avoid taking positions. These phrases signal authority-avoidance.',
+                      fix: "Take a position. Be direct. If you believe something, state it. Hedged copy reads as uncertain copy.",
+                    },
+                    {
+                      pattern: "The hook transition",
+                      tell: '"But here\'s the kicker:" / "That\'s only half the story." / "Real talk:" / "Why does this matter?" Announcing a transition instead of making one.',
+                      fix: "Link ideas through logic, not through announcing you are changing the subject. The last sentence of one paragraph should create the question that the first sentence of the next answers.",
+                    },
+                    {
+                      pattern: "The standardised summary",
+                      tell: '"In conclusion," "At the end of the day," "Ultimately," "In essence." AI ends content by summarising what it just said — a university essay habit applied to product copy.',
+                      fix: "End with a call to action or a final thought that opens a new question. Never summarise what you just said.",
+                    },
+                    {
+                      pattern: "Fabricated social proof",
+                      tell: "Testimonials from \"Sarah Chen\" or \"James Okonkwo\" with AI-generated portrait photos and quotes so generic they could apply to any product. Round-number statistics (100+ companies, 500+ users) that feel invented.",
+                      fix: "Use real quotes or no quotes. Real testimonials have specific details, imperfect grammar, and named context. If you have no real testimonials yet, omit the section entirely.",
+                    },
+                  ].map(({ pattern, tell, fix }) => (
+                    <tr key={pattern}>
+                      <td className="py-3 pr-6 font-archivo font-semibold text-foreground text-sm align-top">{pattern}</td>
+                      <td className="py-3 pr-6 text-muted-foreground text-sm align-top">{tell}</td>
+                      <td className="py-3 text-sm align-top" style={{ color: '#93E07D' }}>{fix}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* ── Category 4: ERI-Specific ── */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-block px-2.5 py-1 rounded text-[11px] font-archivo font-bold uppercase tracking-widest" style={{ backgroundColor: 'rgba(147,224,125,0.12)', color: '#93E07D' }}>ERI-Specific Tells</span>
+            </div>
+            <p className="text-muted-foreground text-sm mb-4 max-w-3xl">
+              These patterns have been observed specifically in ERI lab applications. They are not generic AI tells —
+              they are tells that emerge when an AI agent builds an ERI-branded product without sufficient human
+              direction on voice, structure, and purpose.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-1/4">Pattern</th>
+                    <th className="text-left py-2.5 pr-6 font-archivo font-bold text-foreground text-xs uppercase tracking-wider w-2/5">What it looks like</th>
+                    <th className="text-left py-2.5 font-archivo font-bold text-foreground text-xs uppercase tracking-wider">The fix</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {[
+                    {
+                      pattern: "Verb + Noun navigation labels",
+                      tell: "Every nav item and section heading follows the same \"Explore Data\", \"Track Progress\", \"Manage Settings\" pattern. The rhythm becomes a tell: the user can predict the next heading before reading it.",
+                      fix: "Vary the grammatical form. Use nouns (\"Data Explorer\"), questions (\"What does this company report?\"), or descriptive phrases (\"Your saved comparisons\"). Break the pattern at least once per page.",
+                    },
+                    {
+                      pattern: "Identical card heights",
+                      tell: "Feature grids where all cards are forced to the same height regardless of content density. Cards with two lines of text have the same height as cards with six. The grid looks uniform; the content feels padded.",
+                      fix: "Let cards size to their content. Use CSS grid with align-items: start, not stretch. Visual uniformity should come from consistent padding and typography, not forced height.",
+                    },
+                    {
+                      pattern: "Invented statistics",
+                      tell: "\"100+ companies\", \"500+ data points\", \"1,000+ users\" — round numbers that feel generated rather than counted. Readers in a data-literacy context (ERI's audience) notice immediately.",
+                      fix: "Use real numbers or no numbers. \"29 ERI member companies\" is more credible than \"30+ members\". Specificity signals truth.",
+                    },
+                    {
+                      pattern: "Noise badges and attributions",
+                      tell: "\"Powered by ERI\" badges, \"Built with React\" footer notes, \"Version 1.0.0\" displayed prominently in the UI. These add visual noise without user value.",
+                      fix: "Remove anything that serves the developer's ego rather than the user's task. Version strings belong in the header badge (ERI pattern) or nowhere.",
+                    },
+                    {
+                      pattern: "Unlock / Discover / Explore CTAs",
+                      tell: "Primary CTAs that use \"Unlock\", \"Discover\", or \"Explore\" — the three most overused AI CTA verbs. They are vague, interchangeable, and carry no information about what happens next.",
+                      fix: "CTAs should describe the action and the outcome. \"View company data\", \"Compare frameworks\", \"Download the report\" — specific, honest, and immediately scannable.",
+                    },
+                  ].map(({ pattern, tell, fix }) => (
+                    <tr key={pattern}>
+                      <td className="py-3 pr-6 font-archivo font-semibold text-foreground text-sm align-top">{pattern}</td>
+                      <td className="py-3 pr-6 text-muted-foreground text-sm align-top">{tell}</td>
+                      <td className="py-3 text-sm align-top" style={{ color: '#93E07D' }}>{fix}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* ── The pub test callout ── */}
+          <div className="rounded-xl border border-border bg-card p-6 max-w-3xl">
+            <p className="text-xs font-archivo font-bold text-muted-foreground uppercase tracking-widest mb-2">The Pub Test</p>
+            <p className="text-foreground font-archivo font-semibold text-base mb-2">
+              Read the sentence aloud. Would you say it to a colleague over a beer?
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="rounded-lg p-4" style={{ backgroundColor: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                <p className="text-xs font-mono text-red-400 mb-1">AI</p>
+                <p className="text-sm text-muted-foreground italic">"We empower organisations to leverage a comprehensive ecosystem that fosters innovation and drives transformative climate impact across the value chain."</p>
+              </div>
+              <div className="rounded-lg p-4" style={{ backgroundColor: 'rgba(147,224,125,0.08)', border: '1px solid rgba(147,224,125,0.2)' }}>
+                <p className="text-xs font-mono mb-1" style={{ color: '#93E07D' }}>Human</p>
+                <p className="text-sm text-muted-foreground italic">"We help companies measure and cut their emissions — and show their value chain how to do the same."</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
         {/* SECTION 19: RESOURCES */}
         {/* ================================================================ */}
         <section id="resources" className="mb-16">

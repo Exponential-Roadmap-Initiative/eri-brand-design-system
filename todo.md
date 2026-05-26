@@ -513,3 +513,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Inline <style> tag confirmed present in JSX (not useEffect) — present on first render, no FOUC risk
 - [x] Bump @eri/components to v2.15.3
 - [x] TypeScript check: 0 errors
+
+## Anti-AI Design Patterns — BDS site + skill v3.2.0 (2026-05-26)
+
+- [x] Research AI design anti-patterns from design literature, UX critique, and ERI-specific observations
+- [x] Add Anti-AI Design Patterns section to BDS site (between In the Wild and Resources)
+- [x] Register section in SectionNavigator with sublabel "Human-crafted design rules"
+- [x] Four categories: Visual & Layout (8 patterns), Typography (4 patterns), Copywriting (6 patterns + blacklist), ERI-Specific Tells (5 patterns)
+- [x] Pub Test callout card with AI vs Human copy comparison
+- [x] Add condensed Anti-AI section to SKILL.md v3.2.0
+- [x] Upload skill to CDN: SKILL_54410e34.md
+- [x] Update BDS site skill CDN pointer to v3.2.0
+- [x] TypeScript check: 0 errors
