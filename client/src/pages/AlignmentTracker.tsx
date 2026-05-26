@@ -23,7 +23,10 @@ const COMPONENT_NAMES: ComponentName[] = [
   "EriContactUsButton",
 ];
 
-const LATEST_VERSION = "v2.16.0";
+// Injected at build time by vite.config.ts from packages/eri-components/package.json.
+// Never hardcode this — bump the package version and Vite handles the rest.
+declare const __ERI_COMPONENTS_VERSION__: string;
+const LATEST_VERSION = __ERI_COMPONENTS_VERSION__;
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 

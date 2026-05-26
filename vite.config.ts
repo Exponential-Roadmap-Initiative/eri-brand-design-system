@@ -3,8 +3,14 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
+
+// Read @eri/components version at build time — injected as __ERI_COMPONENTS_VERSION__
+// so AlignmentTracker.tsx never needs a hardcoded LATEST_VERSION constant.
+const _require = createRequire(import.meta.url);
+const eriComponentsVersion: string = (_require("./packages/eri-components/package.json") as { version: string }).version;
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -154,6 +160,10 @@ const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(
 
 export default defineConfig({
   plugins,
+  define: {
+    // Injected at build time from packages/eri-components/package.json — never hardcode this value.
+    __ERI_COMPONENTS_VERSION__: JSON.stringify(`v${eriComponentsVersion}`),
+  },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
