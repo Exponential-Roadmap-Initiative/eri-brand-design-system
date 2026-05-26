@@ -1,5 +1,5 @@
 /**
- * EriAppHeader — ERI Brand Design System v2.15.2
+ * EriAppHeader — ERI Brand Design System v2.15.3
  *
  * Canonical header for all ERI applications.
  * Renders once in EriPageLayout — never duplicated across page files.
@@ -64,11 +64,15 @@
  *     Requires showThemeToggle={true} — otherwise the user cannot switch to light mode.
  *
  * MOBILE LAYOUT NOTE:
- *   The header uses a single <header> element with CSS media queries (via inline style + a
- *   <style> tag) rather than Tailwind responsive classes. This is intentional: @eri/components
- *   is a pre-compiled library — consuming projects' Tailwind compilers never scan its source,
- *   so sm:hidden / sm:flex classes would not be generated and both blocks would render
- *   simultaneously. All responsive behaviour is therefore handled via a scoped <style> block.
+ *   The header uses a single <header> element with CSS media queries (via an inline <style>
+ *   tag rendered in JSX, NOT via useEffect) rather than Tailwind responsive classes.
+ *   This is intentional: @eri/components is a pre-compiled library — consuming projects'
+ *   Tailwind compilers never scan its source, so sm:hidden / sm:flex classes would not be
+ *   generated and both blocks would render simultaneously. All responsive behaviour is
+ *   therefore handled via a scoped <style> block present on first render.
+ *
+ *   The Contact Us button is structurally absent from the mobile layout (not just CSS-hidden)
+ *   to prevent any risk of it bleeding through if the scoped CSS fails to apply.
  *
  * COMMON MISTAKES:
  *   - Passing showCTA={!isAuthenticated}: incorrect — CTA should be visible on authenticated surfaces too.
@@ -243,7 +247,7 @@ export function EriAppHeader({
   // Bottom border in light mode to separate header from content
   const headerBorderBottom = isHeaderDark ? 'none' : '1px solid rgba(0,0,0,0.08)';
 
-  // Unique ID for scoped styles (avoids conflicts when multiple headers exist in docs)
+  // Unique scope ID for scoped styles
   const scopeId = 'eri-app-header';
 
   const ThemeToggleIcon = () => isDark ? (
@@ -273,23 +277,26 @@ export function EriAppHeader({
     </button>
   );
 
+  // Determine whether to show the CTA (all required props present)
+  const showCtaButton = showCTA && !!source && !!sourceLabel && !!returnUrl;
+
   return (
     <>
       {/*
-        Scoped responsive styles for EriAppHeader.
-        We use a <style> block rather than Tailwind responsive classes because
-        @eri/components is a pre-compiled library — consuming projects' Tailwind
-        compilers never scan this source, so sm:hidden / sm:flex would not be
-        generated and both layout blocks would render simultaneously on desktop.
+        Scoped responsive styles — rendered inline in JSX (NOT via useEffect) so they are
+        present on first render and suppress eri-header-desktop / eri-header-mobile correctly
+        before the browser paints. This prevents any flash of the wrong layout.
+
+        We use a <style> block rather than Tailwind responsive classes because @eri/components
+        is a pre-compiled library — consuming projects' Tailwind compilers never scan this
+        source, so sm:hidden / sm:flex classes would not be generated.
       */}
       <style>{`
         #${scopeId} .eri-header-desktop { display: none; }
         #${scopeId} .eri-header-mobile  { display: flex;  }
-        #${scopeId} .eri-desktop-only   { display: none; }
         @media (min-width: 640px) {
           #${scopeId} .eri-header-desktop { display: flex;  }
           #${scopeId} .eri-header-mobile  { display: none; }
-          #${scopeId} .eri-desktop-only   { display: flex; }
         }
       `}</style>
 
@@ -334,19 +341,15 @@ export function EriAppHeader({
               {appName}
             </span>
           </div>
-          {/* Right zone */}
+          {/* Right zone — desktop only: badge, version, theme toggle, CTA, hamburger */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
             {status && (
-              <span className="eri-desktop-only" style={{ alignItems: 'center' }}>
-                <EriStatusBadge status={status} theme={isHeaderDark ? 'dark' : 'light'} />
-              </span>
+              <EriStatusBadge status={status} theme={isHeaderDark ? 'dark' : 'light'} />
             )}
             <span
-              className="eri-desktop-only"
               style={{
                 fontSize: '12px', fontFamily: 'monospace',
                 color: versionColor, transition: 'color 0.2s ease',
-                alignItems: 'center',
               }}
             >
               {version}
@@ -379,22 +382,28 @@ export function EriAppHeader({
                 <ThemeToggleIcon />
               </button>
             )}
-            {showCTA && source && sourceLabel && returnUrl && (
-              <span className="eri-desktop-only" style={{ alignItems: 'center' }}>
-                <EriContactUsButton
-                  source={source}
-                  sourceLabel={sourceLabel}
-                  returnUrl={returnUrl}
-                  subject={contactSubject}
-                  size="sm"
-                />
-              </span>
+            {showCtaButton && (
+              <EriContactUsButton
+                source={source!}
+                sourceLabel={sourceLabel!}
+                returnUrl={returnUrl!}
+                subject={contactSubject}
+                size="sm"
+              />
             )}
             <HamburgerButton />
           </div>
         </div>
 
         {/* ── Mobile (< 640px): two-row layout ── */}
+        {/*
+          IMPORTANT: Contact Us, status badge, and version string are intentionally
+          ABSENT from the mobile layout — they are not CSS-hidden, they are structurally
+          not rendered. This prevents any risk of them bleeding through if the scoped
+          CSS fails to apply (e.g. in SSR, slow hydration, or unusual browser contexts).
+          Mobile Row 1: logo | [theme toggle] [hamburger]
+          Mobile Row 2: app name
+        */}
         <div
           className="eri-header-mobile"
           style={{ flexDirection: 'column' }}
@@ -426,7 +435,7 @@ export function EriAppHeader({
               <HamburgerButton />
             </div>
           </div>
-          {/* Row 2: app name */}
+          {/* Row 2: app name only */}
           <div
             style={{
               paddingBottom: '8px',

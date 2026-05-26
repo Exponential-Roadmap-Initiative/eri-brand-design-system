@@ -504,3 +504,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Push git tag v2.15.2
 - [x] Publish to production (bds.exponentialroadmap.org)
 - [ ] Update eri-bds-reference skill with v2.15.x changes (headerTheme prop, mobile layout note, CSS media query approach)
+
+## EriAppHeader v2.15.3 — Mobile Layout Hardening (2026-05-26)
+
+- [x] Remove all eri-desktop-only CSS class wrappers from desktop right zone — badge, version, and CTA are now structurally inside eri-header-desktop only
+- [x] Contact Us button structurally absent from mobile block (not CSS-hidden) — eliminates any risk of bleed-through
+- [x] Confirmed headerTheme?: 'dark' | 'auto' in both EriAppHeader and EriPageLayout TypeScript interfaces
+- [x] Inline <style> tag confirmed present in JSX (not useEffect) — present on first render, no FOUC risk
+- [x] Bump @eri/components to v2.15.3
+- [x] TypeScript check: 0 errors
