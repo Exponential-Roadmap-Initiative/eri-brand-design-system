@@ -1,5 +1,5 @@
-# bds-meta.json — ERI Project BDS Alignment Metadata Spec
-# Version: 1.1 | 2026-04-24
+
+# Version: 1.3 | 2026-05-26
 
 ## Purpose
 Each ERI project publishes a static `bds-meta.json` file at the root of its deployed site
@@ -12,15 +12,15 @@ fetches this file from all known projects and renders a live compliance dashboar
 This file is served at `https://{project-domain}/bds-meta.json` automatically by Vite's
 static file serving.
 
-## Schema (v1.1)
+## Schema (v1.3)
 
 ```json
 {
-  "schemaVersion": "1.1",
+  "schemaVersion": "1.3",
   "project": "hal",
   "displayName": "Human-AI Lab",
   "url": "https://human-ai-lab.exponentialroadmap.org",
-  "eriComponentsPin": "v2.11.1",
+  "eriComponentsPin": "v2.15.3",
   "cssImportMethod": "dist",
   "components": {
     "EriAppHeader":       { "used": true,  "compliant": true  },
@@ -38,19 +38,30 @@ static file serving.
     "hexTokensOnly":     true,
     "archivoHeadings":   true,
     "openSansBody":      true,
+    "gdprFonts":         true,
     "bodyTextHex383838": true,
     "ctaAccentLime":     true,
-    "noHardcodedGreys":  true
+    "noHardcodedGreys":  true,
+    "cardAccentPattern": true,
+    "eyebrowAccentLime": true
   },
   "layout": {
     "eriPageLayoutInAppTsx": true,
     "showCtaExplicit":       true,
     "sourcePropsPresent":    true,
-    "noStaleComponentNames": true
+    "noStaleComponentNames": true,
+    "overlayBackground":     true
+  },
+  "antiAi": {
+    "noBlacklistedCopyWords":     true,
+    "noPurpleGradientOrSparkles": true,
+    "ctasDescribeOutcome":        true,
+    "statisticsAreReal":          true,
+    "noIdenticalSectionSequence": true
   },
   "knownViolations": [],
   "overallStatus": "green",
-  "lastUpdated": "2026-04-22",
+  "lastUpdated": "2026-05-26",
   "updatedBy": "Manus"
 }
 ```
@@ -61,16 +72,16 @@ static file serving.
 
 | Field | Type | Description |
 |---|---|---|
-| `schemaVersion` | string | Current schema version (`"1.1"`). Increment when new fields are added. Check `https://bds.exponentialroadmap.org/bds-meta-changelog.json` for the latest version. |
+| `schemaVersion` | string | Current schema version (`"1.3"`). Check `https://bds.exponentialroadmap.org/bds-meta-changelog.json` for the latest version. |
 | `project` | string | Short project code, e.g. `"hal"`, `"psm"`, `"taxonomy"` |
 | `displayName` | string | Full human-readable project name |
 | `url` | string | Canonical deployed URL |
-| `eriComponentsPin` | string | Current `@eri/components` pin, e.g. `"v2.11.1"` |
+| `eriComponentsPin` | string | Current `@eri/components` pin, e.g. `"v2.15.3"` |
 | `cssImportMethod` | string | `"dist"` (correct) or `"source-workaround"` (legacy) or `"none"` |
 | `components` | object | One entry per standard component — see Component fields below |
 | `knownViolations` | array | Known non-conformant patterns for `used: true` components only |
 | `overallStatus` | string | `"green"`, `"amber"`, or `"red"` — informational; tracker computes independently |
-| `lastUpdated` | string | ISO date of last update, e.g. `"2026-04-22"` |
+| `lastUpdated` | string | ISO date of last update, e.g. `"2026-05-26"` |
 | `updatedBy` | string | `"Manus"` or team member name |
 
 ### Component fields
@@ -97,11 +108,14 @@ Missing fields are shown as "—" in the tracker (not as failures).
 | Field | Type | Pass condition |
 |---|---|---|
 | `brand.hexTokensOnly` | boolean | All brand colour values use exact hex tokens — no Tailwind colour names |
-| `brand.archivoHeadings` | boolean | Heading font is Archivo loaded from Google Fonts CDN |
-| `brand.openSansBody` | boolean | Body font is Open Sans loaded from Google Fonts CDN |
+| `brand.archivoHeadings` | boolean | Heading font is Archivo, self-hosted WOFF2 in `client/public/fonts/` |
+| `brand.openSansBody` | boolean | Body font is Open Sans, self-hosted WOFF2 in `client/public/fonts/` |
+| `brand.gdprFonts` | boolean | No Google Fonts CDN requests; all fonts self-hosted WOFF2 |
 | `brand.bodyTextHex383838` | boolean | Body paragraph text uses `#383838` (not `#232323`) on white/light backgrounds |
 | `brand.ctaAccentLime` | boolean | All filled CTA buttons use `#93E07D` (Accent Lime) |
-| `brand.noHardcodedGreys` | boolean | No structural `text-gray-*`, `bg-gray-*`, or `bg-white` Tailwind classes used for text or backgrounds outside intentional documentation specimens |
+| `brand.noHardcodedGreys` | boolean | No structural `text-gray-*`, `bg-gray-*`, or `bg-white` Tailwind classes for text or backgrounds |
+| `brand.cardAccentPattern` | boolean | Card category accents use left border + tint pattern only (no full four-side coloured outlines) |
+| `brand.eyebrowAccentLime` | boolean | Section eyebrow / category labels use `#93E07D` — never the card accent colour |
 
 ### layout fields (optional — self-reported)
 
@@ -111,6 +125,25 @@ Missing fields are shown as "—" in the tracker (not as failures).
 | `layout.showCtaExplicit` | boolean | `showCTA={true}` is passed explicitly on all `EriPageLayout` instances |
 | `layout.sourcePropsPresent` | boolean | `source`, `sourceLabel`, and `returnUrl` are all passed when `showCTA={true}` |
 | `layout.noStaleComponentNames` | boolean | No stale component names (`EriNavDrawer`, `EriFooter`) anywhere in the codebase |
+| `layout.overlayBackground` | boolean | Nav drawer / overlay panel background is `bg-[#232323]` — not pure black, not `bg-background` |
+
+### antiAi fields (optional — self-reported, schema v1.3+)
+
+These fields guard against the most common AI-generated UI and copy tells.
+
+| Field | Type | Pass condition |
+|---|---|---|
+| `antiAi.noBlacklistedCopyWords` | boolean | No blacklisted AI copy words (Unlock, Empower, Seamless, Leverage, Holistic, Transformative, Cutting-edge, Delve, Elevate, Revolutionise) in any user-visible text |
+| `antiAi.noPurpleGradientOrSparkles` | boolean | No purple/indigo gradient hero; no decorative emoji (✨🚀💡) in headings |
+| `antiAi.ctasDescribeOutcome` | boolean | Primary CTAs describe the action and outcome — not generic verbs (Unlock, Discover, Explore, Get Started, Learn More) without a specific object |
+| `antiAi.statisticsAreReal` | boolean | All statistics shown are real and specific — no round-number invented figures (100+, 500+, 1,000+) |
+| `antiAi.noIdenticalSectionSequence` | boolean | Page structure avoids the identical AI section sequence (Hero → 3 cards → testimonials → CTA → footer) without deliberate variation |
+
+**Quick A1 verification command:**
+```bash
+grep -rn "Unlock\|Empower\|Seamless\|Leverage\|Holistic\|Transformative\|Cutting-edge\|Delve\|Elevate\|Revolutionise" client/src/pages/ client/src/components/
+```
+Should return no results. Any match is a violation that must be rewritten before closing.
 
 ## overallStatus rules
 
@@ -128,7 +161,7 @@ your task whenever you:
 - Change the CSS import method
 - Add, remove, or fix usage of any standard component
 - Resolve a known violation
-- Complete the Project Alignment Checklist (update `systemOps`, `brand`, `layout` fields)
+- Complete the Project Alignment Checklist (update `systemOps`, `brand`, `layout`, `antiAi` fields)
 
 Update `lastUpdated` to today's date and `updatedBy` to `"Manus"`.
 
@@ -139,7 +172,7 @@ the field if it is not applicable to this project.
 ## Schema versioning
 
 The `schemaVersion` field tracks which version of this spec the file conforms to. When new
-fields are added to the schema, the version is incremented (e.g. `"1.0"` → `"1.1"`).
+fields are added to the schema, the version is incremented (e.g. `"1.2"` → `"1.3"`).
 
 A machine-readable changelog is published at:
 `https://bds.exponentialroadmap.org/bds-meta-changelog.json`
@@ -149,7 +182,7 @@ those fields. AI agents should fetch this changelog at Step 2 of the pre-action 
 and apply any missing fields automatically.
 
 **Rule for BDS maintainers:** Whenever a new field is added to this spec, you MUST:
-1. Increment `schemaVersion` in this spec and in the BDS site’s own `bds-meta.json`.
+1. Increment `schemaVersion` in this spec and in the BDS site's own `bds-meta.json`.
 2. Add a new entry to `client/public/bds-meta-changelog.json` with the new version, date,
    `fieldsAdded` list, and `defaultValues`.
 3. Bump the `eri-bds-reference` skill version and upload the updated skill to CDN.

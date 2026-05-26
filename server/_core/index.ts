@@ -48,14 +48,14 @@ async function startServer() {
   // Update SKILL_LATEST_URL when releasing a new skill version.
   // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
-    "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_54410e34.md"; // v3.2.0 — Anti-AI Design Patterns section added (visual/layout, typography, copywriting, ERI-specific tells, pub test)
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_506236e6.md"; // v3.3.0 — A1–A5 Anti-AI checklist added to Project Alignment Checklist; antiAi block in bds-meta.json schema v1.3; quick shell commands updated
   app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
   app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    res.json({ url: SKILL_LATEST_URL, version: "3.2.0" }); // v3.2.0 — Anti-AI Design Patterns section added
+    res.json({ url: SKILL_LATEST_URL, version: "3.3.0" }); // v3.3.0 — A1–A5 Anti-AI checklist in Project Alignment Checklist; bds-meta.json schema v1.3
   });
 
   // ── BDS-meta proxy ─────────────────────────────────────────────────────────

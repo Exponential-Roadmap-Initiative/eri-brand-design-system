@@ -73,6 +73,24 @@ export interface BrandCompliance {
 }
 
 /**
+ * Self-reported Anti-AI Design compliance fields.
+ * Set after running the Project Alignment Checklist.
+ * These checks guard against the most common AI-generated UI tells.
+ */
+export interface AntiAiCompliance {
+  /** No blacklisted AI copy words (Unlock, Empower, Seamless, Leverage, Holistic, etc.) in any user-visible text */
+  noBlacklistedCopyWords?: boolean;
+  /** No purple/indigo gradient hero and no decorative emoji (✨ etc.) in headings */
+  noPurpleGradientOrSparkles?: boolean;
+  /** Primary CTAs describe the action and outcome — not generic verbs (Unlock, Discover, Explore, Get Started) */
+  ctasDescribeOutcome?: boolean;
+  /** All statistics shown are real and specific — no round-number invented figures (100+, 500+, 1,000+) */
+  statisticsAreReal?: boolean;
+  /** Page structure avoids the identical AI section sequence (Hero → 3 cards → testimonials → CTA → footer) without deliberate variation */
+  noIdenticalSectionSequence?: boolean;
+}
+
+/**
  * Self-reported Layout compliance fields.
  * Set after running the Project Alignment Checklist.
  */
@@ -90,7 +108,7 @@ export interface LayoutCompliance {
 }
 
 export interface BdsMeta {
-  schemaVersion: "1.0" | "1.1" | "1.2";
+  schemaVersion: "1.0" | "1.1" | "1.2" | "1.3";
   /** Short project code matching PROJECT_REGISTRY id */
   project: string;
   /** Full human-readable project name */
@@ -109,6 +127,8 @@ export interface BdsMeta {
   brand?: BrandCompliance;
   /** Self-reported Layout compliance (optional) */
   layout?: LayoutCompliance;
+  /** Self-reported Anti-AI Design compliance (optional) */
+  antiAi?: AntiAiCompliance;
   /** List of known non-conformant patterns */
   knownViolations: string[];
   /** RAG overall status */

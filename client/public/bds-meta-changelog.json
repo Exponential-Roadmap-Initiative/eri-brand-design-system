@@ -1,6 +1,6 @@
 {
   "_comment": "Machine-readable changelog for the bds-meta.json schema. AI agents should fetch this file, compare the latestVersion against their project's schemaVersion, and add any fields listed under versions newer than their current schemaVersion.",
-  "latestVersion": "1.1",
+  "latestVersion": "1.3",
   "updateInstructions": "Fetch this file. If your bds-meta.json schemaVersion is older than latestVersion, add all fields listed in the versions between your current version and latestVersion (inclusive). Set schemaVersion to latestVersion and update lastUpdated to today's date.",
   "versions": [
     {
@@ -63,6 +63,51 @@
         }
       },
       "migrationNote": "Add the systemOps, brand, and layout blocks with all values set to false, then audit your project and set each field to true when the condition is met. See https://bds.exponentialroadmap.org/tracker for the full checklist with what/why for each field."
+    },
+    {
+      "version": "1.2",
+      "date": "2026-05-01",
+      "description": "Added additional brand and layout compliance fields: gdprFonts, cardAccentPattern, eyebrowAccentLime, overlayBackground.",
+      "fieldsAdded": [
+        "brand.gdprFonts",
+        "brand.cardAccentPattern",
+        "brand.eyebrowAccentLime",
+        "layout.overlayBackground"
+      ],
+      "defaultValues": {
+        "brand": {
+          "gdprFonts": false,
+          "cardAccentPattern": false,
+          "eyebrowAccentLime": false
+        },
+        "layout": {
+          "overlayBackground": false
+        }
+      },
+      "migrationNote": "Add the four new fields to your existing brand and layout blocks. Audit your project and set each to true when the condition is met."
+    },
+    {
+      "version": "1.3",
+      "date": "2026-05-26",
+      "description": "Added antiAi compliance block (A1–A5). Guards against the most common AI-generated UI and copy tells: blacklisted words, purple gradients, generic CTAs, invented statistics, and the identical section sequence.",
+      "fieldsAdded": [
+        "antiAi",
+        "antiAi.noBlacklistedCopyWords",
+        "antiAi.noPurpleGradientOrSparkles",
+        "antiAi.ctasDescribeOutcome",
+        "antiAi.statisticsAreReal",
+        "antiAi.noIdenticalSectionSequence"
+      ],
+      "defaultValues": {
+        "antiAi": {
+          "noBlacklistedCopyWords": false,
+          "noPurpleGradientOrSparkles": false,
+          "ctasDescribeOutcome": false,
+          "statisticsAreReal": false,
+          "noIdenticalSectionSequence": false
+        }
+      },
+      "migrationNote": "Add the antiAi block with all values set to false. Run the A1 grep command (see https://bds.exponentialroadmap.org/tracker Quick Verification Commands) to check for blacklisted words. Set each field to true when the condition is genuinely met. Full checklist definitions: https://bds.exponentialroadmap.org/tracker#checklist"
     }
   ]
 }

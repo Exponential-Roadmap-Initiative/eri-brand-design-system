@@ -200,9 +200,9 @@ function violationText(v: unknown): string {
 /** Compute a checklist compliance score from the self-reported fields in bds-meta.json */
 function checklistScore(meta: BdsMeta | undefined): { score: number; total: number } | null {
   if (!meta) return null;
-  const { systemOps, brand, layout } = meta;
+  const { systemOps, brand, layout, antiAi } = meta;
   // Only compute if at least one field group is present
-  if (!systemOps && !brand && !layout) return null;
+  if (!systemOps && !brand && !layout && !antiAi) return null;
   const fields = [
     systemOps?.projectContextExists,
     systemOps?.manusPlatformInstructionsRead,
@@ -220,6 +220,11 @@ function checklistScore(meta: BdsMeta | undefined): { score: number; total: numb
     layout?.sourcePropsPresent,
     layout?.noStaleComponentNames,
     layout?.overlayBackground,
+    antiAi?.noBlacklistedCopyWords,
+    antiAi?.noPurpleGradientOrSparkles,
+    antiAi?.ctasDescribeOutcome,
+    antiAi?.statisticsAreReal,
+    antiAi?.noIdenticalSectionSequence,
   ];
   const reported = fields.filter((f) => f !== undefined && f !== null);
   const passing  = reported.filter((f) => f === true);
@@ -1069,23 +1074,60 @@ Overall status: [green / amber / red]
             </div>
           </div>
 
+          {/* A — Anti-AI Design block */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded tracking-widest uppercase" style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>A — Anti-AI Design</span>
+              <span className="text-xs" style={{ color: TV.mutedFg }}>Guard against machine-made tells in copy, layout, and visual design</span>
+            </div>
+            <div className="overflow-x-auto rounded-lg" style={{ border: `1px solid ${TV.border}` }}>
+              <table className="w-full text-xs" style={{ borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ backgroundColor: T.dark }}>
+                    <th className="px-3 py-2 text-left font-mono text-[11px] tracking-widest" style={{ color: T.lime, width: 40 }}>#</th>
+                    <th className="px-3 py-2 text-left font-semibold" style={{ color: '#e5e7eb' }}>Check</th>
+                    <th className="px-3 py-2 text-left font-semibold" style={{ color: '#e5e7eb', width: '40%' }}>Pass condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { id: 'A1', check: 'No blacklisted AI copy words in any user-visible text', pass: 'grep -r "Unlock\\|Empower\\|Seamless\\|Leverage\\|Holistic\\|Transformative\\|Cutting-edge\\|Delve\\|Elevate\\|Revolutionise" client/src/ returns no results in user-facing strings' },
+                    { id: 'A2', check: 'No purple/indigo gradient hero and no decorative emoji in headings', pass: 'No bg-indigo-*, bg-violet-*, bg-purple-* on hero sections; no ✨🚀💡 emoji in h1/h2/h3 elements' },
+                    { id: 'A3', check: 'Primary CTAs describe the action and outcome — not generic AI verbs', pass: 'No CTA button labelled "Unlock", "Discover", "Explore", "Get Started", "Learn More" without a specific object (e.g. "Explore company data" is acceptable; "Explore" alone is not)' },
+                    { id: 'A4', check: 'All statistics shown are real and specific — no round-number invented figures', pass: 'No "100+", "500+", "1,000+" style claims unless backed by a real count. Use exact numbers or remove the statistic.' },
+                    { id: 'A5', check: 'Page structure avoids the identical AI section sequence without deliberate variation', pass: 'At least one section breaks the Hero → 3 feature cards → testimonials → CTA → footer pattern (different column count, asymmetric layout, or reordered sections)' },
+                  ].map((row, i) => (
+                    <tr key={row.id} style={{ backgroundColor: i % 2 === 0 ? TV.card : TV.muted, borderBottom: `1px solid ${TV.border}` }}>
+                      <td className="px-3 py-2 font-mono text-[11px] font-bold" style={{ color: '#92400e', backgroundColor: '#fef3c7' }}>{row.id}</td>
+                      <td className="px-3 py-2" style={{ color: TV.foreground }}>{row.check}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: TV.mutedFg }}>{row.pass}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           {/* Self-reporting note */}
           <div className="mb-6 rounded-lg p-4" style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
             <p className="text-xs font-semibold mb-1" style={{ color: '#166534' }}>Self-reporting in bds-meta.json</p>
             <p className="text-[11px]" style={{ color: '#166534' }}>
-              After running this checklist, update the <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>systemOps</code>, <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>brand</code>, and <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>layout</code> fields in <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>client/public/bds-meta.json</code> to reflect the results. Set each field to <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>true</code> if the check passes, <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>false</code> if it fails (and add an entry to <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>knownViolations</code>), or omit the field if not applicable. The tracker will display a compliance score badge (<span className="font-mono font-bold">9/11</span>) in the Checklist column, computed from these self-reported values.
+              After running this checklist, update the <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>systemOps</code>, <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>brand</code>, <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>layout</code>, and <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>antiAi</code> fields in <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>client/public/bds-meta.json</code> to reflect the results. Set each field to <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>true</code> if the check passes, <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>false</code> if it fails (and add an entry to <code className="font-mono" style={{ backgroundColor: '#dcfce7', padding: '0 2px', borderRadius: 2 }}>knownViolations</code>), or omit the field if not applicable. The tracker will display a compliance score badge (<span className="font-mono font-bold">9/11</span>) in the Checklist column, computed from these self-reported values.
             </p>
           </div>
 
           {/* Quick shell commands */}
           <div className="rounded-lg p-4" style={{ backgroundColor: T.dark }}>
             <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: T.lime }}>QUICK VERIFICATION COMMANDS</p>
-            <p className="text-xs mb-3" style={{ color: '#9ca3af' }}>Run these in the project root to verify C4 and C7 in seconds. Both should return no output.</p>
+            <p className="text-xs mb-3" style={{ color: '#9ca3af' }}>Run these in the project root to verify key checks in seconds. All should return no output.</p>
             <pre className="text-xs leading-relaxed" style={{ color: '#e5e7eb', fontFamily: 'monospace' }}>{`# C4 — confirm header/footer not imported in page files
 grep -r "EriAppHeader\\|EriAppFooter" client/src/pages/
 
 # C7 — confirm no stale component names
-grep -r "EriNavDrawer\\|EriFooter" client/src/`}</pre>
+grep -r "EriNavDrawer\\|EriFooter" client/src/
+
+# A1 — scan for blacklisted AI copy words in user-facing source files
+grep -rn "Unlock\\|Empower\\|Seamless\\|Leverage\\|Holistic\\|Transformative\\|Cutting-edge\\|Delve\\|Elevate\\|Revolutionise" client/src/pages/ client/src/components/`}</pre>
           </div>
         </div>
       </div>

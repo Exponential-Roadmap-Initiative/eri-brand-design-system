@@ -525,3 +525,33 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Upload skill to CDN: SKILL_54410e34.md
 - [x] Update BDS site skill CDN pointer to v3.2.0
 - [x] TypeScript check: 0 errors
+
+## Anti-AI Checklist A1–A5 in Project Alignment Tracker (2026-05-26)
+
+- [ ] Define A1–A5 checklist items and add AntiAiCompliance interface to bdsMetaTypes.ts
+- [ ] Add antiAi block to BdsMetaJson interface
+- [ ] Update checklistScore() to include A1–A5 in the score
+- [ ] Add A block to AlignmentTracker.tsx checklist UI (after C block)
+- [ ] Add A block to the "How this tracker works" canonical template
+- [ ] Add A block to the PROJECT-CONTEXT.md seed template
+- [ ] Update bds-meta-spec.md with new schema fields
+- [ ] Bump schemaVersion to 1.3 in bds-meta-changelog.json
+- [ ] Update BDS site's own bds-meta.json with antiAi block
+- [ ] Update SKILL.md with A1–A5, upload to CDN as v3.3.0
+- [ ] TypeScript check: 0 errors
+- [ ] Save checkpoint
+
+## Anti-AI Checklist A1–A5 in Alignment Tracker (2026-05-26)
+
+- [x] Add AntiAiCompliance interface to bdsMetaTypes.ts (5 fields: noBlacklistedCopyWords, noPurpleGradientOrSparkles, ctasDescribeOutcome, statisticsAreReal, noIdenticalSectionSequence)
+- [x] Extend checklistScore() to include all 5 antiAi fields
+- [x] Add A block table to AlignmentTracker.tsx (between C block and self-reporting note)
+- [x] Add A1 grep command to Quick Verification Commands section
+- [x] Update self-reporting note to mention antiAi field
+- [x] Bump bds-meta.json schemaVersion to 1.3, add antiAi block, update eriComponentsPin to v2.15.3
+- [x] Add v1.2 and v1.3 entries to bds-meta-changelog.json (latestVersion now 1.3)
+- [x] Rewrite bds-meta-spec.md with v1.3 schema, antiAi field definitions, A1 grep command
+- [x] Update SKILL.md: schema template to v1.3 with antiAi block, field reference table, A1–A5 checklist table, quick shell commands, manus agent update rule
+- [x] Upload SKILL.md v3.3.0 to CDN
+- [x] Update SKILL_LATEST_URL in server/index.ts to v3.3.0
+- [x] TypeScript check: 0 errors
