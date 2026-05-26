@@ -24,8 +24,7 @@ function TabNav() {
   ];
   return (
     <div
-      className="fixed left-0 right-0 z-40 bg-white dark:bg-[#232323] border-b border-gray-200 dark:border-gray-700 transition-colors duration-200"
-      style={{ top: "64px" }}
+      className="fixed left-0 right-0 z-40 bg-white dark:bg-[#232323] border-b border-gray-200 dark:border-gray-700 transition-colors duration-200 top-[80px] sm:top-[64px]"
     >
       <div
         className="flex items-center gap-0 h-10"

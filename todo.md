@@ -491,4 +491,4 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Visual verification: dark mode header (dark bg, white logo) + light mode header (white bg, full-colour logo) ✔
 - [x] Update skill v3.1.0: new hero image, headerTheme prop, light-mode header rules, updated registered apps table
 - [x] Update PROJECT-CONTEXT.md
-- [ ] Save checkpoint (v2.15.0)
+- [x] Save checkpoint (v2.15.0 — 431f5ade)

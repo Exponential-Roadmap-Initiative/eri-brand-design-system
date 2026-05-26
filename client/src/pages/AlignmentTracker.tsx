@@ -23,7 +23,7 @@ const COMPONENT_NAMES: ComponentName[] = [
   "EriContactUsButton",
 ];
 
-const LATEST_VERSION = "v2.12.0";
+const LATEST_VERSION = "v2.15.0";
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 
@@ -333,8 +333,8 @@ export default function AlignmentTracker() {
   const redCount   = live.filter((r) => deriveStatus(r.meta) === "red" || r.status === "error").length;
 
   return (
-    // pt-[104px] clears the fixed EriAppHeader (64px) + TabNav (40px)
-    <div className="min-h-screen pt-[104px] bg-background">
+    // pt-[120px] on mobile (80px two-row header + 40px TabNav), pt-[104px] on sm+ (64px header + 40px TabNav)
+    <div className="min-h-screen pt-[120px] sm:pt-[104px] bg-background">
 
        {/* ── Dark header band — full viewport width ───────────────────── */}
       <div style={{ backgroundColor: T.dark }}>
