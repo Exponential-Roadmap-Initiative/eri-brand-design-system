@@ -48,14 +48,14 @@ async function startServer() {
   // Update SKILL_LATEST_URL when releasing a new skill version.
   // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
-    "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_3628a00b.md";
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_1367b606.md"; // v3.1.0 — headerTheme prop, mobile layout spec, no-Tailwind-responsive-in-library rule, hero image updates (Crocodile Economics added, Reaching Duo + Hands Touching removed)
   app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
   app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    res.json({ url: SKILL_LATEST_URL, version: "3.0.2" }); // BDS site header/footer migration: BDS site now uses EriAppHeader+EriAppFooter from @eri/components; removed BDS exempt note
+    res.json({ url: SKILL_LATEST_URL, version: "3.1.0" }); // v3.1.0 — headerTheme prop, mobile layout spec, no-Tailwind-responsive-in-library rule, hero image updates
   });
 
   // ── BDS-meta proxy ─────────────────────────────────────────────────────────

@@ -42,6 +42,7 @@ import {
   EriHeroSection,
   EriPageLayout,
   ERI_HERO_IMAGE_HANDS,
+  ERI_HERO_IMAGE_DEFAULT,
   ERI_HERO_IMAGE_TRUST,
 } from "@eri/components";
 
@@ -1724,9 +1725,9 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
               <p className="text-xs text-muted-foreground mb-4">Three alternate hero compositions share the same S-curve structure and are documented in full in the <a href="#surface-modes" className="text-[#3ba559] underline hover:text-[#2e8a47]">Surface Modes</a> section.</p>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { url: heroImages.halHumanNetwork, label: "Human Network",     badge: "Alternate", anchor: "#halHumanNetwork" },
-                  { url: heroImages.halMFReaching,    label: "Reaching Duo",      badge: "Alternate", anchor: "#halMFReaching" },
-                  { url: heroImages.halHandsTouching, label: "Hands Touching",    badge: "Legacy",    anchor: "#halHandsTouching" },
+                  { url: heroImages.halHumanNetwork,    label: "Human Network",          badge: "Alternate",    anchor: "#halHumanNetwork" },
+                  { url: heroImages.crocodileDecoupling, label: "Crocodile Economics",     badge: "App-specific", anchor: "#crocodileDecoupling" },
+                  { url: heroImages.trust,              label: "Trust Centre — Shield",  badge: "App-specific", anchor: "#trust" },
                 ].map((alt) => (
                   <a
                     key={alt.anchor}
@@ -3978,7 +3979,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                 </div>
                 <div style={{ maxHeight: '380px', overflow: 'hidden' }}>
                   <EriHeroSection
-                    backgroundImage={ERI_HERO_IMAGE_HANDS}
+                    backgroundImage={ERI_HERO_IMAGE_DEFAULT}
                     eyebrow="PROFESSIONAL SERVICES MATRIX ——— BETA"
                     titleLine1="Professional"
                     titleLine2="Services Matrix"
@@ -4006,7 +4007,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["body",            "string",           "Yes",  "Body paragraph text"],
                     ["primaryCTA",      "{ label, href }",  "Yes",  "Accent Lime filled button — rounded-lg always"],
                     ["secondaryCTA",    "{ label, href }?", "No",   "White outline button — rounded-lg always"],
-                    ["backgroundImage", "string?",          "No",   "Trust Centre MUST pass ERI_HERO_IMAGE_TRUST. All other ERI apps: omit (defaults to ERI_HERO_IMAGE_HANDS). Never use hands image on Trust Centre."],
+                    ["backgroundImage", "string?",          "No",   "Trust Centre MUST pass ERI_HERO_IMAGE_TRUST. All other ERI apps: omit (defaults to ERI_HERO_IMAGE_DEFAULT). Crocodile Economics: pass heroImages.crocodileDecoupling. Never use the trust image on any other app."],
                     ["overlayOpacity",      "number?",   "No",   "0–1, defaults to 0.82. Overlay colour is always #232323"],
                     ["showScrollIndicator", "boolean?",  "No",   "Renders a subtle animated scroll indicator at the bottom-centre of the hero: a short vertical line above a single open chevron. The whole element drifts gently up and down via an inlined CSS keyframe (no external dependency). Defaults to false."],
                     ["children",            "ReactNode?", "No",   "Optional slot below CTAs — for stat counters, attribution lines, etc."],
@@ -4081,7 +4082,7 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
               <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">2.</span><span><strong>No background colour needed on the page wrapper.</strong> The component sets its own background via the image and overlay.</span></div>
               <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">3.</span><span><strong><code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">--eri-content-inset</code> is optional</strong> — the component falls back to <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">clamp(1rem, 3vw, 2rem)</code> if the variable is absent. Define it in <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">index.css :root</code> for alignment with the header logotype.</span></div>
               <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">4.</span><span><strong>CSS import required.</strong> Ensure <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">@import "@eri/components/dist/eri-components.css"</code> is at the top of <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">index.css</code> (v2.9.1+) to prevent Tailwind 4 from purging component classes.</span></div>
-              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">5.</span><span><strong>Default image is baked in.</strong> The canonical hands image (<code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">ERI_HERO_IMAGE_HANDS</code>) is the default. Only pass <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">backgroundImage</code> for app-specific hero images. Never regenerate the hands image.</span></div>
+              <div className="flex gap-2"><span className="text-blue-500 font-bold mt-0.5">5.</span><span><strong>Default image is baked in.</strong> <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">ERI_HERO_IMAGE_DEFAULT</code> (Dual S-Curve Rich) is the default from v2.15.0. Only pass <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">backgroundImage</code> for app-specific images (Trust Centre, Crocodile Economics). <code className="font-mono bg-blue-100 dark:bg-blue-900/40 px-1 rounded">ERI_HERO_IMAGE_HANDS</code> is deprecated — do not use in new projects.</span></div>
             </div>
           </div>
           {/* Mandatory per-project assignment */}
@@ -4091,7 +4092,8 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
               <thead><tr className="text-amber-700"><th className="text-left pr-4 pb-1">Project</th><th className="text-left pr-4 pb-1">backgroundImage prop</th></tr></thead>
               <tbody className="text-amber-900 dark:text-amber-200">
                 <tr><td className="pr-4 py-0.5 font-semibold">Trust Centre (trust.exponentialroadmap.org)</td><td className="py-0.5 font-mono">backgroundImage={'{'}ERI_HERO_IMAGE_TRUST{'}'} — MANDATORY</td></tr>
-                <tr><td className="pr-4 py-0.5">All other ERI apps (HAL, PSM, Taxonomy, etc.)</td><td className="py-0.5">Omit prop — defaults to ERI_HERO_IMAGE_HANDS automatically</td></tr>
+                <tr><td className="pr-4 py-0.5">Crocodile Economics</td><td className="py-0.5 font-mono">backgroundImage={'{'}heroImages.crocodileDecoupling{'}'}</td></tr>
+                <tr><td className="pr-4 py-0.5">All other ERI apps (HAL, PSM, Taxonomy, etc.)</td><td className="py-0.5">Omit prop — defaults to ERI_HERO_IMAGE_DEFAULT automatically</td></tr>
               </tbody>
             </table>
           </div>
@@ -4106,7 +4108,8 @@ import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
               <li>Pill-shaped CTA (<code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-full</code>) — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">rounded-lg</code></li>
               <li>Icon prefix on CTA buttons — text only</li>
               <li>Wrapping <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">EriHeroSection</code> in a <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">pt-16</code> div — the component handles its own header clearance</li>
-              <li>Passing <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">backgroundImage</code> with the hands URL manually — import <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">ERI_HERO_IMAGE_HANDS</code> or omit the prop entirely</li>
+              <li>Passing <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">backgroundImage</code> with the default image URL manually — omit the prop entirely (defaults to <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">ERI_HERO_IMAGE_DEFAULT</code>)</li>
+              <li>Using <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">ERI_HERO_IMAGE_HANDS</code> in new projects — it is deprecated; use <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">ERI_HERO_IMAGE_DEFAULT</code> instead</li>
               <li>Using the hands image on a Trust / Security / Compliance page — use <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">ERI_HERO_IMAGE_TRUST</code> instead</li>
             </ul>
           </div>
@@ -4886,24 +4889,6 @@ const tabs: TabConfig[] = [
                 url: heroImages.halHumanNetwork,
                 token: "heroImages.halHumanNetwork",
                 use: "Earth-Aligned AI Lab, any human + AI collaboration narrative. Features the dual S-curves with a distributed network of connected person icons representing global human collaboration.",
-              },
-              {
-                id: "halHandsTouching",
-                label: "Earth-Aligned AI Lab — Hands Touching (Legacy)",
-                badge: "Legacy",
-                badgeColor: "bg-amber-600 text-white",
-                url: heroImages.halHandsTouching,
-                token: "heroImages.halHandsTouching",
-                use: "Legacy image — no longer the default. Two translucent wireframe hands reaching toward each other at the S-curve crossing. Retained in the library for projects that have already adopted it. New projects should use the Dual S-Curve Rich image instead.",
-              },
-              {
-                id: "halMFReaching",
-                label: "Earth-Aligned AI Lab — Reaching (Duo Figures)",
-                badge: "Alternate",
-                badgeColor: "bg-[#2C3F43] text-white",
-                url: heroImages.halMFReaching,
-                token: "heroImages.halMFReaching",
-                use: "Earth-Aligned AI Lab, human collaboration with AI, gender-balanced team narratives. Two constellation figures (male left, female right) reaching toward each other across the S-curve crossing point — emphasising the human-to-human connection enabled by AI.",
               },
               {
                 id: "crocodileDecoupling",
