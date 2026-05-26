@@ -3825,7 +3825,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
              {/* ── Component 4: EriAppFooter ──────────────────────── */}
           <h3 className="font-bold text-foreground mb-1 text-lg">4. EriAppFooter</h3>
           <p className="text-muted-foreground text-sm mb-4">
-            Canonical two-zone dark footer. Left zone: ERI logo + optional tagline. Right zone: copyright string.
+            Four-column dark footer matching the official ERI website (exponentialroadmap.org): About · Newsletter · Follow us · Contact us.
             Background is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">#232323</code> — never dark green, white, or any other colour.
             Rendered once in <code className="font-mono text-xs bg-gray-100 px-1 rounded">EriPageLayout</code> — never imported directly in page files.
           </p>
@@ -3837,7 +3837,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               appName="Professional Services Matrix"
               tagline="Making Pillar 3 climate impact measurable and actionable."
             />
-            {/* footerLinks defaults to Trust Centre + Earth-Aligned AI Lab */}
+            {/* Four columns: About (Members + Privacy + optional appLink) · Newsletter · Follow us (LinkedIn/X/YouTube) · Contact us */}
           </div>
 
           {/* Source code */}
@@ -3851,10 +3851,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 <EriAppFooter
   appName="Professional Services Matrix"
   tagline="Making Pillar 3 climate impact measurable and actionable."
-  // footerLinks defaults to:
-  // [{ label: 'Trust Centre', href: 'https://trust.exponentialroadmap.org' },
-  //  { label: 'Earth-Aligned AI Lab', href: 'https://earth-aligned-ai-lab.exponentialroadmap.org' }]
-  // Pass [] to show no additional links, or override with your own list.
+  // appLink adds an optional extra link in the About column:
+  appLink={{ label: 'Professional Services Matrix', href: 'https://psm.exponentialroadmap.org' }}
 />`}</pre>
             </CardContent>
           </Card>
@@ -3870,7 +3868,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["appName",     "string",         "Required. App display name shown in the footer left zone alongside the ERI logo."],
                     ["tagline",     "string?",        "Optional one-line tagline shown below the app name. Keep to one sentence."],
                     ["attribution", "string?",        "Optional right-aligned attribution string in the footer bottom bar."],
-                    ["footerLinks", "FooterLink[]?",  "Links shown in the right zone between the ERI homepage and Contact Us. Defaults to Trust Centre + Earth-Aligned AI Lab. Pass [] to show no additional links."],
+                    ["appLink",     "AppLink?",        "Optional single app-specific link in the About column, below Members and partners and Privacy policy. Provide { label, href }."],
                   ].map(([prop, type, note]) => (
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
@@ -3910,9 +3908,12 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ['Background', '#232323 — always. Never dark green, never white (except Tier C admin tools)'],
                     ['Top border', 'border-t border-gray-700'],
                     ['Padding', 'py-8 vertical · paddingInline: var(--eri-content-inset) horizontal'],
-                    ['Layout', 'flex items-center justify-between — two zones, single row'],
-                    ['Left zone', 'ERI dark-mode wordmark SVG (logos.eriLogoDarkMode, h-7) + optional tagline below (text-sm text-muted-foreground, max 80 chars). Footer background is always #232323 — always use eriLogoDarkMode here.'],
-                    ['Right nav zone', 'Confirmed links only: ERI homepage (https://exponentialroadmap.org/) + Contact Us (https://contact-us.exponentialroadmap.org?source=footer&app=...) — text-sm text-muted-foreground hover:text-white'],
+                    ['Layout', 'Logo row above four equal columns (2×2 on mobile, 4×1 on desktop via CSS @media — not Tailwind responsive classes)'],
+                    ['Logo row', 'ERI dark-mode wordmark SVG (h-7, links to exponentialroadmap.org) + optional tagline below. Always #232323 background — always use dark-mode logo.'],
+                    ['Column 1 — About', 'Members and partners · Privacy policy · optional appLink'],
+                    ['Column 2 — Newsletter', 'Subscribe now → https://exponentialroadmap.org/#subscribenewsletter'],
+                    ['Column 3 — Follow us', 'LinkedIn (#007BB6) · X (#1D1D1D) · YouTube (#A82400) — branded 36×36px rounded icon buttons'],
+                    ['Column 4 — Contact us', 'hello@exponentialroadmap.org in Accent Lime #93E07D'],
                     ['© Bottom bar', '© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-muted-foreground'],
                     ['Link columns', 'Only show links with confirmed URLs — no placeholder columns'],
                   ].map(([prop, val]) => (

@@ -555,3 +555,11 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Upload SKILL.md v3.3.0 to CDN
 - [x] Update SKILL_LATEST_URL in server/index.ts to v3.3.0
 - [x] TypeScript check: 0 errors
+
+## EriAppFooter v2.16.0 — Four-column layout matching official ERI website
+- [x] EriAppFooter.tsx rewritten: four columns (About, Newsletter, Follow us, Contact us), logo above, social icons, Accent Lime email
+- [x] EriPageLayout.tsx: footerLinks replaced with footerAppLink (AppLink type), FooterLink kept as deprecated export for backward compat
+- [x] PublicLayout.tsx: updated to use appLink
+- [x] BrandDesignSystem.tsx: live preview, code snippet, props table, footer rules table all updated
+- [x] @eri/components bumped to v2.16.0
+- [x] TypeScript: 0 errors

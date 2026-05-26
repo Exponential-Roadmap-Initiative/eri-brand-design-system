@@ -72,7 +72,7 @@
 
 import React from 'react';
 import { EriAppHeader } from './EriAppHeader';
-import { EriAppFooter, FooterLink } from './EriAppFooter';
+import { EriAppFooter, AppLink } from './EriAppFooter';
 import { EriStatusValue } from './EriStatusBadge';
 
 interface EriPageLayoutProps {
@@ -103,13 +103,11 @@ interface EriPageLayoutProps {
   /** Optional right-aligned attribution in the footer bottom bar */
   footerAttribution?: string;
   /**
-   * Links shown in the footer right zone between ERI homepage and Contact Us.
-   * Defaults to Trust Centre + Earth-Aligned AI Lab.
-   * Pass an empty array to show no additional links.
-   * The Trust Centre should pass footerLinks={[{ label: 'Earth-Aligned AI Lab', href: 'https://earth-aligned-ai-lab.exponentialroadmap.org' }]}
-   * to avoid a self-referential link in its own footer.
+   * Optional single app-specific link shown in the About column of the footer,
+   * below "Members and partners" and "Privacy policy".
+   * Example: { label: 'Human-AI Lab', href: 'https://human-ai-lab.exponentialroadmap.org' }
    */
-  footerLinks?: FooterLink[];
+  footerAppLink?: AppLink;
   /**
    * Callback for hamburger menu open.
    * Defaults to no-op — hamburger is always visible regardless.
@@ -149,7 +147,7 @@ export function EriPageLayout({
   contactSubject,
   footerTagline,
   footerAttribution,
-  footerLinks,
+  footerAppLink,
   onMenuClick,
   logoHref = '/',
   showThemeToggle = false,
@@ -187,7 +185,7 @@ export function EriPageLayout({
         appName={appName}
         tagline={footerTagline}
         attribution={footerAttribution}
-        footerLinks={footerLinks}
+        appLink={footerAppLink}
       />
     </div>
   );

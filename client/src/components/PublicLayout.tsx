@@ -31,10 +31,7 @@ export default function PublicLayout({ children, hideFooter = false }: PublicLay
           appName="Brand Design System"
           tagline="The official brand design system for all ERI digital products."
           attribution="Based on Exponential Business Playbook v5.0"
-          footerLinks={[
-            { label: "Earth-Aligned AI Lab", href: "https://earth-aligned-ai-lab.exponentialroadmap.org" },
-            { label: "Project Alignment Tracker", href: "https://bds.exponentialroadmap.org/tracker" },
-          ]}
+          appLink={{ label: "Project Alignment Tracker", href: "https://bds.exponentialroadmap.org/tracker" }}
         />
       )}
     </div>
