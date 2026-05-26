@@ -1,11 +1,11 @@
 /**
- * EriAppFooter — ERI Brand Design System v2.16.0
+ * EriAppFooter — ERI Brand Design System v2.16.1
  *
  * Four-column footer matching the official ERI website (exponentialroadmap.org):
  *   Column 1 — About:       Members and partners · Privacy policy · optional appLink
  *   Column 2 — Newsletter:  Subscribe now (links to ERI newsletter signup)
  *   Column 3 — Follow us:   LinkedIn · X · YouTube branded icon buttons
- *   Column 4 — Contact us:  hello@exponentialroadmap.org in Accent Lime
+ *   Column 4 — Contact us:  "Contact us" link → contact-us.exponentialroadmap.org (same as EriContactUsButton)
  *
  * The ERI logo sits above the four columns, linking to exponentialroadmap.org.
  *
@@ -26,7 +26,7 @@
  *   - Logo: ERI dark-mode wordmark SVG (h-7), links to exponentialroadmap.org
  *   - Four columns are fixed — do not add, remove, or reorder them
  *   - Social icons use exact brand colours: LinkedIn #007BB6, X #1D1D1D, YouTube #A82400
- *   - Contact email uses Accent Lime #93E07D — never any other colour
+ *   - Contact us link uses Accent Lime #93E07D — links to contact-us.exponentialroadmap.org
  *   - Horizontal padding: var(--eri-content-inset) — aligns with header logo
  *
  * BDS reference: https://bds.exponentialroadmap.org/#standard-components
@@ -103,8 +103,8 @@ const ColumnHeading = ({ children }: { children: React.ReactNode }) => (
 const FooterTextLink = ({ href, children, accent }: { href: string; children: React.ReactNode; accent?: boolean }) => (
   <a
     href={href}
-    target={href.startsWith('mailto:') ? undefined : '_blank'}
-    rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+    target="_blank"
+    rel="noopener noreferrer"
     style={{
       display: 'block',
       fontSize: '0.875rem',
@@ -256,8 +256,8 @@ export function EriAppFooter({ appName, tagline, attribution, appLink }: EriAppF
         {/* Column 4 — Contact us */}
         <div>
           <ColumnHeading>Contact us</ColumnHeading>
-          <FooterTextLink href="mailto:hello@exponentialroadmap.org" accent>
-            hello@exponentialroadmap.org
+          <FooterTextLink href="https://contact-us.exponentialroadmap.org/" accent>
+            Contact us
           </FooterTextLink>
         </div>
 
