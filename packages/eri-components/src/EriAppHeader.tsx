@@ -1,7 +1,7 @@
 /**
- * EriAppHeader — ERI Brand Design System v2.15.1
+ * EriAppHeader — ERI Brand Design System v2.15.2
  *
- * Canonical 64px header for all ERI applications.
+ * Canonical header for all ERI applications.
  * Renders once in EriPageLayout — never duplicated across page files.
  *
  * USAGE:
@@ -26,7 +26,8 @@
  *
  * RULES (do not override):
  *   - Background: #232323 always in dark mode; #FFFFFF in light mode when headerTheme="auto"
- *   - Height: 64px (h-16) always
+ *   - Desktop height: 64px (h-16) always — single row
+ *   - Mobile height: ~80px — two rows (logo+controls row 1, app name row 2)
  *   - Left zone: ERI logo → pipe divider → app name
  *   - Right zone: status badge → version string → theme toggle (if showThemeToggle) → CTA (if showCTA) → hamburger
  *   - showCTA: always pass true — the Contact Us CTA is visible on ALL surfaces (public and authenticated).
@@ -61,6 +62,13 @@
  *       Light mode → #FFFFFF background, full-colour logo (eri-logo-full-color.svg), #1A1A1A text
  *     Use 'auto' when showThemeToggle={true} so the header visually matches the content area.
  *     Requires showThemeToggle={true} — otherwise the user cannot switch to light mode.
+ *
+ * MOBILE LAYOUT NOTE:
+ *   The header uses a single <header> element with CSS media queries (via inline style + a
+ *   <style> tag) rather than Tailwind responsive classes. This is intentional: @eri/components
+ *   is a pre-compiled library — consuming projects' Tailwind compilers never scan its source,
+ *   so sm:hidden / sm:flex classes would not be generated and both blocks would render
+ *   simultaneously. All responsive behaviour is therefore handled via a scoped <style> block.
  *
  * COMMON MISTAKES:
  *   - Passing showCTA={!isAuthenticated}: incorrect — CTA should be visible on authenticated surfaces too.
@@ -235,170 +243,203 @@ export function EriAppHeader({
   // Bottom border in light mode to separate header from content
   const headerBorderBottom = isHeaderDark ? 'none' : '1px solid rgba(0,0,0,0.08)';
 
-  return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50"
+  // Unique ID for scoped styles (avoids conflicts when multiple headers exist in docs)
+  const scopeId = 'eri-app-header';
+
+  const ThemeToggleIcon = () => isDark ? (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+    </svg>
+  ) : (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+  );
+
+  const HamburgerButton = ({ extraStyle = {} }: { extraStyle?: React.CSSProperties }) => (
+    <button
+      onClick={onMenuClick}
       style={{
-        backgroundColor: headerBg,
-        borderBottom: headerBorderBottom,
-        transition: 'background-color 0.2s ease, border-color 0.2s ease',
+        display: 'flex', flexDirection: 'column', gap: '5px',
+        padding: '8px', background: 'transparent', border: 'none',
+        cursor: 'pointer', color: hamburgerColor, ...extraStyle,
       }}
+      aria-label="Open menu"
     >
-      {/* ── Desktop (sm+): single row ── */}
-      <div
-        className="hidden sm:flex items-center h-16"
-        style={{ paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))' }}
+      <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: 'currentColor' }} />
+      <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: 'currentColor' }} />
+      <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: 'currentColor' }} />
+    </button>
+  );
+
+  return (
+    <>
+      {/*
+        Scoped responsive styles for EriAppHeader.
+        We use a <style> block rather than Tailwind responsive classes because
+        @eri/components is a pre-compiled library — consuming projects' Tailwind
+        compilers never scan this source, so sm:hidden / sm:flex would not be
+        generated and both layout blocks would render simultaneously on desktop.
+      */}
+      <style>{`
+        #${scopeId} .eri-header-desktop { display: none; }
+        #${scopeId} .eri-header-mobile  { display: flex;  }
+        #${scopeId} .eri-desktop-only   { display: none; }
+        @media (min-width: 640px) {
+          #${scopeId} .eri-header-desktop { display: flex;  }
+          #${scopeId} .eri-header-mobile  { display: none; }
+          #${scopeId} .eri-desktop-only   { display: flex; }
+        }
+      `}</style>
+
+      <header
+        id={scopeId}
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+          backgroundColor: headerBg,
+          borderBottom: headerBorderBottom,
+          transition: 'background-color 0.2s ease, border-color 0.2s ease',
+          paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))',
+        }}
       >
-        {/* Left zone */}
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <a href={logoHref} className="shrink-0" aria-label="Exponential Roadmap Initiative home">
-            <img
-              src={logoSrc}
-              alt="Exponential Roadmap Initiative"
-              className="h-8 w-auto"
-              style={{ transition: 'opacity 0.2s ease' }}
-            />
-          </a>
-          <div
-            className="w-px h-6 shrink-0"
-            style={{ backgroundColor: pipeDividerColor }}
-            aria-hidden="true"
-          />
-          <span
-            className="text-sm font-medium truncate"
-            style={{ color: appNameColor, transition: 'color 0.2s ease' }}
-          >
-            {appName}
-          </span>
-        </div>
-        {/* Right zone */}
-        <div className="flex items-center gap-3 shrink-0">
-          {status && <EriStatusBadge status={status} theme={isHeaderDark ? 'dark' : 'light'} />}
-          <span
-            className="text-xs font-mono"
-            style={{ color: versionColor, transition: 'color 0.2s ease' }}
-          >
-            {version}
-          </span>
-          {showThemeToggle && (
-            <button
-              onClick={toggleTheme}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              title={
-                isDark
-                  ? 'Switch to light mode — dark mode saves display energy on OLED screens'
-                  : 'Switch to dark mode — saves display energy on OLED screens'
-              }
+        {/* ── Desktop (≥ 640px): single row, 64px tall ── */}
+        <div
+          className="eri-header-desktop"
+          style={{ alignItems: 'center', height: '64px' }}
+        >
+          {/* Left zone */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
+            <a href={logoHref} style={{ flexShrink: 0 }} aria-label="Exponential Roadmap Initiative home">
+              <img
+                src={logoSrc}
+                alt="Exponential Roadmap Initiative"
+                style={{ height: '32px', width: 'auto', transition: 'opacity 0.2s ease' }}
+              />
+            </a>
+            <div
               style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: '32px', height: '32px', borderRadius: '6px',
-                border: 'none', background: 'transparent',
-                color: toggleIconColor, cursor: 'pointer',
-                transition: 'color 0.15s, background 0.15s',
+                width: '1px', height: '24px', flexShrink: 0,
+                backgroundColor: pipeDividerColor,
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.color = toggleHoverColor;
-                (e.currentTarget as HTMLButtonElement).style.background = toggleHoverBg;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.color = toggleIconColor;
-                (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+              aria-hidden="true"
+            />
+            <span
+              style={{
+                fontSize: '14px', fontWeight: 500,
+                color: appNameColor, transition: 'color 0.2s ease',
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
               }}
             >
-              {isDark ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="4" />
-                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                </svg>
-              )}
-            </button>
-          )}
-          {showCTA && source && sourceLabel && returnUrl && (
-            <EriContactUsButton
-              source={source}
-              sourceLabel={sourceLabel}
-              returnUrl={returnUrl}
-              subject={contactSubject}
-              size="sm"
-            />
-          )}
-          <button
-            onClick={onMenuClick}
-            className="flex flex-col gap-1.5 p-2 hover:opacity-70 transition-opacity"
-            aria-label="Open menu"
-            style={{ color: hamburgerColor }}
-          >
-            <span className="block w-5 h-0.5 bg-current" />
-            <span className="block w-5 h-0.5 bg-current" />
-            <span className="block w-5 h-0.5 bg-current" />
-          </button>
-        </div>
-      </div>
-
-      {/* ── Mobile (< sm): two-row layout ── */}
-      <div
-        className="flex sm:hidden flex-col"
-        style={{ paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))' }}
-      >
-        {/* Row 1: logo (smaller) + theme toggle + hamburger */}
-        <div className="flex items-center justify-between h-12">
-          <a href={logoHref} className="shrink-0" aria-label="Exponential Roadmap Initiative home">
-            <img
-              src={logoSrc}
-              alt="Exponential Roadmap Initiative"
-              className="h-6 w-auto"
-              style={{ transition: 'opacity 0.2s ease' }}
-            />
-          </a>
-          <div className="flex items-center gap-2">
+              {appName}
+            </span>
+          </div>
+          {/* Right zone */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+            {status && (
+              <span className="eri-desktop-only" style={{ alignItems: 'center' }}>
+                <EriStatusBadge status={status} theme={isHeaderDark ? 'dark' : 'light'} />
+              </span>
+            )}
+            <span
+              className="eri-desktop-only"
+              style={{
+                fontSize: '12px', fontFamily: 'monospace',
+                color: versionColor, transition: 'color 0.2s ease',
+                alignItems: 'center',
+              }}
+            >
+              {version}
+            </span>
             {showThemeToggle && (
               <button
                 onClick={toggleTheme}
                 aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                title={
+                  isDark
+                    ? 'Switch to light mode — dark mode saves display energy on OLED screens'
+                    : 'Switch to dark mode — saves display energy on OLED screens'
+                }
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: '32px', height: '32px', borderRadius: '6px',
                   border: 'none', background: 'transparent',
                   color: toggleIconColor, cursor: 'pointer',
+                  transition: 'color 0.15s, background 0.15s',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.color = toggleHoverColor;
+                  (e.currentTarget as HTMLButtonElement).style.background = toggleHoverBg;
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.color = toggleIconColor;
+                  (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
                 }}
               >
-                {isDark ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                  </svg>
-                )}
+                <ThemeToggleIcon />
               </button>
             )}
-            <button
-              onClick={onMenuClick}
-              className="flex flex-col gap-1.5 p-2 hover:opacity-70 transition-opacity"
-              aria-label="Open menu"
-              style={{ color: hamburgerColor }}
-            >
-              <span className="block w-5 h-0.5 bg-current" />
-              <span className="block w-5 h-0.5 bg-current" />
-              <span className="block w-5 h-0.5 bg-current" />
-            </button>
+            {showCTA && source && sourceLabel && returnUrl && (
+              <span className="eri-desktop-only" style={{ alignItems: 'center' }}>
+                <EriContactUsButton
+                  source={source}
+                  sourceLabel={sourceLabel}
+                  returnUrl={returnUrl}
+                  subject={contactSubject}
+                  size="sm"
+                />
+              </span>
+            )}
+            <HamburgerButton />
           </div>
         </div>
-        {/* Row 2: app name (smaller, left-aligned) */}
+
+        {/* ── Mobile (< 640px): two-row layout ── */}
         <div
-          className="pb-2 text-xs font-medium"
-          style={{ color: appNameColor, opacity: 0.85, transition: 'color 0.2s ease' }}
+          className="eri-header-mobile"
+          style={{ flexDirection: 'column' }}
         >
-          {appName}
+          {/* Row 1: logo + theme toggle + hamburger */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '48px' }}>
+            <a href={logoHref} style={{ flexShrink: 0 }} aria-label="Exponential Roadmap Initiative home">
+              <img
+                src={logoSrc}
+                alt="Exponential Roadmap Initiative"
+                style={{ height: '24px', width: 'auto', transition: 'opacity 0.2s ease' }}
+              />
+            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {showThemeToggle && (
+                <button
+                  onClick={toggleTheme}
+                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: '32px', height: '32px', borderRadius: '6px',
+                    border: 'none', background: 'transparent',
+                    color: toggleIconColor, cursor: 'pointer',
+                  }}
+                >
+                  <ThemeToggleIcon />
+                </button>
+              )}
+              <HamburgerButton />
+            </div>
+          </div>
+          {/* Row 2: app name */}
+          <div
+            style={{
+              paddingBottom: '8px',
+              fontSize: '12px', fontWeight: 500,
+              color: appNameColor, opacity: 0.85,
+              transition: 'color 0.2s ease',
+            }}
+          >
+            {appName}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
 

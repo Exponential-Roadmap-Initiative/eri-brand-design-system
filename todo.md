@@ -492,3 +492,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update skill v3.1.0: new hero image, headerTheme prop, light-mode header rules, updated registered apps table
 - [x] Update PROJECT-CONTEXT.md
 - [x] Save checkpoint (v2.15.0 — 431f5ade)
+
+## CRITICAL BUG FIX — v2.15.2 Duplicate Header (2026-05-26)
+
+- [x] Diagnose root cause: v2.15.1 used Tailwind sm:hidden/sm:flex classes in a pre-compiled library — consuming projects never compile those classes, so both desktop and mobile blocks rendered simultaneously
+- [x] Rewrite EriAppHeader.tsx: single header element with scoped <style> block using CSS @media (min-width: 640px) — no Tailwind responsive classes in the component library
+- [x] Bump @eri/components to v2.15.2
+- [x] TypeScript check: 0 errors
+- [x] Visual verify: single header row on desktop confirmed
+- [x] Save checkpoint v2.15.2
+- [x] Push git tag v2.15.2
+- [x] Publish to production (bds.exponentialroadmap.org)
+- [ ] Update eri-bds-reference skill with v2.15.x changes (headerTheme prop, mobile layout note, CSS media query approach)
