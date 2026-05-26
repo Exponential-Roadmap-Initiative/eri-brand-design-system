@@ -6,19 +6,6 @@ import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 
-// Read @eri/components version at build time — injected as __ERI_COMPONENTS_VERSION__
-// so AlignmentTracker.tsx never needs a hardcoded LATEST_VERSION constant.
-// Uses fs.readFileSync with an absolute path so this code only runs in vite.config.ts
-// (never bundled into the server output by esbuild).
-const eriComponentsVersion: string = (
-  JSON.parse(
-    fs.readFileSync(
-      path.resolve(import.meta.dirname, "packages", "eri-components", "package.json"),
-      "utf-8"
-    )
-  ) as { version: string }
-).version;
-
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
 // Writes browser logs directly to files, trimmed when exceeding size limit
@@ -167,10 +154,6 @@ const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(
 
 export default defineConfig({
   plugins,
-  define: {
-    // Injected at build time from packages/eri-components/package.json — never hardcode this value.
-    __ERI_COMPONENTS_VERSION__: JSON.stringify(`v${eriComponentsVersion}`),
-  },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

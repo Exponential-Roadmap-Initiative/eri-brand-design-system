@@ -11,8 +11,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { PROJECT_REGISTRY, getBdsMetaUrl } from "@/data/projectRegistry";
 import type { BdsMeta, ProjectFetchResult, ComponentName } from "@/data/bdsMetaTypes";
+import { ERI_COMPONENTS_VERSION } from "@shared/eriVersion";
 
-// ── Constants ─────────────────────────────────────────────────────────────────
+// ── Constants ─────────────────────────────────────────────────────────────────────────────────
 
 const COMPONENT_NAMES: ComponentName[] = [
   "EriAppHeader",
@@ -23,10 +24,9 @@ const COMPONENT_NAMES: ComponentName[] = [
   "EriContactUsButton",
 ];
 
-// Injected at build time by vite.config.ts from packages/eri-components/package.json.
-// Never hardcode this — bump the package version and Vite handles the rest.
-declare const __ERI_COMPONENTS_VERSION__: string;
-const LATEST_VERSION = __ERI_COMPONENTS_VERSION__;
+// Auto-generated from packages/eri-components/package.json by scripts/gen-eri-version.mjs.
+// Never hardcode this — bump the package version and run `pnpm gen:version` (or build).
+const LATEST_VERSION = ERI_COMPONENTS_VERSION;
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 
