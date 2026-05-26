@@ -3,7 +3,7 @@
   "project": "bds",
   "displayName": "ERI Brand Design System",
   "url": "https://bds.exponentialroadmap.org",
-  "eriComponentsPin": "v2.16.0",
+  "eriComponentsPin": "v2.16.1",
   "cssImportMethod": "dist",
   "components": {
     "EriAppHeader":       { "used": true,  "compliant": true,  "note": "Used in App.tsx with showThemeToggle=true, showCTA=true, source/sourceLabel/returnUrl props set" },
