@@ -563,3 +563,13 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] BrandDesignSystem.tsx: live preview, code snippet, props table, footer rules table all updated
 - [x] @eri/components bumped to v2.16.0
 - [x] TypeScript: 0 errors
+
+## Version-sync housekeeping — v2.16.2 (2026-05-26)
+- [x] Add shared/eriVersion.ts to .gitignore and untrack from git (git rm --cached)
+- [x] Extend gen-eri-version.mjs to also write ERI_BDS_SKILL_VERSION (read from server/_core/index.ts)
+- [x] Update BrandDesignSystem.tsx to import ERI_BDS_SKILL_VERSION from @shared/eriVersion (replace 5 hardcoded v3.3.0 strings)
+- [x] Update SKILL.md v3.4.0: document gen:version/prebuild workflow
+- [x] Validate skill, upload to CDN, update SKILL_LATEST_URL in server/_core/index.ts
+- [x] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.16.2
+- [ ] Push git tag v2.16.2 to user_github
