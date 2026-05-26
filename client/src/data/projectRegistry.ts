@@ -20,9 +20,9 @@ export interface ProjectRegistryEntry {
 export const PROJECT_REGISTRY: ProjectRegistryEntry[] = [
   {
     id: "HAL",
-    displayName: "Human-AI Lab",
-    url: "https://human-ai-lab.exponentialroadmap.org",
-    description: "Main ERI lab website showcasing human-AI collaboration research.",
+    displayName: "Earth-Aligned AI Lab",
+    url: "https://earth-aligned-ai-lab.exponentialroadmap.org",
+    description: "ERI lab website for Earth-aligned AI research and human-AI collaboration.",
     status: "live",
   },
   {

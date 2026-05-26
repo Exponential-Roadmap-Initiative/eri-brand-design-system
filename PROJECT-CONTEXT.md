@@ -129,7 +129,7 @@ Full spec: see `bds-meta-spec.md` in this project root.
 | Code | Display Name | Domain |
 |---|---|---|
 | BDS | Brand Design System | `bds.exponentialroadmap.org` |
-| HAL | Human-AI Lab | `human-ai-lab.exponentialroadmap.org` |
+| HAL | Earth-Aligned AI Lab | `earth-aligned-ai-lab.exponentialroadmap.org` |
 | PSM | Professional Services Matrix | `psm.exponentialroadmap.org` |
 | Trust | Trust Centre | `trust.exponentialroadmap.org` |
 | Taxonomy | Exponential Taxonomy | `taxonomy.exponentialroadmap.org` |

@@ -457,4 +457,20 @@
 - [x] Update skill Standard Components table with EriCrocodileChart
 - [x] Update PROJECT-CONTEXT.md
 - [x] TypeScript check — 0 errors
+- [x] Save checkpoint (v2.14.0 — 06b9811a)
+
+## Earth-Aligned AI Lab rename (2026-05-26)
+
+Old: "Human-AI Lab" / human-ai-lab.exponentialroadmap.org (dead — no redirect)
+New: "Earth-Aligned AI Lab" / earth-aligned-ai-lab.exponentialroadmap.org
+Source ID: keep as "hal" (stable internal ID — do not change)
+
+- [x] Update BrandDesignSystem.tsx — all Human-AI Lab / human-ai-lab references (sed, 0 remaining)
+- [x] Update AlignmentTracker.tsx — all Human-AI Lab / human-ai-lab references (sed, 0 remaining)
+- [x] Update projectRegistry.ts — HAL entry displayName + URL
+- [x] Update eri-bds-reference skill — all Human-AI Lab / human-ai-lab references (sed, 0 remaining)
+- [x] Update server/routers/bdsSpec.ts — scope note
+- [x] Update PROJECT-CONTEXT.md — registered projects table
+- [x] Prepare corrected bds-meta.json for Earth-Aligned AI Lab project (references/earth-aligned-ai-lab-bds-meta.json)
+- [x] TypeScript check — 0 errors
 - [ ] Save checkpoint

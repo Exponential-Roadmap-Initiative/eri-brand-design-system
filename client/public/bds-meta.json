@@ -3,15 +3,16 @@
   "project": "bds",
   "displayName": "ERI Brand Design System",
   "url": "https://bds.exponentialroadmap.org",
-  "eriComponentsPin": "v2.12.0",
+  "eriComponentsPin": "v2.14.0",
   "cssImportMethod": "source-workaround",
   "components": {
-    "EriAppHeader":       { "used": false, "compliant": false, "note": "BDS site uses its own PublicLayout header — exempt from standard header requirement" },
-    "EriPageLayout":      { "used": false, "compliant": false, "note": "BDS site uses its own PublicLayout — exempt" },
-    "EriHeroSection":     { "used": false, "compliant": false, "note": "BDS site has no hero section — exempt" },
-    "EriAppFooter":       { "used": false, "compliant": false, "note": "BDS site uses its own footer — exempt" },
+    "EriAppHeader":       { "used": true,  "compliant": true,  "note": "Used in App.tsx with showThemeToggle=true, showCTA=true, source/sourceLabel/returnUrl props set" },
+    "EriPageLayout":      { "used": false, "compliant": false, "note": "BDS site uses EriAppHeader + EriAppFooter directly (not EriPageLayout) due to custom TabNav between header and content" },
+    "EriHeroSection":     { "used": false, "compliant": false, "note": "BDS site uses a custom hero section — no EriHeroSection required" },
+    "EriAppFooter":       { "used": true,  "compliant": true,  "note": "Used in PublicLayout.tsx" },
     "EriStatusBadge":     { "used": true,  "compliant": true  },
-    "EriContactUsButton": { "used": true,  "compliant": true  }
+    "EriContactUsButton": { "used": true,  "compliant": true  },
+    "EriCrocodileChart":  { "used": true,  "compliant": true,  "note": "Used in CrocodileChartExamples.tsx (Charts section live preview)" }
   },
   "systemOps": {
     "projectContextExists":          true,
@@ -30,20 +31,26 @@
   },
   "layout": {
     "eriPageLayoutInAppTsx": false,
-    "showCtaExplicit":       false,
-    "sourcePropsPresent":    false,
+    "showCtaExplicit":       true,
+    "sourcePropsPresent":    true,
     "noStaleComponentNames": true,
     "overlayBackground":     true
   },
   "knownViolations": [
     {
       "component": "EriPageLayout",
-      "reason": "BDS site is the reference implementation and is exempt from standard layout requirements. It uses its own PublicLayout and custom header/footer to demonstrate all patterns.",
+      "reason": "BDS site uses EriAppHeader + EriAppFooter directly instead of EriPageLayout. This is intentional: the BDS site has a custom TabNav bar between the header and content area that EriPageLayout does not support. EriAppHeader and EriAppFooter are used in full conformance.",
+      "approvedBy": "ERI BDS maintainer",
+      "bdsRef": "Standard Components scope note"
+    },
+    {
+      "component": "EriHeroSection",
+      "reason": "BDS site uses a custom hero section with a dark #232323 background that merges visually with the header and TabNav. EriHeroSection is not required here.",
       "approvedBy": "ERI BDS maintainer",
       "bdsRef": "Standard Components scope note"
     }
   ],
   "overallStatus": "amber",
-  "lastUpdated": "2026-04-29",
+  "lastUpdated": "2026-05-22",
   "updatedBy": "Manus"
 }

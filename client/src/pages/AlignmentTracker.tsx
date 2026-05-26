@@ -693,7 +693,7 @@ export default function AlignmentTracker() {
                 {([
                   ["schemaVersion", '"1.1"',                        'Current schema version. Fetch /bds-meta-changelog.json from bds.exponentialroadmap.org to check for new fields since your last update.'],
                   ["project",       '"hal"',                         'Short lowercase project code. Examples: hal, psm, playbook, taxonomy.'],
-                  ["projectName",   '"Human-AI Lab"',                'Full human-readable project name.'],
+                  ["projectName",   '"Earth-Aligned AI Lab"',                'Full human-readable project name.'],
                   ["domain",        '"hal.exponentialroadmap.org"',  'Canonical deployed domain (no https://).'],
                   ["eriComponentsPin", `"${LATEST_VERSION}"`,        `Exact version tag installed. Latest is ${LATEST_VERSION}.`],
                   ["cssImportMethod", '"dist"',                      '"dist" = correct. "source-workaround" = amber. "none" = red.'],

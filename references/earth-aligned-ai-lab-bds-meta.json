@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.2",
+  "project": "hal",
+  "displayName": "Earth-Aligned AI Lab",
+  "url": "https://earth-aligned-ai-lab.exponentialroadmap.org",
+  "eriComponentsPin": "v2.14.0",
+  "cssImportMethod": "dist",
+  "components": {
+    "EriAppHeader":       { "used": true, "compliant": true },
+    "EriPageLayout":      { "used": true, "compliant": true },
+    "EriHeroSection":     { "used": true, "compliant": true },
+    "EriAppFooter":       { "used": true, "compliant": true },
+    "EriStatusBadge":     { "used": true, "compliant": true },
+    "EriContactUsButton": { "used": true, "compliant": true }
+  },
+  "systemOps": {
+    "projectContextExists":          true,
+    "manusPlatformInstructionsRead": true
+  },
+  "brand": {
+    "hexTokensOnly":       true,
+    "archivoHeadings":     true,
+    "openSansBody":        true,
+    "bodyTextHex383838":   true,
+    "ctaAccentLime":       true,
+    "noHardcodedGreys":    true,
+    "cardAccentPattern":   true,
+    "eyebrowAccentLime":   true,
+    "gdprFonts":           false
+  },
+  "layout": {
+    "eriPageLayoutInAppTsx": true,
+    "showCtaExplicit":       true,
+    "sourcePropsPresent":    true,
+    "noStaleComponentNames": true,
+    "overlayBackground":     true
+  },
+  "knownViolations": [],
+  "overallStatus": "amber",
+  "lastUpdated": "2026-05-26",
+  "updatedBy": "Manus"
+}

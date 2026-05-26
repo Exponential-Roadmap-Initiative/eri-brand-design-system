@@ -768,7 +768,7 @@ export default function BrandDesignSystem() {
                 <div className="relative z-10 pl-6 text-left" style={{maxWidth: '55%'}}>
                   <p className="font-mono text-[8px] tracking-widest text-[#93E07D] uppercase mb-1">EXPONENTIAL ROADMAP INITIATIVE <span className="text-white/50">———</span> BETA</p>
                   <p className="font-archivo font-extrabold text-2xl text-white leading-tight">
-                    <span className="text-[#93E07D]">Exponential</span><br />Human-AI Lab
+                    <span className="text-[#93E07D]">Exponential</span><br />Earth-Aligned AI Lab
                   </p>
                   <p className="text-white/70 text-[10px] mt-1 mb-2 leading-snug">One place for everything ERI builds at the intersection of human expertise and AI.</p>
                   <button className="mt-1 px-3 py-1 bg-[#93E07D] text-[#1a1a1a] text-[10px] font-semibold rounded-md">Explore the Application Suite →</button>
@@ -1630,9 +1630,9 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
 
           {/* Hands Touching Hero — PRIMARY */}
           <div className="mb-12">
-            <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Human-AI Lab Hero — Hands Touching (Primary)</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Earth-Aligned AI Lab Hero — Hands Touching (Primary)</h3>
             <p className="text-muted-foreground mb-6 max-w-3xl text-sm">
-              The primary hero background for the Human-AI Lab and any human + AI collaboration narrative. Two translucent
+              The primary hero background for the Earth-Aligned AI Lab and any human + AI collaboration narrative. Two translucent
               wireframe hands reach toward each other across the S-curve crossing point, fingertips meeting in a golden
               burst of light — a Michelangelo-inspired composition set against a deep teal grid. The crossing point of
               the S-curves is the visual focal point: the moment of connection between human and AI.
@@ -1653,7 +1653,7 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
                 <div className="absolute inset-0 flex flex-col justify-center px-12 py-10">
                   <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-3">EXPONENTIAL ROADMAP INITIATIVE — EXAMPLE</p>
                   <h1 className="font-archivo font-extrabold text-white text-4xl md:text-5xl leading-tight mb-4">
-                    <span className="text-[#93E07D]">Exponential</span><br />Human-AI Lab
+                    <span className="text-[#93E07D]">Exponential</span><br />Earth-Aligned AI Lab
                   </h1>
                   <p className="text-muted-foreground text-base max-w-md mb-6">
                     One place for everything ERI builds at the intersection of human expertise and AI.
@@ -3286,7 +3286,7 @@ const contactUrl =
               </thead>
               <tbody>
                 {[
-                  ["hal", "Human-AI Lab", "https://human-ai-lab.exponentialroadmap.org"],
+                  ["hal", "Earth-Aligned AI Lab", "https://earth-aligned-ai-lab.exponentialroadmap.org"],
                   ["psm", "Professional Services Matrix", "https://psm.exponentialroadmap.org"],
                   ["taxonomy", "ERI Taxonomy", "https://taxonomy.exponentialroadmap.org"],
                   ["platform", "ERI Platform", "https://exponentialroadmap.org"],
@@ -3837,7 +3837,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               appName="Professional Services Matrix"
               tagline="Making Pillar 3 climate impact measurable and actionable."
             />
-            {/* footerLinks defaults to Trust Centre + Human-AI Lab */}
+            {/* footerLinks defaults to Trust Centre + Earth-Aligned AI Lab */}
           </div>
 
           {/* Source code */}
@@ -3853,7 +3853,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
   tagline="Making Pillar 3 climate impact measurable and actionable."
   // footerLinks defaults to:
   // [{ label: 'Trust Centre', href: 'https://trust.exponentialroadmap.org' },
-  //  { label: 'Human-AI Lab', href: 'https://human-ai-lab.exponentialroadmap.org' }]
+  //  { label: 'Earth-Aligned AI Lab', href: 'https://earth-aligned-ai-lab.exponentialroadmap.org' }]
   // Pass [] to show no additional links, or override with your own list.
 />`}</pre>
             </CardContent>
@@ -3870,7 +3870,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["appName",     "string",         "Required. App display name shown in the footer left zone alongside the ERI logo."],
                     ["tagline",     "string?",        "Optional one-line tagline shown below the app name. Keep to one sentence."],
                     ["attribution", "string?",        "Optional right-aligned attribution string in the footer bottom bar."],
-                    ["footerLinks", "FooterLink[]?",  "Links shown in the right zone between the ERI homepage and Contact Us. Defaults to Trust Centre + Human-AI Lab. Pass [] to show no additional links."],
+                    ["footerLinks", "FooterLink[]?",  "Links shown in the right zone between the ERI homepage and Contact Us. Defaults to Trust Centre + Earth-Aligned AI Lab. Pass [] to show no additional links."],
                   ].map(([prop, type, note]) => (
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
@@ -3950,7 +3950,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           <h3 className="font-bold text-foreground mb-1 text-lg">5. EriHeroSection</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Canonical full-viewport hero section. Matches the live pattern on{" "}
-            <a href="https://human-ai-lab.exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-[#3ba559] underline">human-ai-lab.exponentialroadmap.org</a>.{" "}
+            <a href="https://earth-aligned-ai-lab.exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-[#3ba559] underline">earth-aligned-ai-lab.exponentialroadmap.org</a>.{" "}
             Text block is always left-aligned and vertically centred, anchored to{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> so it aligns with the header logotype.
             The background image is centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">50% 50%</code>) — the hands composition is designed to be centred.
@@ -4872,25 +4872,25 @@ const tabs: TabConfig[] = [
             {[
               {
                 id: "halHandsTouching",
-                label: "Human-AI Lab — Hands Touching (Primary)",
+                label: "Earth-Aligned AI Lab — Hands Touching (Primary)",
                 badge: "Primary",
                 badgeColor: "bg-[#3ba559] text-white",
                 url: heroImages.halHandsTouching,
                 token: "heroImages.halHandsTouching",
-                use: "Human-AI Lab landing page, any human + AI collaboration narrative. Two translucent wireframe hands reaching toward each other, fingertips meeting at the S-curve crossing point with a golden burst of light. Michelangelo-inspired composition. Currently live on human-ai-lab.exponentialroadmap.org.",
+                use: "Earth-Aligned AI Lab landing page, any human + AI collaboration narrative. Two translucent wireframe hands reaching toward each other, fingertips meeting at the S-curve crossing point with a golden burst of light. Michelangelo-inspired composition. Currently live on earth-aligned-ai-lab.exponentialroadmap.org.",
               },
               {
                 id: "halHumanNetwork",
-                label: "Human-AI Lab — Human Network",
+                label: "Earth-Aligned AI Lab — Human Network",
                 badge: "Alternate",
                 badgeColor: "bg-[#2C3F43] text-white",
                 url: heroImages.halHumanNetwork,
                 token: "heroImages.halHumanNetwork",
-                use: "Human-AI Lab, any human + AI collaboration narrative. Features the dual S-curves with a distributed network of connected person icons representing global human collaboration.",
+                use: "Earth-Aligned AI Lab, any human + AI collaboration narrative. Features the dual S-curves with a distributed network of connected person icons representing global human collaboration.",
               },
               {
                 id: "halSCurveDual",
-                label: "Human-AI Lab — Dual S-Curve (Minimal)",
+                label: "Earth-Aligned AI Lab — Dual S-Curve (Minimal)",
                 badge: "Minimal",
                 badgeColor: "bg-gray-500 text-white",
                 url: heroImages.halSCurveDual,
@@ -4899,12 +4899,12 @@ const tabs: TabConfig[] = [
               },
               {
                 id: "halMFReaching",
-                label: "Human-AI Lab — Reaching (Duo Figures)",
+                label: "Earth-Aligned AI Lab — Reaching (Duo Figures)",
                 badge: "Alternate",
                 badgeColor: "bg-[#2C3F43] text-white",
                 url: heroImages.halMFReaching,
                 token: "heroImages.halMFReaching",
-                use: "Human-AI Lab, human collaboration with AI, gender-balanced team narratives. Two constellation figures (male left, female right) reaching toward each other across the S-curve crossing point — emphasising the human-to-human connection enabled by AI.",
+                use: "Earth-Aligned AI Lab, human collaboration with AI, gender-balanced team narratives. Two constellation figures (male left, female right) reaching toward each other across the S-curve crossing point — emphasising the human-to-human connection enabled by AI.",
               },
               {
                 id: "crocodileDecoupling",
@@ -4970,8 +4970,8 @@ const tabs: TabConfig[] = [
           <div className="grid md:grid-cols-3 gap-6 mb-10">
             {[
               {
-                name: "Exponential Human-AI Lab",
-                url: "https://human-ai-lab.exponentialroadmap.org",
+                name: "Exponential Earth-Aligned AI Lab",
+                url: "https://earth-aligned-ai-lab.exponentialroadmap.org",
                 img: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hero_2ad5f074.png",
                 badge: "BETA",
                 desc: "Hub application — Tier B Marketing navigation, dark hero with S-curve image, lime CTA buttons, status badge.",
@@ -5034,11 +5034,11 @@ const tabs: TabConfig[] = [
             <div className="rounded-xl overflow-hidden border border-border shadow-sm">
               <div className="px-4 py-2.5 bg-card border-b border-border flex items-center gap-2">
                 <span className="bg-[#3ba559] text-white text-[10px] font-archivo font-bold px-2 py-0.5 rounded uppercase tracking-wider">Hub Overlay</span>
-                <span className="text-xs font-archivo font-bold text-[#232323]">Human-AI Lab — Tier B Hub pattern</span>
+                <span className="text-xs font-archivo font-bold text-[#232323]">Earth-Aligned AI Lab — Tier B Hub pattern</span>
               </div>
               <img
                 src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hal-hub-overlay-new_1d389fa7.png"
-                alt="Human-AI Lab Hub Overlay — two-column dark overlay with Navigation on the left and numbered Application cards on the right"
+                alt="Earth-Aligned AI Lab Hub Overlay — two-column dark overlay with Navigation on the left and numbered Application cards on the right"
                 className="w-full block"
               />
             </div>
