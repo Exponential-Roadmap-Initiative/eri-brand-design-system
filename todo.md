@@ -654,4 +654,10 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update SKILL_LATEST_URL in server/_core/index.ts to v3.8.0
 - [x] Regenerate shared/eriVersion.ts (ERI_BDS_SKILL_VERSION = v3.8.0)
 - [x] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.16.8, push git tag v2.16.8
+- [x] Save checkpoint v2.16.8, push git tag v2.16.8
+
+## v2.16.9 — Version badge + Trust Centre patch (2026-05-27)
+- [x] Bump APP_VERSION in App.tsx from V.2026.04.21 to V.2026.05.27
+- [x] Write TRUST-CENTRE-PATCH.md: Fix A (headerTheme="auto"), Fix B (returnUrl hardcoded), Fix C (Vite cache), T6 verification, bds-meta.json template
+- [x] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.16.9, push git tag v2.16.9

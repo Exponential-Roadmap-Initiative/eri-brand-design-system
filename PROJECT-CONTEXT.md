@@ -590,3 +590,10 @@ Four gaps identified by the Trust Centre project after a failed implementation:
 4. **returnUrl canonical value not stated** — `returnUrl` prop description in EriAppHeader, EriPageLayout, and the Contact Us props table now says "Always the hardcoded canonical production URL — never `window.location.origin`". A standalone callout added after the Contact Us props table. `window.location.origin` resolves to `http://localhost:3000` in development and breaks the Contact Us return flow in production.
 
 CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/XMkyuyXwCGcxKiHP.md`
+
+---
+
+## v2.16.9 — Version badge + Trust Centre patch document (2026-05-27)
+
+- `APP_VERSION` in `client/src/App.tsx` bumped from `V.2026.04.21` to `V.2026.05.27`.
+- `TRUST-CENTRE-PATCH.md` written in project root: exact three-fix patch (Fix A: `headerTheme="auto"`, Fix B: `returnUrl` hardcoded, Fix C: Vite cache restart + hard-reload), T6 browser verification table, and complete `bds-meta.json` template for the Trust Centre.

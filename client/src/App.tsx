@@ -10,7 +10,7 @@ import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
 import { useState } from "react";
 
-const APP_VERSION = "V.2026.04.21";
+const APP_VERSION = "V.2026.05.27";
 
 // ── Tab navigation bar ────────────────────────────────────────────────────────
 // Positioned directly below the standard 64px EriAppHeader.
