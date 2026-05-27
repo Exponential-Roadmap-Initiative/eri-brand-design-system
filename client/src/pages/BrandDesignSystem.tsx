@@ -514,8 +514,8 @@ export default function BrandDesignSystem() {
               {[
                 ["EriPageLayout",      "Full-page wrapper: dark header, footer, content slot"],
                 ["EriAppHeader",       "Fixed 64px header: ERI logo, app name, version, CTA"],
-                ["EriHeroSection",     "Full-viewport hero: hands image, left text block, CTAs"],
-                ["EriAppFooter",       "Standard dark footer with ERI branding and links"],
+                ["EriHeroSection",     "Full-viewport hero: S-curve image, left text block, CTAs"],
+                ["EriAppFooter",       "Four-column dark footer: About · Newsletter · Follow us · Contact us"],
                 ["EriStatusBadge",     "Pill badge for BETA / PILOT / PROTOTYPE labels"],
                 ["EriContactUsButton", "Standalone Contact Us CTA linking to the shared service"],
                 ["EriCrocodileChart",  "Crocodile Economy decoupling chart — pure SVG, zero deps"],
@@ -1630,14 +1630,11 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
             illustrations and graphic compositions that carry specific conceptual meaning.
           </p>
 
-          {/* Hands Touching Hero — PRIMARY */}
+          {/* Default Hero Image — Dual S-Curve Rich */}
           <div className="mb-12">
-            <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Earth-Aligned AI Lab Hero — Hands Touching (Primary)</h3>
+            <h3 className="font-archivo text-lg font-bold text-foreground mb-2">Default Hero Image — Dual S-Curve Rich (ERI_HERO_IMAGE_DEFAULT)</h3>
             <p className="text-muted-foreground mb-6 max-w-3xl text-sm">
-              The primary hero background for the Earth-Aligned AI Lab and any human + AI collaboration narrative. Two translucent
-              wireframe hands reach toward each other across the S-curve crossing point, fingertips meeting in a golden
-              burst of light — a Michelangelo-inspired composition set against a deep teal grid. The crossing point of
-              the S-curves is the visual focal point: the moment of connection between human and AI.
+              The default hero background for all ERI applications (except Trust Centre). Two S-curves — one amber, one Accent Lime — cross at the centre of the composition against a deep teal grid with particle bokeh. The crossing point represents the exponential transition: the moment where emissions decouple from growth. Used via <code className="font-mono text-xs bg-gray-100 px-1 rounded">ERI_HERO_IMAGE_DEFAULT</code> (baked in as the default — omit the <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code> prop for standard use).
             </p>
 
             {/* Live preview */}
@@ -3370,7 +3367,7 @@ const contactUrl =
               Updates propagate automatically to all ERI sites on their next deploy.
             </p>
             <p className="text-xs text-muted-foreground mb-1">Pin to a stable release (recommended):</p>
-            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.12.0&path:packages/eri-components"`}</pre>
+            <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.16.1&path:packages/eri-components"`}</pre>
             <p className="text-xs text-muted-foreground mb-1">Or track latest (auto-updates on each deploy):</p>
             <pre className="text-xs text-green-400 bg-gray-900 rounded p-3 mb-3 overflow-x-auto font-mono">{`pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#main&path:packages/eri-components"`}</pre>
             <p className="text-xs text-muted-foreground mb-2">
@@ -3866,8 +3863,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                 <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
-                    ["appName",     "string",         "Required. App display name shown in the footer left zone alongside the ERI logo."],
-                    ["tagline",     "string?",        "Optional one-line tagline shown below the app name. Keep to one sentence."],
+                    ["appName",     "string",         "Required. App display name used in the copyright string in the bottom bar (© YYYY Exponential Roadmap Initiative. [appName])."],
+                    ["tagline",     "string?",        "Optional one-line tagline shown below the ERI logo in the footer logo row. Keep to one sentence."],
                     ["attribution", "string?",        "Optional right-aligned attribution string in the footer bottom bar."],
                     ["appLink",     "AppLink?",        "Optional single app-specific link in the About column, below Members and partners and Privacy policy. Provide { label, href }."],
                   ].map(([prop, type, note]) => (
@@ -3887,7 +3884,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <p className="text-xs font-semibold text-red-700 dark:text-red-300 mb-1">NON-CONFORMANT PATTERNS — do not use</p>
             <ul className="text-xs text-red-600 dark:text-red-400 space-y-1 list-disc list-inside">
               <li>Dark green background (e.g. PSM v1) — always <code className="font-mono bg-red-100 dark:bg-red-900/40 px-1 rounded">#232323</code></li>
-              <li>White footer (Tier C variation) — only for public marketing sites, not apps</li>
+              <li>White footer (Tier C variation) — only for admin tools with a persistent sidebar, not public-facing apps</li>
               <li>Placeholder link columns with unconfirmed URLs — only show links with a confirmed destination</li>
               <li>Importing EriAppFooter directly in page files — use EriPageLayout</li>
             </ul>
@@ -3914,7 +3911,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ['Column 1 — About', 'Members and partners · Privacy policy · optional appLink'],
                     ['Column 2 — Newsletter', 'Subscribe now → https://exponentialroadmap.org/#subscribenewsletter'],
                     ['Column 3 — Follow us', 'LinkedIn (#007BB6) · X (#1D1D1D) · YouTube (#A82400) — branded 36×36px rounded icon buttons'],
-                    ['Column 4 — Contact us', 'hello@exponentialroadmap.org in Accent Lime #93E07D'],
+                    ['Column 4 — Contact us', 'Contact Us button linking to contact-us.exponentialroadmap.org — uses EriContactUsButton internally'],
                     ['© Bottom bar', '© YYYY Exponential Roadmap Initiative. [App Name]. — text-sm text-muted-foreground'],
                     ['Link columns', 'Only show links with confirmed URLs — no placeholder columns'],
                   ].map(([prop, val]) => (
@@ -3943,7 +3940,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               <ul className="text-sm text-red-600 space-y-1 list-disc list-inside">
                 <li>ERI Platform footer: <code className="font-mono text-xs">bg-[#1a3a2a]</code> dark green — replace with <code className="font-mono text-xs">#232323</code></li>
                 <li>PSM light footer: white background — acceptable only for Tier C admin tools, not for public-facing apps</li>
-                <li>Taxonomy footer: single-row flat layout with no logo column — upgrade to two-zone standard</li>
+                <li>Custom footer layouts that omit the four-column structure — always use EriPageLayout which renders EriAppFooter</li>
               </ul>
             </div>
           </div>
@@ -3955,10 +3952,10 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
             <a href="https://earth-aligned-ai-lab.exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-[#3ba559] underline">earth-aligned-ai-lab.exponentialroadmap.org</a>.{" "}
             Text block is always left-aligned and vertically centred, anchored to{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> so it aligns with the header logotype.
-            The background image is centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">50% 50%</code>) — the hands composition is designed to be centred.
+            The background image is centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">50% 50%</code>) — the S-curve composition is designed to be centred.
             The overlay is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">rgba(35,35,35,0.82)</code> — brand dark, not pure black.
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">titleLine1</code> is in Accent Lime; <code className="font-mono text-xs bg-gray-100 px-1 rounded">titleLine2</code> is in white.
-            The canonical hands image is baked in as the default — no need to pass <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code> for standard use.
+            The canonical S-curve image (<code className="font-mono text-xs bg-gray-100 px-1 rounded">ERI_HERO_IMAGE_DEFAULT</code>) is baked in as the default — no need to pass <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code> for standard use.
           </p>
 
           {/* Live preview — real EriHeroSection component */}
@@ -4046,7 +4043,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
 />
 
 {/* Custom image (e.g. Crocodile Economics) */}
-import { EriHeroSection, ERI_HERO_IMAGE_HANDS } from '@eri/components';
+import { EriHeroSection } from '@eri/components';
 
 <EriHeroSection
   eyebrow="CROCODILE ECONOMICS ——— PROTOTYPE"
@@ -5808,7 +5805,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                 <div>{'{'}</div>
                 <div className="pl-4">{`"appName": "Your App Name",`}</div>
                 <div className="pl-4">{`"version": "V.YYYY.MM.DD",`}</div>
-                <div className="pl-4">{`"eriComponentsPin": "v2.12.0",`}</div>
+                <div className="pl-4">{`"eriComponentsPin": "v2.16.1",`}</div>
                 <div className="pl-4">{`"overallStatus": "green",`}</div>
                 <div className="pl-4">{`"components": { ... }`}</div>
                 <div>{'}'}</div>

@@ -68,7 +68,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Standard components — canonical names and current version
 
-Package: `@eri/components` — current pin: **v2.12.0**
+Package: `@eri/components` — current pin: **v2.16.1**
 
 The six canonical component names are:
 
@@ -305,7 +305,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 
 **JSON discovery endpoint:** `https://bds.exponentialroadmap.org/api/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
 
-**Current skill version:** v3.4.0 (2026-05-26) — gen:version/prebuild workflow documented; shared/eriVersion.ts gitignored; ERI_BDS_SKILL_VERSION auto-synced from server/_core/index.ts. CDN: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/BcfwdIJHtTNhcuml.md`
+**Current skill version:** v3.5.0 (2026-05-27) — EriAppFooter docs updated (four-column layout, appLink prop, contact-us.exponentialroadmap.org); install pin bumped to v2.16.1 in SKILL.md. CDN: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/BcfwdIJHtTNhcuml.md`
+
+**Content audit v2.16.4 (2026-05-27):** 14 stale/incorrect items fixed in BrandDesignSystem.tsx: (1–2) install pin v2.12.0 → v2.16.1 in two places; (3–4) intro component list descriptions for EriHeroSection and EriAppFooter; (5–6) EriHeroSection section description — removed stale “hands” references, updated to “S-curve” and “ERI_HERO_IMAGE_DEFAULT”; (7) code example — removed deprecated ERI_HERO_IMAGE_HANDS import; (8–9) EriAppFooter props table — appName and tagline descriptions corrected; (10) Footer Rules table Column 4 — hello@ → contact-us.exponentialroadmap.org; (11) non-conformant callout — Tier C is admin tools not public marketing sites; (12) known violations — stale Taxonomy single-row item replaced with generic rule; (13–14) Brand Graphics section heading and description — “Hands Touching (Primary)” → “Dual S-Curve Rich (ERI_HERO_IMAGE_DEFAULT)” with accurate description.
 
 **Current @eri/components version:** v2.16.1 (2026-05-26) — EriAppFooter four-column layout matching official ERI site; Contact Us links to contact-us.exponentialroadmap.org
 

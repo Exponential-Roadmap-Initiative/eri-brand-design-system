@@ -581,9 +581,11 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Fix all identified issues in BrandDesignSystem.tsx
 - [ ] TypeScript check, save checkpoint v2.16.3, push git tag
 
-## Screenshot audit v2.16.3
+## Screenshot audit v2.16.4
 - [x] Update BDS skill to latest, read PROJECT-CONTEXT.md
-- [ ] Audit all screenshot/visual examples on live BDS site
-- [ ] Compile findings: outdated/incorrect screenshots
-- [ ] Fix all identified issues in BrandDesignSystem.tsx
-- [ ] TypeScript check, save checkpoint v2.16.3, push git tag
+- [x] Audit all screenshot/visual examples on live BDS site
+- [x] Compile findings: 14 issues across install pin, component descriptions, footer props, hero image text, brand graphics section
+- [x] Fix all 14 issues in BrandDesignSystem.tsx
+- [x] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.16.4
+- [ ] Push git tag v2.16.4
