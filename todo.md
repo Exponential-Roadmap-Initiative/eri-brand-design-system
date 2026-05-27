@@ -571,5 +571,19 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update SKILL.md v3.4.0: document gen:version/prebuild workflow
 - [x] Validate skill, upload to CDN, update SKILL_LATEST_URL in server/_core/index.ts
 - [x] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.16.2
-- [ ] Push git tag v2.16.2 to user_github
+- [x] Save checkpoint v2.16.2
+- [x] Push git tag v2.16.2 to user_github
+
+## Screenshot audit v2.16.3
+- [ ] Update BDS skill to latest, read PROJECT-CONTEXT.md
+- [ ] Audit all screenshot/visual examples on live BDS site
+- [ ] Compile findings: outdated/incorrect screenshots
+- [ ] Fix all identified issues in BrandDesignSystem.tsx
+- [ ] TypeScript check, save checkpoint v2.16.3, push git tag
+
+## Screenshot audit v2.16.3
+- [x] Update BDS skill to latest, read PROJECT-CONTEXT.md
+- [ ] Audit all screenshot/visual examples on live BDS site
+- [ ] Compile findings: outdated/incorrect screenshots
+- [ ] Fix all identified issues in BrandDesignSystem.tsx
+- [ ] TypeScript check, save checkpoint v2.16.3, push git tag
