@@ -48,14 +48,14 @@ async function startServer() {
   // Update SKILL_LATEST_URL when releasing a new skill version.
   // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/KABWupNGWXheUgnE.md"; // v3.5.0 — EriAppFooter docs updated to v2.16.0 four-column layout; footerLinks deprecated; install pin bumped to v2.16.1
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_31d5b90f.md"; // v3.6.0 — example bds-meta.json pin bumped to v2.16.1; A1–A5 antiAi schema documented; Trust Centre added to In the Wild gallery
   app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
   app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    res.json({ url: SKILL_LATEST_URL, version: "3.5.0" }); // v3.5.0 — EriAppFooter docs updated to v2.16.0 four-column layout; footerLinks deprecated; install pin bumped to v2.16.1
+    res.json({ url: SKILL_LATEST_URL, version: "3.6.0" }); // v3.6.0 — example bds-meta.json pin bumped to v2.16.1; A1–A5 antiAi schema documented; Trust Centre added to In the Wild gallery
   });
 
   // ── BDS-meta proxy ─────────────────────────────────────────────────────────

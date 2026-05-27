@@ -4950,7 +4950,7 @@ const tabs: TabConfig[] = [
           </p>
 
           {/* ── App gallery ── */}
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
             {[
               {
                 name: "Exponential Earth-Aligned AI Lab",
@@ -4974,6 +4974,14 @@ const tabs: TabConfig[] = [
                 img: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/psm-hero-new_e37d0d9f.png",
                 badge: "BETA",
                 desc: "Application — Tier B App navigation, dark hero with landscape image, lime primary CTA + outlined secondary CTA.",
+                tier: "Tier B — App",
+              },
+              {
+                name: "ERI Trust Centre",
+                url: "https://trust.exponentialroadmap.org",
+                img: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/trust-hero_61e9c5e5.png",
+                badge: "LIVE",
+                desc: "Trust & Security application — ERI_HERO_IMAGE_TRUST (hexagonal shield graphic), lime accent on title line 1, LIVE status badge, View Security Controls + Data Privacy CTAs.",
                 tier: "Tier B — App",
               },
             ].map((app) => (

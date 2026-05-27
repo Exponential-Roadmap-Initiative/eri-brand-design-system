@@ -587,5 +587,41 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Compile findings: 14 issues across install pin, component descriptions, footer props, hero image text, brand graphics section
 - [x] Fix all 14 issues in BrandDesignSystem.tsx
 - [x] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.16.4
-- [ ] Push git tag v2.16.4
+- [x] Save checkpoint v2.16.4
+- [x] Push git tag v2.16.4
+
+## Anti-AI Checklist A1–A5 + Trust Centre In the Wild — v2.16.5 (2026-05-27)
+- [ ] Read all relevant source files (bdsMetaTypes.ts, AlignmentTracker.tsx, bds-meta-spec.md, changelog, BrandDesignSystem.tsx)
+- [ ] Extend bdsMetaTypes.ts: add AntiAiCompliance interface and antiAi field to BdsMetaJson
+- [ ] Extend checklistScore() to include A1–A5
+- [ ] Update bds-meta-spec.md with antiAi field definitions
+- [ ] Bump bds-meta-changelog.json to v1.4 with antiAi block
+- [ ] Add A block table to AlignmentTracker.tsx (after C block)
+- [ ] Add A1 grep command to Quick Verification Commands section
+- [ ] Update self-reporting note to mention antiAi field
+- [ ] Update canonical template in AlignmentTracker.tsx with antiAi block
+- [ ] Update PROJECT-CONTEXT.md seed template with antiAi block
+- [ ] Update BDS site bds-meta.json with antiAi block (schemaVersion 1.4)
+- [ ] Add Trust Centre to In the Wild gallery in BrandDesignSystem.tsx
+- [ ] Update SKILL.md v3.6.0: A1–A5 checklist, schema template, upload to CDN
+- [ ] Update SKILL_LATEST_URL in server/_core/index.ts
+- [ ] Regenerate shared/eriVersion.ts
+- [ ] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.16.5
+- [ ] Push git tag v2.16.5
+
+## Anti-AI Checklist A1–A5 + Trust Centre gallery v2.16.5
+- [x] Verify A1–A5 schema already in bdsMetaTypes.ts and checklistScore() — confirmed complete
+- [x] Verify A block UI already in AlignmentTracker.tsx — confirmed complete
+- [x] Update canonical template in AlignmentTracker.tsx: schemaVersion 1.3, add antiAi block, update date
+- [x] Update Copy template button handler: schemaVersion 1.3, add antiAi block
+- [x] Verify bds-meta.json already has antiAi block with all 5 fields true
+- [x] Capture Trust Centre screenshot and upload to CDN
+- [x] Add Trust Centre as 4th card in In the Wild gallery (2x2 grid)
+- [x] Update SKILL.md example bds-meta.json: pin v2.16.1, lastUpdated 2026-05-27
+- [x] Bump SKILL.md version to 3.6.0, upload to CDN
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts to v3.6.0
+- [x] Regenerate shared/eriVersion.ts (ERI_BDS_SKILL_VERSION = v3.6.0)
+- [x] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.16.5
+- [ ] Push git tag v2.16.5

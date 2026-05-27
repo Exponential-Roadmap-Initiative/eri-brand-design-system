@@ -550,3 +550,28 @@ Any agent reading the skill before starting work will now have everything needed
 
 ### Skill version
 - Skill bumped to v3.1.0 with all above changes documented
+
+---
+
+## v2.16.5 — Anti-AI Checklist A1–A5 complete + Trust Centre In the Wild (2026-05-27)
+
+### Anti-AI Checklist A1–A5 — fully implemented
+- `bdsMetaTypes.ts` `AntiAiCompliance` interface: 5 fields (`noBlacklistedCopyWords`, `noPurpleGradientOrSparkles`, `ctasDescribeOutcome`, `statisticsAreReal`, `noIdenticalSectionSequence`)
+- `checklistScore()` in `AlignmentTracker.tsx` scores all 5 fields
+- A block UI table in `AlignmentTracker.tsx`: rows A1–A5 with check description and pass condition
+- Canonical template (visible + Copy button) updated to `schemaVersion: "1.3"` with `antiAi` block
+- BDS site `bds-meta.json` already had `antiAi` block with all 5 fields `true`
+
+### Trust Centre added to In the Wild gallery
+- Screenshot captured from `trust.exponentialroadmap.org` and uploaded to CDN
+- CDN URL: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/trust-hero_61e9c5e5.png`
+- Gallery switched from 3-column to 2×2 grid to accommodate 4 cards
+- Trust Centre card: badge LIVE, tier "Tier B — App", description notes `ERI_HERO_IMAGE_TRUST`
+
+### SKILL.md v3.6.0
+- Example `bds-meta.json` pin updated from `v2.15.3` to `v2.16.1`
+- `lastUpdated` updated to `2026-05-27`
+- Frontmatter description updated to mention A1–A5 Anti-AI checklist and Trust Centre
+- CDN URL: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_31d5b90f.md`
+- `SKILL_LATEST_URL` in `server/_core/index.ts` updated to v3.6.0 CDN URL
+- `shared/eriVersion.ts` regenerated: `ERI_BDS_SKILL_VERSION = "v3.6.0"`

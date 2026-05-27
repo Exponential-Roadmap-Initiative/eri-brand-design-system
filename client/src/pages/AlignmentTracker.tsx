@@ -596,7 +596,7 @@ export default function AlignmentTracker() {
                   const today = new Date().toISOString().slice(0, 10);
                   navigator.clipboard.writeText(
                     JSON.stringify({
-                      schemaVersion: "1.1",
+                      schemaVersion: "1.3",
                       project: "your-project-id",
                       displayName: "Your Project Name",
                       url: "https://your-project.exponentialroadmap.org",
@@ -632,6 +632,13 @@ export default function AlignmentTracker() {
                         noStaleComponentNames: false,
                         overlayBackground:     false,
                       },
+                      antiAi: {
+                        noBlacklistedCopyWords:     false,
+                        noPurpleGradientOrSparkles: false,
+                        ctasDescribeOutcome:        false,
+                        statisticsAreReal:          false,
+                        noIdenticalSectionSequence: false,
+                      },
                       knownViolations: [],
                       overallStatus: "red",
                       lastUpdated: today,
@@ -647,7 +654,7 @@ export default function AlignmentTracker() {
             </div>
             <div className="rounded-lg p-4 font-mono text-xs overflow-x-auto leading-relaxed" style={{ backgroundColor: T.dark, color: T.lime }}>
 {`{
-  "schemaVersion": "1.2",
+  "schemaVersion": "1.3",
   "project": "your-project-id",
   "displayName": "Your Project Name",
   "url": "https://your-project.exponentialroadmap.org",
@@ -683,9 +690,16 @@ export default function AlignmentTracker() {
     "noStaleComponentNames": false,
     "overlayBackground":     false
   },
+  "antiAi": {
+    "noBlacklistedCopyWords":     false,
+    "noPurpleGradientOrSparkles": false,
+    "ctasDescribeOutcome":        false,
+    "statisticsAreReal":          false,
+    "noIdenticalSectionSequence": false
+  },
   "knownViolations": [],
   "overallStatus": "red",
-  "lastUpdated": "2026-04-29",
+  "lastUpdated": "2026-05-27",
   "updatedBy": "Manus"
 }`}
             </div>
