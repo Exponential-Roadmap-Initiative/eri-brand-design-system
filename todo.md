@@ -625,3 +625,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] TypeScript check: 0 errors
 - [ ] Save checkpoint v2.16.5
 - [ ] Push git tag v2.16.5
+
+## Contradiction audit — headerTheme + full audit v2.16.6
+- [x] SKILL.md fix 1: Remove "Only the BDS site" prohibition from line 1303 blockquote
+- [x] SKILL.md fix 2: Fix Common mistakes table — headerTheme="auto" is the recommended pairing with showThemeToggle, not a special-case opt-in
+- [x] SKILL.md fix 3: Remove "All other ERI apps should use dark unless explicitly required"
+- [x] BrandDesignSystem.tsx fix 4: Add headerTheme="auto" to the showThemeToggle implementation example
+- [x] BrandDesignSystem.tsx fix 5: Add showThemeToggle and headerTheme props to EriAppHeader props table
+- [x] BrandDesignSystem.tsx fix 6: Add showThemeToggle and headerTheme props to EriPageLayout props table
+- [x] PROJECT-CONTEXT.md fix 7: Remove ERI_HERO_IMAGE_HANDS from the "current named exports" list
+- [x] TypeScript check: 0 errors
+- [x] Upload SKILL.md v3.7.0, update SKILL_LATEST_URL, regenerate eriVersion.ts
+- [ ] Save checkpoint v2.16.6, push git tag

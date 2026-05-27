@@ -3733,6 +3733,8 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["contactSubject",    "string?",         "Optional subject hint for the contact email (e.g. \"PSM Partnership Enquiry\")"],
                     ["onMenuClick",       "(() => void)?",   "Callback for the hamburger button. Defaults to no-op — hamburger is always visible. Pass () => setMenuOpen(true) to wire your drawer."],
                     ["logoHref",          "string?",         "Logo link destination. Defaults to \"/\"."],
+                    ["showThemeToggle",   "boolean?",        "Pass true on every ERI app — shows the dark/light mode toggle. Always pair with headerTheme=\"auto\"."],
+                    ["headerTheme",       "'dark' | 'auto'?","Default: 'dark' (header always #232323). Pass 'auto' whenever showThemeToggle={true} — makes the header background respond to the active theme. Without 'auto', the header stays dark even in light mode."],
                     ["footerTagline",     "string?",         "(EriPageLayout only) One-line tagline shown in the footer below the logo (max 80 chars)"],
                     ["footerAttribution", "string?",         "(EriPageLayout only) Right-aligned attribution string in the footer bottom bar"],
                   ].map(([prop, type, note]) => (
@@ -4234,6 +4236,8 @@ function App() {
                     ["contactSubject",    "string?",           "Optional subject hint for the contact email"],
                     ["footerTagline",     "string?",           "One-line tagline shown in the footer below the logo (max 80 chars)"],
                     ["footerAttribution", "string?",           "Right-aligned attribution string in the footer bottom bar"],
+                    ["showThemeToggle",   "boolean?",          "Pass true on every ERI app — shows the dark/light mode toggle. Always pair with headerTheme=\"auto\"."],
+                    ["headerTheme",       "'dark' | 'auto'?",  "Default: 'dark' (header always #232323). Pass 'auto' whenever showThemeToggle={true} — makes the header respond to the active theme. Without 'auto', the header stays dark even in light mode."],
                     ["onMenuClick",       "(() => void)?",     "Callback for the hamburger button. Defaults to no-op — hamburger is always visible. Pass () => setMenuOpen(true) to wire your drawer."],
                     ["logoHref",          "string?",           'Logo link destination. Defaults to "/".'],
                     ["children",          "React.ReactNode",   "Page content — include your drawer as a sibling to Router"],
@@ -4826,10 +4830,11 @@ const tabs: TabConfig[] = [
                     <p className="text-[#93E07D] font-semibold mb-2">2. EriPageLayout prop</p>
                     <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<EriPageLayout
   appName="Your App"
-  showThemeToggle={true}
+  showThemeToggle={true}  {/* shows the toggle button */}
+  headerTheme="auto"       {/* REQUIRED — makes header respond to theme */}
   ...
 />`}</pre>
-                    <p className="text-muted-foreground mt-2">The toggle reads/writes <code className="text-muted-foreground">localStorage</code> key <code className="text-muted-foreground">eri-theme</code> and applies the <code className="text-muted-foreground">dark</code> class to <code className="text-muted-foreground">&lt;html&gt;</code>.</p>
+                    <p className="text-muted-foreground mt-2">The toggle reads/writes <code className="text-muted-foreground">localStorage</code> key <code className="text-muted-foreground">eri-theme</code> and applies the <code className="text-muted-foreground">dark</code> class to <code className="text-muted-foreground">&lt;html&gt;</code>. <strong className="text-white">Always pair with <code className="text-muted-foreground">headerTheme="auto"</code></strong> — without it the header stays dark even in light mode.</p>
                   </div>
                 </div>
                 <div className="mt-4 grid md:grid-cols-3 gap-3 text-xs">

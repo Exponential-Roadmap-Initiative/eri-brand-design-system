@@ -99,7 +99,7 @@ The six canonical component names are:
 - Overlay is always `rgba(35,35,35,0.82)` — never `bg-black/40` or any other overlay.
 - Body text colour inside the hero is `rgba(255,255,255,0.85)` — white on dark, not `#383838`.
 - Primary CTA is always Accent Lime (`#93E07D`). Secondary CTA is white outline.
-- `ERI_HERO_IMAGE_HANDS` and `ERI_HERO_IMAGE_TRUST` are named exports from `@eri/components`.
+- `ERI_HERO_IMAGE_DEFAULT` and `ERI_HERO_IMAGE_TRUST` are named exports from `@eri/components`. `ERI_HERO_IMAGE_HANDS` is a deprecated alias for `ERI_HERO_IMAGE_DEFAULT` — do not use in new code.
 
 ### showCTA rule
 - Always pass `showCTA={true}`. The Contact Us CTA must be visible on all surfaces (public and authenticated).
@@ -224,7 +224,7 @@ The following errors have been found and fixed multiple times. If you see them a
 
 7. **`PublicLayout` / `transparentHeader` references in Machine Instructions and skill** — the correct component name is `EriPageLayout`. `PublicLayout` is the BDS site’s own internal layout (exempt from the standard). `transparentHeader` is a non-existent prop — it was removed from the component. References corrected to `EriPageLayout` on 2026-04-20.
 
-8. **Hero image assignment was passive, not mandatory** — the instruction said “use `ERI_HERO_IMAGE_TRUST` for trust contexts” but never gave a per-project table. An AI building the Trust Centre defaulted to the hands image. Fixed 2026-04-20: added mandatory per-project assignment table to both the skill and BDS site (amber callout box in EriHeroSection section). Trust Centre MUST use `ERI_HERO_IMAGE_TRUST`. All other apps MUST omit `backgroundImage` (defaults to `ERI_HERO_IMAGE_HANDS`).
+8. **Hero image assignment was passive, not mandatory** — the instruction said “use `ERI_HERO_IMAGE_TRUST` for trust contexts” but never gave a per-project table. An AI building the Trust Centre defaulted to the hands image. Fixed 2026-04-20: added mandatory per-project assignment table to both the skill and BDS site (amber callout box in EriHeroSection section). Trust Centre MUST use `ERI_HERO_IMAGE_TRUST`. All other apps MUST omit `backgroundImage` (defaults to `ERI_HERO_IMAGE_DEFAULT`).
 
 9. **Registered Source IDs table was incomplete** — `trust` was missing. Trust Centre source ID is `trust`, `sourceLabel` is `"Trust Centre"`, `returnUrl` is `"https://trust.exponentialroadmap.org"`, `status` is `"LIVE"`. Added to skill table 2026-04-20.
 
@@ -575,3 +575,5 @@ Any agent reading the skill before starting work will now have everything needed
 - CDN URL: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_31d5b90f.md`
 - `SKILL_LATEST_URL` in `server/_core/index.ts` updated to v3.6.0 CDN URL
 - `shared/eriVersion.ts` regenerated: `ERI_BDS_SKILL_VERSION = "v3.6.0"`
+
+17. **`headerTheme="auto"` restriction was a prohibition, not a status note (2026-05-27)** — SKILL.md said "Only the BDS site currently uses `headerTheme='auto'`. All other ERI apps should use `headerTheme='dark'` unless explicitly required." This was written as a status note but read as a prohibition. Fixed in SKILL.md v3.7.0: the rule is now "Always pair `showThemeToggle={true}` with `headerTheme='auto'`". Without `headerTheme='auto'`, the header stays dark even in light mode. The canonical code examples, integration checklist step 6, and both props tables in SKILL.md and BrandDesignSystem.tsx have been updated to reflect this.
