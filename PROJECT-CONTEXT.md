@@ -577,3 +577,16 @@ Any agent reading the skill before starting work will now have everything needed
 - `shared/eriVersion.ts` regenerated: `ERI_BDS_SKILL_VERSION = "v3.6.0"`
 
 17. **`headerTheme="auto"` restriction was a prohibition, not a status note (2026-05-27)** — SKILL.md said "Only the BDS site currently uses `headerTheme='auto'`. All other ERI apps should use `headerTheme='dark'` unless explicitly required." This was written as a status note but read as a prohibition. Fixed in SKILL.md v3.7.0: the rule is now "Always pair `showThemeToggle={true}` with `headerTheme='auto'`". Without `headerTheme='auto'`, the header stays dark even in light mode. The canonical code examples, integration checklist step 6, and both props tables in SKILL.md and BrandDesignSystem.tsx have been updated to reflect this.
+
+---
+
+## SKILL.md v3.8.0 — Trust Centre feedback applied (2026-05-27)
+
+Four gaps identified by the Trust Centre project after a failed implementation:
+
+1. **headerTheme contradiction** — already resolved in v3.7.0. Confirmed absent.
+2. **No browser verification step** — T6 row added to Project Alignment Checklist (T block): "Open the app in a browser. Click the theme toggle. Confirm: (1) header goes white; (2) page content goes light; (3) all text readable in both modes." Do not mark task complete until T6 passes.
+3. **Vite module cache not mentioned** — Setup Checklist step 1 now warns: after `pnpm add @eri/components`, restart the dev server and hard-reload the browser (`Cmd+Shift+R`). Vite pre-bundles on first start — old cache may be served otherwise.
+4. **returnUrl canonical value not stated** — `returnUrl` prop description in EriAppHeader, EriPageLayout, and the Contact Us props table now says "Always the hardcoded canonical production URL — never `window.location.origin`". A standalone callout added after the Contact Us props table. `window.location.origin` resolves to `http://localhost:3000` in development and breaks the Contact Us return flow in production.
+
+CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/XMkyuyXwCGcxKiHP.md`

@@ -48,14 +48,14 @@ async function startServer() {
   // Update SKILL_LATEST_URL when releasing a new skill version.
   // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
-    "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_dcb3ab0c.md"; // v3.7.0 — headerTheme/showThemeToggle contradiction fixed; pairing rule enforced across all skill examples and BrandDesignSystem.tsx props tables
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/XMkyuyXwCGcxKiHP.md"; // v3.8.0 — Trust Centre feedback: Vite cache warning, T6 browser verification step, returnUrl hardcoded URL rule
   app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
   app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    res.json({ url: SKILL_LATEST_URL, version: "3.7.0" }); // v3.7.0 — headerTheme/showThemeToggle contradiction fixed; pairing rule enforced across all skill examples and BrandDesignSystem.tsx props tables
+    res.json({ url: SKILL_LATEST_URL, version: "3.8.0" }); // v3.8.0 — Trust Centre feedback: Vite cache warning, T6 browser verification step, returnUrl hardcoded URL rule
   });
 
   // ── BDS-meta proxy ─────────────────────────────────────────────────────────

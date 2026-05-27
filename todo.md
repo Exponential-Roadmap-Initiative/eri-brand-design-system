@@ -636,4 +636,22 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] PROJECT-CONTEXT.md fix 7: Remove ERI_HERO_IMAGE_HANDS from the "current named exports" list
 - [x] TypeScript check: 0 errors
 - [x] Upload SKILL.md v3.7.0, update SKILL_LATEST_URL, regenerate eriVersion.ts
-- [ ] Save checkpoint v2.16.6, push git tag
+- [x] Save checkpoint v2.16.6, push git tag v2.16.6
+
+## Trust Centre instructions + BDS instruction quality audit v2.16.7
+- [ ] Audit BDS skill for structural AI-comprehension failures (cognitive load, ambiguity, contradictions, missing specificity)
+- [ ] Write Trust Centre-specific implementation document (flat, numbered, exact values, copy-paste code)
+- [ ] Write root-cause analysis report: why BDS instructions fail to land
+- [ ] Add root-cause findings to BDS site (new Instruction Quality section or Machine Instructions)
+- [ ] TypeScript check, update PROJECT-CONTEXT.md, save checkpoint v2.16.7, push git tag
+
+## Trust Centre feedback — SKILL.md v3.8.0 (2026-05-27)
+- [x] Fix 1 (headerTheme contradiction): Already resolved in v3.7.0 — confirmed absent
+- [x] Fix 2 (browser verification step): Add T6 row to Project Alignment Checklist — click toggle, confirm header goes white, confirm page content goes light
+- [x] Fix 3 (Vite module cache): Add warning to Setup Checklist step 1 — restart dev server and hard-reload after pnpm add
+- [x] Fix 4 (returnUrl canonical URL): Add "never window.location.origin" rule to Contact Us props table, EriAppHeader props table, EriPageLayout props table, and standalone callout
+- [x] Bump SKILL.md to v3.8.0, upload to CDN
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts to v3.8.0
+- [x] Regenerate shared/eriVersion.ts (ERI_BDS_SKILL_VERSION = v3.8.0)
+- [x] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.16.8, push git tag v2.16.8
