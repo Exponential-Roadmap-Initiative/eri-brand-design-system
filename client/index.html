@@ -15,6 +15,19 @@
     <!-- Fonts: Archivo (headings) + Open Sans (body)
          Self-hosted WOFF2 via @font-face in index.css (GDPR-compliant — no external font requests)
          Font files: /fonts/Archivo-{400-800}.woff2, /fonts/OpenSans-{400,600,700}.woff2 -->
+    <!-- FODC prevention: apply dark class synchronously before any JS loads.
+         Light is the ERI default; dark is an active user preference stored in
+         localStorage under the key "eri-theme". Without this script, returning
+         dark-mode users would see a brief light flash on every page load. -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('eri-theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

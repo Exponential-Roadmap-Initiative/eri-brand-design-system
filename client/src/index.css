@@ -99,8 +99,8 @@
 /*
  * ERI DARK MODE TOKENS
  * html.dark is set by ThemeContext when theme === 'dark'.
- * Dark is the ERI default — these values are the canonical dark surface colours.
- * The :root block above defines light mode (opt-in via toggle).
+ * Dark is an active user preference — these values are the canonical dark surface colours.
+ * The :root block above defines light mode (the ERI default).
  *
  * Surface hierarchy:
  *   --background:  #111111  (page canvas — true near-black for OLED efficiency)

@@ -1,18 +1,20 @@
 /**
  * ERI Brand Design System — ThemeContext
  *
- * Dark mode is the ERI default — a deliberate energy-efficiency statement.
- * OLED displays consume near-zero power for black pixels; defaulting to dark
- * reduces display energy consumption without any user effort required.
+ * Light mode is the ERI default — accessible to all users without any action.
+ * Dark mode is an active individual user preference, persisted in localStorage.
+ * Users who prefer dark mode select it via the theme toggle; their choice is
+ * remembered across sessions and across all ERI applications.
  *
  * Storage key: "eri-theme" (localStorage)
- * Default: "dark"
+ * Default: "light"
  * OS preference (prefers-color-scheme): intentionally ignored — ERI always
- * defaults to dark regardless of OS setting.
+ * defaults to light regardless of OS setting.
  *
- * Flash of light content (FOLC) prevention: the CSS default (`:root`) is dark,
- * so the page is dark before any JavaScript runs. Switching to light requires
- * an explicit user action.
+ * Flash of dark content (FODC) prevention: a small inline script in index.html
+ * reads localStorage before any JS bundle loads and applies the `.dark` class
+ * immediately if the user has previously selected dark mode. Without this script,
+ * returning dark-mode users would briefly see a light flash on page load.
  *
  * Cross-component sync: listens for `storage` events so that external theme
  * writers (e.g. EriAppHeader's self-contained toggle) keep this context in sync.
@@ -23,7 +25,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 export type Theme = "light" | "dark";
 
 const STORAGE_KEY = "eri-theme";
-const DEFAULT_THEME: Theme = "dark";
+const DEFAULT_THEME: Theme = "light";
 
 interface ThemeContextType {
   theme: Theme;

@@ -1009,7 +1009,7 @@ export default function BrandDesignSystem() {
                 <h3 className="font-bold text-foreground text-base">Theme-Aware Logo Switching</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
-                ERI apps default to dark mode. The header logo must switch between the full-colour wordmark (light mode) and the dedicated dark-mode SVG (dark mode). Use the <code className="bg-muted px-1 rounded text-xs">useTheme()</code> hook — never a CSS filter.
+                ERI apps default to light mode. The header logo must switch between the full-colour wordmark (light mode) and the dedicated dark-mode SVG (dark mode). Use the <code className="bg-muted px-1 rounded text-xs">useTheme()</code> hook — never a CSS filter.
               </p>
               <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed mb-4">{`import { useTheme } from "@/contexts/ThemeContext";
 import { logos } from "@/lib/assets";
@@ -4706,7 +4706,7 @@ const tabs: TabConfig[] = [
             Surface Modes
           </h2>
           <p className="text-muted-foreground mb-8 max-w-3xl">
-            ERI products use two named surface modes — <strong>Dark</strong> (the ERI default) and <strong>Light</strong> (opt-in via toggle). These are not competing themes; they are two contexts within the same brand. Dark mode is the default for all ERI applications — a deliberate energy-efficiency decision. Light mode is available to users who prefer it, and their preference persists across the entire ERI ecosystem via a shared <code className="text-sm font-mono">localStorage</code> key.
+            ERI products use two named surface modes — <strong>Light</strong> (the ERI default) and <strong>Dark</strong> (active user preference). These are not competing themes; they are two contexts within the same brand. Light mode is the default for all ERI applications — accessible to all users without any action. Dark mode is available to users who prefer it, and their preference persists across the entire ERI ecosystem via a shared <code className="text-sm font-mono">localStorage</code> key.
           </p>
 
           {/* Mode comparison table */}
@@ -4714,8 +4714,8 @@ const tabs: TabConfig[] = [
             {[
               {
                 mode: "Light Mode",
-                badge: "Opt-in",
-                badgeColor: "bg-[#6b7280] text-white",
+                badge: "Default",
+                badgeColor: "bg-[#3ba559] text-white",
                 bg: "bg-card border border-border",
                 tokens: [
                   { name: "Page background", value: "#F9FAFB", swatch: "#F9FAFB", border: true },
@@ -4725,12 +4725,12 @@ const tabs: TabConfig[] = [
                   { name: "Border",          value: "#E5E7EB",  swatch: "#E5E7EB",  border: true },
                   { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
                 ],
-                use: "Available via the toggle in the header. User preference persists across all ERI apps.",
+                use: "The ERI default for all applications. All new users see light mode first.",
               },
               {
                 mode: "Dark Mode",
-                badge: "Default",
-                badgeColor: "bg-[#3ba559] text-white",
+                badge: "User preference",
+                badgeColor: "bg-[#6b7280] text-white",
                 bg: "bg-[#111111] border border-[#2e2e2e]",
                 tokens: [
                   { name: "Page background", value: "#111111",  swatch: "#111111" },
@@ -4740,7 +4740,7 @@ const tabs: TabConfig[] = [
                   { name: "Accent text",     value: "#93E07D",  swatch: "#93E07D" },
                   { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
                 ],
-                use: "All ERI apps — dark is the ERI default. Light mode is available via the toggle in the header.",
+                use: "Active user preference. Selected via the toggle in the header; persists across all ERI apps via localStorage.",
               },
             ].map((m) => (
               <div key={m.mode} className={`rounded-xl p-6 ${m.bg}`}>
@@ -4772,7 +4772,7 @@ const tabs: TabConfig[] = [
             <h3 className="font-semibold text-foreground mb-3">How the mode system works</h3>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               {[
-                { q: "What is the default?", a: "Dark — always, for all apps" },
+                { q: "What is the default?", a: "Light — always, for all apps" },
                 { q: "How does a user change it?", a: "Toggle in the header (sun/moon icon)" },
                 { q: "Does it persist across apps?", a: "Yes — shared localStorage key eri-theme" },
               ].map((r) => (
@@ -4796,35 +4796,34 @@ const tabs: TabConfig[] = [
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="font-archivo font-bold text-white text-lg">Dark by Default</h3>
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3ba559]/20 text-[#93cda3] border border-[#3ba559]/30">v2.12.0</span>
+                  <h3 className="font-archivo font-bold text-white text-lg">Light by Default, Dark by Choice</h3>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3ba559]/20 text-[#93cda3] border border-[#3ba559]/30">v2.17.0</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4 max-w-2xl leading-relaxed">
-                  From v2.12.0, dark mode is the <strong className="text-white">ERI default</strong> for all applications — not just marketing pages.
-                  OLED screens consume near-zero power for dark pixels; switching to dark mode saves meaningful display energy at scale.
-                  Light mode remains available for users who need it, but it is opt-in, not the starting point.
+                  From v2.17.0, <strong className="text-white">light mode is the ERI default</strong> for all applications. Dark mode is an active individual user preference — selected via the toggle and persisted in localStorage. Users who prefer dark mode are never more than one click away from it, and their choice is remembered across all ERI apps.
                 </p>
                 {/* Placeholder energy stat — will be updated with specific figures from updated research */}
                 <div className="bg-[#1a1a1a] border border-[#2e2e2e] rounded-lg p-4 mb-4">
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    <span className="text-[#93E07D] font-semibold">Energy context (OLED screens):</span>{" "}
+                    <span className="text-[#93E07D] font-semibold">Energy note (OLED screens):</span>{" "}
                     Dark pixels on OLED displays require near-zero power compared to light pixels.
-                    Specific global figures will be added once updated research is confirmed.
-                    Light mode is available for those who need it — the toggle is in the header and footer.
+                    Users who choose dark mode still benefit from reduced display energy on OLED devices.
+                    The toggle is in the header — one click to switch, preference persists across all ERI apps.
                   </p>
                 </div>
                 <h4 className="text-sm font-semibold text-white mb-3">Implementation</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-xs">
                   <div className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
-                    <p className="text-[#93E07D] font-semibold mb-2">1. FOLC prevention script (index.html)</p>
+                    <p className="text-[#93E07D] font-semibold mb-2">1. FODC prevention script (index.html)</p>
                     <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<script>
 (function() {
-  var t = localStorage.getItem('eri-theme');
-  if (!t || t === 'dark')
-    document.documentElement.classList.add('dark');
+  try {
+    if (localStorage.getItem('eri-theme') === 'dark')
+      document.documentElement.classList.add('dark');
+  } catch(e) {}
 })();
 </script>`}</pre>
-                    <p className="text-muted-foreground mt-2">Add to {'<head>'} before any CSS. Prevents flash of light content on page load.</p>
+                    <p className="text-muted-foreground mt-2">Add to {'<head>'} before any CSS. Prevents flash of dark content for returning dark-mode users. Light is the default so no script is needed for first-time visitors.</p>
                   </div>
                   <div className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
                     <p className="text-[#93E07D] font-semibold mb-2">2. EriPageLayout prop</p>
@@ -4839,9 +4838,9 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="mt-4 grid md:grid-cols-3 gap-3 text-xs">
                   {[
-                    { q: "Default theme?", a: "Dark — always" },
+                    { q: "Default theme?", a: "Light — always" },
                     { q: "Storage?",       a: "localStorage key eri-theme" },
-                    { q: "OS preference?", a: "Ignored — dark is the ERI statement" },
+                    { q: "OS preference?", a: "Ignored — light is the ERI default" },
                   ].map((r) => (
                     <div key={r.q} className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-3">
                       <p className="text-muted-foreground mb-1">{r.q}</p>

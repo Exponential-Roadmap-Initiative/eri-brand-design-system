@@ -597,3 +597,35 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 
 - `APP_VERSION` in `client/src/App.tsx` bumped from `V.2026.04.21` to `V.2026.05.27`.
 - `TRUST-CENTRE-PATCH.md` written in project root: exact three-fix patch (Fix A: `headerTheme="auto"`, Fix B: `returnUrl` hardcoded, Fix C: Vite cache restart + hard-reload), T6 browser verification table, and complete `bds-meta.json` template for the Trust Centre.
+
+---
+
+## v2.17.0 — Light-default theme (2026-06-03)
+
+**Decision:** Default theme changed from dark to light. Dark mode is now an active individual user preference, persisted in `localStorage` under `eri-theme`. Key stakeholders found the dark-by-default approach too heavy.
+
+**Changes made:**
+- `ThemeContext.tsx`: `DEFAULT_THEME` changed from `"dark"` to `"light"`
+- `client/index.html`: FOLC script updated — now only applies `.dark` class if `localStorage.getItem('eri-theme') === 'dark'` (not on first visit)
+- `client/src/index.css`: comments updated to reflect light-default
+- `BrandDesignSystem.tsx`: Surface Modes section fully updated (13 edits — section title, badges, descriptions, How it works table, "Light by Default" section replacing "Dark by Default", FOLC code example, Logo Switching description)
+- `SKILL.md v3.9.0`: `### Default: light (from v2.17.0)`, migration note for pre-v2.17.0 projects, updated FOLC script, `DEFAULT_THEME="light"` in ThemeContext code example, dark tokens comment updated
+
+**Migration for consuming projects (HAL, PSM, Trust, Taxonomy):**
+1. Update `DEFAULT_THEME` in `ThemeContext.tsx` from `"dark"` to `"light"`
+2. Update the FOLC script in `client/index.html`:
+   ```html
+   <script>
+     (function() {
+       try {
+         if (localStorage.getItem('eri-theme') === 'dark')
+           document.documentElement.classList.add('dark');
+       } catch(e) {}
+     })();
+   </script>
+   ```
+3. Run `pnpm update @eri/components` to pull in v2.17.x if needed
+4. Hard-reload browser to flush Vite cache
+5. Verify: first visit shows light mode; toggle to dark works; preference persists on reload
+
+**SKILL.md v3.9.0 CDN:** `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/bYsMBUbdpKgsycna.md`

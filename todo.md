@@ -660,4 +660,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Bump APP_VERSION in App.tsx from V.2026.04.21 to V.2026.05.27
 - [x] Write TRUST-CENTRE-PATCH.md: Fix A (headerTheme="auto"), Fix B (returnUrl hardcoded), Fix C (Vite cache), T6 verification, bds-meta.json template
 - [x] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.16.9, push git tag v2.16.9
+- [x] Save checkpoint v2.16.9, push git tag v2.16.9
+
+## Light-default theme — v2.17.0
+- [x] ThemeContext.tsx: DEFAULT_THEME changed from "dark" to "light"
+- [x] index.html: FOLC script updated (applies dark class only if localStorage === "dark")
+- [x] index.css: comments updated to reflect light-default
+- [x] BrandDesignSystem.tsx: Surface Modes section updated (13 edits — badges, descriptions, How it works table, Light by Default section, FOLC code example, Logo Switching description)
+- [x] SKILL.md v3.9.0: ### Default: light (from v2.17.0), migration note, updated FOLC script, DEFAULT_THEME="light" in ThemeContext code example, dark tokens comment updated
+- [x] SKILL.md uploaded to CDN, SKILL_LATEST_URL updated in server/_core/index.ts
+- [x] shared/eriVersion.ts regenerated (ERI_BDS_SKILL_VERSION = v3.9.0)
+- [x] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.17.0, push git tag v2.17.0
