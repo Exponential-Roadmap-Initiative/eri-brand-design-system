@@ -762,3 +762,16 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add "Team Guide" tab to TabNav in App.tsx
 - [x] Add "Team Guide" link to BdsNavDrawer.tsx Other pages section
 - [x] Add team_guide_url to bdsSpec.ts
+
+## Skills Management Tab — /skills
+
+- [ ] Add skills + skill_improvements tables to drizzle/schema.ts
+- [ ] Run pnpm db:push to apply migration
+- [ ] Implement server/routers/skills.ts (adapted for getDb() pattern, adminProcedure for writes)
+- [x] Register skillsRouter in server/routers.ts
+- [ ] Write server/skills.test.ts (happy path + auth guard)
+- [ ] Implement client/src/pages/Skills.tsx (adapted from package + project instructions section)
+- [ ] Add /skills route and "Skills" tab to App.tsx
+- [x] Add Skills link to BdsNavDrawer
+- [ ] Seed existing ERI skills into the DB
+- [ ] Update PROJECT-CONTEXT.md and skill-manager SKILL.md

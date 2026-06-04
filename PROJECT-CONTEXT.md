@@ -662,3 +662,37 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 5. Verify: first visit shows light mode; toggle to dark works; preference persists on reload
 
 **SKILL.md v3.9.0 CDN:** `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/bYsMBUbdpKgsycna.md`
+
+---
+
+## v3.4.0 — Skills tab (2026-06-04)
+
+### New page: /skills
+- `client/src/pages/Skills.tsx` — self-improving skills registry for the ERI skill ecosystem
+- Fifth tab added to navigation: Brand Design System / Project Alignment Tracker / Start a Project / Team Guide / **Skills**
+- Database: `skills` table (id, name, description, tier, version, readWhen, createdAt, updatedAt) and `skill_improvements` table (id, skillId, version, summary, taskContext, loggedAt)
+- Router: `server/routers/skills.ts` — `publicProcedure` for reads (list, get), `adminProcedure` for writes (upsert, logImprovement, delete)
+- 24 skills seeded from `/home/ubuntu/skills/` directory (all current ERI skills)
+- Seed script: `scripts/seed-skills.mjs` — idempotent, safe to re-run
+- Tests: `server/skills.test.ts` — 9 tests, all passing
+- `bdsSpec.ts` addition: `skills_url`
+- `BdsNavDrawer.tsx`: Skills link added to Other pages section
+
+### Tier model
+- Tier 1 — Always-on (3 skills): exponential-human-ai-collaboration, eri-bds-reference, skill-creator
+- Tier 2 — Per-action gate (4 skills): code-quality-gate, trpc-router-patterns, decision-framework, database-design
+- Tier 3 — Conditional (17 skills): all other ERI skills
+
+### Admin note
+- `adminProcedure` throws `FORBIDDEN` (not `UNAUTHORIZED`) for null users — this is correct behaviour (admin gate checks role, not just auth)
+- Writes (upsert, logImprovement, delete) require admin role
+- Reads (list, get) are public — no login required
+
+### Current routes table
+| Route | Component | Status |
+|---|---|---|
+| `/` | BrandDesignSystem.tsx | Live |
+| `/tracker` | AlignmentTracker.tsx | Live |
+| `/new-project` | NewProject.tsx | Live |
+| `/team-guide` | TeamGuide.tsx | Live |
+| `/skills` | Skills.tsx | Live |

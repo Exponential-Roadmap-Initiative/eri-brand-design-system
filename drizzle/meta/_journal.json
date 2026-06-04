@@ -8,6 +8,13 @@
       "when": 1776625426297,
       "tag": "0000_busy_changeling",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1780603034900,
+      "tag": "0001_rapid_bloodstrike",
+      "breakpoints": true
     }
   ]
 }

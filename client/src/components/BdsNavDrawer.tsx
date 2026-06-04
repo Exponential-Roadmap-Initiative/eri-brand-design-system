@@ -136,6 +136,13 @@ export default function BdsNavDrawer({ open, onClose }: BdsNavDrawerProps) {
               Team Guide
             </a>
             <a
+              href="/skills"
+              onClick={onClose}
+              className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
+            >
+              Skills
+            </a>
+            <a
               href="/tracker"
               onClick={onClose}
               className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
