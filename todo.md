@@ -727,3 +727,31 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add new_project_url, handoff_prompt_track1, handoff_prompt_track2 to bdsSpec.ts
 - [x] TypeScript check passes
 - [x] Save checkpoint
+
+## /new-project — Missing vs original (2026-06-04)
+- [ ] Fix title to "Start a New Project" (was "Start a Project")
+- [ ] Fix hero eyebrow to "ERI WEB PROJECTS" (was "ERI BRAND DESIGN SYSTEM")
+- [x] Add PAGE GUIDE callout box in hero
+- [ ] Fix track card labels to "Static Website" / "Full-Stack Application" (Track 1 / Track 2)
+- [x] Add example projects to track cards (Exponential Framework, Earth-Aligned AI Lab, CrocodileEconomics)
+- [x] Add decision rule line under track cards
+- [x] Add tech stack subtitle under track section headers
+- [x] Expand Track 1 checklist to 10 steps (add: fonts, EriPageLayout wrap, EriHeroSection, Contact Us source ID, bds-meta.json, Alignment Checklist)
+- [x] Add Track 2 specific checklist steps (web-db-user, db:push, OAuth, workspace isolation, user management)
+- [x] Add Earth-Aligned Skills placeholder callout in Track 2 section
+- [x] Add Project Naming Conventions table section
+- [x] Add Machine-Readable Spec Endpoint section with GET URL and Open Spec Endpoint button
+
+## /new-project — Missing vs original (2026-06-04)
+- [x] Fix title to Start a New Project
+- [x] Fix hero eyebrow to ERI WEB PROJECTS
+- [x] Add PAGE GUIDE callout box in hero
+- [x] Fix track card labels to Static Website / Full-Stack Application
+- [x] Add example projects to track cards
+- [x] Add decision rule line under track cards
+- [x] Add tech stack subtitle under track section headers
+- [x] Expand Track 1 checklist to 10 steps
+- [x] Add Track 2 specific checklist steps
+- [x] Add Earth-Aligned Skills placeholder callout in Track 2
+- [x] Add Project Naming Conventions table section
+- [x] Add Machine-Readable Spec Endpoint section
