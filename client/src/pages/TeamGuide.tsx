@@ -283,10 +283,18 @@ export default function TeamGuide() {
                 ))}
               </div>
             </div>
-            <div className="px-6 py-3 bg-muted/20 border-t border-border">
+            <div className="px-6 py-3 bg-muted/20 border-t border-border flex items-center justify-between gap-4 flex-wrap">
               <p className="text-xs text-muted-foreground italic">
                 ERI principle: Define the human agenda before you start. Know what transformation goal your task should support, what assumptions you are challenging, and what a useful output looks like — then let Manus execute.
               </p>
+              <a
+                href="https://bds.exponentialroadmap.org/new-project"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-semibold text-[#3ba559] hover:text-foreground transition-colors shrink-0"
+              >
+                View the full ERI Task Pre-Prompt v5 →
+              </a>
             </div>
           </div>
         </div>
@@ -330,6 +338,14 @@ export default function TeamGuide() {
                   <p className="text-[10px] text-muted-foreground leading-relaxed">
                     <span className="font-semibold text-foreground">Collaboration note:</span> Perplexity Spaces are shared libraries — contributors must explicitly share threads. Thread visibility is private by default.
                   </p>
+                  <a
+                    href="https://www.perplexity.ai/hub/getting-started"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 text-xs font-semibold text-[#3ba559] hover:text-foreground transition-colors"
+                  >
+                    ERI Perplexity Onboarding →
+                  </a>
                 </div>
               </div>
             </div>
@@ -362,6 +378,14 @@ export default function TeamGuide() {
                   <p className="text-[10px] text-muted-foreground leading-relaxed">
                     <span className="font-semibold text-foreground">Collaboration note:</span> Manus tasks are private by default. Share individual tasks via Collab, or use project shared files for team-wide context.
                   </p>
+                  <a
+                    href="https://manus.im/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 text-xs font-semibold text-[#3ba559] hover:text-foreground transition-colors"
+                  >
+                    Manus Documentation →
+                  </a>
                 </div>
               </div>
             </div>
@@ -548,7 +572,7 @@ export default function TeamGuide() {
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <a
-                href="https://manus.im/docs"
+                href="https://manus.im/docs/features/projects"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold text-[#93E07D] hover:text-white transition-colors"
@@ -556,7 +580,7 @@ export default function TeamGuide() {
                 Manus Projects Docs →
               </a>
               <a
-                href="https://manus.im/docs"
+                href="https://manus.im/docs/features/collab"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold text-[#93E07D] hover:text-white transition-colors"
