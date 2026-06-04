@@ -755,3 +755,10 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add Earth-Aligned Skills placeholder callout in Track 2
 - [x] Add Project Naming Conventions table section
 - [x] Add Machine-Readable Spec Endpoint section
+
+## Team Guide tab — /team-guide (2026-06-04)
+- [x] Create client/src/pages/TeamGuide.tsx with all collaboration guide content
+- [x] Add /team-guide route to App.tsx Switch
+- [x] Add "Team Guide" tab to TabNav in App.tsx
+- [x] Add "Team Guide" link to BdsNavDrawer.tsx Other pages section
+- [x] Add team_guide_url to bdsSpec.ts

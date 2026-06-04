@@ -21,6 +21,7 @@ export const bdsSpecRouter = router({
       siteUrl: "https://bds.exponentialroadmap.org",
       skillUrl: "https://bds.exponentialroadmap.org/api/skill/latest",
       new_project_url: "https://bds.exponentialroadmap.org/new-project",
+      team_guide_url: "https://bds.exponentialroadmap.org/team-guide",
 
       // ─── Track-specific handoff prompts ─────────────────────────────────────
       handoff_prompt_track1: `ERI PROJECT SETUP — TRACK 1 (Static / Tier B)

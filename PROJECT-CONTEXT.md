@@ -602,6 +602,19 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 
 ---
 
+## v3.3.0 — "Team Guide" tab (2026-06-04)
+
+### New page: /team-guide
+- `client/src/pages/TeamGuide.tsx` — Manus collaboration guide for non-technical ERI colleagues
+- Content ported from `eri-collaboration.manus.space` (prototype site — now consolidated here)
+- Four-tab navigation: Brand Design System / Project Alignment Tracker / Start a Project / **Team Guide**
+- Content: hero with three entry cards (I'm new / I need to share / I want the full picture), Getting Started (4 steps), ERI Pre-Prompt with Hard Stops table, ERI AI Stack (Perplexity vs Manus), Sharing (4 quick facts, 4 explanatory steps, sharing models table, team workflow)
+- `bdsSpec.ts` addition: `team_guide_url`
+- `BdsNavDrawer.tsx`: Team Guide link added to Other pages section
+- Decision: distinct standalone page with its own layout — not integrated into BDS sidebar sections
+
+---
+
 ## v3.2.0 — "Start a Project" tab + Vite cache failure pattern (2026-06-04)
 
 ### New page: /new-project

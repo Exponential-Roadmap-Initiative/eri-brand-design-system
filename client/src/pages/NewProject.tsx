@@ -313,10 +313,10 @@ export default function NewProject() {
                 <span className="font-bold text-foreground text-sm">Static Website</span>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-                Marketing sites, content sites, interactive visualisations, public-facing tools with no user accounts or server-side logic.
+                Pure content and marketing sites — no user accounts, no database, no server-side logic. The simplest ERI project type.
               </p>
               <p className="text-xs text-[#3ba559] font-medium">
-                Examples: Exponential Framework, Earth-Aligned AI Lab, CrocodileEconomics →
+                Examples: Exponential Framework, Earth-Aligned AI Lab, Exponential Taxonomy →
               </p>
             </button>
             {/* Track 2 */}
@@ -334,10 +334,10 @@ export default function NewProject() {
                 <span className="font-bold text-foreground text-sm">Full-Stack Application</span>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-                Authenticated platforms, workspace-based tools, AI-powered tools — anything requiring user accounts, data storage, or server-side logic.
+                Any project with data, AI, authentication, or workspaces — this covers the majority of ERI applications.
               </p>
               <p className="text-xs text-[#00B8D4] font-medium">
-                Examples: PSM Climate Service Portal, Exponential Platform →
+                Examples: Professional Services Matrix, Exponential Platform →
               </p>
             </button>
           </div>

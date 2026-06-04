@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import BrandDesignSystem from "./pages/BrandDesignSystem";
 import AlignmentTracker from "./pages/AlignmentTracker";
 import NewProject from "./pages/NewProject";
+import TeamGuide from "./pages/TeamGuide";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
 import { useState } from "react";
@@ -23,6 +24,7 @@ function TabNav() {
     { href: "/",            label: "Brand Design System" },
     { href: "/tracker",    label: "Project Alignment Tracker" },
     { href: "/new-project", label: "Start a Project" },
+    { href: "/team-guide",  label: "Team Guide" },
   ];
   return (
     <div
@@ -84,6 +86,7 @@ function Router() {
         <Route path={"/"} component={BrandDesignSystem} />
         <Route path={"/tracker"} component={AlignmentTracker} />
         <Route path={"/new-project"} component={NewProject} />
+        <Route path={"/team-guide"} component={TeamGuide} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
