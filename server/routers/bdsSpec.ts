@@ -20,6 +20,87 @@ export const bdsSpecRouter = router({
       lastUpdated: LAST_UPDATED,
       siteUrl: "https://bds.exponentialroadmap.org",
       skillUrl: "https://bds.exponentialroadmap.org/api/skill/latest",
+      new_project_url: "https://bds.exponentialroadmap.org/new-project",
+
+      // ─── Track-specific handoff prompts ─────────────────────────────────────
+      handoff_prompt_track1: `ERI PROJECT SETUP — TRACK 1 (Static / Tier B)
+
+Before writing any code, complete these steps in order:
+
+STEP 0 — Update and read the ERI brand skill
+  curl -sL https://bds.exponentialroadmap.org/api/skill/latest \\
+    > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"
+Then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full.
+
+STEP 1 — Read or create PROJECT-CONTEXT.md in the project root
+Every ERI project must have a PROJECT-CONTEXT.md. Read it before acting.
+If it does not exist, create one using the seed template at:
+https://bds.exponentialroadmap.org/tracker (System Operations section).
+
+STEP 2 — Check client/public/bds-meta.json exists and is up to date
+Fetch the live template from https://bds.exponentialroadmap.org/tracker
+(scroll to "How this tracker works"). Do not use the template in the skill.
+
+STEP 3 — Install @eri/components
+  pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.17.0&path:packages/eri-components"
+
+STEP 3b — Add the CSS import (FIRST line in client/src/index.css)
+  @import "@eri/components/dist/eri-components.css";
+
+STEP 4 — Use EriPageLayout as the top-level wrapper in App.tsx
+  Required props: appName, appId, showCTA={true}, showThemeToggle={true},
+                  headerTheme="auto", returnUrl (hardcoded production URL — never window.location.origin)
+
+STEP 5 — Copy the canonical CSS token block into client/src/index.css
+  Fetch from: https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec
+  Use the semanticTokens.cssBlock field verbatim.
+
+STEP 6 — Self-host fonts (GDPR-compliant — no Google Fonts CDN)
+  Download WOFF2 files to client/public/fonts/
+  Add @font-face declarations to index.css.
+
+STEP 7 — Implement the Cross-Site Theme System
+  ThemeContext.tsx, FOLC-prevention script, localStorage key "eri-theme".
+  DEFAULT_THEME = "light" (from v2.17.0).
+
+STEP 8 — Run the Project Alignment Checklist before closing any task
+  https://bds.exponentialroadmap.org/tracker
+
+STEP 9 — After pnpm add or webdev_add_feature: clear Vite cache
+  rm -rf node_modules/.vite
+  Then restart the dev server and hard-reload the browser (Cmd+Shift+R).`,
+
+      handoff_prompt_track2: `ERI PROJECT SETUP — TRACK 2 (Full-Stack / Tier A)
+
+Complete Track 1 steps first, then add:
+
+A — Server-side tRPC router for brand spec
+  Add a bdsSpec router (see server/routers/bdsSpec.ts on the BDS site for
+  the canonical pattern). Expose it at /api/trpc/bdsSpec.getSpec.
+
+B — Database schema
+  Follow the ERI database-design skill before writing any schema.
+  Store UTC timestamps as Unix milliseconds. Never store file bytes in DB.
+
+C — Authentication
+  Use protectedProcedure for all user-specific data.
+  Use publicProcedure for brand/reference data.
+  Never expose JWT_SECRET or BUILT_IN_FORGE_API_KEY to the client.
+
+D — Multi-tenancy
+  If the app has company workspaces, apply row-level isolation on every
+  query. See the eri-user-management skill for the canonical pattern.
+
+E — bds-meta.json
+  Full-stack apps must still publish client/public/bds-meta.json.
+  The tracker at https://bds.exponentialroadmap.org/tracker fetches it
+  from the production domain.
+
+REMINDER — Vite cache
+  After any dependency install or webdev_add_feature upgrade:
+    rm -rf node_modules/.vite
+  Then restart the dev server. Stale Vite pre-bundle cache causes blank
+  pages with no error messages — the most common failure mode.`,
 
       // ─── AI Agent handoff prompt ──────────────────────────────────────────
       handoff_prompt: `ERI BRAND DESIGN SYSTEM — MANDATORY SETUP (v${BDS_VERSION})

@@ -397,7 +397,7 @@
 - [ ] Fix broken image URLs in dark-mode logo preview panels (Dark-Mode Wordmark dark side, Full Colour Wordmark dark side)
 - [ ] Fix light-background preview panels: hardcode bg-white so they show white in dark mode
 - [ ] TypeScript check — 0 errors
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Logo Usage redesign — single wordmark card (2026-05-12)
 
@@ -539,7 +539,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Update BDS site's own bds-meta.json with antiAi block
 - [ ] Update SKILL.md with A1–A5, upload to CDN as v3.3.0
 - [ ] TypeScript check: 0 errors
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Anti-AI Checklist A1–A5 in Alignment Tracker (2026-05-26)
 
@@ -607,7 +607,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Update SKILL_LATEST_URL in server/_core/index.ts
 - [ ] Regenerate shared/eriVersion.ts
 - [ ] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.16.5
+- [x] Save checkpoint v2.16.5
 - [ ] Push git tag v2.16.5
 
 ## Anti-AI Checklist A1–A5 + Trust Centre gallery v2.16.5
@@ -623,7 +623,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update SKILL_LATEST_URL in server/_core/index.ts to v3.6.0
 - [x] Regenerate shared/eriVersion.ts (ERI_BDS_SKILL_VERSION = v3.6.0)
 - [x] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.16.5
+- [x] Save checkpoint v2.16.5
 - [ ] Push git tag v2.16.5
 
 ## Contradiction audit — headerTheme + full audit v2.16.6
@@ -682,7 +682,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Upload new SKILL.md to CDN, update SKILL_LATEST_URL in server/_core/index.ts
 - [ ] Run node scripts/gen-eri-version.mjs to regenerate shared/eriVersion.ts
 - [ ] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.17.1
+- [x] Save checkpoint v2.17.1
 - [ ] Push git tag v2.17.1
 - [ ] Update PROJECT-CONTEXT.md with framework taxonomy decisions
 
@@ -718,3 +718,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update BrandDesignSystem.tsx: skill download link to SKILL_be7aa38b.md, date to 4 June 2026
 - [x] Update bds-meta.json: lastUpdated to 2026-06-04
 - [x] TypeScript check passes
+
+## "Start a Project" tab — /new-project (04 June 2026)
+- [x] Create client/src/pages/NewProject.tsx — AI-agent-optimised onboarding page
+- [x] Add /new-project route to App.tsx Switch
+- [x] Add "Start a Project" tab to TabNav in App.tsx
+- [x] Add "Start a Project" link to BdsNavDrawer.tsx
+- [x] Add new_project_url, handoff_prompt_track1, handoff_prompt_track2 to bdsSpec.ts
+- [x] TypeScript check passes
+- [x] Save checkpoint

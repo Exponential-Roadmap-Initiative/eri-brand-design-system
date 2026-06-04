@@ -602,6 +602,24 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 
 ---
 
+## v3.2.0 — "Start a Project" tab + Vite cache failure pattern (2026-06-04)
+
+### New page: /new-project
+- `client/src/pages/NewProject.tsx` — AI-agent-optimised onboarding page
+- Three-tab navigation: Brand Design System / Project Alignment Tracker / **Start a Project**
+- Content: mandatory setup steps (01–05), seven canonical components table, copy-paste project instructions (Track 1 + Track 2 toggle), quick links, Vite cache warning callout
+- `bdsSpec.ts` additions: `new_project_url`, `handoff_prompt_track1`, `handoff_prompt_track2`
+- `BdsNavDrawer.tsx`: "Other pages" section added with Start a Project + Tracker links
+
+### Confirmed failure pattern: Vite pre-bundle cache
+**Symptom:** Blank page after `webdev_add_feature` or major `pnpm add`. No JavaScript errors. Network log shows no requests for `/src/main.tsx`.
+**Root cause:** Stale `node_modules/.vite/` pre-bundle cache. New dependencies were installed but Vite's cache was not invalidated.
+**Fix:** `rm -rf node_modules/.vite` → restart dev server → hard-reload browser (`Cmd+Shift+R`).
+**Rule:** This must be the FIRST thing tried when a page goes blank after any dependency change. Do not spend time investigating script conflicts, CSP, or runtime errors before clearing the cache.
+**Added to:** SKILL.md (Setup Checklist step 1), NewProject.tsx (Vite cache warning callout), bdsSpec.ts `handoff_prompt_track1` Step 9, `handoff_prompt_track2` REMINDER section.
+
+---
+
 ## v2.17.0 — Light-default theme (2026-06-03)
 
 **Decision:** Default theme changed from dark to light. Dark mode is now an active individual user preference, persisted in `localStorage` under `eri-theme`. Key stakeholders found the dark-by-default approach too heavy.

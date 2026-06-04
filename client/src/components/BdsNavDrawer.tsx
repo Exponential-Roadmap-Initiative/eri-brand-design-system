@@ -116,8 +116,28 @@ export default function BdsNavDrawer({ open, onClose }: BdsNavDrawerProps) {
             </a>
           ))}
 
+          {/* Page links */}
+          <div className="mt-4 pt-4 border-t border-border flex flex-col gap-0.5">
+            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 pb-1">
+              Other pages
+            </p>
+            <a
+              href="/new-project"
+              onClick={onClose}
+              className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
+            >
+              Start a Project
+            </a>
+            <a
+              href="/tracker"
+              onClick={onClose}
+              className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
+            >
+              Project Alignment Tracker
+            </a>
+          </div>
           {/* External links */}
-          <div className="mt-4 pt-4 border-t border-border">
+          <div className="mt-2 pt-2 border-t border-border">
             <a
               href="https://exponentialroadmap.org"
               target="_blank"
