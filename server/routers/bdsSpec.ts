@@ -75,20 +75,6 @@ See darkModeRules in this spec for the complete rule table.
 STEP 9 — Run the Project Alignment Checklist before closing any task
 See https://bds.exponentialroadmap.org/tracker for the full checklist.`,
 
-      // ─── Track-specific project instructions (copy-paste into Manus project) ──
-      new_project_url: "https://bds.exponentialroadmap.org/new-project",
-      handoff_prompt_track1: `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
-Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
-Critical: This is a Track 1 ERI static website. Read https://bds.exponentialroadmap.org/new-project#track-1 and follow all instructions before writing any code.
-Critical: After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
-      handoff_prompt_track2: `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
-Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
-Critical: This is a Track 2 ERI full-stack application. Read https://bds.exponentialroadmap.org/new-project#track-2 and follow all instructions before writing any code.
-Critical: Always follow the ERI development workflow: 1. Research: clarify purpose, understand current context and existing assets, explore possible solutions. 2. Design. 3. Plan and get acceptance for plan. 4. Implement. 5. Test. 6. Iterate until solution works.
-Critical: Apply the exponential-human-ai-collaboration skill to every task in this project.
-Critical: After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
-[EARTH-ALIGNED SKILLS — placeholder: will be populated when the Earth-aligned skills management package is available from the Earth-Aligned AI Lab project]`,
-
       // ─── Colours ──────────────────────────────────────────────────────────
       colors: {
         brand: [

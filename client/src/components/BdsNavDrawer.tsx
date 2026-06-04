@@ -116,15 +116,8 @@ export default function BdsNavDrawer({ open, onClose }: BdsNavDrawerProps) {
             </a>
           ))}
 
-          {/* Start a Project + External links */}
+          {/* External links */}
           <div className="mt-4 pt-4 border-t border-border">
-            <a
-              href="/new-project"
-              onClick={onClose}
-              className="px-3 py-2 text-sm font-semibold text-[#3ba559] hover:text-[#2d8a47] flex items-center gap-2 transition-colors rounded-md hover:bg-muted"
-            >
-              + Start a Project
-            </a>
             <a
               href="https://exponentialroadmap.org"
               target="_blank"
