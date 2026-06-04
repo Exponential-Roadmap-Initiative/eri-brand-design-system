@@ -15,6 +15,13 @@
       "when": 1780603034900,
       "tag": "0001_rapid_bloodstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1780606761261,
+      "tag": "0002_romantic_jasper_sitwell",
+      "breakpoints": true
     }
   ]
 }

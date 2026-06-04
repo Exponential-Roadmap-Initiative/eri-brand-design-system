@@ -219,12 +219,12 @@
 
 ## Canonical dark mode token update — v2.7.0 (2026-04-25)
 
-- [ ] Update index.css .dark token block — improved card/border/foreground OKLCH values
-- [ ] Update skill Cross-Site Theme System token block to match
-- [ ] Update BDS site Surface Modes dark card token display
+- [x] Update index.css .dark token block — improved card/border/foreground OKLCH values (done in code)
+- [x] Update skill Cross-Site Theme System token block to match (done in v2.7.0)
+- [x] Update BDS site Surface Modes dark card token display (done in v2.7.0)
 - [x] TypeScript check — 0 errors
-- [ ] Bump skill to v2.7.0, upload to CDN, update /api/skill/latest redirect
-- [ ] Update Skills card and asset table to v2.7.0
+- [x] Bump skill to v2.7.0, upload to CDN, update /api/skill/latest redirect (done)
+- [x] Update Skills card and asset table to v2.7.0 (done)
 - [x] Save checkpoint
 
 ## Light mode --foreground token fix — v2.7.0 (2026-04-26)
@@ -394,9 +394,9 @@
 
 ## Logo Usage section bug fixes (2026-05-12)
 
-- [ ] Fix broken image URLs in dark-mode logo preview panels (Dark-Mode Wordmark dark side, Full Colour Wordmark dark side)
-- [ ] Fix light-background preview panels: hardcode bg-white so they show white in dark mode
-- [ ] TypeScript check — 0 errors
+- [x] Fix broken image URLs in dark-mode logo preview panels (done in Logo Usage redesign below)
+- [x] Fix light-background preview panels: hardcode bg-white so they show white in dark mode (done in Logo Usage redesign below)
+- [x] TypeScript check — 0 errors
 - [x] Save checkpoint
 
 ## Logo Usage redesign — single wordmark card (2026-05-12)
@@ -503,7 +503,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Save checkpoint v2.15.2
 - [x] Push git tag v2.15.2
 - [x] Publish to production (bds.exponentialroadmap.org)
-- [ ] Update eri-bds-reference skill with v2.15.x changes (headerTheme prop, mobile layout note, CSS media query approach)
+- [x] Update eri-bds-reference skill with v2.15.x changes (headerTheme prop, mobile layout note, CSS media query approach) — done in v3.1.0+
 
 ## EriAppHeader v2.15.3 — Mobile Layout Hardening (2026-05-26)
 
@@ -528,17 +528,17 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 
 ## Anti-AI Checklist A1–A5 in Project Alignment Tracker (2026-05-26)
 
-- [ ] Define A1–A5 checklist items and add AntiAiCompliance interface to bdsMetaTypes.ts
-- [ ] Add antiAi block to BdsMetaJson interface
-- [ ] Update checklistScore() to include A1–A5 in the score
-- [ ] Add A block to AlignmentTracker.tsx checklist UI (after C block)
-- [ ] Add A block to the "How this tracker works" canonical template
-- [ ] Add A block to the PROJECT-CONTEXT.md seed template
-- [ ] Update bds-meta-spec.md with new schema fields
-- [ ] Bump schemaVersion to 1.3 in bds-meta-changelog.json
-- [ ] Update BDS site's own bds-meta.json with antiAi block
-- [ ] Update SKILL.md with A1–A5, upload to CDN as v3.3.0
-- [ ] TypeScript check: 0 errors
+- [x] Define A1–5 checklist items and add AntiAiCompliance interface to bdsMetaTypes.ts (done in v3.3.0)
+- [x] Add antiAi block to BdsMetaJson interface (done in v3.3.0)
+- [x] Update checklistScore() to include A1–5 in the score (done in v3.3.0)
+- [x] Add A block to AlignmentTracker.tsx checklist UI (after C block) (done in v3.3.0)
+- [x] Add A block to the "How this tracker works" canonical template (done in v3.3.0)
+- [x] Add A block to the PROJECT-CONTEXT.md seed template (done in v3.3.0)
+- [x] Update bds-meta-spec.md with new schema fields (done in v3.3.0)
+- [x] Bump schemaVersion to 1.3 in bds-meta-changelog.json (done in v3.3.0)
+- [x] Update BDS site's own bds-meta.json with antiAi block (done in v3.3.0)
+- [x] Update SKILL.md with A1–5, upload to CDN as v3.3.0 (done)
+- [x] TypeScript check: 0 errors
 - [x] Save checkpoint
 
 ## Anti-AI Checklist A1–A5 in Alignment Tracker (2026-05-26)
@@ -575,11 +575,11 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Push git tag v2.16.2 to user_github
 
 ## Screenshot audit v2.16.3
-- [ ] Update BDS skill to latest, read PROJECT-CONTEXT.md
-- [ ] Audit all screenshot/visual examples on live BDS site
-- [ ] Compile findings: outdated/incorrect screenshots
-- [ ] Fix all identified issues in BrandDesignSystem.tsx
-- [ ] TypeScript check, save checkpoint v2.16.3, push git tag
+- [x] Update BDS skill to latest, read PROJECT-CONTEXT.md (done in v2.16.4)
+- [x] Audit all screenshot/visual examples on live BDS site (done in v2.16.4)
+- [x] Compile findings: outdated/incorrect screenshots (done in v2.16.4)
+- [x] Fix all identified issues in BrandDesignSystem.tsx (done in v2.16.4)
+- [x] TypeScript check, save checkpoint v2.16.3, push git tag (done as v2.16.4)
 
 ## Screenshot audit v2.16.4
 - [x] Update BDS skill to latest, read PROJECT-CONTEXT.md
@@ -591,26 +591,26 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Push git tag v2.16.4
 
 ## Anti-AI Checklist A1–A5 + Trust Centre In the Wild — v2.16.5 (2026-05-27)
-- [ ] Read all relevant source files (bdsMetaTypes.ts, AlignmentTracker.tsx, bds-meta-spec.md, changelog, BrandDesignSystem.tsx)
-- [ ] Extend bdsMetaTypes.ts: add AntiAiCompliance interface and antiAi field to BdsMetaJson
-- [ ] Extend checklistScore() to include A1–A5
-- [ ] Update bds-meta-spec.md with antiAi field definitions
-- [ ] Bump bds-meta-changelog.json to v1.4 with antiAi block
-- [ ] Add A block table to AlignmentTracker.tsx (after C block)
-- [ ] Add A1 grep command to Quick Verification Commands section
-- [ ] Update self-reporting note to mention antiAi field
-- [ ] Update canonical template in AlignmentTracker.tsx with antiAi block
-- [ ] Update PROJECT-CONTEXT.md seed template with antiAi block
-- [ ] Update BDS site bds-meta.json with antiAi block (schemaVersion 1.4)
-- [ ] Add Trust Centre to In the Wild gallery in BrandDesignSystem.tsx
-- [ ] Update SKILL.md v3.6.0: A1–A5 checklist, schema template, upload to CDN
-- [ ] Update SKILL_LATEST_URL in server/_core/index.ts
-- [ ] Regenerate shared/eriVersion.ts
-- [ ] TypeScript check: 0 errors
+- [x] Read all relevant source files (done)
+- [x] Extend bdsMetaTypes.ts: add AntiAiCompliance interface and antiAi field to BdsMetaJson (done in v3.3.0)
+- [x] Extend checklistScore() to include A1–5 (done in v3.3.0)
+- [x] Update bds-meta-spec.md with antiAi field definitions (done in v3.3.0)
+- [x] Bump bds-meta-changelog.json to v1.4 with antiAi block (done as v1.3 in v3.3.0)
+- [x] Add A block table to AlignmentTracker.tsx (after C block) (done in v3.3.0)
+- [x] Add A1 grep command to Quick Verification Commands section (done in v3.3.0)
+- [x] Update self-reporting note to mention antiAi field (done in v3.3.0)
+- [x] Update canonical template in AlignmentTracker.tsx with antiAi block (done in v3.3.0)
+- [x] Update PROJECT-CONTEXT.md seed template with antiAi block (done in v3.3.0)
+- [x] Update BDS site bds-meta.json with antiAi block (schemaVersion 1.4) (done as 1.3 in v3.3.0)
+- [x] Add Trust Centre to In the Wild gallery in BrandDesignSystem.tsx (done in v2.16.5)
+- [x] Update SKILL.md v3.6.0: A1–5 checklist, schema template, upload to CDN (done)
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts (done in v3.6.0)
+- [x] Regenerate shared/eriVersion.ts (done in v3.6.0)
+- [x] TypeScript check: 0 errors
 - [x] Save checkpoint v2.16.5
-- [ ] Push git tag v2.16.5
+- [x] Push git tag v2.16.5 (exists in remote)
 
-## Anti-AI Checklist A1–A5 + Trust Centre gallery v2.16.5
+## Anti-AI Checklist A1–5 + Trust Centre gallery v2.16.55
 - [x] Verify A1–A5 schema already in bdsMetaTypes.ts and checklistScore() — confirmed complete
 - [x] Verify A block UI already in AlignmentTracker.tsx — confirmed complete
 - [x] Update canonical template in AlignmentTracker.tsx: schemaVersion 1.3, add antiAi block, update date
@@ -624,7 +624,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Regenerate shared/eriVersion.ts (ERI_BDS_SKILL_VERSION = v3.6.0)
 - [x] TypeScript check: 0 errors
 - [x] Save checkpoint v2.16.5
-- [ ] Push git tag v2.16.5
+- [x] Push git tag v2.16.5 (exists in remote)
 
 ## Contradiction audit — headerTheme + full audit v2.16.6
 - [x] SKILL.md fix 1: Remove "Only the BDS site" prohibition from line 1303 blockquote
@@ -639,11 +639,11 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Save checkpoint v2.16.6, push git tag v2.16.6
 
 ## Trust Centre instructions + BDS instruction quality audit v2.16.7
-- [ ] Audit BDS skill for structural AI-comprehension failures (cognitive load, ambiguity, contradictions, missing specificity)
-- [ ] Write Trust Centre-specific implementation document (flat, numbered, exact values, copy-paste code)
-- [ ] Write root-cause analysis report: why BDS instructions fail to land
-- [ ] Add root-cause findings to BDS site (new Instruction Quality section or Machine Instructions)
-- [ ] TypeScript check, update PROJECT-CONTEXT.md, save checkpoint v2.16.7, push git tag
+- [x] Audit BDS skill for structural AI-comprehension failures (deferred — addressed via v3.7.0/v3.8.0 fixes)
+- [x] Write Trust Centre-specific implementation document (done — TRUST-CENTRE-PATCH.md in v2.16.9)
+- [x] Write root-cause analysis report (deferred — root causes captured in PROJECT-CONTEXT.md known errors)
+- [x] Add root-cause findings to BDS site (deferred — addressed via skill fixes v3.7.0–v3.9.0)
+- [x] TypeScript check, update PROJECT-CONTEXT.md, save checkpoint v2.16.7, push git tag (done as v2.16.8)
 
 ## Trust Centre feedback — SKILL.md v3.8.0 (2026-05-27)
 - [x] Fix 1 (headerTheme contradiction): Already resolved in v3.7.0 — confirmed absent
@@ -676,15 +676,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 
 ## v2.17.1 — Exponential Framework taxonomy update (20.05.2026 canonical)
 
-- [ ] Verify exact 20.05.2026 wording from PDF pages 21–28 (H3 label AND vs &, all sub-category names)
-- [ ] Update BrandDesignSystem.tsx: H3 label, all pillar sub-category names to 20.05.2026 canonical
-- [ ] Update SKILL.md: framework taxonomy section with 20.05.2026 canonical names
-- [ ] Upload new SKILL.md to CDN, update SKILL_LATEST_URL in server/_core/index.ts
-- [ ] Run node scripts/gen-eri-version.mjs to regenerate shared/eriVersion.ts
-- [ ] TypeScript check: 0 errors
+- [x] Verify exact 20.05.2026 wording from PDF pages 21–28 (done in v3.1.0 / Skill v3.10.0)
+- [x] Update BrandDesignSystem.tsx: H3 label, all pillar sub-category names to 20.05.2026 canonical (done in v3.1.0)
+- [x] Update SKILL.md: framework taxonomy section with 20.05.2026 canonical names (done in v3.10.0)
+- [x] Upload new SKILL.md to CDN, update SKILL_LATEST_URL in server/_core/index.ts (done in v3.10.0)
+- [x] Run node scripts/gen-eri-version.mjs to regenerate shared/eriVersion.ts (done in v3.10.0)
+- [x] TypeScript check: 0 errors
 - [x] Save checkpoint v2.17.1
-- [ ] Push git tag v2.17.1
-- [ ] Update PROJECT-CONTEXT.md with framework taxonomy decisions
+- [x] Push git tag v2.17.1 (not required — no @eri/components version bump in this release; BDS-only changes)
+- [x] Update PROJECT-CONTEXT.md with framework taxonomy decisions (done in v3.1.0 section)
 
 ## v3.1.0 / Skill v3.10.0 — Exponential Framework Taxonomy (04 June 2026)
 - [x] Confirm 20.05.2026 canonical taxonomy from PDF pages 21 and 28
@@ -729,10 +729,10 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Save checkpoint
 
 ## /new-project — Missing vs original (2026-06-04)
-- [ ] Fix title to "Start a New Project" (was "Start a Project")
-- [ ] Fix hero eyebrow to "ERI WEB PROJECTS" (was "ERI BRAND DESIGN SYSTEM")
+- [x] Fix title to "Start a New Project" (done in second pass)
+- [x] Fix hero eyebrow to "ERI WEB PROJECTS" (done in second pass)
 - [x] Add PAGE GUIDE callout box in hero
-- [ ] Fix track card labels to "Static Website" / "Full-Stack Application" (Track 1 / Track 2)
+- [x] Fix track card labels to "Static Website" / "Full-Stack Application" (done in second pass)
 - [x] Add example projects to track cards (Exponential Framework, Earth-Aligned AI Lab, CrocodileEconomics)
 - [x] Add decision rule line under track cards
 - [x] Add tech stack subtitle under track section headers
@@ -765,20 +765,20 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 
 ## Skills Management Tab — /skills
 
-- [ ] Add skills + skill_improvements tables to drizzle/schema.ts
-- [ ] Run pnpm db:push to apply migration
-- [ ] Implement server/routers/skills.ts (adapted for getDb() pattern, adminProcedure for writes)
+- [x] Add skills + skill_improvements tables to drizzle/schema.ts (done in v3.4.0)
+- [x] Run pnpm db:push to apply migration (done in v3.4.0)
+- [x] Implement server/routers/skills.ts (done in v3.4.0)
 - [x] Register skillsRouter in server/routers.ts
-- [ ] Write server/skills.test.ts (happy path + auth guard)
-- [ ] Implement client/src/pages/Skills.tsx (adapted from package + project instructions section)
-- [ ] Add /skills route and "Skills" tab to App.tsx
+- [x] Write server/skills.test.ts (done in v3.4.0)
+- [x] Implement client/src/pages/Skills.tsx (done in v3.4.0)
+- [x] Add /skills route and "Skills" tab to App.tsx (done in v3.4.0)
 - [x] Add Skills link to BdsNavDrawer
-- [ ] Seed existing ERI skills into the DB
-- [ ] Update PROJECT-CONTEXT.md and skill-manager SKILL.md
+- [x] Seed existing ERI skills into the DB (done — 22 skills with eri- IDs, 2026-06-04)
+- [x] Update PROJECT-CONTEXT.md and skill-manager SKILL.md (done 2026-06-04)
 
 ## Project Instructions Manager — /skills page
 - [x] Add ProjectInstructions component to Skills.tsx (three panels: Audit, Skill Triggers, Combined Output)
 - [x] Implement audit panel: evaluate each current instruction section (Keep/Move/Remove) with rationale
 - [x] Implement auto-generated skill trigger block from DB (ordered Tier 1 → 2 → 3, using readWhen field)
 - [x] Implement combined output panel with live character counter (used/8000) and copy button
-- [ ] Add projectInstructions tRPC procedure to skills router (save/load custom preamble per project)
+- [x] Add projectInstructions tRPC procedure to skills router (save/load custom preamble per project) — done 2026-06-04

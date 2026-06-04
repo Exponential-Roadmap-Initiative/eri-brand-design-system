@@ -8,6 +8,10 @@
  *   - upsert: throws FORBIDDEN when user is not admin
  *   - logImprovement: throws UNAUTHORIZED when unauthenticated
  *   - delete: throws UNAUTHORIZED when unauthenticated
+ *   - getProjectInstructions: throws FORBIDDEN when unauthenticated
+ *   - getProjectInstructions: returns null for unknown project (authenticated)
+ *   - saveProjectInstructions: throws FORBIDDEN when unauthenticated
+ *   - saveProjectInstructions: succeeds when authenticated
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -173,5 +177,50 @@ describe("skills.delete", () => {
     await expect(
       caller.skills.delete({ id: "test-skill" })
     ).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+});
+
+describe("skills.getProjectInstructions", () => {
+  it("throws UNAUTHORIZED when unauthenticated (protectedProcedure gate)", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: null }));
+    await expect(
+      caller.skills.getProjectInstructions({ projectId: "test-project" })
+    ).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+  });
+
+  it("returns null for an unknown project when authenticated", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
+    const result = await caller.skills.getProjectInstructions({ projectId: "test-project" });
+    expect(result).toBeNull();
+  });
+});
+
+describe("skills.saveProjectInstructions", () => {
+  it("throws UNAUTHORIZED when unauthenticated (protectedProcedure gate)", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: null }));
+    await expect(
+      caller.skills.saveProjectInstructions({
+        projectId: "test-project",
+        preamble: "My custom preamble",
+      })
+    ).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+  });
+
+  it("succeeds when authenticated as a regular user", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
+    const result = await caller.skills.saveProjectInstructions({
+      projectId: "test-project",
+      preamble: "My custom preamble",
+    });
+    expect(result).toEqual({ success: true });
+  });
+
+  it("succeeds when authenticated as admin", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
+    const result = await caller.skills.saveProjectInstructions({
+      projectId: "test-project",
+      preamble: "Admin preamble",
+    });
+    expect(result).toEqual({ success: true });
   });
 });

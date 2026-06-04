@@ -2,13 +2,14 @@
 // Skills management router for the BDS skill-manager system.
 // Reads are public (the skill registry is openly visible).
 // Writes are admin-only (only ERI staff can add/update/delete skills or log improvements).
+// Project instructions (preamble) are protected — any authenticated user can save/load.
 
 import { TRPCError } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { getDb } from "../db";
-import { skillImprovements, skills } from "../../drizzle/schema";
-import { adminProcedure, publicProcedure, router } from "../_core/trpc";
+import { projectInstructions, skillImprovements, skills } from "../../drizzle/schema";
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "../_core/trpc";
 
 export const skillsRouter = router({
 
@@ -150,6 +151,51 @@ export const skillsRouter = router({
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
 
       await db.delete(skills).where(eq(skills.id, input.id));
+      return { success: true };
+    }),
+
+  // ─── Project Instructions ────────────────────────────────────────────────────
+
+  /**
+   * Load the saved preamble for a given project ID.
+   * Protected — any authenticated user can read their project's preamble.
+   * Returns null if no preamble has been saved yet.
+   */
+  getProjectInstructions: protectedProcedure
+    .input(z.object({ projectId: z.string().min(1).max(128) }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+
+      const [row] = await db
+        .select()
+        .from(projectInstructions)
+        .where(eq(projectInstructions.projectId, input.projectId))
+        .limit(1);
+
+      return row ?? null;
+    }),
+
+  /**
+   * Save (upsert) the preamble for a given project ID.
+   * Protected — any authenticated user can save their project's preamble.
+   */
+  saveProjectInstructions: protectedProcedure
+    .input(
+      z.object({
+        projectId: z.string().min(1).max(128),
+        preamble: z.string().max(8000),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+
+      await db
+        .insert(projectInstructions)
+        .values({ projectId: input.projectId, preamble: input.preamble })
+        .onDuplicateKeyUpdate({ set: { preamble: input.preamble } });
+
       return { success: true };
     }),
 });

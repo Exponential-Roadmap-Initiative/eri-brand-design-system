@@ -58,3 +58,18 @@ export const skillImprovements = mysqlTable("skill_improvements", {
 
 export type SkillImprovement = typeof skillImprovements.$inferSelect;
 export type InsertSkillImprovement = typeof skillImprovements.$inferInsert;
+
+// ─── Project Instructions (“Preamble”) ──────────────────────────────────────────────
+// One row per project ID. Stores the custom preamble text that appears before
+// the auto-generated skill trigger block in the combined project instructions output.
+// projectId is a free-form string (e.g. Manus project ID or slug).
+
+export const projectInstructions = mysqlTable("project_instructions", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: varchar("project_id", { length: 128 }).notNull().unique(),
+  preamble: text("preamble").notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ProjectInstruction = typeof projectInstructions.$inferSelect;
+export type InsertProjectInstruction = typeof projectInstructions.$inferInsert;
