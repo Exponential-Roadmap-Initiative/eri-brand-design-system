@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM skills WHERE id IN (\n  'exponential-human-ai-collaboration',\n  'skill-creator',\n  'code-quality-gate',\n  'trpc-router-patterns',\n  'decision-framework',\n  'database-design',\n  'data-source-explorer',\n  'explorer-compare-view',\n  'data-source-integration',\n  'widget-component-standard',\n  'earth-aligned-agent',\n  'trust-security',\n  'rest-api-creator',\n  'corporate-report-finder',\n  'ueil-inline-widget-navigation',\n  'eri-brand-design-system-site'\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute DELETE FROM skills WHERE id IN (\n  'exponential-human-ai-collaboration',\n  'skill-creator',\n  'code-quality-gate',\n  'trpc-router-patterns',\n  'decision-framework',\n  'database-design',\n  'data-source-explorer',\n  'explorer-compare-view',\n  'data-source-integration',\n  'widget-component-standard',\n  'earth-aligned-agent',\n  'trust-security',\n  'rest-api-creator',\n  'corporate-report-finder',\n  'ueil-inline-widget-navigation',\n  'eri-brand-design-system-site'\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 268
+}

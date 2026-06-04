@@ -305,7 +305,7 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 
 **JSON discovery endpoint:** `https://bds.exponentialroadmap.org/api/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
 
-**Current skill version:** v3.10.0 (2026-06-04) — 20.05.2026 canonical Exponential Framework taxonomy: full pillar names (v5), H1–H4 horizontals, all 17 sub-categories by pillar; fixed skill fetch URL in Step 0 (was missing /api/ segment); updated pillar table with full names; bdsSpec.ts BDS_VERSION bumped to 3.1.0. CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_01177c24.md`
+**Current skill version:** v3.11.0 (2026-06-04) — 20.05.2026 canonical Exponential Framework taxonomy: full pillar names (v5), H1–H4 horizontals, all 17 sub-categories by pillar; fixed skill fetch URL in Step 0 (was missing /api/ segment); updated pillar table with full names; bdsSpec.ts BDS_VERSION bumped to 3.1.0. CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_01177c24.md`
 
 **Previous skill version:** v3.5.0 (2026-05-27) — EriAppFooter docs updated (four-column layout, appLink prop, contact-us.exponentialroadmap.org); install pin bumped to v2.16.1 in SKILL.md. CDN: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/BcfwdIJHtTNhcuml.md`
 
@@ -672,16 +672,25 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 - Fifth tab added to navigation: Brand Design System / Project Alignment Tracker / Start a Project / Team Guide / **Skills**
 - Database: `skills` table (id, name, description, tier, version, readWhen, createdAt, updatedAt) and `skill_improvements` table (id, skillId, version, summary, taskContext, loggedAt)
 - Router: `server/routers/skills.ts` — `publicProcedure` for reads (list, get), `adminProcedure` for writes (upsert, logImprovement, delete)
-- 24 skills seeded from `/home/ubuntu/skills/` directory (all current ERI skills)
+- 22 skills seeded from `/home/ubuntu/skills/` directory (all current ERI skills, post-rename)
 - Seed script: `scripts/seed-skills.mjs` — idempotent, safe to re-run
 - Tests: `server/skills.test.ts` — 9 tests, all passing
 - `bdsSpec.ts` addition: `skills_url`
 - `BdsNavDrawer.tsx`: Skills link added to Other pages section
 
-### Tier model
-- Tier 1 — Always-on (3 skills): exponential-human-ai-collaboration, eri-bds-reference, skill-creator
-- Tier 2 — Per-action gate (4 skills): code-quality-gate, trpc-router-patterns, decision-framework, database-design
-- Tier 3 — Conditional (17 skills): all other ERI skills
+### Tier model (post-rename, 2026-06-04)
+- Tier 1 — Always-on (3 skills): eri-bds-reference, eri-human-ai-collaboration, eri-skill-manager
+- Tier 2 — Per-action gate (3 skills): eri-code-quality, eri-trpc, eri-decision
+- Tier 3 — Conditional (16 skills): eri-data-source, eri-widget, eri-database, eri-security, eri-rest-api, eri-earth-aligned-agent, eri-report-finder, eri-ueil-nav, eri-user-management, eri-bds-site, manus-api, manus-config, automation-and-scheduling, persistent-computing, imagegen, music-prompter
+
+### Skill renaming/consolidation (2026-06-04)
+- All ERI-owned skills renamed with `eri-` prefix
+- Three explorer skills (data-source-integration, data-source-explorer, explorer-compare-view) consolidated into single `eri-data-source`
+- `skill-creator` → `eri-skill-manager` (ERI-adapted meta-skill with tier governance, BDS registry, project instructions management)
+- `exponential-human-ai-collaboration` → `eri-human-ai-collaboration`
+- `bgm-prompter` archived to `_archive/`
+- Skill directories at `/home/ubuntu/skills/eri-*/`; old directories remain for backward compat
+- DB cleaned: old IDs deleted, new IDs seeded via `scripts/seed-skills.mjs`
 
 ### Admin note
 - `adminProcedure` throws `FORBIDDEN` (not `UNAUTHORIZED`) for null users — this is correct behaviour (admin gate checks role, not just auth)

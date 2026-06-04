@@ -1,0 +1,200 @@
+{
+  "query": "SELECT id, name, tier FROM skills ORDER BY tier, id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SELECT id, name, tier FROM skills ORDER BY tier, id;",
+  "rows": [
+    {
+      "id": "eri-bds-reference",
+      "name": "ERI Brand Design System Reference",
+      "tier": "1"
+    },
+    {
+      "id": "eri-human-ai-collaboration",
+      "name": "ERI Human-AI Collaboration",
+      "tier": "1"
+    },
+    {
+      "id": "eri-skill-manager",
+      "name": "ERI Skill Manager",
+      "tier": "1"
+    },
+    {
+      "id": "exponential-human-ai-collaboration",
+      "name": "Exponential Human-AI Collaboration",
+      "tier": "1"
+    },
+    {
+      "id": "skill-creator",
+      "name": "Skill Creator",
+      "tier": "1"
+    },
+    {
+      "id": "code-quality-gate",
+      "name": "Code Quality Gate",
+      "tier": "2"
+    },
+    {
+      "id": "database-design",
+      "name": "Database Design",
+      "tier": "2"
+    },
+    {
+      "id": "decision-framework",
+      "name": "Decision Framework",
+      "tier": "2"
+    },
+    {
+      "id": "eri-code-quality",
+      "name": "ERI Code Quality Gate",
+      "tier": "2"
+    },
+    {
+      "id": "eri-decision",
+      "name": "ERI Decision Framework",
+      "tier": "2"
+    },
+    {
+      "id": "eri-trpc",
+      "name": "ERI tRPC Router Patterns",
+      "tier": "2"
+    },
+    {
+      "id": "trpc-router-patterns",
+      "name": "tRPC Router Patterns",
+      "tier": "2"
+    },
+    {
+      "id": "automation-and-scheduling",
+      "name": "Automation & Scheduling",
+      "tier": "3"
+    },
+    {
+      "id": "corporate-report-finder",
+      "name": "Corporate Report Finder",
+      "tier": "3"
+    },
+    {
+      "id": "data-source-explorer",
+      "name": "Data Source Explorer",
+      "tier": "3"
+    },
+    {
+      "id": "data-source-integration",
+      "name": "Data Source Integration",
+      "tier": "3"
+    },
+    {
+      "id": "earth-aligned-agent",
+      "name": "Earth-Aligned Agent",
+      "tier": "3"
+    },
+    {
+      "id": "eri-bds-site",
+      "name": "ERI Brand Design System Site",
+      "tier": "3"
+    },
+    {
+      "id": "eri-brand-design-system-site",
+      "name": "ERI Brand Design System Site",
+      "tier": "3"
+    },
+    {
+      "id": "eri-data-source",
+      "name": "ERI Data Source Integration & Explorer",
+      "tier": "3"
+    },
+    {
+      "id": "eri-database",
+      "name": "ERI Database Design",
+      "tier": "3"
+    },
+    {
+      "id": "eri-earth-aligned-agent",
+      "name": "ERI Earth-Aligned Agent",
+      "tier": "3"
+    },
+    {
+      "id": "eri-report-finder",
+      "name": "ERI Corporate Report Finder",
+      "tier": "3"
+    },
+    {
+      "id": "eri-rest-api",
+      "name": "ERI REST API Creator",
+      "tier": "3"
+    },
+    {
+      "id": "eri-security",
+      "name": "ERI Trust & Security",
+      "tier": "3"
+    },
+    {
+      "id": "eri-ueil-nav",
+      "name": "ERI UEIL Inline Widget Navigation",
+      "tier": "3"
+    },
+    {
+      "id": "eri-user-management",
+      "name": "ERI User Management",
+      "tier": "3"
+    },
+    {
+      "id": "eri-widget",
+      "name": "ERI Widget Component Standard",
+      "tier": "3"
+    },
+    {
+      "id": "explorer-compare-view",
+      "name": "Explorer Compare View",
+      "tier": "3"
+    },
+    {
+      "id": "imagegen",
+      "name": "Image Generation Routing",
+      "tier": "3"
+    },
+    {
+      "id": "manus-api",
+      "name": "Manus API",
+      "tier": "3"
+    },
+    {
+      "id": "manus-config",
+      "name": "Manus Config",
+      "tier": "3"
+    },
+    {
+      "id": "music-prompter",
+      "name": "Music Prompter",
+      "tier": "3"
+    },
+    {
+      "id": "persistent-computing",
+      "name": "Persistent Computing",
+      "tier": "3"
+    },
+    {
+      "id": "rest-api-creator",
+      "name": "REST API Creator",
+      "tier": "3"
+    },
+    {
+      "id": "trust-security",
+      "name": "Trust & Security",
+      "tier": "3"
+    },
+    {
+      "id": "ueil-inline-widget-navigation",
+      "name": "UEIL Inline Widget Navigation",
+      "tier": "3"
+    },
+    {
+      "id": "widget-component-standard",
+      "name": "Widget Component Standard",
+      "tier": "3"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\ttier\neri-bds-reference\tERI Brand Design System Reference\t1\neri-human-ai-collaboration\tERI Human-AI Collaboration\t1\neri-skill-manager\tERI Skill Manager\t1\nexponential-human-ai-collaboration\tExponential Human-AI Collaboration\t1\nskill-creator\tSkill Creator\t1\ncode-quality-gate\tCode Quality Gate\t2\ndatabase-design\tDatabase Design\t2\ndecision-framework\tDecision Framework\t2\neri-code-quality\tERI Code Quality Gate\t2\neri-decision\tERI Decision Framework\t2\neri-trpc\tERI tRPC Router Patterns\t2\ntrpc-router-patterns\ttRPC Router Patterns\t2\nautomation-and-scheduling\tAutomation & Scheduling\t3\ncorporate-report-finder\tCorporate Report Finder\t3\ndata-source-explorer\tData Source Explorer\t3\ndata-source-integration\tData Source Integration\t3\nearth-aligned-agent\tEarth-Aligned Agent\t3\neri-bds-site\tERI Brand Design System Site\t3\neri-brand-design-system-site\tERI Brand Design System Site\t3\neri-data-source\tERI Data Source Integration & Explorer\t3\neri-database\tERI Database Design\t3\neri-earth-aligned-agent\tERI Earth-Aligned Agent\t3\neri-report-finder\tERI Corporate Report Finder\t3\neri-rest-api\tERI REST API Creator\t3\neri-security\tERI Trust & Security\t3\neri-ueil-nav\tERI UEIL Inline Widget Navigation\t3\neri-user-management\tERI User Management\t3\neri-widget\tERI Widget Component Standard\t3\nexplorer-compare-view\tExplorer Compare View\t3\nimagegen\tImage Generation Routing\t3\nmanus-api\tManus API\t3\nmanus-config\tManus Config\t3\nmusic-prompter\tMusic Prompter\t3\npersistent-computing\tPersistent Computing\t3\nrest-api-creator\tREST API Creator\t3\ntrust-security\tTrust & Security\t3\nueil-inline-widget-navigation\tUEIL Inline Widget Navigation\t3\nwidget-component-standard\tWidget Component Standard\t3\n",
+  "stderr": "",
+  "execution_time_ms": 433
+}

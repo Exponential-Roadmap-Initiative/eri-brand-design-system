@@ -1,0 +1,20 @@
+{
+  "query": "SELECT id, name, tier FROM skills WHERE id IN ('music-prompter', 'persistent-computing');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SELECT id, name, tier FROM skills WHERE id IN ('music-prompter', 'persistent-computing');",
+  "rows": [
+    {
+      "id": "music-prompter",
+      "name": "Music Prompter",
+      "tier": "3"
+    },
+    {
+      "id": "persistent-computing",
+      "name": "Persistent Computing",
+      "tier": "3"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\ttier\nmusic-prompter\tMusic Prompter\t3\npersistent-computing\tPersistent Computing\t3\n",
+  "stderr": "",
+  "execution_time_ms": 258
+}
