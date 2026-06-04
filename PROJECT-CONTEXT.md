@@ -305,7 +305,9 @@ Whenever the `eri-bds-reference` skill is updated, the following must also be up
 
 **JSON discovery endpoint:** `https://bds.exponentialroadmap.org/api/skill/latest.json` — returns `{ url, version }` for programmatic discovery.
 
-**Current skill version:** v3.5.0 (2026-05-27) — EriAppFooter docs updated (four-column layout, appLink prop, contact-us.exponentialroadmap.org); install pin bumped to v2.16.1 in SKILL.md. CDN: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/BcfwdIJHtTNhcuml.md`
+**Current skill version:** v3.10.0 (2026-06-04) — 20.05.2026 canonical Exponential Framework taxonomy: full pillar names (v5), H1–H4 horizontals, all 17 sub-categories by pillar; fixed skill fetch URL in Step 0 (was missing /api/ segment); updated pillar table with full names; bdsSpec.ts BDS_VERSION bumped to 3.1.0. CDN: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_01177c24.md`
+
+**Previous skill version:** v3.5.0 (2026-05-27) — EriAppFooter docs updated (four-column layout, appLink prop, contact-us.exponentialroadmap.org); install pin bumped to v2.16.1 in SKILL.md. CDN: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/BcfwdIJHtTNhcuml.md`
 
 **Content audit v2.16.4 (2026-05-27):** 14 stale/incorrect items fixed in BrandDesignSystem.tsx: (1–2) install pin v2.12.0 → v2.16.1 in two places; (3–4) intro component list descriptions for EriHeroSection and EriAppFooter; (5–6) EriHeroSection section description — removed stale “hands” references, updated to “S-curve” and “ERI_HERO_IMAGE_DEFAULT”; (7) code example — removed deprecated ERI_HERO_IMAGE_HANDS import; (8–9) EriAppFooter props table — appName and tagline descriptions corrected; (10) Footer Rules table Column 4 — hello@ → contact-us.exponentialroadmap.org; (11) non-conformant callout — Tier C is admin tools not public marketing sites; (12) known violations — stale Taxonomy single-row item replaced with generic rule; (13–14) Brand Graphics section heading and description — “Hands Touching (Primary)” → “Dual S-Curve Rich (ERI_HERO_IMAGE_DEFAULT)” with accurate description.
 

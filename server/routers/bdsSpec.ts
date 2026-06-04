@@ -10,8 +10,8 @@
 
 import { publicProcedure, router } from "../_core/trpc";
 
-const BDS_VERSION = "3.0.1";
-const LAST_UPDATED = "2026-04-29";
+const BDS_VERSION = "3.1.0";
+const LAST_UPDATED = "2026-05-20";
 
 export const bdsSpecRouter = router({
   getSpec: publicProcedure.query(() => {
@@ -86,13 +86,56 @@ See https://bds.exponentialroadmap.org/tracker for the full checklist.`,
           { name: "ERI Blue",         hex: "#00B8D4", cssVar: "--color-eri-blue",       tailwind: "text-[#00B8D4]",  role: "card category accent (slot 2) — left border + tint only, never full outline" },
         ],
         pillars: [
-          { pillar: 1, name: "Renewable Energy",    hex: "#F59E0B", tintDark: "rgba(245,158,11,0.08)",  tintLight: "rgba(245,158,11,0.06)" },
-          { pillar: 2, name: "Energy Efficiency",   hex: "#3B82F6", tintDark: "rgba(59,130,246,0.08)",  tintLight: "rgba(59,130,246,0.06)" },
-          { pillar: 3, name: "Sustainable Land",    hex: "#10B981", tintDark: "rgba(16,185,129,0.08)",  tintLight: "rgba(16,185,129,0.06)" },
-          { pillar: 4, name: "Industry & Cities",   hex: "#8B5CF6", tintDark: "rgba(139,92,246,0.08)",  tintLight: "rgba(139,92,246,0.06)" },
-          { pillar: 5, name: "Consumption & Waste", hex: "#EF4444", tintDark: "rgba(239,68,68,0.08)",   tintLight: "rgba(239,68,68,0.06)" },
-          { pillar: 6, name: "ERI Blue (general)",  hex: "#00B8D4", tintDark: "rgba(0,184,212,0.08)",   tintLight: "rgba(0,184,212,0.06)" },
+          { pillar: 1, name: "Cut Operational Emissions",     shortName: "Operations",  hex: "#9aa08c", tintDark: "rgba(154,160,140,0.12)", tintLight: "rgba(154,160,140,0.08)" },
+          { pillar: 2, name: "Decarbonize Value Chain",       shortName: "Value Chain", hex: "#17b7dd", tintDark: "rgba(23,183,221,0.12)",  tintLight: "rgba(23,183,221,0.08)" },
+          { pillar: 3, name: "Build & Scale Solutions",       shortName: "Solutions",   hex: "#00ac58", tintDark: "rgba(0,172,88,0.12)",    tintLight: "rgba(0,172,88,0.08)" },
+          { pillar: 4, name: "Mobilize Finance & Investment", shortName: "Finance",     hex: "#ff8b00", tintDark: "rgba(255,139,0,0.12)",   tintLight: "rgba(255,139,0,0.08)" },
+          { pillar: 5, name: "Shape Policy & Narrative",      shortName: "Policy",      hex: "#ff5133", tintDark: "rgba(255,81,51,0.12)",   tintLight: "rgba(255,81,51,0.08)" },
         ],
+        // ─── Exponential Framework matrix (canonical 20.05.2026) ──────────
+        // 5 Pillars (columns) × 4 Horizontals (rows) = 20 cells
+        framework: {
+          version: "20.05.2026",
+          horizontals: [
+            { id: "H1", label: "Earth-Aligned Vision & Mission" },
+            { id: "H2", label: "Set Targets & Strategy" },
+            { id: "H3", label: "Develop Transition Plan & Take Action" },
+            { id: "H4", label: "Measure, Report & Disclose" },
+          ],
+          subCategories: {
+            P1: [
+              { id: "1.1", name: "Facilities" },
+              { id: "1.2", name: "Fleet" },
+              { id: "1.3", name: "Super-Pollutant GHG Emissions" },
+            ],
+            P2: [
+              { id: "2.1", name: "Supplier Engagement & Enablement" },
+              { id: "2.2", name: "Supplier Energy" },
+              { id: "2.3", name: "Supplier Materials & Products" },
+              { id: "2.4", name: "Goods Transport, Business Travel & Commuting" },
+              { id: "2.5", name: "Supplier Services: Professional & Digital" },
+              { id: "2.6", name: "Forest, Land & Agriculture (FLAG)" },
+              { id: "2.7", name: "Product Use & End-of-Life" },
+            ],
+            P3: [
+              { id: "3.1", name: "Product Efficiency & Technology Innovation" },
+              { id: "3.2", name: "Climate Solutions Innovation & Scaling" },
+              { id: "3.3", name: "Business Model & Value Chain Transformation" },
+              { id: "3.4", name: "Customer Engagement & Lifestyles" },
+            ],
+            P4: [
+              { id: "4.1", name: "Low-Carbon Materials, Fuels & Infrastructure" },
+              { id: "4.2", name: "Nature Protection & Restoration" },
+              { id: "4.3", name: "Carbon Removals" },
+              { id: "4.4", name: "Financial Assets Aligned to Net-Zero" },
+            ],
+            P5: [
+              { id: "5.1", name: "Direct Policy Engagement & Advocacy" },
+              { id: "5.2", name: "Industry Associations & Initiatives" },
+              { id: "5.3", name: "Public Narrative" },
+            ],
+          },
+        },
         doNotUse: ["purple", "teal", "pink", "Tailwind colour names (e.g. text-green-500, bg-gray-900)"],
       },
 
@@ -175,17 +218,18 @@ See https://bds.exponentialroadmap.org/tracker for the full checklist.`,
         palette: [
           { slot: 1, name: "Primary Green",  hex: "#3ba559", tintDark: "rgba(59,165,89,0.08)",  tintLight: "rgba(59,165,89,0.06)",  useCase: "Applications, primary content" },
           { slot: 2, name: "ERI Blue",       hex: "#00B8D4", tintDark: "rgba(0,184,212,0.08)",  tintLight: "rgba(0,184,212,0.06)",  useCase: "Strategic Frameworks, data" },
-          { slot: 3, name: "Amber",          hex: "#F59E0B", tintDark: "rgba(245,158,11,0.08)", tintLight: "rgba(245,158,11,0.06)", useCase: "Pillar 1 / Energy" },
-          { slot: 4, name: "Blue",           hex: "#3B82F6", tintDark: "rgba(59,130,246,0.08)", tintLight: "rgba(59,130,246,0.06)", useCase: "Pillar 2 / Efficiency" },
-          { slot: 5, name: "Emerald",        hex: "#10B981", tintDark: "rgba(16,185,129,0.08)", tintLight: "rgba(16,185,129,0.06)", useCase: "Pillar 3 / Land" },
-          { slot: 6, name: "Violet",         hex: "#8B5CF6", tintDark: "rgba(139,92,246,0.08)", tintLight: "rgba(139,92,246,0.06)", useCase: "Pillar 4 / Industry" },
+          { slot: 3, name: "P1 Gray-Green", hex: "#9aa08c", tintDark: "rgba(154,160,140,0.08)", tintLight: "rgba(154,160,140,0.06)", useCase: "P1 Cut Operational Emissions" },
+          { slot: 4, name: "P2 Cyan",        hex: "#17b7dd", tintDark: "rgba(23,183,221,0.08)",  tintLight: "rgba(23,183,221,0.06)",  useCase: "P2 Decarbonize Value Chain" },
+          { slot: 5, name: "P3 ERI Green",   hex: "#00ac58", tintDark: "rgba(0,172,88,0.08)",    tintLight: "rgba(0,172,88,0.06)",    useCase: "P3 Build & Scale Solutions" },
+          { slot: 6, name: "P4 Orange",      hex: "#ff8b00", tintDark: "rgba(255,139,0,0.08)",   tintLight: "rgba(255,139,0,0.06)",   useCase: "P4 Mobilize Finance & Investment" },
+          { slot: 7, name: "P5 Red",         hex: "#ff5133", tintDark: "rgba(255,81,51,0.08)",   tintLight: "rgba(255,81,51,0.06)",   useCase: "P5 Shape Policy & Narrative" },
         ],
       },
 
       // ─── Components ───────────────────────────────────────────────────────
       components: {
-        npmInstall: 'pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.11.1&path:packages/eri-components"',
-        latestVersion: "v2.11.1",
+        npmInstall: 'pnpm add "github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.17.0&path:packages/eri-components"',
+        latestVersion: "v2.17.0",
         available: ["EriPageLayout", "EriHeroSection", "EriAppHeader", "EriAppFooter", "EriStatusBadge", "EriContactUsButton"],
         requiredProps: {
           EriPageLayout: ["appName (string)", "appId (string)", "showCTA={true}", "showThemeToggle={true}"],

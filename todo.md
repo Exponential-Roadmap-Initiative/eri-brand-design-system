@@ -671,4 +671,50 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] SKILL.md uploaded to CDN, SKILL_LATEST_URL updated in server/_core/index.ts
 - [x] shared/eriVersion.ts regenerated (ERI_BDS_SKILL_VERSION = v3.9.0)
 - [x] TypeScript check: 0 errors
-- [ ] Save checkpoint v2.17.0, push git tag v2.17.0
+- [x] Save checkpoint v2.17.0 (7a874aef)
+- [x] Push git tag v2.17.0
+
+## v2.17.1 — Exponential Framework taxonomy update (20.05.2026 canonical)
+
+- [ ] Verify exact 20.05.2026 wording from PDF pages 21–28 (H3 label AND vs &, all sub-category names)
+- [ ] Update BrandDesignSystem.tsx: H3 label, all pillar sub-category names to 20.05.2026 canonical
+- [ ] Update SKILL.md: framework taxonomy section with 20.05.2026 canonical names
+- [ ] Upload new SKILL.md to CDN, update SKILL_LATEST_URL in server/_core/index.ts
+- [ ] Run node scripts/gen-eri-version.mjs to regenerate shared/eriVersion.ts
+- [ ] TypeScript check: 0 errors
+- [ ] Save checkpoint v2.17.1
+- [ ] Push git tag v2.17.1
+- [ ] Update PROJECT-CONTEXT.md with framework taxonomy decisions
+
+## v3.1.0 / Skill v3.10.0 — Exponential Framework Taxonomy (04 June 2026)
+- [x] Confirm 20.05.2026 canonical taxonomy from PDF pages 21 and 28
+- [x] Update bdsSpec.ts: replace stale ER 1.5 pillar names with v5 pillar names and correct hex values
+- [x] Update bdsSpec.ts: add colors.framework with horizontals (H1–H4) and all sub-categories
+- [x] Update bdsSpec.ts: update cardAccentColors.palette slots 3–7 to reference v5 pillar names
+- [x] Update bdsSpec.ts: bump BDS_VERSION to 3.1.0, LAST_UPDATED to 2026-05-20
+- [x] Update bdsSpec.ts: bump components.latestVersion to v2.17.0
+- [x] Update SKILL.md: expand pillar table with full names
+- [x] Update SKILL.md: add Exponential Framework Matrix section with horizontals and sub-categories
+- [x] Upload SKILL.md to CDN — SKILL_be7aa38b.md
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts to v3.10.0
+- [x] Update eriVersion.ts: ERI_BDS_SKILL_VERSION = v3.10.0
+- [x] Update BrandDesignSystem.tsx: skill download link to SKILL_be7aa38b.md, date to 4 June 2026
+- [x] Update bds-meta.json: lastUpdated to 2026-06-04
+- [x] TypeScript check passes
+
+## v3.1.0 / Skill v3.10.0 — Exponential Framework Taxonomy (04 June 2026)
+
+- [x] Confirm 20.05.2026 canonical taxonomy from PDF pages 21 and 28
+- [x] Update bdsSpec.ts: replace stale ER 1.5 pillar names with v5 pillar names and correct hex values
+- [x] Update bdsSpec.ts: add colors.framework with horizontals (H1-H4) and all sub-categories
+- [x] Update bdsSpec.ts: update cardAccentColors.palette slots 3-7 to reference v5 pillar names
+- [x] Update bdsSpec.ts: bump BDS_VERSION to 3.1.0, LAST_UPDATED to 2026-05-20
+- [x] Update bdsSpec.ts: bump components.latestVersion to v2.17.0
+- [x] Update SKILL.md: expand pillar table with full names
+- [x] Update SKILL.md: add Exponential Framework Matrix section with horizontals and sub-categories
+- [x] Upload SKILL.md to CDN — SKILL_be7aa38b.md
+- [x] Update SKILL_LATEST_URL in server/_core/index.ts to v3.10.0
+- [x] Update eriVersion.ts: ERI_BDS_SKILL_VERSION = v3.10.0
+- [x] Update BrandDesignSystem.tsx: skill download link to SKILL_be7aa38b.md, date to 4 June 2026
+- [x] Update bds-meta.json: lastUpdated to 2026-06-04
+- [x] TypeScript check passes

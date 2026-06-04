@@ -5436,7 +5436,7 @@ const tabs: TabConfig[] = [
                     <span className="text-lg">🧩</span>
                     <h3 className="font-bold text-foreground text-base">ERI BDS Reference Skill</h3>
                     {ERI_BDS_SKILL_VERSION && <span className="text-[10px] font-mono bg-muted text-muted-foreground px-2 py-0.5 rounded border border-border">{ERI_BDS_SKILL_VERSION}</span>}
-                    <span className="text-[10px] text-muted-foreground">Updated 26 May 2026</span>
+                    <span className="text-[10px] text-muted-foreground">Updated 4 June 2026</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3 max-w-2xl">
                     A portable Manus skill that embeds the ERI brand reference directly into any AI project.
@@ -5458,7 +5458,7 @@ const tabs: TabConfig[] = [
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_506236e6.md"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_01177c24.md"
                     {...(ERI_BDS_SKILL_VERSION ? {download: `eri-bds-skill-${ERI_BDS_SKILL_VERSION}.md`} : {})}
                     className="inline-flex items-center gap-2 bg-[#3ba559] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#2c6d3e] transition-colors"
                   >
@@ -5466,7 +5466,7 @@ const tabs: TabConfig[] = [
                     Download Skill
                   </a>
                   <a
-                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_506236e6.md"
+                    href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_01177c24.md"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-border text-muted-foreground text-sm font-medium px-4 py-2 rounded-lg hover:bg-muted transition-colors"
@@ -5878,7 +5878,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                     <td className="py-1.5 pr-3 text-muted-foreground">{ERI_BDS_SKILL_VERSION}</td>
                     <td className="py-1.5 text-[#3ba559] break-all">
                       <a
-                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_506236e6.md"
+                        href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_01177c24.md"
                         {...(ERI_BDS_SKILL_VERSION ? {download: `eri-bds-skill-${ERI_BDS_SKILL_VERSION}.md`} : {})}
                         className="underline underline-offset-2 hover:text-[#2c6d3e]"
                       >

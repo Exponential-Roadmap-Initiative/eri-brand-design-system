@@ -48,14 +48,14 @@ async function startServer() {
   // Update SKILL_LATEST_URL when releasing a new skill version.
   // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/bYsMBUbdpKgsycna.md"; // v3.9.0 — light-by-default: DEFAULT_THEME="light", updated FOLC script, migration note
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_01177c24.md"; // v3.10.0 — 20.05.2026 canonical framework taxonomy: full pillar names, H1–H4 horizontals, all sub-categories; fixed /api/skill/latest URL in Step 0
   app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
   app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    res.json({ url: SKILL_LATEST_URL, version: "3.9.0" }); // v3.9.0 — light-by-default: DEFAULT_THEME="light", updated FOLC script, migration note
+    res.json({ url: SKILL_LATEST_URL, version: "3.10.0" }); // v3.10.0 — 20.05.2026 canonical framework taxonomy: full pillar names, H1–H4 horizontals, all sub-categories
   });
 
   // ── BDS-meta proxy ─────────────────────────────────────────────────────────
