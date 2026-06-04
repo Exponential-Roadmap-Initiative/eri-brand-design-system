@@ -631,3 +631,32 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 5. Verify: first visit shows light mode; toggle to dark works; preference persists on reload
 
 **SKILL.md v3.9.0 CDN:** `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/bYsMBUbdpKgsycna.md`
+
+---
+
+## New-project onboarding page — 2026-06-04
+
+Added a third tab at `/new-project` (`client/src/pages/NewProject.tsx`) — the canonical onboarding entry point for all new ERI Manus projects.
+
+**Architecture principle: zero duplication.** The page is an orchestration layer only — it links to existing BDS sections for all canonical content. No content is duplicated.
+
+**Track 1** (static website — Exponential Framework, Earth-Aligned AI Lab pattern):
+- Manus template: `web-static`
+- Copy-paste project instructions block: 4 Critical lines
+- 10-step checklist: links to `#standard-components` and `#ai-instructions` for each step
+
+**Track 2** (full-stack app — PSM, Exponential Platform pattern):
+- Manus template: `web-db-user`
+- Copy-paste project instructions block: 6 Critical lines + Earth-Aligned Skills placeholder
+- 15-step checklist: steps 1–10 same as Track 1, steps 11–15 cover Manus-platform specifics (auth, DB, workspace isolation, user management)
+
+**Earth-Aligned Skills placeholder:** A clearly marked amber placeholder section in the Track 2 instructions block. Will be replaced with the Earth-aligned skills management package when it is available from the Earth-Aligned AI Lab project.
+
+**Three upgrades to existing sections:**
+1. `bdsSpec.ts` — added `handoff_prompt_track1`, `handoff_prompt_track2`, `new_project_url` fields to the machine-readable spec endpoint
+2. Standard Components section — added Track 1 Setup Checklist (10-step navigation index) at the top of the section, anchored at `#track1-setup-checklist`
+3. Machine Instructions section — added "Copy-Paste Project Instructions" dark card with both track blocks, positioned after the spec endpoint card
+
+**Routing:** `/new-project` route added to `App.tsx`. Third tab added to `TabNav`. Mobile drawer updated with "+ Start a Project" link.
+
+**Usage:** To start a new ERI project, go to `https://bds.exponentialroadmap.org/new-project`, pick a track, copy the instructions block, and paste it into the Manus project's Project Instructions field. The agent reads the page and follows the checklist automatically.

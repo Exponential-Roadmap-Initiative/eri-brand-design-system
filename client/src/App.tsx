@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import BrandDesignSystem from "./pages/BrandDesignSystem";
 import AlignmentTracker from "./pages/AlignmentTracker";
+import NewProject from "./pages/NewProject";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
 import { useState } from "react";
@@ -19,8 +20,9 @@ const APP_VERSION = "V.2026.05.27";
 function TabNav() {
   const [location] = useLocation();
   const tabs = [
-    { href: "/",        label: "Brand Design System" },
-    { href: "/tracker", label: "Project Alignment Tracker" },
+    { href: "/",            label: "Brand Design System" },
+    { href: "/tracker",    label: "Project Alignment Tracker" },
+    { href: "/new-project", label: "Start a Project" },
   ];
   return (
     <div
@@ -81,6 +83,7 @@ function Router() {
       <Switch>
         <Route path={"/"} component={BrandDesignSystem} />
         <Route path={"/tracker"} component={AlignmentTracker} />
+        <Route path={"/new-project"} component={NewProject} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

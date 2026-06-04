@@ -3349,6 +3349,38 @@ const contactUrl =
           </h2>
           <p className="text-muted-foreground text-sm mb-6">Version 2.14.0 · 7 canonical files · Copy verbatim — do not reconstruct</p>
 
+          {/* ── Track 1 Setup Checklist ── */}
+          <div id="track1-setup-checklist" className="rounded-lg p-5 mb-6 border-2 border-[#3ba559] bg-[#f0faf3]">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[#3ba559] text-lg">&#9312;</span>
+              <h3 className="font-bold text-foreground text-base">Track 1 Setup Checklist — 10 Steps</h3>
+              <span className="ml-auto text-xs text-muted-foreground">Referenced by <a href="/new-project#track-1" className="underline text-[#3ba559]">Start a Project → Track 1</a></span>
+            </div>
+            <p className="text-xs text-muted-foreground mb-4">Complete these steps in order for every new Track 1 (static website) ERI project. Each step links to the canonical documentation below.</p>
+            <ol className="space-y-2">
+              {([
+                ["Fetch the eri-bds-reference skill",       "#ai-instructions",       "curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md"],
+                ["Create PROJECT-CONTEXT.md",               "#ai-instructions",       "Seed with canonical values from the skill. Read it at the start of every subsequent task."],
+                ["Install @eri/components",                 "#standard-components",   "pnpm add github:Exponential-Roadmap-Initiative/eri-brand-design-system#v2.16.1&path:packages/eri-components"],
+                ["Add @eri/components CSS import",          "#standard-components",   "@import '@eri/components/dist/eri-components.css'; — FIRST line in index.css, before all other directives"],
+                ["Self-host Archivo + Open Sans fonts",     "#standard-components",   "Download WOFF2 to client/public/fonts/. Remove any Google Fonts link tags from index.html."],
+                ["Wrap App.tsx in EriPageLayout",           "#standard-components",   "Pass appName, showCTA={true}, showThemeToggle={true}, headerTheme='auto'"],
+                ["Add EriHeroSection to homepage",          "#standard-components",   "Use ERI_HERO_IMAGE_DEFAULT or ERI_HERO_IMAGE_TRUST as the background image."],
+                ["Register a Contact Us source ID",         "#contact-us",            "Choose a short stable slug (e.g. 'hal', 'taxonomy'). Register at contact-us.exponentialroadmap.org/admin."],
+                ["Create client/public/bds-meta.json",      "#ai-instructions",       "Fetch the canonical template from /tracker. Publish at the root URL of your deployed site."],
+                ["Run Project Alignment Checklist",         "/tracker",               "Open the Project Alignment Tracker tab and verify all checks pass before closing the task."],
+              ] as [string, string, string][]).map(([label, anchor, hint], i) => (
+                <li key={i} className="flex items-start gap-3 text-sm">
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-[#3ba559] text-white text-[10px] font-bold flex items-center justify-center mt-0.5">{i + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <a href={anchor} className="font-semibold text-foreground hover:text-[#3ba559] transition-colors">{label}</a>
+                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{hint}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
           {/* Scope note */}
           <div className="rounded-lg p-4 mb-6 border bg-muted border-border">
             <p className="text-sm font-bold text-foreground mb-1">Scope: All Public-Facing ERI Apps</p>
@@ -6033,13 +6065,16 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   <div className="space-y-1 text-xs font-mono">
                     {[
                       ["version",              "Current BDS version string"],
-                      ["handoff_prompt",        "Copy-pasteable AI project instruction block"],
-                      ["colors.brand",          "All brand hex values with roles"],
+                      ["handoff_prompt",           "Generic project instruction block (all projects)"],
+                      ["handoff_prompt_track1",    "Copy-paste project instructions for Track 1 static sites"],
+                      ["handoff_prompt_track2",    "Copy-paste project instructions for Track 2 full-stack apps"],
+                      ["new_project_url",          "URL of the Start a Project onboarding page"],
+                      ["colors.brand",             "All brand hex values with roles"],
                       ["typography.fontFaceTemplate", "@font-face declarations (copy verbatim)"],
-                      ["semanticTokens.cssBlock", "Full CSS variable block for index.css"],
-                      ["darkModeRules",         "Rule + correct + antiPattern for each rule"],
-                      ["cardAccentColors",      "Six-slot palette with tint values"],
-                      ["canonicalSourceFiles",  "GitHub links to reference implementations"],
+                      ["semanticTokens.cssBlock",  "Full CSS variable block for index.css"],
+                      ["darkModeRules",            "Rule + correct + antiPattern for each rule"],
+                      ["cardAccentColors",         "Six-slot palette with tint values"],
+                      ["canonicalSourceFiles",     "GitHub links to reference implementations"],
                     ].map(([field, desc]) => (
                       <div key={field} className="flex gap-2">
                         <span className="text-[#3ba559] shrink-0">{field}</span>
@@ -6067,6 +6102,49 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                   Download JSON
                 </a>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* ── COPY-PASTE PROJECT INSTRUCTIONS ── */}
+          <Card className="shadow-sm mb-6 border-2 border-[#232323] bg-[#1a1a1a]">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-lg">&#128203;</span>
+                <h3 className="font-bold text-white text-base">Copy-Paste Project Instructions</h3>
+                <span className="ml-auto text-xs font-mono bg-[#93E07D] text-[#232323] px-2 py-0.5 rounded font-semibold">Paste into Manus project settings</span>
+              </div>
+              <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                Paste one of these blocks into the <strong className="text-white">Project Instructions</strong> field when creating a new Manus project.
+                The agent will read the BDS site and follow the correct track automatically.
+                Full onboarding guide at <a href="/new-project" className="underline" style={{ color: '#93E07D' }}>Start a Project</a>.
+              </p>
+              {/* Track 1 */}
+              <div className="mb-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#93E07D', color: '#232323' }}>TRACK 1</span>
+                  <span className="text-sm font-semibold text-white">Static Website</span>
+                  <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>(Exponential Framework, Earth-Aligned AI Lab)</span>
+                </div>
+                <pre className="text-xs rounded p-4 overflow-x-auto whitespace-pre-wrap leading-relaxed" style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.12)' }}>{`Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
+Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
+Critical: This is a Track 1 ERI static website. Read https://bds.exponentialroadmap.org/new-project#track-1 and follow all instructions before writing any code.
+Critical: After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`}</pre>
+              </div>
+              {/* Track 2 */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ backgroundColor: '#17b7dd', color: '#232323' }}>TRACK 2</span>
+                  <span className="text-sm font-semibold text-white">Full-Stack Application</span>
+                  <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>(Professional Services Matrix, Playbook)</span>
+                </div>
+                <pre className="text-xs rounded p-4 overflow-x-auto whitespace-pre-wrap leading-relaxed" style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.12)' }}>{`Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
+Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
+Critical: This is a Track 2 ERI full-stack application. Read https://bds.exponentialroadmap.org/new-project#track-2 and follow all instructions before writing any code.
+Critical: Always follow the ERI development workflow: 1. Research: clarify purpose, understand current context and existing assets, explore possible solutions. 2. Design. 3. Plan and get acceptance for plan. 4. Implement. 5. Test. 6. Iterate until solution works.
+Critical: Apply the exponential-human-ai-collaboration skill to every task in this project.
+Critical: After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
+[EARTH-ALIGNED SKILLS — placeholder: will be populated when the Earth-aligned skills management package is available]`}</pre>
               </div>
             </CardContent>
           </Card>
