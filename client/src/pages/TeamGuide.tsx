@@ -174,7 +174,7 @@ export default function TeamGuide() {
               {
                 id: "stack" as const,
                 label: "I WANT THE FULL PICTURE",
-                desc: "ERI uses Perplexity for deep research and evidence synthesis, and Manus to build and run the Exponential Human–AI Lab. Understand when to use each tool and how they connect.",
+                desc: "Understand how ERI uses Manus to build the Exponential Human\u2013AI Lab \u2014 the applications, tools, and frameworks that power ERI's climate and business transformation work.",
                 cta: "Explore the AI stack",
               },
             ].map(({ id, label, desc, cta }) => (
@@ -305,51 +305,11 @@ export default function TeamGuide() {
         <div className="max-w-3xl mx-auto" style={{ paddingInline: "var(--eri-content-inset, clamp(1rem, 3vw, 2rem))" }}>
           <SectionHeading
             eyebrow="ERI AI Stack"
-            title="Perplexity + Manus"
-            subtitle="ERI uses two AI platforms that serve different purposes. Understanding which to use — and when — is the foundation of effective human–AI collaboration at ERI."
+            title="Manus"
+            subtitle="ERI uses Manus as its autonomous execution layer \u2014 building the applications, tools, and frameworks that power ERI's climate and business transformation work."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Perplexity */}
-            <div className="rounded-xl border border-border bg-background overflow-hidden">
-              <div className="bg-[#232323] px-5 py-4">
-                <p className="text-[10px] font-bold text-[#93E07D] uppercase tracking-widest mb-1">Perplexity · Research Layer</p>
-                <p className="text-white font-bold font-archivo text-lg">Find, synthesise, and evaluate</p>
-              </div>
-              <div className="px-5 py-4">
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  Perplexity is ERI's research and evidence layer. Use it to find information from external sources, synthesise evidence across documents, challenge assumptions, and explore ideas. ERI's principle: define the human agenda first, use AI to explore, then apply ERI judgement to decide what deserves to scale.
-                </p>
-                <p className="text-xs font-bold text-foreground uppercase tracking-wide mb-2">ERI use cases</p>
-                <ul className="text-xs text-muted-foreground space-y-1.5">
-                  {[
-                    "Deep research on companies, sectors, or climate topics",
-                    "Evidence gathering and assumption-challenging for ERI work",
-                    "Synthesising academic, policy, or disclosure literature",
-                    "Turning research outputs into shared Space notes and evidence tables",
-                  ].map(item => (
-                    <li key={item} className="flex gap-2">
-                      <span className="text-[#3ba559] shrink-0">→</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 pt-4 border-t border-border">
-                  <p className="text-[10px] text-muted-foreground leading-relaxed">
-                    <span className="font-semibold text-foreground">Collaboration note:</span> Perplexity Spaces are shared libraries — contributors must explicitly share threads. Thread visibility is private by default.
-                  </p>
-                  <a
-                    href="https://www.perplexity.ai/hub/getting-started"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-2 text-xs font-semibold text-[#3ba559] hover:text-foreground transition-colors"
-                  >
-                    ERI Perplexity Onboarding →
-                  </a>
-                </div>
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 gap-6">
             {/* Manus */}
             <div className="rounded-xl border border-[#3ba559] bg-background overflow-hidden">
               <div className="bg-[#3ba559] px-5 py-4">
@@ -393,7 +353,7 @@ export default function TeamGuide() {
 
           <div className="mt-6 rounded-lg bg-background border border-border px-5 py-4">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              <span className="font-semibold text-foreground">How they connect:</span> Use Perplexity to research and gather evidence. Bring the findings into Manus to build the output — a graded report, a whitepaper, a dashboard, or a workflow. The two tools are complementary, not competing.
+              <span className="font-semibold text-foreground">ERI principle:</span> Define the human agenda before you start. Know what transformation goal your task should support, what assumptions you are challenging, and what a useful output looks like \u2014 then let Manus execute.
             </p>
           </div>
         </div>
