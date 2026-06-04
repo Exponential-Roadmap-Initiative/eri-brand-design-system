@@ -631,3 +631,40 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 5. Verify: first visit shows light mode; toggle to dark works; preference persists on reload
 
 **SKILL.md v3.9.0 CDN:** `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/bYsMBUbdpKgsycna.md`
+
+---
+
+## Skill v3.10.0 — 20.05.2026 canonical Exponential Framework taxonomy (2026-06-04)
+
+- `bdsSpec.ts`: Replaced stale ER 1.5 pillar names with v5 names + correct hex; added `colors.framework` with H1–H4 horizontals and all 17 sub-categories; bumped `BDS_VERSION` to 3.1.0; added `handoff_prompt_track1`, `handoff_prompt_track2`, `new_project_url`
+- `SKILL.md v3.10.0`: Expanded pillar table with full names; added full Framework Matrix section; fixed Step 0 URL (`/skill/latest` → `/api/skill/latest`)
+- `server/_core/index.ts`: `SKILL_LATEST_URL` updated to new CDN URL
+- `shared/eriVersion.ts`: `ERI_BDS_SKILL_VERSION = "v3.10.0"`
+
+---
+
+## "Start a Project" tab — /new-project (2026-06-04)
+
+New third tab added at `/new-project`. This is the single onboarding entry point for new ERI Manus AI projects.
+
+**Design principle:** Zero duplication. The page is a pure orchestration layer — it links to existing BDS sections for all canonical content. No content from BrandDesignSystem.tsx was duplicated.
+
+**Track 1** (static website): 4-line copy-paste project instructions + 10-step checklist
+**Track 2** (full-stack app): 6-line copy-paste project instructions + Earth-Aligned Skills placeholder + steps 11–15
+
+**Earth-Aligned Skills placeholder:** Amber-styled placeholder section in Track 2 block. Will be replaced when the Earth-aligned skills management package is available from the Earth-Aligned AI Lab project.
+
+**Files changed:**
+- `client/src/pages/NewProject.tsx` — new page (standalone, no BrandDesignSystem.tsx changes)
+- `client/src/App.tsx` — one import + one route + one tab entry
+- `client/src/components/BdsNavDrawer.tsx` — one link entry
+- `server/routers/bdsSpec.ts` — `handoff_prompt_track1`, `handoff_prompt_track2`, `new_project_url` added
+
+---
+
+## CRITICAL: Never inject JSX into BrandDesignSystem.tsx via `file edit` without reading full context
+
+**Date:** 2026-06-04
+**What happened:** Edits to BrandDesignSystem.tsx using the `file edit` tool inserted orphaned JSX elements (table rows, Card components) outside their parent containers. TypeScript did not catch this. The result was a silent React runtime crash that left `#root` empty — the Management UI preview showed a black screen.
+**Fix:** Rolled back to checkpoint `30997f6`, then cherry-picked only the clean files (bdsSpec.ts, NewProject.tsx, App.tsx, BdsNavDrawer.tsx). BrandDesignSystem.tsx was left at the rolled-back state.
+**Rule going forward:** Any additions to BrandDesignSystem.tsx must be done by reading the full surrounding context (±50 lines) before editing, and verified with a Vite build (`pnpm build`) after every edit — not just `pnpm check`. TypeScript type checking does not catch malformed JSX nesting.
