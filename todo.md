@@ -775,3 +775,10 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add Skills link to BdsNavDrawer
 - [ ] Seed existing ERI skills into the DB
 - [ ] Update PROJECT-CONTEXT.md and skill-manager SKILL.md
+
+## Project Instructions Manager — /skills page
+- [x] Add ProjectInstructions component to Skills.tsx (three panels: Audit, Skill Triggers, Combined Output)
+- [x] Implement audit panel: evaluate each current instruction section (Keep/Move/Remove) with rationale
+- [x] Implement auto-generated skill trigger block from DB (ordered Tier 1 → 2 → 3, using readWhen field)
+- [x] Implement combined output panel with live character counter (used/8000) and copy button
+- [ ] Add projectInstructions tRPC procedure to skills router (save/load custom preamble per project)

@@ -593,6 +593,364 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
   );
 }
 
+// ── Project Instructions ─────────────────────────────────────────────────────
+
+const CHAR_BUDGET = 8000;
+
+const DEFAULT_PREAMBLE = `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
+Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
+
+const AUDIT_SECTIONS = [
+  {
+    id: "skill-update",
+    title: "Skill update command",
+    chars: 285,
+    recommendation: "keep" as const,
+    reason: "Essential — fetches the latest BDS skill before every task. Without this, the agent uses a stale skill version. The curl command is specific and cannot be inferred.",
+  },
+  {
+    id: "project-context",
+    title: "PROJECT-CONTEXT.md instruction",
+    chars: 448,
+    recommendation: "keep" as const,
+    reason: "Essential — context compaction erases session memory. This instruction is the only mechanism that preserves project-specific knowledge across sessions. Cannot be moved to a skill because it must run before any skill is read.",
+  },
+  {
+    id: "skill-scan",
+    title: "Skill scan instruction",
+    chars: 340,
+    recommendation: "replace" as const,
+    reason: "Partially redundant — the auto-generated skill trigger block below replaces the generic 'scan and identify' instruction with precise per-skill triggers. The generic instruction can be shortened to a single line: 'Read the SKILL.md for each relevant skill listed below before taking action.'",
+  },
+  {
+    id: "skill-update-post",
+    title: "Post-task skill update instruction",
+    chars: 440,
+    recommendation: "compress" as const,
+    reason: "Still valuable but verbose. The core instruction ('update the relevant SKILL.md after every task') is 60 chars. The explanation of why (350 chars) is now covered by the Skills page philosophy. Compressing to the essential directive saves ~380 chars.",
+  },
+  {
+    id: "dev-workflow",
+    title: "ERI development workflow (6 steps)",
+    chars: 257,
+    recommendation: "evaluate" as const,
+    reason: "Manus now follows a structured research → design → plan → implement → test loop by default. The question is whether the explicit ERI framing ('get acceptance for plan') adds value beyond the default agent behaviour. If the agent already does this, these 257 chars are recoverable.",
+  },
+  {
+    id: "collab-skill",
+    title: "Apply exponential-human-ai-collaboration skill",
+    chars: 91,
+    recommendation: "replace" as const,
+    reason: "Redundant once this skill is in Tier 1 — the auto-generated trigger block will include it with 'Read at the start of every task'. The explicit instruction duplicates the tier assignment.",
+  },
+  {
+    id: "framework",
+    title: "Exponential Framework matrix",
+    chars: 530,
+    recommendation: "evaluate" as const,
+    reason: "Project-specific context that the agent cannot infer. However, this is only relevant for projects that work with the Exponential Framework (e.g. PSM, Exponential Platform). For the BDS project specifically, this section is rarely used. Consider moving to PROJECT-CONTEXT.md for projects where it is not central.",
+  },
+  {
+    id: "agent-files",
+    title: "Earth-aligned AI Agent key files",
+    chars: 230,
+    recommendation: "move" as const,
+    reason: "This is project-specific context for the eri-playbook-team project, not the BDS project. It belongs in that project's PROJECT-CONTEXT.md, not in shared project instructions. Removing it from the BDS project instructions saves 230 chars with no loss.",
+  },
+];
+
+const RECOMMENDATION_CONFIG = {
+  keep: { label: "Keep", badge: "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300", icon: "✓" },
+  replace: { label: "Replace", badge: "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300", icon: "↻" },
+  compress: { label: "Compress", badge: "bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300", icon: "⇩" },
+  evaluate: { label: "Evaluate", badge: "bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300", icon: "?" },
+  move: { label: "Move", badge: "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300", icon: "→" },
+};
+
+function generateSkillTriggers(skills: Skill[]): string {
+  if (!skills || skills.length === 0) return "";
+
+  const tier1 = skills.filter(s => s.tier === 1);
+  const tier2 = skills.filter(s => s.tier === 2);
+  const tier3 = skills.filter(s => s.tier === 3);
+
+  const lines: string[] = [];
+
+  if (tier1.length > 0) {
+    lines.push("## Always-on skills (read at the start of every task)");
+    for (const s of tier1) {
+      lines.push(`Read /home/ubuntu/skills/${s.id}/SKILL.md before every task.`);
+    }
+  }
+
+  if (tier2.length > 0) {
+    lines.push("");
+    lines.push("## Per-action skills (read immediately before the indicated action)");
+    for (const s of tier2) {
+      const trigger = s.readWhen ? s.readWhen.replace(/^Read (this skill |SKILL\.md )?/i, "").replace(/\.$/, "") : `using ${s.name}`;
+      lines.push(`Read /home/ubuntu/skills/${s.id}/SKILL.md before ${trigger}.`);
+    }
+  }
+
+  if (tier3.length > 0) {
+    lines.push("");
+    lines.push("## Conditional skills (read when the domain applies)");
+    for (const s of tier3) {
+      const trigger = s.readWhen ? s.readWhen.replace(/^Read (this skill |SKILL\.md )?/i, "").replace(/\.$/, "") : `working on ${s.name}`;
+      lines.push(`Read /home/ubuntu/skills/${s.id}/SKILL.md when ${trigger}.`);
+    }
+  }
+
+  return lines.join("\n");
+}
+
+interface ProjectInstructionsProps {
+  skills: Skill[];
+}
+
+function ProjectInstructions({ skills }: ProjectInstructionsProps) {
+  const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"audit" | "triggers" | "output">("audit");
+  const [preamble, setPreamble] = useState(() => {
+    try { return localStorage.getItem("eri-pi-preamble") ?? DEFAULT_PREAMBLE; }
+    catch { return DEFAULT_PREAMBLE; }
+  });
+  const [copied, setCopied] = useState(false);
+
+  const skillTriggers = generateSkillTriggers(skills);
+  const combined = [preamble.trim(), skillTriggers.trim()].filter(Boolean).join("\n\n");
+  const charCount = combined.length;
+  const budgetPct = Math.min(100, (charCount / CHAR_BUDGET) * 100);
+  const budgetColor = charCount > CHAR_BUDGET * 0.9 ? "text-red-600" : charCount > CHAR_BUDGET * 0.7 ? "text-amber-600" : "text-green-600";
+  const barColor = charCount > CHAR_BUDGET * 0.9 ? "bg-red-500" : charCount > CHAR_BUDGET * 0.7 ? "bg-amber-500" : "bg-green-500";
+
+  const savePreamble = (v: string) => {
+    setPreamble(v);
+    try { localStorage.setItem("eri-pi-preamble", v); } catch {}
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(combined).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  const resetPreamble = () => savePreamble(DEFAULT_PREAMBLE);
+
+  const totalAuditChars = AUDIT_SECTIONS.reduce((s, a) => s + a.chars, 0);
+  const keepChars = AUDIT_SECTIONS.filter(a => a.recommendation === "keep").reduce((s, a) => s + a.chars, 0);
+  const potentialSavings = totalAuditChars - keepChars;
+
+  return (
+    <div className="border border-border rounded-lg overflow-hidden mb-8">
+      <button
+        onClick={() => setOpen(v => !v)}
+        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/30 transition-colors"
+      >
+        <div>
+          <p className="text-sm font-semibold text-foreground">Project Instructions Manager</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Audit existing instructions · Auto-generate skill triggers · Optimise character budget
+          </p>
+        </div>
+        <div className="flex items-center gap-3 ml-4">
+          <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
+            {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()}
+          </span>
+          <span className="text-muted-foreground text-xs">{open ? "Collapse ↑" : "Expand ↓"}</span>
+        </div>
+      </button>
+
+      {open && (
+        <div className="border-t border-border">
+
+          {/* Tab bar */}
+          <div className="flex border-b border-border bg-muted/20">
+            {([
+              { id: "audit", label: "Instruction Audit" },
+              { id: "triggers", label: "Skill Triggers" },
+              { id: "output", label: "Combined Output" },
+            ] as const).map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-5 py-3 text-xs font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? "border-b-2 border-foreground text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Audit tab */}
+          {activeTab === "audit" && (
+            <div className="px-5 py-6 space-y-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    The current project instructions were written incrementally over several months. Some sections may now be redundant — either because Manus handles them by default, or because the content has been moved into a skill or PROJECT-CONTEXT.md. This audit evaluates each section against the question: <span className="italic">"Would a capable Manus agent do the right thing here without this instruction?"</span>
+                  </p>
+                </div>
+                <div className="flex-shrink-0 text-right">
+                  <p className="text-xs text-muted-foreground">Potential savings</p>
+                  <p className="text-lg font-bold text-amber-600">~{potentialSavings} chars</p>
+                  <p className="text-xs text-muted-foreground">{Math.round((potentialSavings / totalAuditChars) * 100)}% of current</p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {AUDIT_SECTIONS.map(section => {
+                  const cfg = RECOMMENDATION_CONFIG[section.recommendation];
+                  return (
+                    <div key={section.id} className="border border-border rounded-md p-4">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-sm font-medium text-foreground">{section.title}</span>
+                          <span className="text-xs text-muted-foreground font-mono">{section.chars} chars</span>
+                        </div>
+                        <span className={`flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border ${cfg.badge}`}>
+                          <span>{cfg.icon}</span> {cfg.label}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{section.reason}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="rounded-md bg-muted/30 border border-border p-4">
+                <p className="text-xs font-semibold text-foreground mb-2">Legend</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {Object.entries(RECOMMENDATION_CONFIG).map(([key, cfg]) => (
+                    <div key={key} className="flex items-center gap-2">
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border ${cfg.badge}`}>
+                        {cfg.icon} {cfg.label}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {key === "keep" && "Essential — cannot be removed"}
+                        {key === "replace" && "Superseded by skill trigger block"}
+                        {key === "compress" && "Valuable but can be shortened"}
+                        {key === "evaluate" && "May be redundant in current Manus — test"}
+                        {key === "move" && "Belongs in PROJECT-CONTEXT.md"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Skill triggers tab */}
+          {activeTab === "triggers" && (
+            <div className="px-5 py-6 space-y-4">
+              <p className="text-sm text-foreground/80 leading-relaxed">
+                This block is auto-generated from the skill registry above. It replaces the generic "scan the skills" instruction with precise, per-skill triggers ordered by tier. Update skill tiers or <span className="font-mono text-xs">readWhen</span> fields in the registry to change the output.
+              </p>
+              <div className="rounded-md bg-muted/20 border border-border p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Generated output</p>
+                  <span className="text-xs text-muted-foreground font-mono">{skillTriggers.length} chars</span>
+                </div>
+                <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">{skillTriggers || "No skills registered yet."}</pre>
+              </div>
+              <div className="rounded-md bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-3">
+                <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
+                  <span className="font-semibold">Note:</span> The trigger text is derived from each skill's <span className="font-mono">readWhen</span> field in the registry. If a skill has no <span className="font-mono">readWhen</span> value, a generic trigger is used. Edit the skill in the registry above to set a precise trigger.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Combined output tab */}
+          {activeTab === "output" && (
+            <div className="px-5 py-6 space-y-5">
+
+              {/* Character budget bar */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-xs font-semibold text-foreground">Character budget</p>
+                  <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
+                    {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()} ({Math.round(budgetPct)}%)
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all ${barColor}`}
+                    style={{ width: `${budgetPct}%` }}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {CHAR_BUDGET - charCount > 0
+                    ? `${(CHAR_BUDGET - charCount).toLocaleString()} characters remaining`
+                    : `${(charCount - CHAR_BUDGET).toLocaleString()} characters over budget`
+                  }
+                </p>
+              </div>
+
+              {/* Preamble editor */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-xs font-semibold text-foreground">Preamble (editable)</p>
+                  <button
+                    onClick={resetPreamble}
+                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Reset to default
+                  </button>
+                </div>
+                <Textarea
+                  value={preamble}
+                  onChange={(e) => savePreamble(e.target.value)}
+                  className="font-mono text-xs leading-relaxed min-h-[160px]"
+                  placeholder="Paste your project-specific preamble here..."
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  {preamble.length.toLocaleString()} chars · Saved to browser storage automatically
+                </p>
+              </div>
+
+              {/* Skill triggers (read-only) */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-xs font-semibold text-foreground">Skill triggers (auto-generated)</p>
+                  <span className="text-xs text-muted-foreground font-mono">{skillTriggers.length} chars</span>
+                </div>
+                <div className="rounded-md bg-muted/20 border border-border p-3">
+                  <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{skillTriggers || "No skills registered."}</pre>
+                </div>
+              </div>
+
+              {/* Copy button */}
+              <Button
+                onClick={handleCopy}
+                className="w-full"
+                disabled={charCount === 0}
+              >
+                {copied ? "Copied to clipboard ✓" : `Copy full instructions (${charCount.toLocaleString()} chars)`}
+              </Button>
+
+              {charCount > CHAR_BUDGET && (
+                <div className="rounded-md bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 p-3">
+                  <p className="text-xs text-red-800 dark:text-red-300 font-semibold">
+                    Over budget by {(charCount - CHAR_BUDGET).toLocaleString()} characters.
+                  </p>
+                  <p className="text-xs text-red-700 dark:text-red-400 mt-1">
+                    Review the Instruction Audit tab for compression opportunities. The "Evaluate" and "Compress" sections together offer ~{potentialSavings} chars of savings.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function Skills() {
@@ -642,6 +1000,9 @@ export default function Skills() {
 
         {/* System overview */}
         <SystemOverview />
+
+        {/* Project Instructions Manager */}
+        {skillsList && <ProjectInstructions skills={skillsList} />}
 
         {/* Admin header */}
         {isAdmin && (
