@@ -45,11 +45,11 @@ export const SKILLS_METADATA: SkillMeta[] = [
   // ── Tier 1: Always-on ──────────────────────────────────────────────────────
   {
     id: "eri-bds-reference",
-    name: "ERI Brand Design System",
-    description: "Portable ERI brand reference. Use when building or updating any ERI product.",
+    name: "ERI Brand Design System Reference",
+    description: "Portable ERI brand reference. Use when building or updating any ERI product (web apps, presentations, visual assets).",
     tier: 1,
     category: "brand",
-    version: "20.05.2026",
+    version: "3.11.0",
     readWhen: "Before any ERI product work — web apps, presentations, visual assets.",
     hasReferences: true,
   },

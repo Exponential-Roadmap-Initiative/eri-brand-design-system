@@ -833,3 +833,36 @@ The Generator panel has 5 toggleable Fixed Sections:
 5. **Checkpoint discipline** — save-checkpoint rules
 
 These are rendered before the skill triggers block in the combined output. The budget bar shows used/8,000 characters.
+
+---
+
+## eri-bds-reference v3.11.0 — Option A targeted fixes (2026-06-05)
+
+### What changed
+
+Three targeted improvements applied to `eri-bds-reference` SKILL.md. No structural rewrite — Option A only.
+
+**1. Setup Checklist step 10 — self-contained dark mode checklist**
+- Replaced the single-line cross-reference ("read the Cross-Site Theme System section") with a numbered 6-step dark mode implementation checklist
+- Each step names the exact file, the exact action, and the failure mode if skipped
+- Steps: FOLC script → CSS tokens → ThemeContext.tsx → ThemeProvider wrapper → showThemeToggle → headerTheme="auto"
+- Steps 5 and 6 explicitly noted as always-paired
+
+**2. Canonical App.tsx pattern — three required files callout**
+- Added a blockquote above the code pattern listing the three required files (FOLC script, CSS tokens, ThemeContext.tsx) with section references
+- Added `ThemeProvider` import and wrapper to the pattern itself (was missing — the pattern was incomplete without it)
+
+**3. Prop table improvements**
+- `EriStatusBadge.theme`: improved description — now explains when to use `'dark'` vs `'light'` and notes that `EriPageLayout` handles this automatically
+- `EriHeroSection`: added a full dedicated prop table (was previously only an inline summary paragraph). All props have decision guidance:
+  - `backgroundImage`: per-project decision rule (omit for all standard apps, Trust Centre only, Crocodile Economics only)
+  - `overlayOpacity`: canonical value `0.82` with warning against changing it
+  - `showScrollIndicator`: instruction to pass `true` on all landing pages
+
+### What was NOT changed (deliberate)
+- No structural rewrite or progressive disclosure refactor (Option B deferred)
+- No decision-tree rewrite (Option C deferred)
+- The 1,918-line length is acknowledged but not addressed in this pass
+
+### SKILLS_METADATA
+- `eri-bds-reference` version updated to `3.11.0` in `server/routers/skills.ts`
