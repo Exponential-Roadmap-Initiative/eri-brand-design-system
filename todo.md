@@ -782,3 +782,26 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Implement auto-generated skill trigger block from DB (ordered Tier 1 → 2 → 3, using readWhen field)
 - [x] Implement combined output panel with live character counter (used/8000) and copy button
 - [x] Add projectInstructions tRPC procedure to skills router (save/load custom preamble per project) — done 2026-06-04
+
+## Skills page upgrade — card redesign + filter bar (2026-06-05)
+
+- [x] Add `category` varchar field to skills table in drizzle/schema.ts (done 2026-06-05)
+- [x] Run pnpm db:push to apply migration (done 2026-06-05)
+- [x] Update seed-skills.mjs with category values for all 22 skills (done via SQL 2026-06-05)
+- [x] Re-run seed script to populate category field in DB (done via SQL 2026-06-05)
+- [x] Update skills.upsert input schema to accept optional category field (done 2026-06-05)
+- [x] Redesign SkillCard: name as heading, ID as muted subtitle, icon prefix, readWhen as styled callout box, version + history icon + View + Download buttons in footer (done 2026-06-05)
+- [x] Add filter bar: ecosystem tabs (ERI skills / Manus standard / All), tier chips, category chips, missing-self-improvement filter (done 2026-06-05)
+- [x] Update hero stats: show "X missing self-improvement" in orange when > 0 (done 2026-06-05)
+- [ ] Extract reusable PageGuide component to client/src/components/PageGuide.tsx (deferred — inline pattern works well for now)
+- [x] TypeScript check — 0 real errors (13 stale watcher errors are known/expected)
+- [x] Run tests — all 15 pass (done 2026-06-05)
+
+## PAGE GUIDE callout rollout to all tabs (2026-06-05)
+
+- [x] Add PAGE GUIDE callout to BrandDesignSystem hero (done 2026-06-05)
+- [x] Add PAGE GUIDE callout to AlignmentTracker hero (done 2026-06-05)
+- [x] Add PAGE GUIDE callout to TeamGuide hero (done 2026-06-05)
+- [x] Add PAGE GUIDE callout to Skills hero (done 2026-06-05)
+- [x] Verify NewProject already has PAGE GUIDE (confirmed — no change needed)
+- [x] TypeScript check — 0 real errors (13 stale watcher errors are known/expected)

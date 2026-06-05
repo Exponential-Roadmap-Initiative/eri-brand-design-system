@@ -80,6 +80,7 @@ export const skillsRouter = router({
         tier: z.number().int().min(1).max(3),
         version: z.string().min(1).max(16),
         readWhen: z.string().max(500).optional(),
+        category: z.string().max(64).optional(),
       })
     )
     .mutation(async ({ input }) => {
@@ -96,6 +97,7 @@ export const skillsRouter = router({
             tier: input.tier,
             version: input.version,
             readWhen: input.readWhen ?? null,
+            category: input.category ?? null,
           },
         });
 

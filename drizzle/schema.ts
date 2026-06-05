@@ -36,6 +36,7 @@ export const skills = mysqlTable("skills", {
   tier: int("tier").notNull(),                            // 1 = always-on, 2 = per-action, 3 = conditional
   version: varchar("version", { length: 16 }).notNull(), // semver, e.g. "3.11.0"
   readWhen: text("read_when"),                            // human-readable trigger condition
+  category: varchar("category", { length: 64 }),           // e.g. "development", "domain", "design", "meta", "security"
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

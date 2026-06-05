@@ -197,10 +197,17 @@ export default function TeamGuide() {
               </button>
             ))}
           </div>
+          {/* PAGE GUIDE */}
+          <div className="mt-8 rounded-lg border border-white/10 bg-white/5 px-5 py-4">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1.5 text-[#7FBA00]">PAGE GUIDE</p>
+            <p className="text-sm text-white/80 leading-relaxed">
+              Use the three cards above to jump to the section most relevant to you. New to Manus? Start with “I’m new to Manus”. Already onboarded and need to share a task with a colleague? Go to “I need to share a task”. Want to understand how ERI’s full AI stack fits together? Choose “I want the full picture”.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* ── Getting Started ───────────────────────────────────────────────── */}
+      {/* ── Getting Started ──────────────────────────────────────────────────────────────────────────────── */}
       <section id="section-new" className="py-16 px-4 bg-background">
         <div className="max-w-3xl mx-auto" style={{ paddingInline: "var(--eri-content-inset, clamp(1rem, 3vw, 2rem))" }}>
           <SectionHeading

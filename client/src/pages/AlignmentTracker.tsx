@@ -375,6 +375,13 @@ export default function AlignmentTracker() {
               ↻ Refresh
             </button>
           </div>
+          {/* PAGE GUIDE */}
+          <div className="mt-6 rounded-lg border border-white/10 bg-white/5 px-5 py-4 max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: '#7FBA00' }}>PAGE GUIDE</p>
+            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
+              This tracker reads each project's published <code className="font-mono text-[11px] px-1 py-0.5 rounded" style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: T.lime }}>bds-meta.json</code> file and scores it against the BDS checklist. Green means fully compliant. Amber means the project is behind on <code className="font-mono text-[11px]">@eri/components</code> or missing optional fields. Red means a required field is absent or the file is unreachable. Use the checklist below each project card to identify exactly what needs fixing.
+            </p>
+          </div>
         </div>
       </div>
 

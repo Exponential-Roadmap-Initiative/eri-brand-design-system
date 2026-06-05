@@ -385,6 +385,13 @@ export default function BrandDesignSystem() {
             The definitive guide to the Exponential Roadmap Initiative visual and verbal identity.
             The purpose of the system is to enable consistency, quality, and integrity across all touch points.
           </p>
+          {/* PAGE GUIDE */}
+          <div className="mt-6 rounded-lg border border-white/10 bg-white/5 px-5 py-4 max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: '#7FBA00' }}>PAGE GUIDE</p>
+            <p className="text-sm text-white/80 leading-relaxed">
+              This page is the canonical reference for every ERI web project. Use the sticky navigator on the left to jump to any section. When building a new ERI product, read the Tokens, Typography, Logo Usage, and Component sections first — they contain the exact values your implementation must match. The Alignment Tracker tab shows you how to verify compliance.
+            </p>
+          </div>
         </div>
       </section>
 
