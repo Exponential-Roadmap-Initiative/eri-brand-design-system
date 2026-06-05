@@ -805,3 +805,14 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add PAGE GUIDE callout to Skills hero (done 2026-06-05)
 - [x] Verify NewProject already has PAGE GUIDE (confirmed — no change needed)
 - [x] TypeScript check — 0 real errors (13 stale watcher errors are known/expected)
+
+## Skills page — top-level tab navigation (2026-06-05)
+
+- [x] Add top-level tab state (skills / projectInstructions / philosophy) to main Skills component (done 2026-06-05)
+- [x] Add tab nav bar below hero (Skills | Project Instructions | Philosophy) with icons matching parallel project (done 2026-06-05)
+- [x] Move skill registry (filter bar + skill cards) into "Skills" tab content (done 2026-06-05)
+- [x] Move ProjectInstructions component into "Project Instructions" tab content (done 2026-06-05)
+- [x] Move SystemOverview (philosophy/tier model/self-improvement loop) into "Philosophy" tab content (done 2026-06-05)
+- [x] Update PageGuide text to reflect the tabbed structure (done 2026-06-05)
+- [x] TypeScript check — 0 real errors (13 stale watcher errors are known/expected)
+- [ ] Save checkpoint

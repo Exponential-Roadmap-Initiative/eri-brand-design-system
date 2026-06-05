@@ -11,6 +11,7 @@
  */
 
 import { useState } from "react";
+import { Layers, SlidersHorizontal, Lightbulb } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -1054,6 +1055,7 @@ export default function Skills() {
   const refresh = () => utils.skills.list.invalidate();
 
   // ── Filter state
+  const [activePageTab, setActivePageTab] = useState<"skills" | "projectInstructions" | "philosophy">("skills");
   const [ecosystemFilter, setEcosystemFilter] = useState<EcosystemFilter>("all");
   const [tierFilter, setTierFilter] = useState<number | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
@@ -1098,7 +1100,7 @@ export default function Skills() {
             ERI SKILL ECOSYSTEM
           </p>
           <h1 className="text-3xl font-bold tracking-tight mb-4">Skills — Operational Knowledge System</h1>
-          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. The quality of any task is partly a function of which skills were applied and how well they were followed. The system is self-improving: every task that applies a skill is an opportunity to make it better." />
+          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. Use the Skills tab to browse and filter the registry. Use Project Instructions to generate or audit the instructions block for your Manus project. Use Philosophy to understand the tier model and self-improvement loop." />
           {skillsList && (
             <div className="flex items-center gap-3 mt-4 flex-wrap">
               <span className="text-sm text-white/70">
@@ -1114,12 +1116,39 @@ export default function Skills() {
         </div>
       </div>
 
+      {/* Tab nav */}
+      <div className="border-b border-border bg-background">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="flex items-center gap-1">
+            {([
+              { id: "skills" as const,              label: "Skills",               Icon: Layers },
+              { id: "projectInstructions" as const,  label: "Project Instructions", Icon: SlidersHorizontal },
+              { id: "philosophy" as const,           label: "Philosophy",           Icon: Lightbulb },
+            ]).map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActivePageTab(id)}
+                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  activePageTab === id
+                    ? "border-foreground text-foreground"
+                    : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
+        {activePageTab === "philosophy" && <SystemOverview />}
+        {activePageTab === "projectInstructions" && skillsList && <ProjectInstructions skills={skillsList} />}
 
-        <SystemOverview />
-        {skillsList && <ProjectInstructions skills={skillsList} />}
-
+        {activePageTab === "skills" && (
+        <>
         {isAdmin && (
           <div className="flex items-center justify-between mb-4">
             <p className="text-xs text-muted-foreground">Logged in as admin — you can add, edit, and log improvements.</p>
@@ -1258,7 +1287,8 @@ export default function Skills() {
             <span><span className="font-semibold text-foreground">{skillsList.length - missingImprovementCount}</span> with self-improvement patterns</span>
           </div>
         )}
-
+        </>
+        )}
       </div>
     </PublicLayout>
   );
