@@ -70,7 +70,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     description: "Full lifecycle governance for ERI skills: create, improve, register, and maintain the self-improving ERI skill ecosystem.",
     tier: 2,
     category: "process",
-    version: "2.0.0",
+    version: "2.1.0",
     readWhen: "Before writing a single line of any eri- skill file. Before running the post-task reflection loop.",
     hasReferences: true,
   },
