@@ -753,3 +753,83 @@ All BDS compliance violations in `client/src/pages/Skills.tsx` were resolved. Th
 - Version: `3810c562`
 - Tests: 14/14 passing (`server/skills.test.ts`)
 - TypeScript: 0 real errors (13 stale watcher noise — TS 5.6.3 vs 5.9.3 path mismatch, safe to ignore)
+
+---
+
+## v3.9.0 — Skills architecture migration: filesystem-first (2026-06-05)
+
+### Architecture decision
+
+The `skills` DB table was a stale copy of SKILL.md content. The new architecture:
+
+- **Filesystem = source of truth for skill content** (name, description, tier, category, version, readWhen, hasReferences)
+- **DB = source of truth for governance data** (improvement log, project instructions preamble, version snapshots, audit findings)
+
+### What changed
+
+**Schema (`drizzle/schema.ts`):**
+- `skills` table removed from schema (still exists in DB — `DROP TABLE` blocked by safety system; requires manual drop via Database panel)
+- `skillImprovements` table kept (no FK to `skills` — standalone improvement log keyed by `skillId` string)
+- `projectInstructionsVersions` table added (snapshots when "Mark as Applied" is clicked)
+- `projectInstructionsAudits` table added (agent-written audit findings from "Run Audit" workflow)
+
+**Router (`server/routers/skills.ts`):**
+- `SKILLS_METADATA` TypeScript constant added — 26 entries, one per skill directory, with all structured metadata
+- `skills.list` — now returns `SKILLS_METADATA` array (no DB query)
+- `skills.get` — returns one entry from `SKILLS_METADATA` + improvement log from DB
+- `skills.getContent` — new procedure; reads SKILL.md from filesystem at `/home/ubuntu/skills/{id}/SKILL.md`
+- `skills.upsert` — removed (skills are filesystem-only)
+- `skills.delete` — removed (skills are filesystem-only)
+- `skills.logImprovement` — kept (writes to `skillImprovements`)
+- `skills.saveInstructionsVersion` — new; writes snapshot to `projectInstructionsVersions`
+- `skills.listInstructionsVersions` — new; reads from `projectInstructionsVersions`
+- `skills.saveInstructionsAudit` — new; writes to `projectInstructionsAudits`
+- `skills.listInstructionsAudits` — new; reads from `projectInstructionsAudits`
+- `skills.getProjectInstructions` / `skills.saveProjectInstructions` — kept (preamble storage)
+
+**Frontend (`client/src/pages/Skills.tsx`):**
+- `AddSkillDialog` component removed
+- `DeleteSkillButton` component removed
+- `SkillRow` now lazy-loads improvements via `trpc.skills.get` when expanded
+- `FIXED_SECTIONS` constant added (5 toggleable blocks for Generator panel)
+- `generateSkillTriggers` updated to trigger-only format (strips "Read before/when" prefix)
+- `ProjectInstructions` rewritten with 3 panels:
+  - **Generator**: Fixed Sections toggles + trigger-only skills block + live budget bar (vs 8,000 chars) + "Copy all" + "Mark as Applied" button
+  - **Version History**: list of saved snapshots from `projectInstructionsVersions` DB table
+  - **Audit**: static analysis sections + "Run Audit" button (opens modal with copy-ready prompt for pasting into a new Manus task) + list of stored audit findings from `projectInstructionsAudits`
+
+**Tests (`server/skills.test.ts`):**
+- Rewritten for new architecture — 22/22 passing
+- Tests for `upsert` and `delete` removed
+- Tests added for `getContent`, `saveInstructionsAudit`, `saveInstructionsVersion`
+
+### Known issue: skills table still in DB
+
+The `skills` table still exists in the DB because `DROP TABLE` is blocked by the safety system. The data is stale seed data (22 rows from `scripts/seed-skills.mjs`). No real data is at risk. To drop it:
+1. Open the **Database panel** in the Management UI
+2. Select the `skills` table
+3. Delete all rows, then drop the table
+
+The `seed-skills.mjs` script has been deleted — it is superseded by the `SKILLS_METADATA` constant in the router.
+
+### Checkpoints
+- `79e39347` — after schema + router changes (22/22 tests passing)
+- `8252e07e` — after frontend changes (22/22 tests passing)
+
+### SKILLS_METADATA — how to add a new skill
+
+To add a new skill to the registry:
+1. Create the skill directory: `/home/ubuntu/skills/{id}/SKILL.md`
+2. Add an entry to `SKILLS_METADATA` in `server/routers/skills.ts` with the correct `id`, `name`, `description`, `tier`, `category`, `version`, `readWhen`, `hasReferences`
+3. No DB migration required — the list is a TypeScript constant
+
+### FIXED_SECTIONS — Project Instructions Generator
+
+The Generator panel has 5 toggleable Fixed Sections:
+1. **ERI workflow** — the 5-step ERI development workflow
+2. **Exponential Framework** — 5×4 matrix, pillar/horizontal names
+3. **Earth-Aligned AI Agent** — key files for the agent pipeline
+4. **BDS compliance** — pre-action checklist reference
+5. **Checkpoint discipline** — save-checkpoint rules
+
+These are rendered before the skill triggers block in the combined output. The budget bar shows used/8,000 characters.
