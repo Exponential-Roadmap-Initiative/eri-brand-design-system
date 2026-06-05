@@ -10,8 +10,8 @@
  *   3. Add / Log Improvement dialogs (admin only)
  */
 
-import { useState } from "react";
-import { Layers, SlidersHorizontal, Lightbulb, Clock, AlertTriangle, Eye, Download, Code2, BookOpen, Palette, Shield, Users, Search, Settings, Cloud, Music } from "lucide-react";
+import { useState, useCallback } from "react";
+import { Layers, SlidersHorizontal, Lightbulb, Clock, AlertTriangle, Eye, Download, Code2, BookOpen, Palette, Shield, Users, Search, Settings, Cloud, Music, Copy, CheckCircle2, History, ClipboardList, ChevronDown, ChevronRight, ToggleLeft, ToggleRight } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -386,190 +386,6 @@ function LogImprovementDialog({ skillId, currentVersion, onSuccess }: LogImprove
   );
 }
 
-// ── Add / Edit Skill dialog ───────────────────────────────────────────────────
-
-interface AddSkillDialogProps {
-  onSuccess: () => void;
-  prefill?: Partial<Skill>;
-}
-
-function AddSkillDialog({ onSuccess, prefill }: AddSkillDialogProps) {
-  const [open, setOpen] = useState(false);
-    const [id, setId] = useState(prefill?.id ?? "");
-  const [name, setName] = useState(prefill?.name ?? "");
-  const [description, setDescription] = useState(prefill?.description ?? "");
-  const [tier, setTier] = useState(String(prefill?.tier ?? "3"));
-  const [version, setVersion] = useState(prefill?.version ?? "1.0.0");
-  const [readWhen, setReadWhen] = useState(prefill?.readWhen ?? "");
-  const [category, setCategory] = useState(prefill?.category ?? "");
-  const isEdit = Boolean(prefill?.id);
-  const upsertMutation = trpc.skills.upsert.useMutation({
-    onSuccess: () => {
-      setOpen(false);
-      if (!isEdit) {
-        setId(""); setName(""); setDescription(""); setTier("3"); setVersion("1.0.0"); setReadWhen(""); setCategory("");
-      }
-      onSuccess();
-    },
-  });
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {isEdit ? (
-          <Button variant="ghost" size="sm">Edit</Button>
-        ) : (
-          <Button>Add Skill</Button>
-        )}
-      </DialogTrigger>
-      <DialogContent className="max-w-lg">
-        <DialogHeader>
-          <DialogTitle>{isEdit ? `Edit — ${prefill?.id}` : "Add Skill"}</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-3 pt-2">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <Label>ID</Label>
-              <Input
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                placeholder="eri-bds-reference"
-                className="mt-1"
-                disabled={isEdit}
-              />
-            </div>
-            <div>
-              <Label>Version</Label>
-              <Input
-                value={version}
-                onChange={(e) => setVersion(e.target.value)}
-                placeholder="1.0.0"
-                className="mt-1"
-              />
-            </div>
-          </div>
-          <div>
-            <Label>Name</Label>
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="ERI Brand Design System Reference"
-              className="mt-1"
-            />
-          </div>
-          <div>
-            <Label>Tier</Label>
-            <Select value={tier} onValueChange={setTier}>
-              <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Tier 1 — Always-on</SelectItem>
-                <SelectItem value="2">Tier 2 — Per-action gate</SelectItem>
-                <SelectItem value="3">Tier 3 — Conditional</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Label>Description</Label>
-            <Textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="mt-1"
-              rows={3}
-              placeholder="What this skill does and when to use it. Make it slightly pushy — 'use whenever X' rather than just 'for X'."
-            />
-          </div>
-          <div>
-            <Label>Category (optional)</Label>
-            <Select value={category || ""} onValueChange={setCategory}>
-              <SelectTrigger className="mt-1"><SelectValue placeholder="Select category" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">No category</SelectItem>
-                {Object.entries(CATEGORY_CONFIG).map(([key, cfg]) => {
-                  const CfgIcon = cfg.Icon;
-                  return (
-                    <SelectItem key={key} value={key}>
-                      <span className="inline-flex items-center gap-1.5">
-                        <CfgIcon size={12} />{cfg.label}
-                      </span>
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Label>Read when (optional)</Label>
-            <Input
-              value={readWhen}
-              onChange={(e) => setReadWhen(e.target.value)}
-              placeholder="When building or updating any ERI product"
-              className="mt-1"
-            />
-          </div>
-          <Button
-            onClick={() =>
-              upsertMutation.mutate({
-                id,
-                name,
-                description,
-                tier: parseInt(tier),
-                version,
-                readWhen: readWhen || undefined,
-                category: category || undefined,
-              })
-            }
-            disabled={!id.trim() || !name.trim() || !description.trim() || upsertMutation.isPending}
-            className="w-full"
-          >
-            {upsertMutation.isPending ? "Saving…" : "Save Skill"}
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-// ── Delete confirmation ───────────────────────────────────────────────────────
-
-interface DeleteSkillButtonProps {
-  skillId: string;
-  onSuccess: () => void;
-}
-
-function DeleteSkillButton({ skillId, onSuccess }: DeleteSkillButtonProps) {
-  const [confirming, setConfirming] = useState(false);
-
-  const deleteMutation = trpc.skills.delete.useMutation({
-    onSuccess: () => {
-      setConfirming(false);
-      onSuccess();
-    },
-  });
-
-  if (confirming) {
-    return (
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-destructive">Delete?</span>
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={() => deleteMutation.mutate({ id: skillId })}
-          disabled={deleteMutation.isPending}
-        >
-          {deleteMutation.isPending ? "Deleting…" : "Confirm"}
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setConfirming(false)}>Cancel</Button>
-      </div>
-    );
-  }
-
-  return (
-    <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={() => setConfirming(true)}>
-      Delete
-    </Button>
-  );
-}
-
 // ── Skill row ─────────────────────────────────────────────────────────────────
 
 interface SkillRowProps {
@@ -720,65 +536,59 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
 
 const CHAR_BUDGET = 8000;
 
-const DEFAULT_PREAMBLE = `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
-Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
+// ── Fixed Sections ─────────────────────────────────────────────────────────────
+// These are non-skill CRITICAL blocks that belong in project instructions.
+// Each has an id, label, char count, and the actual text content.
 
-const AUDIT_SECTIONS = [
+interface FixedSection {
+  id: string;
+  label: string;
+  chars: number;
+  content: string;
+  defaultOn: boolean;
+  description: string;
+}
+
+const FIXED_SECTIONS: FixedSection[] = [
   {
-    id: "skill-update",
-    title: "Skill update command",
+    id: "S_BDS_UPDATE",
+    label: "BDS skill auto-update",
     chars: 285,
-    recommendation: "keep" as const,
-    reason: "Essential — fetches the latest BDS skill before every task. Without this, the agent uses a stale skill version. The curl command is specific and cannot be inferred.",
+    defaultOn: true,
+    description: "Fetches the latest BDS reference skill at the start of every task.",
+    content: `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action`,
   },
   {
-    id: "project-context",
-    title: "PROJECT-CONTEXT.md instruction",
+    id: "S_PROJECT_CONTEXT",
+    label: "PROJECT-CONTEXT.md guard",
     chars: 448,
-    recommendation: "keep" as const,
-    reason: "Essential — context compaction erases session memory. This instruction is the only mechanism that preserves project-specific knowledge across sessions. Cannot be moved to a skill because it must run before any skill is read.",
+    defaultOn: true,
+    description: "Preserves project-specific knowledge across context compaction and sandbox resets.",
+    content: `Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
   },
   {
-    id: "skill-scan",
-    title: "Skill scan instruction",
-    chars: 340,
-    recommendation: "replace" as const,
-    reason: "Partially redundant — the auto-generated skill trigger block below replaces the generic 'scan and identify' instruction with precise per-skill triggers. The generic instruction can be shortened to a single line: 'Read the SKILL.md for each relevant skill listed below before taking action.'",
+    id: "S_CHECKPOINT",
+    label: "Checkpoint discipline",
+    chars: 480,
+    defaultOn: true,
+    description: "Prevents losing work to sandbox resets by enforcing frequent checkpoints.",
+    content: `Critical: Checkpoint discipline — save a checkpoint after every 3–5 file changes. Never treat an entire feature sprint as a single checkpoint unit. Specifically:\n- Save a checkpoint immediately after writing each logical group of files (e.g., after the router, after the widget components, after the explorer page, after config wiring, after route wiring)\n- Never run \`pnpm test\` (the full test suite) before saving a checkpoint — it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`\n- If a sandbox reset occurs mid-task, the last checkpoint is the recovery point — all unsaved work is lost`,
   },
   {
-    id: "skill-update-post",
-    title: "Post-task skill update instruction",
-    chars: 440,
-    recommendation: "compress" as const,
-    reason: "Still valuable but verbose. The core instruction ('update the relevant SKILL.md after every task') is 60 chars. The explanation of why (350 chars) is now covered by the Skills page philosophy. Compressing to the essential directive saves ~380 chars.",
-  },
-  {
-    id: "dev-workflow",
-    title: "ERI development workflow (6 steps)",
+    id: "S_DEV_WORKFLOW",
+    label: "ERI development workflow",
     chars: 257,
-    recommendation: "evaluate" as const,
-    reason: "Manus now follows a structured research → design → plan → implement → test loop by default. The question is whether the explicit ERI framing ('get acceptance for plan') adds value beyond the default agent behaviour. If the agent already does this, these 257 chars are recoverable.",
+    defaultOn: true,
+    description: "6-step workflow: Research → Design → Plan → Implement → Test → Iterate.",
+    content: `Critical: Always follow the ERI development workflow:\n1. Research: clarify purpose, understand current context and existing assets, explore possible solutions\n2. Design\n3. Plan and get acceptance for plan\n4. Implement\n5. Test\n6. Iterate until solution works`,
   },
   {
-    id: "collab-skill",
-    title: "Apply exponential-human-ai-collaboration skill",
-    chars: 91,
-    recommendation: "replace" as const,
-    reason: "Redundant once this skill is in Tier 1 — the auto-generated trigger block will include it with 'Read at the start of every task'. The explicit instruction duplicates the tier assignment.",
-  },
-  {
-    id: "framework",
-    title: "Exponential Framework matrix",
+    id: "S_FRAMEWORK",
+    label: "Exponential Framework matrix",
     chars: 530,
-    recommendation: "evaluate" as const,
-    reason: "Project-specific context that the agent cannot infer. However, this is only relevant for projects that work with the Exponential Framework (e.g. PSM, Exponential Platform). For the BDS project specifically, this section is rarely used. Consider moving to PROJECT-CONTEXT.md for projects where it is not central.",
-  },
-  {
-    id: "agent-files",
-    title: "Earth-aligned AI Agent key files",
-    chars: 230,
-    recommendation: "move" as const,
-    reason: "This is project-specific context for the eri-playbook-team project, not the BDS project. It belongs in that project's PROJECT-CONTEXT.md, not in shared project instructions. Removing it from the BDS project instructions saves 230 chars with no loss.",
+    defaultOn: false,
+    description: "5×4 matrix reference for projects using the Exponential Framework. Disable for non-framework projects.",
+    content: `## Exponential Framework — Always Remember\nThe ERI Exponential Framework is a 5 pillars (columns) x 4 horizontals (rows) matrix = 20 cells.\n\n5 Pillars: P1=Cut Operational Emissions, P2=Decarbonise Value Chain, P3=Build & Scale Solutions, P4=Mobilise Finance & Investment, P5=Shape Policy & Narrative\n\n4 Horizontals (rows, top to bottom): H1=Earth-aligned Vision & Mission, H2=Set Targets & Strategy, H3=Develop Transition Plan & Take Action, H4=Measure, Report & Disclose\n\nReference: https://exponentialroadmap.org/exponential-framework/`,
   },
 ];
 
@@ -790,6 +600,8 @@ const RECOMMENDATION_CONFIG: Record<string, { label: string; accentColor: string
   move:     { label: "Move",     accentColor: "#f97316", tintBg: "rgba(249,115,22,0.08)" },
 };
 
+// Trigger-only format: strips "Read before/when" prefix from readWhen.
+// Saves ~35 chars/entry vs verbose format (~980 chars total for 28 skills).
 function generateSkillTriggers(skills: Skill[]): string {
   if (!skills || skills.length === 0) return "";
 
@@ -800,78 +612,144 @@ function generateSkillTriggers(skills: Skill[]): string {
   const lines: string[] = [];
 
   if (tier1.length > 0) {
-    lines.push("## Always-on skills (read at the start of every task)");
+    lines.push("## Tier 1 — Always-on (read at the start of every task)");
     for (const s of tier1) {
-      lines.push(`Read /home/ubuntu/skills/${s.id}/SKILL.md before every task.`);
+      lines.push(`• ${s.id}: every task.`);
     }
   }
 
   if (tier2.length > 0) {
     lines.push("");
-    lines.push("## Per-action skills (read immediately before the indicated action)");
+    lines.push("## Tier 2 — Per-action (read immediately before the indicated action)");
     for (const s of tier2) {
-      const trigger = s.readWhen ? s.readWhen.replace(/^Read (this skill |SKILL\.md )?/i, "").replace(/\.$/, "") : `using ${s.name}`;
-      lines.push(`Read /home/ubuntu/skills/${s.id}/SKILL.md before ${trigger}.`);
+      // Trigger-only: strip leading "Read (this skill|SKILL.md) (before|when|for)"
+      const raw = s.readWhen ?? `using ${s.name}`;
+      const trigger = raw
+        .replace(/^Read (this skill |SKILL\.md )?(before |when |for |to )?/i, "")
+        .replace(/^(before |when |for )/i, "")
+        .replace(/\.$/, "");
+      lines.push(`• ${s.id}: ${trigger}.`);
     }
   }
 
   if (tier3.length > 0) {
     lines.push("");
-    lines.push("## Conditional skills (read when the domain applies)");
+    lines.push("## Tier 3 — Conditional (read when the domain applies)");
     for (const s of tier3) {
-      const trigger = s.readWhen ? s.readWhen.replace(/^Read (this skill |SKILL\.md )?/i, "").replace(/\.$/, "") : `working on ${s.name}`;
-      lines.push(`Read /home/ubuntu/skills/${s.id}/SKILL.md when ${trigger}.`);
+      const raw = s.readWhen ?? `working on ${s.name}`;
+      const trigger = raw
+        .replace(/^Read (this skill |SKILL\.md )?(before |when |for |to )?/i, "")
+        .replace(/^(before |when |for )/i, "")
+        .replace(/\.$/, "");
+      lines.push(`• ${s.id}: ${trigger}.`);
     }
   }
 
   return lines.join("\n");
 }
 
+const AUDIT_PROMPT = `Read the current project instructions from your context (<project_instructions> block) and run a section-by-section audit.
+
+For each section:
+1. Assign a verdict: Keep / Keep-compress / Move to skill / Remove
+2. Estimate character savings if compressed or removed
+3. Reasoning: would a capable Manus agent do the right thing here without this instruction?
+
+Also check:
+- Broken skill references (e.g. "see §9 of ht-dev-ops" where §9 doesn't exist)
+- Tier discrepancies (skills listed in wrong tier vs the registry)
+- Character budget: total chars used vs the 8,000-char limit
+
+Write findings to the database using trpc.skills.saveInstructionsAudit with:
+- sectionsJson: array of { id, label, chars, verdict, saving, reasoning }
+- discrepanciesJson: array of string descriptions
+- charCount: total chars of current instructions
+- budgetPct: percentage of 8,000 used
+- summary: 2-3 sentence overall assessment`;
+
 interface ProjectInstructionsProps {
   skills: Skill[];
 }
 
 function ProjectInstructions({ skills }: ProjectInstructionsProps) {
-  const [activeTab, setActiveTab] = useState<"audit" | "triggers" | "output">("audit");
-  const [preamble, setPreamble] = useState(() => {
-    try { return localStorage.getItem("eri-pi-preamble") ?? DEFAULT_PREAMBLE; }
-    catch { return DEFAULT_PREAMBLE; }
+  const [activeTab, setActiveTab] = useState<"generator" | "history" | "audit">("generator");
+  const [enabledSections, setEnabledSections] = useState<Record<string, boolean>>(() => {
+    const defaults: Record<string, boolean> = {};
+    FIXED_SECTIONS.forEach(s => { defaults[s.id] = s.defaultOn; });
+    return defaults;
   });
-  const [copied, setCopied] = useState(false);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const [versionNote, setVersionNote] = useState("");
+  const [versionLabel, setVersionLabel] = useState(() => {
+    const d = new Date();
+    return `v${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`;
+  });
+  const [markAppliedOpen, setMarkAppliedOpen] = useState(false);
+  const [auditModalOpen, setAuditModalOpen] = useState(false);
+  const [copiedOutput, setCopiedOutput] = useState(false);
+  const [copiedAuditPrompt, setCopiedAuditPrompt] = useState(false);
 
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
+
+  // DB queries (only when logged in)
+  const versionsQuery = trpc.skills.listInstructionsVersions.useQuery(undefined, { enabled: isAdmin });
+  const auditsQuery = trpc.skills.listInstructionsAudits.useQuery(undefined, { enabled: isAdmin });
+  const saveVersionMutation = trpc.skills.saveInstructionsVersion.useMutation({
+    onSuccess: () => {
+      versionsQuery.refetch();
+      setMarkAppliedOpen(false);
+      setVersionNote("");
+    },
+  });
+
+  // Assemble the generated output
+  const fixedText = FIXED_SECTIONS
+    .filter(s => enabledSections[s.id])
+    .map(s => s.content)
+    .join("\n");
   const skillTriggers = generateSkillTriggers(skills);
-  const combined = [preamble.trim(), skillTriggers.trim()].filter(Boolean).join("\n\n");
+  const skillsBlock = skills.length > 0
+    ? `Critical: At the start of every task, scan the skills listed in the system prompt and identify which ones apply to this task. Read the full SKILL.md for each relevant skill before taking any action.\n\n${skillTriggers}`
+    : "";
+  const combined = [fixedText.trim(), skillsBlock.trim()].filter(Boolean).join("\n\n");
   const charCount = combined.length;
   const budgetPct = Math.min(100, (charCount / CHAR_BUDGET) * 100);
-  const budgetColor = charCount > CHAR_BUDGET * 0.9 ? "text-red-600" : charCount > CHAR_BUDGET * 0.7 ? "text-amber-600" : "text-green-600";
+  const budgetColor = charCount > CHAR_BUDGET * 0.9 ? "text-red-500" : charCount > CHAR_BUDGET * 0.7 ? "text-amber-500" : "text-green-500";
   const barColor = charCount > CHAR_BUDGET * 0.9 ? "bg-red-500" : charCount > CHAR_BUDGET * 0.7 ? "bg-amber-500" : "bg-green-500";
 
-  const savePreamble = (v: string) => {
-    setPreamble(v);
-    try { localStorage.setItem("eri-pi-preamble", v); } catch {}
-  };
-
-  const handleCopy = () => {
+  const handleCopyOutput = useCallback(() => {
     navigator.clipboard.writeText(combined).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopiedOutput(true);
+      setTimeout(() => setCopiedOutput(false), 2000);
+    });
+  }, [combined]);
+
+  const handleCopyAuditPrompt = useCallback(() => {
+    navigator.clipboard.writeText(AUDIT_PROMPT).then(() => {
+      setCopiedAuditPrompt(true);
+      setTimeout(() => setCopiedAuditPrompt(false), 2000);
+    });
+  }, []);
+
+  const handleMarkApplied = () => {
+    saveVersionMutation.mutate({
+      version: versionLabel,
+      generatedSnapshot: combined,
+      changeNote: versionNote || undefined,
+      charCount,
+      budgetPct: Math.round(budgetPct),
     });
   };
 
-  const resetPreamble = () => savePreamble(DEFAULT_PREAMBLE);
-
-  const totalAuditChars = AUDIT_SECTIONS.reduce((s, a) => s + a.chars, 0);
-  const keepChars = AUDIT_SECTIONS.filter(a => a.recommendation === "keep").reduce((s, a) => s + a.chars, 0);
-  const potentialSavings = totalAuditChars - keepChars;
-
   return (
     <div className="border border-border rounded-lg overflow-hidden mb-8">
-      {/* Header bar — always visible, no collapse toggle */}
+      {/* Header */}
       <div className="w-full flex items-center justify-between px-5 py-4">
         <div>
           <p className="text-sm font-semibold text-foreground">Project Instructions Manager</p>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Audit existing instructions · Auto-generate skill triggers · Optimise character budget
+            Assemble skill triggers · Manage Fixed Sections · Track version history · Run audits
           </p>
         </div>
         <div className="flex items-center gap-3 ml-4">
@@ -880,59 +758,287 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
           </span>
         </div>
       </div>
+
       <div className="border-t border-border">
+        {/* Tab bar */}
+        <div className="flex border-b border-border bg-muted/20">
+          {([
+            { id: "generator" as const, label: "Generator", Icon: SlidersHorizontal },
+            { id: "history" as const,   label: "Version History", Icon: History },
+            { id: "audit" as const,     label: "Audit", Icon: ClipboardList },
+          ]).map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-1.5 px-5 py-3 text-xs font-medium transition-colors ${
+                activeTab === tab.id
+                  ? "border-b-2 border-foreground text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <tab.Icon size={12} />
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Tab bar */}
-          <div className="flex border-b border-border bg-muted/20">
-            {([
-              { id: "audit", label: "Instruction Audit" },
-              { id: "triggers", label: "Skill Triggers" },
-              { id: "output", label: "Combined Output" },
-            ] as const).map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-3 text-xs font-medium transition-colors ${
-                  activeTab === tab.id
-                    ? "border-b-2 border-foreground text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+        {/* ── Generator tab ── */}
+        {activeTab === "generator" && (
+          <div className="px-5 py-6 space-y-6">
 
-          {/* Audit tab */}
-          {activeTab === "audit" && (
-            <div className="px-5 py-6 space-y-5">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-sm text-foreground/80 leading-relaxed">
-                    The current project instructions were written incrementally over several months. Some sections may now be redundant — either because Manus handles them by default, or because the content has been moved into a skill or PROJECT-CONTEXT.md. This audit evaluates each section against the question: <span className="italic">"Would a capable Manus agent do the right thing here without this instruction?"</span>
-                  </p>
-                </div>
-                <div className="flex-shrink-0 text-right">
-                  <p className="text-xs text-muted-foreground">Potential savings</p>
-                  <p className="text-lg font-bold text-amber-600">~{potentialSavings} chars</p>
-                  <p className="text-xs text-muted-foreground">{Math.round((potentialSavings / totalAuditChars) * 100)}% of current</p>
-                </div>
+            {/* Budget bar */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-xs font-semibold text-foreground">Character budget</p>
+                <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
+                  {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()} ({Math.round(budgetPct)}%)
+                </span>
               </div>
+              <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${budgetPct}%` }} />
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {CHAR_BUDGET - charCount > 0
+                  ? `${(CHAR_BUDGET - charCount).toLocaleString()} chars remaining · target: under 65% (5,200 chars)`
+                  : `${(charCount - CHAR_BUDGET).toLocaleString()} chars over budget`}
+              </p>
+            </div>
 
-              <div className="space-y-3">
-                {AUDIT_SECTIONS.map(section => {
-                  const cfg = RECOMMENDATION_CONFIG[section.recommendation];
-                  return (
-                    <div key={section.id} className="border border-border rounded-md p-4">
-                      <div className="flex items-start justify-between gap-3 mb-2">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-medium text-foreground">{section.title}</span>
+            {/* Fixed Sections */}
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Fixed Sections</p>
+              <div className="space-y-2">
+                {FIXED_SECTIONS.map(section => (
+                  <div key={section.id} className="border border-border rounded-md overflow-hidden">
+                    <div className="flex items-center gap-3 px-4 py-3">
+                      <button
+                        onClick={() => setEnabledSections(prev => ({ ...prev, [section.id]: !prev[section.id] }))}
+                        className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                        title={enabledSections[section.id] ? "Disable" : "Enable"}
+                      >
+                        {enabledSections[section.id]
+                          ? <ToggleRight size={18} className="text-green-500" />
+                          : <ToggleLeft size={18} className="text-muted-foreground" />}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-xs font-medium ${
+                            enabledSections[section.id] ? "text-foreground" : "text-muted-foreground line-through"
+                          }`}>{section.label}</span>
                           <span className="text-xs text-muted-foreground font-mono">{section.chars} chars</span>
                         </div>
-                        <span
-                          className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border"
-                          style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}
-                        >
+                        <p className="text-xs text-muted-foreground mt-0.5 truncate">{section.description}</p>
+                      </div>
+                      <button
+                        onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
+                        className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                        title="Expand content"
+                      >
+                        {expandedSection === section.id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                      </button>
+                    </div>
+                    {expandedSection === section.id && (
+                      <div className="border-t border-border bg-muted/20 px-4 py-3">
+                        <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{section.content}</pre>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Skill triggers block */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skills Block (trigger-only format)</p>
+                <span className="text-xs text-muted-foreground font-mono">{skillTriggers.length} chars</span>
+              </div>
+              <div className="rounded-md bg-muted/20 border border-border p-3">
+                <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{skillTriggers || "No skills registered."}</pre>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Trigger-only format saves ~35 chars/skill vs verbose format. Derived from each skill's <span className="font-mono">readWhen</span> field.
+              </p>
+            </div>
+
+            {/* Copy + Mark as Applied */}
+            <div className="flex gap-3">
+              <Button
+                onClick={handleCopyOutput}
+                variant="outline"
+                className="flex-1 gap-2"
+                disabled={charCount === 0}
+              >
+                {copiedOutput ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
+                {copiedOutput ? "Copied!" : `Copy (${charCount.toLocaleString()} chars)`}
+              </Button>
+              {isAdmin && (
+                <Button
+                  onClick={() => setMarkAppliedOpen(true)}
+                  className="flex-1 gap-2"
+                  disabled={charCount === 0}
+                >
+                  <CheckCircle2 size={14} />
+                  Mark as Applied
+                </Button>
+              )}
+            </div>
+
+            {charCount > CHAR_BUDGET && (
+              <div className="rounded-md bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 p-3">
+                <p className="text-xs text-red-800 dark:text-red-300 font-semibold">
+                  Over budget by {(charCount - CHAR_BUDGET).toLocaleString()} characters. Disable optional Fixed Sections or review the Audit tab.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Version History tab ── */}
+        {activeTab === "history" && (
+          <div className="px-5 py-6 space-y-4">
+            <p className="text-sm text-foreground/80 leading-relaxed">
+              Each time you paste generated instructions into Manus project settings, click <span className="font-medium">Mark as Applied</span> in the Generator tab to record a snapshot here. This creates a permanent record of what was active and when.
+            </p>
+            {!isAdmin && (
+              <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
+                <p className="text-xs text-muted-foreground">Sign in as admin to view version history.</p>
+              </div>
+            )}
+            {isAdmin && versionsQuery.isLoading && (
+              <div className="space-y-2">
+                {[1,2,3].map(i => <div key={i} className="h-16 rounded-md bg-muted animate-pulse" />)}
+              </div>
+            )}
+            {isAdmin && !versionsQuery.isLoading && (versionsQuery.data?.length ?? 0) === 0 && (
+              <div className="rounded-md bg-muted/30 border border-border p-6 text-center">
+                <History size={24} className="mx-auto text-muted-foreground mb-2" />
+                <p className="text-sm font-medium text-foreground">No versions recorded yet</p>
+                <p className="text-xs text-muted-foreground mt-1">Generate instructions and click "Mark as Applied" to create the first snapshot.</p>
+              </div>
+            )}
+            {isAdmin && (versionsQuery.data ?? []).map(v => (
+              <div key={v.id} className="border border-border rounded-md p-4">
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div>
+                    <span className="text-sm font-semibold text-foreground font-mono">{v.version}</span>
+                    {v.changeNote && <p className="text-xs text-muted-foreground mt-0.5">{v.changeNote}</p>}
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-xs text-muted-foreground">{new Date(v.appliedAt).toLocaleDateString()}</p>
+                    {v.charCount != null && (
+                      <p className={`text-xs font-mono font-semibold ${
+                        (v.budgetPct ?? 0) > 90 ? "text-red-500" : (v.budgetPct ?? 0) > 70 ? "text-amber-500" : "text-green-500"
+                      }`}>{v.charCount.toLocaleString()} chars ({v.budgetPct}%)</p>
+                    )}
+                  </div>
+                </div>
+                <div className="rounded bg-muted/20 border border-border p-2 max-h-32 overflow-y-auto">
+                  <pre className="text-xs text-foreground/60 whitespace-pre-wrap font-mono leading-relaxed">{v.generatedSnapshot.slice(0, 400)}{v.generatedSnapshot.length > 400 ? "..." : ""}</pre>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── Audit tab ── */}
+        {activeTab === "audit" && (
+          <div className="px-5 py-6 space-y-5">
+            <div className="flex items-start justify-between gap-4">
+              <p className="text-sm text-foreground/80 leading-relaxed">
+                The Manus platform has no API to read live project instructions — only the agent itself can read them from its context. Use the <span className="font-medium">Run Audit</span> button to copy a prompt, paste it into a new Manus task in this project, and the agent will write findings back to this page.
+              </p>
+              <Button
+                onClick={() => setAuditModalOpen(true)}
+                variant="outline"
+                className="flex-shrink-0 gap-2 text-xs"
+              >
+                <ClipboardList size={13} />
+                Run Audit
+              </Button>
+            </div>
+
+            {/* Stored audit findings */}
+            {!isAdmin && (
+              <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
+                <p className="text-xs text-muted-foreground">Sign in as admin to view stored audit findings.</p>
+              </div>
+            )}
+            {isAdmin && auditsQuery.isLoading && (
+              <div className="space-y-2">
+                {[1,2].map(i => <div key={i} className="h-20 rounded-md bg-muted animate-pulse" />)}
+              </div>
+            )}
+            {isAdmin && !auditsQuery.isLoading && (auditsQuery.data?.length ?? 0) === 0 && (
+              <div className="rounded-md bg-muted/30 border border-border p-6 text-center">
+                <ClipboardList size={24} className="mx-auto text-muted-foreground mb-2" />
+                <p className="text-sm font-medium text-foreground">No audit findings yet</p>
+                <p className="text-xs text-muted-foreground mt-1">Click "Run Audit" to copy the prompt and run it in a new Manus task.</p>
+              </div>
+            )}
+            {isAdmin && (auditsQuery.data ?? []).map(a => (
+              <div key={a.id} className="border border-border rounded-md p-4">
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div>
+                    <p className="text-xs text-muted-foreground">{new Date(a.auditedAt).toLocaleString()}</p>
+                    {a.summary && <p className="text-sm text-foreground mt-1 leading-relaxed">{a.summary}</p>}
+                  </div>
+                  {a.charCount != null && (
+                    <div className="text-right flex-shrink-0">
+                      <p className={`text-xs font-mono font-semibold ${
+                        (a.budgetPct ?? 0) > 90 ? "text-red-500" : (a.budgetPct ?? 0) > 70 ? "text-amber-500" : "text-green-500"
+                      }`}>{a.charCount.toLocaleString()} chars ({a.budgetPct}%)</p>
+                    </div>
+                  )}
+                </div>
+                {a.discrepanciesJson && (() => {
+                  try {
+                    const discrepancies = JSON.parse(a.discrepanciesJson) as string[];
+                    if (discrepancies.length > 0) return (
+                      <div className="mt-2">
+                        <p className="text-xs font-semibold text-amber-600 mb-1">Discrepancies</p>
+                        <ul className="space-y-1">
+                          {discrepancies.map((d, i) => (
+                            <li key={i} className="text-xs text-muted-foreground flex gap-2">
+                              <AlertTriangle size={11} className="flex-shrink-0 mt-0.5 text-amber-500" />
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  } catch {}
+                  return null;
+                })()}
+              </div>
+            ))}
+
+            {/* Static analysis (legacy — pre-agent audit) */}
+            <details className="border border-border rounded-md overflow-hidden">
+              <summary className="px-4 py-3 text-xs font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+                Static analysis (pre-agent, for reference)
+              </summary>
+              <div className="px-4 pb-4 pt-2 space-y-3 border-t border-border">
+                {[
+                  { id: "skill-update", title: "BDS skill auto-update", chars: 285, recommendation: "keep" as const, reason: "Essential — fetches the latest BDS skill before every task." },
+                  { id: "project-context", title: "PROJECT-CONTEXT.md guard", chars: 448, recommendation: "keep" as const, reason: "Essential — context compaction erases session memory." },
+                  { id: "skill-scan", title: "Skill scan instruction", chars: 340, recommendation: "replace" as const, reason: "Superseded by the auto-generated trigger block in the Generator tab." },
+                  { id: "skill-update-post", title: "Post-task skill update", chars: 440, recommendation: "compress" as const, reason: "Valuable but verbose — core directive is 60 chars." },
+                  { id: "dev-workflow", title: "ERI development workflow", chars: 257, recommendation: "evaluate" as const, reason: "May be redundant if Manus already follows this loop by default." },
+                  { id: "collab-skill", title: "Apply exponential-human-ai-collaboration", chars: 91, recommendation: "replace" as const, reason: "Redundant once this skill is in Tier 1." },
+                  { id: "framework", title: "Exponential Framework matrix", chars: 530, recommendation: "evaluate" as const, reason: "Only relevant for framework projects — disable for BDS." },
+                  { id: "agent-files", title: "Earth-aligned AI Agent key files", chars: 230, recommendation: "move" as const, reason: "Belongs in the eri-playbook-team PROJECT-CONTEXT.md, not BDS." },
+                ].map(section => {
+                  const cfg = RECOMMENDATION_CONFIG[section.recommendation];
+                  return (
+                    <div key={section.id} className="border border-border rounded-md p-3">
+                      <div className="flex items-start justify-between gap-3 mb-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-medium text-foreground">{section.title}</span>
+                          <span className="text-xs text-muted-foreground font-mono">{section.chars}c</span>
+                        </div>
+                        <span className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border"
+                          style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}>
                           {cfg.label}
                         </span>
                       </div>
@@ -941,134 +1047,83 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
                   );
                 })}
               </div>
+            </details>
+          </div>
+        )}
+      </div>
 
-              <div className="rounded-md bg-muted/30 border border-border p-4">
-                <p className="text-xs font-semibold text-foreground mb-2">Legend</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {Object.entries(RECOMMENDATION_CONFIG).map(([key, cfg]) => (
-                    <div key={key} className="flex items-center gap-2">
-                      <span
-                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border"
-                        style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}
-                      >
-                        {cfg.label}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {key === "keep" && "Essential — cannot be removed"}
-                        {key === "replace" && "Superseded by skill trigger block"}
-                        {key === "compress" && "Valuable but can be shortened"}
-                        {key === "evaluate" && "May be redundant in current Manus — test"}
-                        {key === "move" && "Belongs in PROJECT-CONTEXT.md"}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      {/* Mark as Applied dialog */}
+      <Dialog open={markAppliedOpen} onOpenChange={setMarkAppliedOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Mark as Applied</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <p className="text-sm text-muted-foreground">
+              Record a snapshot of the current generated instructions. Use this after pasting into Manus project settings.
+            </p>
+            <div className="space-y-2">
+              <Label htmlFor="version-label">Version label</Label>
+              <Input
+                id="version-label"
+                value={versionLabel}
+                onChange={e => setVersionLabel(e.target.value)}
+                placeholder="e.g. v2026.06.05"
+                className="font-mono text-sm"
+              />
             </div>
-          )}
-
-          {/* Skill triggers tab */}
-          {activeTab === "triggers" && (
-            <div className="px-5 py-6 space-y-4">
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                This block is auto-generated from the skill registry above. It replaces the generic "scan the skills" instruction with precise, per-skill triggers ordered by tier. Update skill tiers or <span className="font-mono text-xs">readWhen</span> fields in the registry to change the output.
+            <div className="space-y-2">
+              <Label htmlFor="version-note">Change note (optional)</Label>
+              <Textarea
+                id="version-note"
+                value={versionNote}
+                onChange={e => setVersionNote(e.target.value)}
+                placeholder="What changed in this version?"
+                className="text-sm min-h-[80px]"
+              />
+            </div>
+            <div className="rounded-md bg-muted/30 border border-border p-3">
+              <p className="text-xs text-muted-foreground">
+                Snapshot: <span className="font-mono">{charCount.toLocaleString()} chars</span> · <span className={budgetColor}>{Math.round(budgetPct)}% of budget</span>
               </p>
-              <div className="rounded-md bg-muted/20 border border-border p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Generated output</p>
-                  <span className="text-xs text-muted-foreground font-mono">{skillTriggers.length} chars</span>
-                </div>
-                <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">{skillTriggers || "No skills registered yet."}</pre>
-              </div>
-              <div className="rounded-md bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-3">
-                <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
-                  <span className="font-semibold">Note:</span> The trigger text is derived from each skill's <span className="font-mono">readWhen</span> field in the registry. If a skill has no <span className="font-mono">readWhen</span> value, a generic trigger is used. Edit the skill in the registry above to set a precise trigger.
-                </p>
-              </div>
             </div>
-          )}
-
-          {/* Combined output tab */}
-          {activeTab === "output" && (
-            <div className="px-5 py-6 space-y-5">
-
-              {/* Character budget bar */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-xs font-semibold text-foreground">Character budget</p>
-                  <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
-                    {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()} ({Math.round(budgetPct)}%)
-                  </span>
-                </div>
-                <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all ${barColor}`}
-                    style={{ width: `${budgetPct}%` }}
-                  />
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {CHAR_BUDGET - charCount > 0
-                    ? `${(CHAR_BUDGET - charCount).toLocaleString()} characters remaining`
-                    : `${(charCount - CHAR_BUDGET).toLocaleString()} characters over budget`
-                  }
-                </p>
-              </div>
-
-              {/* Preamble editor */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-xs font-semibold text-foreground">Preamble (editable)</p>
-                  <button
-                    onClick={resetPreamble}
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Reset to default
-                  </button>
-                </div>
-                <Textarea
-                  value={preamble}
-                  onChange={(e) => savePreamble(e.target.value)}
-                  className="font-mono text-xs leading-relaxed min-h-[160px]"
-                  placeholder="Paste your project-specific preamble here..."
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {preamble.length.toLocaleString()} chars · Saved to browser storage automatically
-                </p>
-              </div>
-
-              {/* Skill triggers (read-only) */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-xs font-semibold text-foreground">Skill triggers (auto-generated)</p>
-                  <span className="text-xs text-muted-foreground font-mono">{skillTriggers.length} chars</span>
-                </div>
-                <div className="rounded-md bg-muted/20 border border-border p-3">
-                  <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{skillTriggers || "No skills registered."}</pre>
-                </div>
-              </div>
-
-              {/* Copy button */}
+            <div className="flex gap-3">
+              <Button variant="outline" onClick={() => setMarkAppliedOpen(false)} className="flex-1">Cancel</Button>
               <Button
-                onClick={handleCopy}
-                className="w-full"
-                disabled={charCount === 0}
+                onClick={handleMarkApplied}
+                disabled={!versionLabel.trim() || saveVersionMutation.isPending}
+                className="flex-1"
               >
-                {copied ? "Copied to clipboard ✓" : `Copy full instructions (${charCount.toLocaleString()} chars)`}
+                {saveVersionMutation.isPending ? "Saving..." : "Save snapshot"}
               </Button>
-
-              {charCount > CHAR_BUDGET && (
-                <div className="rounded-md bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 p-3">
-                  <p className="text-xs text-red-800 dark:text-red-300 font-semibold">
-                    Over budget by {(charCount - CHAR_BUDGET).toLocaleString()} characters.
-                  </p>
-                  <p className="text-xs text-red-700 dark:text-red-400 mt-1">
-                    Review the Instruction Audit tab for compression opportunities. The "Evaluate" and "Compress" sections together offer ~{potentialSavings} chars of savings.
-                  </p>
-                </div>
-              )}
             </div>
-          )}
-        </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Run Audit modal */}
+      <Dialog open={auditModalOpen} onOpenChange={setAuditModalOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Run Audit — copy prompt</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <p className="text-sm text-muted-foreground">
+              Copy this prompt and paste it into a <span className="font-medium">new Manus task in this project</span>. The agent will read the live project instructions from its context, run the analysis, and call <span className="font-mono text-xs">trpc.skills.saveInstructionsAudit</span> to write findings back to this page.
+            </p>
+            <div className="rounded-md bg-muted/20 border border-border p-4 max-h-64 overflow-y-auto">
+              <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">{AUDIT_PROMPT}</pre>
+            </div>
+            <div className="flex gap-3">
+              <Button variant="outline" onClick={() => setAuditModalOpen(false)} className="flex-1">Close</Button>
+              <Button onClick={handleCopyAuditPrompt} className="flex-1 gap-2">
+                {copiedAuditPrompt ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
+                {copiedAuditPrompt ? "Copied!" : "Copy prompt"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
