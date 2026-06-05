@@ -825,4 +825,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update bds-meta.json: lastUpdated to 2026-06-05
 - [x] Note: NavigationPatterns.tsx grey classes are intentional — inside documentation specimens (live previews of other apps' nav patterns), not structural UI
 - [x] All 14 vitest tests pass
-- [ ] Save checkpoint
+- [x] Save checkpoint (done 2026-06-05 — vd281c83e)
+
+## Skills page — BDS card violation fixes (2026-06-05)
+
+- [x] Fix card border: replace full four-side teal outline with left accent border only (border-l-4) + tinted bg (canonical BDS pattern)
+- [x] Fix tier badge: remove colour — use transparent outlined pill (border-current, no filled bg, no teal colour)
+- [x] Fix category badge: remove emoji, use Lucide icon pill with correct six-slot accent palette colour
+- [x] Remove clock emoji from readWhen callout — use Lucide Clock icon instead
+- [x] Remove warning emoji from "no improvements logged" — use Lucide AlertTriangle icon instead
+- [x] Remove all other emoji from skill cards (filter bar, hero stats, RECOMMENDATION_CONFIG badges, category select, tier group headings)
+- [x] TypeScript check — 0 real errors (13 stale watcher noise confirmed)
+- [x] Save checkpoint

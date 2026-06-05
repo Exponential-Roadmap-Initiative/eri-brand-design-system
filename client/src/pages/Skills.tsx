@@ -11,7 +11,7 @@
  */
 
 import { useState } from "react";
-import { Layers, SlidersHorizontal, Lightbulb } from "lucide-react";
+import { Layers, SlidersHorizontal, Lightbulb, Clock, AlertTriangle, Eye, Download, Code2, BookOpen, Palette, Shield, Users, Search, Settings, Cloud, Music } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -55,22 +55,27 @@ interface Skill {
 
 // ── Category config ───────────────────────────────────────────────────────────
 
-const CATEGORY_CONFIG: Record<string, { label: string; icon: string; badge: string }> = {
-  development: { label: "development", icon: "</>", badge: "bg-violet-100 text-violet-800 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-700" },
-  domain:      { label: "domain",      icon: "📋",  badge: "bg-sky-100 text-sky-800 border-sky-200 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-700" },
-  design:      { label: "design",      icon: "🎨",  badge: "bg-pink-100 text-pink-800 border-pink-200 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-700" },
-  meta:        { label: "meta",        icon: "⚙",   badge: "bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" },
-  security:    { label: "security",    icon: "🔒",  badge: "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700" },
-  platform:    { label: "platform",    icon: "☁",   badge: "bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-900/30 dark:text-cyan-300 dark:border-cyan-700" },
-  media:       { label: "media",       icon: "🎵",  badge: "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700" },
+// BDS six-slot accent palette — left border colour + tinted bg
+const CATEGORY_CONFIG: Record<string, { label: string; Icon: React.ElementType; accentColor: string; tintBg: string }> = {
+  development: { label: "development", Icon: Code2,    accentColor: "#17b7dd", tintBg: "rgba(23,183,221,0.08)" },
+  domain:      { label: "domain",      Icon: BookOpen, accentColor: "#3ba559", tintBg: "rgba(59,165,89,0.08)" },
+  design:      { label: "design",      Icon: Palette,  accentColor: "#f59e0b", tintBg: "rgba(245,158,11,0.08)" },
+  meta:        { label: "meta",        Icon: Settings, accentColor: "#8b5cf6", tintBg: "rgba(139,92,246,0.08)" },
+  security:    { label: "security",    Icon: Shield,   accentColor: "#ef4444", tintBg: "rgba(239,68,68,0.08)" },
+  platform:    { label: "platform",    Icon: Cloud,    accentColor: "#06b6d4", tintBg: "rgba(6,182,212,0.08)" },
+  media:       { label: "media",       Icon: Music,    accentColor: "#f97316", tintBg: "rgba(249,115,22,0.08)" },
 };
 
 function CategoryBadge({ category }: { category: string | null }) {
   if (!category) return null;
-  const cfg = CATEGORY_CONFIG[category] ?? { label: category, icon: "•", badge: "bg-gray-100 text-gray-700 border-gray-200" };
+  const cfg = CATEGORY_CONFIG[category] ?? { label: category, Icon: Settings, accentColor: "#6b7280", tintBg: "rgba(107,114,128,0.08)" };
+  const { Icon } = cfg;
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border ${cfg.badge}`}>
-      <span className="text-[10px]">{cfg.icon}</span>
+    <span
+      className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold tracking-wide border"
+      style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}
+    >
+      <Icon size={10} />
       {cfg.label}
     </span>
   );
@@ -90,9 +95,8 @@ interface SkillImprovement {
 const TIER_CONFIG: Record<number, {
   label: string;
   shortLabel: string;
-  badge: string;
-  border: string;
-  bg: string;
+  accentColor: string;
+  tintBg: string;
   heading: string;
   when: string;
   constraint: string;
@@ -101,10 +105,9 @@ const TIER_CONFIG: Record<number, {
   1: {
     label: "Tier 1 — Always-on",
     shortLabel: "Tier 1",
-    badge: "bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700",
-    border: "border-teal-200 dark:border-teal-800",
-    bg: "bg-teal-50/50 dark:bg-teal-950/20",
-    heading: "text-teal-700 dark:text-teal-400",
+    accentColor: "#3ba559",
+    tintBg: "rgba(59,165,89,0.06)",
+    heading: "text-[#3ba559]",
     when: "Read at the start of every task, without exception.",
     constraint: "Must be lean — every token costs on every task. Keep under 200 lines.",
     example: "Core operating procedures, collaboration principles, dev standards.",
@@ -112,10 +115,9 @@ const TIER_CONFIG: Record<number, {
   2: {
     label: "Tier 2 — Per-action gate",
     shortLabel: "Tier 2",
-    badge: "bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700",
-    border: "border-amber-200 dark:border-amber-800",
-    bg: "bg-amber-50/50 dark:bg-amber-950/20",
-    heading: "text-amber-700 dark:text-amber-400",
+    accentColor: "#f59e0b",
+    tintBg: "rgba(245,158,11,0.06)",
+    heading: "text-amber-600 dark:text-amber-400",
     when: "Re-read immediately before a specific action — even within the same task.",
     constraint: "Can be longer. Only loaded when the specific action is about to happen.",
     example: "UI design rules before writing any component. Router guard before adding a procedure.",
@@ -123,10 +125,9 @@ const TIER_CONFIG: Record<number, {
   3: {
     label: "Tier 3 — Conditional",
     shortLabel: "Tier 3",
-    badge: "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
-    border: "border-blue-200 dark:border-blue-800",
-    bg: "bg-blue-50/50 dark:bg-blue-950/20",
-    heading: "text-blue-700 dark:text-blue-400",
+    accentColor: "#17b7dd",
+    tintBg: "rgba(23,183,221,0.06)",
+    heading: "text-[#17b7dd]",
     when: "Read when the domain or trigger condition applies.",
     constraint: "Can be detailed. Only loaded when the domain is relevant.",
     example: "ERI brand rules when building a web project. Data source patterns when adding a new source.",
@@ -136,12 +137,12 @@ const TIER_CONFIG: Record<number, {
 // ── Tier badge ────────────────────────────────────────────────────────────────
 
 function TierBadge({ tier }: { tier: number }) {
-  const cfg = TIER_CONFIG[tier] ?? {
-    shortLabel: `Tier ${tier}`,
-    badge: "bg-gray-100 text-gray-700 border-gray-200",
-  };
+  const cfg = TIER_CONFIG[tier] ?? { shortLabel: `Tier ${tier}`, accentColor: "#6b7280" };
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${cfg.badge}`}>
+    <span
+      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-widest uppercase border"
+      style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}80` }}
+    >
       {cfg.shortLabel}
     </span>
   );
@@ -192,8 +193,8 @@ function SystemOverview() {
               {([1, 2, 3] as const).map(tier => {
                 const cfg = TIER_CONFIG[tier];
                 return (
-                  <div key={tier} className={`rounded-md border ${cfg.border} ${cfg.bg} p-3 space-y-2`}>
-                    <span className={`text-xs font-semibold ${cfg.heading}`}>{cfg.label}</span>
+                  <div key={tier} className="rounded-md border border-l-4 border-border p-3 space-y-2" style={{ borderLeftColor: cfg.accentColor, backgroundColor: cfg.tintBg }}>
+                    <span className="text-xs font-semibold" style={{ color: cfg.accentColor }}>{cfg.label}</span>
                     <p className="text-xs text-foreground/80 leading-relaxed">
                       <span className="font-medium">When:</span> {cfg.when}
                     </p>
@@ -481,9 +482,16 @@ function AddSkillDialog({ onSuccess, prefill }: AddSkillDialogProps) {
               <SelectTrigger className="mt-1"><SelectValue placeholder="Select category" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="">No category</SelectItem>
-                {Object.entries(CATEGORY_CONFIG).map(([key, cfg]) => (
-                  <SelectItem key={key} value={key}>{cfg.icon} {cfg.label}</SelectItem>
-                ))}
+                {Object.entries(CATEGORY_CONFIG).map(([key, cfg]) => {
+                  const CfgIcon = cfg.Icon;
+                  return (
+                    <SelectItem key={key} value={key}>
+                      <span className="inline-flex items-center gap-1.5">
+                        <CfgIcon size={12} />{cfg.label}
+                      </span>
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
@@ -587,9 +595,16 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
     URL.revokeObjectURL(url);
   };
 
+  const catCfg = skill.category ? (CATEGORY_CONFIG[skill.category] ?? null) : null;
+  const accentColor = catCfg ? catCfg.accentColor : cfg.accentColor;
+  const tintBg = catCfg ? catCfg.tintBg : cfg.tintBg;
+
   return (
     <Collapsible>
-      <div className={`border rounded-xl overflow-hidden ${cfg.border} bg-card`}>
+      <div
+        className="border border-border border-l-4 rounded-xl overflow-hidden bg-card"
+        style={{ borderLeftColor: accentColor, backgroundColor: tintBg }}
+      >
         {/* Card header — always visible */}
         <CollapsibleTrigger className="w-full text-left">
           <div className="px-5 pt-5 pb-3 hover:bg-muted/20 transition-colors">
@@ -616,7 +631,7 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
             {/* readWhen callout */}
             {skill.readWhen && (
               <div className="ml-7 mt-3 rounded-md bg-muted/40 border border-border px-4 py-2.5 flex items-start gap-2">
-                <span className="text-muted-foreground text-xs mt-0.5 flex-shrink-0">⏰</span>
+                <Clock size={12} className="text-muted-foreground flex-shrink-0 mt-0.5" />
                 <p className="text-xs text-foreground/80 leading-relaxed">
                   <span className="font-semibold">When:</span> {skill.readWhen}
                 </p>
@@ -633,17 +648,20 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
               <span className="text-xs text-muted-foreground">· {skill.improvements.length} improvement{skill.improvements.length !== 1 ? 's' : ''}</span>
             )}
             {!hasSelfImprovement && (
-              <span className="text-xs text-amber-600 dark:text-amber-400">⚠ no improvements logged</span>
+              <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
+                <AlertTriangle size={11} />
+                no improvements logged
+              </span>
             )}
           </div>
           <div className="flex items-center gap-2">
             <CollapsibleTrigger asChild>
-              <Button variant="outline" size="sm" className="text-xs h-7 px-3">
-                👁 View
+              <Button variant="outline" size="sm" className="text-xs h-7 px-3 inline-flex items-center gap-1.5">
+                <Eye size={12} /> View
               </Button>
             </CollapsibleTrigger>
-            <Button variant="outline" size="sm" className="text-xs h-7 px-3" onClick={handleDownload}>
-              ⤓ Download
+            <Button variant="outline" size="sm" className="text-xs h-7 px-3 inline-flex items-center gap-1.5" onClick={handleDownload}>
+              <Download size={12} /> Download
             </Button>
           </div>
         </div>
@@ -653,7 +671,7 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
           <div className="border-t border-border px-5 py-5 space-y-4 bg-muted/10">
             {/* File path hint */}
             <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono bg-muted/30 rounded px-3 py-1.5">
-              <span className="text-muted-foreground/50">📁</span>
+              <span className="text-muted-foreground/50">/</span>
               {skillPath}
             </div>
 
@@ -750,12 +768,12 @@ const AUDIT_SECTIONS = [
   },
 ];
 
-const RECOMMENDATION_CONFIG = {
-  keep: { label: "Keep", badge: "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300", icon: "✓" },
-  replace: { label: "Replace", badge: "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300", icon: "↻" },
-  compress: { label: "Compress", badge: "bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300", icon: "⇩" },
-  evaluate: { label: "Evaluate", badge: "bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300", icon: "?" },
-  move: { label: "Move", badge: "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300", icon: "→" },
+const RECOMMENDATION_CONFIG: Record<string, { label: string; accentColor: string; tintBg: string }> = {
+  keep:     { label: "Keep",     accentColor: "#3ba559", tintBg: "rgba(59,165,89,0.08)" },
+  replace:  { label: "Replace",  accentColor: "#17b7dd", tintBg: "rgba(23,183,221,0.08)" },
+  compress: { label: "Compress", accentColor: "#f59e0b", tintBg: "rgba(245,158,11,0.08)" },
+  evaluate: { label: "Evaluate", accentColor: "#8b5cf6", tintBg: "rgba(139,92,246,0.08)" },
+  move:     { label: "Move",     accentColor: "#f97316", tintBg: "rgba(249,115,22,0.08)" },
 };
 
 function generateSkillTriggers(skills: Skill[]): string {
@@ -897,8 +915,11 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
                           <span className="text-sm font-medium text-foreground">{section.title}</span>
                           <span className="text-xs text-muted-foreground font-mono">{section.chars} chars</span>
                         </div>
-                        <span className={`flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border ${cfg.badge}`}>
-                          <span>{cfg.icon}</span> {cfg.label}
+                        <span
+                          className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border"
+                          style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}
+                        >
+                          {cfg.label}
                         </span>
                       </div>
                       <p className="text-xs text-muted-foreground leading-relaxed">{section.reason}</p>
@@ -912,8 +933,11 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
                 <div className="grid grid-cols-2 gap-2">
                   {Object.entries(RECOMMENDATION_CONFIG).map(([key, cfg]) => (
                     <div key={key} className="flex items-center gap-2">
-                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border ${cfg.badge}`}>
-                        {cfg.icon} {cfg.label}
+                      <span
+                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border"
+                        style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}
+                      >
+                        {cfg.label}
                       </span>
                       <span className="text-xs text-muted-foreground">
                         {key === "keep" && "Essential — cannot be removed"}
@@ -1099,8 +1123,9 @@ export default function Skills() {
                 <span className="text-white font-semibold">{skillsList.length}</span> skills in the ecosystem
               </span>
               {missingImprovementCount > 0 && (
-                <span className="text-sm text-amber-400">
-                  ⚠ {missingImprovementCount} skill{missingImprovementCount !== 1 ? 's' : ''} missing self-improvement patterns
+                <span className="inline-flex items-center gap-1.5 text-sm text-amber-400">
+                  <AlertTriangle size={14} />
+                  {missingImprovementCount} skill{missingImprovementCount !== 1 ? 's' : ''} missing self-improvement patterns
                 </span>
               )}
             </div>
@@ -1179,7 +1204,7 @@ export default function Skills() {
                     : "text-amber-600 border-amber-200 hover:bg-amber-50 dark:text-amber-400 dark:border-amber-800"
                 }`}
               >
-                ⚠ Missing self-improvement <span className="font-bold">{missingImprovementCount}</span>
+                <AlertTriangle size={12} /> Missing self-improvement <span className="font-bold">{missingImprovementCount}</span>
               </button>
             )}
           </div>
@@ -1191,9 +1216,11 @@ export default function Skills() {
               const cfg = TIER_CONFIG[t];
               return (
                 <button key={t} onClick={() => toggleTier(t)}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium border transition-colors ${
-                    tierFilter === t ? cfg.badge : "border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground"
-                  }`}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium border transition-colors"
+                  style={tierFilter === t
+                    ? { borderColor: cfg.accentColor, color: cfg.accentColor, backgroundColor: cfg.tintBg }
+                    : undefined
+                  }
                 >
                   {cfg.shortLabel} <span className="opacity-60">{count}</span>
                 </button>
@@ -1202,14 +1229,17 @@ export default function Skills() {
             {allCategories.length > 0 && <span className="text-border select-none">|</span>}
             {allCategories.map(cat => {
               const count = (skillsList ?? []).filter(s => s.category === cat).length;
-              const catCfg = CATEGORY_CONFIG[cat] ?? { label: cat, icon: "•", badge: "bg-gray-100 text-gray-700 border-gray-200" };
+              const catCfg = CATEGORY_CONFIG[cat] ?? { label: cat, Icon: Settings, accentColor: "#6b7280", tintBg: "rgba(107,114,128,0.08)" };
+              const CatIcon = catCfg.Icon;
               return (
                 <button key={cat} onClick={() => toggleCategory(cat)}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-colors ${
-                    categoryFilter === cat ? catCfg.badge : "border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground"
-                  }`}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-colors"
+                  style={categoryFilter === cat
+                    ? { borderColor: catCfg.accentColor, color: catCfg.accentColor, backgroundColor: catCfg.tintBg }
+                    : undefined
+                  }
                 >
-                  <span className="text-[10px]">{catCfg.icon}</span>
+                  <CatIcon size={10} />
                   {cat} <span className="opacity-60">{count}</span>
                 </button>
               );
@@ -1257,7 +1287,7 @@ export default function Skills() {
           grouped[tier].length > 0 ? (
             <div key={tier} className="mb-8">
               <div className="flex items-center gap-3 mb-3">
-                <h2 className={`text-sm font-semibold uppercase tracking-wider ${TIER_CONFIG[tier].heading}`}>
+                <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: TIER_CONFIG[tier].accentColor }}>
                   {TIER_CONFIG[tier].label}
                 </h2>
                 <span className="text-xs text-muted-foreground">{grouped[tier].length} skill{grouped[tier].length !== 1 ? "s" : ""}</span>
