@@ -196,6 +196,16 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   // ── Tier 3: Reference ──────────────────────────────────────────────────────
   {
+    id: "eri-exponential-framework",
+    name: "ERI Exponential Framework",
+    description: "Canonical knowledge base for the ERI Exponential Framework data model, CPR assessment methodology, and three-application architecture (CPR, Marketing EF app, Earth-aligned AI Agent).",
+    tier: 3,
+    category: "data",
+    version: "1.0.0",
+    readWhen: "Designing or extending the Exponential Framework data model, working on CPR assessment pipeline, adding cpr_action_templates or cpr_data_source_mappings, building Marketing EF pages, or working on Earth-aligned AI Agent framework cells.",
+    hasReferences: true,
+  },
+  {
     id: "data-source-integration",
     name: "Data Source Integration",
     description: "Canonical checklist for integrating a new external data source into the ERI platform.",
