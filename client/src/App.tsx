@@ -30,7 +30,7 @@ function TabNav() {
   ];
   return (
     <div
-      className="fixed left-0 right-0 z-40 bg-white dark:bg-[#232323] border-b border-gray-200 dark:border-gray-700 transition-colors duration-200 top-[80px] sm:top-[64px]"
+      className="fixed left-0 right-0 z-40 bg-background border-b border-border transition-colors duration-200 top-[80px] sm:top-[64px]"
     >
       <div
         className="flex items-center gap-0 h-10"
@@ -46,7 +46,7 @@ function TabNav() {
                 "px-4 h-full flex items-center text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
                 isActive
                   ? "border-[#3ba559] text-[#3ba559]"
-                  : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600",
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border",
               ].join(" ")}
             >
               {label}

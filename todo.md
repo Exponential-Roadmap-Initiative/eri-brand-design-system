@@ -817,3 +817,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] TypeScript check — 0 real errors (13 stale watcher errors are known/expected)
 - [x] Save checkpoint (done 2026-06-05 — v24f478fc)
 
+
+## BDS compliance audit (2026-06-05)
+
+- [x] Run full BDS compliance checklist (S, T, B, C, A checks) across all 5 pages
+- [x] Fix B6/T1 violation: replace hardcoded grey classes in TabNav (App.tsx lines 33, 49) with semantic tokens (bg-background, border-border, text-muted-foreground, text-foreground)
+- [x] Update bds-meta.json: lastUpdated to 2026-06-05
+- [x] Note: NavigationPatterns.tsx grey classes are intentional — inside documentation specimens (live previews of other apps' nav patterns), not structural UI
+- [x] All 14 vitest tests pass
+- [ ] Save checkpoint
