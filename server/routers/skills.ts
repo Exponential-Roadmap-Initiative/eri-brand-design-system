@@ -63,17 +63,17 @@ export const SKILLS_METADATA: SkillMeta[] = [
     readWhen: "At the start of every ERI task where the quality of thinking matters.",
     hasReferences: false,
   },
+  // ── Tier 2: Per-action gate ────────────────────────────────────────────────────────────────────────────
   {
     id: "eri-skill-creator",
     name: "ERI Skill Creator",
     description: "Full lifecycle governance for ERI skills: create, improve, register, and maintain the self-improving ERI skill ecosystem.",
-    tier: 1,
+    tier: 2,
     category: "process",
     version: "2.0.0",
-    readWhen: "Whenever creating, editing, or improving an ERI skill. After every task — post-task reflection loop.",
+    readWhen: "Before writing a single line of any eri- skill file. Before running the post-task reflection loop.",
     hasReferences: true,
   },
-  // ── Tier 2: Task-triggered ─────────────────────────────────────────────────
   {
     id: "eri-earth-aligned-agent",
     name: "Earth-aligned AI Agent",

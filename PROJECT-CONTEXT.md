@@ -679,8 +679,8 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 - `BdsNavDrawer.tsx`: Skills link added to Other pages section
 
 ### Tier model (post-rename, 2026-06-04)
-- Tier 1 — Always-on (3 skills): eri-bds-reference, eri-human-ai-collaboration, eri-skill-creator
-- Tier 2 — Per-action gate (3 skills): eri-code-quality, eri-trpc, eri-decision
+- Tier 1 — Always-on (2 skills): eri-bds-reference, eri-human-ai-collaboration
+- Tier 2 — Per-action gate (4 skills): eri-skill-creator, eri-code-quality, eri-trpc, eri-decision
 - Tier 3 — Conditional (16 skills): eri-data-source, eri-widget, eri-database, eri-security, eri-rest-api, eri-earth-aligned-agent, eri-report-finder, eri-ueil-nav, eri-user-management, eri-bds-site, manus-api, manus-config, automation-and-scheduling, persistent-computing, imagegen, music-prompter
 
 ### Skill renaming/consolidation (2026-06-04)
