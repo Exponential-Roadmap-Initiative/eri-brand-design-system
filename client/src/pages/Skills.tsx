@@ -800,7 +800,6 @@ interface ProjectInstructionsProps {
 }
 
 function ProjectInstructions({ skills }: ProjectInstructionsProps) {
-  const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"audit" | "triggers" | "output">("audit");
   const [preamble, setPreamble] = useState(() => {
     try { return localStorage.getItem("eri-pi-preamble") ?? DEFAULT_PREAMBLE; }
@@ -835,10 +834,8 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
 
   return (
     <div className="border border-border rounded-lg overflow-hidden mb-8">
-      <button
-        onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/30 transition-colors"
-      >
+      {/* Header bar — always visible, no collapse toggle */}
+      <div className="w-full flex items-center justify-between px-5 py-4">
         <div>
           <p className="text-sm font-semibold text-foreground">Project Instructions Manager</p>
           <p className="text-xs text-muted-foreground mt-0.5">
@@ -849,12 +846,9 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
           <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
             {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()}
           </span>
-          <span className="text-muted-foreground text-xs">{open ? "Collapse ↑" : "Expand ↓"}</span>
         </div>
-      </button>
-
-      {open && (
-        <div className="border-t border-border">
+      </div>
+      <div className="border-t border-border">
 
           {/* Tab bar */}
           <div className="flex border-b border-border bg-muted/20">
@@ -1037,12 +1031,10 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
             </div>
           )}
         </div>
-      )}
     </div>
   );
 }
-
-// ── Page ────────────────────────────────────────────────────────────────────────────────
+// ── Pagee ────────────────────────────────────────────────────────────────────────────────
 
 type EcosystemFilter = "eri" | "manus" | "all";
 

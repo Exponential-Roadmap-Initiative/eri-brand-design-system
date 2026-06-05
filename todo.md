@@ -815,4 +815,5 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Move SystemOverview (philosophy/tier model/self-improvement loop) into "Philosophy" tab content (done 2026-06-05)
 - [x] Update PageGuide text to reflect the tabbed structure (done 2026-06-05)
 - [x] TypeScript check — 0 real errors (13 stale watcher errors are known/expected)
-- [ ] Save checkpoint
+- [x] Save checkpoint (done 2026-06-05 — v24f478fc)
+
