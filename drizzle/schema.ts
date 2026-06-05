@@ -25,38 +25,18 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// ─── Skills Registry ────────────────────────────────────────────────────────
-// One row per skill. Source of truth for version and tier.
-// Populated via the /skills admin UI or programmatically.
-
-export const skills = mysqlTable("skills", {
-  id: varchar("id", { length: 64 }).primaryKey(),        // e.g. "skill-manager", "eri-bds-reference"
-  name: varchar("name", { length: 128 }).notNull(),
-  description: text("description").notNull(),
-  tier: int("tier").notNull(),                            // 1 = always-on, 2 = per-action, 3 = conditional
-  version: varchar("version", { length: 16 }).notNull(), // semver, e.g. "3.11.0"
-  readWhen: text("read_when"),                            // human-readable trigger condition
-  category: varchar("category", { length: 64 }),           // e.g. "development", "domain", "design", "meta", "security"
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
-
-export type Skill = typeof skills.$inferSelect;
-export type InsertSkill = typeof skills.$inferInsert;
-
 // ─── Skill Improvement Log ───────────────────────────────────────────────────
 // Append-only — never delete entries. One row per logged improvement.
-
+// skillId matches the directory name under /home/ubuntu/skills/ (e.g. "eri-bds-reference").
+// Skill content lives in SKILL.md files on the filesystem — NOT in the DB.
 export const skillImprovements = mysqlTable("skill_improvements", {
   id: int("id").autoincrement().primaryKey(),
-  skillId: varchar("skill_id", { length: 64 }).notNull()
-    .references(() => skills.id, { onDelete: "cascade" }),
+  skillId: varchar("skill_id", { length: 64 }).notNull(),
   version: varchar("version", { length: 16 }).notNull(),  // version after this improvement
   summary: text("summary").notNull(),                      // what changed and why
   taskContext: text("task_context"),                       // optional: which task surfaced this
   loggedAt: timestamp("logged_at").defaultNow().notNull(),
 });
-
 export type SkillImprovement = typeof skillImprovements.$inferSelect;
 export type InsertSkillImprovement = typeof skillImprovements.$inferInsert;
 
@@ -74,3 +54,35 @@ export const projectInstructions = mysqlTable("project_instructions", {
 
 export type ProjectInstruction = typeof projectInstructions.$inferSelect;
 export type InsertProjectInstruction = typeof projectInstructions.$inferInsert;
+
+// ─── Project Instructions Version History ────────────────────────────────────
+// Append-only snapshot table. One row per "Mark as Applied" action.
+// Stores the full generated instructions text so diffs can be computed.
+export const projectInstructionsVersions = mysqlTable("project_instructions_versions", {
+  id: int("id").primaryKey().autoincrement(),
+  version: varchar("version", { length: 20 }).notNull(),
+  appliedAt: timestamp("applied_at").notNull().defaultNow(),
+  generatedSnapshot: text("generated_snapshot").notNull(),
+  changeNote: varchar("change_note", { length: 500 }),
+  charCount: int("char_count"),
+  budgetPct: int("budget_pct"),
+});
+export type ProjectInstructionsVersion = typeof projectInstructionsVersions.$inferSelect;
+export type InsertProjectInstructionsVersion = typeof projectInstructionsVersions.$inferInsert;
+
+// ─── Project Instructions Audit Findings ─────────────────────────────────────
+// Append-only. One row per agent-run audit. Stores structured findings as JSON.
+// The Manus agent reads the live project instructions from its context, runs the
+// analysis, and writes findings here via trpc.skills.saveInstructionsAudit.
+export const projectInstructionsAudits = mysqlTable("project_instructions_audits", {
+  id: int("id").primaryKey().autoincrement(),
+  auditedAt: timestamp("audited_at").notNull().defaultNow(),
+  charCount: int("char_count"),
+  budgetPct: int("budget_pct"),
+  sectionsJson: text("sections_json").notNull(), // JSON array of AuditSection
+  discrepanciesJson: text("discrepancies_json"),  // JSON array of strings
+  summary: text("summary"),
+  agentNote: varchar("agent_note", { length: 500 }),
+});
+export type ProjectInstructionsAudit = typeof projectInstructionsAudits.$inferSelect;
+export type InsertProjectInstructionsAudit = typeof projectInstructionsAudits.$inferInsert;

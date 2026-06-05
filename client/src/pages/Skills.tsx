@@ -45,28 +45,30 @@ interface Skill {
   id: string;
   name: string;
   description: string;
-  tier: number;
+  tier: 1 | 2 | 3;
   version: string;
-  readWhen: string | null;
-  category: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  readWhen: string;
+  category: string;
+  hasReferences: boolean;
 }
 
 // ── Category config ───────────────────────────────────────────────────────────
 
 // BDS six-slot accent palette — left border colour + tinted bg
 const CATEGORY_CONFIG: Record<string, { label: string; Icon: React.ElementType; accentColor: string; tintBg: string }> = {
+  brand:       { label: "brand",       Icon: Palette,  accentColor: "#f59e0b", tintBg: "rgba(245,158,11,0.08)" },
+  process:     { label: "process",     Icon: Settings, accentColor: "#8b5cf6", tintBg: "rgba(139,92,246,0.08)" },
+  platform:    { label: "platform",    Icon: Cloud,    accentColor: "#06b6d4", tintBg: "rgba(6,182,212,0.08)" },
+  data:        { label: "data",        Icon: Search,   accentColor: "#3ba559", tintBg: "rgba(59,165,89,0.08)" },
+  security:    { label: "security",    Icon: Shield,   accentColor: "#ef4444", tintBg: "rgba(239,68,68,0.08)" },
   development: { label: "development", Icon: Code2,    accentColor: "#17b7dd", tintBg: "rgba(23,183,221,0.08)" },
   domain:      { label: "domain",      Icon: BookOpen, accentColor: "#3ba559", tintBg: "rgba(59,165,89,0.08)" },
   design:      { label: "design",      Icon: Palette,  accentColor: "#f59e0b", tintBg: "rgba(245,158,11,0.08)" },
   meta:        { label: "meta",        Icon: Settings, accentColor: "#8b5cf6", tintBg: "rgba(139,92,246,0.08)" },
-  security:    { label: "security",    Icon: Shield,   accentColor: "#ef4444", tintBg: "rgba(239,68,68,0.08)" },
-  platform:    { label: "platform",    Icon: Cloud,    accentColor: "#06b6d4", tintBg: "rgba(6,182,212,0.08)" },
   media:       { label: "media",       Icon: Music,    accentColor: "#f97316", tintBg: "rgba(249,115,22,0.08)" },
 };
 
-function CategoryBadge({ category }: { category: string | null }) {
+function CategoryBadge({ category }: { category: string }) {
   if (!category) return null;
   const cfg = CATEGORY_CONFIG[category] ?? { label: category, Icon: Settings, accentColor: "#6b7280", tintBg: "rgba(107,114,128,0.08)" };
   const { Icon } = cfg;
@@ -571,22 +573,28 @@ function DeleteSkillButton({ skillId, onSuccess }: DeleteSkillButtonProps) {
 // ── Skill row ─────────────────────────────────────────────────────────────────
 
 interface SkillRowProps {
-  skill: Skill & { improvements: ImprovementLogProps["improvements"] };
+  skill: Skill;
   isAdmin: boolean;
   onRefresh: () => void;
 }
 
 function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
   const cfg = TIER_CONFIG[skill.tier] ?? TIER_CONFIG[3];
-  const hasSelfImprovement = skill.improvements.length > 0;
-  const skillPath = `/home/ubuntu/skills/${skill.id}/SKILL.md`;
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Lazy-load improvements + SKILL.md content only when the row is expanded
+  const { data: detail, isLoading: detailLoading } = trpc.skills.get.useQuery(
+    { id: skill.id },
+    { enabled: isOpen }
+  );
+  const improvements = detail?.improvements ?? [];
+  const hasSelfImprovement = improvements.length > 0;
 
   const handleDownload = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const blob = new Blob(
-      [`# ${skill.name}\n\nID: ${skill.id}\nVersion: ${skill.version}\nTier: ${skill.tier}\nCategory: ${skill.category ?? 'uncategorised'}\n\n## Description\n\n${skill.description}\n\n## When to Read\n\n${skill.readWhen ?? 'See description.'}\n`],
-      { type: 'text/plain' }
-    );
+    const content = detail?.content ??
+      `# ${skill.name}\n\nID: ${skill.id}\nVersion: ${skill.version}\nTier: ${skill.tier}\nCategory: ${skill.category}\n\n## Description\n\n${skill.description}\n\n## When to Read\n\n${skill.readWhen}\n`;
+    const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -600,7 +608,7 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
   const tintBg = catCfg ? catCfg.tintBg : cfg.tintBg;
 
   return (
-    <Collapsible>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div
         className="border border-border border-l-4 rounded-xl overflow-hidden bg-card"
         style={{ borderLeftColor: accentColor, backgroundColor: tintBg }}
@@ -640,14 +648,14 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
           </div>
         </CollapsibleTrigger>
 
-        {/* Card footer — always visible */}
-        <div className="px-5 py-3 border-t border-border flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-muted-foreground">v{skill.version}</span>
-            {skill.improvements.length > 0 && (
-              <span className="text-xs text-muted-foreground">· {skill.improvements.length} improvement{skill.improvements.length !== 1 ? 's' : ''}</span>
-            )}
-            {!hasSelfImprovement && (
+          {/* Card footer — always visible */}
+          <div className="px-5 py-3 border-t border-border flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono text-muted-foreground">v{skill.version}</span>
+              {isOpen && improvements.length > 0 && (
+                <span className="text-xs text-muted-foreground">· {improvements.length} improvement{improvements.length !== 1 ? 's' : ''}</span>
+              )}
+              {isOpen && !hasSelfImprovement && !detailLoading && (
               <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
                 <AlertTriangle size={11} />
                 no improvements logged
@@ -667,15 +675,18 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
         </div>
 
         {/* Expanded content */}
-        <CollapsibleContent>
+          <CollapsibleContent>
           <div className="border-t border-border px-5 py-5 space-y-4 bg-muted/10">
             {/* File path hint */}
             <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono bg-muted/30 rounded px-3 py-1.5">
               <span className="text-muted-foreground/50">/</span>
-              {skillPath}
+              /home/ubuntu/skills/{skill.id}/SKILL.md
+              {skill.hasReferences && (
+                <span className="ml-2 text-muted-foreground/60">+ references/</span>
+              )}
             </div>
 
-            {/* Admin actions */}
+            {/* Admin: Log Improvement */}
             {isAdmin && (
               <div className="flex items-center gap-2 flex-wrap">
                 <LogImprovementDialog
@@ -683,18 +694,21 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
                   currentVersion={skill.version}
                   onSuccess={onRefresh}
                 />
-                <AddSkillDialog prefill={skill} onSuccess={onRefresh} />
-                <DeleteSkillButton skillId={skill.id} onSuccess={onRefresh} />
               </div>
             )}
 
-            {/* Improvement log */}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                Improvement Log
-              </p>
-              <ImprovementLog improvements={skill.improvements} />
-            </div>
+            {/* Improvement log — lazy loaded */}
+            {detailLoading && (
+              <div className="h-12 rounded bg-muted animate-pulse" />
+            )}
+            {!detailLoading && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Improvement Log
+                </p>
+                <ImprovementLog improvements={improvements} />
+              </div>
+            )}
           </div>
         </CollapsibleContent>
       </div>
@@ -1075,12 +1089,10 @@ export default function Skills() {
   const [ecosystemFilter, setEcosystemFilter] = useState<EcosystemFilter>("all");
   const [tierFilter, setTierFilter] = useState<number | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
-  const [missingImprovementOnly, setMissingImprovementOnly] = useState(false);
 
-  // ── Derived stats
+  // ── Derived stats (improvements are NOT in the list response — lazy-loaded per row)
   const eriSkills = skillsList?.filter(s => s.id.startsWith("eri-")) ?? [];
   const manusSkills = skillsList?.filter(s => !s.id.startsWith("eri-")) ?? [];
-  const missingImprovementCount = skillsList?.filter(s => s.improvements.length === 0).length ?? 0;
   const allCategories = Array.from(
     new Set((skillsList ?? []).map(s => s.category).filter(Boolean) as string[])
   ).sort();
@@ -1093,7 +1105,6 @@ export default function Skills() {
   const filteredSkills = ecosystemBase.filter(s => {
     if (tierFilter !== null && s.tier !== tierFilter) return false;
     if (categoryFilter !== null && s.category !== categoryFilter) return false;
-    if (missingImprovementOnly && s.improvements.length > 0) return false;
     return true;
   });
 
@@ -1103,7 +1114,6 @@ export default function Skills() {
     3: filteredSkills.filter(s => s.tier === 3),
   };
 
-  const totalImprovements = skillsList?.reduce((sum, s) => sum + s.improvements.length, 0) ?? 0;
   const toggleTier = (t: number) => setTierFilter(prev => prev === t ? null : t);
   const toggleCategory = (c: string) => setCategoryFilter(prev => prev === c ? null : c);
 
@@ -1122,12 +1132,6 @@ export default function Skills() {
               <span className="text-sm text-white/70">
                 <span className="text-white font-semibold">{skillsList.length}</span> skills in the ecosystem
               </span>
-              {missingImprovementCount > 0 && (
-                <span className="inline-flex items-center gap-1.5 text-sm text-amber-400">
-                  <AlertTriangle size={14} />
-                  {missingImprovementCount} skill{missingImprovementCount !== 1 ? 's' : ''} missing self-improvement patterns
-                </span>
-              )}
             </div>
           )}
         </div>
@@ -1168,8 +1172,7 @@ export default function Skills() {
         <>
         {isAdmin && (
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-muted-foreground">Logged in as admin — you can add, edit, and log improvements.</p>
-            <AddSkillDialog onSuccess={refresh} />
+            <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements.</p>
           </div>
         )}
 
@@ -1195,18 +1198,6 @@ export default function Skills() {
                 <span className={`text-xs ${ecosystemFilter === tab.id ? "opacity-60" : "text-muted-foreground/60"}`}>{tab.count}</span>
               </button>
             ))}
-            {missingImprovementCount > 0 && (
-              <button
-                onClick={() => setMissingImprovementOnly(v => !v)}
-                className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors border ${
-                  missingImprovementOnly
-                    ? "bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700"
-                    : "text-amber-600 border-amber-200 hover:bg-amber-50 dark:text-amber-400 dark:border-amber-800"
-                }`}
-              >
-                <AlertTriangle size={12} /> Missing self-improvement <span className="font-bold">{missingImprovementCount}</span>
-              </button>
-            )}
           </div>
 
           {/* Row 2: Tier chips + Category chips */}
@@ -1249,8 +1240,8 @@ export default function Skills() {
           {/* Results count */}
           <p className="text-xs text-muted-foreground">
             Showing <span className="font-semibold text-foreground">{filteredSkills.length}</span> of {skillsList?.length ?? 0} skills
-            {(tierFilter !== null || categoryFilter !== null || missingImprovementOnly) && (
-              <button onClick={() => { setTierFilter(null); setCategoryFilter(null); setMissingImprovementOnly(false); }}
+            {(tierFilter !== null || categoryFilter !== null) && (
+              <button onClick={() => { setTierFilter(null); setCategoryFilter(null); }}
                 className="ml-2 text-muted-foreground/70 hover:text-foreground underline">
                 Clear filters
               </button>
@@ -1305,8 +1296,8 @@ export default function Skills() {
         {skillsList && skillsList.length > 0 && (
           <div className="mt-8 pt-6 border-t border-border flex items-center gap-6 text-xs text-muted-foreground flex-wrap">
             <span><span className="font-semibold text-foreground">{skillsList.length}</span> total skills</span>
-            <span><span className="font-semibold text-foreground">{totalImprovements}</span> improvements logged</span>
-            <span><span className="font-semibold text-foreground">{skillsList.length - missingImprovementCount}</span> with self-improvement patterns</span>
+            <span><span className="font-semibold text-foreground">{eriSkills.length}</span> ERI skills</span>
+            <span><span className="font-semibold text-foreground">{manusSkills.length}</span> Manus standard skills</span>
           </div>
         )}
         </>

@@ -29,6 +29,20 @@
       "when": 1780635923063,
       "tag": "0003_equal_crusher_hogan",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1780650009384,
+      "tag": "0004_rich_sentinels",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1780650119475,
+      "tag": "0005_skills_to_filesystem",
+      "breakpoints": true
     }
   ]
 }

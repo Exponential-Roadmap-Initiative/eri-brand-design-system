@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `project_instructions_versions` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `version` varchar(20) NOT NULL,\n  `applied_at` timestamp NOT NULL DEFAULT (now()),\n  `generated_snapshot` text NOT NULL,\n  `change_note` varchar(500),\n  `char_count` int,\n  `budget_pct` int,\n  CONSTRAINT `project_instructions_versions_id` PRIMARY KEY(`id`)\n);\n\nCREATE TABLE IF NOT EXISTS `project_instructions_audits` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `audited_at` timestamp NOT NULL DEFAULT (now()),\n  `char_count` int,\n  `budget_pct` int,\n  `sections_json` text NOT NULL,\n  `discrepancies_json` text,\n  `summary` text,\n  `agent_note` varchar(500),\n  CONSTRAINT `project_instructions_audits_id` PRIMARY KEY(`id`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute CREATE TABLE IF NOT EXISTS `project_instructions_versions` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `version` varchar(20) NOT NULL,\n  `applied_at` timestamp NOT NULL DEFAULT (now()),\n  `generated_snapshot` text NOT NULL,\n  `change_note` varchar(500),\n  `char_count` int,\n  `budget_pct` int,\n  CONSTRAINT `project_instructions_versions_id` PRIMARY KEY(`id`)\n);\n\nCREATE TABLE IF NOT EXISTS `project_instructions_audits` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `audited_at` timestamp NOT NULL DEFAULT (now()),\n  `char_count` int,\n  `budget_pct` int,\n  `sections_json` text NOT NULL,\n  `discrepancies_json` text,\n  `summary` text,\n  `agent_note` varchar(500),\n  CONSTRAINT `project_instructions_audits_id` PRIMARY KEY(`id`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 386
+}

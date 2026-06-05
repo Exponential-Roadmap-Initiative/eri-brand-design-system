@@ -837,3 +837,30 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Remove all other emoji from skill cards (filter bar, hero stats, RECOMMENDATION_CONFIG badges, category select, tier group headings)
 - [x] TypeScript check — 0 real errors (13 stale watcher noise confirmed)
 - [x] Save checkpoint
+
+## Skills architecture migration — filesystem-first (2026-06-05)
+- [ ] Schema: remove `skills` table definition from drizzle/schema.ts
+- [ ] Schema: keep `skillImprovements` table (improvement log stays)
+- [ ] Schema: add `projectInstructionsVersions` table
+- [ ] Schema: add `projectInstructionsAudits` table
+- [ ] Run pnpm db:push to apply schema changes
+- [ ] Router: add SKILLS_METADATA TypeScript constant (22 entries)
+- [ ] Router: replace skills.list (DB query) with SKILLS_METADATA array
+- [ ] Router: replace skills.get (DB query) with SKILLS_METADATA lookup + improvement log
+- [ ] Router: add skills.getContent (filesystem reader — reads SKILL.md)
+- [ ] Router: remove skills.upsert and skills.delete (no more DB rows for skill content)
+- [ ] Router: keep skills.logImprovement (writes to skillImprovements)
+- [ ] Router: add skills.saveInstructionsAudit mutation
+- [ ] Router: add skills.saveInstructionsVersion mutation
+- [ ] Router: keep skills.getProjectInstructions / skills.saveProjectInstructions
+- [ ] Delete scripts/seed-skills.mjs
+- [ ] Frontend: Skills.tsx — remove trpc.skills.upsert / delete calls and AddSkillDialog
+- [ ] Frontend: Skills.tsx — skill list now reads from SKILLS_METADATA via updated trpc.skills.list
+- [ ] Frontend: Skills.tsx — add getContent call when skill card is expanded (lazy-loads SKILL.md)
+- [ ] Frontend: Project Instructions tab — Audit panel (stored findings + Run Audit modal with copy-ready prompt)
+- [ ] Frontend: Project Instructions tab — Generator panel (Fixed Sections toggles + trigger-only skills block + budget bar + Copy all)
+- [ ] Frontend: Project Instructions tab — Version History panel (list of snapshots + Mark as Applied button)
+- [ ] Update skills.test.ts to cover new procedures (getContent, saveInstructionsAudit, saveInstructionsVersion)
+- [ ] Remove tests for skills.upsert and skills.delete
+- [ ] Save checkpoint after schema + router changes
+- [ ] Save checkpoint after frontend changes

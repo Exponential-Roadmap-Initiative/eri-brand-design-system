@@ -705,3 +705,51 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 | `/new-project` | NewProject.tsx | Live |
 | `/team-guide` | TeamGuide.tsx | Live |
 | `/skills` | Skills.tsx | Live |
+
+---
+
+## v3.8.0 — Skills page BDS card violation fixes (2026-06-05)
+
+### What was fixed
+
+All BDS compliance violations in `client/src/pages/Skills.tsx` were resolved. The page now exemplifies the system it documents.
+
+**Card pattern violations fixed:**
+- `SkillRow` card: replaced full four-side teal outline with `border-l-4` left accent border + `tintBg` background (canonical BDS card pattern). Category `accentColor` used when available, tier `accentColor` as fallback.
+- `SystemOverview` tier model cards: replaced `cfg.border`/`cfg.bg` classes with `border-l-4` + inline `accentColor`/`tintBg`.
+
+**Badge violations fixed:**
+- `TierBadge`: now transparent outlined pill — `border` with `accentColor` border colour, no filled background, no hardcoded colour class.
+- `CategoryBadge`: Lucide icon + `accentColor` border/bg (no emoji, uses six-slot BDS palette).
+- `RECOMMENDATION_CONFIG`: removed `badge`/`icon` fields; replaced with `accentColor`/`tintBg`. Audit section recommendation pills now use inline style (transparent outlined pill pattern).
+
+**Emoji violations fixed (all replaced with Lucide icons or text):**
+- `readWhen` callout: `⏰` → `<Clock size={12} />`
+- "no improvements logged": `⚠` → `<AlertTriangle size={11} />`
+- Hero stats warning: `⚠` → `<AlertTriangle size={14} />`
+- Filter bar missing-self-improvement button: `⚠` → `<AlertTriangle size={12} />`
+- View/Download buttons: emoji → `<Eye size={12} />` / `<Download size={12} />`
+- Folder path hint: `📁` → `/` text
+- Category select in `AddSkillDialog`: `cfg.icon` (emoji) → Lucide `CfgIcon` component
+
+**Stale config class violations fixed:**
+- Filter bar tier chips: `cfg.badge` → inline `style` with `cfg.accentColor`/`cfg.tintBg`
+- Filter bar category chips: `catCfg.badge`/`catCfg.icon` → Lucide `CatIcon` + inline `style`
+- Tier group headings: `cfg.heading` class → inline `style={{ color: cfg.accentColor }}`
+- `SystemOverview` tier card heading: `cfg.heading` class → inline `style={{ color: cfg.accentColor }}`
+
+### Config objects after fix
+
+`TIER_CONFIG` fields: `label`, `shortLabel`, `accentColor`, `tintBg`, `when`, `constraint`, `example`
+- The `badge`, `border`, `bg`, `heading` fields have been **removed** — do not re-add them.
+
+`CATEGORY_CONFIG` fields: `label`, `Icon` (Lucide component), `accentColor`, `tintBg`
+- The `icon` (emoji string) and `badge` fields have been **removed** — do not re-add them.
+
+`RECOMMENDATION_CONFIG` fields: `label`, `accentColor`, `tintBg`
+- The `badge` and `icon` fields have been **removed** — do not re-add them.
+
+### Checkpoint
+- Version: `3810c562`
+- Tests: 14/14 passing (`server/skills.test.ts`)
+- TypeScript: 0 real errors (13 stale watcher noise — TS 5.6.3 vs 5.9.3 path mismatch, safe to ignore)
