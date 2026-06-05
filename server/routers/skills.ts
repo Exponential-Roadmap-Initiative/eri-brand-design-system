@@ -64,13 +64,13 @@ export const SKILLS_METADATA: SkillMeta[] = [
     hasReferences: false,
   },
   {
-    id: "eri-skill-manager",
-    name: "ERI Skill Manager",
-    description: "Governs the full lifecycle of the ERI self-improving skill ecosystem.",
+    id: "eri-skill-creator",
+    name: "ERI Skill Creator",
+    description: "Full lifecycle governance for ERI skills: create, improve, register, and maintain the self-improving ERI skill ecosystem.",
     tier: 1,
     category: "process",
-    version: "1.0.0",
-    readWhen: "Whenever creating, editing, or improving an ERI skill. After every task — post-task reflection.",
+    version: "2.0.0",
+    readWhen: "Whenever creating, editing, or improving an ERI skill. After every task — post-task reflection loop.",
     hasReferences: true,
   },
   // ── Tier 2: Task-triggered ─────────────────────────────────────────────────

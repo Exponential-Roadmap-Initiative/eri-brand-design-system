@@ -679,14 +679,14 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 - `BdsNavDrawer.tsx`: Skills link added to Other pages section
 
 ### Tier model (post-rename, 2026-06-04)
-- Tier 1 — Always-on (3 skills): eri-bds-reference, eri-human-ai-collaboration, eri-skill-manager
+- Tier 1 — Always-on (3 skills): eri-bds-reference, eri-human-ai-collaboration, eri-skill-creator
 - Tier 2 — Per-action gate (3 skills): eri-code-quality, eri-trpc, eri-decision
 - Tier 3 — Conditional (16 skills): eri-data-source, eri-widget, eri-database, eri-security, eri-rest-api, eri-earth-aligned-agent, eri-report-finder, eri-ueil-nav, eri-user-management, eri-bds-site, manus-api, manus-config, automation-and-scheduling, persistent-computing, imagegen, music-prompter
 
 ### Skill renaming/consolidation (2026-06-04)
 - All ERI-owned skills renamed with `eri-` prefix
 - Three explorer skills (data-source-integration, data-source-explorer, explorer-compare-view) consolidated into single `eri-data-source`
-- `skill-creator` → `eri-skill-manager` (ERI-adapted meta-skill with tier governance, BDS registry, project instructions management)
+- `skill-creator` → `eri-skill-creator` (ERI-adapted meta-skill with tier governance, BDS registry, project instructions management; renamed from eri-skill-manager 2026-06-05)
 - `exponential-human-ai-collaboration` → `eri-human-ai-collaboration`
 - `bgm-prompter` archived to `_archive/`
 - Skill directories at `/home/ubuntu/skills/eri-*/`; old directories remain for backward compat
