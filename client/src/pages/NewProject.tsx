@@ -17,6 +17,7 @@ import {
   Database, Shield, Users, Server, Type, Palette,
 } from "lucide-react";
 import PublicLayout from "@/components/PublicLayout";
+import { PageGuide } from "@/components/PageGuide";
 
 // ─── Copy-to-clipboard hook ───────────────────────────────────────────────────
 function useCopy() {
@@ -281,15 +282,7 @@ export default function NewProject() {
           <h1 className="text-4xl font-extrabold text-white mb-4 leading-tight">
             Start a New Project
           </h1>
-          {/* PAGE GUIDE callout */}
-          <div className="mt-4 rounded-lg border border-white/20 bg-white/5 px-5 py-4 max-w-2xl">
-            <p className="text-xs font-bold text-[#93E07D] uppercase tracking-widest mb-1">Page Guide</p>
-            <p className="text-sm text-white/80 leading-relaxed">
-              This page is the starting point for every new ERI web project. Use the decision card below to pick a track,
-              copy the project instructions block, and paste it into your new Manus project instructions field — the
-              agent will read this page and follow the correct setup steps automatically.
-            </p>
-          </div>
+          <PageGuide text="This page is the starting point for every new ERI web project. Use the decision card below to pick a track, copy the project instructions block, and paste it into your new Manus project instructions field — the agent will read this page and follow the correct setup steps automatically." />
         </div>
       </section>
 

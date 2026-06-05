@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PublicLayout from "@/components/PublicLayout";
+import { PageGuide } from "@/components/PageGuide";
 import SectionNavigator from "@/components/SectionNavigator";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { DataSourceLogoGrid } from "@/components/DataSourceLogoGrid";
@@ -378,20 +379,14 @@ export default function BrandDesignSystem() {
           <p className="font-archivo text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: '#93E07D' }}>
             Brand Reference
           </p>
-          <h1 className="font-archivo text-4xl md:text-5xl font-extrabold mb-6">
+          <h1 className="font-archivo text-4xl md:text-5xl font-extrabold mb-4">
             Brand Design System
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <PageGuide text="This page is the canonical reference for every ERI web project. Use the sticky navigator on the left to jump to any section. When building a new ERI product, read the Tokens, Typography, Logo Usage, and Component sections first — they contain the exact values your implementation must match. The Alignment Tracker tab shows you how to verify compliance." />
+          <p className="text-xl text-muted-foreground max-w-3xl mt-6">
             The definitive guide to the Exponential Roadmap Initiative visual and verbal identity.
             The purpose of the system is to enable consistency, quality, and integrity across all touch points.
           </p>
-          {/* PAGE GUIDE */}
-          <div className="mt-6 rounded-lg border border-white/10 bg-white/5 px-5 py-4 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: '#7FBA00' }}>PAGE GUIDE</p>
-            <p className="text-sm text-white/80 leading-relaxed">
-              This page is the canonical reference for every ERI web project. Use the sticky navigator on the left to jump to any section. When building a new ERI product, read the Tokens, Typography, Logo Usage, and Component sections first — they contain the exact values your implementation must match. The Alignment Tracker tab shows you how to verify compliance.
-            </p>
-          </div>
         </div>
       </section>
 

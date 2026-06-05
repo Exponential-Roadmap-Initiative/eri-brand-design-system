@@ -793,7 +793,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Redesign SkillCard: name as heading, ID as muted subtitle, icon prefix, readWhen as styled callout box, version + history icon + View + Download buttons in footer (done 2026-06-05)
 - [x] Add filter bar: ecosystem tabs (ERI skills / Manus standard / All), tier chips, category chips, missing-self-improvement filter (done 2026-06-05)
 - [x] Update hero stats: show "X missing self-improvement" in orange when > 0 (done 2026-06-05)
-- [ ] Extract reusable PageGuide component to client/src/components/PageGuide.tsx (deferred — inline pattern works well for now)
+- [x] Extract reusable PageGuide component to client/src/components/PageGuide.tsx (done 2026-06-05 — all 5 pages now use shared component)
 - [x] TypeScript check — 0 real errors (13 stale watcher errors are known/expected)
 - [x] Run tests — all 15 pass (done 2026-06-05)
 

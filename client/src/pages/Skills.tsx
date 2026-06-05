@@ -38,6 +38,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import PublicLayout from "@/components/PublicLayout";
+import { PageGuide } from "@/components/PageGuide";
 // Types inlined to avoid cross-boundary import from client to server/drizzle
 interface Skill {
   id: string;
@@ -1096,9 +1097,10 @@ export default function Skills() {
           <p className="text-xs font-semibold uppercase tracking-widest text-white/50 mb-2">
             ERI SKILL ECOSYSTEM
           </p>
-          <h1 className="text-3xl font-bold tracking-tight mb-1">Skills — Operational Knowledge System</h1>
+          <h1 className="text-3xl font-bold tracking-tight mb-4">Skills — Operational Knowledge System</h1>
+          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. The quality of any task is partly a function of which skills were applied and how well they were followed. The system is self-improving: every task that applies a skill is an opportunity to make it better." />
           {skillsList && (
-            <div className="flex items-center gap-3 mt-2 flex-wrap">
+            <div className="flex items-center gap-3 mt-4 flex-wrap">
               <span className="text-sm text-white/70">
                 <span className="text-white font-semibold">{skillsList.length}</span> skills in the ecosystem
               </span>
@@ -1109,13 +1111,6 @@ export default function Skills() {
               )}
             </div>
           )}
-          {/* PAGE GUIDE */}
-          <div className="mt-5 rounded-lg border border-white/10 bg-white/5 px-5 py-4 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#7FBA00] mb-1.5">PAGE GUIDE</p>
-            <p className="text-sm text-white/80 leading-relaxed">
-              Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. The quality of any task is partly a function of which skills were applied and how well they were followed. The system is self-improving: every task that applies a skill is an opportunity to make it better.
-            </p>
-          </div>
         </div>
       </div>
 

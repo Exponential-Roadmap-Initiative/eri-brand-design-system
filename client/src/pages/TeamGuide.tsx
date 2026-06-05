@@ -9,6 +9,7 @@
  */
 import { useState } from "react";
 import PublicLayout from "@/components/PublicLayout";
+import { PageGuide } from "@/components/PageGuide";
 
 // ── Copy-to-clipboard helper ──────────────────────────────────────────────────
 function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) {
@@ -153,7 +154,8 @@ export default function TeamGuide() {
             Your ERI AI<br />
             <span className="text-[#93E07D]">Team</span> is Ready.
           </h1>
-          <p className="text-base text-white/80 mb-8 max-w-xl">
+          <PageGuide text="Use the three cards below to jump to the section most relevant to you. New to Manus? Start with ‘I’m new to Manus’. Already onboarded and need to share a task with a colleague? Go to ‘I need to share a task’. Want to understand how ERI’s full AI stack fits together? Choose ‘I want the full picture’." />
+          <p className="text-base text-white/80 mt-6 mb-8 max-w-xl">
             ERI uses Manus to build the Exponential Human–AI Lab — everything at the intersection of human expertise and AI, from early-stage experiments to live applications. This guide gets you from zero to your first output in 15 minutes.
           </p>
           {/* Entry cards */}
@@ -197,13 +199,7 @@ export default function TeamGuide() {
               </button>
             ))}
           </div>
-          {/* PAGE GUIDE */}
-          <div className="mt-8 rounded-lg border border-white/10 bg-white/5 px-5 py-4">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1.5 text-[#7FBA00]">PAGE GUIDE</p>
-            <p className="text-sm text-white/80 leading-relaxed">
-              Use the three cards above to jump to the section most relevant to you. New to Manus? Start with “I’m new to Manus”. Already onboarded and need to share a task with a colleague? Go to “I need to share a task”. Want to understand how ERI’s full AI stack fits together? Choose “I want the full picture”.
-            </p>
-          </div>
+
         </div>
       </section>
 
