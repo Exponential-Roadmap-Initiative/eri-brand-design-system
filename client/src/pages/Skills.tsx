@@ -584,11 +584,11 @@ const FIXED_SECTIONS: FixedSection[] = [
   },
   {
     id: "S_FRAMEWORK",
-    label: "Exponential Framework matrix",
+    label: "Exponential Framework structure",
     chars: 530,
     defaultOn: false,
-    description: "5×4 matrix reference for projects using the Exponential Framework. Disable for non-framework projects.",
-    content: `## Exponential Framework — Always Remember\nThe ERI Exponential Framework is a 5 pillars (columns) x 4 horizontals (rows) matrix = 20 cells.\n\n5 Pillars: P1=Cut Operational Emissions, P2=Decarbonise Value Chain, P3=Build & Scale Solutions, P4=Mobilise Finance & Investment, P5=Shape Policy & Narrative\n\n4 Horizontals (rows, top to bottom): H1=Earth-aligned Vision & Mission, H2=Set Targets & Strategy, H3=Develop Transition Plan & Take Action, H4=Measure, Report & Disclose\n\nReference: https://exponentialroadmap.org/exponential-framework/`,
+    description: "Framework structure reference for projects using the Exponential Framework. Disable for non-framework projects.",
+    content: `## Exponential Framework — Always Remember\nThe ERI Exponential Framework has 5 Pillars and 4 Horizontals — two independent dimensions, not a matrix. H1, H2, and H4 are company-wide (not per-pillar). Only H3 (Develop Transition Plan & Take Action) contains the 21 pillar-specific action sub-sections.\n\n5 Pillars: P1=Cut Operational Emissions, P2=Decarbonise Value Chain, P3=Build & Scale Solutions, P4=Mobilise Finance & Investment, P5=Shape Policy & Narrative\n\n4 Horizontals: H1=Earth-aligned Vision & Mission, H2=Set Targets & Strategy, H3=Develop Transition Plan & Take Action (21 action sub-sections, pillar-specific), H4=Measure, Report & Disclose\n\nReference: https://exponentialroadmap.org/exponential-framework/`,
   },
 ];
 
@@ -1026,7 +1026,7 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
                   { id: "skill-update-post", title: "Post-task skill update", chars: 440, recommendation: "compress" as const, reason: "Valuable but verbose — core directive is 60 chars." },
                   { id: "dev-workflow", title: "ERI development workflow", chars: 257, recommendation: "evaluate" as const, reason: "May be redundant if Manus already follows this loop by default." },
                   { id: "collab-skill", title: "Apply exponential-human-ai-collaboration", chars: 91, recommendation: "replace" as const, reason: "Redundant once this skill is in Tier 1." },
-                  { id: "framework", title: "Exponential Framework matrix", chars: 530, recommendation: "evaluate" as const, reason: "Only relevant for framework projects — disable for BDS." },
+                  { id: "framework", title: "Exponential Framework structure", chars: 530, recommendation: "evaluate" as const, reason: "Only relevant for framework projects — disable for BDS." },
                   { id: "agent-files", title: "Earth-aligned AI Agent key files", chars: 230, recommendation: "move" as const, reason: "Belongs in the eri-playbook-team PROJECT-CONTEXT.md, not BDS." },
                 ].map(section => {
                   const cfg = RECOMMENDATION_CONFIG[section.recommendation];
