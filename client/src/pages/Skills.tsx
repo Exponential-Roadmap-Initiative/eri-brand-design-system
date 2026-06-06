@@ -534,12 +534,24 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
     { id: skill.id },
     { enabled: isOpen }
   );
+  const { data: rawContent, isLoading: contentLoading } = trpc.skills.getContent.useQuery(
+    { id: skill.id },
+    { enabled: isOpen }
+  );
   const improvements = detail?.improvements ?? [];
   const hasSelfImprovement = improvements.length > 0;
 
+  // Extract a short preview from the SKILL.md body (strip frontmatter, take first ~350 chars)
+  const contentPreview = rawContent
+    ? (() => {
+        const body = rawContent.replace(/^---[\s\S]*?---\s*/m, "").trim();
+        return body.length > 350 ? body.slice(0, 350).trimEnd() + "…" : body;
+      })()
+    : null;
+
   const handleDownload = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const content = detail?.content ??
+    const content =
       `# ${skill.name}\n\nID: ${skill.id}\nVersion: ${skill.version}\nTier: ${skill.tier}\nCategory: ${skill.category}\n\n## Description\n\n${skill.description}\n\n## When to Read\n\n${skill.readWhen}\n`;
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -563,10 +575,9 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
         {/* Card header — always visible */}
         <CollapsibleTrigger className="w-full text-left">
           <div className="px-5 pt-5 pb-3 hover:bg-muted/20 transition-colors">
-            {/* Top row: icon + name + tier badge + category badge */}
+            {/* Top row: name + tier badge + category badge */}
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-3 flex-1 min-w-0">
-                <span className="flex-shrink-0 text-muted-foreground/50 text-sm font-mono mt-0.5">&lt;/&gt;</span>
+              <div className="flex items-start gap-2 flex-1 min-w-0">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className="font-bold text-base text-foreground leading-snug">{skill.name}</span>
@@ -581,14 +592,18 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
             </div>
 
             {/* Description preview */}
-            <p className="text-sm text-foreground/75 leading-relaxed mt-3 ml-7">{skill.description}</p>
+            <p className="text-sm text-foreground/75 leading-relaxed mt-3">{skill.description}</p>
 
-            {/* readWhen callout */}
+            {/* readWhen callout — most important signal on the card */}
             {skill.readWhen && (
-              <div className="ml-7 mt-3 rounded-md bg-muted/40 border border-border px-4 py-2.5 flex items-start gap-2">
-                <Clock size={12} className="text-muted-foreground flex-shrink-0 mt-0.5" />
+              <div
+                className="mt-3 rounded-md border-l-2 px-4 py-2.5 flex items-start gap-2"
+                style={{ borderLeftColor: accentColor, backgroundColor: `${accentColor}0d` }}
+              >
+                <Clock size={12} className="flex-shrink-0 mt-0.5" style={{ color: accentColor }} />
                 <p className="text-xs text-foreground/80 leading-relaxed">
-                  <span className="font-semibold">When:</span> {skill.readWhen}
+                  <span className="font-semibold" style={{ color: accentColor }}>When:</span>{" "}
+                  {skill.readWhen}
                 </p>
               </div>
             )}
@@ -602,13 +617,7 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
               {isOpen && improvements.length > 0 && (
                 <span className="text-xs text-muted-foreground">· {improvements.length} improvement{improvements.length !== 1 ? 's' : ''}</span>
               )}
-              {isOpen && !hasSelfImprovement && !detailLoading && (
-              <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
-                <AlertTriangle size={11} />
-                no improvements logged
-              </span>
-            )}
-          </div>
+            </div>
           <div className="flex items-center gap-2">
             <CollapsibleTrigger asChild>
               <Button variant="outline" size="sm" className="text-xs h-7 px-3 inline-flex items-center gap-1.5">
@@ -644,6 +653,21 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
               </div>
             )}
 
+            {/* Content preview — first ~350 chars of SKILL.md body */}
+            {(contentLoading) && (
+              <div className="h-16 rounded bg-muted animate-pulse" />
+            )}
+            {!contentLoading && contentPreview && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Preview
+                </p>
+                <div className="rounded-md bg-muted/20 border border-border px-4 py-3">
+                  <p className="text-xs text-foreground/70 leading-relaxed whitespace-pre-wrap font-mono">{contentPreview}</p>
+                </div>
+              </div>
+            )}
+
             {/* Improvement log — lazy loaded */}
             {detailLoading && (
               <div className="h-12 rounded bg-muted animate-pulse" />
@@ -653,7 +677,16 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
                   Improvement Log
                 </p>
-                <ImprovementLog improvements={improvements} />
+                {!hasSelfImprovement ? (
+                  <div className="rounded-md bg-muted/20 border border-dashed border-border px-4 py-3">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      No improvements logged yet. After applying this skill in a task, expand this card and use{" "}
+                      <span className="font-medium">Log Improvement</span> to record what you learned.
+                    </p>
+                  </div>
+                ) : (
+                  <ImprovementLog improvements={improvements} />
+                )}
               </div>
             )}
           </div>
@@ -1466,7 +1499,7 @@ export default function Skills() {
         {!isLoading && skillsList && skillsList.length > 0 && filteredSkills.length === 0 && (
           <div className="text-center py-12 text-muted-foreground">
             <p className="text-sm font-medium mb-1">No skills match the current filters.</p>
-            <button onClick={() => { setTierFilter(null); setCategoryFilter(null); setMissingImprovementOnly(false); setEcosystemFilter("all"); }}
+            <button onClick={() => { setTierFilter(null); setCategoryFilter(null); setEcosystemFilter("all"); }}
               className="text-xs underline hover:text-foreground">Clear all filters</button>
           </div>
         )}
@@ -1475,11 +1508,18 @@ export default function Skills() {
         {([1, 2, 3] as const).map((tier) =>
           grouped[tier].length > 0 ? (
             <div key={tier} className="mb-8">
-              <div className="flex items-center gap-3 mb-3">
-                <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: TIER_CONFIG[tier].accentColor }}>
-                  {TIER_CONFIG[tier].label}
-                </h2>
-                <span className="text-xs text-muted-foreground">{grouped[tier].length} skill{grouped[tier].length !== 1 ? "s" : ""}</span>
+              <div className="mb-4">
+                <div className="flex items-center gap-3 mb-1">
+                  <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: TIER_CONFIG[tier].accentColor }}>
+                    {TIER_CONFIG[tier].label}
+                  </h2>
+                  <span className="text-xs text-muted-foreground">{grouped[tier].length} skill{grouped[tier].length !== 1 ? "s" : ""}</span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {tier === 1 && "Read at the start of every task, without exception. These skills define how ERI work is done — collaboration principles, brand standards, and core operating procedures."}
+                  {tier === 2 && "Read immediately before a specific action, even within the same task. These are gate skills — they prevent mistakes by ensuring the right pattern is applied at the right moment."}
+                  {tier === 3 && "Read when the domain or trigger condition applies. These are reference skills — deep knowledge for specific areas of the platform, data sources, or tooling."}
+                </p>
               </div>
               <div className="space-y-3">
                 {grouped[tier].map((skill) => (

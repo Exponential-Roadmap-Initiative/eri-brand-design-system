@@ -317,7 +317,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
 ];
 
-// ─── Filesystem content reader ────────────────────────────────────────────────
+// ─── Filesystem helpers ──────────────────────────────────────────────────────
 const SKILLS_BASE_DIR = "/home/ubuntu/skills";
 
 function readSkillContent(skillId: string): string | null {
@@ -330,15 +330,82 @@ function readSkillContent(skillId: string): string | null {
   }
 }
 
+/**
+ * Parse YAML frontmatter from a SKILL.md file.
+ * Returns only the fields we trust from frontmatter: name, description, version.
+ * Tier, category, readWhen, and hasReferences are governance decisions — they stay
+ * hardcoded in SKILLS_METADATA and are never overridden by frontmatter.
+ *
+ * Handles both flat quoted strings and block scalars (>).
+ */
+function parseFrontmatterMeta(content: string): { name?: string; description?: string; version?: string } {
+  // Extract the frontmatter block (between first --- and second ---)
+  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+  const fm = match[1];
+
+  // Parse name (flat string only)
+  const nameMatch = fm.match(/^name:\s*["']?([^"'\n]+)["']?/m);
+  const name = nameMatch ? nameMatch[1].trim() : undefined;
+
+  // Parse description — handles quoted strings and block scalars
+  let description: string | undefined;
+  const descQuotedMatch = fm.match(/^description:\s*"([^"]*)"/m);
+  if (descQuotedMatch) {
+    description = descQuotedMatch[1].trim();
+  } else {
+    // Block scalar (>) or unquoted — take first non-empty line after the key
+    const descBlockMatch = fm.match(/^description:\s*>?\s*\n(([\s\S]*?)(?=\n\S|$))/);
+    if (descBlockMatch) {
+      // Collapse the block scalar into a single line
+      description = descBlockMatch[1]
+        .split("\n")
+        .map((l) => l.trim())
+        .filter(Boolean)
+        .join(" ")
+        .trim();
+    } else {
+      const descInlineMatch = fm.match(/^description:\s*(.+)/m);
+      if (descInlineMatch) description = descInlineMatch[1].trim();
+    }
+  }
+
+  // Parse metadata.version (nested block)
+  const versionMatch = fm.match(/^metadata:\s*\n\s+version:\s*["']?([\d.]+)["']?/m);
+  const version = versionMatch ? versionMatch[1].trim() : undefined;
+
+  return { name, description, version };
+}
+
+/**
+ * Merge live frontmatter values over the hardcoded SKILLS_METADATA entry.
+ * name and description always come from the filesystem if the file exists.
+ * version comes from metadata.version in frontmatter if present; otherwise
+ * falls back to the hardcoded value.
+ * Tier, category, readWhen, hasReferences are always from SKILLS_METADATA.
+ */
+function enrichWithFrontmatter(meta: SkillMeta): SkillMeta {
+  const content = readSkillContent(meta.id);
+  if (!content) return meta;
+  const fm = parseFrontmatterMeta(content);
+  return {
+    ...meta,
+    name: fm.name ?? meta.name,
+    description: fm.description ?? meta.description,
+    version: fm.version ?? meta.version,
+  };
+}
+
 // ─── Router ───────────────────────────────────────────────────────────────────────
 export const skillsRouter = router({
   /**
    * List all skills with their metadata.
-   * Returns SKILLS_METADATA — no DB query needed.
+   * name, description, and version are read live from SKILL.md frontmatter.
+   * tier, category, readWhen, hasReferences come from SKILLS_METADATA (governance decisions).
    * Public.
    */
   list: publicProcedure.query(() => {
-    return SKILLS_METADATA;
+    return SKILLS_METADATA.map(enrichWithFrontmatter);
   }),
 
   /**
@@ -349,8 +416,9 @@ export const skillsRouter = router({
   get: publicProcedure
     .input(z.object({ id: z.string().min(1).max(64) }))
     .query(async ({ input }) => {
-      const meta = SKILLS_METADATA.find((s) => s.id === input.id);
-      if (!meta) return null;
+      const raw = SKILLS_METADATA.find((s) => s.id === input.id);
+      if (!raw) return null;
+      const meta = enrichWithFrontmatter(raw);
       const db = await getDb();
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
       const improvements = await db

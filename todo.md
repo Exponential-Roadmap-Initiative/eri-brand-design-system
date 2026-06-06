@@ -865,3 +865,19 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Save checkpoint after schema + router changes (79e39347)
 - [x] Save checkpoint after frontend changes (8252e07e)
 - [ ] DB: drop skills table (requires manual action — DROP TABLE blocked by safety system; data is stale seed data, no real data loss)
+
+## Skills page — dynamic metadata + UX improvements (2026-06-06)
+- [x] Router: add parseFrontmatterMeta() helper — reads name, description, metadata.version from SKILL.md frontmatter
+- [x] Router: add enrichWithFrontmatter() helper — merges live frontmatter values over SKILLS_METADATA
+- [x] Router: update skills.list to return SKILLS_METADATA.map(enrichWithFrontmatter)
+- [x] Router: update skills.get to use enrichWithFrontmatter before returning
+- [x] Frontend: remove decorative </> icon from SkillRow card header
+- [x] Frontend: fix description margin (ml-7 → mt-3, icon was removed)
+- [x] Frontend: improve readWhen callout — accent-coloured left border + tinted bg + bold coloured "When:" label
+- [x] Frontend: add content preview in expanded state — first ~350 chars of SKILL.md body (lazy-loaded via getContent)
+- [x] Frontend: replace empty improvement log warning with actionable message
+- [x] Frontend: add tier section descriptions (plain-language explanation of each tier's role)
+- [x] Fix TS error: remove detail?.content reference (content not in get response)
+- [x] Fix TS error: remove setMissingImprovementOnly from clear-filters button
+- [x] 22/22 tests passing
+- [x] TypeScript: 0 real errors

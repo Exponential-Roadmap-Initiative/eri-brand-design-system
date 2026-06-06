@@ -866,3 +866,48 @@ Three targeted improvements applied to `eri-bds-reference` SKILL.md. No structur
 
 ### SKILLS_METADATA
 - `eri-bds-reference` version updated to `3.11.0` in `server/routers/skills.ts`
+
+---
+
+## v3.10.0 — Dynamic skill metadata + Skills page UX improvements (2026-06-06)
+
+### Dynamic metadata (skills router)
+
+**Architecture change:** `skills.list` and `skills.get` now merge live frontmatter values over the hardcoded `SKILLS_METADATA` entries at request time.
+
+**What is live (from SKILL.md frontmatter):**
+- `name` — always overrides hardcoded value if frontmatter has it
+- `description` — always overrides hardcoded value if frontmatter has it
+- `version` — overrides hardcoded value only if `metadata.version` is present in frontmatter (only 4 skills currently have this: eri-code-quality, eri-decision, eri-rest-api, eri-trpc)
+
+**What stays hardcoded (governance decisions, not self-descriptions):**
+- `tier`, `category`, `readWhen`, `hasReferences`
+
+**New helpers in `server/routers/skills.ts`:**
+- `parseFrontmatterMeta(content)` — parses YAML frontmatter, handles quoted strings, block scalars (`>`), and `metadata.version` nested block
+- `enrichWithFrontmatter(meta)` — merges live values over hardcoded entry
+
+**How to add a new skill (updated):**
+1. Create `/home/ubuntu/skills/{id}/SKILL.md` with `name:` and `description:` in frontmatter
+2. Add an entry to `SKILLS_METADATA` with `id`, `tier`, `category`, `version`, `readWhen`, `hasReferences`
+3. `name` and `description` will be read live from frontmatter — no need to keep them in sync manually
+
+### Skills page UX improvements
+
+**Individual skill cards:**
+- Removed `</>` decorative icon — it signalled "code" but skills are knowledge modules
+- `description` margin adjusted (was `ml-7` to align with icon — now `mt-3` only)
+- `readWhen` callout now has accent-coloured left border + tinted background matching the card accent colour — makes the "When to read" signal visually prominent
+- `readWhen` "When:" label is now bold and in the accent colour
+- Expanded state now shows a **content preview** — first ~350 chars of SKILL.md body (after frontmatter), lazy-loaded via `trpc.skills.getContent`. Gives immediate value without requiring a download.
+- Empty improvement log: replaced `<AlertTriangle>` warning with an actionable message: "No improvements logged yet. After applying this skill in a task, expand this card and use Log Improvement to record what you learned."
+
+**Ecosystem framing (tier section headers):**
+- Each tier group heading now has a one-line plain-language description:
+  - Tier 1: "Read at the start of every task, without exception. These skills define how ERI work is done — collaboration principles, brand standards, and core operating procedures."
+  - Tier 2: "Read immediately before a specific action, even within the same task. These are gate skills — they prevent mistakes by ensuring the right pattern is applied at the right moment."
+  - Tier 3: "Read when the domain or trigger condition applies. These are reference skills — deep knowledge for specific areas of the platform, data sources, or tooling."
+
+### Tests
+- 22/22 passing (`server/skills.test.ts`)
+- TypeScript: 0 real errors (13 stale watcher noise — TS 5.6.3 vs 5.9.3 path mismatch, safe to ignore)
