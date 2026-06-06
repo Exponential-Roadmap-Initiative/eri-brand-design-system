@@ -150,7 +150,131 @@ function TierBadge({ tier }: { tier: number }) {
   );
 }
 
-// ── System Overview (collapsible) ─────────────────────────────────────────────
+// ── Governance Diagram ────────────────────────────────────────────────────────
+
+/**
+ * Four-level governance diagram — rendered as HTML/CSS, no external images.
+ * Designed to be readable by non-technical colleagues.
+ * Levels: Manus System → ERI Project → Codebase → Task
+ * Feedback loop: Task improvements flow back into Project Skills.
+ */
+function GovernanceDiagram() {
+  const levels = [
+    {
+      id: "system",
+      emoji: "🌐",
+      title: "Manus Platform",
+      subtitle: "The foundation — always present, not configurable by ERI",
+      color: "#6b7280",
+      tint: "rgba(107,114,128,0.06)",
+      border: "rgba(107,114,128,0.25)",
+      assets: [
+        { icon: "🛠", name: "Built-in tools", desc: "Browser, code editor, file system, image generation, search" },
+        { icon: "📖", name: "General skills", desc: "Skill creator, image routing, API access, scheduling" },
+        { icon: "⚙️", name: "System behaviour", desc: "Safety rules, tool use patterns, response format" },
+      ],
+    },
+    {
+      id: "project",
+      emoji: "🏢",
+      title: "ERI Project",
+      subtitle: "Shared across every ERI task — the team's accumulated knowledge",
+      color: "#3ba559",
+      tint: "rgba(59,165,89,0.06)",
+      border: "rgba(59,165,89,0.30)",
+      assets: [
+        { icon: "📋", name: "Project Instructions", desc: "Always-on rules: how to behave, what to always check, what to never skip" },
+        { icon: "🧠", name: "Project Skills", desc: "Living knowledge modules: how ERI work is done well — improving after every task" },
+        { icon: "📁", name: "Project Files", desc: "Shared domain knowledge: framework PDFs, specs, canonical reference documents" },
+      ],
+    },
+    {
+      id: "codebase",
+      emoji: "💻",
+      title: "Codebase",
+      subtitle: "Specific to one application — persists across tasks on that codebase",
+      color: "#f59e0b",
+      tint: "rgba(245,158,11,0.06)",
+      border: "rgba(245,158,11,0.30)",
+      assets: [
+        { icon: "🗂", name: "PROJECT-CONTEXT.md", desc: "Codebase memory: decisions made, known errors, pending work — survives session resets" },
+        { icon: "✅", name: "todo.md", desc: "Active work tracking: what is in progress, what is done, what is next" },
+        { icon: "🏗", name: "The codebase itself", desc: "The actual application being built — code, database schema, tests" },
+      ],
+    },
+    {
+      id: "task",
+      emoji: "⚡",
+      title: "Task",
+      subtitle: "A single session — ephemeral, exists only while the task is running",
+      color: "#17b7dd",
+      tint: "rgba(23,183,221,0.06)",
+      border: "rgba(23,183,221,0.30)",
+      assets: [
+        { icon: "💬", name: "Conversation", desc: "Everything said in this session — the brief, the decisions, the feedback" },
+        { icon: "📎", name: "Attached files", desc: "Documents or images shared for this specific task" },
+        { icon: "🔄", name: "Sandbox state", desc: "Installed packages, running processes, downloaded files — reset between sessions" },
+      ],
+    },
+  ];
+
+  return (
+    <div className="space-y-2">
+      {/* Diagram: nested zones */}
+      <div className="relative">
+        {levels.map((level, idx) => (
+          <div
+            key={level.id}
+            className="rounded-xl border p-4 mb-2"
+            style={{
+              borderColor: level.border,
+              backgroundColor: level.tint,
+              marginLeft: `${idx * 16}px`,
+            }}
+          >
+            {/* Level header */}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg leading-none">{level.emoji}</span>
+              <div>
+                <span className="text-sm font-semibold" style={{ color: level.color }}>{level.title}</span>
+                <span className="text-xs text-muted-foreground ml-2">{level.subtitle}</span>
+              </div>
+            </div>
+            {/* Assets */}
+            <div className="flex flex-wrap gap-2">
+              {level.assets.map(asset => (
+                <div
+                  key={asset.name}
+                  className="group relative flex items-start gap-2 rounded-lg border px-3 py-2 cursor-default"
+                  style={{ borderColor: level.border, backgroundColor: "var(--card)" }}
+                >
+                  <span className="text-base leading-none mt-0.5 flex-shrink-0">{asset.icon}</span>
+                  <div>
+                    <p className="text-xs font-medium text-foreground">{asset.name}</p>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed mt-0.5">{asset.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Feedback loop callout */}
+      <div className="rounded-lg border border-dashed p-3 flex items-start gap-3" style={{ borderColor: "rgba(59,165,89,0.4)", backgroundColor: "rgba(59,165,89,0.04)" }}>
+        <span className="text-lg leading-none flex-shrink-0 mt-0.5">🔁</span>
+        <div>
+          <p className="text-xs font-semibold text-foreground">The self-improvement loop</p>
+          <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+            Every completed task is an opportunity to improve the system. When something works better than expected — or fails — that insight flows back into the <span className="font-medium text-foreground">Project Skills</span> layer. The skill is updated, the version is bumped, and every future task benefits automatically. The system gets smarter with every piece of work.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── System Overview (Philosophy tab) ─────────────────────────────────────────
 
 function SystemOverview() {
   const [open, setOpen] = useState(false);
@@ -164,34 +288,42 @@ function SystemOverview() {
         <div>
           <p className="text-sm font-semibold text-foreground">How this system works</p>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Philosophy, tier model, self-improvement loop, and eval framework
+            Governance layers, tier model, and the self-improvement loop
           </p>
         </div>
         <span className="text-muted-foreground text-xs ml-4">{open ? "Collapse ↑" : "Expand ↓"}</span>
       </button>
 
       {open && (
-        <div className="border-t border-border px-5 py-6 space-y-8 bg-muted/10">
+        <div className="border-t border-border px-5 py-6 space-y-10 bg-muted/10">
 
-          {/* Philosophy */}
+          {/* The big idea */}
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-              The Core Idea
-            </h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">The big idea</h3>
             <p className="text-sm text-foreground/80 leading-relaxed">
-              Skills are living knowledge modules — not static documents. Each skill encodes how a specific type of work is done well: the sequence of steps, the failure patterns to avoid, the guardrails that prevent known mistakes. Every task that applies a skill is an opportunity to make it better. The system compounds: each improvement makes the next task easier, and the next, and the next.
+              Every ERI task runs inside a layered knowledge system. Before Manus writes a single line of code or drafts a single sentence, it has already read the team's operating principles, the domain expertise relevant to this work, and the memory of every decision made on this codebase before. The result is that each task starts from a higher baseline — and when the task is done, what was learned raises that baseline further.
             </p>
             <p className="text-sm text-foreground/80 leading-relaxed mt-2">
-              The self-improvement loop is the engine. At the end of every task where skills were applied, a structured post-task reflection surfaces what worked, what was underspecified, and what should be added as a guardrail. Improvements are applied immediately, the version is bumped, and the change is logged here. Over time, the skill ecosystem becomes a precise, battle-tested record of how this team does its best work.
+              This is not automation replacing judgement. It is a system that makes human–AI collaboration more consistent, more informed, and more efficient with every task completed.
             </p>
+          </section>
+
+          {/* Governance diagram */}
+          <section>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">The four governance layers</h3>
+            <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+              Think of these as concentric rings. The outer rings are always present — they form the foundation every task builds on. The inner rings are more specific — they carry knowledge about a particular codebase or session. Every task draws from all four layers simultaneously.
+            </p>
+            <GovernanceDiagram />
           </section>
 
           {/* Tier model */}
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-              The Tier Model
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">How skills are prioritised — the tier model</h3>
+            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+              Not every skill needs to be read on every task. The tier system controls when each skill is loaded — keeping the most critical knowledge always present while loading specialist knowledge only when it is relevant.
+            </p>
+            <div className="grid grid-cols-1 gap-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
               {([1, 2, 3] as const).map(tier => {
                 const cfg = TIER_CONFIG[tier];
                 return (
@@ -201,7 +333,7 @@ function SystemOverview() {
                       <span className="font-medium">When:</span> {cfg.when}
                     </p>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      <span className="font-medium">Constraint:</span> {cfg.constraint}
+                      <span className="font-medium">Size limit:</span> {cfg.constraint}
                     </p>
                     <p className="text-xs text-muted-foreground leading-relaxed">
                       <span className="font-medium">Example:</span> {cfg.example}
@@ -217,15 +349,16 @@ function SystemOverview() {
 
           {/* Self-improvement loop */}
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-              The Self-Improvement Loop
-            </h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">How skills get better — the improvement loop</h3>
+            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+              Skills are not written once and left unchanged. They are living documents that improve after every task. The loop is simple:
+            </p>
             <ol className="space-y-2">
               {[
-                { n: "1", title: "Apply skill", desc: "Task runs with the skill in context. The AI reads it and follows its instructions." },
-                { n: "2", title: "Post-task reflection", desc: "At the end of the task, surface a structured review: what worked, what was underspecified, what should be a guardrail?" },
-                { n: "3", title: "Improve + bump version", desc: "Update the SKILL.md with the new guardrail or correction. Increment the version. Log the change here." },
-                { n: "4", title: "Next task is better", desc: "The improvement is in context from now on. The failure cannot recur. The system compounds." },
+                { n: "1", title: "Task runs", desc: "Manus reads the relevant skills and follows their instructions. The work is done." },
+                { n: "2", title: "Reflect", desc: "At the end of the task: what worked well? What was missing? What should be a guardrail next time?" },
+                { n: "3", title: "Improve", desc: "The skill is updated with the new insight. The version number is bumped. The change is logged here." },
+                { n: "4", title: "Every future task benefits", desc: "The improvement is in context from now on. The same mistake cannot recur. The system compounds." },
               ].map(step => (
                 <li key={step.n} className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-5 h-5 rounded-full bg-muted border border-border text-[10px] font-bold flex items-center justify-center text-muted-foreground mt-0.5">
@@ -239,22 +372,20 @@ function SystemOverview() {
               ))}
             </ol>
             <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-              The reflection is not a failure review — it is a quality review on a spectrum. A task can complete without failures and still have been run at 60% of its potential quality. The question is always: what would have made the output better?
+              This is not a failure review — it is a quality review. A task can complete successfully and still have been run at 60% of its potential. The question is always: what would have made this output better?
             </p>
           </section>
 
           {/* Using this page */}
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-              Using This Page
-            </h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Using this page</h3>
             <ul className="space-y-1.5">
               {[
-                "Click any skill row to expand its improvement log — a timeline of every change made after real task use.",
-                "Use 'Log Improvement' after completing a task where a skill was applied and you identified something to improve.",
-                "Use 'Add Skill' to register a new skill. The ID should match the skill's directory name in /home/ubuntu/skills/.",
-                "Version numbers follow semver: patch bump (1.0.1) for minor additions, minor bump (1.1.0) for structural changes.",
-                "Skills are grouped by tier. Tier 1 should be the shortest list — if it grows beyond 5–6 skills, review whether each is truly always-on.",
+                "Browse the Skills tab to see every registered skill, its tier, and its full improvement history.",
+                "Use 'Log Improvement' after a task to record what changed and why — this is the improvement loop in action.",
+                "Use 'Add Skill' to register a new skill. The ID must match the skill's directory name in /home/ubuntu/skills/.",
+                "Use the Project Instructions tab to generate the instructions block for your Manus project settings.",
+                "Version numbers follow semver: patch (1.0.1) for small additions, minor (1.1.0) for structural changes.",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed">
                   <span className="text-muted-foreground/40 mt-0.5">—</span>
@@ -676,6 +807,14 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
   const [enabledSections, setEnabledSections] = useState<Record<string, boolean>>(() => {
     const defaults: Record<string, boolean> = {};
     FIXED_SECTIONS.forEach(s => { defaults[s.id] = s.defaultOn; });
+    try {
+      const saved = localStorage.getItem("eri-bds-section-prefs");
+      if (saved) {
+        const parsed = JSON.parse(saved) as Record<string, boolean>;
+        // Merge: saved values override defaults, but new sections get their defaultOn
+        return { ...defaults, ...parsed };
+      }
+    } catch { /* ignore parse errors */ }
     return defaults;
   });
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -812,7 +951,11 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
                   <div key={section.id} className="border border-border rounded-md overflow-hidden">
                     <div className="flex items-center gap-3 px-4 py-3">
                       <button
-                        onClick={() => setEnabledSections(prev => ({ ...prev, [section.id]: !prev[section.id] }))}
+                        onClick={() => setEnabledSections(prev => {
+                          const next = { ...prev, [section.id]: !prev[section.id] };
+                          try { localStorage.setItem("eri-bds-section-prefs", JSON.stringify(next)); } catch { /* ignore */ }
+                          return next;
+                        })}
                         className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
                         title={enabledSections[section.id] ? "Disable" : "Enable"}
                       >
