@@ -881,3 +881,14 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Fix TS error: remove setMissingImprovementOnly from clear-filters button
 - [x] 22/22 tests passing
 - [x] TypeScript: 0 real errors
+
+## Philosophy top-level page (2026-06-07)
+- [x] Create client/src/pages/Philosophy.tsx with all sections: hero, four governance layers, self-improving system, skill ecosystem, task lifecycle, project instructions system, human-AI collaboration principles
+- [x] Add /philosophy route to App.tsx Router
+- [x] Add "Governance" tab to TabNav in App.tsx (sixth tab)
+- [x] Add Philosophy link to BdsNavDrawer.tsx
+- [x] Remove Philosophy inner tab from Skills page (activePageTab state, tab bar entry, and {activePageTab === "philosophy" && <SystemOverview />} render)
+- [x] GovernanceDiagram duplicated in Philosophy.tsx (GovernanceDiagram in Skills.tsx kept for backward compat — can be removed in a future cleanup)
+- [x] Fix skill card expand affordance: add ChevronDown/Up icon to card header, change "View" button to "Details"/"Close" toggle
+- [x] TypeScript check — 0 real errors
+- [x] 22/22 tests passing

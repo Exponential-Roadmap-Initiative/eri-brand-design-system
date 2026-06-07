@@ -588,6 +588,10 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
               <div className="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
                 <TierBadge tier={skill.tier} />
                 <CategoryBadge category={skill.category} />
+                {/* Expand affordance — rotates on open */}
+                <span className="ml-1 text-muted-foreground transition-transform duration-200" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', display: 'inline-flex' }}>
+                  <ChevronDown size={16} />
+                </span>
               </div>
             </div>
 
@@ -621,7 +625,8 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
           <div className="flex items-center gap-2">
             <CollapsibleTrigger asChild>
               <Button variant="outline" size="sm" className="text-xs h-7 px-3 inline-flex items-center gap-1.5">
-                <Eye size={12} /> View
+                {isOpen ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                {isOpen ? 'Close' : 'Details'}
               </Button>
             </CollapsibleTrigger>
             <Button variant="outline" size="sm" className="text-xs h-7 px-3 inline-flex items-center gap-1.5" onClick={handleDownload}>
@@ -1316,7 +1321,7 @@ export default function Skills() {
   const refresh = () => utils.skills.list.invalidate();
 
   // ── Filter state
-  const [activePageTab, setActivePageTab] = useState<"skills" | "projectInstructions" | "philosophy">("skills");
+  const [activePageTab, setActivePageTab] = useState<"skills" | "projectInstructions">("skills");
   const [ecosystemFilter, setEcosystemFilter] = useState<EcosystemFilter>("all");
   const [tierFilter, setTierFilter] = useState<number | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
@@ -1357,7 +1362,7 @@ export default function Skills() {
             ERI SKILL ECOSYSTEM
           </p>
           <h1 className="text-3xl font-bold tracking-tight mb-4">Skills — Operational Knowledge System</h1>
-          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. Use the Skills tab to browse and filter the registry. Use Project Instructions to generate or audit the instructions block for your Manus project. Use Philosophy to understand the tier model and self-improvement loop." />
+          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. Use the Skills tab to browse and filter the registry. Use Project Instructions to generate or audit the instructions block for your Manus project. Visit the Governance tab to understand the tier model, self-improvement loop, and the full governance architecture." />
           {skillsList && (
             <div className="flex items-center gap-3 mt-4 flex-wrap">
               <span className="text-sm text-white/70">
@@ -1375,7 +1380,6 @@ export default function Skills() {
             {([
               { id: "skills" as const,              label: "Skills",               Icon: Layers },
               { id: "projectInstructions" as const,  label: "Project Instructions", Icon: SlidersHorizontal },
-              { id: "philosophy" as const,           label: "Philosophy",           Icon: Lightbulb },
             ]).map(({ id, label, Icon }) => (
               <button
                 key={id}
@@ -1396,7 +1400,6 @@ export default function Skills() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
-        {activePageTab === "philosophy" && <SystemOverview />}
         {activePageTab === "projectInstructions" && skillsList && <ProjectInstructions skills={skillsList} />}
 
         {activePageTab === "skills" && (

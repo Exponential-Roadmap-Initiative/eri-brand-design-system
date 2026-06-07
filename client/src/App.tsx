@@ -9,6 +9,7 @@ import AlignmentTracker from "./pages/AlignmentTracker";
 import NewProject from "./pages/NewProject";
 import TeamGuide from "./pages/TeamGuide";
 import Skills from "./pages/Skills";
+import Philosophy from "./pages/Philosophy";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
 import { useState } from "react";
@@ -27,6 +28,7 @@ function TabNav() {
     { href: "/new-project", label: "Start a Project" },
     { href: "/team-guide",  label: "Team Guide" },
     { href: "/skills",      label: "Skills" },
+    { href: "/philosophy",  label: "Governance" },
   ];
   return (
     <div
@@ -90,6 +92,7 @@ function Router() {
         <Route path={"/new-project"} component={NewProject} />
         <Route path={"/team-guide"} component={TeamGuide} />
         <Route path={"/skills"} component={Skills} />
+        <Route path={"/philosophy"} component={Philosophy} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

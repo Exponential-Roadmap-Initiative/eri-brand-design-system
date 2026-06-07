@@ -911,3 +911,45 @@ Three targeted improvements applied to `eri-bds-reference` SKILL.md. No structur
 ### Tests
 - 22/22 passing (`server/skills.test.ts`)
 - TypeScript: 0 real errors (13 stale watcher noise — TS 5.6.3 vs 5.9.3 path mismatch, safe to ignore)
+
+---
+
+## v3.11.0 — Governance top-level page + Skills UX improvements (2026-06-07)
+
+### New: `/philosophy` — Governance & Methodology page
+
+A new top-level page at `/philosophy` (tab label: "Governance") has been added as the sixth tab in the main `TabNav` in `App.tsx`. It is also in `BdsNavDrawer.tsx`.
+
+**Route:** `/philosophy` → `client/src/pages/Philosophy.tsx`
+
+**Sections (all collapsible, first two open by default):**
+1. The big idea (always visible callout — not collapsible)
+2. The four governance layers (`GovernanceDiagram` component — duplicated from Skills.tsx)
+3. The self-improving system (four-step loop + compounding callout)
+4. The skill ecosystem (tier model cards + link to /skills)
+5. The task lifecycle (horizontal flow + six-step ERI development workflow)
+6. The project instructions system (what it controls + link to /skills)
+7. Human–AI collaboration principles (six principle cards from eri-human-ai-collaboration skill)
+8. Further reading (six curated external resources with annotations)
+
+**Further reading links (verified URLs):**
+- The Vibe Codex: https://thevibecodex.com/
+- AI's Quiet Elegance — The Vibe Codex (Eclipse AI): https://www.eclipseai.ai/insights/vibe-codex
+- Beyond Vibe Coding (Thoughtworks, March 2026): https://www.thoughtworks.com/en-us/insights/blog/generative-ai/beyond-vibe-coding-the-five-building-blocks-of-aI-native-engineering
+- The AI Coding Agent Manifesto (Wix Engineering): https://medium.com/wix-engineering/the-ai-coding-agent-manifesto-c8f61629d677
+- Vibe Coding: Don't Kill the Vibe, Govern It (IAPP): https://iapp.org/news/a/vibe-coding-don-t-kill-the-vibe-govern-it
+- The Vibe Engineering Manifesto (Feifan Wang): https://www.vibeengineering.ai/p/the-vibe-engineering-manifesto
+
+### Skills page changes
+
+- **Philosophy inner tab removed** from `/skills` — its content is now on the top-level Governance page. `activePageTab` state is now `"skills" | "projectInstructions"` only. The `SystemOverview` component remains in `Skills.tsx` but is no longer rendered (can be cleaned up in a future task).
+- **PageGuide text updated** to point users to the Governance tab instead of the removed Philosophy tab.
+
+### Skill card expand affordance
+
+- Added `ChevronDown`/`ChevronUp` icon to the top-right of the card header (rotates 180° when open) — the universal expand signal.
+- Changed "View" button label to "Details ↓" (collapsed) / "Close ↑" (expanded) — makes it a toggle, not a navigation action.
+
+### Test status
+
+22/22 tests passing. TypeScript: 0 real errors (13 stale watcher errors are known noise — TS 5.6.3 vs 5.9.3 path mismatch, harmless).
