@@ -35,7 +35,7 @@ export default function BdsNavDrawer({ open, onClose }: BdsNavDrawerProps) {
             <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
               Exponential Roadmap Initiative
             </span>
-            <span className="text-base font-semibold text-foreground">Brand Design System</span>
+            <span className="text-base font-semibold text-foreground">Design and Development Hub</span>
           </div>
           <button
             onClick={onClose}

@@ -15,7 +15,7 @@ import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
 import { useState } from "react";
 
-const APP_VERSION = "V.2026.05.27";
+const APP_VERSION = "V.2026.06.08";
 
 // ── Tab navigation bar ────────────────────────────────────────────────────────
 // Positioned directly below the standard 64px EriAppHeader.
@@ -69,13 +69,13 @@ function Router() {
     <>
       {/* Standard ERI header — #232323 background, dark-mode SVG logo, no status badge (live) */}
       <EriAppHeader
-        appName="Brand Design System"
+        appName="Design and Development Hub"
         version={APP_VERSION}
         showThemeToggle={true}
         headerTheme="auto"
         showCTA={true}
         source="bds"
-        sourceLabel="Brand Design System"
+        sourceLabel="Design and Development Hub"
         returnUrl="https://bds.exponentialroadmap.org"
         onMenuClick={() => setMenuOpen(true)}
         logoHref="/"
