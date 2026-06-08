@@ -25,6 +25,7 @@ import {
   Globe, Building2, Code2, Zap,
   Wrench, BookOpen, Settings, ClipboardList, Brain, FolderOpen,
   FileText, CheckSquare, Layers, MessageSquare, Paperclip, RefreshCw,
+  Plug, Database, Terminal, Copy,
 } from "lucide-react";
 import PublicLayout from "@/components/PublicLayout";
 import { PageGuide } from "@/components/PageGuide";
@@ -557,6 +558,81 @@ export default function Philosophy() {
             <div className="pt-1">
               <Link href="/skills" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3ba559] hover:underline">
                 Generate or audit the project instructions block <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </Section>
+
+        {/* Section 5b — The agent-bridge pattern */}
+        <Section
+          title="The agent-bridge pattern"
+          subtitle="How to surface Manus system assets in a web application"
+        >
+          <div className="space-y-5">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              The Manus platform has no API to read project instructions, skill files, or other system assets from a web application. These assets only exist inside the agent's context window — they are injected by the platform at task start and are never exposed to the browser.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              The <strong className="text-foreground">agent-bridge pattern</strong> solves this. Instead of trying to fetch system assets directly, the web application asks a Manus agent to read them and write the result back via a tRPC mutation. The agent acts as the bridge between the Manus platform context and the application database.
+            </p>
+
+            {/* Three-step diagram */}
+            <div className="rounded-xl border border-border p-4 bg-muted/5">
+              <p className="text-xs font-semibold text-foreground mb-3">How it works</p>
+              <div className="flex items-start gap-0">
+                {[
+                  { Icon: Copy,     color: "#17b7dd", step: "1", label: "Copy prompt",     desc: "User clicks \"Copy sync prompt\" in the web app. The prompt instructs the agent to read a specific context block and call a named tRPC mutation." },
+                  { Icon: Terminal, color: "#f59e0b", step: "2", label: "Agent reads",     desc: "User pastes the prompt into a new Manus task. The agent reads the system asset from its context — project instructions, skill file, or sandbox state." },
+                  { Icon: Database, color: "#3ba559", step: "3", label: "Agent writes back", desc: "The agent calls the tRPC mutation with the asset text. The mutation upserts a single row in the database. The web app fetches it on next load." },
+                ].map(({ Icon, color, step, label, desc }, idx) => (
+                  <div key={step} className="flex items-start">
+                    <div className="flex flex-col items-center gap-1.5" style={{ minWidth: "120px", maxWidth: "160px" }}>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${color}18`, border: `1.5px solid ${color}50` }}>
+                        <Icon className="w-4 h-4" style={{ color }} />
+                      </div>
+                      <p className="text-[11px] font-semibold text-foreground text-center">{step}. {label}</p>
+                      <p className="text-[10px] text-muted-foreground leading-relaxed text-center">{desc}</p>
+                    </div>
+                    {idx < 2 && (
+                      <ArrowRight className="w-3 h-3 text-muted-foreground/40 mx-2 mt-2.5 flex-shrink-0" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* When to use */}
+            <div className="rounded-lg border border-border bg-muted/10 p-4 space-y-2">
+              <p className="text-xs font-semibold text-foreground">When to use this pattern</p>
+              <ul className="space-y-1.5">
+                {[
+                  "A UI needs to display the current Manus project instructions",
+                  "A UI needs to show the contents of a skill file from the sandbox",
+                  "A UI needs to reflect the current state of a sandbox file or environment variable",
+                  "Any time a web app needs data that only exists inside an agent's context window",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed">
+                    <span className="text-[#3ba559] mt-0.5 flex-shrink-0">—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Implementation note */}
+            <div className="rounded-lg border border-dashed border-muted-foreground/30 p-3 space-y-1.5">
+              <div className="flex items-center gap-1.5">
+                <Plug className="w-3.5 h-3.5 text-muted-foreground" />
+                <p className="text-xs font-semibold text-foreground">Implementation note for agents</p>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                When a feature requires displaying data that only an agent can read, <strong className="text-foreground">propose the agent-bridge pattern before building a static fallback</strong>. A static fallback (hardcoded constant) goes stale the moment the source changes. The agent-bridge keeps the UI accurate whenever the user chooses to sync. The tRPC mutation should be admin-only to prevent arbitrary injection, and the table should use a single upserted row (id=1) since only one live version exists at a time.
+              </p>
+            </div>
+
+            <div className="pt-1">
+              <Link href="/project-instructions" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3ba559] hover:underline">
+                See it in action on the Project Instructions page <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>

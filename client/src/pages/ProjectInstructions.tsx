@@ -441,6 +441,21 @@ export default function ProjectInstructions() {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
 
+  // Agent-bridge: fetch the live instructions text written back by a Manus agent
+  const currentInstructionsQuery = trpc.skills.getCurrentInstructions.useQuery();
+  const syncedRow = currentInstructionsQuery.data;
+
+  const [copiedSyncPrompt, setCopiedSyncPrompt] = useState(false);
+
+  const SYNC_PROMPT = `Read the full text of the <project_instructions> block from your context (the ERI Shared Dev Assets project instructions). Then call trpc.skills.syncCurrentInstructions with the full text as instructionsText, and set agentNote to "Synced by agent on ${new Date().toISOString().slice(0, 10)}".`;
+
+  const handleCopySyncPrompt = useCallback(() => {
+    navigator.clipboard.writeText(SYNC_PROMPT).then(() => {
+      setCopiedSyncPrompt(true);
+      setTimeout(() => setCopiedSyncPrompt(false), 2500);
+    });
+  }, [SYNC_PROMPT]);
+
   const versionsQuery = trpc.skills.listInstructionsVersions.useQuery(undefined, { enabled: isAdmin });
   const auditsQuery = trpc.skills.listInstructionsAudits.useQuery(undefined, { enabled: isAdmin });
   const saveVersionMutation = trpc.skills.saveInstructionsVersion.useMutation({
@@ -568,15 +583,37 @@ export default function ProjectInstructions() {
             {/* ── Current Instructions tab ── */}
             {activeTab === "current" && (
               <div className="px-5 py-6 space-y-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Active project instructions</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">The text currently set in Manus project settings for ERI Shared Dev Assets. Known issues are highlighted.</p>
+
+                {/* Agent-bridge explanation + Sync button */}
+                <div className="rounded-md border border-border bg-muted/10 p-4 space-y-3">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Active project instructions</p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                        The Manus platform has no API to read project instructions — only a Manus agent can read them from its context.
+                        To update this view, click <span className="font-medium text-foreground">Copy sync prompt</span>, paste it into a new Manus task in the ERI Shared Dev Assets project, and run it.
+                        The agent will read its <code className="text-[11px] bg-muted px-1 py-0.5 rounded">{'<project_instructions>'}</code> block and write the text here automatically.
+                      </p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-shrink-0 gap-1.5 text-xs"
+                      onClick={handleCopySyncPrompt}
+                    >
+                      {copiedSyncPrompt ? <CheckCircle2 size={13} className="text-green-500" /> : <Copy size={13} />}
+                      {copiedSyncPrompt ? "Copied!" : "Copy sync prompt"}
+                    </Button>
                   </div>
-                  <span className="flex-shrink-0 text-xs font-mono text-muted-foreground">{CURRENT_INSTRUCTIONS.length.toLocaleString()} chars</span>
+                  {syncedRow && (
+                    <p className="text-[11px] text-muted-foreground">
+                      Last synced: {new Date(syncedRow.syncedAt).toLocaleString()}
+                      {syncedRow.agentNote ? ` — ${syncedRow.agentNote}` : ""}
+                    </p>
+                  )}
                 </div>
 
-                {/* Issues banner */}
+                {/* Issues banner — shown regardless of sync state */}
                 <div className="rounded-md border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 p-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <AlertTriangle size={14} className="flex-shrink-0 text-amber-600 dark:text-amber-400" />
@@ -604,24 +641,40 @@ export default function ProjectInstructions() {
                   ))}
                 </div>
 
-                {/* Live text with highlights */}
-                <div className="rounded-md bg-muted/20 border border-border p-4 max-h-[32rem] overflow-y-auto">
-                  <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">
-                    {(() => {
-                      const patterns = KNOWN_ISSUES.map(i => i.pattern).filter(Boolean);
-                      if (patterns.length === 0) return CURRENT_INSTRUCTIONS;
-                      const regex = new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g");
-                      const parts = CURRENT_INSTRUCTIONS.split(regex);
-                      return parts.map((part, i) =>
-                        patterns.includes(part) ? (
-                          <mark key={i} style={{ backgroundColor: "rgba(245,158,11,0.3)", color: "inherit", borderRadius: "2px", padding: "0 2px" }}>{part}</mark>
-                        ) : (
-                          <span key={i}>{part}</span>
-                        )
-                      );
-                    })()}
-                  </pre>
-                </div>
+                {/* Instructions text — DB-synced if available, else hardcoded fallback */}
+                {(() => {
+                  const displayText = syncedRow?.instructionsText ?? CURRENT_INSTRUCTIONS;
+                  const isFallback = !syncedRow;
+                  const patterns = KNOWN_ISSUES.map(i => i.pattern).filter(Boolean);
+                  const regex = patterns.length > 0
+                    ? new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g")
+                    : null;
+                  const parts = regex ? displayText.split(regex) : [displayText];
+                  return (
+                    <div>
+                      {isFallback && (
+                        <p className="text-[11px] text-muted-foreground mb-2 italic">
+                          Showing hardcoded snapshot — sync from agent to see the live text.
+                        </p>
+                      )}
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs font-medium text-foreground">Instructions text</span>
+                        <span className="text-xs font-mono text-muted-foreground">{displayText.length.toLocaleString()} chars</span>
+                      </div>
+                      <div className="rounded-md bg-muted/20 border border-border p-4 max-h-[32rem] overflow-y-auto">
+                        <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">
+                          {parts.map((part, i) =>
+                            patterns.includes(part) ? (
+                              <mark key={i} style={{ backgroundColor: "rgba(245,158,11,0.3)", color: "inherit", borderRadius: "2px", padding: "0 2px" }}>{part}</mark>
+                            ) : (
+                              <span key={i}>{part}</span>
+                            )
+                          )}
+                        </pre>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             )}
 

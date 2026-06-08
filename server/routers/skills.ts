@@ -18,6 +18,7 @@ import { desc, eq, isNotNull } from "drizzle-orm";
 import { z } from "zod";
 import { getDb } from "../db";
 import {
+  currentInstructionsSync,
   projectInstructions,
   projectInstructionsAudits,
   projectInstructionsVersions,
@@ -618,6 +619,52 @@ export const skillsRouter = router({
         .where(eq(projectInstructionsVersions.id, input.versionId));
       return { success: true };
     }),
+
+  /**
+   * Agent-bridge: sync the live project instructions text from an agent's context.
+   *
+   * The Manus platform has no API to read project instructions — only a Manus agent
+   * can read them from its <project_instructions> context block. This mutation is the
+   * bridge: the agent reads the block and writes the text here so the web app can
+   * display it. One row only (id=1), always upserted.
+   *
+   * HOW TO TRIGGER: On the Project Instructions page, click "Sync from agent" to copy
+   * a prompt. Paste it into a new Manus task in this project. The agent will call this
+   * mutation automatically.
+   *
+   * Admin-only — prevents arbitrary text injection.
+   */
+  syncCurrentInstructions: adminProcedure
+    .input(
+      z.object({
+        instructionsText: z.string().min(1).max(32000),
+        agentNote: z.string().max(500).optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+      await db
+        .insert(currentInstructionsSync)
+        .values({ id: 1, instructionsText: input.instructionsText, agentNote: input.agentNote ?? null })
+        .onDuplicateKeyUpdate({ set: { instructionsText: input.instructionsText, syncedAt: new Date(), agentNote: input.agentNote ?? null } });
+      return { success: true };
+    }),
+
+  /**
+   * Get the agent-synced current project instructions text.
+   * Public — the Current tab reads this to display the live instructions.
+   * Returns null if no sync has been performed yet.
+   */
+  getCurrentInstructions: publicProcedure.query(async () => {
+    const db = await getDb();
+    if (!db) return null;
+    const [row] = await db
+      .select()
+      .from(currentInstructionsSync)
+      .limit(1);
+    return row ?? null;
+  }),
 
   /**
    * Get the currently published project instructions snapshot.

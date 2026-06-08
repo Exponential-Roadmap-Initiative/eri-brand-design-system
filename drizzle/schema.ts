@@ -87,3 +87,18 @@ export const projectInstructionsAudits = mysqlTable("project_instructions_audits
 });
 export type ProjectInstructionsAudit = typeof projectInstructionsAudits.$inferSelect;
 export type InsertProjectInstructionsAudit = typeof projectInstructionsAudits.$inferInsert;
+
+// ─── Current Instructions Sync ───────────────────────────────────────────────
+// Stores the live project instructions text as written back by a Manus agent.
+// The Manus platform has no API to read project instructions — only an agent
+// can read them from its context. This table is the agent-bridge: the agent
+// reads the <project_instructions> block and writes it here via
+// trpc.skills.syncCurrentInstructions so the web app can display it.
+// One row only — always upserted with id=1.
+export const currentInstructionsSync = mysqlTable("current_instructions_sync", {
+  id: int("id").primaryKey().default(1),
+  instructionsText: text("instructions_text").notNull(),
+  syncedAt: timestamp("synced_at").notNull().defaultNow(),
+  agentNote: varchar("agent_note", { length: 500 }),
+});
+export type CurrentInstructionsSync = typeof currentInstructionsSync.$inferSelect;

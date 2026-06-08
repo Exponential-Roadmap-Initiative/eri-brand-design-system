@@ -1039,3 +1039,27 @@ Four issues pre-loaded:
 
 ### Test status
 22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v3.13.0 — Agent-bridge pattern: live project instructions sync (2026-06-08)
+
+### Core insight
+The Manus platform has no API to read project instructions from a web application. Only a Manus agent can read them (from its `<project_instructions>` context block). The **agent-bridge pattern** is the canonical solution: the web app provides a "Copy sync prompt" button; the user pastes it into a new Manus task; the agent reads its context and calls a tRPC mutation to write the text to the database; the web app fetches it on next load.
+
+### Changes
+- New DB table: `current_instructions_sync` (id=1 upsert row, `instructions_text TEXT`, `synced_at TIMESTAMP`, `agent_note VARCHAR(500)`)
+- New tRPC procedures:
+  - `skills.syncCurrentInstructions` (adminProcedure) — agent writes the live instructions text
+  - `skills.getCurrentInstructions` (publicProcedure) — web app reads the synced text
+- Current tab on `/project-instructions` now fetches from DB via `getCurrentInstructions`; falls back to hardcoded `CURRENT_INSTRUCTIONS` constant if no sync has been performed yet
+- "Copy sync prompt" button added to the Current tab — copies a ready-to-paste Manus task prompt
+- "Last synced" timestamp and agent note shown when a sync row exists
+- Agent-bridge pattern documented on `/governance` page as new Section 5b ("The agent-bridge pattern")
+- Agent-bridge pattern added to `eri-bds-site` skill under "The Agent-Bridge Pattern" section
+
+### Rule for future agents
+When a feature requires displaying data that only an agent can read, **propose the agent-bridge pattern before building a static fallback**. A hardcoded constant goes stale the moment the source changes. The agent-bridge keeps the UI accurate whenever the user chooses to sync.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
