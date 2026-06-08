@@ -10,7 +10,6 @@
 import { useState, useCallback } from "react";
 import {
   SlidersHorizontal,
-  Clock,
   AlertTriangle,
   Copy,
   CheckCircle2,
@@ -21,6 +20,8 @@ import {
   ToggleLeft,
   ToggleRight,
   Globe,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -53,6 +54,51 @@ interface Skill {
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const CHAR_BUDGET = 8000;
+
+// ── Known issues in the current live instructions ─────────────────────────────
+
+interface KnownIssue {
+  id: string;
+  severity: "high" | "medium";
+  title: string;
+  detail: string;
+  pattern: string; // substring to highlight in the live text (empty = no highlight)
+}
+
+const KNOWN_ISSUES: KnownIssue[] = [
+  {
+    id: "filename",
+    severity: "high",
+    title: "Stale filename: PROJECT-CONTEXT.md",
+    detail:
+      "The file was renamed to CODEBASE-CONTEXT.md in v2.17.0. Agents reading these instructions will look for PROJECT-CONTEXT.md, not find it, and create a new file — losing all accumulated context.",
+    pattern: "PROJECT-CONTEXT.md",
+  },
+  {
+    id: "skill-name",
+    severity: "medium",
+    title: "Stale skill name: exponential-human-ai-collaboration",
+    detail:
+      "The skill was renamed to eri-human-ai-collaboration during the v3.4.0 skills consolidation. The old directory still exists for backward compatibility, but the canonical name is eri-human-ai-collaboration.",
+    pattern: "exponential-human-ai-collaboration",
+  },
+  {
+    id: "framework",
+    severity: "medium",
+    title: "Framework described as a 20-cell matrix",
+    detail:
+      "H1, H2, and H4 are company-wide (not per-pillar). Only H3 contains the 21 pillar-specific action sub-sections. Describing it as a '5×4 matrix = 20 cells' implies every horizontal applies to every pillar, which is incorrect.",
+    pattern: "5 pillars (columns) x 4 horizontals (rows) matrix = 20 cells",
+  },
+  {
+    id: "instructions-update",
+    severity: "medium",
+    title: "Project instructions auto-update section is disabled",
+    detail:
+      "The S_INSTRUCTIONS_UPDATE Fixed Section (curl line that fetches the latest published instructions at task start) is set to defaultOn: false. It should be on by default so agents always pull the latest instructions.",
+    pattern: "",
+  },
+];
 
 // ── Fixed Sections ─────────────────────────────────────────────────────────────
 
@@ -102,8 +148,8 @@ const FIXED_SECTIONS: FixedSection[] = [
     id: "S_INSTRUCTIONS_UPDATE",
     label: "Project instructions auto-update",
     chars: 220,
-    defaultOn: false,
-    description: "Fetches the latest published project instructions from the BDS site at task start. Enable once a version has been published via the Publish to API button.",
+    defaultOn: true,
+    description: "Fetches the latest published project instructions from the BDS site at task start. Requires a version to have been published via the Publish to API button in Version History.",
     content: `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true`,
   },
   {
@@ -190,6 +236,144 @@ Write findings to the database using trpc.skills.saveInstructionsAudit with:
 - budgetPct: percentage of 8,000 used
 - summary: 2-3 sentence overall assessment`;
 
+// ── Current Instructions panel ────────────────────────────────────────────────
+
+function CurrentInstructionsPanel() {
+  const { data, isLoading } = trpc.skills.getPublishedInstructions.useQuery();
+  const [expanded, setExpanded] = useState(false);
+
+  const highIssues = KNOWN_ISSUES.filter(i => i.severity === "high");
+  const mediumIssues = KNOWN_ISSUES.filter(i => i.severity === "medium");
+
+  const liveText: string = (data as { generatedSnapshot?: string } | null)?.generatedSnapshot ?? "";
+  const hasLive = liveText.length > 0;
+
+  // Highlight known-issue patterns in the live text
+  function renderHighlighted(text: string) {
+    const patterns = KNOWN_ISSUES.map(i => i.pattern).filter(Boolean);
+    if (patterns.length === 0) return <span>{text}</span>;
+
+    // Split text into segments, marking matches
+    const regex = new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g");
+    const parts = text.split(regex);
+    return (
+      <>
+        {parts.map((part, i) =>
+          patterns.includes(part) ? (
+            <mark
+              key={i}
+              style={{
+                backgroundColor: "rgba(245,158,11,0.25)",
+                color: "inherit",
+                borderRadius: "2px",
+                padding: "0 2px",
+              }}
+            >
+              {part}
+            </mark>
+          ) : (
+            <span key={i}>{part}</span>
+          )
+        )}
+      </>
+    );
+  }
+
+  return (
+    <div className="border border-border rounded-lg overflow-hidden mb-6">
+      {/* Header */}
+      <div className="px-5 py-4 flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold text-foreground">Current Live Instructions</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            {hasLive
+              ? "The instructions currently published to the API endpoint — what every Manus agent reads at task start."
+              : "No instructions have been published yet. Use the Generator tab to create and publish a version."}
+          </p>
+        </div>
+        {hasLive && (
+          <button
+            onClick={() => setExpanded(e => !e)}
+            className="flex-shrink-0 flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {expanded ? <EyeOff size={13} /> : <Eye size={13} />}
+            {expanded ? "Hide" : "Show"}
+          </button>
+        )}
+      </div>
+
+      {/* Known issues banner */}
+      {(highIssues.length > 0 || mediumIssues.length > 0) && (
+        <div className="border-t border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 px-5 py-4">
+          <div className="flex items-start gap-2 mb-3">
+            <AlertTriangle size={14} className="flex-shrink-0 mt-0.5 text-amber-600 dark:text-amber-400" />
+            <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
+              {KNOWN_ISSUES.length} known issue{KNOWN_ISSUES.length !== 1 ? "s" : ""} detected in the current instructions
+            </p>
+          </div>
+          <div className="space-y-3">
+            {KNOWN_ISSUES.map(issue => (
+              <div key={issue.id} className="flex items-start gap-2">
+                <span
+                  className="flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold border mt-0.5"
+                  style={
+                    issue.severity === "high"
+                      ? { color: "#dc2626", borderColor: "rgba(220,38,38,0.4)", backgroundColor: "rgba(220,38,38,0.08)" }
+                      : { color: "#d97706", borderColor: "rgba(217,119,6,0.4)", backgroundColor: "rgba(217,119,6,0.08)" }
+                  }
+                >
+                  {issue.severity === "high" ? "High" : "Medium"}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs font-medium text-amber-900 dark:text-amber-200">{issue.title}</p>
+                  <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5 leading-relaxed">{issue.detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-amber-200 dark:border-amber-800">
+            Use the <span className="font-semibold">Generator</span> tab to produce corrected instructions, then click <span className="font-semibold">Mark as Applied</span> and <span className="font-semibold">Publish to API</span> to replace the live version.
+          </p>
+        </div>
+      )}
+
+      {/* Live text */}
+      {isLoading && (
+        <div className="border-t border-border px-5 py-4">
+          <div className="h-4 w-48 rounded bg-muted animate-pulse" />
+        </div>
+      )}
+      {!isLoading && hasLive && expanded && (
+        <div className="border-t border-border bg-muted/10 px-5 py-4">
+          <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">
+            {renderHighlighted(liveText)}
+          </pre>
+        </div>
+      )}
+      {!isLoading && hasLive && !expanded && (
+        <div className="border-t border-border bg-muted/10 px-5 py-3">
+          <pre className="text-xs text-foreground/50 whitespace-pre-wrap leading-relaxed font-mono line-clamp-3 overflow-hidden" style={{ maxHeight: "4.5rem" }}>
+            {liveText.slice(0, 300)}{liveText.length > 300 ? "…" : ""}
+          </pre>
+          <button
+            onClick={() => setExpanded(true)}
+            className="text-xs text-muted-foreground hover:text-foreground mt-1 transition-colors"
+          >
+            Show full text ({liveText.length.toLocaleString()} chars) ↓
+          </button>
+        </div>
+      )}
+      {!isLoading && !hasLive && (
+        <div className="border-t border-border px-5 py-4">
+          <p className="text-xs text-muted-foreground italic">
+            No published version found. Generate instructions in the Generator tab, click "Mark as Applied", then "Publish to API" in Version History.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function ProjectInstructions() {
@@ -227,7 +411,6 @@ export default function ProjectInstructions() {
   const auditsQuery = trpc.skills.listInstructionsAudits.useQuery(undefined, { enabled: isAdmin });
   const saveVersionMutation = trpc.skills.saveInstructionsVersion.useMutation({
     onSuccess: () => {
-      versionsQuery.refetch();
       setMarkAppliedOpen(false);
       setVersionNote("");
     },
@@ -300,12 +483,16 @@ export default function ProjectInstructions() {
           <h1 className="text-3xl font-extrabold font-archivo tracking-tight mb-4">
             Project <span style={{ color: "#93E07D" }}>Instructions</span>
           </h1>
-          <PageGuide text="Generate the instructions block for your Manus project, manage Fixed Sections, track version history, and run audits. The generator assembles skill triggers from the live registry plus any Fixed Sections you enable. Copy the output and paste it into Manus project settings." />
+          <PageGuide text="Review the current live instructions and any known issues, then use the Generator to produce a corrected version. Copy the output and paste it into Manus project settings. Use Version History to publish a version to the API endpoint so agents can self-update at task start." />
         </div>
       </div>
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
+
+        {/* Current Instructions panel */}
+        <CurrentInstructionsPanel />
+
         {/* Manager card */}
         <div className="border border-border rounded-lg overflow-hidden mb-8">
           {/* Card header */}
@@ -466,7 +653,7 @@ export default function ProjectInstructions() {
             {activeTab === "history" && (
               <div className="px-5 py-6 space-y-4">
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  Each time you paste generated instructions into Manus project settings, click <span className="font-medium">Mark as Applied</span> in the Generator tab to record a snapshot here. This creates a permanent record of what was active and when.
+                  Each time you paste generated instructions into Manus project settings, click <span className="font-medium">Mark as Applied</span> in the Generator tab to record a snapshot here. Click <span className="font-medium">Publish to API</span> to make a version the live source that agents fetch at task start.
                 </p>
                 {!isAdmin && (
                   <div className="rounded-md bg-muted/30 border border-border p-4 text-center">

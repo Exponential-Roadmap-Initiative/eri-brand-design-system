@@ -952,7 +952,7 @@ A new top-level page at `/philosophy` (tab label: "Governance") has been added a
 
 ### Test status
 
-22/22 tests passing. TypeScript: 0 real errors (13 stale watcher errors are known noise — TS 5.6.3 vs 5.9.3 path mismatch, harmless).
+22/22 tests passing. TypeScript: 0 real errors.
 
 ---
 
@@ -965,19 +965,49 @@ A new top-level page at `/philosophy` (tab label: "Governance") has been added a
 - **Action required:** Update the Manus project instructions (ERI Shared Dev Assets → Instructions) to replace `PROJECT-CONTEXT.md` with `CODEBASE-CONTEXT.md`. Use the Project Instructions generator on `/skills` to regenerate and copy-paste.
 
 ### EriStatusBadge — LIVE removed
-- `LIVE` removed from `EriStatusValue` type. Rule: when a site goes live, remove the `status` prop entirely — do not replace `BETA` with `LIVE`. No badge = live.
-- `status="BETA"` removed from `EriAppHeader` in `App.tsx` — the BDS site is now live (no badge shown).
+- `LIVE` removed from `EriStatusValue` type. Rule: when a site goes live, remove the `status` prop entirely. No badge = live.
+- `status="BETA"` removed from `EriAppHeader` in `App.tsx` — the BDS site is now live.
 - All `LIVE` references removed from `BrandDesignSystem.tsx`, `AlignmentTracker.tsx`, `NavigationPatterns.tsx`, and `packages/eri-components/README.md`.
 
 ### /api/project-instructions/latest endpoint
-- New Express endpoint: `GET /api/project-instructions/latest` — returns the most recently published `generatedSnapshot` from `project_instructions_versions` as `text/plain`.
+- New Express endpoint: `GET /api/project-instructions/latest` returns the most recently published `generatedSnapshot` as `text/plain`.
 - New tRPC procedures: `skills.publishInstructions({ versionId })` and `skills.getPublishedInstructions`.
-- New DB column: `published_at` (nullable timestamp) on `project_instructions_versions`. Applied via direct SQL; migration file `0006_project_instructions_published_at.sql` created.
-- **Version History tab**: each version card now has a "Publish to API" / "Re-publish" button. Published versions show a green "Published" badge.
-- **New fixed section `S_INSTRUCTIONS_UPDATE`** (defaultOn: false): curl line that fetches from `/api/project-instructions/latest`. Enable once a version has been published.
+- New DB column: `published_at` (nullable timestamp) on `project_instructions_versions`.
+- Version History tab: each card has "Publish to API" / "Re-publish" button. Published versions show green "Published" badge.
+- `S_INSTRUCTIONS_UPDATE` fixed section: now `defaultOn: true` (was `false`). The curl line is included in every generated output by default.
 
 ### @eri/components version
 - Bumped to **v2.17.0**. `gen:version` run — `shared/eriVersion.ts` updated.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v3.12.0 — Project Instructions page: Current Instructions panel + issue highlights (2026-06-08)
+
+### Current Instructions panel
+- New `CurrentInstructionsPanel` component added above the Manager card on `/project-instructions`.
+- Fetches the live published instructions via `trpc.skills.getPublishedInstructions` (public query — no auth required).
+- Shows a collapsible read-only code block of the live text with known-issue patterns highlighted in amber.
+- Displays an amber warning banner listing all `KNOWN_ISSUES` with severity badges (High / Medium) and plain-language explanations.
+- Banner footer guides the user to use the Generator tab to produce corrected instructions and publish them.
+
+### KNOWN_ISSUES constant
+Four issues pre-loaded:
+1. **High** — Stale filename `PROJECT-CONTEXT.md` (should be `CODEBASE-CONTEXT.md`)
+2. **Medium** — Stale skill name `exponential-human-ai-collaboration` (should be `eri-human-ai-collaboration`)
+3. **Medium** — Framework described as "5 pillars × 4 horizontals matrix = 20 cells" (incorrect — H1/H2/H4 are company-wide)
+4. **Medium** — `S_INSTRUCTIONS_UPDATE` was disabled by default
+
+### S_INSTRUCTIONS_UPDATE defaultOn changed
+- `defaultOn: false` → `defaultOn: true` for the "Project instructions auto-update" Fixed Section.
+- The curl line is now included in every generated output by default.
+- Description updated: "Requires a version to have been published via the Publish to API button in Version History."
+
+### Tab order change (Jun 2026)
+- Team Guide moved to last tab in the main `TabNav` in `App.tsx` and `BdsNavDrawer.tsx`.
+- New tab order: Brand Design System → Project Alignment Tracker → Start a Project → Governance → Skills → Project Instructions → Team Guide
 
 ### Test status
 22/22 tests passing. TypeScript: 0 real errors.
