@@ -28,7 +28,7 @@ function TabNav() {
     { href: "/new-project", label: "Start a Project" },
     { href: "/team-guide",  label: "Team Guide" },
     { href: "/skills",      label: "Skills" },
-    { href: "/philosophy",  label: "Governance" },
+    { href: "/governance",  label: "Governance" },
   ];
   return (
     <div
@@ -92,7 +92,7 @@ function Router() {
         <Route path={"/new-project"} component={NewProject} />
         <Route path={"/team-guide"} component={TeamGuide} />
         <Route path={"/skills"} component={Skills} />
-        <Route path={"/philosophy"} component={Philosophy} />
+        <Route path={"/governance"} component={Philosophy} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
