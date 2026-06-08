@@ -2860,7 +2860,7 @@ import { pillarBottomIcons } from "@/lib/assets";
                 <tbody>
                   {[
                     { family: "Tier",          shape: "rounded",      size: "text-[10px] px-1.5 py-0.5", border: "No",     where: "Header, WorkspaceHub, assessment pages" },
-                    { family: "App Status",    shape: "rounded-full", size: "text-[11px] px-2.5 py-0.5", border: "Yes (border-current)", where: "Header right zone — ALPHA / BETA / PREVIEW / LIVE" },
+                    { family: "App Status",    shape: "rounded-full", size: "text-[11px] px-2.5 py-0.5", border: "Yes (border-current)", where: "Header right zone — ALPHA / BETA / PREVIEW (no badge = live)" },
                     { family: "Experimental",  shape: "rounded-full", size: "text-[11px] px-2.5 py-1",   border: "Yes",    where: "Header right zone" },
                     { family: "Priority",      shape: "rounded-full", size: "text-xs px-2 py-0.5",        border: "Yes",    where: "CPR Recommendations, action lists" },
                     { family: "KPI / Framework", shape: "rounded",    size: "text-xs px-2 py-0.5",        border: "No",     where: "KPI sections, action themes" },
@@ -3447,33 +3447,32 @@ const contactUrl =
               ))}
             </div>
           </div>
-          {/* ── Component 1: EriStatusBadge ──────────────────────────────────────────────────── */}
+          {/* Component 1: EriStatusBadge */}
           <h3 className="font-bold text-foreground mb-1 text-lg">1. EriStatusBadge</h3>
           <p className="text-muted-foreground text-sm mb-4">
-            Transparent outlined pill badge for app status. Four values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code>{" "}
+            Transparent outlined pill badge for app status. Three values: <code className="font-mono text-xs bg-gray-100 px-1 rounded">ALPHA</code>{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">BETA</code>{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code>{" "}
-            <code className="font-mono text-xs bg-gray-100 px-1 rounded">LIVE</code>. Adapts to dark and light backgrounds via the{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">PREVIEW</code>. When a site goes live, remove the status prop entirely - no badge means live. Adapts to dark and light backgrounds via the{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">theme</code> prop. Never filled, never coloured.
-          </p>
-
-          {/* Live preview */}
+          </p>         {/* Live preview */}
           <div className="border border-border rounded-lg overflow-hidden shadow-sm mb-3">
             <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 border-b border-border">LIVE PREVIEW</div>
             <div className="p-6 flex flex-wrap gap-6 items-center">
               {/* Dark theme — real component */}
               <div className="rounded-lg px-6 py-4 flex items-center gap-3" style={{ backgroundColor: '#232323' }}>
                 <span className="text-xs text-muted-foreground mr-1">dark:</span>
-                {(['ALPHA','BETA','PREVIEW','LIVE'] as const).map(s => (
+                {(['ALPHA','BETA','PREVIEW'] as const).map(s => (
                   <EriStatusBadge key={s} status={s} theme="dark" />
                 ))}
+                <span className="text-xs text-white/40 italic ml-2">no badge = live</span>
               </div>
               {/* Light theme — real component */}
               <div className="rounded-lg px-6 py-4 flex items-center gap-3 bg-card border border-border">
                 <span className="text-xs text-muted-foreground mr-1">light:</span>
-                {(['ALPHA','BETA','PREVIEW','LIVE'] as const).map(s => (
+                {(['ALPHA','BETA','PREVIEW'] as const).map(s => (
                   <EriStatusBadge key={s} status={s} theme="light" />
                 ))}
+                <span className="text-xs text-muted-foreground italic ml-2">no badge = live</span>
               </div>
             </div>
           </div>
@@ -3485,7 +3484,8 @@ const contactUrl =
                 <span className="text-xs font-mono text-muted-foreground">EriStatusBadge.tsx</span>
                 <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/EriStatusBadge_d862f741.tsx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-muted-foreground hover:text-white transition-colors"><Download className="w-3 h-3" /> Download</a>
               </div>
-              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`export type EriStatusValue = 'ALPHA' | 'BETA' | 'PREVIEW' | 'LIVE';
+              <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`export type EriStatusValue = 'ALPHA' | 'BETA' | 'PREVIEW';
+// LIVE is intentionally omitted — when a site goes live, remove the status prop entirely.
 
 export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
   const colours =
@@ -3521,7 +3521,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                 <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
-                    ["status",    "EriStatusValue",           "Required. One of: ALPHA | BETA | PREVIEW | LIVE"],
+                    ["status",    "EriStatusValue",           "Required. One of: ALPHA | BETA | PREVIEW. When live, omit the status prop entirely — no badge = live."],
                     ["theme",     "'dark' | 'light'?",        "Defaults to 'dark'. Use 'dark' on dark/transparent headers, 'light' on white/light headers."],
                     ["className", "string?",                  "Optional extra Tailwind classes — only for spacing overrides. Never override colour or shape."],
                   ].map(([prop, type, note]) => (
@@ -3546,7 +3546,6 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     { label: 'ALPHA',   desc: 'Internal / pre-release' },
                     { label: 'BETA',    desc: 'Public, under active development' },
                     { label: 'PREVIEW', desc: 'Feature-complete, not yet launched' },
-                    { label: 'LIVE',    desc: 'Fully launched, stable, production' },
                   ].map(({ label, desc }) => (
                     <div key={label} className="flex flex-col items-start gap-2">
                       <div className="flex items-center gap-3">
@@ -4987,7 +4986,7 @@ const tabs: TabConfig[] = [
                 url: "https://trust.exponentialroadmap.org",
                 img: "https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/trust-hero_61e9c5e5.png",
                 badge: "LIVE",
-                desc: "Trust & Security application — ERI_HERO_IMAGE_TRUST (hexagonal shield graphic), lime accent on title line 1, LIVE status badge, View Security Controls + Data Privacy CTAs.",
+                desc: "Trust & Security application — ERI_HERO_IMAGE_TRUST (hexagonal shield graphic), lime accent on title line 1, no status badge (live), View Security Controls + Data Privacy CTAs.",
                 tier: "Tier B — App",
               },
             ].map((app) => (
@@ -5777,7 +5776,7 @@ Do not use any colours, fonts, or patterns not listed there.`}</pre>
               <div className="grid md:grid-cols-3 gap-3 mb-4">
                 {[
                   { step: 'Step 0', title: 'Update and read the eri-bds-reference skill', body: 'Run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md — then read the file in full. This ensures you have the current version, not the stale sandbox copy.' },
-                  { step: 'Step 1', title: 'Read or create PROJECT-CONTEXT.md', body: 'Every ERI project must have a PROJECT-CONTEXT.md at its root. Read it first if it exists. If not, create it — seed it with canonical values from the eri-bds-reference skill.' },
+                  { step: 'Step 1', title: 'Read or create CODEBASE-CONTEXT.md', body: 'Every ERI project must have a CODEBASE-CONTEXT.md at its root. Read it first if it exists. If not, create it — seed it with canonical values from the eri-bds-reference skill.' },
                   { step: 'Step 2', title: 'Check bds-meta.json exists', body: 'Every ERI project must publish client/public/bds-meta.json. This file is not part of @eri/components — you create it. If missing, create it before closing the task.' },
                 ].map(({ step, title, body }) => (
                   <div key={step} className="rounded-lg p-3" style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)' }}>

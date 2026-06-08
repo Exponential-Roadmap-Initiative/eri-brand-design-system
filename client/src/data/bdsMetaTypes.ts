@@ -41,7 +41,7 @@ export interface ComponentStatus {
  * Missing fields are shown as "—" in the tracker (not as failures).
  */
 export interface SystemOpsCompliance {
-  /** PROJECT-CONTEXT.md exists at project root and was read at task start */
+  /** CODEBASE-CONTEXT.md exists at project root and was read at task start */
   projectContextExists?: boolean;
   /** Manus platform project instructions were read before acting */
   manusPlatformInstructionsRead?: boolean;

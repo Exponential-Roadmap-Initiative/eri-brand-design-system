@@ -43,6 +43,13 @@
       "when": 1780650119475,
       "tag": "0005_skills_to_filesystem",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1749381600000,
+      "tag": "0006_project_instructions_published_at",
+      "breakpoints": true
     }
   ]
 }

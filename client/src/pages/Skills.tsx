@@ -11,7 +11,7 @@
  */
 
 import { useState, useCallback } from "react";
-import { Layers, SlidersHorizontal, Lightbulb, Clock, AlertTriangle, Eye, Download, Code2, BookOpen, Palette, Shield, Users, Search, Settings, Cloud, Music, Copy, CheckCircle2, History, ClipboardList, ChevronDown, ChevronUp, ChevronRight, ToggleLeft, ToggleRight } from "lucide-react";
+import { Layers, SlidersHorizontal, Lightbulb, Clock, AlertTriangle, Eye, Download, Code2, BookOpen, Palette, Shield, Users, Search, Settings, Cloud, Music, Copy, CheckCircle2, History, ClipboardList, ChevronDown, ChevronUp, ChevronRight, ToggleLeft, ToggleRight, Globe } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -197,7 +197,7 @@ function GovernanceDiagram() {
       tint: "rgba(245,158,11,0.06)",
       border: "rgba(245,158,11,0.30)",
       assets: [
-        { icon: "🗂", name: "PROJECT-CONTEXT.md", desc: "Codebase memory: decisions made, known errors, pending work — survives session resets" },
+        { icon: "🗂", name: "CODEBASE-CONTEXT.md", desc: "Codebase memory: decisions made, known errors, pending work — survives session resets" },
         { icon: "✅", name: "todo.md", desc: "Active work tracking: what is in progress, what is done, what is next" },
         { icon: "🏗", name: "The codebase itself", desc: "The actual application being built — code, database schema, tests" },
       ],
@@ -729,11 +729,11 @@ const FIXED_SECTIONS: FixedSection[] = [
   },
   {
     id: "S_PROJECT_CONTEXT",
-    label: "PROJECT-CONTEXT.md guard",
+    label: "CODEBASE-CONTEXT.md guard",
     chars: 448,
     defaultOn: true,
     description: "Preserves project-specific knowledge across context compaction and sandbox resets.",
-    content: `Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
+    content: `Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
   },
   {
     id: "S_CHECKPOINT",
@@ -750,6 +750,14 @@ const FIXED_SECTIONS: FixedSection[] = [
     defaultOn: true,
     description: "6-step workflow: Research → Design → Plan → Implement → Test → Iterate.",
     content: `Critical: Always follow the ERI development workflow:\n1. Research: clarify purpose, understand current context and existing assets, explore possible solutions\n2. Design\n3. Plan and get acceptance for plan\n4. Implement\n5. Test\n6. Iterate until solution works`,
+  },
+  {
+    id: "S_INSTRUCTIONS_UPDATE",
+    label: "Project instructions auto-update",
+    chars: 220,
+    defaultOn: false,
+    description: "Fetches the latest published project instructions from the BDS site at task start. Enable once a version has been published via the Publish to API button.",
+    content: `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true`,
   },
   {
     id: "S_FRAMEWORK",
@@ -878,6 +886,14 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
       setMarkAppliedOpen(false);
       setVersionNote("");
     },
+  });
+  const [publishingId, setPublishingId] = useState<number | null>(null);
+  const publishMutation = trpc.skills.publishInstructions.useMutation({
+    onSuccess: () => {
+      versionsQuery.refetch();
+      setPublishingId(null);
+    },
+    onError: () => setPublishingId(null),
   });
 
   // Assemble the generated output
@@ -1101,17 +1117,39 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
             {isAdmin && (versionsQuery.data ?? []).map(v => (
               <div key={v.id} className="border border-border rounded-md p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
-                  <div>
-                    <span className="text-sm font-semibold text-foreground font-mono">{v.version}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-sm font-semibold text-foreground font-mono">{v.version}</span>
+                      {v.publishedAt && (
+                        <span className="inline-flex items-center gap-1 text-xs font-medium px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
+                          <Globe size={10} /> Published
+                        </span>
+                      )}
+                    </div>
                     {v.changeNote && <p className="text-xs text-muted-foreground mt-0.5">{v.changeNote}</p>}
                   </div>
-                  <div className="text-right flex-shrink-0">
-                    <p className="text-xs text-muted-foreground">{new Date(v.appliedAt).toLocaleDateString()}</p>
-                    {v.charCount != null && (
-                      <p className={`text-xs font-mono font-semibold ${
-                        (v.budgetPct ?? 0) > 90 ? "text-red-500" : (v.budgetPct ?? 0) > 70 ? "text-amber-500" : "text-green-500"
-                      }`}>{v.charCount.toLocaleString()} chars ({v.budgetPct}%)</p>
-                    )}
+                  <div className="flex items-start gap-2 flex-shrink-0">
+                    <div className="text-right">
+                      <p className="text-xs text-muted-foreground">{new Date(v.appliedAt).toLocaleDateString()}</p>
+                      {v.charCount != null && (
+                        <p className={`text-xs font-mono font-semibold ${
+                          (v.budgetPct ?? 0) > 90 ? "text-red-500" : (v.budgetPct ?? 0) > 70 ? "text-amber-500" : "text-green-500"
+                        }`}>{v.charCount.toLocaleString()} chars ({v.budgetPct}%)</p>
+                      )}
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-xs gap-1.5 flex-shrink-0"
+                      disabled={publishingId === v.id || publishMutation.isPending}
+                      onClick={() => {
+                        setPublishingId(v.id);
+                        publishMutation.mutate({ versionId: v.id });
+                      }}
+                    >
+                      <Globe size={11} />
+                      {publishingId === v.id ? "Publishing..." : v.publishedAt ? "Re-publish" : "Publish to API"}
+                    </Button>
                   </div>
                 </div>
                 <div className="rounded bg-muted/20 border border-border p-2 max-h-32 overflow-y-auto">
@@ -1202,13 +1240,13 @@ function ProjectInstructions({ skills }: ProjectInstructionsProps) {
               <div className="px-4 pb-4 pt-2 space-y-3 border-t border-border">
                 {[
                   { id: "skill-update", title: "BDS skill auto-update", chars: 285, recommendation: "keep" as const, reason: "Essential — fetches the latest BDS skill before every task." },
-                  { id: "project-context", title: "PROJECT-CONTEXT.md guard", chars: 448, recommendation: "keep" as const, reason: "Essential — context compaction erases session memory." },
+                  { id: "project-context", title: "CODEBASE-CONTEXT.md guard", chars: 448, recommendation: "keep" as const, reason: "Essential — context compaction erases session memory." },
                   { id: "skill-scan", title: "Skill scan instruction", chars: 340, recommendation: "replace" as const, reason: "Superseded by the auto-generated trigger block in the Generator tab." },
                   { id: "skill-update-post", title: "Post-task skill update", chars: 440, recommendation: "compress" as const, reason: "Valuable but verbose — core directive is 60 chars." },
                   { id: "dev-workflow", title: "ERI development workflow", chars: 257, recommendation: "evaluate" as const, reason: "May be redundant if Manus already follows this loop by default." },
                   { id: "collab-skill", title: "Apply exponential-human-ai-collaboration", chars: 91, recommendation: "replace" as const, reason: "Redundant once this skill is in Tier 1." },
                   { id: "framework", title: "Exponential Framework structure", chars: 530, recommendation: "keep" as const, reason: "All ERI tasks are in the same project — always include." },
-                  { id: "agent-files", title: "Earth-aligned AI Agent key files", chars: 230, recommendation: "move" as const, reason: "Belongs in the eri-playbook-team PROJECT-CONTEXT.md, not BDS." },
+                  { id: "agent-files", title: "Earth-aligned AI Agent key files", chars: 230, recommendation: "move" as const, reason: "Belongs in the eri-playbook-team CODEBASE-CONTEXT.md, not BDS." },
                 ].map(section => {
                   const cfg = RECOMMENDATION_CONFIG[section.recommendation];
                   return (

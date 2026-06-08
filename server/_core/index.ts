@@ -57,6 +57,37 @@ async function startServer() {
     res.setHeader("Cache-Control", "no-store");
     res.json({ url: SKILL_LATEST_URL, version: "3.11.0" }); // v3.11.0 — Vite pre-bundle cache critical rule; /new-project page documented
   });
+  // ── Project instructions latest ─────────────────────────────────────────────
+  // Returns the most recently published project instructions snapshot as plain text.
+  // Used by ERI codebase project instructions to self-update via curl at task start.
+  // Admin publishes a version via trpc.skills.publishInstructions — sets publishedAt.
+  app.get("/api/project-instructions/latest", async (_req, res) => {
+    try {
+      const { getDb } = await import("../db");
+      const { projectInstructionsVersions } = await import("../../drizzle/schema");
+      const { desc, isNotNull } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) {
+        res.status(503).type("text/plain").send("# Project instructions unavailable — DB not connected");
+        return;
+      }
+      const [row] = await db
+        .select()
+        .from(projectInstructionsVersions)
+        .where(isNotNull(projectInstructionsVersions.publishedAt))
+        .orderBy(desc(projectInstructionsVersions.publishedAt))
+        .limit(1);
+      if (!row) {
+        res.status(404).type("text/plain").send("# No published project instructions found");
+        return;
+      }
+      res.setHeader("Cache-Control", "no-store");
+      res.type("text/plain").send(row.generatedSnapshot);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      res.status(500).type("text/plain").send(`# Error: ${msg}`);
+    }
+  });
 
   // ── BDS-meta proxy ─────────────────────────────────────────────────────────
   // Fetches bds-meta.json server-side so the browser never makes a cross-origin

@@ -44,10 +44,10 @@ Neutrals:
 
 ## IMPORTANT DISCREPANCY FOUND:
 - PDF page 1 shows P4 primary as #FF8B00 (RGB 255, 139, 0)
-- PROJECT-CONTEXT.md says P4 is #ff8b00 ✓ MATCH
+- CODEBASE-CONTEXT.md says P4 is #ff8b00 ✓ MATCH
 - PDF page 5 shows P4.1 HEX as #00D264 but RGB as 255, 162, 0 — this is a PDF typo; the actual P4.1 colour is #FFA200
 
-## BDS PROJECT-CONTEXT.md pillar colours vs PDF:
+## BDS CODEBASE-CONTEXT.md pillar colours vs PDF:
 - P1: BDS says #9aa08c, PDF says #9AA08C ✓ MATCH
 - P2: BDS says #17b7dd, PDF says #17B7DD ✓ MATCH
 - P3: BDS says #00ac58, PDF says #00AC58 ✓ MATCH

@@ -905,3 +905,11 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add ChevronUp to Skills.tsx lucide-react import (was missing, caused TS error)
 - [x] TypeScript: 0 real errors
 - [x] 22/22 tests passing
+
+## Rename PROJECT-CONTEXT.md → CODEBASE-CONTEXT.md (2026-06-08)
+- [ ] Rename PROJECT-CONTEXT.md to CODEBASE-CONTEXT.md in this repository
+- [ ] Update all references in Philosophy.tsx (GovernanceDiagram + codebase layer assets)
+- [ ] Update all references in Skills.tsx (GovernanceDiagram)
+- [ ] Update eri-bds-reference skill — all mentions of PROJECT-CONTEXT.md
+- [ ] Update Manus project instructions via manus-config
+- [ ] Save checkpoint

@@ -152,9 +152,9 @@ Full spec: see `bds-meta-spec.md` in this project root.
 - [x] Push v2.11.1 git tag — verified on GitHub 2026-04-21
 - [x] Fix duplicate version display: removed Introduction section version line, header badge is canonical (APP_VERSION in App.tsx)
 - [x] Fix /tracker crash: TypeError on meta?.components[c] when components field missing (Framework uses legacy schema); added optional chaining + schema validation on fetch
-- [x] Update eri-bds-reference skill: new Steps 0-2 pre-action checklist (Step 0 = read Manus project instructions, Step 1 = PROJECT-CONTEXT.md for all ERI projects, Step 2 = bds-meta.json)
+- [x] Update eri-bds-reference skill: new Steps 0-2 pre-action checklist (Step 0 = read Manus project instructions, Step 1 = CODEBASE-CONTEXT.md for all ERI projects, Step 2 = bds-meta.json)
 - [x] Add System Operations section to /tracker page: WHAT/WHY/HOW cards explaining context continuity pattern
-- [x] Add PROJECT-CONTEXT.md seed template to /tracker HOW section with copy button (also fixed LATEST_VERSION stale at v2.10.9 → v2.11.1)
+- [x] Add CODEBASE-CONTEXT.md seed template to /tracker HOW section with copy button (also fixed LATEST_VERSION stale at v2.10.9 → v2.11.1)
 - [x] Add System Operations callout card (dark #232323 card with SYS OPS badge) to Machine Instructions section on main BDS page, linking to /tracker
 - [x] Fix skill Gap 1 (C5): showCTA wording — now says "Pass showCTA={true} explicitly — do not rely on the default"
 - [x] Fix skill Gap 2 (C6): add trust and bds to Contact Us Registered Source IDs table in skill
@@ -281,7 +281,7 @@ This checklist is **mandatory** before every checkpoint. Every item must be chec
 
 17. **Version strings** — are all version strings in `BrandDesignSystem.tsx` (header display, live previews, prop table examples, install command) consistent with `packages/eri-components/package.json`?
 18. **Git tag** — if the version was bumped, has the tag been pushed? Run: `git ls-remote --tags user_github | grep v2.` to verify. **Never bump version strings without pushing the tag.**
-19. **`PROJECT-CONTEXT.md` version pin** — does the "current pin" line match the package version?
+19. **`CODEBASE-CONTEXT.md` version pin** — does the "current pin" line match the package version?
 
 ### G. bds-meta.json
 
@@ -359,7 +359,7 @@ Critical: At the start of every task, run: curl -sL https://bds.exponentialroadm
 5. Save checkpoint (this pushes the commit to `main`)
 6. **Create and push the git tag:** `git tag -a vX.Y.Z -m "release notes" && git push user_github vX.Y.Z`
 7. Verify with `git ls-remote --tags user_github | grep vX.Y.Z`
-8. Update `PROJECT-CONTEXT.md` canonical version pin
+8. Update `CODEBASE-CONTEXT.md` canonical version pin
 
 Do NOT skip step 6. The install command in the BDS site is `github:Exponential-Roadmap-Initiative/eri-brand-design-system#vX.Y.Z&path:packages/eri-components` — if the tag does not exist, the install command fails silently for all downstream projects.
 
@@ -953,3 +953,59 @@ A new top-level page at `/philosophy` (tab label: "Governance") has been added a
 ### Test status
 
 22/22 tests passing. TypeScript: 0 real errors (13 stale watcher errors are known noise — TS 5.6.3 vs 5.9.3 path mismatch, harmless).
+
+---
+
+## v2.17.0 — Governance rename + Project Instructions API (Jun 2026)
+
+### CODEBASE-CONTEXT.md rename
+- `PROJECT-CONTEXT.md` renamed to `CODEBASE-CONTEXT.md` across this entire codebase (global sed replace + git mv).
+- Rationale: the file sits at the **codebase layer** of the ERI governance model, not the project layer. All ERI codebases share one Manus project (ERI Shared Dev Assets). Calling it "PROJECT-CONTEXT" was a misnomer.
+- The eri-bds-reference skill has been updated to use `CODEBASE-CONTEXT.md` throughout.
+- **Action required:** Update the Manus project instructions (ERI Shared Dev Assets → Instructions) to replace `PROJECT-CONTEXT.md` with `CODEBASE-CONTEXT.md`. Use the Project Instructions generator on `/skills` to regenerate and copy-paste.
+
+### EriStatusBadge — LIVE removed
+- `LIVE` removed from `EriStatusValue` type. Rule: when a site goes live, remove the `status` prop entirely — do not replace `BETA` with `LIVE`. No badge = live.
+- `status="BETA"` removed from `EriAppHeader` in `App.tsx` — the BDS site is now live (no badge shown).
+- All `LIVE` references removed from `BrandDesignSystem.tsx`, `AlignmentTracker.tsx`, `NavigationPatterns.tsx`, and `packages/eri-components/README.md`.
+
+### /api/project-instructions/latest endpoint
+- New Express endpoint: `GET /api/project-instructions/latest` — returns the most recently published `generatedSnapshot` from `project_instructions_versions` as `text/plain`.
+- New tRPC procedures: `skills.publishInstructions({ versionId })` and `skills.getPublishedInstructions`.
+- New DB column: `published_at` (nullable timestamp) on `project_instructions_versions`. Applied via direct SQL; migration file `0006_project_instructions_published_at.sql` created.
+- **Version History tab**: each version card now has a "Publish to API" / "Re-publish" button. Published versions show a green "Published" badge.
+- **New fixed section `S_INSTRUCTIONS_UPDATE`** (defaultOn: false): curl line that fetches from `/api/project-instructions/latest`. Enable once a version has been published.
+
+### @eri/components version
+- Bumped to **v2.17.0**. `gen:version` run — `shared/eriVersion.ts` updated.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v2.17.0 — Governance rename + Project Instructions API (Jun 2026)
+
+### CODEBASE-CONTEXT.md rename
+- `PROJECT-CONTEXT.md` renamed to `CODEBASE-CONTEXT.md` across this entire codebase (global sed replace + git mv).
+- Rationale: the file sits at the **codebase layer** of the ERI governance model, not the project layer. All ERI codebases share one Manus project (ERI Shared Dev Assets). Calling it "PROJECT-CONTEXT" was a misnomer.
+- The eri-bds-reference skill has been updated to use `CODEBASE-CONTEXT.md` throughout.
+- **Action required:** Update the Manus project instructions (ERI Shared Dev Assets) to replace `PROJECT-CONTEXT.md` with `CODEBASE-CONTEXT.md`. Use the Project Instructions generator on `/skills` to regenerate and copy-paste.
+
+### EriStatusBadge — LIVE removed
+- `LIVE` removed from `EriStatusValue` type. Rule: when a site goes live, remove the `status` prop entirely. No badge = live.
+- `status="BETA"` removed from `EriAppHeader` in `App.tsx` — the BDS site is now live.
+- All `LIVE` references removed from `BrandDesignSystem.tsx`, `AlignmentTracker.tsx`, `NavigationPatterns.tsx`, and `packages/eri-components/README.md`.
+
+### /api/project-instructions/latest endpoint
+- New Express endpoint: `GET /api/project-instructions/latest` returns the most recently published `generatedSnapshot` as `text/plain`.
+- New tRPC procedures: `skills.publishInstructions({ versionId })` and `skills.getPublishedInstructions`.
+- New DB column: `published_at` (nullable timestamp) on `project_instructions_versions`.
+- Version History tab: each card has "Publish to API" / "Re-publish" button. Published versions show green "Published" badge.
+- New fixed section `S_INSTRUCTIONS_UPDATE` (defaultOn: false): curl line that fetches from `/api/project-instructions/latest`. Enable once a version has been published.
+
+### @eri/components version
+- Bumped to **v2.17.0**. `gen:version` run — `shared/eriVersion.ts` updated.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.

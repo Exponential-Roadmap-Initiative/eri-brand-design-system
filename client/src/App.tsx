@@ -65,10 +65,9 @@ function Router() {
 
   return (
     <>
-      {/* Standard ERI header — #232323 background, dark-mode SVG logo, BETA badge */}
+      {/* Standard ERI header — #232323 background, dark-mode SVG logo, no status badge (live) */}
       <EriAppHeader
         appName="Brand Design System"
-        status="BETA"
         version={APP_VERSION}
         showThemeToggle={true}
         headerTheme="auto"

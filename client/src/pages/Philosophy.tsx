@@ -83,7 +83,7 @@ function GovernanceDiagram() {
       tint: "rgba(245,158,11,0.06)",
       border: "rgba(245,158,11,0.30)",
       assets: [
-        { Icon: FileText,    name: "PROJECT-CONTEXT.md", desc: "Codebase memory: decisions made, known errors, pending work — survives session resets" },
+        { Icon: FileText,    name: "CODEBASE-CONTEXT.md", desc: "Codebase memory: decisions made, known errors, pending work — survives session resets" },
         { Icon: CheckSquare, name: "todo.md",             desc: "Active work tracking: what is in progress, what is done, what is next" },
         { Icon: Layers,      name: "The codebase itself", desc: "The actual application being built — code, database schema, tests" },
       ],

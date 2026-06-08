@@ -63,7 +63,7 @@ Wrap your router in `EriPageLayout` in `App.tsx`:
 
 | Component | Purpose |
 |---|---|
-| `EriStatusBadge` | App status pill (ALPHA / BETA / PREVIEW / LIVE) |
+| `EriStatusBadge` | App status pill (ALPHA / BETA / PREVIEW; no badge = live) |
 | `EriContactUsButton` | Accent Lime CTA linking to the shared contact service |
 | `EriAppHeader` | Canonical 64px fixed dark header |
 | `EriAppFooter` | Canonical dark footer with confirmed nav links |

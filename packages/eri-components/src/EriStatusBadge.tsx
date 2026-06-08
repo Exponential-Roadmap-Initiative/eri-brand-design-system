@@ -1,5 +1,5 @@
 /**
- * EriStatusBadge — ERI Brand Design System v2.0.0
+ * EriStatusBadge — ERI Brand Design System v2.17.0
  *
  * Canonical status badge for all ERI applications.
  * Transparent outlined pill, all-caps, adapts to dark or light backgrounds.
@@ -14,12 +14,16 @@
  *   - theme="dark"  → white border + white text (for dark/transparent headers)
  *   - theme="light" → gray border + gray text (for white/light headers)
  *
+ * LIVE RULE: When a site goes live, remove the status prop entirely from EriAppHeader.
+ *   Do NOT pass status="LIVE" — the convention is no badge = live.
+ *   'LIVE' has been intentionally removed from EriStatusValue to enforce this rule.
+ *
  * BDS reference: https://eri-brand-design-system.manus.space/#badges
  */
 
 import React from 'react';
 
-export type EriStatusValue = 'ALPHA' | 'BETA' | 'PREVIEW' | 'LIVE';
+export type EriStatusValue = 'ALPHA' | 'BETA' | 'PREVIEW';
 
 interface EriStatusBadgeProps {
   /** The status value to display */

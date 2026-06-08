@@ -66,6 +66,7 @@ export const projectInstructionsVersions = mysqlTable("project_instructions_vers
   changeNote: varchar("change_note", { length: 500 }),
   charCount: int("char_count"),
   budgetPct: int("budget_pct"),
+  publishedAt: timestamp("published_at"),  // null = not yet published to /api/project-instructions/latest
 });
 export type ProjectInstructionsVersion = typeof projectInstructionsVersions.$inferSelect;
 export type InsertProjectInstructionsVersion = typeof projectInstructionsVersions.$inferInsert;

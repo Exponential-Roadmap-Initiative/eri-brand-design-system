@@ -75,7 +75,7 @@ const PRE_PROMPT_TEXT = `Critical: At the start of every task, run:
   curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"
 Then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.
 
-Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
+Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
 
 Critical: Always follow the ERI development workflow:
 1. Research: clarify purpose, understand current context and existing assets, explore possible solutions
@@ -87,14 +87,14 @@ Critical: Always follow the ERI development workflow:
 
 Critical: Apply the exponential-human-ai-collaboration skill to every task in this project.
 
-Critical: After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
+Critical: After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
 
 // ── Hard stops data ───────────────────────────────────────────────────────────
 const HARD_STOPS = [
   {
     id: "STEP 0",
     label: "Mandatory Startup",
-    desc: "Before reading the task, update the BDS skill, confirm the server is running, read the mandatory skills (exponential-human-ai-collaboration, eri-bds-reference), and read PROJECT-CONTEXT.md in full. This file contains canonical values, known errors, and pending work that are lost during context compaction.",
+    desc: "Before reading the task, update the BDS skill, confirm the server is running, read the mandatory skills (exponential-human-ai-collaboration, eri-bds-reference), and read CODEBASE-CONTEXT.md in full. This file contains canonical values, known errors, and pending work that are lost during context compaction.",
   },
   {
     id: "INHERITED SESSION",

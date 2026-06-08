@@ -14,7 +14,7 @@
 import fs from "fs";
 import path from "path";
 import { TRPCError } from "@trpc/server";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, isNotNull } from "drizzle-orm";
 import { z } from "zod";
 import { getDb } from "../db";
 import {
@@ -600,5 +600,38 @@ export const skillsRouter = router({
       .orderBy(desc(projectInstructionsAudits.auditedAt))
       .limit(20);
     return rows;
+  }),
+
+  /**
+   * Publish a version snapshot to the public /api/project-instructions/latest endpoint.
+   * Sets publishedAt on the given version row. Admin only.
+   */
+  publishInstructions: protectedProcedure
+    .input(z.object({ versionId: z.number().int().positive() }))
+    .mutation(async ({ input, ctx }) => {
+      if (ctx.user.role !== "admin") throw new TRPCError({ code: "FORBIDDEN" });
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+      await db
+        .update(projectInstructionsVersions)
+        .set({ publishedAt: new Date() })
+        .where(eq(projectInstructionsVersions.id, input.versionId));
+      return { success: true };
+    }),
+
+  /**
+   * Get the currently published project instructions snapshot.
+   * Public — used by /api/project-instructions/latest endpoint.
+   */
+  getPublishedInstructions: publicProcedure.query(async () => {
+    const db = await getDb();
+    if (!db) return null;
+    const [row] = await db
+      .select()
+      .from(projectInstructionsVersions)
+      .where(isNotNull(projectInstructionsVersions.publishedAt))
+      .orderBy(desc(projectInstructionsVersions.publishedAt))
+      .limit(1);
+    return row ?? null;
   }),
 });

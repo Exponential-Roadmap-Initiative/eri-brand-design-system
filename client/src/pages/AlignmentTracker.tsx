@@ -815,8 +815,8 @@ export default function AlignmentTracker() {
                 },
                 {
                   step: "Step 1",
-                  title: "Read or create PROJECT-CONTEXT.md",
-                  body: "A PROJECT-CONTEXT.md file at the project root is the persistent memory that survives context compaction. If it exists, read it first. If not, create it — seed it with canonical values from the eri-bds-reference skill. Update it after every task.",
+                  title: "Read or create CODEBASE-CONTEXT.md",
+                  body: "A CODEBASE-CONTEXT.md file at the project root is the persistent memory that survives context compaction. If it exists, read it first. If not, create it — seed it with canonical values from the eri-bds-reference skill. Update it after every task.",
                   color: T.lime,
                 },
                 {
@@ -844,7 +844,7 @@ export default function AlignmentTracker() {
               AI agents operating in long-running projects suffer from two failure modes: <strong>context compaction</strong> (earlier conversation history is summarised and key details are lost) and <strong>sandbox resets</strong> (the agent's working memory is wiped between sessions). Without a structured recovery mechanism, the agent reverts to defaults — re-introducing errors that were previously fixed, using stale component names, or missing required files.
             </p>
             <p className="text-sm" style={{ color: TV.foreground }}>
-              The System Operations pattern solves this by externalising memory into two durable artefacts: the Manus platform project instructions (set once by the project owner, always present) and the <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> file (updated after every task, read before every task). Together they give the agent a reliable starting point regardless of what was lost from session memory.
+              The System Operations pattern solves this by externalising memory into two durable artefacts: the Manus platform project instructions (set once by the project owner, always present) and the <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>CODEBASE-CONTEXT.md</code> file (updated after every task, read before every task). Together they give the agent a reliable starting point regardless of what was lost from session memory.
             </p>
           </div>
 
@@ -858,7 +858,7 @@ export default function AlignmentTracker() {
               </li>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>2</span>
-                <span><strong>Create <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> at the project root.</strong> Seed it with: current <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>@eri/components</code> version pin, colour tokens, known errors, pending work, and any canonical decisions made for this project. Commit it to the repository.</span>
+                <span><strong>Create <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>CODEBASE-CONTEXT.md</code> at the project root.</strong> Seed it with: current <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>@eri/components</code> version pin, colour tokens, known errors, pending work, and any canonical decisions made for this project. Commit it to the repository.</span>
               </li>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>3</span>
@@ -866,12 +866,12 @@ export default function AlignmentTracker() {
               </li>
             </ol>
 
-            {/* PROJECT-CONTEXT.md seed template */}
+            {/* CODEBASE-CONTEXT.md seed template */}
             <div className="mt-6 rounded-lg overflow-hidden" style={{ border: `1px solid ${TV.border}` }}>
               <div className="flex items-center justify-between px-4 py-2.5" style={{ backgroundColor: T.dark }}>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ backgroundColor: T.lime, color: T.dark }}>SEED TEMPLATE</span>
-                  <span className="text-xs font-semibold font-mono" style={{ color: T.lime }}>PROJECT-CONTEXT.md</span>
+                  <span className="text-xs font-semibold font-mono" style={{ color: T.lime }}>CODEBASE-CONTEXT.md</span>
                 </div>
                 <button
                   onClick={() => {
@@ -914,7 +914,7 @@ Package: \`@eri/components\` — current pin: **${LATEST_VERSION}**
 | \`EriPageLayout\` | Full-page layout wrapper — use in App.tsx only |
 | \`EriHeroSection\` | Full-viewport hero section |
 | \`EriAppFooter\` | Two-zone dark footer — rendered once via EriPageLayout |
-| \`EriStatusBadge\` | Status pill badge (ALPHA / BETA / PREVIEW / LIVE) |
+| \`EriStatusBadge\` | Status pill badge (ALPHA / BETA / PREVIEW; no badge = live) |
 | \`EriContactUsButton\` | Accent Lime CTA linking to the shared contact service |
 
 ---
@@ -966,7 +966,7 @@ Overall status: [green / amber / red]
             <ol className="text-sm space-y-3 mt-4" style={{ color: TV.foreground }}>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>4</span>
-                <span><strong>Maintain both files.</strong> After every AI task session, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>PROJECT-CONTEXT.md</code> with new decisions and corrected errors. After every component upgrade or compliance change, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>.</span>
+                <span><strong>Maintain both files.</strong> After every AI task session, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>CODEBASE-CONTEXT.md</code> with new decisions and corrected errors. After every component upgrade or compliance change, the agent updates <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>bds-meta.json</code>.</span>
               </li>
             </ol>
           </div>
@@ -1003,7 +1003,7 @@ Overall status: [green / amber / red]
                 </thead>
                 <tbody>
                   {[
-                    { id: 'S1', check: 'PROJECT-CONTEXT.md exists at project root and was read at task start', pass: 'File exists; you read it before taking any action' },
+                    { id: 'S1', check: 'CODEBASE-CONTEXT.md exists at project root and was read at task start', pass: 'File exists; you read it before taking any action' },
                     { id: 'S2', check: 'client/public/bds-meta.json exists', pass: 'File is present and served at https://{domain}/bds-meta.json' },
                     { id: 'S3', check: 'bds-meta.json has schemaVersion: "1.0" and overallStatus reflects actual state', pass: 'Field present; status is green, amber, or red per the overallStatus rules' },
                   ].map((row, i) => (

@@ -59,11 +59,11 @@ const TRACK1_INSTRUCTIONS = `Critical: At the start of every task, run:
     > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"
 Then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.
 
-Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
+Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
 
 Critical: This is a Track 1 ERI static website. Read https://bds.exponentialroadmap.org/new-project#track1 and follow all instructions before writing any code.
 
-Critical: After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
+Critical: After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
 
 // ─── Track 2 project instructions ────────────────────────────────────────────
 const TRACK2_INSTRUCTIONS = `Critical: At the start of every task, run:
@@ -71,13 +71,13 @@ const TRACK2_INSTRUCTIONS = `Critical: At the start of every task, run:
     > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"
 Then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action.
 
-Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
+Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
 
 Critical: This is a Track 2 ERI full-stack application. Read https://bds.exponentialroadmap.org/new-project#track2 and follow all instructions before writing any code.
 
 Critical: Always follow the ERI development workflow: 1. Research: clarify purpose, understand current context and existing assets, explore possible solutions. 2. Design. 3. Plan and get acceptance for plan. 4. Implement. 5. Test. 6. Iterate until solution works.
 
-Critical: After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
+Critical: After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
 
 EARTH-ALIGNED SKILLS — PLACEHOLDER: An Earth-aligned skills management package is being developed as part of the Earth-Aligned AI Lab project. When available, it will populate Earth-aligned learning, impact assessment, and ERI-specific development guidelines. This placeholder will be replaced with the full package when it is ready.`;
 
@@ -94,7 +94,7 @@ const TRACK1_STEPS = [
   {
     number: "02",
     icon: FileText,
-    title: "Create PROJECT-CONTEXT.md",
+    title: "Create CODEBASE-CONTEXT.md",
     description: "Read at the start of every subsequent task. This file survives context compaction.",
     code: null,
     codeId: null,
@@ -450,14 +450,14 @@ export default function NewProject() {
             {/* 10-step checklist — Track 2 */}
             <h3 className="text-lg font-extrabold text-foreground mb-2">10-Step Setup Checklist</h3>
             <p className="text-sm text-muted-foreground mb-6">
-              Steps 1–10 are the same as Track 1 — follow the BDS checklist, install @eri/components, create PROJECT-CONTEXT.md, add CSS import, and run the Project Alignment Tracker check. Then add the Track 2 steps below.
+              Steps 1–10 are the same as Track 1 — follow the BDS checklist, install @eri/components, create CODEBASE-CONTEXT.md, add CSS import, and run the Project Alignment Tracker check. Then add the Track 2 steps below.
             </p>
 
             {/* Track 2 same as Track 1 note */}
             <div className="rounded-lg border border-border bg-muted/40 px-5 py-4 mb-6">
               <p className="text-sm font-semibold text-foreground mb-1">Steps 1–10: Same as Track 1</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Follow the same 10-step checklist — fetch skill, create PROJECT-CONTEXT.md, install @eri/components, add CSS import, self-host fonts, wrap App.tsx in EriPageLayout, add EriHeroSection, register Contact Us source ID, create bds-meta.json, and run the Project Alignment Tracker check.
+                Follow the same 10-step checklist — fetch skill, create CODEBASE-CONTEXT.md, install @eri/components, add CSS import, self-host fonts, wrap App.tsx in EriPageLayout, add EriHeroSection, register Contact Us source ID, create bds-meta.json, and run the Project Alignment Tracker check.
               </p>
             </div>
 

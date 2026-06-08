@@ -20,7 +20,7 @@ The ERI Brand Design System skill (`eri-bds-reference`) is comprehensive and tec
 
 **Fix:** The most critical rules must appear at the point of use, not only in a reference section. The canonical `App.tsx` pattern (line 235–262) is the single most-read section — it must be self-contained and include every required prop with an inline comment explaining why it is required.
 
-**Status:** Partially fixed in v3.7.0 — the canonical App.tsx pattern now includes `headerTheme="auto"` with a comment. The deeper fix is to reduce total skill length by moving historical/changelog content out of the skill and into `PROJECT-CONTEXT.md`.
+**Status:** Partially fixed in v3.7.0 — the canonical App.tsx pattern now includes `headerTheme="auto"` with a comment. The deeper fix is to reduce total skill length by moving historical/changelog content out of the skill and into `CODEBASE-CONTEXT.md`.
 
 ---
 
@@ -128,7 +128,7 @@ The ERI Brand Design System skill (`eri-bds-reference`) is comprehensive and tec
 
 **Medium priority (will reduce future drift):**
 
-4. **Move all changelog/historical content from the skill to `PROJECT-CONTEXT.md`** — the skill should contain only current rules, not the history of how they evolved. This would reduce the skill from ~1,810 lines to ~800 lines.
+4. **Move all changelog/historical content from the skill to `CODEBASE-CONTEXT.md`** — the skill should contain only current rules, not the history of how they evolved. This would reduce the skill from ~1,810 lines to ~800 lines.
 
 5. **Add a "Contradictions audit" step to the skill release process** — before uploading a new version, run a grep for every rule that appears in more than one section and verify the statements are consistent.
 

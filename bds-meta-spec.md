@@ -100,7 +100,7 @@ Missing fields are shown as "—" in the tracker (not as failures).
 
 | Field | Type | Pass condition |
 |---|---|---|
-| `systemOps.projectContextExists` | boolean | `PROJECT-CONTEXT.md` exists at project root and was read at task start |
+| `systemOps.projectContextExists` | boolean | `CODEBASE-CONTEXT.md` exists at project root and was read at task start |
 | `systemOps.manusPlatformInstructionsRead` | boolean | Manus platform project instructions were read before acting |
 
 ### brand fields (optional — self-reported)

@@ -33,8 +33,8 @@ STEP 0 — Update and read the ERI brand skill
     > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"
 Then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full.
 
-STEP 1 — Read or create PROJECT-CONTEXT.md in the project root
-Every ERI project must have a PROJECT-CONTEXT.md. Read it before acting.
+STEP 1 — Read or create CODEBASE-CONTEXT.md in the project root
+Every ERI project must have a CODEBASE-CONTEXT.md. Read it before acting.
 If it does not exist, create one using the seed template at:
 https://bds.exponentialroadmap.org/tracker (System Operations section).
 
@@ -114,8 +114,8 @@ Run this command in the sandbox terminal, then read the file in full:
   curl -sL https://bds.exponentialroadmap.org/api/skill/latest \\
     > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"
 
-STEP 1 — Read or create PROJECT-CONTEXT.md in the project root
-Every ERI project must have a PROJECT-CONTEXT.md at its root. Read it in full
+STEP 1 — Read or create CODEBASE-CONTEXT.md in the project root
+Every ERI project must have a CODEBASE-CONTEXT.md at its root. Read it in full
 before taking any action. If it does not exist, create one.
 
 STEP 2 — Check client/public/bds-meta.json exists and is up to date
