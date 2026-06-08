@@ -11,7 +11,7 @@
  */
 
 import { useState, useCallback } from "react";
-import { Layers, SlidersHorizontal, Lightbulb, Clock, AlertTriangle, Eye, Download, Code2, BookOpen, Palette, Shield, Users, Search, Settings, Cloud, Music, Copy, CheckCircle2, History, ClipboardList, ChevronDown, ChevronRight, ToggleLeft, ToggleRight } from "lucide-react";
+import { Layers, SlidersHorizontal, Lightbulb, Clock, AlertTriangle, Eye, Download, Code2, BookOpen, Palette, Shield, Users, Search, Settings, Cloud, Music, Copy, CheckCircle2, History, ClipboardList, ChevronDown, ChevronUp, ChevronRight, ToggleLeft, ToggleRight } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";

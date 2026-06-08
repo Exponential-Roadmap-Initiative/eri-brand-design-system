@@ -892,3 +892,16 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Fix skill card expand affordance: add ChevronDown/Up icon to card header, change "View" button to "Details"/"Close" toggle
 - [x] TypeScript check — 0 real errors
 - [x] 22/22 tests passing
+
+## Philosophy.tsx — BDS compliance fixes (2026-06-08)
+- [x] Replace all emoji with Lucide icons (Globe, Building2, Code2, Zap, Wrench, BookOpen, Settings, ClipboardList, Brain, FolderOpen, FileText, CheckSquare, Layers, MessageSquare, Paperclip, RefreshCw)
+- [x] Hero heading: font-bold → font-extrabold font-archivo
+- [x] Hero eyebrow: text-white/50 → text-[#93E07D] uppercase tracking-widest
+- [x] "The big idea" section label: text-[#3ba559] → text-[#93E07D] uppercase tracking-widest
+- [x] "Why compounding matters" callout label: text-[#3ba559] → text-[#93E07D] uppercase tracking-widest
+- [x] Hero padding: px-6 → style={{ paddingInline: 'var(--eri-content-inset)' }}
+- [x] H1 accent word added: "with AI" in text-[#93E07D]
+- [x] "The big idea" card: changed from bg-[#3ba559]/5 border-[#3ba559]/30 to canonical left-border-4 + tint pattern
+- [x] Add ChevronUp to Skills.tsx lucide-react import (was missing, caused TS error)
+- [x] TypeScript: 0 real errors
+- [x] 22/22 tests passing

@@ -1,4 +1,4 @@
-/**
+/*
  * ERI Brand Design System — Governance & Methodology Page
  *
  * A top-level page explaining the full ERI human-AI governance model:
@@ -8,72 +8,98 @@
  *
  * This page is intentionally non-technical — it is written for the whole
  * ERI team, not just developers.
+ *
+ * BDS compliance:
+ * - PublicLayout wrapper (correct header clearance, semantic bg/text tokens, ERI footer)
+ * - Hero: bg-[#232323], font-extrabold font-archivo, eyebrow #93E07D, --eri-content-inset
+ * - Section eyebrow labels: #93E07D (Accent Lime) — never #3ba559 (Primary Green)
+ * - Card accents: left border + tint (≤8% opacity), no full four-side coloured outline
+ * - No emoji — Lucide icons only
+ * - Semantic tokens for structural surfaces (bg-card, bg-muted, border-border, text-foreground)
  */
 
 import { useState } from "react";
 import { Link } from "wouter";
-import { ExternalLink, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
+import {
+  ExternalLink, ChevronDown, ChevronUp, ArrowRight,
+  Globe, Building2, Code2, Zap,
+  Wrench, BookOpen, Settings, ClipboardList, Brain, FolderOpen,
+  FileText, CheckSquare, Layers, MessageSquare, Paperclip, RefreshCw,
+} from "lucide-react";
 import PublicLayout from "@/components/PublicLayout";
 import { PageGuide } from "@/components/PageGuide";
 
 // ── Governance Diagram ────────────────────────────────────────────────────────
 
+type AssetIcon = typeof Wrench;
+
+interface GovernanceLevel {
+  id: string;
+  Icon: AssetIcon;
+  title: string;
+  subtitle: string;
+  color: string;
+  tint: string;
+  border: string;
+  assets: { Icon: AssetIcon; name: string; desc: string }[];
+}
+
 function GovernanceDiagram() {
-  const levels = [
+  const levels: GovernanceLevel[] = [
     {
       id: "system",
-      emoji: "🌐",
+      Icon: Globe,
       title: "Manus Platform",
       subtitle: "The foundation — always present, not configurable by ERI",
       color: "#6b7280",
       tint: "rgba(107,114,128,0.06)",
       border: "rgba(107,114,128,0.25)",
       assets: [
-        { icon: "🛠", name: "Built-in tools", desc: "Browser, code editor, file system, image generation, search" },
-        { icon: "📖", name: "General skills", desc: "Skill creator, image routing, API access, scheduling" },
-        { icon: "⚙️", name: "System behaviour", desc: "Safety rules, tool use patterns, response format" },
+        { Icon: Wrench,   name: "Built-in tools",    desc: "Browser, code editor, file system, image generation, search" },
+        { Icon: BookOpen, name: "General skills",     desc: "Skill creator, image routing, API access, scheduling" },
+        { Icon: Settings, name: "System behaviour",   desc: "Safety rules, tool use patterns, response format" },
       ],
     },
     {
       id: "project",
-      emoji: "🏢",
+      Icon: Building2,
       title: "ERI Project",
       subtitle: "Shared across every ERI task — the team's accumulated knowledge",
       color: "#3ba559",
       tint: "rgba(59,165,89,0.06)",
       border: "rgba(59,165,89,0.30)",
       assets: [
-        { icon: "📋", name: "Project Instructions", desc: "Always-on rules: how to behave, what to always check, what to never skip" },
-        { icon: "🧠", name: "Project Skills", desc: "Living knowledge modules: how ERI work is done well — improving after every task" },
-        { icon: "📁", name: "Project Files", desc: "Shared domain knowledge: framework PDFs, specs, canonical reference documents" },
+        { Icon: ClipboardList, name: "Project Instructions", desc: "Always-on rules: how to behave, what to always check, what to never skip" },
+        { Icon: Brain,         name: "Project Skills",       desc: "Living knowledge modules: how ERI work is done well — improving after every task" },
+        { Icon: FolderOpen,    name: "Project Files",        desc: "Shared domain knowledge: framework PDFs, specs, canonical reference documents" },
       ],
     },
     {
       id: "codebase",
-      emoji: "💻",
+      Icon: Code2,
       title: "Codebase",
       subtitle: "Specific to one application — persists across tasks on that codebase",
       color: "#f59e0b",
       tint: "rgba(245,158,11,0.06)",
       border: "rgba(245,158,11,0.30)",
       assets: [
-        { icon: "🗂", name: "PROJECT-CONTEXT.md", desc: "Codebase memory: decisions made, known errors, pending work — survives session resets" },
-        { icon: "✅", name: "todo.md", desc: "Active work tracking: what is in progress, what is done, what is next" },
-        { icon: "🏗", name: "The codebase itself", desc: "The actual application being built — code, database schema, tests" },
+        { Icon: FileText,    name: "PROJECT-CONTEXT.md", desc: "Codebase memory: decisions made, known errors, pending work — survives session resets" },
+        { Icon: CheckSquare, name: "todo.md",             desc: "Active work tracking: what is in progress, what is done, what is next" },
+        { Icon: Layers,      name: "The codebase itself", desc: "The actual application being built — code, database schema, tests" },
       ],
     },
     {
       id: "task",
-      emoji: "⚡",
+      Icon: Zap,
       title: "Task",
       subtitle: "A single session — ephemeral, exists only while the task is running",
       color: "#17b7dd",
       tint: "rgba(23,183,221,0.06)",
       border: "rgba(23,183,221,0.30)",
       assets: [
-        { icon: "💬", name: "Conversation", desc: "Everything said in this session — the brief, the decisions, the feedback" },
-        { icon: "📎", name: "Attached files", desc: "Documents or images shared for this specific task" },
-        { icon: "🔄", name: "Sandbox state", desc: "Installed packages, running processes, downloaded files — reset between sessions" },
+        { Icon: MessageSquare, name: "Conversation",   desc: "Everything said in this session — the brief, the decisions, the feedback" },
+        { Icon: Paperclip,     name: "Attached files", desc: "Documents or images shared for this specific task" },
+        { Icon: RefreshCw,     name: "Sandbox state",  desc: "Installed packages, running processes, downloaded files — reset between sessions" },
       ],
     },
   ];
@@ -81,44 +107,50 @@ function GovernanceDiagram() {
   return (
     <div className="space-y-2">
       <div className="relative">
-        {levels.map((level, idx) => (
-          <div
-            key={level.id}
-            className="rounded-xl border p-4 mb-2"
-            style={{
-              borderColor: level.border,
-              backgroundColor: level.tint,
-              marginLeft: `${idx * 16}px`,
-            }}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-lg leading-none">{level.emoji}</span>
-              <div>
-                <span className="text-sm font-semibold" style={{ color: level.color }}>{level.title}</span>
-                <span className="text-xs text-muted-foreground ml-2">{level.subtitle}</span>
+        {levels.map((level, idx) => {
+          const LevelIcon = level.Icon;
+          return (
+            <div
+              key={level.id}
+              className="rounded-xl border p-4 mb-2"
+              style={{
+                borderColor: level.border,
+                backgroundColor: level.tint,
+                marginLeft: `${idx * 16}px`,
+              }}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <LevelIcon className="w-4 h-4 flex-shrink-0" style={{ color: level.color }} />
+                <div>
+                  <span className="text-sm font-semibold" style={{ color: level.color }}>{level.title}</span>
+                  <span className="text-xs text-muted-foreground ml-2">{level.subtitle}</span>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {level.assets.map(asset => {
+                  const AssetIconComp = asset.Icon;
+                  return (
+                    <div
+                      key={asset.name}
+                      className="flex items-start gap-2 rounded-lg border px-3 py-2"
+                      style={{ borderColor: level.border, backgroundColor: "var(--card)" }}
+                    >
+                      <AssetIconComp className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-muted-foreground" />
+                      <div>
+                        <p className="text-xs font-medium text-foreground">{asset.name}</p>
+                        <p className="text-[11px] text-muted-foreground leading-relaxed mt-0.5">{asset.desc}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {level.assets.map(asset => (
-                <div
-                  key={asset.name}
-                  className="flex items-start gap-2 rounded-lg border px-3 py-2"
-                  style={{ borderColor: level.border, backgroundColor: "var(--card)" }}
-                >
-                  <span className="text-base leading-none mt-0.5 flex-shrink-0">{asset.icon}</span>
-                  <div>
-                    <p className="text-xs font-medium text-foreground">{asset.name}</p>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed mt-0.5">{asset.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       {/* Feedback loop callout */}
       <div className="rounded-lg border border-dashed p-3 flex items-start gap-3" style={{ borderColor: "rgba(59,165,89,0.4)", backgroundColor: "rgba(59,165,89,0.04)" }}>
-        <span className="text-lg leading-none flex-shrink-0 mt-0.5">🔁</span>
+        <RefreshCw className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#3ba559" }} />
         <div>
           <p className="text-xs font-semibold text-foreground">The self-improvement loop</p>
           <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
@@ -134,14 +166,14 @@ function GovernanceDiagram() {
 
 function TaskLifecycleFlow() {
   const steps = [
-    { label: "Task starts", sub: "User gives a brief", color: "#17b7dd" },
-    { label: "Tier 1 skills", sub: "Always read — no exceptions", color: "#3ba559" },
-    { label: "Tier 2 gate", sub: "Read before specific actions", color: "#f59e0b" },
-    { label: "Tier 3 reference", sub: "Read when domain applies", color: "#17b7dd" },
-    { label: "Work", sub: "Execute with full context", color: "#6b7280" },
-    { label: "Reflect", sub: "What worked? What was missing?", color: "#8b5cf6" },
-    { label: "Improve", sub: "Update the skill, bump version", color: "#3ba559" },
-    { label: "Next task", sub: "Starts from a higher baseline", color: "#3ba559" },
+    { label: "Task starts",      sub: "User gives a brief",                color: "#17b7dd" },
+    { label: "Tier 1 skills",    sub: "Always read — no exceptions",       color: "#3ba559" },
+    { label: "Tier 2 gate",      sub: "Read before specific actions",      color: "#f59e0b" },
+    { label: "Tier 3 reference", sub: "Read when domain applies",          color: "#17b7dd" },
+    { label: "Work",             sub: "Execute with full context",         color: "#6b7280" },
+    { label: "Reflect",          sub: "What worked? What was missing?",    color: "#8b5cf6" },
+    { label: "Improve",          sub: "Update the skill, bump version",    color: "#3ba559" },
+    { label: "Next task",        sub: "Starts from a higher baseline",     color: "#3ba559" },
   ];
 
   return (
@@ -351,23 +383,29 @@ function FurtherReading() {
 export default function Philosophy() {
   return (
     <PublicLayout>
-      {/* Hero */}
-      <div className="bg-[#232323] text-white px-6 py-10">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-xs font-semibold uppercase tracking-widest text-white/50 mb-2">
-            GOVERNANCE &amp; METHODOLOGY
+      {/* Hero — BDS compliant: bg-[#232323], font-extrabold font-archivo, eyebrow #93E07D, --eri-content-inset */}
+      <section className="bg-[#232323] text-white py-16 px-4">
+        <div
+          className="max-w-3xl mx-auto"
+          style={{ paddingInline: "var(--eri-content-inset, clamp(1rem, 3vw, 2rem))" }}
+        >
+          <p className="text-xs font-bold text-[#93E07D] uppercase tracking-widest mb-4">
+            Exponential Roadmap Initiative ——— Governance &amp; Methodology
           </p>
-          <h1 className="text-3xl font-bold tracking-tight mb-4">How ERI Works with AI</h1>
+          <h1 className="text-4xl font-extrabold font-archivo mb-4 leading-tight">
+            How ERI Works<br />
+            <span className="text-[#93E07D]">with AI</span>
+          </h1>
           <PageGuide text="This page explains the operating model for human–AI collaboration at ERI — a system designed to get better with every task completed. Read the four governance layers to understand the architecture. Read the self-improving system to understand the principle at its heart. Use the Further Reading section to explore the broader field of AI-native engineering governance." />
         </div>
-      </div>
+      </section>
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
 
         {/* The big idea */}
-        <div className="rounded-xl border border-[#3ba559]/30 bg-[#3ba559]/5 px-6 py-5">
-          <p className="text-sm font-semibold text-[#3ba559] mb-2">The big idea</p>
+        <div className="rounded-xl border border-l-4 border-border p-6" style={{ borderLeftColor: "#3ba559", backgroundColor: "rgba(59,165,89,0.06)" }}>
+          <p className="text-xs font-semibold text-[#93E07D] uppercase tracking-widest mb-3">The big idea</p>
           <p className="text-sm text-foreground/80 leading-relaxed">
             Every ERI task runs inside a layered knowledge system. Before Manus writes a single line of code or drafts a single sentence, it has already read the team's operating principles, the domain expertise relevant to this work, and the memory of every decision made on this codebase before. The result is that each task starts from a higher baseline — and when the task is done, what was learned raises that baseline further.
           </p>
@@ -405,10 +443,10 @@ export default function Philosophy() {
             {/* The loop */}
             <div className="space-y-3">
               {[
-                { n: "1", title: "Task runs", desc: "Manus reads the relevant skills and follows their instructions. The work is done." },
-                { n: "2", title: "Reflect", desc: "At the end of the task: what worked well? What was missing? What should be a guardrail next time?" },
-                { n: "3", title: "Improve", desc: "The skill is updated with the new insight. The version number is bumped. The change is logged in the Skills registry." },
-                { n: "4", title: "Every future task benefits", desc: "The improvement is in context from now on. The same mistake cannot recur. The system compounds." },
+                { n: "1", title: "Task runs",                   desc: "Manus reads the relevant skills and follows their instructions. The work is done." },
+                { n: "2", title: "Reflect",                     desc: "At the end of the task: what worked well? What was missing? What should be a guardrail next time?" },
+                { n: "3", title: "Improve",                     desc: "The skill is updated with the new insight. The version number is bumped. The change is logged in the Skills registry." },
+                { n: "4", title: "Every future task benefits",  desc: "The improvement is in context from now on. The same mistake cannot recur. The system compounds." },
               ].map(step => (
                 <div key={step.n} className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#3ba559]/15 border border-[#3ba559]/30 text-[11px] font-bold flex items-center justify-center text-[#3ba559] mt-0.5">
@@ -424,7 +462,7 @@ export default function Philosophy() {
 
             {/* Compounding callout */}
             <div className="rounded-lg border border-dashed border-[#3ba559]/40 bg-[#3ba559]/4 p-4">
-              <p className="text-xs font-semibold text-[#3ba559] mb-1">Why compounding matters for ERI</p>
+              <p className="text-xs font-semibold text-[#93E07D] uppercase tracking-widest mb-1">Why compounding matters for ERI</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 ERI uses AI to accelerate its mission: halving global emissions by 2030. The work spans climate data infrastructure, corporate accountability tools, member engagement, and strategic communications. A system that gets measurably better with every task is not a productivity tool — it is a strategic asset. The Human-AI Lab's premise is that organisations pairing human judgement with AI-powered execution capture a 5× advantage over those that do not. The self-improving system is how ERI demonstrates that premise through its own work.
               </p>
@@ -468,12 +506,12 @@ export default function Philosophy() {
             <TaskLifecycleFlow />
             <div className="grid grid-cols-1 gap-3 mt-4" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
               {[
-                { step: "Research", desc: "Clarify purpose, understand current context and existing assets, explore possible solutions." },
-                { step: "Design", desc: "Propose an approach; surface trade-offs and assumptions." },
+                { step: "Research",              desc: "Clarify purpose, understand current context and existing assets, explore possible solutions." },
+                { step: "Design",                desc: "Propose an approach; surface trade-offs and assumptions." },
                 { step: "Plan and get acceptance", desc: "Present the plan to the user and wait for explicit go-ahead before proceeding." },
-                { step: "Implement", desc: "Execute the agreed plan." },
-                { step: "Test", desc: "Verify the output works as intended." },
-                { step: "Iterate", desc: "Refine until the solution works." },
+                { step: "Implement",             desc: "Execute the agreed plan." },
+                { step: "Test",                  desc: "Verify the output works as intended." },
+                { step: "Iterate",               desc: "Refine until the solution works." },
               ].map((item, i) => (
                 <div key={i} className="rounded-lg border border-border p-3 bg-muted/10">
                   <p className="text-xs font-semibold text-foreground mb-1">{String(i + 1).padStart(2, "0")} {item.step}</p>
@@ -535,12 +573,12 @@ export default function Philosophy() {
             </p>
             <div className="grid grid-cols-1 gap-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
               {[
-                { title: "Direct answers", desc: "Answer the question first. Do not make the user earn the answer through Socratic questioning." },
-                { title: "Named objections", desc: "After answering, name the strongest objection or failure mode — one or two sentences, even when unasked." },
+                { title: "Direct answers",       desc: "Answer the question first. Do not make the user earn the answer through Socratic questioning." },
+                { title: "Named objections",     desc: "After answering, name the strongest objection or failure mode — one or two sentences, even when unasked." },
                 { title: "Calibrated confidence", desc: "Admit ignorance, thin evidence, or questions outside competence. Confidence calibration matters more than confidence." },
-                { title: "No flattery", desc: "Never use 'great question', 'excellent point', 'fantastic idea' — including softened variants. Agree briefly when you agree, and move on." },
-                { title: "Steelman first", desc: "Before arguing against a position, state the strongest version the user could defend. Then go at its weakest joint." },
-                { title: "Surface assumptions", desc: "When a request rests on a shaky assumption, surface it before answering or executing — not mid-task." },
+                { title: "No flattery",          desc: "Never use 'great question', 'excellent point', 'fantastic idea' — including softened variants. Agree briefly when you agree, and move on." },
+                { title: "Steelman first",       desc: "Before arguing against a position, state the strongest version the user could defend. Then go at its weakest joint." },
+                { title: "Surface assumptions",  desc: "When a request rests on a shaky assumption, surface it before answering or executing — not mid-task." },
               ].map(p => (
                 <div key={p.title} className="rounded-lg border border-border p-3 bg-muted/10">
                   <p className="text-xs font-semibold text-foreground mb-1">{p.title}</p>
