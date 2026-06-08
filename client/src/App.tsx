@@ -10,6 +10,7 @@ import NewProject from "./pages/NewProject";
 import TeamGuide from "./pages/TeamGuide";
 import Skills from "./pages/Skills";
 import Philosophy from "./pages/Philosophy";
+import ProjectInstructions from "./pages/ProjectInstructions";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
 import { useState } from "react";
@@ -18,17 +19,18 @@ const APP_VERSION = "V.2026.05.27";
 
 // ── Tab navigation bar ────────────────────────────────────────────────────────
 // Positioned directly below the standard 64px EriAppHeader.
-// This is a BDS-specific feature (two pages: BDS + Tracker) — not part of the
-// standard EriAppHeader spec, so it lives here as a separate component.
+// This is a BDS-specific feature — not part of the standard EriAppHeader spec,
+// so it lives here as a separate component.
 function TabNav() {
   const [location] = useLocation();
   const tabs = [
-    { href: "/",            label: "Brand Design System" },
-    { href: "/tracker",    label: "Project Alignment Tracker" },
-    { href: "/new-project", label: "Start a Project" },
-    { href: "/team-guide",  label: "Team Guide" },
-    { href: "/skills",      label: "Skills" },
-    { href: "/governance",  label: "Governance" },
+    { href: "/",                      label: "Brand Design System" },
+    { href: "/tracker",               label: "Project Alignment Tracker" },
+    { href: "/new-project",           label: "Start a Project" },
+    { href: "/governance",            label: "Governance" },
+    { href: "/skills",                label: "Skills" },
+    { href: "/project-instructions",  label: "Project Instructions" },
+    { href: "/team-guide",            label: "Team Guide" },
   ];
   return (
     <div
@@ -89,9 +91,10 @@ function Router() {
         <Route path={"/"} component={BrandDesignSystem} />
         <Route path={"/tracker"} component={AlignmentTracker} />
         <Route path={"/new-project"} component={NewProject} />
-        <Route path={"/team-guide"} component={TeamGuide} />
-        <Route path={"/skills"} component={Skills} />
         <Route path={"/governance"} component={Philosophy} />
+        <Route path={"/skills"} component={Skills} />
+        <Route path={"/project-instructions"} component={ProjectInstructions} />
+        <Route path={"/team-guide"} component={TeamGuide} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
