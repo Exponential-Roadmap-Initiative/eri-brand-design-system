@@ -55,6 +55,40 @@ interface Skill {
 
 const CHAR_BUDGET = 8000;
 
+// ── Current live project instructions (hardcoded — Manus has no API to read them) ──
+
+const CURRENT_INSTRUCTIONS = `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
+Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
+Critical: Checkpoint discipline — save a checkpoint after every 3–5 file changes. Never treat an entire feature sprint as a single checkpoint unit. Specifically:
+- Save a checkpoint immediately after writing each logical group of files (e.g., after the router, after the widget components, after the explorer page, after config wiring, after route wiring)
+- Never run \`pnpm test\` (the full test suite) before saving a checkpoint — it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`
+- If a sandbox reset occurs mid-task, the last checkpoint is the recovery point — all unsaved work is lost
+
+Critical: At the start of every task, scan the skills listed in the system prompt and identify which ones apply to this task. Read the full SKILL.md for each relevant skill before taking any action. Do not skip this step — skills contain ERI-specific patterns, known errors, and canonical implementations that are not in your training data.
+
+Critical: After completing any task, review whether any skill you used (or should have used) needs updating. If you encountered a workflow not covered by a skill, an instruction that was wrong or incomplete, or a reusable pattern worth capturing, update the relevant SKILL.md before delivering the result. Use the skill-creator skill for all skill updates. This is how the skills library improves — every task is an improvement opportunity.
+
+Critical: Always follow the ERI development workflow:
+1. Research: clarify purpose, understand current context and existing assets, explore possible solutions
+2. Design
+3. Plan and get acceptance for plan
+4. Implement
+5. Test
+6. Iterate until solution works
+
+Critical: Apply the exponential-human-ai-collaboration skill to every task in this project.
+
+## Exponential Framework — Always Remember
+The ERI Exponential Framework is a 5 pillars (columns) x 4 horizontals (rows) matrix = 20 cells.
+
+5 Pillars: P1=Cut Operational Emissions, P2=Decarbonise Value Chain, P3=Build & Scale Solutions, P4=Mobilise Finance & Investment, P5=Shape Policy & Narrative
+
+4 Horizontals (rows, top to bottom): H1=Earth-aligned Vision & Mission, H2=Set Targets & Strategy, H3=Develop Transition Plan & Take Action, H4=Measure, Report & Disclose
+
+Reference: https://exponentialroadmap.org/exponential-framework/
+
+Earth-aligned AI Agent key files: server/routers/earthAlignedReport.ts (Mode 2 orchestrator ), server/routers/earthAlignedAgent.ts (Mode 1), client/src/pages/admin/EarthAlignedAgent.tsx (frontend). agentPipeline.ts does NOT exist.`;
+
 // ── Known issues in the current live instructions ─────────────────────────────
 
 interface KnownIssue {
@@ -380,7 +414,7 @@ export default function ProjectInstructions() {
   const { data: skillsList } = trpc.skills.list.useQuery();
   const skills: Skill[] = skillsList ?? [];
 
-  const [activeTab, setActiveTab] = useState<"generator" | "history" | "audit">("generator");
+  const [activeTab, setActiveTab] = useState<"current" | "generator" | "history" | "audit">("current");
   const [enabledSections, setEnabledSections] = useState<Record<string, boolean>>(() => {
     const defaults: Record<string, boolean> = {};
     FIXED_SECTIONS.forEach(s => { defaults[s.id] = s.defaultOn; });
@@ -490,9 +524,6 @@ export default function ProjectInstructions() {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
 
-        {/* Current Instructions panel */}
-        <CurrentInstructionsPanel />
-
         {/* Manager card */}
         <div className="border border-border rounded-lg overflow-hidden mb-8">
           {/* Card header */}
@@ -514,6 +545,7 @@ export default function ProjectInstructions() {
             {/* Tab bar */}
             <div className="flex border-b border-border bg-muted/20">
               {([
+                { id: "current"   as const, label: "Current",         Icon: Eye },
                 { id: "generator" as const, label: "Generator",       Icon: SlidersHorizontal },
                 { id: "history"   as const, label: "Version History", Icon: History },
                 { id: "audit"     as const, label: "Audit",           Icon: ClipboardList },
@@ -532,6 +564,66 @@ export default function ProjectInstructions() {
                 </button>
               ))}
             </div>
+
+            {/* ── Current Instructions tab ── */}
+            {activeTab === "current" && (
+              <div className="px-5 py-6 space-y-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Active project instructions</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">The text currently set in Manus project settings for ERI Shared Dev Assets. Known issues are highlighted.</p>
+                  </div>
+                  <span className="flex-shrink-0 text-xs font-mono text-muted-foreground">{CURRENT_INSTRUCTIONS.length.toLocaleString()} chars</span>
+                </div>
+
+                {/* Issues banner */}
+                <div className="rounded-md border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 p-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle size={14} className="flex-shrink-0 text-amber-600 dark:text-amber-400" />
+                    <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
+                      {KNOWN_ISSUES.length} known issue{KNOWN_ISSUES.length !== 1 ? "s" : ""} — use the Generator tab to produce a corrected version
+                    </p>
+                  </div>
+                  {KNOWN_ISSUES.map(issue => (
+                    <div key={issue.id} className="flex items-start gap-2">
+                      <span
+                        className="flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold border mt-0.5"
+                        style={
+                          issue.severity === "high"
+                            ? { color: "#dc2626", borderColor: "rgba(220,38,38,0.4)", backgroundColor: "rgba(220,38,38,0.08)" }
+                            : { color: "#d97706", borderColor: "rgba(217,119,6,0.4)", backgroundColor: "rgba(217,119,6,0.08)" }
+                        }
+                      >
+                        {issue.severity === "high" ? "High" : "Medium"}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-xs font-medium text-amber-900 dark:text-amber-200">{issue.title}</p>
+                        <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5 leading-relaxed">{issue.detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Live text with highlights */}
+                <div className="rounded-md bg-muted/20 border border-border p-4 max-h-[32rem] overflow-y-auto">
+                  <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">
+                    {(() => {
+                      const patterns = KNOWN_ISSUES.map(i => i.pattern).filter(Boolean);
+                      if (patterns.length === 0) return CURRENT_INSTRUCTIONS;
+                      const regex = new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g");
+                      const parts = CURRENT_INSTRUCTIONS.split(regex);
+                      return parts.map((part, i) =>
+                        patterns.includes(part) ? (
+                          <mark key={i} style={{ backgroundColor: "rgba(245,158,11,0.3)", color: "inherit", borderRadius: "2px", padding: "0 2px" }}>{part}</mark>
+                        ) : (
+                          <span key={i}>{part}</span>
+                        )
+                      );
+                    })()}
+                  </pre>
+                </div>
+              </div>
+            )}
 
             {/* ── Generator tab ── */}
             {activeTab === "generator" && (
