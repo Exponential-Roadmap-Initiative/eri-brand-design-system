@@ -62,7 +62,7 @@ Then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking a
 
 Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
 
-Critical: This is a Track 1 ERI static website. Read https://bds.exponentialroadmap.org/new-project#track1 and follow all instructions before writing any code.
+Critical: This is a Track 1 ERI static website. Read https://bds.exponentialroadmap.org/new-webproject#track1 and follow all instructions before writing any code.
 
 Critical: After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
 
@@ -74,9 +74,19 @@ Then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking a
 
 Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files.
 
-Critical: This is a Track 2 ERI full-stack application. Read https://bds.exponentialroadmap.org/new-project#track2 and follow all instructions before writing any code.
+Critical: This is a Track 2 ERI full-stack application. Read https://bds.exponentialroadmap.org/new-webproject#track2 and follow all instructions before writing any code.
 
 Critical: Always follow the ERI development workflow: 1. Research: clarify purpose, understand current context and existing assets, explore possible solutions. 2. Design. 3. Plan and get acceptance for plan. 4. Implement. 5. Test. 6. Iterate until solution works.
+
+Critical: Before writing any code, scan the skills listed in the system prompt and identify which ones apply to this task. Read the full SKILL.md for each relevant skill. Key skills for a Track 2 full-stack application:
+- eri-code-quality: Run the 10-gate pre-implementation checklist before writing any code
+- eri-trpc: Canonical patterns for tRPC routers — use paginationSchema, never private getDb()
+- eri-database: Schema design, index strategy, migration safety, anti-patterns
+- eri-user-management: Workspace isolation, invite flows, role management
+- eri-exponential-framework: Canonical data model — read before designing any schema that touches the Exponential Framework
+- eri-bds-reference: Brand tokens, component usage, navigation patterns
+
+Critical: Apply the eri-human-ai-collaboration skill to every task — peer-colleague mode: direct answers, named objections, calibrated confidence, no flattery.
 
 Critical: After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
 

@@ -26,7 +26,7 @@ function TabNav() {
   const tabs = [
     { href: "/",                      label: "Brand Design System" },
     { href: "/tracker",               label: "Project Alignment Tracker" },
-    { href: "/new-project",           label: "Start a Project" },
+    { href: "/new-webproject",        label: "New Web Project" },
     { href: "/governance",            label: "Governance" },
     { href: "/skills",                label: "Skills" },
     { href: "/project-instructions",  label: "Project Instructions" },
@@ -90,7 +90,7 @@ function Router() {
       <Switch>
         <Route path={"/"} component={BrandDesignSystem} />
         <Route path={"/tracker"} component={AlignmentTracker} />
-        <Route path={"/new-project"} component={NewProject} />
+        <Route path={"/new-webproject"} component={NewProject} />
         <Route path={"/governance"} component={Philosophy} />
         <Route path={"/skills"} component={Skills} />
         <Route path={"/project-instructions"} component={ProjectInstructions} />

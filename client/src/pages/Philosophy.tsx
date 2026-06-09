@@ -733,7 +733,7 @@ export default function Philosophy() {
             <p className="text-sm font-semibold text-foreground mb-1">Ready to start a new ERI web project?</p>
             <p className="text-xs text-muted-foreground leading-relaxed">The Start a Project page walks you through bootstrapping a new ERI codebase — from fetching the BDS skill to publishing a compliant <code className="font-mono text-[10px] px-1 rounded bg-muted">bds-meta.json</code>.</p>
           </div>
-          <Link href="/new-project" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#3ba559] hover:underline shrink-0">
+          <Link href="/new-webproject" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#3ba559] hover:underline shrink-0">
             Start a Project <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

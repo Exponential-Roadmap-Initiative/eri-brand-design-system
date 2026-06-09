@@ -983,7 +983,7 @@ Overall status: [green / amber / red]
         </div>
         <div className="px-6 py-5 bg-card">
           <p className="text-sm mb-6" style={{ color: TV.foreground }}>
-            Run this checklist before saving a checkpoint or marking any task complete on an ERI project. Each item maps to a specific section of the <a href="/" className="underline" style={{ color: '#3ba559' }}>BDS reference</a> or the <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system" className="underline" style={{ color: '#3ba559' }}>eri-bds-reference skill</a>. If any item fails, fix it before closing. Setting up a new project from scratch? See the <a href="/new-project" className="underline" style={{ color: '#3ba559' }}>Start a Project guide</a>.
+            Run this checklist before saving a checkpoint or marking any task complete on an ERI project. Each item maps to a specific section of the <a href="/" className="underline" style={{ color: '#3ba559' }}>BDS reference</a> or the <a href="https://github.com/Exponential-Roadmap-Initiative/eri-brand-design-system" className="underline" style={{ color: '#3ba559' }}>eri-bds-reference skill</a>. If any item fails, fix it before closing. Setting up a new project from scratch? See the <a href="/new-webproject" className="underline" style={{ color: '#3ba559' }}>New Web Project guide</a>.
           </p>
 
           {/* S — System Operations */}

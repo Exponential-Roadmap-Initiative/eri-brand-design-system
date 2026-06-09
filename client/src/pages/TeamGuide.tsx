@@ -85,7 +85,7 @@ Critical: Always follow the ERI development workflow:
 5. Test
 6. Iterate until solution works
 
-Critical: Apply the exponential-human-ai-collaboration skill to every task in this project.
+Critical: Apply the eri-human-ai-collaboration skill to every task in this project — peer-colleague mode: direct answers, named objections, calibrated confidence, no flattery.
 
 Critical: After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`;
 
