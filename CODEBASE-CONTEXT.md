@@ -1095,3 +1095,43 @@ The skills library is a prevention-only system by default. The audit findings ar
 
 ### Test status
 22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v3.15.0 — Cross-task SKILLS_METADATA sync (2026-06-09)
+
+### Problem resolved
+
+The eri-skill-creator Step 8 previously told agents to "update SKILLS_METADATA in server/routers/skills.ts" — which is only possible from the BDS task. Agents in other tasks (CPR, PSM, HAL, etc.) could not complete this step.
+
+### Key distinction (now documented in eri-skill-creator v2.3.0)
+
+- **SKILL.md files** live in `/home/ubuntu/skills/` — shared project files, editable from **any** task in the same Manus project
+- **SKILLS_METADATA** in `server/routers/skills.ts` lives in the BDS webdev project directory — only editable from the BDS task
+
+### New procedures added to `server/routers/skills.ts`
+
+**`skills.syncMetadataFromFiles`** (adminProcedure, no input)
+- Reads the frontmatter from every registered skill's SKILL.md
+- Updates `version`, `name`, and `description` fields in SKILLS_METADATA in-place (regex replacement)
+- Fields left unchanged: `tier`, `category`, `readWhen`, `hasReferences`
+- Writes the updated source back to skills.ts
+- Returns `{ success, changesCount, changes: [{ id, field, from, to }], message }`
+- Triggered via "↻ Sync from skill files" button on /skills page (admin only)
+- Shows a diff table of what changed
+
+**`skills.registerSkill`** (adminProcedure)
+- Manual fallback for registering brand-new skills not yet on the filesystem
+- Appends a new entry to SKILLS_METADATA before the closing `];`
+- Rejects if skill ID already exists (CONFLICT error)
+- Triggered via "+ Register Skill" form on /skills page (admin only)
+
+### Workflow for non-BDS tasks (Path B in eri-skill-creator Step 8)
+
+1. Agent updates SKILL.md directly (shared project file — always accessible)
+2. Agent tells user: "I updated `eri-<skill-name>` to v1.2.0. Please click Sync from skill files on the BDS Skills page."
+3. User clicks the button on `/skills` (admin only)
+4. SKILLS_METADATA is updated automatically from the frontmatter
+
+### Test status
+29/29 tests passing. TypeScript: 0 real errors.
