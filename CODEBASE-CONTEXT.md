@@ -1063,3 +1063,35 @@ When a feature requires displaying data that only an agent can read, **propose t
 
 ### Test status
 22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v3.14.0 — Skill updates from Lean Code Audit (2026-06-09)
+
+### Context
+A lean code audit of the eri-playbook-team codebase identified 7 categories of technical debt. Three skills were updated to prevent recurrence and to enable opportunistic remediation of pre-existing debt.
+
+### Skills updated
+
+**eri-trpc v2.1.0 → v2.2.0**
+- Added canonical `paginationSchema` in `shared/pagination.ts` — use instead of inline `z.number().int().min(1).max(...)` schemas (691+ inline instances exist in the codebase)
+- Added "Opportunistic Remediation" section: when touching a router file, also fix private `getDb()` definitions (85 instances), inline pagination schemas, and inline DB helpers
+
+**eri-code-quality v2.1.0 → v2.2.0**
+- Gate 8 now has 5 checks (was 3): added "search first" (check `client/src/components/` before creating a new component — 15-20 duplicated badge/formatter components exist) and `useTabState` hook requirement for all tab state (141 inline `useState` tab instances exist)
+- Added Gate 10: file placement (`server/scripts/`, `shared/`, `server/db/<domain>.ts`) and `server/db.ts` size check (currently 2,512 lines — new functions go to domain modules if >500 lines)
+- Updated checklist format to include Gate 10 row
+- Description updated to "10 gates"
+
+**data-source-integration v1.0.0 → v1.1.0**
+- Added frontmatter `metadata.version: "1.1.0"` (was missing — skill was not self-versioning)
+- Added "Known Pre-Existing Debt — Workspace Shell Pages" section: names all 11 affected pages and provides the mechanical migration pattern to `WorkspaceDataSourcePage`
+
+### Key insight: prevention vs remediation
+The skills library is a prevention-only system by default. The audit findings are pre-existing debt from before the skills existed. The fix is **opportunistic remediation rules** — when touching an affected file for any reason, apply the fix as a side effect. This transforms skills into a rolling debt-reduction system without requiring dedicated refactoring sprints.
+
+### Analysis document
+`/home/ubuntu/LeanAuditVsGovernanceAnalysis.md` — full cross-reference of the 7 audit findings against the skills library.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
