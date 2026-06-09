@@ -1,5 +1,5 @@
 /**
- * NewProject.tsx — "Start a New Project" onboarding page
+ * NewProject.tsx — "Start a New Web Project" onboarding page
  *
  * Audience: Manus AI agents and developers starting a new ERI application.
  * Purpose:  Provide the canonical setup sequence, copy-paste project instructions,
@@ -291,7 +291,7 @@ export default function NewProject() {
             ERI Web Projects
           </p>
           <h1 className="text-4xl font-extrabold text-white mb-4 leading-tight">
-            Start a New Project
+            Start a New Web Project
           </h1>
           <PageGuide text="This page is the starting point for every new ERI web project. Use the decision card below to pick a track, copy the project instructions block, and paste it into your new Manus project instructions field — the agent will read this page and follow the correct setup steps automatically." />
           <div className="mt-3">
