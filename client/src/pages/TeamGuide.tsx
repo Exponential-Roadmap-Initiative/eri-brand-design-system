@@ -291,9 +291,7 @@ export default function TeamGuide() {
                 ERI principle: Define the human agenda before you start. Know what transformation goal your task should support, what assumptions you are challenging, and what a useful output looks like — then let Manus execute.
               </p>
               <a
-                href="https://bds.exponentialroadmap.org/new-project"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/new-project"
                 className="text-xs font-semibold text-[#3ba559] hover:text-foreground transition-colors shrink-0"
               >
                 View the full ERI Task Pre-Prompt v5 →
@@ -356,8 +354,18 @@ export default function TeamGuide() {
 
           <div className="mt-6 rounded-lg bg-background border border-border px-5 py-4">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              <span className="font-semibold text-foreground">ERI principle:</span> Define the human agenda before you start. Know what transformation goal your task should support, what assumptions you are challenging, and what a useful output looks like \u2014 then let Manus execute.
+              <span className="font-semibold text-foreground">ERI principle:</span> Define the human agenda before you start. Know what transformation goal your task should support, what assumptions you are challenging, and what a useful output looks like — then let Manus execute.
             </p>
+            <div className="mt-4 pt-4 border-t border-border">
+              <p className="text-xs text-muted-foreground mb-2">Want to understand the full ERI governance model — how skills, project instructions, and the human-AI collaboration principles fit together?</p>
+              <a
+                href="/governance"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3ba559] hover:text-foreground transition-colors"
+              >
+                Read the Governance page
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>

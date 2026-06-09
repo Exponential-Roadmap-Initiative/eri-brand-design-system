@@ -11,10 +11,11 @@
  * - Two tracks: Track 1 (Static Website) and Track 2 (Full-Stack Application)
  */
 import { useState } from "react";
+import { Link } from "wouter";
 import {
   Copy, Check, ExternalLink, Rocket, Layers, Zap, BookOpen,
   Terminal, Package, FileText, ChevronRight, AlertTriangle,
-  Database, Shield, Users, Server, Type, Palette,
+  Database, Shield, Users, Server, Type, Palette, ArrowRight,
 } from "lucide-react";
 import PublicLayout from "@/components/PublicLayout";
 import { PageGuide } from "@/components/PageGuide";
@@ -283,6 +284,11 @@ export default function NewProject() {
             Start a New Project
           </h1>
           <PageGuide text="This page is the starting point for every new ERI web project. Use the decision card below to pick a track, copy the project instructions block, and paste it into your new Manus project instructions field — the agent will read this page and follow the correct setup steps automatically." />
+          <div className="mt-3">
+            <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.5)" }}>
+              New to ERI’s governance model? Read the Governance page first <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
       </section>
 

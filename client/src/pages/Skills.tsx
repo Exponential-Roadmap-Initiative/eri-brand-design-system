@@ -11,7 +11,8 @@
  */
 
 import { useState } from "react";
-import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp } from "lucide-react";
+import { Link } from "wouter";
+import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -753,7 +754,18 @@ export default function Skills() {
             ERI SKILL ECOSYSTEM
           </p>
           <h1 className="text-3xl font-bold tracking-tight mb-4">Skills — Operational Knowledge System</h1>
-          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. Use the filter controls below to browse the registry by tier, category, or ecosystem. Visit the Governance tab to understand the tier model and self-improvement loop. Use the Project Instructions tab to generate or audit the instructions block for your Manus project." />
+          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. Use the filter controls below to browse the registry by tier, category, or ecosystem." />
+          <div className="flex flex-wrap items-center gap-4 mt-3">
+            <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#93E07D] hover:text-white transition-colors">
+              Understand the tier model and self-improvement loop <ArrowRight className="w-3 h-3" />
+            </Link>
+            <Link href="/project-instructions" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/50 hover:text-white transition-colors">
+              Generate or audit the project instructions block <ArrowRight className="w-3 h-3" />
+            </Link>
+            <Link href="/new-project" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/50 hover:text-white transition-colors">
+              Start a new project <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
           {skillsList && (
             <div className="flex items-center gap-3 mt-4 flex-wrap">
               <span className="text-sm text-white/70">

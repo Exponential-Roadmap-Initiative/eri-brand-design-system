@@ -8,6 +8,7 @@
  */
 
 import { useState, useCallback } from "react";
+import { Link } from "wouter";
 import {
   SlidersHorizontal,
   AlertTriangle,
@@ -22,6 +23,7 @@ import {
   Globe,
   Eye,
   EyeOff,
+  ArrowRight,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -533,6 +535,11 @@ export default function ProjectInstructions() {
             Project <span style={{ color: "#93E07D" }}>Instructions</span>
           </h1>
           <PageGuide text="Review the current live instructions and any known issues, then use the Generator to produce a corrected version. Copy the output and paste it into Manus project settings. Use Version History to publish a version to the API endpoint so agents can self-update at task start." />
+          <div className="mt-3">
+            <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.5)" }}>
+              Understand the governance model behind project instructions <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
       </div>
 
