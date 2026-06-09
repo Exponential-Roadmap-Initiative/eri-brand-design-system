@@ -54,9 +54,15 @@ vi.mock("../server/db", () => ({
 
 // ── Mock fs (getContent reads SKILL.md from filesystem) ──────────────────────────────────────────────
 
-vi.mock("fs", () => ({
+const fsMock = vi.hoisted(() => ({
   existsSync: vi.fn().mockReturnValue(false),
   readFileSync: vi.fn().mockReturnValue(""),
+  writeFileSync: vi.fn().mockReturnValue(undefined),
+}));
+
+vi.mock("fs", () => ({
+  ...fsMock,
+  default: fsMock,
 }));
 
 // ── Context helpers ─────────────────────────────────────────────────────────────────
@@ -289,6 +295,71 @@ describe("skills.listInstructionsAudits", () => {
     const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
     const result = await caller.skills.listInstructionsAudits();
     expect(Array.isArray(result)).toBe(true);
+  });
+});
+
+describe("skills.syncMetadataFromFiles", () => {
+  it("throws FORBIDDEN when unauthenticated", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: null }));
+    await expect(caller.skills.syncMetadataFromFiles()).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+
+  it("throws FORBIDDEN when user is not admin", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
+    await expect(caller.skills.syncMetadataFromFiles()).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+
+  it("returns zero changes when no skill files exist (mocked fs)", async () => {
+    // fsMock.existsSync returns false by default — no SKILL.md files found
+    // readFileSync is called once for the source file itself
+    fsMock.readFileSync.mockReturnValueOnce("// source");
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
+    const result = await caller.skills.syncMetadataFromFiles();
+    expect(result.success).toBe(true);
+    expect(result.changesCount).toBe(0);
+    expect(Array.isArray(result.changes)).toBe(true);
+  });
+});
+
+describe("skills.registerSkill", () => {
+  const validInput = {
+    id: "eri-test-new-skill",
+    name: "ERI Test New Skill",
+    description: "A test skill for verifying the agent-bridge registration flow.",
+    tier: 3 as const,
+    category: "process" as const,
+    readWhen: "When testing the registerSkill mutation.",
+    hasReferences: false,
+    version: "1.0.0",
+  };
+
+  it("throws FORBIDDEN when unauthenticated (adminProcedure gate)", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: null }));
+    await expect(caller.skills.registerSkill(validInput)).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+
+  it("throws FORBIDDEN when user is not admin", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
+    await expect(caller.skills.registerSkill(validInput)).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+
+  it("throws CONFLICT when skill id already exists in SKILLS_METADATA", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
+    // eri-bds-reference is a known existing skill
+    await expect(
+      caller.skills.registerSkill({ ...validInput, id: "eri-bds-reference" })
+    ).rejects.toMatchObject({ code: "CONFLICT" });
+  });
+
+  it("succeeds for a new skill id as admin (writes to filesystem)", async () => {
+    // Override readFileSync to return a minimal skills.ts source with the closing marker.
+    // The marker the mutation searches for is "];" — must be present in the mock source.
+    fsMock.readFileSync.mockReturnValueOnce("// skills.ts\nexport const SKILLS_METADATA = [\n];");
+
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
+    const result = await caller.skills.registerSkill(validInput);
+    expect(result.success).toBe(true);
+    expect(result.message).toContain("eri-test-new-skill");
   });
 });
 

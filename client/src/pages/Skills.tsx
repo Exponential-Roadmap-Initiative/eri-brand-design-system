@@ -518,6 +518,206 @@ function LogImprovementDialog({ skillId, currentVersion, onSuccess }: LogImprove
   );
 }
 
+// ── Sync Metadata Button (admin-only agent-bridge) ─────────────────────────────
+
+function SyncMetadataButton({ onSuccess }: { onSuccess: () => void }) {
+  const [result, setResult] = useState<{ changesCount: number; changes: Array<{ id: string; field: string; from: string; to: string }>; message: string } | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const syncMutation = trpc.skills.syncMetadataFromFiles.useMutation({
+    onSuccess: (data) => {
+      setResult(data);
+      setOpen(true);
+      if (data.changesCount > 0) onSuccess();
+    },
+    onError: (err) => {
+      alert(`Sync failed: ${err.message}`);
+    },
+  });
+
+  return (
+    <>
+      <Button
+        variant="outline"
+        size="sm"
+        className="gap-1.5"
+        onClick={() => syncMutation.mutate()}
+        disabled={syncMutation.isPending}
+      >
+        {syncMutation.isPending ? "Syncing…" : "↻ Sync from skill files"}
+      </Button>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Sync Result</DialogTitle>
+          </DialogHeader>
+          {result && (
+            <div className="space-y-3">
+              <p className="text-sm">{result.message}</p>
+              {result.changes.length > 0 && (
+                <div className="rounded-md border border-border overflow-hidden">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="bg-muted/40 border-b border-border">
+                        <th className="text-left px-3 py-2 font-medium">Skill</th>
+                        <th className="text-left px-3 py-2 font-medium">Field</th>
+                        <th className="text-left px-3 py-2 font-medium">From</th>
+                        <th className="text-left px-3 py-2 font-medium">To</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {result.changes.map((c, i) => (
+                        <tr key={i} className="border-b border-border last:border-0">
+                          <td className="px-3 py-2 font-mono text-[11px]">{c.id}</td>
+                          <td className="px-3 py-2 text-muted-foreground">{c.field}</td>
+                          <td className="px-3 py-2 text-red-500/80 line-through truncate max-w-[120px]">{c.from}</td>
+                          <td className="px-3 py-2 text-[#93E07D] truncate max-w-[120px]">{c.to}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {result.changesCount > 0 && (
+                <p className="text-xs text-muted-foreground">Restart the dev server for changes to take effect in the running process.</p>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+// ── Register Skill Dialog (admin-only agent-bridge) ─────────────────────────────
+
+function RegisterSkillDialog({ onSuccess }: { onSuccess: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [tier, setTier] = useState<"1" | "2" | "3">("3");
+  const [category, setCategory] = useState("");
+  const [readWhen, setReadWhen] = useState("");
+  const [hasReferences, setHasReferences] = useState(false);
+  const [version, setVersion] = useState("1.0.0");
+
+  const registerMutation = trpc.skills.registerSkill.useMutation({
+    onSuccess: (data) => {
+      setOpen(false);
+      setId(""); setName(""); setDescription(""); setTier("3"); setCategory(""); setReadWhen(""); setHasReferences(false); setVersion("1.0.0");
+      onSuccess();
+      alert(data.message);
+    },
+    onError: (err) => {
+      alert(`Registration failed: ${err.message}`);
+    },
+  });
+
+  const isValid = id.trim() && name.trim() && description.trim() && category.trim() && readWhen.trim() && /^\d+\.\d+\.\d+$/.test(version);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm" className="gap-1.5">
+          <span className="text-[#93E07D]">+</span> Register Skill
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Register Skill in SKILLS_METADATA</DialogTitle>
+        </DialogHeader>
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          Use this form when an agent in another Manus task has created a new skill and cannot edit
+          <code className="mx-1 px-1 bg-muted rounded text-[11px]">server/routers/skills.ts</code> directly.
+          Paste the skill frontmatter values here — the entry will be appended to SKILLS_METADATA and
+          a server restart will make it visible in the registry.
+        </p>
+        <div className="space-y-3 pt-1">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label className="text-xs">Skill ID <span className="text-muted-foreground">(kebab-case)</span></Label>
+              <Input value={id} onChange={e => setId(e.target.value)} placeholder="eri-my-skill" className="mt-1 text-sm" />
+            </div>
+            <div>
+              <Label className="text-xs">Version</Label>
+              <Input value={version} onChange={e => setVersion(e.target.value)} placeholder="1.0.0" className="mt-1 text-sm" />
+            </div>
+          </div>
+          <div>
+            <Label className="text-xs">Display Name</Label>
+            <Input value={name} onChange={e => setName(e.target.value)} placeholder="ERI My Skill" className="mt-1 text-sm" />
+          </div>
+          <div>
+            <Label className="text-xs">Description <span className="text-muted-foreground">(one-line trigger text)</span></Label>
+            <Textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="What it does and when to use it." className="mt-1 text-sm" rows={2} />
+          </div>
+          <div>
+            <Label className="text-xs">Read When</Label>
+            <Input value={readWhen} onChange={e => setReadWhen(e.target.value)} placeholder="Before writing any tRPC router" className="mt-1 text-sm" />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label className="text-xs">Tier</Label>
+              <Select value={tier} onValueChange={v => setTier(v as "1" | "2" | "3")}>
+                <SelectTrigger className="mt-1 text-sm"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">Tier 1 — Always-on</SelectItem>
+                  <SelectItem value="2">Tier 2 — Per-action gate</SelectItem>
+                  <SelectItem value="3">Tier 3 — Conditional</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="text-xs">Category</Label>
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger className="mt-1 text-sm"><SelectValue placeholder="Select…" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="brand">brand</SelectItem>
+                  <SelectItem value="development">development</SelectItem>
+                  <SelectItem value="data">data</SelectItem>
+                  <SelectItem value="process">process</SelectItem>
+                  <SelectItem value="platform">platform</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="hasRefs"
+              checked={hasReferences}
+              onChange={e => setHasReferences(e.target.checked)}
+              className="w-4 h-4 rounded border-border"
+            />
+            <Label htmlFor="hasRefs" className="text-xs cursor-pointer">Has references/ directory</Label>
+          </div>
+          <Button
+            onClick={() => registerMutation.mutate({
+              id: id.trim(),
+              name: name.trim(),
+              description: description.trim(),
+              tier: Number(tier) as 1 | 2 | 3,
+              category: category as "brand" | "development" | "data" | "process" | "platform",
+              readWhen: readWhen.trim(),
+              hasReferences,
+              version: version.trim(),
+            })}
+            disabled={!isValid || registerMutation.isPending}
+            className="w-full"
+          >
+            {registerMutation.isPending ? "Registering…" : "Register Skill"}
+          </Button>
+          <p className="text-[11px] text-muted-foreground">
+            After registering, restart the dev server and check the registry. Then update the Manus project instructions via the Project Instructions tab.
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // ── Skill row ─────────────────────────────────────────────────────────────────
 
 interface SkillRowProps {
@@ -781,7 +981,11 @@ export default function Skills() {
         <>
         {isAdmin && (
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements.</p>
+            <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements, register a new one, or sync metadata from skill files.</p>
+            <div className="flex items-center gap-2">
+              <SyncMetadataButton onSuccess={refresh} />
+              <RegisterSkillDialog onSuccess={refresh} />
+            </div>
           </div>
         )}
 

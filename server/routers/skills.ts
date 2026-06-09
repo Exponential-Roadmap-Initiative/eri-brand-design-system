@@ -68,10 +68,10 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-skill-creator",
     name: "ERI Skill Creator",
-    description: "Full lifecycle governance for ERI skills: create, improve, register, and maintain the self-improving ERI skill ecosystem.",
+    description: "Full lifecycle governance for ERI skills: create, improve, register, and maintain the self-improving ERI skill ecosystem. Step 8 has two paths: Path A (BDS task) edits skills.ts directly; Path B (any other task) updates SKILL.md and asks the user to click Sync Metadata on the BDS Skills page.",
     tier: 2,
     category: "process",
-    version: "2.2.0",
+    version: "2.3.0",
     readWhen: "Before writing a single line of any eri- skill file. Before running the post-task reflection loop.",
     hasReferences: true,
   },
@@ -661,5 +661,177 @@ export const skillsRouter = router({
       .orderBy(desc(projectInstructionsVersions.publishedAt))
       .limit(1);
     return row ?? null;
+  }),
+
+  /**
+   * Agent-bridge: register a new skill in SKILLS_METADATA.
+   *
+   * Agents in non-BDS tasks cannot edit skills.ts directly. This mutation is the
+   * bridge: the agent (or user via the Skills page form) provides the skill metadata
+   * and this procedure appends a new entry to the SKILLS_METADATA array in this file.
+   *
+   * The mutation writes the new entry as a TypeScript object literal appended before
+   * the closing `];` of the SKILLS_METADATA array. A server restart is required for
+   * the change to take effect in the running process.
+   *
+   * Admin-only — prevents arbitrary registry manipulation.
+   */
+  registerSkill: adminProcedure
+    .input(
+      z.object({
+        id: z.string().min(2).max(64).regex(/^[a-z][a-z0-9-]*$/, "Must be lowercase kebab-case"),
+        name: z.string().min(2).max(120),
+        description: z.string().min(10).max(1000),
+        tier: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+        category: z.enum(["brand", "development", "data", "process", "platform"]),
+        readWhen: z.string().min(5).max(300),
+        hasReferences: z.boolean(),
+        version: z.string().min(1).max(20).regex(/^\d+\.\d+\.\d+$/, "Must be semver e.g. 1.0.0"),
+      })
+    )
+    .mutation(async ({ input }) => {
+      // Reject if the skill ID already exists
+      const existing = SKILLS_METADATA.find((s) => s.id === input.id);
+      if (existing) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: `Skill '${input.id}' is already registered in SKILLS_METADATA. To update it, edit skills.ts directly.`,
+        });
+      }
+
+      // Build the new entry as a formatted TypeScript object literal
+      const tierComment =
+        input.tier === 1 ? "Tier 1: Always-on" :
+        input.tier === 2 ? "Tier 2: Per-action gate" :
+        "Tier 3: Conditional";
+
+      const newEntry = [
+        `  // ── ${tierComment} (registered via agent-bridge ${new Date().toISOString().slice(0, 10)}) ──`,
+        `  {`,
+        `    id: "${input.id}",`,
+        `    name: "${input.name}",`,
+        `    description: "${input.description.replace(/"/g, "'")}",`,
+        `    tier: ${input.tier},`,
+        `    category: "${input.category}",`,
+        `    version: "${input.version}",`,
+        `    readWhen: "${input.readWhen.replace(/"/g, "'")}",`,
+        `    hasReferences: ${input.hasReferences},`,
+        `  },`,
+      ].join("\n");
+
+      // Read the current file, insert before the closing `];`
+      // import.meta.dirname resolves to server/routers/ at runtime
+      const filePath = path.resolve(import.meta.dirname, "skills.ts");
+      const source = fs.readFileSync(filePath, "utf-8");
+      const insertMarker = "];";
+      const markerIdx = source.lastIndexOf(insertMarker);
+      if (markerIdx === -1) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Could not locate SKILLS_METADATA closing marker in skills.ts",
+        });
+      }
+
+      const updated = source.slice(0, markerIdx) + newEntry + "\n" + source.slice(markerIdx);
+      fs.writeFileSync(filePath, updated, "utf-8");
+
+      return {
+        success: true,
+        message: `Skill '${input.id}' appended to SKILLS_METADATA. Restart the dev server for the change to take effect.`,
+      };
+    }),
+
+  /**
+   * Agent-bridge: sync SKILLS_METADATA versions from SKILL.md frontmatters.
+   *
+   * Any Manus task in the project can update a SKILL.md (shared project file), but
+   * only the BDS task can update SKILLS_METADATA in this file. This procedure bridges
+   * that gap: it reads the frontmatter from every registered skill's SKILL.md and
+   * updates the version (and optionally name/description) fields in SKILLS_METADATA
+   * in-place, then writes the updated source back to this file.
+   *
+   * Fields updated from frontmatter: version, name, description (when present).
+   * Fields left unchanged: tier, category, readWhen, hasReferences.
+   *
+   * Returns a diff summary of what changed.
+   *
+   * Admin-only — prevents arbitrary registry manipulation.
+   */
+  syncMetadataFromFiles: adminProcedure.mutation(async () => {
+    const skillsDir = path.resolve("/home/ubuntu/skills");
+    const filePath = path.resolve(import.meta.dirname, "skills.ts");
+    const source = fs.readFileSync(filePath, "utf-8");
+
+    type Change = { id: string; field: string; from: string; to: string };
+    const changes: Change[] = [];
+    let updatedSource = source;
+
+    for (const skill of SKILLS_METADATA) {
+      const skillMdPath = path.join(skillsDir, skill.id, "SKILL.md");
+      if (!fs.existsSync(skillMdPath)) continue;
+
+      const content = fs.readFileSync(skillMdPath, "utf-8");
+
+      // Extract YAML frontmatter block (between first two --- markers)
+      const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+      if (!fmMatch) continue;
+      const fm = fmMatch[1];
+
+      // Parse individual fields from frontmatter
+      const parseField = (field: string): string | null => {
+        const re = new RegExp(`^${field}:\s*(.+)$`, "m");
+        const m = fm.match(re);
+        if (!m) return null;
+        // Strip surrounding quotes if present
+        return m[1].trim().replace(/^"|"$/g, "").replace(/^'|'$/g, "");
+      };
+
+      const fmVersion = parseField("version");
+      const fmName = parseField("name");
+      // Description may be multi-line quoted — take first line only
+      const fmDescription = parseField("description");
+
+      // Helper: replace a specific field value in the SKILLS_METADATA entry for this skill
+      const replaceField = (field: string, oldVal: string, newVal: string) => {
+        // Match the field line inside the skill's object block
+        // e.g.   version: "1.0.0",
+        const escaped = oldVal.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const re = new RegExp(
+          `(id: "${skill.id}"[\\s\\S]*?${field}: ")${escaped}(")`,
+          "m"
+        );
+        if (re.test(updatedSource)) {
+          updatedSource = updatedSource.replace(re, `$1${newVal}$2`);
+          changes.push({ id: skill.id, field, from: oldVal, to: newVal });
+        }
+      };
+
+      if (fmVersion && fmVersion !== skill.version) {
+        replaceField("version", skill.version, fmVersion);
+      }
+      if (fmName && fmName !== skill.name) {
+        replaceField("name", skill.name, fmName);
+      }
+      if (fmDescription && fmDescription !== skill.description) {
+        // Only update description if it changed and is not excessively long
+        const truncated = fmDescription.length > 500 ? fmDescription.slice(0, 497) + "..." : fmDescription;
+        if (truncated !== skill.description) {
+          replaceField("description", skill.description, truncated.replace(/"/g, "'"));
+        }
+      }
+    }
+
+    if (changes.length > 0) {
+      fs.writeFileSync(filePath, updatedSource, "utf-8");
+    }
+
+    return {
+      success: true,
+      changesCount: changes.length,
+      changes,
+      message: changes.length === 0
+        ? "SKILLS_METADATA is already in sync with the skill files."
+        : `Updated ${changes.length} field(s) in SKILLS_METADATA. Restart the dev server for changes to take effect.`,
+    };
   }),
 });
