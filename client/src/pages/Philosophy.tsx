@@ -638,6 +638,65 @@ export default function Philosophy() {
           </div>
         </Section>
 
+        {/* Section 5c — Technical debt governance */}
+        <Section
+          title="Technical debt governance: prevention vs remediation"
+          subtitle="Why skills prevent new debt but cannot fix existing debt — and how opportunistic remediation bridges the gap"
+        >
+          <div className="space-y-5">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              The skills library is a <span className="font-medium text-foreground">prevention-only system by default</span>. Every gate in a skill stops a known mistake from being introduced into new code. But it cannot reach back in time to fix debt that accumulated before the skill was written. A lean code audit of the ERI Exponential Platform in June 2026 made this concrete: seven categories of technical debt were identified — almost all of it pre-existing, invisible to the skill gates that would have caught it if they had existed earlier.
+            </p>
+
+            <div className="grid grid-cols-1 gap-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
+              {[
+                {
+                  label: "Prevention",
+                  color: "#3ba559",
+                  desc: "Skills with code-quality gates stop known anti-patterns from entering new code. Every task that reads the relevant skill benefits from every previous improvement.",
+                  example: "Gate: no private getDb() in router files."
+                },
+                {
+                  label: "Remediation",
+                  color: "#f59e0b",
+                  desc: "Pre-existing debt requires a different mechanism. A dedicated refactoring sprint is expensive and disruptive. The alternative is opportunistic remediation — paying down debt as a side effect of normal work.",
+                  example: "Rule: if you are already editing a router, also fix any private getDb() you find there."
+                },
+              ].map(item => (
+                <div key={item.label} className="rounded-lg border border-border p-4 bg-muted/10">
+                  <p className="text-xs font-semibold mb-1" style={{ color: item.color }}>{item.label}</p>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed mb-2">{item.desc}</p>
+                  <p className="text-[10px] font-mono text-muted-foreground/70 bg-muted/30 rounded px-2 py-1">{item.example}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-lg border border-border bg-muted/10 p-4 space-y-3">
+              <p className="text-xs font-semibold text-foreground">The opportunistic remediation principle</p>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                When a skill identifies a category of pre-existing debt, it adds an <span className="font-medium text-foreground">opportunistic remediation rule</span>: if you are already touching an affected file for any reason, apply the fix as part of the same task. The fix must be mechanical and bounded — if it takes more than 10 minutes or touches more than 3 files, note it and move on. Over time, this compounds: each task that touches an affected area pays down a small amount of debt without requiring a dedicated sprint.
+              </p>
+              <div className="grid grid-cols-1 gap-2" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+                {[
+                  { title: "Known debt catalogues", desc: "Skills name pre-existing issues explicitly so agents know to fix them when they encounter them." },
+                  { title: "Rolling reduction", desc: "No sprint required. Debt shrinks as a side effect of normal feature work and bug fixes." },
+                  { title: "Compounding improvement", desc: "Each fix raises the baseline for the next agent. The system improves continuously, not in batches." },
+                  { title: "Bounded scope", desc: "Opportunistic rules are mechanical and time-boxed. They never expand into unplanned refactoring." },
+                ].map(item => (
+                  <div key={item.title} className="rounded border border-border/50 p-2.5 bg-background/50">
+                    <p className="text-[11px] font-semibold text-foreground mb-0.5">{item.title}</p>
+                    <p className="text-[10px] text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-lg border border-dashed border-muted-foreground/30 p-3 text-xs text-muted-foreground leading-relaxed">
+              <span className="font-medium text-foreground">In practice:</span> the <code className="font-mono text-[10px] px-1 rounded bg-muted">eri-code-quality</code>, <code className="font-mono text-[10px] px-1 rounded bg-muted">eri-trpc</code>, and <code className="font-mono text-[10px] px-1 rounded bg-muted">data-source-integration</code> skills all contain opportunistic remediation rules as of v2.2.0 / v1.1.0, added after the June 2026 lean code audit. The Skills registry on this hub shows the current version of each skill.
+            </div>
+          </div>
+        </Section>
+
         {/* Section 6 — Human-AI collaboration principles */}
         <Section
           title="Human-AI collaboration principles"
