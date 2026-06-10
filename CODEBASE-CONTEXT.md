@@ -1190,3 +1190,39 @@ The `insert().values()` mock in `skills.test.ts` now uses `Object.assign(Promise
 
 - [ ] Update Current tab by running sync prompt in a new task (eri-skills-orchestrator SKILL.md needs the post-task usage log instruction added to the task-type lookup table)
 - [ ] Rename PROJECT-CONTEXT.md → CODEBASE-CONTEXT.md in this repository (the file already exists as CODEBASE-CONTEXT.md — confirm the old file is gone)
+
+---
+
+## Session update — 2026-06-10 (continued)
+
+### CODEBASE-CONTEXT.md migration — complete
+
+All `PROJECT-CONTEXT.md` references have been updated across the ERI skills ecosystem:
+
+| Skill | Old version | New version | Change |
+|---|---|---|---|
+| `eri-bds-reference` | 3.11.0 | 3.11.1 | Step 1 now uses `CODEBASE-CONTEXT.md` with `mv` rename fallback; CDN updated |
+| `eri-trpc` | 3.0.0 | 3.0.1 | Section heading updated |
+| `data-source-integration` | 1.1.0 | 1.1.1 | Layer 10 note updated |
+| `eri-code-quality` | retired | — | Retired skill, not updated |
+
+- CDN URL for `eri-bds-reference` v3.11.1: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/zuJbeOCbKWpbbXcH.md`
+- `server/_core/index.ts` `SKILL_LATEST_URL` updated to point to v3.11.1
+- `SKILLS_METADATA` versions updated in `server/routers/skills.ts`
+- "Sync from skill files" run — 6 fields updated in DB
+
+### Version History bug — fixed
+
+`saveVersionMutation.onSuccess` now calls `versionsQuery.refetch()` so the Version History list updates immediately after clicking "Mark as Applied".
+
+### Usage logging + Health dashboard — complete
+
+- `skill_usage_logs` DB table created (id, userId, taskDescription, skillsRead JSON, verdict enum, improvementNote, loggedAt)
+- `logUsage` and `listUsageLogs` tRPC procedures added to `skills.ts`
+- `LogUsageDialog` component added to Skills page (admin toolbar button)
+- `HealthDashboard` section added at the bottom of Skills page (shows last-used, verdict breakdown, never-logged chips)
+- 36/36 tests passing
+
+### Remaining pending work
+
+None — all items from this session are complete.

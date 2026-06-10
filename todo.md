@@ -937,4 +937,4 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Phase 4: Add Health dashboard tab to Skills page (last-used, read-rate, stale flags)
 - [x] Publish latest version (5,488 chars) to API via Version History → Publish to API
 - [x] 36/36 tests passing
-- [ ] Update Current tab by running sync prompt in a new task
+- [x] Update Current tab by running sync prompt in a new task (Sync from skill files clicked — 6 fields updated)
