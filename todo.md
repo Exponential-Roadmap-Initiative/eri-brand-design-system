@@ -946,3 +946,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Verify all 4 fixes in browser (0 known issues shown) ✅
 - [x] Save checkpoint (717d8169)
 - [ ] Run sync prompt in new task to update the Instructions text panel with live project instructions
+
+## Audit: stale DB sync issue (2026-06-10)
+- [x] Add audit check: compare DB-stored instructions text against CURRENT_INSTRUCTIONS; flag mismatch as Medium issue with diff summary (what changed, why it matters, how to fix)
+- [x] The issue description lists key differences (new sections added, renamed files, etc.) plus character delta
+- [ ] Save checkpoint
+
+## Project Instructions — Workflow redesign (2026-06-10)
+- [x] Phase 1: Add PipelineStatus component (4-step status bar: Generate → Apply → Publish → Verify)
+- [x] Phase 2: Add stale-sync audit issue (computed diff of DB text vs CURRENT_INSTRUCTIONS)
+- [x] Phase 3: Reorder tabs (Generator first, rename Current → Status) + update Page Guide text
+- [x] Issues banner now green when 0 issues, amber when issues exist
+- [ ] Verify in browser, save checkpoint

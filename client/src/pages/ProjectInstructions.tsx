@@ -7,7 +7,7 @@
  * Reads are public. Writes (save version, publish, save audit) are admin-only.
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Link } from "wouter";
 import {
   SlidersHorizontal,
@@ -24,6 +24,13 @@ import {
   Eye,
   EyeOff,
   ArrowRight,
+  CircleCheck,
+  CircleAlert,
+  Circle,
+  Zap,
+  Upload,
+  Radio,
+  Bot,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -393,6 +400,81 @@ function CurrentInstructionsPanel() {
   );
 }
 
+// ── Pipeline Status component ────────────────────────────────────────────────
+
+interface PipelineStep {
+  id: number;
+  label: string;
+  sublabel: string;
+  status: "done" | "action" | "pending" | "error";
+  statusText: string;
+  actionLabel?: string;
+  onAction?: () => void;
+}
+
+function PipelineStatus({ steps }: { steps: PipelineStep[] }) {
+  return (
+    <div className="rounded-lg border border-border bg-muted/10 px-5 py-4 mb-6">
+      <div className="flex items-start justify-between mb-3">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Governance pipeline</p>
+        <p className="text-[11px] text-muted-foreground">Starting point → desired state</p>
+      </div>
+      <div className="flex items-start gap-0">
+        {steps.map((step, i) => (
+          <div key={step.id} className="flex items-start flex-1">
+            {/* Step card */}
+            <div className="flex-1 min-w-0">
+              {/* Circle + connector */}
+              <div className="flex items-center mb-2">
+                <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-[11px] font-bold flex-shrink-0 transition-all ${
+                  step.status === "done"
+                    ? "border-green-500 bg-green-500 text-white"
+                    : step.status === "action"
+                    ? "border-amber-500 bg-amber-500 text-white"
+                    : step.status === "error"
+                    ? "border-red-500 bg-red-500 text-white"
+                    : "border-border bg-muted text-muted-foreground"
+                }`}>
+                  {step.status === "done" ? <CircleCheck size={13} /> : step.status === "action" ? <CircleAlert size={13} /> : step.status === "error" ? <CircleAlert size={13} /> : <Circle size={13} />}
+                </div>
+                {i < steps.length - 1 && (
+                  <div className={`flex-1 h-px mx-1 ${
+                    step.status === "done" ? "bg-green-500" : "bg-border"
+                  }`} />
+                )}
+              </div>
+              {/* Labels */}
+              <div className="pr-2">
+                <p className={`text-[11px] font-semibold leading-tight ${
+                  step.status === "done" ? "text-green-600 dark:text-green-400"
+                  : step.status === "action" ? "text-amber-600 dark:text-amber-400"
+                  : step.status === "error" ? "text-red-600 dark:text-red-400"
+                  : "text-muted-foreground"
+                }`}>{step.label}</p>
+                <p className="text-[10px] text-muted-foreground leading-tight mt-0.5">{step.sublabel}</p>
+                <p className={`text-[10px] leading-tight mt-1 ${
+                  step.status === "done" ? "text-green-600 dark:text-green-400"
+                  : step.status === "action" ? "text-amber-600 dark:text-amber-400"
+                  : step.status === "error" ? "text-red-500"
+                  : "text-muted-foreground/60"
+                }`}>{step.statusText}</p>
+                {step.actionLabel && step.onAction && (
+                  <button
+                    onClick={step.onAction}
+                    className="mt-1.5 text-[10px] font-medium underline underline-offset-2 text-foreground hover:text-foreground/70 transition-colors"
+                  >
+                    {step.actionLabel} →
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function ProjectInstructions() {
@@ -507,6 +589,97 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     });
   };
 
+  // ── Pipeline status derivation ────────────────────────────────────────────────────
+
+  const latestVersion = versionsQuery.data?.[0] ?? null;
+  const latestPublished = versionsQuery.data?.find(v => v.publishedAt != null) ?? null;
+
+  const pipelineSteps: PipelineStep[] = useMemo(() => [
+    {
+      id: 1,
+      label: "1. Generate",
+      sublabel: "Assemble skill triggers + Fixed Sections",
+      status: charCount > CHAR_BUDGET * 0.9 ? "error" : "done",
+      statusText: charCount > CHAR_BUDGET * 0.9
+        ? `Over budget: ${charCount.toLocaleString()} / ${CHAR_BUDGET.toLocaleString()} chars`
+        : `${charCount.toLocaleString()} chars (${Math.round(budgetPct)}% of budget)`,
+      actionLabel: charCount > CHAR_BUDGET * 0.9 ? "Open Generator" : undefined,
+      onAction: charCount > CHAR_BUDGET * 0.9 ? () => setActiveTab("generator") : undefined,
+    },
+    {
+      id: 2,
+      label: "2. Apply to Manus",
+      sublabel: "Copy output → paste into project settings",
+      status: latestVersion ? "done" : "action",
+      statusText: latestVersion
+        ? `Applied ${new Date(latestVersion.appliedAt).toLocaleDateString()} · ${latestVersion.charCount?.toLocaleString() ?? "?"} chars`
+        : "No version applied yet",
+      actionLabel: latestVersion ? undefined : "Open Generator",
+      onAction: latestVersion ? undefined : () => setActiveTab("generator"),
+    },
+    {
+      id: 3,
+      label: "3. Publish to API",
+      sublabel: "Agents self-update at task start",
+      status: latestPublished
+        ? (latestVersion && !latestVersion.publishedAt ? "action" : "done")
+        : "action",
+      statusText: latestPublished
+        ? (latestVersion && !latestVersion.publishedAt
+          ? `Latest version not yet published — ${latestPublished.version} is live`
+          : `Published ${new Date(latestPublished.publishedAt!).toLocaleDateString()} · ${latestPublished.charCount?.toLocaleString() ?? "?"} chars`)
+        : "No version published yet",
+      actionLabel: latestVersion && !latestVersion.publishedAt ? "Open Version History" : undefined,
+      onAction: latestVersion && !latestVersion.publishedAt ? () => setActiveTab("history") : undefined,
+    },
+    {
+      id: 4,
+      label: "4. Agent verified",
+      sublabel: "Sync prompt confirms agents see the new text",
+      status: syncedRow
+        ? (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt) ? "action" : "done")
+        : "action",
+      statusText: syncedRow
+        ? (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt)
+          ? `Synced ${new Date(syncedRow.syncedAt).toLocaleDateString()} — before latest apply`
+          : `Verified ${new Date(syncedRow.syncedAt).toLocaleDateString()}`)
+        : "No agent sync yet",
+      actionLabel: !syncedRow || (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt))
+        ? "Copy sync prompt"
+        : undefined,
+      onAction: !syncedRow || (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt))
+        ? handleCopySyncPrompt
+        : undefined,
+    },
+  ], [charCount, budgetPct, latestVersion, latestPublished, syncedRow, handleCopySyncPrompt]);
+
+  // ── Stale-sync audit issue (computed dynamically) ───────────────────────────────────
+
+  const staleSyncIssue: KnownIssue | null = useMemo(() => {
+    if (!syncedRow) return null;
+    const live = syncedRow.instructionsText;
+    const canonical = CURRENT_INSTRUCTIONS;
+    if (live.trim() === canonical.trim()) return null;
+    const charDelta = canonical.length - live.length;
+    const deltaStr = charDelta > 0 ? `+${charDelta.toLocaleString()} chars` : `${charDelta.toLocaleString()} chars`;
+    // Compute a rough diff: lines in canonical not in live
+    const liveLines = new Set(live.split("\n").map(l => l.trim()).filter(Boolean));
+    const addedLines = canonical.split("\n").map(l => l.trim()).filter(l => l.length > 20 && !liveLines.has(l));
+    const addedSummary = addedLines.slice(0, 3).map(l => l.slice(0, 80) + (l.length > 80 ? "…" : "")).join("; ");
+    return {
+      id: "stale-sync",
+      severity: "medium" as const,
+      title: "Instructions display is out of date",
+      detail: `The synced text (${live.length.toLocaleString()} chars) differs from the canonical CURRENT_INSTRUCTIONS (${canonical.length.toLocaleString()} chars, ${deltaStr}). ${addedSummary ? `New content includes: ${addedSummary}` : ""} Run the sync prompt to update the display and clear this issue.`,
+      pattern: "",
+    };
+  }, [syncedRow]);
+
+  const allIssues: KnownIssue[] = useMemo(() => [
+    ...KNOWN_ISSUES,
+    ...(staleSyncIssue ? [staleSyncIssue] : []),
+  ], [staleSyncIssue]);
+
   return (
     <PublicLayout>
       {/* Hero */}
@@ -527,7 +700,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
           <h1 className="text-3xl font-extrabold font-archivo tracking-tight mb-4">
             Project <span style={{ color: "#93E07D" }}>Instructions</span>
           </h1>
-          <PageGuide text="Review the current live instructions and any known issues, then use the Generator to produce a corrected version. Copy the output and paste it into Manus project settings. Use Version History to publish a version to the API endpoint so agents can self-update at task start." />
+          <PageGuide text="The governance pipeline has four steps: Generate the latest instructions → Apply to Manus project settings → Publish to the API so agents self-update → Verify with the sync prompt. The status bar below shows where you are in the pipeline and what action is needed next." />
           <div className="mt-3">
             <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.5)" }}>
               Understand the governance model behind project instructions <ArrowRight className="w-3 h-3" />
@@ -538,6 +711,9 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
+
+        {/* Pipeline Status bar */}
+        <PipelineStatus steps={pipelineSteps} />
 
         {/* Manager card */}
         <div className="border border-border rounded-lg overflow-hidden mb-8">
@@ -560,8 +736,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
             {/* Tab bar */}
             <div className="flex border-b border-border bg-muted/20">
               {([
-                { id: "current"   as const, label: "Current",         Icon: Eye },
                 { id: "generator" as const, label: "Generator",       Icon: SlidersHorizontal },
+                { id: "current"   as const, label: "Status",          Icon: Eye },
                 { id: "history"   as const, label: "Version History", Icon: History },
                 { id: "audit"     as const, label: "Audit",           Icon: ClipboardList },
               ]).map(tab => (
@@ -614,14 +790,26 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 </div>
 
                 {/* Issues banner — shown regardless of sync state */}
-                <div className="rounded-md border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 p-4 space-y-3">
+                <div className={`rounded-md border p-4 space-y-3 ${
+                  allIssues.length === 0
+                    ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/20"
+                    : "border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20"
+                }`}>
                   <div className="flex items-center gap-2">
-                    <AlertTriangle size={14} className="flex-shrink-0 text-amber-600 dark:text-amber-400" />
-                    <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
-                      {KNOWN_ISSUES.length} known issue{KNOWN_ISSUES.length !== 1 ? "s" : ""} — use the Generator tab to produce a corrected version
+                    {allIssues.length === 0
+                      ? <CircleCheck size={14} className="flex-shrink-0 text-green-600 dark:text-green-400" />
+                      : <AlertTriangle size={14} className="flex-shrink-0 text-amber-600 dark:text-amber-400" />}
+                    <p className={`text-xs font-semibold ${
+                      allIssues.length === 0
+                        ? "text-green-800 dark:text-green-300"
+                        : "text-amber-800 dark:text-amber-300"
+                    }`}>
+                      {allIssues.length === 0
+                        ? "0 known issues — instructions are up to date"
+                        : `${allIssues.length} known issue${allIssues.length !== 1 ? "s" : ""} — use the Generator tab to produce a corrected version`}
                     </p>
                   </div>
-                  {KNOWN_ISSUES.map(issue => (
+                  {allIssues.map(issue => (
                     <div key={issue.id} className="flex items-start gap-2">
                       <span
                         className="flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold border mt-0.5"
@@ -645,7 +833,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 {(() => {
                   const displayText = syncedRow?.instructionsText ?? CURRENT_INSTRUCTIONS;
                   const isFallback = !syncedRow;
-                  const patterns = KNOWN_ISSUES.map(i => i.pattern).filter(Boolean);
+                  const patterns = allIssues.map(i => i.pattern).filter(Boolean);
                   const regex = patterns.length > 0
                     ? new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g")
                     : null;
