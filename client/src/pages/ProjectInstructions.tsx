@@ -561,11 +561,13 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
   // Step 1: Understand state — is everything healthy?
   const step1Issues = allIssues.length;
   const step1OverBudget = charCount > CHAR_BUDGET * 0.9;
-  const step1Status = (step1Issues > 0 || step1OverBudget) ? "action" : "done";
+  const step1Status = (step1Issues > 0 || step1OverBudget || step2NeedsAction) ? "action" : "done";
   const step1StatusText = step1OverBudget
     ? `Over budget: ${charCount.toLocaleString()} / ${CHAR_BUDGET.toLocaleString()} chars`
     : step1Issues > 0
     ? `${step1Issues} issue${step1Issues !== 1 ? "s" : ""} need attention`
+    : step2NeedsAction
+    ? `Instructions updated — action needed in Step 2`
     : `All good — ${charCount.toLocaleString()} chars, no issues`;
 
   // Step 2: Compose — has the Generator output been recorded as a version?
