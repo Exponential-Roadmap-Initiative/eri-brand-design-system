@@ -58,6 +58,8 @@ const fsMock = vi.hoisted(() => ({
   existsSync: vi.fn().mockReturnValue(false),
   readFileSync: vi.fn().mockReturnValue(""),
   writeFileSync: vi.fn().mockReturnValue(undefined),
+  readdirSync: vi.fn().mockReturnValue([]),
+  statSync: vi.fn().mockReturnValue({ isDirectory: () => false }),
 }));
 
 vi.mock("fs", () => ({
@@ -309,15 +311,51 @@ describe("skills.syncMetadataFromFiles", () => {
     await expect(caller.skills.syncMetadataFromFiles()).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 
-  it("returns zero changes when no skill files exist (mocked fs)", async () => {
-    // fsMock.existsSync returns false by default — no SKILL.md files found
-    // readFileSync is called once for the source file itself
+  it("returns zero changes and zero registrations when no skill files exist (mocked fs)", async () => {
+    // fsMock.existsSync returns false — no SKILL.md files found
+    // readdirSync returns empty array — no skill directories found
     fsMock.readFileSync.mockReturnValueOnce("// source");
+    fsMock.readdirSync = vi.fn().mockReturnValue([]);
     const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
     const result = await caller.skills.syncMetadataFromFiles();
     expect(result.success).toBe(true);
     expect(result.changesCount).toBe(0);
+    expect(result.registeredCount).toBe(0);
     expect(Array.isArray(result.changes)).toBe(true);
+    expect(Array.isArray(result.registered)).toBe(true);
+  });
+
+  it("auto-registers a new skill found on the filesystem that is not in SKILLS_METADATA", async () => {
+    // Simulate: one skill directory 'eri-new-test-skill' with a valid SKILL.md
+    const mockFrontmatter = [
+      "---",
+      "name: ERI New Test Skill",
+      "version: 1.2.0",
+      "tier: 3",
+      "category: data",
+      "readWhen: When testing auto-registration.",
+      "description: A brand-new skill for testing auto-registration.",
+      "---",
+      "# Body",
+    ].join("\n");
+
+    // readFileSync: first call = source file, subsequent calls = SKILL.md for the new skill
+    fsMock.readFileSync
+      .mockReturnValueOnce("// skills.ts\nexport const SKILLS_METADATA = [\n];") // source
+      .mockReturnValue(mockFrontmatter); // SKILL.md for new skill
+
+    // readdirSync returns one new skill directory
+    fsMock.readdirSync = vi.fn().mockReturnValue(["eri-new-test-skill"]);
+    // statSync says it's a directory; existsSync says SKILL.md exists
+    fsMock.statSync = vi.fn().mockReturnValue({ isDirectory: () => true });
+    fsMock.existsSync = vi.fn().mockReturnValue(true);
+
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
+    const result = await caller.skills.syncMetadataFromFiles();
+    expect(result.success).toBe(true);
+    expect(result.registeredCount).toBe(1);
+    expect(result.registered).toContain("eri-new-test-skill");
+    expect(fsMock.writeFileSync).toHaveBeenCalled();
   });
 });
 

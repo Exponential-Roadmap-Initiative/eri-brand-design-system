@@ -236,6 +236,16 @@ export const SKILLS_METADATA: SkillMeta[] = [
     readWhen: "Implementing or extending the corporate report discovery pipeline, auditing pipeline violations.",
     hasReferences: false,
   },
+  {
+    id: "eri-pdf-pipeline",
+    name: "ERI PDF Pipeline",
+    description: "PDF ingestion, extraction, storage, and multi-consumer access patterns for ERI full-stack applications. Use whenever: designing or modifying how corporate reports are fetched, parsed, cached, or served; deciding between parser options; implementing keyword-based page selection; designing a two-pass extract-then-classify pipeline; building a document registry or extract store. Version: 2.0.0",
+    tier: 3,
+    category: "data",
+    version: "2.0.0",
+    readWhen: "When designing or modifying how corporate reports are fetched, parsed, page-selected, extracted, classified, cached, or queried across any ERI application.",
+    hasReferences: true,
+  },
 
   {
     id: "eri-ueil-nav",
@@ -742,59 +752,53 @@ export const skillsRouter = router({
     }),
 
   /**
-   * Agent-bridge: sync SKILLS_METADATA versions from SKILL.md frontmatters.
+   * Agent-bridge: sync SKILLS_METADATA from SKILL.md frontmatters on the filesystem.
    *
-   * Any Manus task in the project can update a SKILL.md (shared project file), but
-   * only the BDS task can update SKILLS_METADATA in this file. This procedure bridges
-   * that gap: it reads the frontmatter from every registered skill's SKILL.md and
-   * updates the version (and optionally name/description) fields in SKILLS_METADATA
-   * in-place, then writes the updated source back to this file.
+   * Does two things in one pass:
+   *   1. Updates existing entries — version, name, description from frontmatter.
+   *      Fields left unchanged: tier, category, readWhen, hasReferences.
+   *   2. Auto-registers new skills — any SKILL.md on the filesystem whose id is not
+   *      yet in SKILLS_METADATA is appended as a new entry. Tier defaults to 3,
+   *      category defaults to 'process'. The user should edit skills.ts to correct
+   *      these after registration.
    *
-   * Fields updated from frontmatter: version, name, description (when present).
-   * Fields left unchanged: tier, category, readWhen, hasReferences.
-   *
-   * Returns a diff summary of what changed.
+   * Returns a diff summary of updates and a list of newly registered skills.
    *
    * Admin-only — prevents arbitrary registry manipulation.
    */
   syncMetadataFromFiles: adminProcedure.mutation(async () => {
     const skillsDir = path.resolve("/home/ubuntu/skills");
     const filePath = path.resolve(import.meta.dirname, "skills.ts");
-    const source = fs.readFileSync(filePath, "utf-8");
+    let source = fs.readFileSync(filePath, "utf-8");
 
     type Change = { id: string; field: string; from: string; to: string };
     const changes: Change[] = [];
+    const registered: string[] = [];
     let updatedSource = source;
 
+    // ── Helper: parse a single YAML frontmatter field ─────────────────────────
+    const parseFmField = (fm: string, field: string): string | null => {
+      const re = new RegExp(`^${field}:\s*(.+)$`, "m");
+      const m = fm.match(re);
+      if (!m) return null;
+      return m[1].trim().replace(/^"|"$/g, "").replace(/^'|'$/g, "");
+    };
+
+    // ── Pass 1: update existing entries ───────────────────────────────────────
     for (const skill of SKILLS_METADATA) {
       const skillMdPath = path.join(skillsDir, skill.id, "SKILL.md");
       if (!fs.existsSync(skillMdPath)) continue;
 
       const content = fs.readFileSync(skillMdPath, "utf-8");
-
-      // Extract YAML frontmatter block (between first two --- markers)
       const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
       if (!fmMatch) continue;
       const fm = fmMatch[1];
 
-      // Parse individual fields from frontmatter
-      const parseField = (field: string): string | null => {
-        const re = new RegExp(`^${field}:\s*(.+)$`, "m");
-        const m = fm.match(re);
-        if (!m) return null;
-        // Strip surrounding quotes if present
-        return m[1].trim().replace(/^"|"$/g, "").replace(/^'|'$/g, "");
-      };
+      const fmVersion = parseFmField(fm, "version");
+      const fmName = parseFmField(fm, "name");
+      const fmDescription = parseFmField(fm, "description");
 
-      const fmVersion = parseField("version");
-      const fmName = parseField("name");
-      // Description may be multi-line quoted — take first line only
-      const fmDescription = parseField("description");
-
-      // Helper: replace a specific field value in the SKILLS_METADATA entry for this skill
       const replaceField = (field: string, oldVal: string, newVal: string) => {
-        // Match the field line inside the skill's object block
-        // e.g.   version: "1.0.0",
         const escaped = oldVal.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const re = new RegExp(
           `(id: "${skill.id}"[\\s\\S]*?${field}: ")${escaped}(")`,
@@ -813,7 +817,6 @@ export const skillsRouter = router({
         replaceField("name", skill.name, fmName);
       }
       if (fmDescription && fmDescription !== skill.description) {
-        // Only update description if it changed and is not excessively long
         const truncated = fmDescription.length > 500 ? fmDescription.slice(0, 497) + "..." : fmDescription;
         if (truncated !== skill.description) {
           replaceField("description", skill.description, truncated.replace(/"/g, "'"));
@@ -821,17 +824,85 @@ export const skillsRouter = router({
       }
     }
 
-    if (changes.length > 0) {
+    // ── Pass 2: auto-register new skills ──────────────────────────────────────
+    const registeredIds = new Set(SKILLS_METADATA.map((s) => s.id));
+
+    // Scan all subdirectories of /home/ubuntu/skills/ for SKILL.md files
+    let skillDirs: string[] = [];
+    try {
+      skillDirs = fs.readdirSync(skillsDir).filter((d) => {
+        // Skip archive and hidden directories
+        if (d.startsWith("_") || d.startsWith(".")) return false;
+        const full = path.join(skillsDir, d);
+        return fs.statSync(full).isDirectory() && fs.existsSync(path.join(full, "SKILL.md"));
+      });
+    } catch {
+      skillDirs = [];
+    }
+
+    for (const dirName of skillDirs) {
+      if (registeredIds.has(dirName)) continue; // already in SKILLS_METADATA
+
+      const skillMdPath = path.join(skillsDir, dirName, "SKILL.md");
+      const content = fs.readFileSync(skillMdPath, "utf-8");
+      const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+
+      // Extract what we can from frontmatter; fall back to sensible defaults
+      const fm = fmMatch ? fmMatch[1] : "";
+      const fmName = parseFmField(fm, "name") ?? dirName;
+      const fmVersion = parseFmField(fm, "version") ?? "1.0.0";
+      const fmDescription = parseFmField(fm, "description") ?? `${fmName} skill.`;
+      const fmTierRaw = parseFmField(fm, "tier");
+      const fmTier = fmTierRaw === "1" ? 1 : fmTierRaw === "2" ? 2 : 3;
+      const fmCategory = parseFmField(fm, "category") ?? "process";
+      const fmReadWhen = parseFmField(fm, "readWhen") ?? `When working on ${fmName}-related tasks.`;
+      const fmHasReferences = fs.existsSync(path.join(skillsDir, dirName, "references"));
+
+      const descTruncated = fmDescription.length > 500
+        ? fmDescription.slice(0, 497) + "..."
+        : fmDescription;
+
+      const newEntry = [
+        `  // ── Auto-registered by syncMetadataFromFiles on ${new Date().toISOString().slice(0, 10)} ──`,
+        `  {`,
+        `    id: "${dirName}",`,
+        `    name: "${fmName.replace(/"/g, "'")}",`,
+        `    description: "${descTruncated.replace(/"/g, "'")}",`,
+        `    tier: ${fmTier},`,
+        `    category: "${fmCategory}",`,
+        `    version: "${fmVersion}",`,
+        `    readWhen: "${fmReadWhen.replace(/"/g, "'")}",`,
+        `    hasReferences: ${fmHasReferences},`,
+        `  },`,
+      ].join("\n");
+
+      // Insert before the closing `];` of SKILLS_METADATA
+      const markerIdx = updatedSource.lastIndexOf("];");
+      if (markerIdx !== -1) {
+        updatedSource = updatedSource.slice(0, markerIdx) + newEntry + "\n" + updatedSource.slice(markerIdx);
+        registered.push(dirName);
+      }
+    }
+
+    // ── Write back if anything changed ────────────────────────────────────────
+    if (changes.length > 0 || registered.length > 0) {
       fs.writeFileSync(filePath, updatedSource, "utf-8");
     }
 
+    const totalActions = changes.length + registered.length;
     return {
       success: true,
       changesCount: changes.length,
+      registeredCount: registered.length,
       changes,
-      message: changes.length === 0
+      registered,
+      message: totalActions === 0
         ? "SKILLS_METADATA is already in sync with the skill files."
-        : `Updated ${changes.length} field(s) in SKILLS_METADATA. Restart the dev server for changes to take effect.`,
+        : [
+            changes.length > 0 ? `Updated ${changes.length} field(s) in existing entries.` : "",
+            registered.length > 0 ? `Auto-registered ${registered.length} new skill(s): ${registered.join(", ")}.` : "",
+            "Restart the dev server for changes to take effect.",
+          ].filter(Boolean).join(" "),
     };
   }),
 });
