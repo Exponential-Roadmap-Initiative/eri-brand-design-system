@@ -71,8 +71,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
     description: "Full lifecycle governance for ERI skills: create, improve, register, and maintain the self-improving ERI skill ecosystem. Step 8 has two paths: Path A (BDS task) edits skills.ts directly; Path B (any other task) updates SKILL.md and asks the user to click Sync Metadata on the BDS Skills page.",
     tier: 2,
     category: "process",
-    version: "2.3.0",
-    readWhen: "Before writing a single line of any eri- skill file. Before running the post-task reflection loop.",
+    version: '2.4.0',
+    readWhen: 'Before writing a single line of any eri- skill file. Before running the post-task reflection loop.',
     hasReferences: true,
   },
   {

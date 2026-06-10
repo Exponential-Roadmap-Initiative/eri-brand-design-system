@@ -1,0 +1,18 @@
+{
+  "query": "SELECT * FROM skill_improvements WHERE skill_id = 'eri-skill-creator' ORDER BY id DESC LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SELECT * FROM skill_improvements WHERE skill_id = 'eri-skill-creator' ORDER BY id DESC LIMIT 3;",
+  "rows": [
+    {
+      "id": "1",
+      "skill_id": "eri-skill-creator",
+      "version": "2.3.0",
+      "summary": "Step 8 had a fundamental misunderstanding: it said agents in other tasks could not update SKILL.md files, which is wrong — SKILL.md files are shared project files accessible from any task. The actual limitation is that SKILLS_METADATA in server/routers/skills.ts lives in the BDS webdev project and is only accessible from the BDS task. Fixed Step 8 with two clear paths: Path A (BDS task) edits skills.ts directly; Path B (any other task) updates SKILL.md then asks user to click Sync Metadata on the BDS Skills page. Added syncMetadataFromFiles tRPC mutation that reads frontmatter from all SKILL.md files and reconciles version/name/description in SKILLS_METADATA automatically. Also fixed stale tier table entries (eri-data-source → eri-data-source-explorer, removed explorer-compare-view). Added cross-task limitation to Known Failure Patterns.",
+      "task_context": "NULL",
+      "logged_at": "2026-06-10 05:08:34"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tskill_id\tversion\tsummary\ttask_context\tlogged_at\n1\teri-skill-creator\t2.3.0\tStep 8 had a fundamental misunderstanding: it said agents in other tasks could not update SKILL.md files, which is wrong — SKILL.md files are shared project files accessible from any task. The actual limitation is that SKILLS_METADATA in server/routers/skills.ts lives in the BDS webdev project and is only accessible from the BDS task. Fixed Step 8 with two clear paths: Path A (BDS task) edits skills.ts directly; Path B (any other task) updates SKILL.md then asks user to click Sync Metadata on the BDS Skills page. Added syncMetadataFromFiles tRPC mutation that reads frontmatter from all SKILL.md files and reconciles version/name/description in SKILLS_METADATA automatically. Also fixed stale tier table entries (eri-data-source → eri-data-source-explorer, removed explorer-compare-view). Added cross-task limitation to Known Failure Patterns.\tNULL\t2026-06-10 05:08:34\n",
+  "stderr": "",
+  "execution_time_ms": 338
+}
