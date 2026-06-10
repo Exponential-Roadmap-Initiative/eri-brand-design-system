@@ -1,0 +1,22 @@
+{
+  "query": "SELECT id, version, applied_at, char_count, budget_pct, change_note, published_at FROM project_instructions_versions ORDER BY applied_at DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SELECT id, version, applied_at, char_count, budget_pct, change_note, published_at FROM project_instructions_versions ORDER BY applied_at DESC LIMIT 10;",
+  "rows": [
+    {
+      "id": "30001",
+      "version": "v2026.06.10",
+      "applied_at": "2026-06-10 11:39:21",
+      "char_count": "5488",
+      "budget_pct": "69",
+      "change_note": "codebase-context.md migration improved",
+      "published_at": "NULL"
+    }
+  ],
+  "messages": [
+    "1\tv2026.06.10\t2026-06-10 11:01:59\t5350\t67\t-skills orchestrator",
+    "-codebase-context (instead of project-context)\tNULL"
+  ],
+  "stdout": "id\tversion\tapplied_at\tchar_count\tbudget_pct\tchange_note\tpublished_at\n30001\tv2026.06.10\t2026-06-10 11:39:21\t5488\t69\tcodebase-context.md migration improved\tNULL\n1\tv2026.06.10\t2026-06-10 11:01:59\t5350\t67\t-skills orchestrator\n-codebase-context (instead of project-context)\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 306
+}

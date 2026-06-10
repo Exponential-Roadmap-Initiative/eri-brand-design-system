@@ -1,0 +1,25 @@
+{
+  "query": "SELECT COUNT(*) as total FROM project_instructions_versions; SELECT id, version, applied_at, char_count, change_note FROM project_instructions_versions ORDER BY id ASC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SELECT COUNT(*) as total FROM project_instructions_versions; SELECT id, version, applied_at, char_count, change_note FROM project_instructions_versions ORDER BY id ASC;",
+  "rows": [
+    {
+      "total": "2"
+    },
+    {
+      "total": "id\tversion\tapplied_at\tchar_count\tchange_note"
+    },
+    {
+      "total": "1\tv2026.06.10\t2026-06-10 11:01:59\t5350\t-skills orchestrator"
+    },
+    {
+      "total": "-codebase-context (instead of project-context)"
+    },
+    {
+      "total": "30001\tv2026.06.10\t2026-06-10 11:39:21\t5488\tcodebase-context.md migration improved"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n2\nid\tversion\tapplied_at\tchar_count\tchange_note\n1\tv2026.06.10\t2026-06-10 11:01:59\t5350\t-skills orchestrator\n-codebase-context (instead of project-context)\n30001\tv2026.06.10\t2026-06-10 11:39:21\t5488\tcodebase-context.md migration improved\n",
+  "stderr": "",
+  "execution_time_ms": 263
+}

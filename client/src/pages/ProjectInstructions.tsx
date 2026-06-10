@@ -159,10 +159,10 @@ const FIXED_SECTIONS: FixedSection[] = [
   {
     id: "S_PROJECT_CONTEXT",
     label: "CODEBASE-CONTEXT.md guard",
-    chars: 448,
+    chars: 570,
     defaultOn: true,
-    description: "Preserves project-specific knowledge across context compaction and sandbox resets.",
-    content: `Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
+    description: "Preserves project-specific knowledge across context compaction and sandbox resets. Includes one-time migration from PROJECT-CONTEXT.md.",
+    content: `Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does not exist but PROJECT-CONTEXT.md does, rename it first: mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md. Then read CODEBASE-CONTEXT.md in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If neither file exists, create CODEBASE-CONTEXT.md before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
   },
   {
     id: "S_CHECKPOINT",
@@ -464,6 +464,7 @@ export default function ProjectInstructions() {
     onSuccess: () => {
       setMarkAppliedOpen(false);
       setVersionNote("");
+      versionsQuery.refetch();
     },
   });
   const [publishingId, setPublishingId] = useState<number | null>(null);

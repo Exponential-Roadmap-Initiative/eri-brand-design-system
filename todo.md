@@ -913,3 +913,24 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Update eri-bds-reference skill — all mentions of PROJECT-CONTEXT.md
 - [ ] Update Manus project instructions via manus-config
 - [ ] Save checkpoint
+
+## ERI Skills Governance System (2026-06-10)
+- [x] Skills consolidation: eri-code-quality merged into eri-trpc v3.0.0
+- [x] Skills consolidation: eri-decision merged into eri-human-ai-collaboration v2.0.0
+- [x] Skills consolidation: eri-ueil-nav merged into eri-data-source-explorer v1.2.0
+- [x] eri-security + persistent-computing demoted to Tier 3 in SKILLS_METADATA
+- [x] eri-skills-orchestrator Tier 1 skill created at /home/ubuntu/skills/eri-skills-orchestrator/SKILL.md
+- [x] syncMetadataFromFiles upgraded: auto-registers new skills, skips retired: true, uses indexOf not lastIndexOf
+- [x] syncMetadataFromFiles: auto-regenerates orchestrator skill-set mappings block
+- [x] Fixed unicode/em-dash characters in string literals (esbuild failure)
+- [x] Fixed self-referential corruption bug (indexOf vs lastIndexOf for SKILLS_END marker)
+- [x] eri-skill-creator v2.4.0: Step 8 cross-task framing, Step 10 HARD STOP
+- [x] Project instructions updated: eri-skills-orchestrator in Tier 1, eri-human-ai-collaboration canonical name, tts-prompter trigger fixed
+- [x] CODEBASE-CONTEXT.md guard Fixed Section updated with one-time migration rename step (mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md)
+- [x] Version History bug fixed: saveVersionMutation.onSuccess now calls versionsQuery.refetch()
+- [x] 30/30 tests passing
+- [ ] Phase 3: Add skill_usage_logs DB table + logUsage tRPC mutation
+- [ ] Phase 3: Add usage log form to Skills page (post-task log: which skills read, helpful/stale/missing verdict)
+- [ ] Phase 4: Add Health dashboard tab to Skills page (last-used, read-rate, stale flags)
+- [ ] Publish latest version (5,488 chars) to API via Version History → Publish to API
+- [ ] Update Current tab by running sync prompt in a new task
