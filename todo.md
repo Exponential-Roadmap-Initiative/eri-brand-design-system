@@ -944,5 +944,5 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Fix: S_INSTRUCTIONS_UPDATE Fixed Section defaultOn was already true (fixed in previous session)
 - [x] KNOWN_ISSUES array cleared to [] — 0 known issues shown in browser ✅
 - [x] Verify all 4 fixes in browser (0 known issues shown) ✅
-- [ ] Save checkpoint
+- [x] Save checkpoint (717d8169)
 - [ ] Run sync prompt in new task to update the Instructions text panel with live project instructions

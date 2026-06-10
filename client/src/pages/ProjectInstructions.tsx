@@ -432,7 +432,16 @@ export default function ProjectInstructions() {
 
   const [copiedSyncPrompt, setCopiedSyncPrompt] = useState(false);
 
-  const SYNC_PROMPT = `Read the full text of the <project_instructions> block from your context (the ERI Shared Dev Assets project instructions). Then call trpc.skills.syncCurrentInstructions with the full text as instructionsText, and set agentNote to "Synced by agent on ${new Date().toISOString().slice(0, 10)}".`;
+  const today = new Date().toISOString().slice(0, 10);
+  const SYNC_PROMPT = `You are syncing the Project Instructions Current tab on the ERI Brand Design System site (bds.exponentialroadmap.org). Do the following two steps:
+
+1. Read the full text of the <project_instructions> block from your context (it is injected by the Manus platform at the top of every task). Copy it exactly — do not paraphrase or summarise.
+
+2. Open the file /home/ubuntu/eri-brand-design-system/client/src/pages/ProjectInstructions.tsx. Find the CURRENT_INSTRUCTIONS constant (a multiline template literal starting with \`Critical: At the start...). Replace its entire content with the exact text you read in step 1. Save the file. The HMR server will reload and the audit will re-run automatically.
+
+3. Call the tRPC mutation skills.syncCurrentInstructions via a POST to http://localhost:3000/api/trpc/skills.syncCurrentInstructions with body { "json": { "instructionsText": "<full text from step 1>", "agentNote": "Synced by agent on ${today}" } } — but only if you have an authenticated admin session cookie available. If not, skip step 3 (step 2 is sufficient to clear audit issues).
+
+Do not create a plan or ask for confirmation — execute all steps immediately.`;
 
   const handleCopySyncPrompt = useCallback(() => {
     navigator.clipboard.writeText(SYNC_PROMPT).then(() => {
@@ -583,7 +592,7 @@ export default function ProjectInstructions() {
                       <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                         The Manus platform has no API to read project instructions — only a Manus agent can read them from its context.
                         To update this view, click <span className="font-medium text-foreground">Copy sync prompt</span>, paste it into a new Manus task in the ERI Shared Dev Assets project, and run it.
-                        The agent will read its <code className="text-[11px] bg-muted px-1 py-0.5 rounded">{'<project_instructions>'}</code> block and write the text here automatically.
+                        The agent will read its <code className="text-[11px] bg-muted px-1 py-0.5 rounded">{'<project_instructions>'}</code> block, update the source file directly, and clear any known issues automatically.
                       </p>
                     </div>
                     <Button
