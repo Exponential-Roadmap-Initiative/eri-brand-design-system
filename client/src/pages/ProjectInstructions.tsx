@@ -558,9 +558,15 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     // not a human governance decision. Non-technical users should never see it.
   ], []);
 
-  // Step 1: Understand state — is everything healthy?
+  // Step 2 drift check — must be computed before step1Status uses step2NeedsAction
   const step1Issues = allIssues.length;
   const step1OverBudget = charCount > CHAR_BUDGET * 0.9;
+  const step2Drifted = latestVersion
+    ? Math.abs(charCount - (latestVersion.charCount ?? 0)) > 100
+    : false;
+  const step2NeedsAction = step1Issues > 0 || !latestVersion || step2Drifted;
+
+  // Step 1: Understand state — is everything healthy?
   const step1Status = (step1Issues > 0 || step1OverBudget || step2NeedsAction) ? "action" : "done";
   const step1StatusText = step1OverBudget
     ? `Over budget: ${charCount.toLocaleString()} / ${CHAR_BUDGET.toLocaleString()} chars`
@@ -574,10 +580,6 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
   // Amber when: (a) there are known issues, OR (b) no version exists, OR
   // (c) the current Generator output (charCount) differs from the last recorded version by >100 chars.
   // Case (c) is the key signal: the instructions have been updated in code but not yet recorded/applied.
-  const step2Drifted = latestVersion
-    ? Math.abs(charCount - (latestVersion.charCount ?? 0)) > 100
-    : false;
-  const step2NeedsAction = step1Issues > 0 || !latestVersion || step2Drifted;
   const step2Status = step2NeedsAction ? "action" : "done";
   const step2StatusText = step1Issues > 0
     ? "Regenerate to fix the issues above"
@@ -842,10 +844,10 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                     : null;
                   const parts = regex ? displayText.split(regex) : [displayText];
                   return (
-                    <details className="border-t border-border" open>
+                    <details className="border-t border-border" open={allIssues.length > 0}>
                       <summary className="px-4 py-2.5 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors flex items-center gap-1.5 select-none">
                         <Eye size={12} />
-                        Instructions text ({displayText.length.toLocaleString()} chars) — click to collapse
+                        Instructions text ({displayText.length.toLocaleString()} chars)
                       </summary>
                       <div className="px-4 pb-4 pt-2 border-t border-border bg-muted/5">
                         <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">
@@ -889,7 +891,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               <div>
                 <p className="text-sm font-semibold text-foreground mb-1">Compose the instructions</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  The instructions are assembled from two parts: the fixed workflow section (always included) and the skill trigger block (auto-generated from the skills registry). Copy the output and paste it into Manus project settings.
+                  Review the output below, then copy it and paste it into the Manus project settings. This is what every ERI agent will read at the start of each task.
                 </p>
               </div>
 
@@ -911,34 +913,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 </p>
               </div>
 
-              {/* Fixed Section — single always-on workflow section */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Workflow section (always included)</p>
-                <div className="border border-border rounded-md overflow-hidden">
-                  <div className="flex items-center gap-3 px-4 py-3">
-                    <CircleCheck size={16} className="flex-shrink-0 text-green-500" />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-foreground">{FIXED_SECTIONS[0].label}</span>
-                        <span className="text-xs text-muted-foreground font-mono">{FIXED_SECTIONS[0].chars} chars</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-0.5 truncate">{FIXED_SECTIONS[0].description}</p>
-                    </div>
-                    <button
-                      onClick={() => setExpandedSection(expandedSection === FIXED_SECTIONS[0].id ? null : FIXED_SECTIONS[0].id)}
-                      className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
-                      title="Preview content"
-                    >
-                      {expandedSection === FIXED_SECTIONS[0].id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                    </button>
-                  </div>
-                  {expandedSection === FIXED_SECTIONS[0].id && (
-                    <div className="border-t border-border bg-muted/20 px-4 py-3">
-                      <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{FIXED_SECTIONS[0].content}</pre>
-                    </div>
-                  )}
-                </div>
-              </div>
+
 
               {/* Skill triggers block */}
               <div>
@@ -987,7 +962,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               <div>
                 <p className="text-sm font-semibold text-foreground mb-1">Apply to Manus project settings</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  You have copied the output from Step 2. Now paste it into Manus and record the version here.
+                  Paste the copied output into the Manus project settings, then record the version here to confirm what was applied and when.
                 </p>
               </div>
 
@@ -1023,54 +998,6 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               {!isAdmin && (
                 <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
                   <p className="text-xs text-muted-foreground">Sign in as admin to record versions.</p>
-                </div>
-              )}
-
-              {/* Version history — compact list */}
-              {isAdmin && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Version history</p>
-                  {versionsQuery.isLoading && (
-                    <div className="space-y-2">
-                      {[1,2,3].map(i => <div key={i} className="h-14 rounded-md bg-muted animate-pulse" />)}
-                    </div>
-                  )}
-                  {!versionsQuery.isLoading && (versionsQuery.data?.length ?? 0) === 0 && (
-                    <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
-                      <p className="text-xs text-muted-foreground">No versions recorded yet. Use the button above after pasting into Manus.</p>
-                    </div>
-                  )}
-                  {(versionsQuery.data ?? []).map(v => (
-                    <div key={v.id} className="border border-border rounded-md p-3 mb-2">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-xs font-semibold text-foreground font-mono">{v.version}</span>
-                            {v.publishedAt && (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
-                                <Globe size={9} /> Live
-                              </span>
-                            )}
-                          </div>
-                          {v.changeNote && <p className="text-[11px] text-muted-foreground mt-0.5">{v.changeNote}</p>}
-                          <p className="text-[10px] text-muted-foreground mt-0.5">{new Date(v.appliedAt).toLocaleDateString()}{v.charCount != null ? ` · ${v.charCount.toLocaleString()} chars` : ""}</p>
-                        </div>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="text-xs gap-1.5 flex-shrink-0"
-                          disabled={publishingId === v.id || publishMutation.isPending}
-                          onClick={() => {
-                            setPublishingId(v.id);
-                            publishMutation.mutate({ versionId: v.id });
-                          }}
-                        >
-                          <Globe size={11} />
-                          {publishingId === v.id ? "Publishing..." : v.publishedAt ? "Re-publish" : "Publish to API"}
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               )}
 
@@ -1124,8 +1051,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 )}
               </div>
 
-              {/* Publish button */}
-              {isAdmin && latestVersion && !latestVersion.publishedAt && (
+              {/* Publish button — show when latest version is unpublished OR when a newer version is recorded but not published (step4Stale) */}
+              {isAdmin && latestVersion && (step4Stale || !latestVersion.publishedAt) && (
                 <Button
                   className="w-full gap-2"
                   disabled={publishingId === latestVersion.id || publishMutation.isPending}
@@ -1141,6 +1068,54 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               {!isAdmin && (
                 <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
                   <p className="text-xs text-muted-foreground">Sign in as admin to publish versions.</p>
+                </div>
+              )}
+
+              {/* Version history — with Publish buttons, admin only */}
+              {isAdmin && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Version history</p>
+                  {versionsQuery.isLoading && (
+                    <div className="space-y-2">
+                      {[1,2,3].map(i => <div key={i} className="h-14 rounded-md bg-muted animate-pulse" />)}
+                    </div>
+                  )}
+                  {!versionsQuery.isLoading && (versionsQuery.data?.length ?? 0) === 0 && (
+                    <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
+                      <p className="text-xs text-muted-foreground">No versions recorded yet. Go to Step 3 to record the first version.</p>
+                    </div>
+                  )}
+                  {(versionsQuery.data ?? []).map(v => (
+                    <div key={v.id} className="border border-border rounded-md p-3 mb-2">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs font-semibold text-foreground font-mono">{v.version}</span>
+                            {v.publishedAt && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
+                                <Globe size={9} /> Live
+                              </span>
+                            )}
+                          </div>
+                          {v.changeNote && <p className="text-[11px] text-muted-foreground mt-0.5">{v.changeNote}</p>}
+                          <p className="text-[10px] text-muted-foreground mt-0.5">{new Date(v.appliedAt).toLocaleDateString()}{v.charCount != null ? ` · ${v.charCount.toLocaleString()} chars` : ""}</p>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-xs gap-1.5 flex-shrink-0"
+                          disabled={publishingId === v.id || publishMutation.isPending}
+                          onClick={() => {
+                            setPublishingId(v.id);
+                            publishMutation.mutate({ versionId: v.id });
+                          }}
+                        >
+                          <Globe size={11} />
+                          {publishingId === v.id ? "Publishing..." : v.publishedAt ? "Re-publish" : "Publish to API"}
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
 
