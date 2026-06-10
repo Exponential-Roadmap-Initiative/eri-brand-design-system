@@ -866,7 +866,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               </div>
 
               {/* Next step prompt */}
-              {allIssues.length === 0 && latestPublished && (
+              {allIssues.length === 0 && !step2NeedsAction && latestPublished && (
                 <div className="rounded-md border border-border bg-muted/10 px-4 py-3 flex items-center justify-between gap-4">
                   <p className="text-xs text-muted-foreground">All steps are complete. The instructions are live and agents will pick them up at the start of their next task.</p>
                   <span className="flex-shrink-0 inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
