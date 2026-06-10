@@ -16,8 +16,6 @@ import {
   ClipboardList,
   ChevronDown,
   ChevronRight,
-  ToggleLeft,
-  ToggleRight,
   Globe,
   Eye,
   EyeOff,
@@ -134,14 +132,8 @@ const FIXED_SECTIONS: FixedSection[] = [
     description: "Unified 8-step workflow: step 1 loads all current state (BDS skill, project instructions, CODEBASE-CONTEXT.md, skill scan); steps 2–7 are Research → Design → Plan → Implement → Test → Iterate; step 8 closes with CODEBASE-CONTEXT.md update.",
     content: `Critical: Follow this workflow at the start of every ERI task:\n1. Load current state: run \`curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"\`; run \`curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true\`; check whether CODEBASE-CONTEXT.md exists in the project root — if PROJECT-CONTEXT.md exists instead, run \`mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md\` first; then read CODEBASE-CONTEXT.md in full; scan the skills in the system prompt and read all relevant SKILL.md files before taking any action.\n2. Research: clarify purpose, understand current context and existing assets, explore possible solutions.\n3. Design.\n4. Plan and get acceptance before implementing.\n5. Implement: save a checkpoint after every 3–5 file changes. Never run \`pnpm test\` before a checkpoint — it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`.\n6. Test.\n7. Iterate until the solution works.\n8. Close: update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
   },
-  {
-    id: "S_FRAMEWORK",
-    label: "Exponential Framework structure",
-    chars: 530,
-    defaultOn: false,
-    description: "Canonical Exponential Framework structure reference — always include for ERI tasks.",
-    content: `## Exponential Framework — Always Remember\nThe ERI Exponential Framework has 5 Pillars and 4 Horizontals — two independent dimensions, not a matrix. H1, H2, and H4 are company-wide (not per-pillar). Only H3 (Develop Transition Plan & Take Action) contains the 21 pillar-specific action sub-sections.\n\n5 Pillars: P1=Cut Operational Emissions, P2=Decarbonise Value Chain, P3=Build & Scale Solutions, P4=Mobilise Finance & Investment, P5=Shape Policy & Narrative\n\n4 Horizontals: H1=Earth-aligned Vision & Mission, H2=Set Targets & Strategy, H3=Develop Transition Plan & Take Action (21 action sub-sections, pillar-specific), H4=Measure, Report & Disclose\n\nReference: https://exponentialroadmap.org/exponential-framework/`,
-  },
+  // S_FRAMEWORK removed — Exponential Framework reference content belongs in the
+  // eri-exponential-framework skill, not in project instructions. Agents read the skill.
 ];
 
 const RECOMMENDATION_CONFIG: Record<string, { label: string; accentColor: string; tintBg: string }> = {
@@ -434,22 +426,11 @@ function PipelineStatus({ steps }: { steps: PipelineStep[] }) {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function ProjectInstructions() {
-  const { data: skillsList } = trpc.skills.list.useQuery();
+  const { data: skillsList, isLoading: skillsLoading } = trpc.skills.list.useQuery();
   const skills: Skill[] = skillsList ?? [];
 
   const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4>(1);
-  const [enabledSections, setEnabledSections] = useState<Record<string, boolean>>(() => {
-    const defaults: Record<string, boolean> = {};
-    FIXED_SECTIONS.forEach(s => { defaults[s.id] = s.defaultOn; });
-    try {
-      const saved = localStorage.getItem("eri-bds-section-prefs");
-      if (saved) {
-        const parsed = JSON.parse(saved) as Record<string, boolean>;
-        return { ...defaults, ...parsed };
-      }
-    } catch { /* ignore parse errors */ }
-    return defaults;
-  });
+  // enabledSections removed — single always-on workflow section, no toggles needed
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [versionNote, setVersionNote] = useState("");
   const [versionLabel, setVersionLabel] = useState(() => {
@@ -506,17 +487,16 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     onError: () => setPublishingId(null),
   });
 
-  // Assemble generated output
-  const fixedText = FIXED_SECTIONS
-    .filter(s => enabledSections[s.id])
-    .map(s => s.content)
-    .join("\n");
+  // Assemble generated output — single always-on workflow section
+  const fixedText = FIXED_SECTIONS.map(s => s.content).join("\n");
   const skillTriggers = generateSkillTriggers(skills);
   // The scan instruction is now embedded in step 1 of the workflow section.
   // skillsBlock just emits the tier blocks directly.
   const skillsBlock = skills.length > 0 ? skillTriggers : "";
   const combined = [fixedText.trim(), skillsBlock.trim()].filter(Boolean).join("\n\n");
-  const charCount = combined.length;
+  // When skills are still loading, fall back to CURRENT_INSTRUCTIONS.length so the char count
+  // and drift detection are accurate even before the async query resolves.
+  const charCount = skillsLoading ? CURRENT_INSTRUCTIONS.length : combined.length;
   const budgetPct = Math.min(100, (charCount / CHAR_BUDGET) * 100);
   const budgetColor = charCount > CHAR_BUDGET * 0.9 ? "text-red-500" : charCount > CHAR_BUDGET * 0.7 ? "text-amber-500" : "text-green-500";
   const barColor = charCount > CHAR_BUDGET * 0.9 ? "bg-red-500" : charCount > CHAR_BUDGET * 0.7 ? "bg-amber-500" : "bg-green-500";
@@ -588,27 +568,42 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     ? `${step1Issues} issue${step1Issues !== 1 ? "s" : ""} need attention`
     : `All good — ${charCount.toLocaleString()} chars, no issues`;
 
-  // Step 2: Compose — is the Generator output up to date?
-  // Amber if there are issues (instructions need to be regenerated), green if latest version matches current char count
-  const step2Status = step1Issues > 0 ? "action" : latestVersion ? "done" : "action";
+  // Step 2: Compose — has the Generator output been recorded as a version?
+  // Amber when: (a) there are known issues, OR (b) no version exists, OR
+  // (c) the current Generator output (charCount) differs from the last recorded version by >100 chars.
+  // Case (c) is the key signal: the instructions have been updated in code but not yet recorded/applied.
+  const step2Drifted = latestVersion
+    ? Math.abs(charCount - (latestVersion.charCount ?? 0)) > 100
+    : false;
+  const step2NeedsAction = step1Issues > 0 || !latestVersion || step2Drifted;
+  const step2Status = step2NeedsAction ? "action" : "done";
   const step2StatusText = step1Issues > 0
     ? "Regenerate to fix the issues above"
+    : step2Drifted
+    ? `Generator output (${charCount.toLocaleString()} chars) differs from last recorded version (${(latestVersion?.charCount ?? 0).toLocaleString()} chars) — record a new version`
     : latestVersion
     ? `Last composed ${new Date(latestVersion.appliedAt).toLocaleDateString()} · ${latestVersion.charCount?.toLocaleString() ?? "?"} chars`
     : "No version composed yet";
 
   // Step 3: Apply to Manus — has the latest version been pasted into project settings?
-  const step3Status = latestVersion ? "done" : "action";
-  const step3StatusText = latestVersion
+  // Cascades from Step 2: if Step 2 needs action, Step 3 is also stale.
+  const step3Status = step2NeedsAction ? "action" : latestVersion ? "done" : "action";
+  const step3StatusText = step2NeedsAction
+    ? "Apply the new version after composing in Step 2"
+    : latestVersion
     ? `Applied ${new Date(latestVersion.appliedAt).toLocaleDateString()}`
     : "Not yet applied";
 
   // Step 4: Agents updated — is the latest version published to the API?
   const step4Stale = latestVersion && !latestVersion.publishedAt;
-  const step4Status = latestPublished
+  const step4Status = step2NeedsAction
+    ? "action"
+    : latestPublished
     ? (step4Stale ? "action" : "done")
     : "action";
-  const step4StatusText = latestPublished
+  const step4StatusText = step2NeedsAction
+    ? "Publish after Steps 2 and 3 are complete"
+    : latestPublished
     ? (step4Stale
       ? `New version not yet published — ${latestPublished.version} is live`
       : `Published ${new Date(latestPublished.publishedAt!).toLocaleDateString()}`)
@@ -759,22 +754,24 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
 
               {/* Health summary */}
               <div className={`rounded-md border p-4 space-y-3 ${
-                allIssues.length === 0
+                (allIssues.length === 0 && !step2NeedsAction)
                   ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/20"
                   : "border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20"
               }`}>
                 <div className="flex items-center gap-2">
-                  {allIssues.length === 0
+                  {(allIssues.length === 0 && !step2NeedsAction)
                     ? <CircleCheck size={14} className="flex-shrink-0 text-green-600 dark:text-green-400" />
                     : <AlertTriangle size={14} className="flex-shrink-0 text-amber-600 dark:text-amber-400" />}
                   <p className={`text-sm font-semibold ${
-                    allIssues.length === 0
+                    (allIssues.length === 0 && !step2NeedsAction)
                       ? "text-green-800 dark:text-green-300"
                       : "text-amber-800 dark:text-amber-300"
                   }`}>
-                    {allIssues.length === 0
-                      ? "Everything looks good — the instructions are current and healthy."
-                      : `${allIssues.length} issue${allIssues.length !== 1 ? "s" : ""} need${allIssues.length === 1 ? "s" : ""} attention`}
+                    {allIssues.length > 0
+                      ? `${allIssues.length} issue${allIssues.length !== 1 ? "s" : ""} need${allIssues.length === 1 ? "s" : ""} attention`
+                      : step2NeedsAction
+                      ? "The instructions have been updated but not yet recorded and applied — go to Step 2."
+                      : "Everything looks good — the instructions are current and healthy."}
                   </p>
                 </div>
                 {allIssues.length > 0 && (
@@ -802,7 +799,12 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                     </p>
                   </div>
                 )}
-                {allIssues.length === 0 && (
+                {allIssues.length === 0 && step2NeedsAction && (
+                  <p className="text-xs text-amber-700 dark:text-amber-400">
+                    Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2 — Compose</button> to record and apply the updated version.
+                  </p>
+                )}
+                {allIssues.length === 0 && !step2NeedsAction && (
                   <p className="text-xs text-green-700 dark:text-green-400">
                     Character budget: <span className={`font-mono font-semibold ${budgetColor}`}>{charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()}</span> ({Math.round(budgetPct)}% used)
                   </p>
@@ -885,7 +887,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               <div>
                 <p className="text-sm font-semibold text-foreground mb-1">Compose the instructions</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  The instructions are assembled from two parts: the fixed workflow section (always included) and the skill trigger block (auto-generated from the skills registry). Toggle optional sections on or off, then copy the output and paste it into Manus project settings.
+                  The instructions are assembled from two parts: the fixed workflow section (always included) and the skill trigger block (auto-generated from the skills registry). Copy the output and paste it into Manus project settings.
                 </p>
               </div>
 
@@ -907,50 +909,32 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 </p>
               </div>
 
-              {/* Fixed Sections */}
+              {/* Fixed Section — single always-on workflow section */}
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Fixed Sections</p>
-                <div className="space-y-2">
-                  {FIXED_SECTIONS.map(section => (
-                    <div key={section.id} className="border border-border rounded-md overflow-hidden">
-                      <div className="flex items-center gap-3 px-4 py-3">
-                        <button
-                          onClick={() => setEnabledSections(prev => {
-                            const next = { ...prev, [section.id]: !prev[section.id] };
-                            try { localStorage.setItem("eri-bds-section-prefs", JSON.stringify(next)); } catch { /* ignore */ }
-                            return next;
-                          })}
-                          className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
-                          title={enabledSections[section.id] ? "Disable" : "Enable"}
-                        >
-                          {enabledSections[section.id]
-                            ? <ToggleRight size={18} className="text-green-500" />
-                            : <ToggleLeft size={18} className="text-muted-foreground" />}
-                        </button>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className={`text-xs font-medium ${
-                              enabledSections[section.id] ? "text-foreground" : "text-muted-foreground line-through"
-                            }`}>{section.label}</span>
-                            <span className="text-xs text-muted-foreground font-mono">{section.chars} chars</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground mt-0.5 truncate">{section.description}</p>
-                        </div>
-                        <button
-                          onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
-                          className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
-                          title="Expand content"
-                        >
-                          {expandedSection === section.id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                        </button>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Workflow section (always included)</p>
+                <div className="border border-border rounded-md overflow-hidden">
+                  <div className="flex items-center gap-3 px-4 py-3">
+                    <CircleCheck size={16} className="flex-shrink-0 text-green-500" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-foreground">{FIXED_SECTIONS[0].label}</span>
+                        <span className="text-xs text-muted-foreground font-mono">{FIXED_SECTIONS[0].chars} chars</span>
                       </div>
-                      {expandedSection === section.id && (
-                        <div className="border-t border-border bg-muted/20 px-4 py-3">
-                          <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{section.content}</pre>
-                        </div>
-                      )}
+                      <p className="text-xs text-muted-foreground mt-0.5 truncate">{FIXED_SECTIONS[0].description}</p>
                     </div>
-                  ))}
+                    <button
+                      onClick={() => setExpandedSection(expandedSection === FIXED_SECTIONS[0].id ? null : FIXED_SECTIONS[0].id)}
+                      className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                      title="Preview content"
+                    >
+                      {expandedSection === FIXED_SECTIONS[0].id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                    </button>
+                  </div>
+                  {expandedSection === FIXED_SECTIONS[0].id && (
+                    <div className="border-t border-border bg-muted/20 px-4 py-3">
+                      <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{FIXED_SECTIONS[0].content}</pre>
+                    </div>
+                  )}
                 </div>
               </div>
 
