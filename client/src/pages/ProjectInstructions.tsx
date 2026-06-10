@@ -26,7 +26,6 @@ import {
   CircleAlert,
   Circle,
   Upload,
-  Radio,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -575,8 +574,9 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
 
   const allIssues: KnownIssue[] = useMemo(() => [
     ...KNOWN_ISSUES,
-    ...(staleSyncIssue ? [staleSyncIssue] : []),
-  ], [staleSyncIssue]);
+    // staleSyncIssue intentionally excluded — display sync is a technical bridge detail,
+    // not a human governance decision. Non-technical users should never see it.
+  ], []);
 
   // Step 1: Understand state — is everything healthy?
   const step1Issues = allIssues.length;
@@ -809,31 +809,29 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 )}
               </div>
 
-              {/* What is live — collapsible */}
+              {/* Current instructions — always visible */}
               <div className="rounded-md border border-border bg-muted/10 overflow-hidden">
                 <div className="flex items-start justify-between gap-4 px-4 py-3">
                   <div>
-                    <p className="text-sm font-semibold text-foreground">What agents are reading</p>
+                    <p className="text-sm font-semibold text-foreground">Current instructions</p>
                     <p className="text-xs text-muted-foreground mt-0.5">
                       {syncedRow
-                        ? `Last refreshed ${new Date(syncedRow.syncedAt).toLocaleString()}${syncedRow.agentNote ? ` — ${syncedRow.agentNote}` : ""}`
-                        : "Not yet refreshed — use the button below to update this view."}
+                        ? `Last verified ${new Date(syncedRow.syncedAt).toLocaleString()}${syncedRow.agentNote ? ` — ${syncedRow.agentNote}` : ""}`
+                        : "Showing the canonical version from source code."}
                     </p>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="flex-shrink-0 gap-1.5 text-xs"
-                    onClick={handleCopySyncPrompt}
-                    title="Copy a prompt to paste into a new Manus task — the agent will read the live instructions and update this display automatically."
-                  >
-                    {copiedSyncPrompt ? <CheckCircle2 size={13} className="text-green-500" /> : <Radio size={13} />}
-                    {copiedSyncPrompt ? "Copied!" : "Update display"}
-                  </Button>
+                  {isAdmin && (
+                    <button
+                      onClick={handleCopySyncPrompt}
+                      title="Admin: copy sync prompt to refresh the stored display text"
+                      className="flex-shrink-0 text-[10px] text-muted-foreground/50 hover:text-muted-foreground transition-colors underline underline-offset-2"
+                    >
+                      {copiedSyncPrompt ? "Copied" : "Refresh"}
+                    </button>
+                  )}
                 </div>
                 {(() => {
                   const displayText = syncedRow?.instructionsText ?? CURRENT_INSTRUCTIONS;
-                  const isFallback = !syncedRow;
                   const patterns = allIssues.map(i => i.pattern).filter(Boolean);
                   const regex = patterns.length > 0
                     ? new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`  , "g")
@@ -844,7 +842,6 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                       <summary className="px-4 py-2.5 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors flex items-center gap-1.5 select-none">
                         <Eye size={12} />
                         Instructions text ({displayText.length.toLocaleString()} chars) — click to collapse
-                        {isFallback && <span className="ml-1 text-[10px] italic">(estimated — click Update display to see live text)</span>}
                       </summary>
                       <div className="px-4 pb-4 pt-2 border-t border-border bg-muted/5">
                         <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">
