@@ -12,7 +12,7 @@
 
 import { useState } from "react";
 import { Link } from "wouter";
-import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
+import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, BarChart2, PlusCircle, X, Activity } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/collapsible";
 import PublicLayout from "@/components/PublicLayout";
 import { PageGuide } from "@/components/PageGuide";
+import { toast } from "sonner";
 // Types inlined to avoid cross-boundary import from client to server/drizzle
 interface Skill {
   id: string;
@@ -901,6 +902,263 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
     </Collapsible>
   );
 }
+// ── Log Usage Dialog ─────────────────────────────────────────────────────────
+// Allows any authenticated user (or an agent via the agent-bridge prompt) to
+// record which skills were read during a task and rate each one.
+
+type SkillVerdict = "helpful" | "stale" | "missing";
+
+interface SkillEntry { skillId: string; verdict: SkillVerdict; }
+
+function LogUsageDialog({ skills, onSuccess }: { skills: Skill[]; onSuccess: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [taskDescription, setTaskDescription] = useState("");
+  const [agentNote, setAgentNote] = useState("");
+  const [entries, setEntries] = useState<SkillEntry[]>([]);
+  const [addingSkillId, setAddingSkillId] = useState("");
+  const [addingVerdict, setAddingVerdict] = useState<SkillVerdict>("helpful");
+
+  const logMutation = trpc.skills.logUsage.useMutation({
+    onSuccess: () => {
+      setOpen(false);
+      setTaskDescription("");
+      setAgentNote("");
+      setEntries([]);
+      setAddingSkillId("");
+      toast.success("Usage log saved");
+      onSuccess();
+    },
+    onError: (err) => {
+      toast.error(`Failed to save: ${err.message}`);
+    },
+  });
+
+  const addEntry = () => {
+    if (!addingSkillId) return;
+    if (entries.some(e => e.skillId === addingSkillId)) return;
+    setEntries(prev => [...prev, { skillId: addingSkillId, verdict: addingVerdict }]);
+    setAddingSkillId("");
+    setAddingVerdict("helpful");
+  };
+
+  const removeEntry = (skillId: string) => {
+    setEntries(prev => prev.filter(e => e.skillId !== skillId));
+  };
+
+  const verdictColor = (v: SkillVerdict) =>
+    v === "helpful" ? "text-[#3ba559]" : v === "stale" ? "text-amber-500" : "text-red-500";
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm" className="gap-1.5">
+          <Activity size={13} /> Log Usage
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Log Skill Usage</DialogTitle>
+        </DialogHeader>
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          After completing a task, record which skills you read and whether each was helpful, stale, or missing content. This powers the Health dashboard.
+        </p>
+        <div className="space-y-4 pt-1">
+          <div>
+            <Label className="text-xs">Task description (optional)</Label>
+            <Input
+              value={taskDescription}
+              onChange={e => setTaskDescription(e.target.value)}
+              placeholder="e.g. BDS site — Skills page usage logging"
+              className="mt-1 text-sm"
+              maxLength={500}
+            />
+          </div>
+
+          {/* Add skill entry */}
+          <div className="rounded-md border border-border p-3 space-y-2">
+            <p className="text-xs font-medium text-foreground">Add a skill</p>
+            <div className="flex gap-2">
+              <Select value={addingSkillId} onValueChange={setAddingSkillId}>
+                <SelectTrigger className="flex-1 text-xs"><SelectValue placeholder="Select skill…" /></SelectTrigger>
+                <SelectContent className="max-h-56">
+                  {skills.filter(s => !entries.some(e => e.skillId === s.id)).map(s => (
+                    <SelectItem key={s.id} value={s.id}>
+                      <span className="font-mono text-[11px]">{s.id}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={addingVerdict} onValueChange={v => setAddingVerdict(v as SkillVerdict)}>
+                <SelectTrigger className="w-28 text-xs"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="helpful">Helpful</SelectItem>
+                  <SelectItem value="stale">Stale</SelectItem>
+                  <SelectItem value="missing">Missing</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button size="sm" variant="outline" onClick={addEntry} disabled={!addingSkillId}>
+                <PlusCircle size={14} />
+              </Button>
+            </div>
+          </div>
+
+          {/* Entries list */}
+          {entries.length > 0 && (
+            <div className="space-y-1.5">
+              {entries.map(e => (
+                <div key={e.skillId} className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-md bg-muted/30 border border-border">
+                  <span className="font-mono text-xs text-foreground flex-1 truncate">{e.skillId}</span>
+                  <span className={`text-xs font-semibold capitalize ${verdictColor(e.verdict)}`}>{e.verdict}</span>
+                  <button onClick={() => removeEntry(e.skillId)} className="text-muted-foreground hover:text-foreground ml-1">
+                    <X size={13} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div>
+            <Label className="text-xs">Agent note (optional)</Label>
+            <Input
+              value={agentNote}
+              onChange={e => setAgentNote(e.target.value)}
+              placeholder="Any additional context"
+              className="mt-1 text-sm"
+              maxLength={500}
+            />
+          </div>
+
+          <Button
+            onClick={() => logMutation.mutate({ taskDescription: taskDescription || undefined, skillsRead: entries, agentNote: agentNote || undefined })}
+            disabled={entries.length === 0 || logMutation.isPending}
+            className="w-full"
+          >
+            {logMutation.isPending ? "Saving…" : `Save log (${entries.length} skill${entries.length !== 1 ? "s" : ""})`}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// ── Health Dashboard ──────────────────────────────────────────────────────────
+// Shows per-skill health stats derived from the usage log: last used, read
+// count, and verdict breakdown (helpful / stale / missing).
+
+function HealthDashboard({ skills }: { skills: Skill[] }) {
+  const { data: logs, isLoading } = trpc.skills.listUsageLogs.useQuery({ limit: 100 });
+
+  // Derive per-skill stats from the logs
+  const stats = (() => {
+    if (!logs) return {};
+    const map: Record<string, { lastUsed: Date; helpful: number; stale: number; missing: number; total: number }> = {};
+    for (const log of logs) {
+      let entries: { skillId: string; verdict: string }[] = [];
+      try { entries = JSON.parse(log.skillsReadJson); } catch { continue; }
+      for (const entry of entries) {
+        if (!map[entry.skillId]) {
+          map[entry.skillId] = { lastUsed: new Date(log.loggedAt), helpful: 0, stale: 0, missing: 0, total: 0 };
+        }
+        const s = map[entry.skillId];
+        if (new Date(log.loggedAt) > s.lastUsed) s.lastUsed = new Date(log.loggedAt);
+        s.total++;
+        if (entry.verdict === "helpful") s.helpful++;
+        else if (entry.verdict === "stale") s.stale++;
+        else if (entry.verdict === "missing") s.missing++;
+      }
+    }
+    return map;
+  })();
+
+  const skillsWithStats = skills.map(s => ({ ...s, stats: stats[s.id] ?? null }));
+  const usedSkills = skillsWithStats.filter(s => s.stats !== null).sort((a, b) =>
+    (b.stats!.lastUsed.getTime()) - (a.stats!.lastUsed.getTime())
+  );
+  const unusedSkills = skillsWithStats.filter(s => s.stats === null);
+  const staleSkills = usedSkills.filter(s => s.stats!.stale > 0);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-2 mt-4">
+        {[1,2,3].map(i => <div key={i} className="h-12 rounded-md bg-muted animate-pulse" />)}
+      </div>
+    );
+  }
+
+  if (!logs || logs.length === 0) {
+    return (
+      <div className="rounded-md border border-border bg-muted/20 p-6 text-center mt-4">
+        <BarChart2 size={24} className="mx-auto text-muted-foreground mb-2" />
+        <p className="text-sm font-medium text-foreground">No usage data yet</p>
+        <p className="text-xs text-muted-foreground mt-1">Use the Log Usage button after completing a task to start tracking skill health.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 space-y-6">
+      {/* Summary row */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="rounded-md border border-border bg-card p-3 text-center">
+          <p className="text-2xl font-bold text-foreground">{usedSkills.length}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Skills used</p>
+        </div>
+        <div className="rounded-md border border-border bg-card p-3 text-center">
+          <p className="text-2xl font-bold text-amber-500">{staleSkills.length}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Flagged stale</p>
+        </div>
+        <div className="rounded-md border border-border bg-card p-3 text-center">
+          <p className="text-2xl font-bold text-muted-foreground">{unusedSkills.length}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Never used</p>
+        </div>
+      </div>
+
+      {/* Recently used skills */}
+      {usedSkills.length > 0 && (
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Recently used</h3>
+          <div className="rounded-md border border-border overflow-hidden">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="bg-muted/40 border-b border-border">
+                  <th className="text-left px-3 py-2 font-medium">Skill</th>
+                  <th className="text-left px-3 py-2 font-medium">Last used</th>
+                  <th className="text-right px-3 py-2 font-medium text-[#3ba559]">Helpful</th>
+                  <th className="text-right px-3 py-2 font-medium text-amber-500">Stale</th>
+                  <th className="text-right px-3 py-2 font-medium text-red-500">Missing</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usedSkills.map(s => (
+                  <tr key={s.id} className="border-b border-border last:border-0 hover:bg-muted/20">
+                    <td className="px-3 py-2 font-mono text-[11px] text-foreground">{s.id}</td>
+                    <td className="px-3 py-2 text-muted-foreground">{s.stats!.lastUsed.toLocaleDateString("en-GB")}</td>
+                    <td className="px-3 py-2 text-right text-[#3ba559] font-semibold">{s.stats!.helpful}</td>
+                    <td className="px-3 py-2 text-right text-amber-500 font-semibold">{s.stats!.stale}</td>
+                    <td className="px-3 py-2 text-right text-red-500 font-semibold">{s.stats!.missing}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Never-used skills */}
+      {unusedSkills.length > 0 && (
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Never logged ({unusedSkills.length})</h3>
+          <div className="flex flex-wrap gap-1.5">
+            {unusedSkills.map(s => (
+              <span key={s.id} className="inline-block font-mono text-[11px] px-2 py-0.5 rounded bg-muted/40 border border-border text-muted-foreground">{s.id}</span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Pagee ────────────────────────────────────────────────────────────────────────────────
 
 type EcosystemFilter = "eri" | "manus" | "all";
@@ -985,6 +1243,7 @@ export default function Skills() {
             <div className="flex items-center gap-2">
               <SyncMetadataButton onSuccess={refresh} />
               <RegisterSkillDialog onSuccess={refresh} />
+              {skillsList && <LogUsageDialog skills={skillsList} onSuccess={() => {}} />}
             </div>
           </div>
         )}
@@ -1118,6 +1377,18 @@ export default function Skills() {
             <span><span className="font-semibold text-foreground">{skillsList.length}</span> total skills</span>
             <span><span className="font-semibold text-foreground">{eriSkills.length}</span> ERI skills</span>
             <span><span className="font-semibold text-foreground">{manusSkills.length}</span> Manus standard skills</span>
+          </div>
+        )}
+
+        {/* Health Dashboard — visible to authenticated users */}
+        {skillsList && skillsList.length > 0 && (
+          <div className="mt-10">
+            <div className="flex items-center gap-2 mb-1">
+              <BarChart2 size={15} className="text-muted-foreground" />
+              <h2 className="text-sm font-semibold text-foreground">Skill Health</h2>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3">Usage statistics derived from post-task logs. Log Usage after each task to keep this data current.</p>
+            <HealthDashboard skills={skillsList} />
           </div>
         )}
          </>

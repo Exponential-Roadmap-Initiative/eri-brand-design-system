@@ -45,9 +45,11 @@ vi.mock("../server/db", () => ({
       }),
     }),
     insert: vi.fn().mockReturnValue({
-      values: vi.fn().mockReturnValue({
-        onDuplicateKeyUpdate: vi.fn().mockResolvedValue([{}]),
-      }),
+      values: vi.fn().mockReturnValue(
+        Object.assign(Promise.resolve([{ insertId: 42 }]), {
+          onDuplicateKeyUpdate: vi.fn().mockResolvedValue([{}]),
+        })
+      ),
     }),
   }),
 }));
@@ -401,3 +403,55 @@ describe("skills.registerSkill", () => {
   });
 });
 
+
+describe("skills.logUsage", () => {
+  it("throws UNAUTHORIZED when unauthenticated (protectedProcedure gate)", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: null }));
+    await expect(
+      caller.skills.logUsage({
+        skillsRead: [{ skillId: "eri-bds-reference", verdict: "helpful" }],
+      })
+    ).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+  });
+
+  it("succeeds when authenticated as a regular user", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
+    const result = await caller.skills.logUsage({
+      taskDescription: "Test task",
+      skillsRead: [
+        { skillId: "eri-bds-reference", verdict: "helpful" },
+        { skillId: "eri-trpc", verdict: "stale" },
+      ],
+      agentNote: "Test note",
+    });
+    expect(result).toEqual({ success: true, id: 42 });
+  });
+
+  it("succeeds when authenticated as admin", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
+    const result = await caller.skills.logUsage({
+      skillsRead: [{ skillId: "eri-bds-reference", verdict: "missing" }],
+    });
+    expect(result.success).toBe(true);
+    expect(typeof result.id).toBe("number");
+  });
+});
+
+describe("skills.listUsageLogs", () => {
+  it("throws UNAUTHORIZED when unauthenticated (protectedProcedure gate)", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: null }));
+    await expect(caller.skills.listUsageLogs()).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+  });
+
+  it("returns an array when authenticated", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
+    const result = await caller.skills.listUsageLogs();
+    expect(Array.isArray(result)).toBe(true);
+  });
+
+  it("accepts a limit parameter", async () => {
+    const caller = appRouter.createCaller(makeCtx({ user: makeUser("user") }));
+    const result = await caller.skills.listUsageLogs({ limit: 10 });
+    expect(Array.isArray(result)).toBe(true);
+  });
+});

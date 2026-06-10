@@ -23,6 +23,7 @@ import {
   projectInstructionsAudits,
   projectInstructionsVersions,
   skillImprovements,
+  skillUsageLogs,
 } from "../../drizzle/schema";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "../_core/trpc";
 
@@ -952,4 +953,56 @@ export const skillsRouter = router({
           ].filter(Boolean).join(" "),
     };
   }),
+
+  // ── Skill Usage Logging ──────────────────────────────────────────────────────
+
+  /**
+   * Log which skills were read during a task, with a per-skill verdict.
+   * Called by agents (via agent-bridge prompt) or users via the Skills page form.
+   * Protected — any authenticated user can submit a usage log.
+   */
+  logUsage: protectedProcedure
+    .input(
+      z.object({
+        taskDescription: z.string().max(500).optional(),
+        skillsRead: z.array(
+          z.object({
+            skillId: z.string().min(1).max(64),
+            verdict: z.enum(["helpful", "stale", "missing"]),
+          })
+        ).min(1).max(50),
+        agentNote: z.string().max(500).optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+      const [result] = await db.insert(skillUsageLogs).values({
+        taskDescription: input.taskDescription ?? null,
+        skillsReadJson: JSON.stringify(input.skillsRead),
+        agentNote: input.agentNote ?? null,
+      });
+      return { success: true, id: result.insertId };
+    }),
+
+  /**
+   * List the most recent skill usage logs, newest first.
+   * Protected — any authenticated user can view logs.
+   */
+  listUsageLogs: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().int().min(1).max(100).default(50),
+      }).optional()
+    )
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+      const rows = await db
+        .select()
+        .from(skillUsageLogs)
+        .orderBy(desc(skillUsageLogs.loggedAt))
+        .limit(input?.limit ?? 50);
+      return rows;
+    }),
 });

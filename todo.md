@@ -929,8 +929,9 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] CODEBASE-CONTEXT.md guard Fixed Section updated with one-time migration rename step (mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md)
 - [x] Version History bug fixed: saveVersionMutation.onSuccess now calls versionsQuery.refetch()
 - [x] 30/30 tests passing
-- [ ] Phase 3: Add skill_usage_logs DB table + logUsage tRPC mutation
-- [ ] Phase 3: Add usage log form to Skills page (post-task log: which skills read, helpful/stale/missing verdict)
-- [ ] Phase 4: Add Health dashboard tab to Skills page (last-used, read-rate, stale flags)
-- [ ] Publish latest version (5,488 chars) to API via Version History → Publish to API
+- [x] Phase 3: Add skill_usage_logs DB table + logUsage tRPC mutation
+- [x] Phase 3: Add usage log form to Skills page (post-task log: which skills read, helpful/stale/missing verdict)
+- [x] Phase 4: Add Health dashboard tab to Skills page (last-used, read-rate, stale flags)
+- [x] Publish latest version (5,488 chars) to API via Version History → Publish to API
+- [x] 36/36 tests passing
 - [ ] Update Current tab by running sync prompt in a new task

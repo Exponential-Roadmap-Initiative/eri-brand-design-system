@@ -1135,3 +1135,58 @@ The eri-skill-creator Step 8 previously told agents to "update SKILLS_METADATA i
 
 ### Test status
 29/29 tests passing. TypeScript: 0 real errors.
+
+## v3.16.0 — Skills Governance System: Usage Logging + Health Dashboard (2026-06-10)
+
+### Changes in this session
+
+**1. CODEBASE-CONTEXT.md migration guard (project instructions)**
+
+The project instructions Fixed Section "CODEBASE-CONTEXT.md guard" was updated to include a one-time self-healing migration step:
+
+> *"If it does not exist but PROJECT-CONTEXT.md does, rename it first: `mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md`"*
+
+This ensures existing projects with `PROJECT-CONTEXT.md` automatically migrate on the next task run — no manual intervention needed per project. Published to API at 5,488 chars (69% of 8,000 budget).
+
+**2. Version History refetch bug fixed**
+
+`saveVersionMutation.onSuccess` in `ProjectInstructions.tsx` was not calling `versionsQuery.refetch()` after saving. Fixed — Version History now updates immediately after clicking "Mark as Applied".
+
+**3. skill_usage_logs DB table**
+
+New table added to `drizzle/schema.ts`:
+```
+skill_usage_logs (id, logged_at, task_description, skills_read_json, agent_note)
+```
+- `skills_read_json`: JSON array of `{ skillId, verdict }` where verdict is `"helpful" | "stale" | "missing"`
+- Append-only, no foreign keys (skill IDs are strings, not DB rows)
+- Created via `webdev_execute_sql` (migration runner failed due to pre-existing tables; SQL applied directly)
+
+**4. New tRPC procedures in `server/routers/skills.ts`**
+
+- **`skills.logUsage`** (protectedProcedure) — any authenticated user can submit a post-task usage log
+- **`skills.listUsageLogs`** (protectedProcedure) — returns up to 100 logs, newest first
+
+**5. Skills page UI additions**
+
+- **Log Usage button** in admin toolbar — opens `LogUsageDialog` (multi-skill selector with verdict per skill)
+- **Skill Health section** at bottom of page — shows `HealthDashboard` component with:
+  - Summary row: skills used / flagged stale / never logged
+  - "Recently used" table: per-skill last-used date + helpful/stale/missing counts
+  - "Never logged" chip list: skills with no usage data yet
+  - Empty state when no logs exist yet
+
+**6. Test status**
+
+36/36 tests passing. TypeScript: 0 real errors (13 false positives from stale typescript@5.6.3 watcher).
+
+### DB mock pattern (important for future tests)
+
+The `insert().values()` mock in `skills.test.ts` now uses `Object.assign(Promise.resolve([{ insertId: 42 }]), { onDuplicateKeyUpdate: ... })` to support both:
+- `insert().values()` (direct await — used by `logUsage`)
+- `insert().values().onDuplicateKeyUpdate()` (chained — used by `saveProjectInstructions`)
+
+### Remaining pending work
+
+- [ ] Update Current tab by running sync prompt in a new task (eri-skills-orchestrator SKILL.md needs the post-task usage log instruction added to the task-type lookup table)
+- [ ] Rename PROJECT-CONTEXT.md → CODEBASE-CONTEXT.md in this repository (the file already exists as CODEBASE-CONTEXT.md — confirm the old file is gone)

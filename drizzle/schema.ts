@@ -102,3 +102,18 @@ export const currentInstructionsSync = mysqlTable("current_instructions_sync", {
   agentNote: varchar("agent_note", { length: 500 }),
 });
 export type CurrentInstructionsSync = typeof currentInstructionsSync.$inferSelect;
+
+// ─── Skill Usage Logs ────────────────────────────────────────────────────────
+// Append-only. One row per post-task usage log submitted by an agent or user.
+// Records which skills were read during a task, with a verdict per skill
+// (helpful / stale / missing) and an optional task description.
+// Used to power the Health dashboard: last-used dates, read-rates, stale flags.
+export const skillUsageLogs = mysqlTable("skill_usage_logs", {
+  id: int("id").primaryKey().autoincrement(),
+  loggedAt: timestamp("logged_at").notNull().defaultNow(),
+  taskDescription: varchar("task_description", { length: 500 }),  // optional: what the task was
+  skillsReadJson: text("skills_read_json").notNull(),              // JSON: [{skillId, verdict}]
+  agentNote: varchar("agent_note", { length: 500 }),              // optional: free-form note
+});
+export type SkillUsageLog = typeof skillUsageLogs.$inferSelect;
+export type InsertSkillUsageLog = typeof skillUsageLogs.$inferInsert;
