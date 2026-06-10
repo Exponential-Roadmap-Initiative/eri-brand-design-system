@@ -60,16 +60,11 @@ const CHAR_BUDGET = 8000;
 // ── Current live project instructions (hardcoded — Manus has no API to read them) ──
 
 const CURRENT_INSTRUCTIONS = `Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated" — then read /home/ubuntu/skills/eri-bds-reference/SKILL.md in full before taking any action
-Critical: At the start of every task, check whether a PROJECT-CONTEXT.md file exists in the project root. If it does, read it in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If it does not exist, create one before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update PROJECT-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
+Critical: At the start of every task, check whether a CODEBASE-CONTEXT.md file exists in the project root. If it does not exist but PROJECT-CONTEXT.md does, rename it first: mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md. Then read CODEBASE-CONTEXT.md in full before taking any other action — it contains canonical values, known errors, and pending work that are lost during context compaction and sandbox resets. If neither file exists, create CODEBASE-CONTEXT.md before starting work by consolidating any existing knowledge files (audit reports, feedback notes, spec files, etc.). After completing any task, update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
 Critical: Checkpoint discipline — save a checkpoint after every 3–5 file changes. Never treat an entire feature sprint as a single checkpoint unit. Specifically:
 - Save a checkpoint immediately after writing each logical group of files (e.g., after the router, after the widget components, after the explorer page, after config wiring, after route wiring)
 - Never run \`pnpm test\` (the full test suite) before saving a checkpoint — it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`
 - If a sandbox reset occurs mid-task, the last checkpoint is the recovery point — all unsaved work is lost
-
-Critical: At the start of every task, scan the skills listed in the system prompt and identify which ones apply to this task. Read the full SKILL.md for each relevant skill before taking any action. Do not skip this step — skills contain ERI-specific patterns, known errors, and canonical implementations that are not in your training data.
-
-Critical: After completing any task, review whether any skill you used (or should have used) needs updating. If you encountered a workflow not covered by a skill, an instruction that was wrong or incomplete, or a reusable pattern worth capturing, update the relevant SKILL.md before delivering the result. Use the skill-creator skill for all skill updates. This is how the skills library improves — every task is an improvement opportunity.
-
 Critical: Always follow the ERI development workflow:
 1. Research: clarify purpose, understand current context and existing assets, explore possible solutions
 2. Design
@@ -77,19 +72,40 @@ Critical: Always follow the ERI development workflow:
 4. Implement
 5. Test
 6. Iterate until solution works
+Critical: At the start of every task, run: curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true
 
-Critical: Apply the exponential-human-ai-collaboration skill to every task in this project.
+Critical: At the start of every task, scan the skills listed in the system prompt and identify which ones apply to this task. Read the full SKILL.md for each relevant skill before taking any action.
 
-## Exponential Framework — Always Remember
-The ERI Exponential Framework is a 5 pillars (columns) x 4 horizontals (rows) matrix = 20 cells.
+## Tier 1 — Always-on (read at the start of every task)
+• eri-skills-orchestrator: every task.
+• eri-bds-reference: every task.
+• eri-human-ai-collaboration: every task.
 
-5 Pillars: P1=Cut Operational Emissions, P2=Decarbonise Value Chain, P3=Build & Scale Solutions, P4=Mobilise Finance & Investment, P5=Shape Policy & Narrative
+## Tier 2 — Per-action (read immediately before the indicated action)
+• eri-skill-creator: writing a single line of any eri- skill file. Before running the post-task reflection loop.
+• eri-earth-aligned-agent: working on any Earth-aligned agent task: adding a mode, modifying the diagnostic or report pipeline, changing scoring.
+• eri-bds-site: asked to build, rebuild, update, or extend the ERI Brand Design System site.
+• eri-trpc: Creating a new router file, adding a procedure, deciding between procedure types, writing middleware, or running the pre-implementation quality gate before writing any code.
+• eri-database: Designing or reviewing a DB schema, writing migrations, adding indexes, planning multi-tenant data isolation.
+• eri-widget: Creating a new data source or analytical widget, building a Widget Hub demo page, registering a widget.
+• eri-user-management: Building or auditing ERI employee management, company workspaces, or workspace user features.
+• eri-rest-api: Designing a new REST endpoint, adding external partner access, implementing API key auth, or marking an endpoint done.
+• automation-and-scheduling: building any automation, scheduled task, recurring workflow, bot, or 'if X then Y' system.
+• imagegen: any image generation, editing, or visual deliverable task.
+• skill-creator: creating a new skill or modifying an existing SKILL.md file.
 
-4 Horizontals (rows, top to bottom): H1=Earth-aligned Vision & Mission, H2=Set Targets & Strategy, H3=Develop Transition Plan & Take Action, H4=Measure, Report & Disclose
-
-Reference: https://exponentialroadmap.org/exponential-framework/
-
-Earth-aligned AI Agent key files: server/routers/earthAlignedReport.ts (Mode 2 orchestrator ), server/routers/earthAlignedAgent.ts (Mode 1), client/src/pages/admin/EarthAlignedAgent.tsx (frontend). agentPipeline.ts does NOT exist.`;
+## Tier 3 — Conditional (read when the domain applies)
+• eri-security: Building a Trust & Security page from scratch, implementing auth or MFA, auditing workspace isolation, or conducting a security review.
+• persistent-computing: User explicitly needs Docker, fixed IP, persistent background services, heavy compute, or a reusable VM environment across sessions.
+• eri-exponential-framework: Designing or extending the Exponential Framework data model, working on CPR assessment pipeline, adding cpr_action_templates or cpr_data_source_mappings, building Marketing EF pages, or working on Earth-aligned AI Agent framework cells.
+• data-source-integration: Implementing a new data source integration end-to-end, or auditing an existing one for completeness across all surfaces.
+• eri-data-source-explorer: Implementing or upgrading a data source explorer page, Browse + Compare tab, widget, or workspace wrapper.
+• eri-report-finder: Implementing or extending the corporate report discovery pipeline, auditing pipeline violations.
+• eri-pdf-pipeline: designing or modifying how corporate reports are fetched, parsed, page-selected, extracted, classified, cached, or queried across any ERI application.
+• manus-api: Building or troubleshooting integrations that call the Manus API or automate Manus agents.
+• manus-config: enabling, inspecting, or modifying connectors; managing project-level config or scheduled tasks.
+• music-prompter: entering generate mode for any music generation task.
+• tts-prompter: MUST read before entering generate mode for any text-to-speech (TTS) or voice generation task.`;
 
 // ── Known issues in the current live instructions ─────────────────────────────
 
@@ -101,40 +117,7 @@ interface KnownIssue {
   pattern: string; // substring to highlight in the live text (empty = no highlight)
 }
 
-const KNOWN_ISSUES: KnownIssue[] = [
-  {
-    id: "filename",
-    severity: "high",
-    title: "Stale filename: PROJECT-CONTEXT.md",
-    detail:
-      "The file was renamed to CODEBASE-CONTEXT.md in v2.17.0. Agents reading these instructions will look for PROJECT-CONTEXT.md, not find it, and create a new file — losing all accumulated context.",
-    pattern: "PROJECT-CONTEXT.md",
-  },
-  {
-    id: "skill-name",
-    severity: "medium",
-    title: "Stale skill name: exponential-human-ai-collaboration",
-    detail:
-      "The skill was renamed to eri-human-ai-collaboration during the v3.4.0 skills consolidation. The old directory still exists for backward compatibility, but the canonical name is eri-human-ai-collaboration.",
-    pattern: "exponential-human-ai-collaboration",
-  },
-  {
-    id: "framework",
-    severity: "medium",
-    title: "Framework described as a 20-cell matrix",
-    detail:
-      "H1, H2, and H4 are company-wide (not per-pillar). Only H3 contains the 21 pillar-specific action sub-sections. Describing it as a '5×4 matrix = 20 cells' implies every horizontal applies to every pillar, which is incorrect.",
-    pattern: "5 pillars (columns) x 4 horizontals (rows) matrix = 20 cells",
-  },
-  {
-    id: "instructions-update",
-    severity: "medium",
-    title: "Project instructions auto-update section is disabled",
-    detail:
-      "The S_INSTRUCTIONS_UPDATE Fixed Section (curl line that fetches the latest published instructions at task start) is set to defaultOn: false. It should be on by default so agents always pull the latest instructions.",
-    pattern: "",
-  },
-];
+const KNOWN_ISSUES: KnownIssue[] = [];
 
 // ── Fixed Sections ─────────────────────────────────────────────────────────────
 

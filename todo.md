@@ -935,3 +935,14 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Publish latest version (5,488 chars) to API via Version History → Publish to API
 - [x] 36/36 tests passing
 - [x] Update Current tab by running sync prompt in a new task (Sync from skill files clicked — 6 fields updated)
+
+## Project Instructions audit fixes (2026-06-10)
+
+- [x] Fix audit rule: "Stale filename: PROJECT-CONTEXT.md" — CURRENT_INSTRUCTIONS updated to CODEBASE-CONTEXT.md with migration step
+- [x] Fix audit rule: "Stale skill name: exponential-human-ai-collaboration" — CURRENT_INSTRUCTIONS updated to eri-human-ai-collaboration
+- [x] Fix audit rule: "Framework described as a 20-cell matrix" — CURRENT_INSTRUCTIONS updated to correct description
+- [x] Fix: S_INSTRUCTIONS_UPDATE Fixed Section defaultOn was already true (fixed in previous session)
+- [x] KNOWN_ISSUES array cleared to [] — 0 known issues shown in browser ✅
+- [x] Verify all 4 fixes in browser (0 known issues shown) ✅
+- [ ] Save checkpoint
+- [ ] Run sync prompt in new task to update the Instructions text panel with live project instructions
