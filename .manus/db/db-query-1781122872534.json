@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, tier, read_when FROM skills WHERE tier IN (2, 3) ORDER BY tier, id LIMIT 30;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SELECT id, tier, read_when FROM skills WHERE tier IN (2, 3) ORDER BY tier, id LIMIT 30;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 292
+}

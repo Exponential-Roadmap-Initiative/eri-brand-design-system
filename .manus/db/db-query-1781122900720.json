@@ -1,0 +1,37 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "current_instructions_sync"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "project_instructions"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "project_instructions_audits"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "project_instructions_versions"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "skill_improvements"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "skill_usage_logs"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "skills"
+    },
+    {
+      "Tables_in_5mtZtU66sMbsnmPoVbf6UJ": "users"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_5mtZtU66sMbsnmPoVbf6UJ\n__drizzle_migrations\ncurrent_instructions_sync\nproject_instructions\nproject_instructions_audits\nproject_instructions_versions\nskill_improvements\nskill_usage_logs\nskills\nusers\n",
+  "stderr": "",
+  "execution_time_ms": 278
+}

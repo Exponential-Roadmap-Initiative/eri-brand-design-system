@@ -1226,3 +1226,43 @@ All `PROJECT-CONTEXT.md` references have been updated across the ERI skills ecos
 ### Remaining pending work
 
 None — all items from this session are complete.
+
+---
+
+## Session update — 2026-06-10 (workflow redesign)
+
+### Project Instructions page — workflow-based redesign
+
+The Project Instructions page (`/project-instructions`) was redesigned to be workflow-driven rather than tab-driven.
+
+**PipelineStatus component** added above the Manager card:
+- 4-step horizontal bar: Generate → Apply to Manus → Publish to API → Agent Verified
+- Each step derives live status from existing queries (`versionsQuery`, `currentInstructionsQuery`)
+- Step 1: always green unless char count > 8,000
+- Step 2: green if any version applied; amber if no versions yet
+- Step 3: green if latest applied version has `publishedAt`; amber if not yet published
+- Step 4: green if `syncedAt` > latest `appliedAt`; amber if stale or no sync
+- Each step has an action button (jumps to relevant tab or triggers action directly)
+
+**Stale-sync audit issue** added as computed `useMemo`:
+- Compares `syncedRow.instructionsText` vs `CURRENT_INSTRUCTIONS`
+- If DB text differs: generates diff summary (added/removed lines, char delta, why it matters)
+- Integrated into `allIssues` array alongside static `KNOWN_ISSUES`
+
+**Tab reordering**: Generator → Status → History → Audit
+- "Current" renamed to "Status"
+- Generator moved first (starting point of workflow)
+
+**Issues banner**: green with ✅ when 0 issues, amber with ⚠️ when issues exist
+
+**Sync prompt redesigned**: agent now edits `CURRENT_INSTRUCTIONS` in source file directly (no auth needed) + optional DB sync
+
+### Known state after this session
+
+- DB-stored instructions text (3,435 chars) is stale vs `CURRENT_INSTRUCTIONS` (5,488 chars)
+- This shows as a Medium audit issue in the Status tab until sync prompt is run
+- **To fix**: click "Copy sync prompt" on the Status tab → paste into new ERI Shared Dev Assets task → run it
+- The agent will edit `CURRENT_INSTRUCTIONS` in `ProjectInstructions.tsx` with the live 5,488-char text
+
+### Checkpoint
+- `30e02ce2` — workflow redesign complete

@@ -83,7 +83,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "process",
     version: '2.4.0',
-    readWhen: 'Before writing a single line of any eri- skill file. Before running the post-task reflection loop.',
+    readWhen: 'Writing any eri- skill file; post-task reflection loop.',
     hasReferences: true,
   },
   {
@@ -93,7 +93,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "platform",
     version: "1.0.0",
-    readWhen: "When working on any Earth-aligned agent task: adding a mode, modifying the diagnostic or report pipeline, changing scoring.",
+    readWhen: "Any Earth-aligned agent task.",
     hasReferences: true,
   },
   {
@@ -103,7 +103,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "brand",
     version: "1.0.0",
-    readWhen: "When asked to build, rebuild, update, or extend the ERI Brand Design System site.",
+    readWhen: "Building, rebuilding, or extending the ERI Brand Design System site.",
     hasReferences: false,
   },
   {
@@ -113,7 +113,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "platform",
     version: "3.0.1",
-    readWhen: "Creating a new router file, adding a procedure, deciding between procedure types, writing middleware, or running the pre-implementation quality gate before writing any code.",
+    readWhen: "New router, new procedure, procedure type decision, quality gate before writing code.",
     hasReferences: false,
   },
   {
@@ -123,7 +123,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "platform",
     version: "1.0.0",
-    readWhen: "Designing or reviewing a DB schema, writing migrations, adding indexes, planning multi-tenant data isolation.",
+    readWhen: "DB schema design, migrations, indexes, multi-tenant isolation.",
     hasReferences: true,
   },
   {
@@ -133,7 +133,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "platform",
     version: "1.0.0",
-    readWhen: "Creating a new data source or analytical widget, building a Widget Hub demo page, registering a widget.",
+    readWhen: "New data source or analytical widget, Widget Hub page, widget registry.",
     hasReferences: true,
   },
   {
@@ -143,7 +143,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "platform",
     version: "1.0.0",
-    readWhen: "Building or auditing ERI employee management, company workspaces, or workspace user features.",
+    readWhen: "ERI employee management, company workspaces, or workspace user features.",
     hasReferences: true,
   },
   {
@@ -153,7 +153,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "platform",
     version: "1.0.0",
-    readWhen: "Building a Trust & Security page from scratch, implementing auth or MFA, auditing workspace isolation, or conducting a security review.",
+    readWhen: "Trust & Security page, auth/MFA, workspace isolation audit, security review.",
     hasReferences: true,
   },
   {
@@ -163,7 +163,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "platform",
     version: "2.2.0",
-    readWhen: "Designing a new REST endpoint, adding external partner access, implementing API key auth, or marking an endpoint done.",
+    readWhen: "New REST endpoint, external partner access, API key auth.",
     hasReferences: true,
   },
   {
@@ -173,7 +173,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "process",
     version: "1.0.0",
-    readWhen: "Before building any automation, scheduled task, recurring workflow, bot, or 'if X then Y' system.",
+    readWhen: "Any automation, scheduled task, recurring workflow, or bot.",
     hasReferences: true,
   },
   {
@@ -183,7 +183,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "process",
     version: "1.0.0",
-    readWhen: "User explicitly needs Docker, fixed IP, persistent background services, heavy compute, or a reusable VM environment across sessions.",
+    readWhen: "Docker, fixed IP, persistent background services, heavy compute.",
     hasReferences: true,
   },
   {
@@ -193,7 +193,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "process",
     version: "1.0.0",
-    readWhen: "Before any image generation, editing, or visual deliverable task.",
+    readWhen: "Any image generation, editing, or visual deliverable.",
     hasReferences: true,
   },
   {
@@ -203,7 +203,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 2,
     category: "process",
     version: "1.0.0",
-    readWhen: "Before creating a new skill or modifying an existing SKILL.md file.",
+    readWhen: "Creating or modifying any SKILL.md file.",
     hasReferences: true,
   },
   // ── Tier 3: Reference ──────────────────────────────────────────────────────
@@ -214,7 +214,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "data",
     version: "1.0.0",
-    readWhen: "Designing or extending the Exponential Framework data model, working on CPR assessment pipeline, adding cpr_action_templates or cpr_data_source_mappings, building Marketing EF pages, or working on Earth-aligned AI Agent framework cells.",
+    readWhen: "Exponential Framework data model, CPR pipeline, cpr_action_templates, cpr_data_source_mappings, Marketing EF pages, Earth-aligned agent framework cells.",
     hasReferences: true,
   },
   {
@@ -224,7 +224,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "data",
     version: "1.1.1",
-    readWhen: "Implementing a new data source integration end-to-end, or auditing an existing one for completeness across all surfaces.",
+    readWhen: "New data source integration end-to-end, or auditing an existing one.",
     hasReferences: false,
   },
   {
@@ -234,7 +234,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "data",
     version: "1.2.0",
-    readWhen: "Implementing or upgrading a data source explorer page, Browse + Compare tab, widget, or workspace wrapper.",
+    readWhen: "Data source explorer page, Browse + Compare tab, widget, workspace wrapper.",
     hasReferences: true,
   },
   {
@@ -244,7 +244,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "data",
     version: "1.0.0",
-    readWhen: "Implementing or extending the corporate report discovery pipeline, auditing pipeline violations.",
+    readWhen: "Corporate report discovery pipeline, pipeline violations.",
     hasReferences: false,
   },
   {
@@ -254,7 +254,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "data",
     version: "2.0.0",
-    readWhen: "When designing or modifying how corporate reports are fetched, parsed, page-selected, extracted, classified, cached, or queried across any ERI application.",
+    readWhen: "Corporate report fetch, parse, page-select, extract, classify, cache, or query.",
     hasReferences: true,
   },
 
@@ -268,7 +268,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "platform",
     version: "1.0.0",
-    readWhen: "Building or troubleshooting integrations that call the Manus API or automate Manus agents.",
+    readWhen: "Manus API integrations or automating Manus agents.",
     hasReferences: false,
   },
   {
@@ -278,7 +278,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "platform",
     version: "1.0.0",
-    readWhen: "When enabling, inspecting, or modifying connectors; managing project-level config or scheduled tasks.",
+    readWhen: "Connectors, project-level config, scheduled tasks.",
     hasReferences: false,
   },
   {
@@ -288,7 +288,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "process",
     version: "1.0.0",
-    readWhen: "Before entering generate mode for any music generation task.",
+    readWhen: "Any music generation task.",
     hasReferences: false,
   },
   // ── Auto-registered by syncMetadataFromFiles on 2026-06-10 ──
@@ -299,7 +299,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     tier: 3,
     category: "process",
     version: "1.0.0",
-    readWhen: "MUST read before entering generate mode for any text-to-speech (TTS) or voice generation task.",
+    readWhen: "Any text-to-speech or voice generation task.",
     hasReferences: false,
   },
 /* SKILLS_END */

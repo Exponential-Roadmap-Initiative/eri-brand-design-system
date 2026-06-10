@@ -950,11 +950,31 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 ## Audit: stale DB sync issue (2026-06-10)
 - [x] Add audit check: compare DB-stored instructions text against CURRENT_INSTRUCTIONS; flag mismatch as Medium issue with diff summary (what changed, why it matters, how to fix)
 - [x] The issue description lists key differences (new sections added, renamed files, etc.) plus character delta
-- [ ] Save checkpoint
+- [x] Save checkpoint (30e02ce2)
 
 ## Project Instructions — Workflow redesign (2026-06-10)
 - [x] Phase 1: Add PipelineStatus component (4-step status bar: Generate → Apply → Publish → Verify)
 - [x] Phase 2: Add stale-sync audit issue (computed diff of DB text vs CURRENT_INSTRUCTIONS)
 - [x] Phase 3: Reorder tabs (Generator first, rename Current → Status) + update Page Guide text
 - [x] Issues banner now green when 0 issues, amber when issues exist
-- [ ] Verify in browser, save checkpoint
+- [x] Verify in browser, save checkpoint (30e02ce2)
+
+## Project Instructions — Compact workflow rewrite (2026-06-10)
+- [ ] Replace four separate Critical Fixed Sections with single ERI_WORKFLOW section (8-step numbered workflow)
+- [ ] Shorten Tier 2 and Tier 3 skill descriptions to trigger phrases in SKILLS_TIERS Fixed Section
+- [ ] Update CURRENT_INSTRUCTIONS constant to match the new proposed text (~3,293 chars)
+- [ ] Update chars counts for affected Fixed Sections
+- [ ] Verify Generator output shows ~3,293 chars (41% of budget)
+- [ ] Save checkpoint and publish new version to API
+
+## Project Instructions Compact Rewrite — 2026-06-10 (session 2)
+
+- [x] Shorten all 22 Tier 2 + Tier 3 readWhen values in SKILLS_METADATA to trigger phrases
+- [x] Replace 6 separate Fixed Sections (S_BDS_UPDATE, S_PROJECT_CONTEXT, S_CHECKPOINT, S_DEV_WORKFLOW, S_INSTRUCTIONS_UPDATE, S_SKILL_SCAN) with single "ERI task workflow (8 steps)" section
+- [x] Remove redundant scan header from skillsBlock in Generator assembly (now embedded in step 1)
+- [x] Update CURRENT_INSTRUCTIONS constant to match new Generator output (3,427 chars, 42.8% of budget)
+- [x] Update SYNC_PROMPT to reference new `Critical: Follow this workflow...` starting text
+- [x] Run tests: pnpm vitest run server/skills.test.ts
+- [ ] Save checkpoint
+- [ ] Mark as Applied + Publish to API (click in UI)
+- [ ] Update CODEBASE-CONTEXT.md with session notes
