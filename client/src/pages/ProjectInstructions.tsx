@@ -555,67 +555,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
   const latestVersion = versionsQuery.data?.[0] ?? null;
   const latestPublished = versionsQuery.data?.find(v => v.publishedAt != null) ?? null;
 
-  const pipelineSteps: PipelineStep[] = useMemo(() => [
-    {
-      id: 1,
-      label: "1. Compose",
-      sublabel: "Assemble workflow + skill triggers",
-      status: charCount > CHAR_BUDGET * 0.9 ? "error" : "done",
-      statusText: charCount > CHAR_BUDGET * 0.9
-        ? `Over budget: ${charCount.toLocaleString()} / ${CHAR_BUDGET.toLocaleString()} chars`
-        : `${charCount.toLocaleString()} chars (${Math.round(budgetPct)}% of budget)`,
-      actionLabel: charCount > CHAR_BUDGET * 0.9 ? "Open Generator" : undefined,
-      onAction: charCount > CHAR_BUDGET * 0.9 ? () => setActiveTab("generator") : undefined,
-    },
-    {
-      id: 2,
-      label: "2. Apply to Manus",
-      sublabel: "Copy output → paste into project settings",
-      status: latestVersion ? "done" : "action",
-      statusText: latestVersion
-        ? `Applied ${new Date(latestVersion.appliedAt).toLocaleDateString()} · ${latestVersion.charCount?.toLocaleString() ?? "?"} chars`
-        : "No version applied yet",
-      actionLabel: latestVersion ? undefined : "Open Generator",
-      onAction: latestVersion ? undefined : () => setActiveTab("generator"),
-    },
-    {
-      id: 3,
-      label: "3. Publish to API",
-      sublabel: "Agents self-update at task start",
-      status: latestPublished
-        ? (latestVersion && !latestVersion.publishedAt ? "action" : "done")
-        : "action",
-      statusText: latestPublished
-        ? (latestVersion && !latestVersion.publishedAt
-          ? `Latest version not yet published — ${latestPublished.version} is live`
-          : `Published ${new Date(latestPublished.publishedAt!).toLocaleDateString()} · ${latestPublished.charCount?.toLocaleString() ?? "?"} chars`)
-        : "No version published yet",
-      actionLabel: latestVersion && !latestVersion.publishedAt ? "Open Version History" : undefined,
-      onAction: latestVersion && !latestVersion.publishedAt ? () => setActiveTab("history") : undefined,
-    },
-    {
-      id: 4,
-      label: "4. Agent verified",
-      sublabel: "Sync prompt confirms agents see the new text",
-      status: syncedRow
-        ? (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt) ? "action" : "done")
-        : "action",
-      statusText: syncedRow
-        ? (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt)
-          ? `Synced ${new Date(syncedRow.syncedAt).toLocaleDateString()} — before latest apply`
-          : `Verified ${new Date(syncedRow.syncedAt).toLocaleDateString()}`)
-        : "No agent sync yet",
-      actionLabel: !syncedRow || (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt))
-        ? "Copy sync prompt"
-        : undefined,
-      onAction: !syncedRow || (latestVersion && new Date(syncedRow.syncedAt) < new Date(latestVersion.appliedAt))
-        ? handleCopySyncPrompt
-        : undefined,
-    },
-  ], [charCount, budgetPct, latestVersion, latestPublished, syncedRow, handleCopySyncPrompt]);
-
-  // ── Stale-sync audit issue (computed dynamically) ───────────────────────────────────
-
+  // Stale-sync audit issue — must be computed before pipelineSteps
   const staleSyncIssue: KnownIssue | null = useMemo(() => {
     if (!syncedRow) return null;
     const live = syncedRow.instructionsText;
@@ -623,10 +563,9 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     if (live.trim() === canonical.trim()) return null;
     const charDelta = canonical.length - live.length;
     const deltaStr = charDelta > 0 ? `+${charDelta.toLocaleString()} chars` : `${charDelta.toLocaleString()} chars`;
-    // Compute a rough diff: lines in canonical not in live
     const liveLines = new Set(live.split("\n").map(l => l.trim()).filter(Boolean));
     const addedLines = canonical.split("\n").map(l => l.trim()).filter(l => l.length > 20 && !liveLines.has(l));
-    const addedSummary = addedLines.slice(0, 3).map(l => l.slice(0, 80) + (l.length > 80 ? "…" : "")).join("; ");
+    const addedSummary = addedLines.slice(0, 3).map(l => l.slice(0, 80) + (l.length > 80 ? "\u2026" : "")).join("; ");
     return {
       id: "stale-sync",
       severity: "medium" as const,
@@ -640,6 +579,81 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     ...KNOWN_ISSUES,
     ...(staleSyncIssue ? [staleSyncIssue] : []),
   ], [staleSyncIssue]);
+
+  // Step 1: Understand state — is everything healthy?
+  const step1Issues = allIssues.length;
+  const step1OverBudget = charCount > CHAR_BUDGET * 0.9;
+  const step1Status = (step1Issues > 0 || step1OverBudget) ? "action" : "done";
+  const step1StatusText = step1OverBudget
+    ? `Over budget: ${charCount.toLocaleString()} / ${CHAR_BUDGET.toLocaleString()} chars`
+    : step1Issues > 0
+    ? `${step1Issues} issue${step1Issues !== 1 ? "s" : ""} need attention`
+    : `All good — ${charCount.toLocaleString()} chars, no issues`;
+
+  // Step 2: Compose — is the Generator output up to date?
+  // Amber if there are issues (instructions need to be regenerated), green if latest version matches current char count
+  const step2Status = step1Issues > 0 ? "action" : latestVersion ? "done" : "action";
+  const step2StatusText = step1Issues > 0
+    ? "Regenerate to fix the issues above"
+    : latestVersion
+    ? `Last composed ${new Date(latestVersion.appliedAt).toLocaleDateString()} · ${latestVersion.charCount?.toLocaleString() ?? "?"} chars`
+    : "No version composed yet";
+
+  // Step 3: Apply to Manus — has the latest version been pasted into project settings?
+  const step3Status = latestVersion ? "done" : "action";
+  const step3StatusText = latestVersion
+    ? `Applied ${new Date(latestVersion.appliedAt).toLocaleDateString()}`
+    : "Not yet applied";
+
+  // Step 4: Agents updated — is the latest version published to the API?
+  const step4Stale = latestVersion && !latestVersion.publishedAt;
+  const step4Status = latestPublished
+    ? (step4Stale ? "action" : "done")
+    : "action";
+  const step4StatusText = latestPublished
+    ? (step4Stale
+      ? `New version not yet published — ${latestPublished.version} is live`
+      : `Published ${new Date(latestPublished.publishedAt!).toLocaleDateString()}`)
+    : "Not yet published";
+
+  const pipelineSteps: PipelineStep[] = useMemo(() => [
+    {
+      id: 1,
+      label: "1. Understand state",
+      sublabel: "Are the instructions current and healthy?",
+      status: step1Status,
+      statusText: step1StatusText,
+      actionLabel: step1Issues > 0 ? "View issues" : undefined,
+      onAction: step1Issues > 0 ? () => setActiveTab("current") : undefined,
+    },
+    {
+      id: 2,
+      label: "2. Compose",
+      sublabel: "Build the latest version in the Generator",
+      status: step2Status,
+      statusText: step2StatusText,
+      actionLabel: step1Issues > 0 || !latestVersion ? "Open Generator" : undefined,
+      onAction: step1Issues > 0 || !latestVersion ? () => setActiveTab("generator") : undefined,
+    },
+    {
+      id: 3,
+      label: "3. Apply to Manus",
+      sublabel: "Paste into project settings so agents use it",
+      status: step3Status,
+      statusText: step3StatusText,
+      actionLabel: !latestVersion ? "Open Generator" : undefined,
+      onAction: !latestVersion ? () => setActiveTab("generator") : undefined,
+    },
+    {
+      id: 4,
+      label: "4. Agents updated",
+      sublabel: "Publish to API so agents self-update at task start",
+      status: step4Status,
+      statusText: step4StatusText,
+      actionLabel: step4Stale ? "Open Version History" : undefined,
+      onAction: step4Stale ? () => setActiveTab("history") : undefined,
+    },
+  ], [step1Status, step1StatusText, step1Issues, step2Status, step2StatusText, latestVersion, step3Status, step3StatusText, step4Status, step4StatusText, step4Stale, latestPublished]);
 
   return (
     <PublicLayout>
@@ -661,7 +675,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
           <h1 className="text-3xl font-extrabold font-archivo tracking-tight mb-4">
             Project <span style={{ color: "#93E07D" }}>Instructions</span>
           </h1>
-          <PageGuide text="The governance pipeline has four steps: Generate the latest instructions → Apply to Manus project settings → Publish to the API so agents self-update → Verify with the sync prompt. The status bar below shows where you are in the pipeline and what action is needed next." />
+          <PageGuide text="The status bar below shows whether the project instructions are healthy. If something needs attention, it will tell you what is wrong and what to do next. The four steps are: Understand state → Compose the latest version → Apply to Manus project settings → Agents updated via the API." />
           <div className="mt-3">
             <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.5)" }}>
               Understand the governance model behind project instructions <ArrowRight className="w-3 h-3" />
