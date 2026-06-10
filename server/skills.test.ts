@@ -341,7 +341,7 @@ describe("skills.syncMetadataFromFiles", () => {
 
     // readFileSync: first call = source file, subsequent calls = SKILL.md for the new skill
     fsMock.readFileSync
-      .mockReturnValueOnce("// skills.ts\nexport const SKILLS_METADATA = [\n];") // source
+      .mockReturnValueOnce("// skills.ts\nexport const SKILLS_METADATA = [\n// -- END_OF_SKILLS_METADATA --\n];") // source
       .mockReturnValue(mockFrontmatter); // SKILL.md for new skill
 
     // readdirSync returns one new skill directory
@@ -392,7 +392,7 @@ describe("skills.registerSkill", () => {
   it("succeeds for a new skill id as admin (writes to filesystem)", async () => {
     // Override readFileSync to return a minimal skills.ts source with the closing marker.
     // The marker the mutation searches for is "];" — must be present in the mock source.
-    fsMock.readFileSync.mockReturnValueOnce("// skills.ts\nexport const SKILLS_METADATA = [\n];");
+    fsMock.readFileSync.mockReturnValueOnce("// skills.ts\nexport const SKILLS_METADATA = [\n// -- END_OF_SKILLS_METADATA --\n];");
 
     const caller = appRouter.createCaller(makeCtx({ user: makeUser("admin") }));
     const result = await caller.skills.registerSkill(validInput);

@@ -521,7 +521,7 @@ function LogImprovementDialog({ skillId, currentVersion, onSuccess }: LogImprove
 // ── Sync Metadata Button (admin-only agent-bridge) ─────────────────────────────
 
 function SyncMetadataButton({ onSuccess }: { onSuccess: () => void }) {
-  const [result, setResult] = useState<{ changesCount: number; changes: Array<{ id: string; field: string; from: string; to: string }>; message: string } | null>(null);
+  const [result, setResult] = useState<{ changesCount: number; registeredCount: number; changes: Array<{ id: string; field: string; from: string; to: string }>; registered: string[]; message: string } | null>(null);
   const [open, setOpen] = useState(false);
 
   const syncMutation = trpc.skills.syncMetadataFromFiles.useMutation({

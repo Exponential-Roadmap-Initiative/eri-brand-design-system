@@ -46,8 +46,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   // ── Tier 1: Always-on ──────────────────────────────────────────────────────
   {
     id: "eri-bds-reference",
-    name: "ERI Brand Design System Reference",
-    description: "Portable ERI brand reference. Use when building or updating any ERI product (web apps, presentations, visual assets).",
+    name: "eri-bds-reference",
+    description: "Portable ERI brand reference. Use when building or updating any ERI product (web apps, presentations, visual assets). Covers: pre-action checklist, colour tokens, typography (GDPR self-hosted WOFF2 only), navigation tiers, header anatomy (headerTheme prop, mobile two-row layout), hero layout rules (ERI_HERO_IMAGE_DEFAULT/TRUST/crocodileDecoupling), CTA/badge/footer standards, layout wrapper, Contact Us integration, dark/light theme system (CSS tokens, ThemeContext, FOLC script), overlay/nav d...",
     tier: 1,
     category: "brand",
     version: "3.11.0",
@@ -56,8 +56,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-human-ai-collaboration",
-    name: "Exponential Human-AI Collaboration",
-    description: "Collaboration principles for ERI human-AI work. Activates peer-colleague mode.",
+    name: "eri-human-ai-collaboration",
+    description: ">-",
     tier: 1,
     category: "process",
     version: "1.0.0",
@@ -67,8 +67,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   // ── Tier 2: Per-action gate ────────────────────────────────────────────────────────────────────────────
   {
     id: "eri-skill-creator",
-    name: "ERI Skill Creator",
-    description: "Full lifecycle governance for ERI skills: create, improve, register, and maintain the self-improving ERI skill ecosystem. Step 8 has two paths: Path A (BDS task) edits skills.ts directly; Path B (any other task) updates SKILL.md and asks the user to click Sync Metadata on the BDS Skills page.",
+    name: "eri-skill-creator",
+    description: "Full lifecycle governance for ERI skills. MUST read before writing any eri- skill — Tier 2 per-action gate. Use whenever: creating or improving an ERI skill, running the post-task reflection loop, a workflow keeps causing repeated mistakes, a user says 'turn this into a skill' or 'improve this skill', optimising a skill description, updating the BDS /skills improvement log, managing the project instructions budget, or registering a skill. HARD STOP: do not write SKILL.md content until Steps 1...",
     tier: 2,
     category: "process",
     version: '2.4.0',
@@ -77,8 +77,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-earth-aligned-agent",
-    name: "Earth-aligned AI Agent",
-    description: "Architecture, modes, pipeline lifecycle, scoring, and known failure patterns for the Earth-aligned Agent subsystem.",
+    name: "eri-earth-aligned-agent",
+    description: ">-",
     tier: 2,
     category: "platform",
     version: "1.0.0",
@@ -87,8 +87,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-bds-site",
-    name: "ERI Brand Design System Site",
-    description: "Build or update the standalone ERI Brand Design System website.",
+    name: "eri-bds-site",
+    description: "Build or update the standalone ERI Brand Design System website from the brand package zip. Use when asked to build, rebuild, update, or extend the ERI Brand Design System site — including adding new logo variants, sections, or design tokens. Covers the full workflow: package inspection, asset upload, component porting, logo rendering fixes, and deployment.",
     tier: 2,
     category: "brand",
     version: "1.0.0",
@@ -97,8 +97,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-trpc",
-    name: "tRPC Router Patterns",
-    description: "Canonical patterns for writing, structuring, and testing tRPC routers in the ERI codebase. Includes What Done Means checklist for procedures, canonical paginationSchema, and opportunistic remediation rules for pre-existing debt.",
+    name: "eri-trpc",
+    description: "Canonical patterns for writing, structuring, and testing tRPC routers in the ERI eri-playbook-team codebase. Use when: creating a new router file, adding a procedure to an existing router, deciding between publicProcedure / protectedProcedure / adminProcedure, writing a custom middleware procedure, splitting an oversized router (over 150 lines), registering a new router in routers.ts, or writing a vitest test for a router. Also use when reviewing a router for correctness, security, or consist...",
     tier: 2,
     category: "platform",
     version: "2.2.0",
@@ -107,8 +107,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-database",
-    name: "Database Design",
-    description: "Best practices for designing, reviewing, and evolving relational database schemas in MySQL/TiDB + Drizzle.",
+    name: "eri-database",
+    description: ">",
     tier: 2,
     category: "platform",
     version: "1.0.0",
@@ -117,8 +117,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-widget",
-    name: "Widget Component Standard",
-    description: "Standard widget component design and implementation for the ERI Exponential Platform.",
+    name: "eri-widget",
+    description: "Standard widget component design and implementation for the ERI Exponential Platform. Use when: creating a new data source or analytical widget (Widget.tsx + Card.tsx), building a Widget Hub demo page, registering a widget in widgetRegistry.ts, wiring a widget into a workspace tab page, choosing between live DB / static registry / external API data paths, or auditing an existing widget for conformance with the DataWidgetCard pattern.",
     tier: 2,
     category: "platform",
     version: "1.0.0",
@@ -127,8 +127,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-user-management",
-    name: "ERI User Management",
-    description: "Design and implement the three-domain user management system used across ERI platform applications.",
+    name: "eri-user-management",
+    description: "Design and implement the three-domain user management system used across ERI platform applications (React + tRPC + Drizzle + MySQL): (1) ERI employees — list, promote/demote admin role, delete, generate invite emails; (2) company workspaces — create with slug/domain uniqueness, update settings, manage credits, soft/hard delete with name-confirmation guard; (3) workspace users — magic-link invites, role management (viewer/analyst/admin), upgrade requests, member removal, OAuth domain auto-assi...",
     tier: 2,
     category: "platform",
     version: "1.0.0",
@@ -137,8 +137,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-security",
-    name: "Trust & Security",
-    description: "Cyber security and data integrity best practices for SaaS web applications with public and authenticated surfaces.",
+    name: "eri-security",
+    description: ">",
     tier: 2,
     category: "platform",
     version: "1.0.0",
@@ -147,8 +147,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-rest-api",
-    name: "REST API Creator",
-    description: "Design and implement production-ready REST APIs on the ERI Platform stack. Includes What Done Means checklist for endpoints.",
+    name: "eri-rest-api",
+    description: "Design and implement production-ready REST APIs on the ERI Platform (Express + TypeScript + Drizzle + MySQL). Use when: designing a new REST endpoint or API surface, adding external partner access to ERI data, implementing API key authentication, writing REST route files, designing response envelopes or error formats, reviewing an existing REST API for correctness and security, building the admin UI surface for API management, or building the public API documentation page. Covers the full lif...",
     tier: 2,
     category: "platform",
     version: "2.2.0",
@@ -157,8 +157,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "automation-and-scheduling",
-    name: "Automation and Scheduling",
-    description: "Read before building any automation, scheduled task, recurring workflow, bot, or monitoring system.",
+    name: "automation-and-scheduling",
+    description: "MUST read before requests involving automated execution, recurring execution, background execution, event-triggered execution, bot/agent execution, auto-updating systems, or ANY system that integrates with external APIs, synchronizes data, handles webhooks, or requires background processes — even if the primary ask is a website, web app, or bot. Use it to choose the right implementation approach before building.",
     tier: 2,
     category: "process",
     version: "1.0.0",
@@ -167,8 +167,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "persistent-computing",
-    name: "Persistent Computing",
-    description: "MUST read when user needs persistent services, Docker, fixed IP, background jobs, or heavy compute.",
+    name: "persistent-computing",
+    description: "MUST read when user needs to run persistent services that WebDev or the default sandbox may not support (automation scripts, game servers, self-hosted open-source apps), or requires Docker, fixed IP, background jobs, heavy compute, or a reusable environment across sessions. MUST also read before deploying a resource-intensive service to an attached persistent VM. Guides persistent computing solutions vs sandbox vs WebDev.",
     tier: 2,
     category: "process",
     version: "1.0.0",
@@ -177,8 +177,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "imagegen",
-    name: "ImageGen",
-    description: "Visual deliverable routing and image generation/editing tasks.",
+    name: "imagegen",
+    description: "Use for visual deliverable routing and image generation/editing tasks, including new images, image edits, image upscaling/restoration/enhancement, UI mockups, diagrams, infographics, posters, icons, logos, charts, visual assets, and ambiguous visual requests. Helps choose between Mermaid, Python plotting, static layout/code screenshots, web/app development, and AI image generation/editing.",
     tier: 2,
     category: "process",
     version: "1.0.0",
@@ -187,8 +187,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "skill-creator",
-    name: "Skill Creator",
-    description: "Guide for creating or updating skills that extend Manus via specialised knowledge and workflows.",
+    name: "skill-creator",
+    description: "Guide for creating or updating skills that extend Manus via specialized knowledge, workflows, or tool integrations. For any modification or improvement request, MUST first read this skill and follow its update workflow instead of editing files directly.",
     tier: 2,
     category: "process",
     version: "1.0.0",
@@ -198,8 +198,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   // ── Tier 3: Reference ──────────────────────────────────────────────────────
   {
     id: "eri-exponential-framework",
-    name: "ERI Exponential Framework",
-    description: "Canonical knowledge base for the ERI Exponential Framework data model, CPR assessment methodology, and three-application architecture (CPR, Marketing EF app, Earth-aligned AI Agent).",
+    name: "eri-exponential-framework",
+    description: "Canonical knowledge base for the ERI Exponential Framework data model, CPR data pipeline, and three-application architecture (CPR tool, Marketing EF app, Earth-aligned AI Agent). Use whenever: designing or extending the Exponential Framework data model, working on the CPR evidence pipeline, adding or updating cpr_action_templates or cpr_data_source_mappings, building the Marketing EF application pages, working on the Earth-aligned AI Agent framework cells, reasoning about primary vs secondary...",
     tier: 3,
     category: "data",
     version: "1.0.0",
@@ -208,8 +208,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "data-source-integration",
-    name: "Data Source Integration",
-    description: "End-to-end checklist for integrating a new external data source into the ERI platform: DB schema, server router, admin explorer, widget, workspace page, and all shared config files. Read this first. For the explorer page and widget steps specifically, also read eri-data-source-explorer. Includes known debt catalogue for 11 workspace shell pages and opportunistic migration rule.",
+    name: "data-source-integration",
+    description: ">",
     tier: 3,
     category: "data",
     version: "1.1.0",
@@ -218,8 +218,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-data-source-explorer",
-    name: "Data Source Explorer",
-    description: "Deep implementation reference for the ERI data source explorer pattern: Browse + Compare tab, sector filter, checkbox selection, workspace wrapper, widget compact layout, and known pitfalls. The SBTi Data Explorer is the canonical reference — every other source must reach parity with it. Read data-source-integration first for the full integration checklist; read this skill when you reach the explorer page and widget steps. Version: 1.1.0",
+    name: "eri-data-source-explorer",
+    description: "Deep implementation reference for the ERI data source explorer pattern: Browse + Compare tab, sector filter, checkbox selection, workspace wrapper, widget compact layout, and known pitfalls. The SBTi Data Explorer is the canonical reference — every other source must reach parity with it. Read data-source-integration first for the full integration checklist across all surfaces; read this skill when you reach the explorer page and widget steps. Version: 1.1.0",
     tier: 3,
     category: "data",
     version: "1.1.0",
@@ -228,8 +228,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-report-finder",
-    name: "Corporate Report Finder",
-    description: "Systematic methodology for finding, storing, and validating corporate reporting URLs.",
+    name: "eri-report-finder",
+    description: "Systematic methodology for finding, storing, and validating corporate reporting URLs across five types (Annual, Sustainability, Transition, Biodiversity, Social). Use for: implementing or extending the integrated 5-tier discovery pipeline (ESEF, Klimatkollen, SRN, SERP, Perplexity), adding new data source tiers, auditing pipeline violations, running coverage gap analysis across 29 ERI members, updating the corporateReportUrls or corporateReportCompanies schema, or debugging slot-key conflicts...",
     tier: 3,
     category: "data",
     version: "1.0.0",
@@ -238,8 +238,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-pdf-pipeline",
-    name: "ERI PDF Pipeline",
-    description: "PDF ingestion, extraction, storage, and multi-consumer access patterns for ERI full-stack applications. Use whenever: designing or modifying how corporate reports are fetched, parsed, cached, or served; deciding between parser options; implementing keyword-based page selection; designing a two-pass extract-then-classify pipeline; building a document registry or extract store. Version: 2.0.0",
+    name: "eri-pdf-pipeline",
+    description: "PDF ingestion, extraction, storage, and multi-consumer access patterns for ERI full-stack applications. Use whenever: designing or modifying how corporate reports (annual, sustainability, transition plan) are fetched, parsed, cached, or served to consumers; deciding between parser options (unpdf vs file_url vs third-party); implementing keyword-based page selection for long documents; designing a two-pass extract-then-classify pipeline; building a document registry or extract store; enabling ...",
     tier: 3,
     category: "data",
     version: "2.0.0",
@@ -249,8 +249,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
 
   {
     id: "eri-ueil-nav",
-    name: "UEIL Inline Widget Navigation",
-    description: "Pattern for adding per-row inline widget navigation to the UEIL Company Data Lookup table.",
+    name: "eri-ueil-nav",
+    description: "Pattern for adding per-row inline widget navigation to the UEIL Company Data Lookup table (UeilDataCoverageWidget.tsx) in the eri-playbook-team project. Use when implementing or extending the 'click a linked source row → view its widget inline' feature for any of the 14 data sources (SBTi, CDP, TPI, NZT, LobbyMap, SME, SRN, B-Corp, Wikidata, GLEIF, LinkedIn, Klimatkollen, Bolagsverket, ESEF). Covers state management, widget map, back-navigation, and the exact source-name cell change.",
     tier: 3,
     category: "platform",
     version: "1.0.0",
@@ -259,8 +259,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-decision",
-    name: "Decision Framework",
-    description: "Framework for preventing tunnel vision when implementing solutions. Includes Generic Architecture Check (Hard Stop 6) with four-question paste format.",
+    name: "eri-decision",
+    description: "Framework for preventing tunnel vision when implementing solutions. Use when starting any non-trivial implementation, user says 'think about this first', or user references this skill to remind you to present options before coding.",
     tier: 3,
     category: "process",
     version: "1.1.0",
@@ -269,8 +269,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "eri-code-quality",
-    name: "Code Quality Gate",
-    description: "Pre-implementation checklist (10 gates) for the eri-playbook-team codebase. Covers: no as-any, auth on writes, pagination, transactions, tests, no secrets, Drizzle destructure, frontend architecture (search-first + useTabState), content ownership, file placement and db.ts size.",
+    name: "eri-code-quality",
+    description: "Pre-implementation checklist (10 gates) for the eri-playbook-team codebase. Prevents new technical debt. Run before writing any code. Results must be pasted into the response — not mentally ticked. Covers: no as-any, no unauthenticated mutations, mandatory pagination, transactions for multi-write ops, tests for new routers, no hardcoded secrets, Drizzle array-destructure, frontend architecture (incl. search-first for components and useTabState hook), content ownership, file placement and db.t...",
     tier: 3,
     category: "process",
     version: "2.2.0",
@@ -279,8 +279,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "manus-api",
-    name: "Manus API",
-    description: "Manage tasks, projects, and other data in Manus via API, build OAuth2 integrations.",
+    name: "manus-api",
+    description: "Manage tasks, projects, and other data in Manus via API, build OAuth2 third-party integrations, or create Manus tasks programmatically to build services or workflows that need agentic capabilities.",
     tier: 3,
     category: "platform",
     version: "1.0.0",
@@ -289,8 +289,8 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "manus-config",
-    name: "Manus Config",
-    description: "Manage connectors, project instructions, shared files, and scheduled task execution.",
+    name: "manus-config",
+    description: "Manage connectors (App, Custom API, Custom MCP), project instructions and shared files, and scheduled task execution with manus-config. Use when the user asks to enable, inspect, or modify integrations; manage project-level configuration or shared project files; or create, update, inspect, pause, expire, or troubleshoot scheduled tasks using cron, intervals, connector UIDs, or run-as-new behavior.",
     tier: 3,
     category: "platform",
     version: "1.0.0",
@@ -299,14 +299,15 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   {
     id: "music-prompter",
-    name: "Music Prompter",
-    description: "MUST read before entering generate mode for music tasks.",
+    name: "music-prompter",
+    description: "MUST read this skill BEFORE entering generate mode for music tasks. Covers prompt crafting framework, structure syntax, and multi-clip strategy.",
     tier: 3,
     category: "process",
     version: "1.0.0",
     readWhen: "Before entering generate mode for any music generation task.",
     hasReferences: false,
   },
+// -- END_OF_SKILLS_METADATA --
 ];
 
 // ─── Filesystem helpers ──────────────────────────────────────────────────────
@@ -729,11 +730,11 @@ export const skillsRouter = router({
         `  },`,
       ].join("\n");
 
-      // Read the current file, insert before the closing `];`
+      // Read the current file, insert before the unique end-of-array marker
       // import.meta.dirname resolves to server/routers/ at runtime
       const filePath = path.resolve(import.meta.dirname, "skills.ts");
       const source = fs.readFileSync(filePath, "utf-8");
-      const insertMarker = "];";
+      const insertMarker = "// -- END_OF_SKILLS_METADATA --";
       const markerIdx = source.lastIndexOf(insertMarker);
       if (markerIdx === -1) {
         throw new TRPCError({
@@ -876,8 +877,19 @@ export const skillsRouter = router({
         `  },`,
       ].join("\n");
 
-      // Insert before the closing `];` of SKILLS_METADATA
-      const markerIdx = updatedSource.lastIndexOf("];");
+      // Insert before the unique end-of-array marker comment
+      const markerIdx = updatedSource.lastIndexOf("  // ── Auto-registered by syncMetadataFromFiles on 2026-06-10 ──
+  {
+    id: "tts-prompter",
+    name: "tts-prompter",
+    description: "MUST read this skill BEFORE entering generate mode for text-to-speech (TTS) tasks. Covers prompt crafting framework, separating spoken text from style instructions, and using markup tags vs natural language for emotions and non-speech sounds.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on tts-prompter-related tasks.",
+    hasReferences: false,
+  },
+// -- END_OF_SKILLS_METADATA --");
       if (markerIdx !== -1) {
         updatedSource = updatedSource.slice(0, markerIdx) + newEntry + "\n" + updatedSource.slice(markerIdx);
         registered.push(dirName);
