@@ -978,3 +978,14 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Save checkpoint
 - [ ] Mark as Applied + Publish to API (click in UI)
 - [x] Update CODEBASE-CONTEXT.md with session notes
+
+## Project Instructions — Pipeline-as-tabs integrated workflow (2026-06-10)
+- [ ] Merge PipelineStatus bar + Manager card tabs into single workflow navigator (steps ARE the tabs)
+- [ ] activeTab → activeStep (1|2|3|4), default step 1 "Understand state"
+- [ ] Step 1 panel: health summary + live text (collapsed) + "Update display" action
+- [ ] Step 2 panel: budget bar + fixed sections + skill triggers + copy output + "Record this version" button
+- [ ] Step 3 panel: plain-English apply instructions + compact version history list
+- [ ] Step 4 panel: publish button + audit section (admin only)
+- [ ] Suppress trivial sync drift < 50 chars in staleSyncIssue
+- [ ] Remove Manager card header jargon
+- [ ] Run tests and save checkpoint

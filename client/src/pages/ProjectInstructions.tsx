@@ -10,11 +10,9 @@
 import { useState, useCallback, useMemo } from "react";
 import { Link } from "wouter";
 import {
-  SlidersHorizontal,
   AlertTriangle,
   Copy,
   CheckCircle2,
-  History,
   ClipboardList,
   ChevronDown,
   ChevronRight,
@@ -27,10 +25,8 @@ import {
   CircleCheck,
   CircleAlert,
   Circle,
-  Zap,
   Upload,
   Radio,
-  Bot,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -442,7 +438,7 @@ export default function ProjectInstructions() {
   const { data: skillsList } = trpc.skills.list.useQuery();
   const skills: Skill[] = skillsList ?? [];
 
-  const [activeTab, setActiveTab] = useState<"current" | "generator" | "history" | "audit">("current");
+  const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4>(1);
   const [enabledSections, setEnabledSections] = useState<Record<string, boolean>>(() => {
     const defaults: Record<string, boolean> = {};
     FIXED_SECTIONS.forEach(s => { defaults[s.id] = s.defaultOn; });
@@ -561,6 +557,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     const live = syncedRow.instructionsText;
     const canonical = CURRENT_INSTRUCTIONS;
     if (live.trim() === canonical.trim()) return null;
+    // Suppress trivial whitespace/newline drift — not worth surfacing as an issue
+    if (Math.abs(canonical.length - live.length) < 50 && live.trim().startsWith(canonical.trim().slice(0, 80))) return null;
     const charDelta = canonical.length - live.length;
     const deltaStr = charDelta > 0 ? `+${charDelta.toLocaleString()} chars` : `${charDelta.toLocaleString()} chars`;
     const liveLines = new Set(live.split("\n").map(l => l.trim()).filter(Boolean));
@@ -623,8 +621,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
       sublabel: "Are the instructions current and healthy?",
       status: step1Status,
       statusText: step1StatusText,
-      actionLabel: step1Issues > 0 ? "View issues" : undefined,
-      onAction: step1Issues > 0 ? () => setActiveTab("current") : undefined,
+      actionLabel: undefined,
+      onAction: undefined,
     },
     {
       id: 2,
@@ -632,8 +630,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
       sublabel: "Build the latest version in the Generator",
       status: step2Status,
       statusText: step2StatusText,
-      actionLabel: step1Issues > 0 || !latestVersion ? "Open Generator" : undefined,
-      onAction: step1Issues > 0 || !latestVersion ? () => setActiveTab("generator") : undefined,
+      actionLabel: undefined,
+      onAction: undefined,
     },
     {
       id: 3,
@@ -641,8 +639,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
       sublabel: "Paste into project settings so agents use it",
       status: step3Status,
       statusText: step3StatusText,
-      actionLabel: !latestVersion ? "Open Generator" : undefined,
-      onAction: !latestVersion ? () => setActiveTab("generator") : undefined,
+      actionLabel: undefined,
+      onAction: undefined,
     },
     {
       id: 4,
@@ -650,8 +648,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
       sublabel: "Publish to API so agents self-update at task start",
       status: step4Status,
       statusText: step4StatusText,
-      actionLabel: step4Stale ? "Open Version History" : undefined,
-      onAction: step4Stale ? () => setActiveTab("history") : undefined,
+      actionLabel: undefined,
+      onAction: undefined,
     },
   ], [step1Status, step1StatusText, step1Issues, step2Status, step2StatusText, latestVersion, step3Status, step3StatusText, step4Status, step4StatusText, step4Stale, latestPublished]);
 
@@ -675,7 +673,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
           <h1 className="text-3xl font-extrabold font-archivo tracking-tight mb-4">
             Project <span style={{ color: "#93E07D" }}>Instructions</span>
           </h1>
-          <PageGuide text="The status bar below shows whether the project instructions are healthy. If something needs attention, it will tell you what is wrong and what to do next. The four steps are: Understand state → Compose the latest version → Apply to Manus project settings → Agents updated via the API." />
+          <PageGuide text="This page guides you through keeping the project instructions healthy. Click any step to see what needs to be done and how to do it. Green means complete; amber means action needed." />
           <div className="mt-3">
             <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.5)" }}>
               Understand the governance model behind project instructions <ArrowRight className="w-3 h-3" />
@@ -687,144 +685,168 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
 
-        {/* Pipeline Status bar */}
-        <PipelineStatus steps={pipelineSteps} />
-
-        {/* Manager card */}
+        {/* ── Integrated Workflow Navigator ── */}
         <div className="border border-border rounded-lg overflow-hidden mb-8">
-          {/* Card header */}
-          <div className="w-full flex items-center justify-between px-5 py-4">
-            <div>
-              <p className="text-sm font-semibold text-foreground">Project Instructions Manager</p>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Assemble skill triggers · Manage Fixed Sections · Track version history · Run audits
-              </p>
-            </div>
-            <div className="flex items-center gap-3 ml-4">
-              <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
-                {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()}
-              </span>
+
+          {/* Step navigator bar — the pipeline IS the navigation */}
+          <div className="bg-muted/10 border-b border-border">
+            <div className="flex">
+              {pipelineSteps.map((step, i) => {
+                const isActive = activeStep === step.id;
+                const statusColor =
+                  step.status === "done" ? "#3ba559"
+                  : step.status === "action" ? "#d97706"
+                  : step.status === "error" ? "#dc2626"
+                  : undefined;
+                return (
+                  <div key={step.id} className="flex items-stretch flex-1">
+                    <button
+                      onClick={() => setActiveStep(step.id as 1 | 2 | 3 | 4)}
+                      className={`flex-1 flex flex-col items-start gap-1 px-4 py-4 text-left transition-colors relative ${
+                        isActive
+                          ? "bg-background"
+                          : "hover:bg-muted/30"
+                      }`}
+                      style={isActive ? { borderBottom: `2px solid ${statusColor ?? "var(--foreground)"}` } : { borderBottom: "2px solid transparent" }}
+                    >
+                      {/* Circle + label row */}
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all"
+                          style={{
+                            borderColor: statusColor ?? "var(--border)",
+                            backgroundColor: step.status === "done" || step.status === "action" || step.status === "error" ? statusColor : "transparent",
+                            color: step.status === "done" || step.status === "action" || step.status === "error" ? "white" : "var(--muted-foreground)",
+                          }}
+                        >
+                          {step.status === "done" ? <CircleCheck size={11} /> : step.status === "action" ? <CircleAlert size={11} /> : step.status === "error" ? <CircleAlert size={11} /> : <Circle size={11} />}
+                        </div>
+                        <span
+                          className="text-[11px] font-semibold leading-tight"
+                          style={{ color: isActive ? (statusColor ?? "var(--foreground)") : "var(--muted-foreground)" }}
+                        >
+                          {step.label}
+                        </span>
+                      </div>
+                      {/* Sublabel */}
+                      <p className="text-[10px] text-muted-foreground leading-tight pl-8">{step.sublabel}</p>
+                      {/* Status text */}
+                      <p
+                        className="text-[10px] font-medium leading-tight pl-8"
+                        style={{ color: statusColor ?? "var(--muted-foreground)" }}
+                      >
+                        {step.statusText}
+                      </p>
+                    </button>
+                    {/* Connector line between steps */}
+                    {i < pipelineSteps.length - 1 && (
+                      <div className="flex items-center flex-shrink-0 px-0">
+                        <div
+                          className="w-px h-8 self-center"
+                          style={{ backgroundColor: "var(--border)" }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          <div className="border-t border-border">
-            {/* Tab bar */}
-            <div className="flex border-b border-border bg-muted/20">
-              {([
-                { id: "generator" as const, label: "Generator",       Icon: SlidersHorizontal },
-                { id: "current"   as const, label: "Status",          Icon: Eye },
-                { id: "history"   as const, label: "Version History", Icon: History },
-                { id: "audit"     as const, label: "Audit",           Icon: ClipboardList },
-              ]).map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1.5 px-5 py-3 text-xs font-medium transition-colors ${
-                    activeTab === tab.id
-                      ? "border-b-2 border-foreground text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  <tab.Icon size={12} />
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+          {/* ── Step 1: Understand state ── */}
+          {activeStep === 1 && (
+            <div className="px-5 py-6 space-y-5">
 
-            {/* ── Current Instructions tab ── */}
-            {activeTab === "current" && (
-              <div className="px-5 py-6 space-y-5">
-
-                {/* Agent-bridge explanation + Sync button */}
-                <div className="rounded-md border border-border bg-muted/10 p-4 space-y-3">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">Active project instructions</p>
-                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                        The Manus platform has no API to read project instructions — only a Manus agent can read them from its context.
-                        To update this view, click <span className="font-medium text-foreground">Copy sync prompt</span>, paste it into a new Manus task in the ERI Shared Dev Assets project, and run it.
-                        The agent will read its <code className="text-[11px] bg-muted px-1 py-0.5 rounded">{'<project_instructions>'}</code> block, update the source file directly, and clear any known issues automatically.
-                      </p>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="flex-shrink-0 gap-1.5 text-xs"
-                      onClick={handleCopySyncPrompt}
-                    >
-                      {copiedSyncPrompt ? <CheckCircle2 size={13} className="text-green-500" /> : <Copy size={13} />}
-                      {copiedSyncPrompt ? "Copied!" : "Copy sync prompt"}
-                    </Button>
-                  </div>
-                  {syncedRow && (
-                    <p className="text-[11px] text-muted-foreground">
-                      Last synced: {new Date(syncedRow.syncedAt).toLocaleString()}
-                      {syncedRow.agentNote ? ` — ${syncedRow.agentNote}` : ""}
-                    </p>
-                  )}
-                </div>
-
-                {/* Issues banner — shown regardless of sync state */}
-                <div className={`rounded-md border p-4 space-y-3 ${
-                  allIssues.length === 0
-                    ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/20"
-                    : "border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20"
-                }`}>
-                  <div className="flex items-center gap-2">
+              {/* Health summary */}
+              <div className={`rounded-md border p-4 space-y-3 ${
+                allIssues.length === 0
+                  ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/20"
+                  : "border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20"
+              }`}>
+                <div className="flex items-center gap-2">
+                  {allIssues.length === 0
+                    ? <CircleCheck size={14} className="flex-shrink-0 text-green-600 dark:text-green-400" />
+                    : <AlertTriangle size={14} className="flex-shrink-0 text-amber-600 dark:text-amber-400" />}
+                  <p className={`text-sm font-semibold ${
+                    allIssues.length === 0
+                      ? "text-green-800 dark:text-green-300"
+                      : "text-amber-800 dark:text-amber-300"
+                  }`}>
                     {allIssues.length === 0
-                      ? <CircleCheck size={14} className="flex-shrink-0 text-green-600 dark:text-green-400" />
-                      : <AlertTriangle size={14} className="flex-shrink-0 text-amber-600 dark:text-amber-400" />}
-                    <p className={`text-xs font-semibold ${
-                      allIssues.length === 0
-                        ? "text-green-800 dark:text-green-300"
-                        : "text-amber-800 dark:text-amber-300"
-                    }`}>
-                      {allIssues.length === 0
-                        ? "0 known issues — instructions are up to date"
-                        : `${allIssues.length} known issue${allIssues.length !== 1 ? "s" : ""} — use the Generator tab to produce a corrected version`}
+                      ? "Everything looks good — the instructions are current and healthy."
+                      : `${allIssues.length} issue${allIssues.length !== 1 ? "s" : ""} need${allIssues.length === 1 ? "s" : ""} attention`}
+                  </p>
+                </div>
+                {allIssues.length > 0 && (
+                  <div className="space-y-3">
+                    {allIssues.map(issue => (
+                      <div key={issue.id} className="flex items-start gap-2">
+                        <span
+                          className="flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold border mt-0.5"
+                          style={
+                            issue.severity === "high"
+                              ? { color: "#dc2626", borderColor: "rgba(220,38,38,0.4)", backgroundColor: "rgba(220,38,38,0.08)" }
+                              : { color: "#d97706", borderColor: "rgba(217,119,6,0.4)", backgroundColor: "rgba(217,119,6,0.08)" }
+                          }
+                        >
+                          {issue.severity === "high" ? "High" : "Medium"}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-xs font-medium text-amber-900 dark:text-amber-200">{issue.title}</p>
+                          <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5 leading-relaxed">{issue.detail}</p>
+                        </div>
+                      </div>
+                    ))}
+                    <p className="text-xs text-amber-700 dark:text-amber-400 pt-2 border-t border-amber-200 dark:border-amber-800">
+                      Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2 — Compose</button> to generate a corrected version.
                     </p>
                   </div>
-                  {allIssues.map(issue => (
-                    <div key={issue.id} className="flex items-start gap-2">
-                      <span
-                        className="flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold border mt-0.5"
-                        style={
-                          issue.severity === "high"
-                            ? { color: "#dc2626", borderColor: "rgba(220,38,38,0.4)", backgroundColor: "rgba(220,38,38,0.08)" }
-                            : { color: "#d97706", borderColor: "rgba(217,119,6,0.4)", backgroundColor: "rgba(217,119,6,0.08)" }
-                        }
-                      >
-                        {issue.severity === "high" ? "High" : "Medium"}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="text-xs font-medium text-amber-900 dark:text-amber-200">{issue.title}</p>
-                        <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5 leading-relaxed">{issue.detail}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                )}
+                {allIssues.length === 0 && (
+                  <p className="text-xs text-green-700 dark:text-green-400">
+                    Character budget: <span className={`font-mono font-semibold ${budgetColor}`}>{charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()}</span> ({Math.round(budgetPct)}% used)
+                  </p>
+                )}
+              </div>
 
-                {/* Instructions text — DB-synced if available, else hardcoded fallback */}
+              {/* What is live — collapsible */}
+              <div className="rounded-md border border-border bg-muted/10 overflow-hidden">
+                <div className="flex items-start justify-between gap-4 px-4 py-3">
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">What agents are reading</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {syncedRow
+                        ? `Last refreshed ${new Date(syncedRow.syncedAt).toLocaleString()}${syncedRow.agentNote ? ` — ${syncedRow.agentNote}` : ""}`
+                        : "Not yet refreshed — use the button below to update this view."}
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-shrink-0 gap-1.5 text-xs"
+                    onClick={handleCopySyncPrompt}
+                    title="Copy a prompt to paste into a new Manus task — the agent will read the live instructions and update this display automatically."
+                  >
+                    {copiedSyncPrompt ? <CheckCircle2 size={13} className="text-green-500" /> : <Radio size={13} />}
+                    {copiedSyncPrompt ? "Copied!" : "Update display"}
+                  </Button>
+                </div>
                 {(() => {
                   const displayText = syncedRow?.instructionsText ?? CURRENT_INSTRUCTIONS;
                   const isFallback = !syncedRow;
                   const patterns = allIssues.map(i => i.pattern).filter(Boolean);
                   const regex = patterns.length > 0
-                    ? new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g")
+                    ? new RegExp(`(${patterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`  , "g")
                     : null;
                   const parts = regex ? displayText.split(regex) : [displayText];
                   return (
-                    <div>
-                      {isFallback && (
-                        <p className="text-[11px] text-muted-foreground mb-2 italic">
-                          Showing hardcoded snapshot — sync from agent to see the live text.
-                        </p>
-                      )}
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-xs font-medium text-foreground">Instructions text</span>
-                        <span className="text-xs font-mono text-muted-foreground">{displayText.length.toLocaleString()} chars</span>
-                      </div>
-                      <div className="rounded-md bg-muted/20 border border-border p-4 max-h-[32rem] overflow-y-auto">
+                    <details className="border-t border-border" open>
+                      <summary className="px-4 py-2.5 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors flex items-center gap-1.5 select-none">
+                        <Eye size={12} />
+                        Instructions text ({displayText.length.toLocaleString()} chars) — click to collapse
+                        {isFallback && <span className="ml-1 text-[10px] italic">(estimated — click Update display to see live text)</span>}
+                      </summary>
+                      <div className="px-4 pb-4 pt-2 border-t border-border bg-muted/5">
                         <pre className="text-xs text-foreground/80 whitespace-pre-wrap leading-relaxed font-mono">
                           {parts.map((part, i) =>
                             patterns.includes(part) ? (
@@ -835,173 +857,241 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                           )}
                         </pre>
                       </div>
-                    </div>
+                    </details>
                   );
                 })()}
               </div>
-            )}
 
-            {/* ── Generator tab ── */}
-            {activeTab === "generator" && (
-              <div className="px-5 py-6 space-y-6">
-
-                {/* Budget bar */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <p className="text-xs font-semibold text-foreground">Character budget</p>
-                    <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
-                      {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()} ({Math.round(budgetPct)}%)
-                    </span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
-                    <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${budgetPct}%` }} />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {CHAR_BUDGET - charCount > 0
-                      ? `${(CHAR_BUDGET - charCount).toLocaleString()} chars remaining · target: under 65% (5,200 chars)`
-                      : `${(charCount - CHAR_BUDGET).toLocaleString()} chars over budget`}
+              {/* Next step prompt */}
+              {allIssues.length === 0 && latestPublished && (
+                <div className="rounded-md border border-border bg-muted/10 px-4 py-3 flex items-center justify-between gap-4">
+                  <p className="text-xs text-muted-foreground">All steps are complete. The instructions are live and agents will pick them up at the start of their next task.</p>
+                  <span className="flex-shrink-0 inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
+                    <CircleCheck size={11} /> Live
+                  </span>
+                </div>
+              )}
+              {allIssues.length === 0 && !latestPublished && (
+                <div className="rounded-md border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 px-4 py-3">
+                  <p className="text-xs text-amber-700 dark:text-amber-400">
+                    No version has been published yet. Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2</button> to compose and publish the first version.
                   </p>
                 </div>
+              )}
+            </div>
+          )}
 
-                {/* Fixed Sections */}
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Fixed Sections</p>
-                  <div className="space-y-2">
-                    {FIXED_SECTIONS.map(section => (
-                      <div key={section.id} className="border border-border rounded-md overflow-hidden">
-                        <div className="flex items-center gap-3 px-4 py-3">
-                          <button
-                            onClick={() => setEnabledSections(prev => {
-                              const next = { ...prev, [section.id]: !prev[section.id] };
-                              try { localStorage.setItem("eri-bds-section-prefs", JSON.stringify(next)); } catch { /* ignore */ }
-                              return next;
-                            })}
-                            className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
-                            title={enabledSections[section.id] ? "Disable" : "Enable"}
-                          >
-                            {enabledSections[section.id]
-                              ? <ToggleRight size={18} className="text-green-500" />
-                              : <ToggleLeft size={18} className="text-muted-foreground" />}
-                          </button>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <span className={`text-xs font-medium ${
-                                enabledSections[section.id] ? "text-foreground" : "text-muted-foreground line-through"
-                              }`}>{section.label}</span>
-                              <span className="text-xs text-muted-foreground font-mono">{section.chars} chars</span>
-                            </div>
-                            <p className="text-xs text-muted-foreground mt-0.5 truncate">{section.description}</p>
+          {/* ── Step 2: Compose ── */}
+          {activeStep === 2 && (
+            <div className="px-5 py-6 space-y-6">
+
+              <div>
+                <p className="text-sm font-semibold text-foreground mb-1">Compose the instructions</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  The instructions are assembled from two parts: the fixed workflow section (always included) and the skill trigger block (auto-generated from the skills registry). Toggle optional sections on or off, then copy the output and paste it into Manus project settings.
+                </p>
+              </div>
+
+              {/* Budget bar */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-xs font-semibold text-foreground">Character budget</p>
+                  <span className={`text-xs font-mono font-semibold ${budgetColor}`}>
+                    {charCount.toLocaleString()} / {CHAR_BUDGET.toLocaleString()} ({Math.round(budgetPct)}%)
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                  <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${budgetPct}%` }} />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {CHAR_BUDGET - charCount > 0
+                    ? `${(CHAR_BUDGET - charCount).toLocaleString()} chars remaining · target: under 65% (5,200 chars)`
+                    : `${(charCount - CHAR_BUDGET).toLocaleString()} chars over budget`}
+                </p>
+              </div>
+
+              {/* Fixed Sections */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Fixed Sections</p>
+                <div className="space-y-2">
+                  {FIXED_SECTIONS.map(section => (
+                    <div key={section.id} className="border border-border rounded-md overflow-hidden">
+                      <div className="flex items-center gap-3 px-4 py-3">
+                        <button
+                          onClick={() => setEnabledSections(prev => {
+                            const next = { ...prev, [section.id]: !prev[section.id] };
+                            try { localStorage.setItem("eri-bds-section-prefs", JSON.stringify(next)); } catch { /* ignore */ }
+                            return next;
+                          })}
+                          className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                          title={enabledSections[section.id] ? "Disable" : "Enable"}
+                        >
+                          {enabledSections[section.id]
+                            ? <ToggleRight size={18} className="text-green-500" />
+                            : <ToggleLeft size={18} className="text-muted-foreground" />}
+                        </button>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-xs font-medium ${
+                              enabledSections[section.id] ? "text-foreground" : "text-muted-foreground line-through"
+                            }`}>{section.label}</span>
+                            <span className="text-xs text-muted-foreground font-mono">{section.chars} chars</span>
                           </div>
-                          <button
-                            onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
-                            className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
-                            title="Expand content"
-                          >
-                            {expandedSection === section.id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                          </button>
+                          <p className="text-xs text-muted-foreground mt-0.5 truncate">{section.description}</p>
                         </div>
-                        {expandedSection === section.id && (
-                          <div className="border-t border-border bg-muted/20 px-4 py-3">
-                            <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{section.content}</pre>
-                          </div>
-                        )}
+                        <button
+                          onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
+                          className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                          title="Expand content"
+                        >
+                          {expandedSection === section.id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                        </button>
                       </div>
-                    ))}
-                  </div>
+                      {expandedSection === section.id && (
+                        <div className="border-t border-border bg-muted/20 px-4 py-3">
+                          <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{section.content}</pre>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
+              </div>
 
-                {/* Skill triggers block */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skills Block (trigger-only format)</p>
-                    <span className="text-xs text-muted-foreground font-mono">{skillTriggers.length} chars</span>
-                  </div>
-                  <div className="rounded-md bg-muted/20 border border-border p-3">
-                    <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{skillTriggers || "No skills registered."}</pre>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Trigger-only format saves ~35 chars/skill vs verbose format. Derived from each skill's <span className="font-mono">readWhen</span> field.
-                  </p>
+              {/* Skill triggers block */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skill triggers (auto-generated)</p>
+                  <span className="text-xs text-muted-foreground font-mono">{skillTriggers.length} chars</span>
                 </div>
+                <div className="rounded-md bg-muted/20 border border-border p-3">
+                  <pre className="text-xs text-foreground/70 whitespace-pre-wrap leading-relaxed font-mono">{skillTriggers || "No skills registered."}</pre>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Derived from each skill's <span className="font-mono">readWhen</span> field. Edit skills in the Skills registry to update this block.
+                </p>
+              </div>
 
-                {/* Copy + Mark as Applied */}
-                <div className="flex gap-3">
+              {/* Copy + Record this version */}
+              <div className="flex gap-3">
+                <Button
+                  onClick={handleCopyOutput}
+                  variant="outline"
+                  className="flex-1 gap-2"
+                  disabled={charCount === 0}
+                >
+                  {copiedOutput ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
+                  {copiedOutput ? "Copied!" : `Copy output (${charCount.toLocaleString()} chars)`}
+                </Button>
+                {isAdmin && (
                   <Button
-                    onClick={handleCopyOutput}
-                    variant="outline"
+                    onClick={() => setMarkAppliedOpen(true)}
                     className="flex-1 gap-2"
                     disabled={charCount === 0}
                   >
-                    {copiedOutput ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
-                    {copiedOutput ? "Copied!" : `Copy (${charCount.toLocaleString()} chars)`}
+                    <CheckCircle2 size={14} />
+                    Record this version
                   </Button>
-                  {isAdmin && (
-                    <Button
-                      onClick={() => setMarkAppliedOpen(true)}
-                      className="flex-1 gap-2"
-                      disabled={charCount === 0}
-                    >
-                      <CheckCircle2 size={14} />
-                      Mark as Applied
-                    </Button>
-                  )}
-                </div>
-
-                {charCount > CHAR_BUDGET && (
-                  <div className="rounded-md bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 p-3">
-                    <p className="text-xs text-red-800 dark:text-red-300 font-semibold">
-                      Over budget by {(charCount - CHAR_BUDGET).toLocaleString()} characters. Disable optional Fixed Sections or review the Audit tab.
-                    </p>
-                  </div>
                 )}
               </div>
-            )}
 
-            {/* ── Version History tab ── */}
-            {activeTab === "history" && (
-              <div className="px-5 py-6 space-y-4">
-                <p className="text-sm text-foreground/80 leading-relaxed">
-                  Each time you paste generated instructions into Manus project settings, click <span className="font-medium">Mark as Applied</span> in the Generator tab to record a snapshot here. Click <span className="font-medium">Publish to API</span> to make a version the live source that agents fetch at task start.
+              {charCount > CHAR_BUDGET && (
+                <div className="rounded-md bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 p-3">
+                  <p className="text-xs text-red-800 dark:text-red-300 font-semibold">
+                    Over budget by {(charCount - CHAR_BUDGET).toLocaleString()} characters. Disable optional Fixed Sections or go to Step 4 to run an audit.
+                  </p>
+                </div>
+              )}
+
+              {/* Next step prompt */}
+              <div className="rounded-md border border-border bg-muted/10 px-4 py-3">
+                <p className="text-xs text-muted-foreground">
+                  Once you have copied the output and pasted it into Manus, go to <button onClick={() => setActiveStep(3)} className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 3 — Apply to Manus</button> to record the version.
                 </p>
-                {!isAdmin && (
-                  <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
-                    <p className="text-xs text-muted-foreground">Sign in as admin to view version history.</p>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 3: Apply to Manus ── */}
+          {activeStep === 3 && (
+            <div className="px-5 py-6 space-y-5">
+
+              <div>
+                <p className="text-sm font-semibold text-foreground mb-1">Apply to Manus project settings</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Copy the output from Step 2 and paste it into the Manus project settings. This is what every agent will read at the start of each task.
+                </p>
+              </div>
+
+              {/* Plain-English instructions */}
+              <div className="rounded-md border border-border bg-muted/10 p-4 space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Copy the output</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Go to <button onClick={() => setActiveStep(2)} className="font-medium text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2</button> and click <span className="font-medium">Copy output</span>. This copies the full instructions text to your clipboard.</p>
                   </div>
-                )}
-                {isAdmin && versionsQuery.isLoading && (
-                  <div className="space-y-2">
-                    {[1,2,3].map(i => <div key={i} className="h-16 rounded-md bg-muted animate-pulse" />)}
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Open Manus project settings</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">In the ERI Shared Dev Assets project on Manus, click the settings icon. Find the <span className="font-medium">Project Instructions</span> field and replace its entire contents with the text you just copied.</p>
                   </div>
-                )}
-                {isAdmin && !versionsQuery.isLoading && (versionsQuery.data?.length ?? 0) === 0 && (
-                  <div className="rounded-md bg-muted/30 border border-border p-6 text-center">
-                    <History size={24} className="mx-auto text-muted-foreground mb-2" />
-                    <p className="text-sm font-medium text-foreground">No versions recorded yet</p>
-                    <p className="text-xs text-muted-foreground mt-1">Generate instructions and click "Mark as Applied" to create the first snapshot.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Record the version here</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Click the button below to save a snapshot. This keeps a record of what was applied and when.</p>
                   </div>
-                )}
-                {isAdmin && (versionsQuery.data ?? []).map(v => (
-                  <div key={v.id} className="border border-border rounded-md p-4">
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-semibold text-foreground font-mono">{v.version}</span>
-                          {v.publishedAt && (
-                            <span className="inline-flex items-center gap-1 text-xs font-medium px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
-                              <Globe size={10} /> Published
-                            </span>
-                          )}
-                        </div>
-                        {v.changeNote && <p className="text-xs text-muted-foreground mt-0.5">{v.changeNote}</p>}
-                      </div>
-                      <div className="flex items-start gap-2 flex-shrink-0">
-                        <div className="text-right">
-                          <p className="text-xs text-muted-foreground">{new Date(v.appliedAt).toLocaleDateString()}</p>
-                          {v.charCount != null && (
-                            <p className={`text-xs font-mono font-semibold ${
-                              (v.budgetPct ?? 0) > 90 ? "text-red-500" : (v.budgetPct ?? 0) > 70 ? "text-amber-500" : "text-green-500"
-                            }`}>{v.charCount.toLocaleString()} chars ({v.budgetPct}%)</p>
-                          )}
+                </div>
+              </div>
+
+              {/* Record this version button */}
+              {isAdmin && (
+                <Button
+                  onClick={() => setMarkAppliedOpen(true)}
+                  className="w-full gap-2"
+                  disabled={charCount === 0}
+                >
+                  <CheckCircle2 size={14} />
+                  Record this version
+                </Button>
+              )}
+              {!isAdmin && (
+                <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
+                  <p className="text-xs text-muted-foreground">Sign in as admin to record versions.</p>
+                </div>
+              )}
+
+              {/* Version history — compact list */}
+              {isAdmin && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Version history</p>
+                  {versionsQuery.isLoading && (
+                    <div className="space-y-2">
+                      {[1,2,3].map(i => <div key={i} className="h-14 rounded-md bg-muted animate-pulse" />)}
+                    </div>
+                  )}
+                  {!versionsQuery.isLoading && (versionsQuery.data?.length ?? 0) === 0 && (
+                    <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
+                      <p className="text-xs text-muted-foreground">No versions recorded yet. Use the button above after pasting into Manus.</p>
+                    </div>
+                  )}
+                  {(versionsQuery.data ?? []).map(v => (
+                    <div key={v.id} className="border border-border rounded-md p-3 mb-2">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs font-semibold text-foreground font-mono">{v.version}</span>
+                            {v.publishedAt && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
+                                <Globe size={9} /> Live
+                              </span>
+                            )}
+                          </div>
+                          {v.changeNote && <p className="text-[11px] text-muted-foreground mt-0.5">{v.changeNote}</p>}
+                          <p className="text-[10px] text-muted-foreground mt-0.5">{new Date(v.appliedAt).toLocaleDateString()}{v.charCount != null ? ` · ${v.charCount.toLocaleString()} chars` : ""}</p>
                         </div>
                         <Button
                           size="sm"
@@ -1018,125 +1108,198 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                         </Button>
                       </div>
                     </div>
-                    <div className="rounded bg-muted/20 border border-border p-2 max-h-32 overflow-y-auto">
-                      <pre className="text-xs text-foreground/60 whitespace-pre-wrap font-mono leading-relaxed">{v.generatedSnapshot.slice(0, 400)}{v.generatedSnapshot.length > 400 ? "..." : ""}</pre>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* ── Audit tab ── */}
-            {activeTab === "audit" && (
-              <div className="px-5 py-6 space-y-5">
-                <div className="flex items-start justify-between gap-4">
-                  <p className="text-sm text-foreground/80 leading-relaxed">
-                    The Manus platform has no API to read live project instructions — only the agent itself can read them from its context. Use the <span className="font-medium">Run Audit</span> button to copy a prompt, paste it into a new Manus task in this project, and the agent will write findings back to this page.
-                  </p>
-                  <Button
-                    onClick={() => setAuditModalOpen(true)}
-                    variant="outline"
-                    className="flex-shrink-0 gap-2 text-xs"
-                  >
-                    <ClipboardList size={13} />
-                    Run Audit
-                  </Button>
+                  ))}
                 </div>
+              )}
 
-                {!isAdmin && (
-                  <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
-                    <p className="text-xs text-muted-foreground">Sign in as admin to view stored audit findings.</p>
-                  </div>
-                )}
-                {isAdmin && auditsQuery.isLoading && (
-                  <div className="space-y-2">
-                    {[1,2].map(i => <div key={i} className="h-20 rounded-md bg-muted animate-pulse" />)}
-                  </div>
-                )}
-                {isAdmin && !auditsQuery.isLoading && (auditsQuery.data?.length ?? 0) === 0 && (
-                  <div className="rounded-md bg-muted/30 border border-border p-6 text-center">
-                    <ClipboardList size={24} className="mx-auto text-muted-foreground mb-2" />
-                    <p className="text-sm font-medium text-foreground">No audit findings yet</p>
-                    <p className="text-xs text-muted-foreground mt-1">Click "Run Audit" to copy the prompt and run it in a new Manus task.</p>
-                  </div>
-                )}
-                {isAdmin && (auditsQuery.data ?? []).map(a => (
-                  <div key={a.id} className="border border-border rounded-md p-4">
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <div>
-                        <p className="text-xs text-muted-foreground">{new Date(a.auditedAt).toLocaleString()}</p>
-                        {a.summary && <p className="text-sm text-foreground mt-1 leading-relaxed">{a.summary}</p>}
-                      </div>
-                      {a.charCount != null && (
-                        <div className="text-right flex-shrink-0">
-                          <p className={`text-xs font-mono font-semibold ${
-                            (a.budgetPct ?? 0) > 90 ? "text-red-500" : (a.budgetPct ?? 0) > 70 ? "text-amber-500" : "text-green-500"
-                          }`}>{a.charCount.toLocaleString()} chars ({a.budgetPct}%)</p>
-                        </div>
-                      )}
-                    </div>
-                    {a.discrepanciesJson && (() => {
-                      try {
-                        const discrepancies = JSON.parse(a.discrepanciesJson) as string[];
-                        if (discrepancies.length > 0) return (
-                          <div className="mt-2">
-                            <p className="text-xs font-semibold text-amber-600 mb-1">Discrepancies</p>
-                            <ul className="space-y-1">
-                              {discrepancies.map((d, i) => (
-                                <li key={i} className="text-xs text-muted-foreground flex gap-2">
-                                  <AlertTriangle size={11} className="flex-shrink-0 mt-0.5 text-amber-500" />
-                                  {d}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        );
-                      } catch {}
-                      return null;
-                    })()}
-                  </div>
-                ))}
+              {/* Next step prompt */}
+              <div className="rounded-md border border-border bg-muted/10 px-4 py-3">
+                <p className="text-xs text-muted-foreground">
+                  After recording, go to <button onClick={() => setActiveStep(4)} className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 4 — Agents updated</button> to publish to the API so agents self-update.
+                </p>
+              </div>
+            </div>
+          )}
 
-                {/* Static analysis (legacy) */}
+          {/* ── Step 4: Agents updated ── */}
+          {activeStep === 4 && (
+            <div className="px-5 py-6 space-y-5">
+
+              <div>
+                <p className="text-sm font-semibold text-foreground mb-1">Publish so agents self-update</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Publishing makes the instructions available at the public API endpoint. Every ERI agent fetches this at the start of each task, so they always have the latest version — no manual update needed.
+                </p>
+              </div>
+
+              {/* Published status */}
+              <div className={`rounded-md border p-4 ${
+                latestPublished
+                  ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/20"
+                  : "border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20"
+              }`}>
+                <div className="flex items-center gap-2 mb-1">
+                  {latestPublished
+                    ? <CircleCheck size={14} className="text-green-600 dark:text-green-400" />
+                    : <CircleAlert size={14} className="text-amber-600 dark:text-amber-400" />}
+                  <p className={`text-sm font-semibold ${
+                    latestPublished ? "text-green-800 dark:text-green-300" : "text-amber-800 dark:text-amber-300"
+                  }`}>
+                    {latestPublished
+                      ? `Live — published ${new Date(latestPublished.publishedAt!).toLocaleDateString()}`
+                      : "Not yet published"}
+                  </p>
+                </div>
+                {latestPublished && (
+                  <p className="text-xs text-green-700 dark:text-green-400 pl-5">
+                    Version <span className="font-mono font-semibold">{latestPublished.version}</span> · {latestPublished.charCount?.toLocaleString() ?? "?"} chars
+                  </p>
+                )}
+                {step4Stale && latestVersion && (
+                  <p className="text-xs text-amber-700 dark:text-amber-400 pl-5 mt-1">
+                    A newer version (<span className="font-mono">{latestVersion.version}</span>) has been recorded but not yet published.
+                  </p>
+                )}
+              </div>
+
+              {/* Publish button */}
+              {isAdmin && latestVersion && !latestVersion.publishedAt && (
+                <Button
+                  className="w-full gap-2"
+                  disabled={publishingId === latestVersion.id || publishMutation.isPending}
+                  onClick={() => {
+                    setPublishingId(latestVersion.id);
+                    publishMutation.mutate({ versionId: latestVersion.id });
+                  }}
+                >
+                  <Upload size={14} />
+                  {publishingId === latestVersion.id ? "Publishing..." : `Publish ${latestVersion.version} to API`}
+                </Button>
+              )}
+              {!isAdmin && (
+                <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
+                  <p className="text-xs text-muted-foreground">Sign in as admin to publish versions.</p>
+                </div>
+              )}
+
+              {/* Audit section — admin only, collapsible */}
+              {isAdmin && (
                 <details className="border border-border rounded-md overflow-hidden">
-                  <summary className="px-4 py-3 text-xs font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
-                    Static analysis (pre-agent, for reference)
+                  <summary className="px-4 py-3 text-xs font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors flex items-center gap-2">
+                    <ClipboardList size={13} />
+                    Audit findings
                   </summary>
-                  <div className="px-4 pb-4 pt-2 space-y-3 border-t border-border">
-                    {[
-                      { id: "skill-update",      title: "BDS skill auto-update",            chars: 285, recommendation: "keep"     as const, reason: "Essential — fetches the latest BDS skill before every task." },
-                      { id: "project-context",   title: "CODEBASE-CONTEXT.md guard",        chars: 448, recommendation: "keep"     as const, reason: "Essential — context compaction erases session memory." },
-                      { id: "skill-scan",        title: "Skill scan instruction",           chars: 340, recommendation: "replace"  as const, reason: "Superseded by the auto-generated trigger block in the Generator tab." },
-                      { id: "skill-update-post", title: "Post-task skill update",           chars: 440, recommendation: "compress" as const, reason: "Valuable but verbose — core directive is 60 chars." },
-                      { id: "dev-workflow",      title: "ERI development workflow",         chars: 257, recommendation: "evaluate" as const, reason: "May be redundant if Manus already follows this loop by default." },
-                      { id: "collab-skill",      title: "Apply exponential-human-ai-collaboration", chars: 91, recommendation: "replace" as const, reason: "Redundant once this skill is in Tier 1." },
-                      { id: "framework",         title: "Exponential Framework structure",  chars: 530, recommendation: "keep"     as const, reason: "All ERI tasks are in the same project — always include." },
-                      { id: "agent-files",       title: "Earth-aligned AI Agent key files", chars: 230, recommendation: "move"     as const, reason: "Belongs in the eri-playbook-team CODEBASE-CONTEXT.md, not BDS." },
-                    ].map(section => {
-                      const cfg = RECOMMENDATION_CONFIG[section.recommendation];
-                      return (
-                        <div key={section.id} className="border border-border rounded-md p-3">
-                          <div className="flex items-start justify-between gap-3 mb-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-xs font-medium text-foreground">{section.title}</span>
-                              <span className="text-xs text-muted-foreground font-mono">{section.chars}c</span>
-                            </div>
-                            <span
-                              className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border"
-                              style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}
-                            >
-                              {cfg.label}
-                            </span>
+                  <div className="border-t border-border px-4 py-4 space-y-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        Run an audit to check whether the live instructions are well-structured, within budget, and free of broken skill references. Copy the prompt and paste it into a new Manus task — the agent will write findings back here.
+                      </p>
+                      <Button
+                        onClick={() => setAuditModalOpen(true)}
+                        variant="outline"
+                        className="flex-shrink-0 gap-2 text-xs"
+                      >
+                        <ClipboardList size={13} />
+                        Run Audit
+                      </Button>
+                    </div>
+                    {auditsQuery.isLoading && (
+                      <div className="space-y-2">
+                        {[1,2].map(i => <div key={i} className="h-20 rounded-md bg-muted animate-pulse" />)}
+                      </div>
+                    )}
+                    {!auditsQuery.isLoading && (auditsQuery.data?.length ?? 0) === 0 && (
+                      <div className="rounded-md bg-muted/30 border border-border p-4 text-center">
+                        <p className="text-xs text-muted-foreground">No audit findings yet.</p>
+                      </div>
+                    )}
+                    {(auditsQuery.data ?? []).map(a => (
+                      <div key={a.id} className="border border-border rounded-md p-4">
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <div>
+                            <p className="text-xs text-muted-foreground">{new Date(a.auditedAt).toLocaleString()}</p>
+                            {a.summary && <p className="text-sm text-foreground mt-1 leading-relaxed">{a.summary}</p>}
                           </div>
-                          <p className="text-xs text-muted-foreground leading-relaxed">{section.reason}</p>
+                          {a.charCount != null && (
+                            <div className="text-right flex-shrink-0">
+                              <p className={`text-xs font-mono font-semibold ${
+                                (a.budgetPct ?? 0) > 90 ? "text-red-500" : (a.budgetPct ?? 0) > 70 ? "text-amber-500" : "text-green-500"
+                              }`}>{a.charCount.toLocaleString()} chars ({a.budgetPct}%)</p>
+                            </div>
+                          )}
                         </div>
-                      );
-                    })}
+                        {a.discrepanciesJson && (() => {
+                          try {
+                            const discrepancies = JSON.parse(a.discrepanciesJson) as string[];
+                            if (discrepancies.length > 0) return (
+                              <div className="mt-2">
+                                <p className="text-xs font-semibold text-amber-600 mb-1">Discrepancies</p>
+                                <ul className="space-y-1">
+                                  {discrepancies.map((d, i) => (
+                                    <li key={i} className="text-xs text-muted-foreground flex gap-2">
+                                      <AlertTriangle size={11} className="flex-shrink-0 mt-0.5 text-amber-500" />
+                                      {d}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            );
+                          } catch {}
+                          return null;
+                        })()}
+                      </div>
+                    ))}
+
+                    {/* Static analysis (legacy) */}
+                    <details className="border border-border rounded-md overflow-hidden">
+                      <summary className="px-4 py-3 text-xs font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+                        Static analysis (pre-agent, for reference)
+                      </summary>
+                      <div className="px-4 pb-4 pt-2 space-y-3 border-t border-border">
+                        {[
+                          { id: "skill-update",      title: "BDS skill auto-update",            chars: 285, recommendation: "keep"     as const, reason: "Essential — fetches the latest BDS skill before every task." },
+                          { id: "project-context",   title: "CODEBASE-CONTEXT.md guard",        chars: 448, recommendation: "keep"     as const, reason: "Essential — context compaction erases session memory." },
+                          { id: "skill-scan",        title: "Skill scan instruction",           chars: 340, recommendation: "replace"  as const, reason: "Superseded by the auto-generated trigger block in the Compose step." },
+                          { id: "skill-update-post", title: "Post-task skill update",           chars: 440, recommendation: "compress" as const, reason: "Valuable but verbose — core directive is 60 chars." },
+                          { id: "dev-workflow",      title: "ERI development workflow",         chars: 257, recommendation: "evaluate" as const, reason: "May be redundant if Manus already follows this loop by default." },
+                          { id: "collab-skill",      title: "Apply exponential-human-ai-collaboration", chars: 91, recommendation: "replace" as const, reason: "Redundant once this skill is in Tier 1." },
+                          { id: "framework",         title: "Exponential Framework structure",  chars: 530, recommendation: "keep"     as const, reason: "All ERI tasks are in the same project — always include." },
+                          { id: "agent-files",       title: "Earth-aligned AI Agent key files", chars: 230, recommendation: "move"     as const, reason: "Belongs in the eri-playbook-team CODEBASE-CONTEXT.md, not BDS." },
+                        ].map(section => {
+                          const cfg = RECOMMENDATION_CONFIG[section.recommendation];
+                          return (
+                            <div key={section.id} className="border border-border rounded-md p-3">
+                              <div className="flex items-start justify-between gap-3 mb-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-xs font-medium text-foreground">{section.title}</span>
+                                  <span className="text-xs text-muted-foreground font-mono">{section.chars}c</span>
+                                </div>
+                                <span
+                                  className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border"
+                                  style={{ color: cfg.accentColor, borderColor: `${cfg.accentColor}50`, backgroundColor: cfg.tintBg }}
+                                >
+                                  {cfg.label}
+                                </span>
+                              </div>
+                              <p className="text-xs text-muted-foreground leading-relaxed">{section.reason}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </details>
                   </div>
                 </details>
+              )}
+
+              {/* Budget note */}
+              <div className="rounded-md border border-border bg-muted/20 px-4 py-3">
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  The Manus project instructions field has a practical limit of around <span className="font-mono font-semibold">8,000 characters</span>. The generator targets under 65% of that budget to leave room for task-specific context. Use the Audit section above to identify sections that can be compressed or moved to skills.
+                </p>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+
 
           {/* Mark as Applied dialog */}
           <Dialog open={markAppliedOpen} onOpenChange={setMarkAppliedOpen}>
@@ -1210,14 +1373,9 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               </div>
             </DialogContent>
           </Dialog>
-        </div>
 
-        {/* Budget note */}
-        <div className="rounded-md border border-border bg-muted/20 px-4 py-3">
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            The Manus project instructions field has a practical limit of around <span className="font-mono font-semibold">8,000 characters</span>. The generator targets under 65% of that budget to leave room for task-specific context. Use the Audit tab to identify sections that can be compressed or moved to skills.
-          </p>
-        </div>
+        </div>{/* end workflow card */}
+
       </div>
     </PublicLayout>
   );
