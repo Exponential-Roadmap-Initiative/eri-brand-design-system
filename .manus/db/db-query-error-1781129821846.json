@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, version_tag, published_at, char_count FROM project_instructions_versions WHERE published_at IS NOT NULL ORDER BY published_at DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute SELECT id, version_tag, published_at, char_count FROM project_instructions_versions WHERE published_at IS NOT NULL ORDER BY published_at DESC;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'version_tag' in 'field list'"
+  ]
+}

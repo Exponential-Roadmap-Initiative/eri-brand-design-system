@@ -14,7 +14,7 @@
 import fs from "fs";
 import path from "path";
 import { TRPCError } from "@trpc/server";
-import { desc, eq, isNotNull } from "drizzle-orm";
+import { desc, eq, isNotNull, ne } from "drizzle-orm";
 import { z } from "zod";
 import { getDb } from "../db";
 import {
@@ -600,6 +600,12 @@ export const skillsRouter = router({
       if (ctx.user.role !== "admin") throw new TRPCError({ code: "FORBIDDEN" });
       const db = await getDb();
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+      // Clear publishedAt on all other versions first so only one is ever "Live"
+      await db
+        .update(projectInstructionsVersions)
+        .set({ publishedAt: null })
+        .where(ne(projectInstructionsVersions.id, input.versionId));
+      // Now set publishedAt on the target version
       await db
         .update(projectInstructionsVersions)
         .set({ publishedAt: new Date() })

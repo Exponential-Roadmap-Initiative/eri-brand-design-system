@@ -949,7 +949,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
 
               <div className="rounded-md border border-border bg-muted/10 px-4 py-3">
                 <p className="text-xs text-muted-foreground">
-                  After copying, paste the text into the <strong className="text-foreground">ERI Shared Dev Assets</strong> project settings in Manus (Project Instructions field). Then come back and go to <button onClick={() => setActiveStep(3)} className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 3 →</button>
+                  Once you have copied the output, go to <button onClick={() => setActiveStep(3)} className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 3 — Apply to Manus →</button>
                 </p>
               </div>
             </div>
