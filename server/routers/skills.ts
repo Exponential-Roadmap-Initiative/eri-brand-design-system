@@ -307,7 +307,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     readWhen: "Before entering generate mode for any music generation task.",
     hasReferences: false,
   },
-// -- END_OF_SKILLS_METADATA --
+/* SKILLS_END */
 ];
 
 // ─── Filesystem helpers ──────────────────────────────────────────────────────
@@ -734,7 +734,7 @@ export const skillsRouter = router({
       // import.meta.dirname resolves to server/routers/ at runtime
       const filePath = path.resolve(import.meta.dirname, "skills.ts");
       const source = fs.readFileSync(filePath, "utf-8");
-      const insertMarker = "// -- END_OF_SKILLS_METADATA --";
+      const insertMarker = "/* SKILLS_END */";
       const markerIdx = source.lastIndexOf(insertMarker);
       if (markerIdx === -1) {
         throw new TRPCError({
@@ -878,18 +878,7 @@ export const skillsRouter = router({
       ].join("\n");
 
       // Insert before the unique end-of-array marker comment
-      const markerIdx = updatedSource.lastIndexOf("  // ── Auto-registered by syncMetadataFromFiles on 2026-06-10 ──
-  {
-    id: "tts-prompter",
-    name: "tts-prompter",
-    description: "MUST read this skill BEFORE entering generate mode for text-to-speech (TTS) tasks. Covers prompt crafting framework, separating spoken text from style instructions, and using markup tags vs natural language for emotions and non-speech sounds.",
-    tier: 3,
-    category: "process",
-    version: "1.0.0",
-    readWhen: "When working on tts-prompter-related tasks.",
-    hasReferences: false,
-  },
-// -- END_OF_SKILLS_METADATA --");
+      const markerIdx = updatedSource.lastIndexOf("/* SKILLS_END */");
       if (markerIdx !== -1) {
         updatedSource = updatedSource.slice(0, markerIdx) + newEntry + "\n" + updatedSource.slice(markerIdx);
         registered.push(dirName);
