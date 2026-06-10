@@ -952,28 +952,15 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 </p>
               </div>
 
-              {/* Copy + Record this version */}
-              <div className="flex gap-3">
-                <Button
-                  onClick={handleCopyOutput}
-                  variant="outline"
-                  className="flex-1 gap-2"
-                  disabled={charCount === 0}
-                >
-                  {copiedOutput ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
-                  {copiedOutput ? "Copied!" : `Copy output (${charCount.toLocaleString()} chars)`}
-                </Button>
-                {isAdmin && (
-                  <Button
-                    onClick={() => setMarkAppliedOpen(true)}
-                    className="flex-1 gap-2"
-                    disabled={charCount === 0}
-                  >
-                    <CheckCircle2 size={14} />
-                    Record this version
-                  </Button>
-                )}
-              </div>
+              {/* Copy output — Step 2 only copies. Recording happens in Step 3. */}
+              <Button
+                onClick={handleCopyOutput}
+                className="w-full gap-2"
+                disabled={charCount === 0}
+              >
+                {copiedOutput ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
+                {copiedOutput ? "Copied! Now go to Step 3 →" : `Copy output (${charCount.toLocaleString()} chars)`}
+              </Button>
 
               {charCount > CHAR_BUDGET && (
                 <div className="rounded-md bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 p-3">
@@ -983,10 +970,9 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 </div>
               )}
 
-              {/* Next step prompt */}
               <div className="rounded-md border border-border bg-muted/10 px-4 py-3">
                 <p className="text-xs text-muted-foreground">
-                  Once you have copied the output and pasted it into Manus, go to <button onClick={() => setActiveStep(3)} className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 3 — Apply to Manus</button> to record the version.
+                  After copying, paste the text into the <strong className="text-foreground">ERI Shared Dev Assets</strong> project settings in Manus (Project Instructions field). Then come back and go to <button onClick={() => setActiveStep(3)} className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 3 →</button>
                 </p>
               </div>
             </div>
@@ -999,7 +985,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               <div>
                 <p className="text-sm font-semibold text-foreground mb-1">Apply to Manus project settings</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Copy the output from Step 2 and paste it into the Manus project settings. This is what every agent will read at the start of each task.
+                  You have copied the output from Step 2. Now paste it into Manus and record the version here.
                 </p>
               </div>
 
@@ -1008,22 +994,15 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
                   <div>
-                    <p className="text-sm font-medium text-foreground">Copy the output</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">Go to <button onClick={() => setActiveStep(2)} className="font-medium text-foreground underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2</button> and click <span className="font-medium">Copy output</span>. This copies the full instructions text to your clipboard.</p>
+                    <p className="text-sm font-medium text-foreground">Paste into Manus project settings</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">In the <span className="font-medium">ERI Shared Dev Assets</span> project on Manus, open Settings and find the <span className="font-medium">Project Instructions</span> field. Replace its entire contents with the text you copied.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
                   <div>
-                    <p className="text-sm font-medium text-foreground">Open Manus project settings</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">In the ERI Shared Dev Assets project on Manus, click the settings icon. Find the <span className="font-medium">Project Instructions</span> field and replace its entire contents with the text you just copied.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
-                  <div>
                     <p className="text-sm font-medium text-foreground">Record the version here</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">Click the button below to save a snapshot. This keeps a record of what was applied and when.</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Click <span className="font-medium">Record this version</span> below to save a snapshot. This confirms what was applied and when.</p>
                   </div>
                 </div>
               </div>
