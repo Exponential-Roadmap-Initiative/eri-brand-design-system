@@ -57,10 +57,10 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-human-ai-collaboration",
     name: "eri-human-ai-collaboration",
-    description: ">-",
+    description: "Collaboration principles for ERI human-AI work. Activates peer-colleague mode: direct answers, named objections, calibrated confidence, no flattery. Includes the Decision Framework (merged from eri-decision): stop-and-present-options before non-trivial implementation, 2-3 option template, wait-for-user-choice hard stop, and Generic Architecture Check. Version: 2.0.0",
     tier: 1,
     category: "process",
-    version: "1.0.0",
+    version: "2.0.0",
     readWhen: "At the start of every ERI task where the quality of thinking matters.",
     hasReferences: false,
   },
@@ -98,11 +98,11 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-trpc",
     name: "eri-trpc",
-    description: "Canonical patterns for writing, structuring, and testing tRPC routers in the ERI eri-playbook-team codebase. Use when: creating a new router file, adding a procedure to an existing router, deciding between publicProcedure / protectedProcedure / adminProcedure, writing a custom middleware procedure, splitting an oversized router (over 150 lines), registering a new router in routers.ts, or writing a vitest test for a router. Also use when reviewing a router for correctness, security, or consist...",
+    description: "Canonical patterns for writing, structuring, and testing tRPC routers in the ERI eri-playbook-team codebase. Includes the 10-gate Code Quality pre-implementation checklist (merged from eri-code-quality). Use when: creating a new router file, adding a procedure, deciding between procedure types, writing middleware, splitting a router, registering a new router, writing vitest tests, or running the pre-implementation quality gate before writing any code. Version: 3.0.0",
     tier: 2,
     category: "platform",
-    version: "2.2.0",
-    readWhen: "Creating a new router file, adding a procedure, deciding between procedure types, writing middleware, or marking a procedure done.",
+    version: "3.0.0",
+    readWhen: "Creating a new router file, adding a procedure, deciding between procedure types, writing middleware, or running the pre-implementation quality gate before writing any code.",
     hasReferences: false,
   },
   {
@@ -138,11 +138,11 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-security",
     name: "eri-security",
-    description: ">",
-    tier: 2,
+    description: "Cyber security and data integrity best practices for SaaS web applications. Covers Trust & Security page, auth (OAuth + TOTP MFA + session management), workspace data isolation, API security (rate limiting, CSP, input validation), audit logging, vulnerability management, and security roadmap. Demoted to Tier 3 — only read when the task explicitly involves security architecture.",
+    tier: 3,
     category: "platform",
     version: "1.0.0",
-    readWhen: "Building or auditing a Trust & Security page, implementing auth, enforcing workspace isolation.",
+    readWhen: "Building a Trust & Security page from scratch, implementing auth or MFA, auditing workspace isolation, or conducting a security review.",
     hasReferences: true,
   },
   {
@@ -168,11 +168,11 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "persistent-computing",
     name: "persistent-computing",
-    description: "MUST read when user needs to run persistent services that WebDev or the default sandbox may not support (automation scripts, game servers, self-hosted open-source apps), or requires Docker, fixed IP, background jobs, heavy compute, or a reusable environment across sessions. MUST also read before deploying a resource-intensive service to an attached persistent VM. Guides persistent computing solutions vs sandbox vs WebDev.",
-    tier: 2,
+    description: "MUST read when user needs to run persistent services that WebDev or the default sandbox may not support (automation scripts, game servers, self-hosted open-source apps), or requires Docker, fixed IP, background jobs, heavy compute, or a reusable environment across sessions. MUST also read before deploying a resource-intensive service to an attached persistent VM. Guides persistent computing solutions vs sandbox vs WebDev. Demoted to Tier 3 — only read when persistent infrastructure is explicitly required.",
+    tier: 3,
     category: "process",
     version: "1.0.0",
-    readWhen: "When user needs persistent services, Docker, fixed IP, background jobs, or a reusable environment.",
+    readWhen: "User explicitly needs Docker, fixed IP, persistent background services, heavy compute, or a reusable VM environment across sessions.",
     hasReferences: true,
   },
   {
@@ -247,36 +247,9 @@ export const SKILLS_METADATA: SkillMeta[] = [
     hasReferences: true,
   },
 
-  {
-    id: "eri-ueil-nav",
-    name: "eri-ueil-nav",
-    description: "Pattern for adding per-row inline widget navigation to the UEIL Company Data Lookup table (UeilDataCoverageWidget.tsx) in the eri-playbook-team project. Use when implementing or extending the 'click a linked source row → view its widget inline' feature for any of the 14 data sources (SBTi, CDP, TPI, NZT, LobbyMap, SME, SRN, B-Corp, Wikidata, GLEIF, LinkedIn, Klimatkollen, Bolagsverket, ESEF). Covers state management, widget map, back-navigation, and the exact source-name cell change.",
-    tier: 3,
-    category: "platform",
-    version: "1.0.0",
-    readWhen: "Implementing or extending the click-a-source-row → view-widget-inline feature.",
-    hasReferences: false,
-  },
-  {
-    id: "eri-decision",
-    name: "eri-decision",
-    description: "Framework for preventing tunnel vision when implementing solutions. Use when starting any non-trivial implementation, user says 'think about this first', or user references this skill to remind you to present options before coding.",
-    tier: 3,
-    category: "process",
-    version: "1.1.0",
-    readWhen: "Starting any non-trivial implementation, when the user says 'think about this first', or before implementing any new feature to check for reusability.",
-    hasReferences: false,
-  },
-  {
-    id: "eri-code-quality",
-    name: "eri-code-quality",
-    description: "Pre-implementation checklist (10 gates) for the eri-playbook-team codebase. Prevents new technical debt. Run before writing any code. Results must be pasted into the response — not mentally ticked. Covers: no as-any, no unauthenticated mutations, mandatory pagination, transactions for multi-write ops, tests for new routers, no hardcoded secrets, Drizzle array-destructure, frontend architecture (incl. search-first for components and useTabState hook), content ownership, file placement and db.t...",
-    tier: 3,
-    category: "process",
-    version: "2.2.0",
-    readWhen: "Before writing any code in the eri-playbook-team project.",
-    hasReferences: false,
-  },
+  // RETIRED: eri-ueil-nav merged into eri-data-source-explorer v1.2.0 (2026-06-10)
+  // RETIRED: eri-decision merged into eri-human-ai-collaboration v2.0.0 (2026-06-10)
+  // RETIRED: eri-code-quality merged into eri-trpc v3.0.0 (2026-06-10)
   {
     id: "manus-api",
     name: "manus-api",
