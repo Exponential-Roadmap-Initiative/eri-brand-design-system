@@ -147,11 +147,8 @@
 
 ## Project instructions + bds-meta.json updates (2026-04-24)
 
-- [ ] Update Manus project instructions to reference eri-bds-reference v2.1.0 (requires manual UI update — no project.update API endpoint)
-- [ ] Add noHardcodedGreys: true to HAL bds-meta.json (HAL fetch failed — site may be down; JSON prepared at /home/ubuntu/bds-meta-updates/hal-bds-meta.json)
-- [ ] Add noHardcodedGreys: true to PSM bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/psm-bds-meta.json)
-- [ ] Add noHardcodedGreys: true to Taxonomy bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/taxonomy-bds-meta.json)
-- [ ] Add noHardcodedGreys: true to Framework bds-meta.json (JSON prepared at /home/ubuntu/bds-meta-updates/framework-bds-meta.json; also needs systemOps/brand/layout blocks added)
+- [x] ~~Update Manus project instructions to reference eri-bds-reference v2.1.0~~ — superseded; project instructions now use CDN-based system, current version is v3.11.1
+- [x] ~~Add noHardcodedGreys: true to HAL/PSM/Taxonomy/Framework bds-meta.json~~ — stale; prepared JSON files from April 2026 never applied; external projects require separate access
 - [x] Save checkpoint
 
 ## Schema versioning + changelog endpoint (2026-04-24)
