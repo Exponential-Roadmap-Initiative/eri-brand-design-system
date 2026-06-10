@@ -975,6 +975,6 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update CURRENT_INSTRUCTIONS constant to match new Generator output (3,427 chars, 42.8% of budget)
 - [x] Update SYNC_PROMPT to reference new `Critical: Follow this workflow...` starting text
 - [x] Run tests: pnpm vitest run server/skills.test.ts
-- [ ] Save checkpoint
+- [x] Save checkpoint
 - [ ] Mark as Applied + Publish to API (click in UI)
-- [ ] Update CODEBASE-CONTEXT.md with session notes
+- [x] Update CODEBASE-CONTEXT.md with session notes

@@ -1266,3 +1266,38 @@ The Project Instructions page (`/project-instructions`) was redesigned to be wor
 
 ### Checkpoint
 - `30e02ce2` — workflow redesign complete
+
+---
+
+## Session update — 2026-06-10 (compact rewrite)
+
+### Project Instructions compact rewrite — complete
+
+The project instructions were compacted from 5,488 chars (68.6% of budget) to **3,427 chars (42.8% of budget)** — saving 2,061 chars.
+
+**Changes made:**
+
+1. **All 22 Tier 2 + Tier 3 `readWhen` values** in `SKILLS_METADATA` (`server/routers/skills.ts`) shortened to concise trigger phrases (e.g. `"New router, new procedure, procedure type decision, quality gate before writing code."` instead of the long sentence).
+
+2. **`FIXED_SECTIONS` array** in `ProjectInstructions.tsx` collapsed from 6 separate "Critical:" sections to a single `S_ERI_WORKFLOW` section (1,284 chars):
+   - Old: `S_BDS_UPDATE` (285) + `S_PROJECT_CONTEXT` (570) + `S_CHECKPOINT` (480) + `S_DEV_WORKFLOW` (257) + `S_INSTRUCTIONS_UPDATE` (220) = 1,812 chars in 5 sections
+   - New: single 8-step numbered workflow where step 1 = "Load current state" (all 4 startup actions combined)
+   - The optional `S_FRAMEWORK` section (530 chars, defaultOn: false) is unchanged
+
+3. **Generator assembly** updated: removed the redundant `skillsBlock` scan header (was `"Critical: At the start of every task, scan the skills..."`) since that instruction is now embedded in step 1 of the workflow. `skillsBlock` now emits just the tier blocks directly.
+
+4. **`CURRENT_INSTRUCTIONS` constant** updated to match the new Generator output exactly (verified ✅ MATCH at 3,427 chars).
+
+5. **`SYNC_PROMPT`** updated to reference the new `Critical: Follow this workflow...` starting text.
+
+### Known state after this session
+
+- `CURRENT_INSTRUCTIONS` in `ProjectInstructions.tsx` now matches the Generator output (3,427 chars)
+- DB-stored instructions text is still the old 5,488-char version (stale) — shows as Medium audit issue in Status tab
+- **To fix**: click "Copy sync prompt" on the Status tab → paste into new ERI Shared Dev Assets task → run it
+- After sync: the Status tab will show 0 issues and the stale-sync audit issue will clear
+- **Then**: click "Mark as Applied" in Generator tab (add change note "compact rewrite: 5488→3427 chars, workflow-first structure"), then click "Publish to API" in Version History
+
+### Checkpoint
+
+- `f5c74a04` — compact rewrite complete, 36/36 tests passing

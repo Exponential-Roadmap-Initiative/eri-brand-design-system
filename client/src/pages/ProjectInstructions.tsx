@@ -558,8 +558,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
   const pipelineSteps: PipelineStep[] = useMemo(() => [
     {
       id: 1,
-      label: "1. Generate",
-      sublabel: "Assemble skill triggers + Fixed Sections",
+      label: "1. Compose",
+      sublabel: "Assemble workflow + skill triggers",
       status: charCount > CHAR_BUDGET * 0.9 ? "error" : "done",
       statusText: charCount > CHAR_BUDGET * 0.9
         ? `Over budget: ${charCount.toLocaleString()} / ${CHAR_BUDGET.toLocaleString()} chars`
