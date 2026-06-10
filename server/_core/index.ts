@@ -48,14 +48,14 @@ async function startServer() {
   // Update SKILL_LATEST_URL when releasing a new skill version.
   // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/ABOYpaqvKYWtvtJP.md"; // v3.11.0 — Vite pre-bundle cache critical rule; /new-project page documented
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/zuJbeOCbKWpbbXcH.md"; // v3.11.1 — CODEBASE-CONTEXT.md migration guard: Step 1 now uses CODEBASE-CONTEXT.md with mv rename fallback
   app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
   app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    res.json({ url: SKILL_LATEST_URL, version: "3.11.0" }); // v3.11.0 — Vite pre-bundle cache critical rule; /new-project page documented
+    res.json({ url: SKILL_LATEST_URL, version: "3.11.1" }); // v3.11.1 — CODEBASE-CONTEXT.md migration guard: Step 1 now uses CODEBASE-CONTEXT.md with mv rename fallback
   });
   // ── Project instructions latest ─────────────────────────────────────────────
   // Returns the most recently published project instructions snapshot as plain text.

@@ -907,12 +907,15 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] 22/22 tests passing
 
 ## Rename PROJECT-CONTEXT.md → CODEBASE-CONTEXT.md (2026-06-08)
-- [ ] Rename PROJECT-CONTEXT.md to CODEBASE-CONTEXT.md in this repository
-- [ ] Update all references in Philosophy.tsx (GovernanceDiagram + codebase layer assets)
-- [ ] Update all references in Skills.tsx (GovernanceDiagram)
-- [ ] Update eri-bds-reference skill — all mentions of PROJECT-CONTEXT.md
-- [ ] Update Manus project instructions via manus-config
-- [ ] Save checkpoint
+- [x] Rename PROJECT-CONTEXT.md to CODEBASE-CONTEXT.md in this repository (already done, confirmed no old file)
+- [x] Update all references in Philosophy.tsx (GovernanceDiagram + codebase layer assets) — no PROJECT-CONTEXT.md refs found in client/src
+- [x] Update all references in Skills.tsx (GovernanceDiagram) — no PROJECT-CONTEXT.md refs found in client/src
+- [x] Update eri-bds-reference skill — all mentions of PROJECT-CONTEXT.md (v3.11.1, CDN updated)
+- [x] Update eri-trpc skill — PROJECT-CONTEXT.md reference (v3.0.1)
+- [x] Update data-source-integration skill — PROJECT-CONTEXT.md reference (v1.1.1)
+- [x] Update Manus project instructions via manus-config (done in previous session, published)
+- [x] SKILLS_METADATA versions updated: eri-bds-reference 3.11.1, eri-trpc 3.0.1, data-source-integration 1.1.1
+- [x] Save checkpoint
 
 ## ERI Skills Governance System (2026-06-10)
 - [x] Skills consolidation: eri-code-quality merged into eri-trpc v3.0.0
