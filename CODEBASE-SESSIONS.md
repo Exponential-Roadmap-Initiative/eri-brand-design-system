@@ -581,3 +581,14 @@ Calling http://localhost:3000/api/agent/skill-sync ...
 ### Remaining pending work
 - [ ] Publish BDS site (click Publish button in Management UI)
 - [ ] Add eri-skill-creator v2.7.0 to ERI Shared Dev Assets project skills (Step 10)
+
+---
+
+## v3.25.0 — Tab reorder (2026-06-11)
+
+### What was done
+- Reordered tab bar to match Overview page card order: Overview → Governance → Skills → Project Instructions → Brand Design System → Project Alignment Tracker → New Web Project → Team Guide
+- Confirmed ProjectInstructions.tsx parse error at 15:25:48 was stale (fixed by HMR at 15:26:08)
+
+### Files changed
+- client/src/App.tsx — tabs array reordered

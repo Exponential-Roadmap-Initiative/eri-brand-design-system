@@ -26,12 +26,12 @@ function TabNav() {
   const [location] = useLocation();
   const tabs = [
     { href: "/",                      label: "Overview" },
-    { href: "/brand-design-system",   label: "Brand Design System" },
-    { href: "/tracker",               label: "Project Alignment Tracker" },
-    { href: "/new-webproject",        label: "New Web Project" },
     { href: "/governance",            label: "Governance" },
     { href: "/skills",                label: "Skills" },
     { href: "/project-instructions",  label: "Project Instructions" },
+    { href: "/brand-design-system",   label: "Brand Design System" },
+    { href: "/tracker",               label: "Project Alignment Tracker" },
+    { href: "/new-webproject",        label: "New Web Project" },
     { href: "/team-guide",            label: "Team Guide" },
   ];
   return (
