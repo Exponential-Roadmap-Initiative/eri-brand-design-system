@@ -119,14 +119,21 @@ export default function BdsNavDrawer({ open, onClose }: BdsNavDrawerProps) {
           {/* Page links */}
           <div className="mt-4 pt-4 border-t border-border flex flex-col gap-0.5">
             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 pb-1">
-              Other pages
+              All pages
             </p>
             <a
-              href="/new-webproject"
+              href="/"
               onClick={onClose}
               className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
             >
-              New Web Project
+              Overview
+            </a>
+            <a
+              href="/brand-design-system"
+              onClick={onClose}
+              className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
+            >
+              Brand Design System
             </a>
             <a
               href="/governance"
@@ -162,6 +169,13 @@ export default function BdsNavDrawer({ open, onClose }: BdsNavDrawerProps) {
               className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
             >
               Project Alignment Tracker
+            </a>
+            <a
+              href="/new-webproject"
+              onClick={onClose}
+              className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
+            >
+              New Web Project
             </a>
           </div>
           {/* External links */}

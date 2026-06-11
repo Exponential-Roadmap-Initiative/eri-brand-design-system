@@ -1212,7 +1212,7 @@ export default function Skills() {
             ERI SKILL ECOSYSTEM
           </p>
           <h1 className="text-3xl font-bold tracking-tight mb-4">Skills — Operational Knowledge System</h1>
-          <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. Use the filter controls below to browse the registry by tier, category, or ecosystem." />
+          <PageGuide text="These 25 knowledge modules are ERI's accumulated expertise, encoded so it cannot be lost and improves automatically after every task. Each skill captures how a specific type of work should be done — built from real decisions and real deliverables, not theory. Use the filters to explore by tier, category, or ecosystem." />
           <p className="text-sm text-white/60 leading-relaxed mt-3 max-w-2xl">
             The Exponential Platform covers more than 52,000 companies in its data lake. This skills ecosystem is the institutional knowledge layer that ensures every task — whether building a new data pipeline, drafting a member report, or extending the platform — is executed at the quality that mission demands.
           </p>

@@ -998,3 +998,16 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update task lifecycle to show 8-step workflow (not 6-step)
 - [x] Add three-layer governance model section (Activation → Accountability → Curation)
 - [x] Update project instructions section text and link (/skills → /project-instructions)
+
+## External-facing landing page & site-wide readability (2026-06-11)
+- [x] Create Overview.tsx landing page at /
+- [x] Move Brand Design System from / to /brand-design-system in App.tsx
+- [x] Add "Overview" tab as first tab in TabNav, rename BDS tab
+- [x] Update BdsNavDrawer to include Overview link and fix BDS anchor links to /brand-design-system
+- [x] Rewrite Governance page guide for external audience
+- [x] Rewrite Skills page guide for external audience
+- [x] Rewrite Project Instructions page guide for external audience
+- [x] Rewrite BrandDesignSystem page guide for external audience
+- [x] Update index.html meta description for external visitors
+- [x] Fix stale / link in AlignmentTracker.tsx (BDS reference link)
+- [x] Fix stale eri-code-quality reference in NewProject.tsx TRACK2_INSTRUCTIONS

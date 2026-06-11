@@ -5,6 +5,7 @@ import { Route, Switch, Link, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import BrandDesignSystem from "./pages/BrandDesignSystem";
+import Overview from "./pages/Overview";
 import AlignmentTracker from "./pages/AlignmentTracker";
 import NewProject from "./pages/NewProject";
 import TeamGuide from "./pages/TeamGuide";
@@ -24,7 +25,8 @@ const APP_VERSION = "V.2026.06.08";
 function TabNav() {
   const [location] = useLocation();
   const tabs = [
-    { href: "/",                      label: "Brand Design System" },
+    { href: "/",                      label: "Overview" },
+    { href: "/brand-design-system",   label: "Brand Design System" },
     { href: "/tracker",               label: "Project Alignment Tracker" },
     { href: "/new-webproject",        label: "New Web Project" },
     { href: "/governance",            label: "Governance" },
@@ -88,7 +90,8 @@ function Router() {
       <BdsNavDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <Switch>
-        <Route path={"/"} component={BrandDesignSystem} />
+        <Route path={"/"} component={Overview} />
+        <Route path={"/brand-design-system"} component={BrandDesignSystem} />
         <Route path={"/tracker"} component={AlignmentTracker} />
         <Route path={"/new-webproject"} component={NewProject} />
         <Route path={"/governance"} component={Governance} />

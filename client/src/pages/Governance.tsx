@@ -399,7 +399,7 @@ export default function Governance() {
             How ERI Works<br />
             <span className="text-[#93E07D]">with AI</span>
           </h1>
-          <PageGuide text="This page explains the operating model for human–AI collaboration at ERI — a system designed to get better with every task completed. Read the four governance layers to understand the architecture. Read the self-improving system to understand the principle at its heart. Use the Further Reading section to explore the broader field of AI-native engineering governance." />
+          <PageGuide text="This is how ERI ensures that every task — from building a data pipeline to drafting a member report — is executed with the same rigour and institutional knowledge, regardless of who starts it. No technical background required: the page is written for the whole team and for anyone who wants to understand ERI's approach to AI-native operations." />
         </div>
       </section>
 

@@ -672,7 +672,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
           <h1 className="text-3xl font-extrabold font-archivo tracking-tight mb-4">
             Project <span style={{ color: "#93E07D" }}>Instructions</span>
           </h1>
-          <PageGuide text="This page guides you through keeping the project instructions healthy. Click any step to see what needs to be done and how to do it. Green means complete; amber means action needed." />
+          <PageGuide text="The standing brief that every Manus AI agent reads before starting any ERI task. It encodes the team's operating principles, quality standards, and governance rules. This page shows the current state of that brief and guides the team through keeping it up to date." />
           <p className="text-sm mt-3 max-w-2xl" style={{ color: "rgba(255,255,255,0.6)", lineHeight: "1.6" }}>
             Project instructions are the standing brief that every Manus agent reads before starting any ERI task. They encode the team's operating principles, quality standards, and governance rules — ensuring that work on a platform serving more than 52,000 companies is always executed to the same standard, regardless of who initiates the task.
           </p>

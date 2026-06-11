@@ -382,7 +382,7 @@ export default function BrandDesignSystem() {
           <h1 className="font-archivo text-4xl md:text-5xl font-extrabold mb-4">
             Brand Design System
           </h1>
-          <PageGuide text="This page is the canonical reference for every ERI web project. Use the sticky navigator on the left to jump to any section. When building a new ERI product, read the Tokens, Typography, Logo Usage, and Component sections first — they contain the exact values your implementation must match. The Alignment Tracker tab shows you how to verify compliance." />
+          <PageGuide text="The single source of truth for all visual, verbal, and component decisions across ERI digital products. This reference ensures that every ERI web application — from the Exponential Platform to the Trust Centre — looks, feels, and communicates as one coherent brand. Use the navigator on the left to jump to any section." />
           <p className="text-xl text-muted-foreground max-w-3xl mt-6">
             The definitive guide to the Exponential Roadmap Initiative visual and verbal identity.
             The purpose of the system is to enable consistency, quality, and integrity across all touch points.

@@ -79,7 +79,7 @@ Critical: This is a Track 2 ERI full-stack application. Read https://bds.exponen
 Critical: Always follow the ERI development workflow: 1. Research: clarify purpose, understand current context and existing assets, explore possible solutions. 2. Design. 3. Plan and get acceptance for plan. 4. Implement. 5. Test. 6. Iterate until solution works.
 
 Critical: Before writing any code, scan the skills listed in the system prompt and identify which ones apply to this task. Read the full SKILL.md for each relevant skill. Key skills for a Track 2 full-stack application:
-- eri-code-quality: Run the 10-gate pre-implementation checklist before writing any code
+- eri-trpc: Run the 10-gate pre-implementation checklist before writing any code (eri-code-quality has been merged into eri-trpc)
 - eri-trpc: Canonical patterns for tRPC routers — use paginationSchema, never private getDb()
 - eri-database: Schema design, index strategy, migration safety, anti-patterns
 - eri-user-management: Workspace isolation, invite flows, role management
