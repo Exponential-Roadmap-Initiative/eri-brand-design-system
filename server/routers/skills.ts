@@ -109,7 +109,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-bds-components",
     name: "eri-bds-components",
-    description: "Full component prop reference for @eri/components. Use when building or modifying EriPageLayout, EriAppHeader, EriAppFooter, EriHeroSection, EriStatusBadge, or EriContactUsButton; adding a new ERI web app; implementing the nav overlay/drawer; setting up the footer; implementing Contact Us integration; or setting up the cross-site theme system. Covers: install + version auto-sync, all six standard components with full prop tables, integration notes, canonical App.tsx pattern, nav overlay rules, hero section layout, web app header anatomy, favicon spec, hero images CDN table, key CDN asset URLs, footer standard, Contact Us integration (URL pattern, registered source IDs), cross-site theme system, layout wrapper pattern, and bds-meta.json full schema. Templates: NavDrawer.tsx, ThemeContext.tsx. Version: 1.2.0",
+    description: "Full component prop reference for @eri/components. Use when building or modifying EriPageLayout, EriAppHeader, EriAppFooter, EriHeroSection, EriStatusBadge, or EriContactUsButton; adding a new ERI web app; implementing the nav overlay/drawer; setting up the footer; implementing Contact Us integration; or setting up the cross-site theme system. Covers: install + version auto-sync, all six standard components with full prop tables, integration notes, canonical App.tsx pattern, nav overlay rules...",
     tier: 2,
     category: "brand",
     version: "1.2.0",
@@ -260,7 +260,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-pdf-pipeline",
     name: "eri-pdf-pipeline",
-    description: "PDF ingestion, extraction, storage, and multi-consumer access patterns for ERI full-stack applications. Use whenever: designing or modifying how corporate reports (annual, sustainability, transition plan) are fetched, parsed, cached, or served to consumers; deciding between parser options (unpdf vs file_url vs third-party); implementing keyword-based page selection for long documents; designing a two-pass extract-then-classify pipeline; building a document registry or extract store; enabling ...",
+    description: "PDF ingestion, extraction, storage, and multi-consumer access patterns for ERI full-stack applications. Use whenever: designing or modifying how corporate reports (annual, sustainability, transition plan) are fetched, parsed, cached, or served to consumers; deciding between parser options (unpdf vs file_url vs third-party); building a document registry or extract store; enabling the Earth-aligned Agent, CPR tool, or any other application to query PDF content without re-parsing; or investigati...",
     tier: 3,
     category: "data",
     version: "2.0.0",
@@ -311,6 +311,17 @@ export const SKILLS_METADATA: SkillMeta[] = [
     version: "1.0.0",
     readWhen: "Any text-to-speech or voice generation task.",
     hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-06-11 --
+  {
+    id: "eri-job-status-modal",
+    name: "eri-job-status-modal",
+    description: "Canonical pattern for background job status modals in ERI applications. Use whenever: building a Run Now button that triggers a background pipeline, adding a status dialog for any async job, replacing an existing ad-hoc progress modal, or debugging a status modal that only shows the current stage instead of all stages. The canonical component is JobStatusModal in client/src/components/JobStatusModal.tsx. Scope: scheduler-backed pipelines only (getPipelineStatus). SyncStatusDialog (sbtiStream ...",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on eri-job-status-modal-related tasks.",
+    hasReferences: true,
   },
 /* SKILLS_END */
 ];
@@ -391,6 +402,152 @@ function enrichWithFrontmatter(meta: SkillMeta): SkillMeta {
     name: fm.name ?? meta.name,
     description: fm.description ?? meta.description,
     version: fm.version ?? meta.version,
+  };
+}
+
+// ─── Standalone sync implementation (exported for use by the agent REST endpoint) ─
+export async function syncMetadataFromFilesImpl() {
+  const skillsDir = path.resolve("/home/ubuntu/skills");
+  const filePath = path.resolve(import.meta.dirname, "skills.ts");
+  let source = fs.readFileSync(filePath, "utf-8");
+
+  type Change = { id: string; field: string; from: string; to: string };
+  const changes: Change[] = [];
+  const registered: string[] = [];
+  let updatedSource = source;
+
+  const parseFmField = (fm: string, field: string): string | null => {
+    const re = new RegExp(`^${field}:\s*(.+)$`, "m");
+    const m = fm.match(re);
+    if (!m) return null;
+    return m[1].trim().replace(/^"|"$/g, "").replace(/^'|'$/g, "");
+  };
+
+  // Pass 1: update existing entries
+  for (const skill of SKILLS_METADATA) {
+    const skillMdPath = path.join(skillsDir, skill.id, "SKILL.md");
+    if (!fs.existsSync(skillMdPath)) continue;
+    const content = fs.readFileSync(skillMdPath, "utf-8");
+    const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+    if (!fmMatch) continue;
+    const fm = fmMatch[1];
+    const fmVersion = parseFmField(fm, "version");
+    const fmName = parseFmField(fm, "name");
+    const fmDescription = parseFmField(fm, "description");
+    const replaceField = (field: string, oldVal: string, newVal: string) => {
+      const escaped = oldVal.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const re = new RegExp(`(id: "${skill.id}"[\\s\\S]*?${field}: ")${escaped}(")`, "m");
+      if (re.test(updatedSource)) {
+        updatedSource = updatedSource.replace(re, `$1${newVal}$2`);
+        changes.push({ id: skill.id, field, from: oldVal, to: newVal });
+      }
+    };
+    if (fmVersion && fmVersion !== skill.version) replaceField("version", skill.version, fmVersion);
+    if (fmName && fmName !== skill.name) replaceField("name", skill.name, fmName);
+    if (fmDescription && fmDescription !== skill.description) {
+      const truncated = fmDescription.length > 500 ? fmDescription.slice(0, 497) + "..." : fmDescription;
+      if (truncated !== skill.description) replaceField("description", skill.description, truncated.replace(/"/g, "'"));
+    }
+  }
+
+  // Pass 2: auto-register new skills
+  const registeredIds = new Set(SKILLS_METADATA.map((s) => s.id));
+  let skillDirs: string[] = [];
+  try {
+    skillDirs = fs.readdirSync(skillsDir).filter((d) => {
+      if (d.startsWith("_") || d.startsWith(".")) return false;
+      const full = path.join(skillsDir, d);
+      return fs.statSync(full).isDirectory() && fs.existsSync(path.join(full, "SKILL.md"));
+    });
+  } catch { skillDirs = []; }
+
+  for (const dirName of skillDirs) {
+    if (registeredIds.has(dirName)) continue;
+    try {
+      const checkContent = fs.readFileSync(path.join(skillsDir, dirName, "SKILL.md"), "utf-8");
+      if (checkContent.match(/^---[\s\S]*?retired:\s*true[\s\S]*?---/m)) continue;
+    } catch { /* skip */ }
+    const content = fs.readFileSync(path.join(skillsDir, dirName, "SKILL.md"), "utf-8");
+    const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+    const fm = fmMatch ? fmMatch[1] : "";
+    const fmName = parseFmField(fm, "name") ?? dirName;
+    const fmVersion = parseFmField(fm, "version") ?? "1.0.0";
+    const fmDescription = parseFmField(fm, "description") ?? `${fmName} skill.`;
+    const fmTierRaw = parseFmField(fm, "tier");
+    const fmTier = fmTierRaw === "1" ? 1 : fmTierRaw === "2" ? 2 : 3;
+    const fmCategory = parseFmField(fm, "category") ?? "process";
+    const fmReadWhen = parseFmField(fm, "readWhen") ?? `When working on ${fmName}-related tasks.`;
+    const fmHasReferences = fs.existsSync(path.join(skillsDir, dirName, "references"));
+    const descTruncated = fmDescription.length > 500 ? fmDescription.slice(0, 497) + "..." : fmDescription;
+    const newEntry = [
+      `  // -- Auto-registered by syncMetadataFromFiles on ${new Date().toISOString().slice(0, 10)} --`,
+      `  {`,
+      `    id: "${dirName}",`,
+      `    name: "${fmName.replace(/"/g, "'")}",`,
+      `    description: "${descTruncated.replace(/"/g, "'")}",`,
+      `    tier: ${fmTier},`,
+      `    category: "${fmCategory}",`,
+      `    version: "${fmVersion}",`,
+      `    readWhen: "${fmReadWhen.replace(/"/g, "'")}",`,
+      `    hasReferences: ${fmHasReferences},`,
+      `  },`,
+    ].join("\n");
+    const markerIdx = updatedSource.indexOf("/* SKILLS_END */");
+    if (markerIdx !== -1) {
+      updatedSource = updatedSource.slice(0, markerIdx) + newEntry + "\n" + updatedSource.slice(markerIdx);
+      registered.push(dirName);
+    }
+  }
+
+  if (changes.length > 0 || registered.length > 0) fs.writeFileSync(filePath, updatedSource, "utf-8");
+
+  // Sync orchestrator skill index
+  try {
+    const orchestratorPath = path.join(skillsDir, "eri-skills-orchestrator", "SKILL.md");
+    if (fs.existsSync(orchestratorPath)) {
+      const allSkills = SKILLS_METADATA;
+      const tier1 = allSkills.filter(s => s.tier === 1).map(s => s.id).join(", ");
+      const tier2 = allSkills.filter(s => s.tier === 2).map(s => s.id).join(", ");
+      const tier3 = allSkills.filter(s => s.tier === 3).map(s => s.id).join(", ");
+      const today = new Date().toISOString().slice(0, 10);
+      const newBlock = [
+        "<!-- ORCHESTRATOR_SKILLS_START -->",
+        "<!-- Auto-generated skill index -- do not edit manually -->",
+        `<!-- Last synced: ${today} -->`,
+        "",
+        "**All active skills by tier:**",
+        "",
+        `Tier 1 (always read): ${tier1}`,
+        "",
+        `Tier 2 (read before the indicated action): ${tier2}`,
+        "",
+        `Tier 3 (read when the domain applies): ${tier3}`,
+        "<!-- ORCHESTRATOR_SKILLS_END -->",
+      ].join("\n");
+      let orchContent = fs.readFileSync(orchestratorPath, "utf-8");
+      const orchStart = orchContent.indexOf("<!-- ORCHESTRATOR_SKILLS_START -->");
+      const orchEnd = orchContent.indexOf("<!-- ORCHESTRATOR_SKILLS_END -->");
+      if (orchStart !== -1 && orchEnd !== -1) {
+        orchContent = orchContent.slice(0, orchStart) + newBlock + orchContent.slice(orchEnd + "<!-- ORCHESTRATOR_SKILLS_END -->".length);
+        fs.writeFileSync(orchestratorPath, orchContent, "utf-8");
+      }
+    }
+  } catch { /* non-fatal */ }
+
+  const totalActions = changes.length + registered.length;
+  return {
+    success: true,
+    changesCount: changes.length,
+    registeredCount: registered.length,
+    changes,
+    registered,
+    message: totalActions === 0
+      ? "SKILLS_METADATA is already in sync with the skill files."
+      : [
+          changes.length > 0 ? `Updated ${changes.length} field(s) in existing entries.` : "",
+          registered.length > 0 ? `Auto-registered ${registered.length} new skill(s): ${registered.join(", ")}.` : "",
+          "Restart the dev server for changes to take effect.",
+        ].filter(Boolean).join(" "),
   };
 }
 

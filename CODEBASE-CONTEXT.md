@@ -1013,3 +1013,55 @@ Completed all remaining eri-skill-creator steps that were skipped in v3.20.0 and
 - **Log improvement** on BDS Skills page for `eri-bds-reference` v4.2.0: "Added closing HARD STOP for Project Alignment Checklist; updated description to cover fixes and audits"
 - **Log improvement** on BDS Skills page for `eri-bds-components` v1.2.0: "Added most-common-error callout for showThemeToggle/headerTheme; added pointer to setup checklist at top"
 - **Send eri-skill-creator v2.5.0 as attachment** (Step 10 for the skill-creator improvement itself)
+
+---
+
+## v3.23.0 — Automated Skill Sync: /api/agent/skill-sync endpoint + sync_skills.sh (2026-06-11)
+
+### Problem solved
+
+The eri-skill-creator process required manual button clicks on the BDS Skills page to:
+1. Log improvement entries (click "Log Improvement" on each skill card)
+2. Sync SKILLS_METADATA from SKILL.md frontmatters (click "Sync Metadata")
+
+This was never going to happen reliably. The fix: a pre-shared-secret REST endpoint that agents call directly.
+
+### Changes
+
+**`server/_core/env.ts`** — Added `agentSecret: process.env.BDS_AGENT_SECRET` to the env object.
+
+**`server/_core/index.ts`** — Added `POST /api/agent/skill-sync` endpoint:
+- Authenticates via `BDS_AGENT_SECRET` in request body (no session cookie required)
+- Calls `syncMetadataFromFilesImpl()` from `server/routers/skills.ts`
+- Inserts improvement log entries into `skill_improvements` table for each `{ skillId, version, summary, taskContext }` in the `improvements` array
+- Returns `{ success, syncResult, logged, loggedSkills, errors }`
+
+**`server/routers/skills.ts`** — Extracted `syncMetadataFromFilesImpl()` as a named export (was inline in the tRPC mutation). The tRPC mutation now calls the exported function.
+
+**`/home/ubuntu/skills/eri-skill-creator/scripts/sync_skills.sh`** — New script. Usage:
+```bash
+BDS_AGENT_SECRET="<secret>" \
+bash /home/ubuntu/skills/eri-skill-creator/scripts/sync_skills.sh \
+  --skill eri-bds-reference --version 4.2.0 --summary "What changed and why" \
+  --skill eri-skill-creator  --version 2.6.0 --summary "What changed and why" \
+  --task-context "Session name or date"
+```
+
+**`/home/ubuntu/skills/eri-skill-creator/SKILL.md`** v2.6.0 — Step 8 now calls the script instead of Path A/B manual editing. Post-task reflection step 4 calls the script instead of "click Log Improvement". Known Failure Patterns updated.
+
+### BDS_AGENT_SECRET
+
+Set in the BDS project environment via `webdev_request_secrets`. Value is a 64-char hex string. Agents must ask the user for the secret value when running the script from a non-BDS task (it is not in the shared project files — it is an env var in the BDS webdev project).
+
+### Test result
+
+```
+Calling http://localhost:3000/api/agent/skill-sync ...
+✓ Sync: SKILLS_METADATA is already in sync with the skill files.
+✓ Improvements logged: 1
+```
+
+### Remaining pending work
+
+- [ ] Publish BDS site (click Publish button in Management UI) — includes the new /api/agent/skill-sync endpoint
+- [ ] Add BDS_AGENT_SECRET to the eri-skill-creator SKILL.md instructions as a note about where to find it (Secrets panel in BDS Management UI)

@@ -1051,3 +1051,21 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Step 10: Delivered both skill files as attachments; user confirmed added to Manus platform
 - [x] Post-task Reflection: eri-skill-creator v2.5.0 — added "Treating Step 10 as optional" to §10
 - [x] Update CODEBASE-CONTEXT.md with v3.22.0 session record
+
+## Automated skill sync — v3.23.0 (2026-06-11)
+- [x] Add BDS_AGENT_SECRET env var to env.ts
+- [x] Add POST /api/agent/skill-sync endpoint to index.ts
+- [x] Extract syncMetadataFromFilesImpl() as named export from skills.ts
+- [x] Write sync_skills.sh script to eri-skill-creator/scripts/
+- [x] Update eri-skill-creator SKILL.md v2.6.0: Step 8 calls script, post-task reflection calls script
+- [x] Test endpoint and script end-to-end (logged 5 improvements across 4 skills)
+- [x] Update CODEBASE-CONTEXT.md with v3.23.0 session record
+
+## Automated skill sync — v3.23.0 (2026-06-11)
+- [x] Add BDS_AGENT_SECRET env var to env.ts
+- [x] Add POST /api/agent/skill-sync endpoint to index.ts
+- [x] Extract syncMetadataFromFilesImpl() as named export from skills.ts
+- [x] Write sync_skills.sh script to eri-skill-creator/scripts/
+- [x] Update eri-skill-creator SKILL.md v2.6.0: Step 8 calls script, post-task reflection calls script
+- [x] Test endpoint and script end-to-end
+- [x] Update CODEBASE-CONTEXT.md with v3.23.0 session record
