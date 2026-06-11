@@ -134,20 +134,20 @@ const PRINCIPLES = [
   {
     Icon: Globe,
     stat: "52,000+",
-    label: "Companies in scope",
-    body: "The Exponential Platform data lake already covers more than 52,000 companies. The infrastructure exists to hold every major corporate emitter on the planet accountable — and the systems built here are designed to operate at that scale.",
+    label: "Companies mapped",
+    body: "The Exponential Platform data lake covers more than 52,000 companies — mapping the full landscape of exponential growth opportunities available to businesses today. The tools built here are designed to operate at that scale.",
   },
   {
     Icon: RefreshCw,
     stat: "Self-improving",
     label: "After every task",
-    body: "Every completed task is an opportunity to improve the system. When something works better than expected — or fails — that insight flows back into the skills layer. The same mistake cannot recur once it has been encoded. The system compounds.",
+    body: "Every completed task raises the baseline for the next one. Insights flow back into the skills layer automatically. The same mistake cannot recur once encoded. The system compounds — and that compounding is the point.",
   },
   {
     Icon: Zap,
     stat: "5×",
     label: "Advantage for AI-native teams",
-    body: "The Human-AI Lab's research shows that organisations pairing human judgement with AI-powered execution capture a 5× productivity advantage over those that do not. This hub is how ERI demonstrates that premise through its own work.",
+    body: "Research from the Human-AI Lab shows that organisations pairing human judgement with AI-powered execution capture a 5× productivity advantage. This hub is how ERI demonstrates that premise through its own work.",
   },
 ];
 
@@ -160,7 +160,7 @@ export default function Overview() {
       <EriHeroSection
         eyebrow="ERI DESIGN AND DEVELOPMENT HUB"
         titleLine1="Where ERI builds"
-        titleLine2="for climate accountability"
+        titleLine2="tools for exponential growth"
         body="This hub is the operational centre of ERI's AI-native working model. It is where the team's institutional knowledge lives, where every product is built to the same standard, and where the system that makes that possible is documented and maintained."
         primaryCTA={{ label: "Understand the governance model", href: "/governance" }}
         secondaryCTA={{ label: "Browse the skills registry", href: "/skills" }}
@@ -175,7 +175,7 @@ export default function Overview() {
             WHAT THIS HUB IS
           </p>
           <h2 className="text-2xl font-extrabold font-archivo text-foreground mb-6 leading-tight">
-            A platform built for the scale of the climate challenge
+            Built for the scale of the business opportunity
           </h2>
           <div className="grid gap-6 md:grid-cols-3">
             {PRINCIPLES.map(({ Icon, stat, label, body }) => (
@@ -208,13 +208,13 @@ export default function Overview() {
           <div className="grid gap-8 md:grid-cols-2">
             <div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                ERI uses Manus — an AI agent — to accelerate its mission: halving global emissions by 2030. The work spans climate data infrastructure, corporate accountability tools, member engagement, and strategic communications.
+                The fastest economic transition in history is underway. Proven solutions are scaling exponentially. Companies that act now can drive growth, build resilience, and shape the new economy — and those that do not will be left behind. ERI builds the intelligence and tools that help companies see and capture that opportunity.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                What makes ERI's approach distinctive is not the use of AI — it is the governance model around it. Every task Manus performs is guided by a layered knowledge system: the team's operating principles, domain expertise built up over years, and the memory of every decision made on every codebase before.
+                ERI uses Manus — an AI agent — to build those tools faster and to a higher standard. The work spans business transformation data, company benchmarking platforms, strategic communications, and the Exponential Platform that maps 52,000+ companies and their growth trajectories.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                When a task is done, what was learned raises the baseline for the next one. The system compounds — and that compounding is the point.
+                What makes ERI's approach distinctive is not the use of AI — it is the governance model around it. Every task is guided by accumulated institutional knowledge. When a task is done, what was learned raises the baseline for the next one. The system compounds.
               </p>
             </div>
             <div className="space-y-4">
@@ -293,17 +293,17 @@ export default function Overview() {
           <div className="grid gap-8 md:grid-cols-2">
             <div>
               <p className="text-sm text-white/70 leading-relaxed mb-4">
-                The Exponential Roadmap Initiative (ERI) is a science-based organisation working to halve global greenhouse gas emissions by 2030. ERI works with businesses, cities, and regions to scale climate solutions exponentially — using the Exponential Business Playbook as the framework for corporate action.
+                The Exponential Roadmap Initiative (ERI) is a science-based organisation that helps companies identify and capture the growth opportunities created by the fastest economic transition in history. ERI works with leading businesses to scale proven solutions exponentially — using the Exponential Business Playbook as the framework for transformation.
               </p>
               <p className="text-sm text-white/70 leading-relaxed">
-                The Exponential Platform is ERI's digital infrastructure for climate accountability — a data lake covering more than 52,000 companies, with tools for corporate performance review, member engagement, and strategic communications.
+                The Exponential Platform is ERI's digital infrastructure for business transformation intelligence — a data lake covering more than 52,000 companies, with tools for benchmarking, member engagement, and strategic communications.
               </p>
             </div>
             <div className="space-y-3">
               {[
-                { label: "Mission", value: "Halve global emissions by 2030" },
-                { label: "Approach", value: "Science-based, exponential scaling" },
-                { label: "Platform scope", value: "52,000+ companies in data lake" },
+                { label: "Mission", value: "Help companies capture exponential growth opportunities" },
+                { label: "Approach", value: "Science-based, business-first" },
+                { label: "Platform scope", value: "52,000+ companies mapped" },
                 { label: "Framework", value: "Exponential Business Playbook v5.0" },
                 { label: "Human-AI model", value: "5× advantage through AI-native operations" },
               ].map(({ label, value }) => (
