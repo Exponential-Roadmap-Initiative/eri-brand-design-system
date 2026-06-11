@@ -989,3 +989,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Suppress trivial sync drift < 50 chars in staleSyncIssue
 - [ ] Remove Manager card header jargon
 - [ ] Run tests and save checkpoint
+
+## Governance page upgrade (2026-06-11)
+
+- [x] Rename Philosophy.tsx → Governance.tsx and update import in App.tsx
+- [x] Fix stale eri-code-quality example in Tier 2 card (→ eri-trpc)
+- [x] Add orchestrator explanation to skill ecosystem section
+- [x] Update task lifecycle to show 8-step workflow (not 6-step)
+- [x] Add three-layer governance model section (Activation → Accountability → Curation)
+- [x] Update project instructions section text and link (/skills → /project-instructions)

@@ -3,7 +3,9 @@
  *
  * A top-level page explaining the full ERI human-AI governance model:
  * four governance layers, the self-improving system, the skill ecosystem,
- * the task lifecycle, the project instructions system, collaboration
+ * the three-layer governance model (Activation → Accountability → Curation),
+ * the task lifecycle (8-step workflow), the project instructions system,
+ * the agent-bridge pattern, technical debt governance, collaboration
  * principles, and curated further reading.
  *
  * This page is intentionally non-technical — it is written for the whole
@@ -25,7 +27,7 @@ import {
   Globe, Building2, Code2, Zap,
   Wrench, BookOpen, Settings, ClipboardList, Brain, FolderOpen,
   FileText, CheckSquare, Layers, MessageSquare, Paperclip, RefreshCw,
-  Plug, Database, Terminal, Copy,
+  Plug, Database, Terminal, Copy, Activity, BarChart2,
 } from "lucide-react";
 import PublicLayout from "@/components/PublicLayout";
 import { PageGuide } from "@/components/PageGuide";
@@ -163,18 +165,18 @@ function GovernanceDiagram() {
   );
 }
 
-// ── Task lifecycle flow ───────────────────────────────────────────────────────
+// ── Task lifecycle flow — 8-step workflow ─────────────────────────────────────
 
 function TaskLifecycleFlow() {
   const steps = [
-    { label: "Task starts",      sub: "User gives a brief",                color: "#17b7dd" },
-    { label: "Tier 1 skills",    sub: "Always read — no exceptions",       color: "#3ba559" },
-    { label: "Tier 2 gate",      sub: "Read before specific actions",      color: "#f59e0b" },
-    { label: "Tier 3 reference", sub: "Read when domain applies",          color: "#17b7dd" },
-    { label: "Work",             sub: "Execute with full context",         color: "#6b7280" },
-    { label: "Reflect",          sub: "What worked? What was missing?",    color: "#8b5cf6" },
-    { label: "Improve",          sub: "Update the skill, bump version",    color: "#3ba559" },
-    { label: "Next task",        sub: "Starts from a higher baseline",     color: "#3ba559" },
+    { label: "Load state",        sub: "Skills, context, codebase memory",  color: "#17b7dd" },
+    { label: "Research",          sub: "Clarify purpose, explore options",   color: "#3ba559" },
+    { label: "Design",            sub: "Propose approach, surface trade-offs", color: "#3ba559" },
+    { label: "Plan & accept",     sub: "Wait for explicit go-ahead",         color: "#f59e0b" },
+    { label: "Implement",         sub: "Execute the agreed plan",            color: "#6b7280" },
+    { label: "Test",              sub: "Verify the output works",            color: "#6b7280" },
+    { label: "Iterate",           sub: "Refine until the solution works",    color: "#6b7280" },
+    { label: "Close",             sub: "Update codebase memory, log skills", color: "#3ba559" },
   ];
 
   return (
@@ -214,7 +216,7 @@ function TierModelCards() {
       when: "Read at the start of every task, without exception.",
       why: "These skills carry the team's core operating principles — collaboration mode, development workflow, brand standards. Missing them means every task starts from scratch.",
       constraint: "Must be lean — every token costs on every task. Keep under 200 lines.",
-      example: "eri-human-ai-collaboration, eri-bds-reference",
+      example: "eri-skills-orchestrator (entry point — identifies which other skills apply), eri-human-ai-collaboration, eri-bds-reference",
     },
     {
       label: "Tier 2 — Per-action gate",
@@ -224,7 +226,7 @@ function TierModelCards() {
       when: "Re-read immediately before a specific action — even within the same task.",
       why: "These skills are guardrails for high-risk actions. Reading them once at task start is not enough — they must be consulted at the moment of action.",
       constraint: "Can be longer. Only loaded when the specific action is about to happen.",
-      example: "eri-code-quality (before writing any code), eri-trpc (before adding a router)",
+      example: "eri-trpc (before adding a router or procedure), eri-bds-site (before extending the BDS site)",
     },
     {
       label: "Tier 3 — Conditional",
@@ -381,7 +383,7 @@ function FurtherReading() {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default function Philosophy() {
+export default function Governance() {
   return (
     <PublicLayout>
       {/* Hero — BDS compliant: bg-[#232323], font-extrabold font-archivo, eyebrow #93E07D, --eri-content-inset */}
@@ -435,7 +437,7 @@ export default function Philosophy() {
         >
           <div className="space-y-6">
             <p className="text-sm text-foreground/80 leading-relaxed">
-              Skills are not written once and left unchanged. They are living documents that improve after every task. The same mistake cannot recur once it has been encoded into a skill. The same insight does not need to be rediscovered — it is already in context the next time it is relevant.
+              Skills are not written once and left unchanged. They are living documents that improve after every task. The same mistake cannot recur once it has been encoded into a skill — every future task benefits from the correction automatically.
             </p>
             <p className="text-sm text-foreground/80 leading-relaxed">
               This is not a failure review — it is a quality review. A task can complete successfully and still have been run at 60% of its potential. The question is always: what would have made this output better? That question, asked consistently, is what makes the system compound.
@@ -483,6 +485,18 @@ export default function Philosophy() {
             <p className="text-sm text-muted-foreground leading-relaxed">
               Not every skill needs to be read on every task. The tier system controls when each skill is loaded — keeping the most critical knowledge always present while loading specialist knowledge only when it is relevant.
             </p>
+
+            {/* Orchestrator callout */}
+            <div className="rounded-lg border border-dashed p-4 flex items-start gap-3" style={{ borderColor: "rgba(59,165,89,0.4)", backgroundColor: "rgba(59,165,89,0.04)" }}>
+              <Brain className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#3ba559" }} />
+              <div>
+                <p className="text-xs font-semibold text-foreground mb-1">The orchestrator — the entry point to the whole system</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  The <span className="font-medium text-foreground">eri-skills-orchestrator</span> is a Tier 1 skill whose sole job is to tell Manus which other skills to read for each type of task. Rather than scanning all 25+ skills on every task, Manus reads the orchestrator first, matches the task to a task type (e.g. "add a data source", "write a router", "extend the BDS site"), and reads only the skills listed for that type. This keeps context lean and ensures the right knowledge is always loaded — without overloading every task with irrelevant detail.
+                </p>
+              </div>
+            </div>
+
             <TierModelCards />
             <p className="text-xs text-muted-foreground leading-relaxed">
               <span className="font-medium text-foreground/70">Assigning tiers:</span> Ask — if this skill were not read, how often would a task fail or produce a worse output? Always → Tier 1. Before a specific risky action → Tier 2. When a specific domain applies → Tier 3. Resist the temptation to promote everything to Tier 1 — a bloated Tier 1 list degrades performance across all tasks.
@@ -495,24 +509,98 @@ export default function Philosophy() {
           </div>
         </Section>
 
-        {/* Section 4 — Task lifecycle */}
+        {/* Section 4 — The three-layer governance model */}
         <Section
-          title="The task lifecycle"
-          subtitle="How governance layers, tiers, and the improvement loop connect in a single task"
+          title="The three-layer governance model"
+          subtitle="How the system activates, holds itself accountable, and improves over time"
         >
           <div className="space-y-5">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Every ERI task follows the same sequence. The governance model is not a set of rules to remember — it is baked into the sequence itself. Manus cannot start work without reading the Tier 1 skills. It cannot write code without passing the Tier 2 gate. It cannot finish a task without reflecting on what could be improved.
+              The skill ecosystem is not just a library of documents — it is a self-governing system with three distinct layers. Each layer plays a different role in keeping the system healthy and improving over time.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                {
+                  n: "1",
+                  Icon: Brain,
+                  color: "#3ba559",
+                  title: "Activation",
+                  label: "The orchestrator identifies which skills apply",
+                  desc: "At the start of every task, Manus reads the orchestrator skill. The orchestrator matches the task to a task type and tells Manus exactly which skills to read. No scanning. No guessing. The right knowledge is loaded before any work begins.",
+                },
+                {
+                  n: "2",
+                  Icon: Activity,
+                  color: "#f59e0b",
+                  title: "Accountability",
+                  label: "Usage logs close the feedback loop",
+                  desc: "After every task, the agent logs which skills were read and whether they were helpful, stale, or missing. These logs are the only signal the library has about which skills are actually being used. Without them, the library cannot improve itself — it becomes a write-only system.",
+                },
+                {
+                  n: "3",
+                  Icon: BarChart2,
+                  color: "#17b7dd",
+                  title: "Curation",
+                  label: "The Health Dashboard surfaces what needs attention",
+                  desc: "The Skills page shows a Health Dashboard: last-used dates, helpful vs stale verdicts, and a list of skills that have never been logged. Quarterly review uses this data to identify candidates for retirement, merging, or promotion to a higher tier. The library stays lean and relevant.",
+                },
+              ].map(layer => {
+                const LayerIcon = layer.Icon;
+                return (
+                  <div key={layer.n} className="rounded-lg border border-border p-4 bg-muted/10">
+                    <div className="flex items-start gap-3">
+                      <div
+                        className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                        style={{ backgroundColor: `${layer.color}18`, border: `1.5px solid ${layer.color}50` }}
+                      >
+                        <LayerIcon className="w-3.5 h-3.5" style={{ color: layer.color }} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline gap-2 flex-wrap mb-1">
+                          <p className="text-sm font-semibold" style={{ color: layer.color }}>Layer {layer.n} — {layer.title}</p>
+                          <p className="text-xs text-foreground/70 font-medium">{layer.label}</p>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{layer.desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="rounded-lg border border-dashed border-muted-foreground/30 p-3 text-xs text-muted-foreground leading-relaxed">
+              <span className="font-medium text-foreground">The accountability layer matters most.</span> A skills library with no usage data is a write-only system — it can only be improved by the people who wrote it, not by the tasks that use it. The usage log is the mechanism that makes the library self-improving rather than self-referential.
+            </div>
+
+            <div className="pt-1">
+              <Link href="/skills" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3ba559] hover:underline">
+                View the Skills Health Dashboard <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </Section>
+
+        {/* Section 5 — Task lifecycle */}
+        <Section
+          title="The task lifecycle"
+          subtitle="The 8-step workflow every ERI task follows — from loading context to closing with updated memory"
+        >
+          <div className="space-y-5">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Every ERI task follows the same eight-step sequence. The governance model is not a set of rules to remember — it is baked into the sequence itself. The task cannot start without loading the right context (step 1), cannot proceed without an accepted plan (step 4), and cannot close without updating the codebase memory (step 8).
             </p>
             <TaskLifecycleFlow />
             <div className="grid grid-cols-1 gap-3 mt-4" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
               {[
+                { step: "Load current state",    desc: "Fetch the latest BDS skill and project instructions. Read CODEBASE-CONTEXT.md in full. Scan the skills list and read all relevant skills before taking any action." },
                 { step: "Research",              desc: "Clarify purpose, understand current context and existing assets, explore possible solutions." },
                 { step: "Design",                desc: "Propose an approach; surface trade-offs and assumptions." },
                 { step: "Plan and get acceptance", desc: "Present the plan to the user and wait for explicit go-ahead before proceeding." },
-                { step: "Implement",             desc: "Execute the agreed plan." },
+                { step: "Implement",             desc: "Execute the agreed plan. Save a checkpoint after every 3–5 file changes." },
                 { step: "Test",                  desc: "Verify the output works as intended." },
                 { step: "Iterate",               desc: "Refine until the solution works." },
+                { step: "Close",                 desc: "Update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues. Log skill usage." },
               ].map((item, i) => (
                 <div key={i} className="rounded-lg border border-border p-3 bg-muted/10">
                   <p className="text-xs font-semibold text-foreground mb-1">{String(i + 1).padStart(2, "0")} {item.step}</p>
@@ -521,32 +609,31 @@ export default function Philosophy() {
               ))}
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              The most common failure mode is jumping from step 1 directly to step 4. If Manus starts implementing before a plan has been accepted, that is a governance failure — not a capability limitation.
+              The most common failure mode is jumping from step 1 directly to step 5. If Manus starts implementing before a plan has been accepted, that is a governance failure — not a capability limitation. Steps 1 and 8 are the bookends that make the system self-sustaining: step 1 loads accumulated knowledge, step 8 adds to it.
             </p>
           </div>
         </Section>
 
-        {/* Section 5 — Project instructions system */}
+        {/* Section 6 — Project instructions system */}
         <Section
           title="The project instructions system"
           subtitle="How the skill ecosystem is compiled into a persistent governance layer"
         >
           <div className="space-y-4">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              The project instructions block is the compiled output of the skill ecosystem. It is not written by hand — it is generated from the skills registry and injected into every Manus task as the always-on governance layer. It tells Manus what to always check, what to never skip, and which skills to read for which types of work.
+              The project instructions block is the compiled output of the skill ecosystem. It is generated from the skills registry and injected into every Manus task as the always-on governance layer. It tells Manus what to always check, what to never skip, and which skills to read for which types of work.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              When a skill is added, improved, or promoted to a higher tier, the project instructions block is regenerated. This means the governance layer is always in sync with the current state of the skills library — there is no manual maintenance step.
+              The current format is a compact, workflow-first document: a single 8-step task workflow followed by the three-tier skill list. When a skill is added, improved, or promoted to a higher tier, the project instructions block is regenerated. This means the governance layer is always in sync with the current state of the skills library.
             </p>
             <div className="rounded-lg border border-border bg-muted/10 p-4 space-y-2">
               <p className="text-xs font-semibold text-foreground">What the project instructions block controls</p>
               <ul className="space-y-1.5">
                 {[
+                  "The 8-step task workflow (load state → research → design → plan → implement → test → iterate → close)",
                   "Which skills to read at the start of every task (Tier 1 — always-on)",
                   "Which skills to read before specific actions (Tier 2 — per-action gates)",
-                  "The ERI development workflow sequence (research → design → plan → implement → test → iterate)",
-                  "The human-AI collaboration mode (peer-colleague, not assistant)",
-                  "The post-task reflection requirement (skill improvement loop)",
+                  "Which skills to read when a domain applies (Tier 3 — conditional)",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed">
                     <span className="text-[#3ba559] mt-0.5 flex-shrink-0">—</span>
@@ -556,14 +643,14 @@ export default function Philosophy() {
               </ul>
             </div>
             <div className="pt-1">
-              <Link href="/skills" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3ba559] hover:underline">
+              <Link href="/project-instructions" className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3ba559] hover:underline">
                 Generate or audit the project instructions block <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
         </Section>
 
-        {/* Section 5b — The agent-bridge pattern */}
+        {/* Section 7 — The agent-bridge pattern */}
         <Section
           title="The agent-bridge pattern"
           subtitle="How to surface Manus system assets in a web application"
@@ -638,7 +725,7 @@ export default function Philosophy() {
           </div>
         </Section>
 
-        {/* Section 5c — Technical debt governance */}
+        {/* Section 8 — Technical debt governance */}
         <Section
           title="Technical debt governance: prevention vs remediation"
           subtitle="Why skills prevent new debt but cannot fix existing debt — and how opportunistic remediation bridges the gap"
@@ -692,12 +779,12 @@ export default function Philosophy() {
             </div>
 
             <div className="rounded-lg border border-dashed border-muted-foreground/30 p-3 text-xs text-muted-foreground leading-relaxed">
-              <span className="font-medium text-foreground">In practice:</span> the <code className="font-mono text-[10px] px-1 rounded bg-muted">eri-code-quality</code>, <code className="font-mono text-[10px] px-1 rounded bg-muted">eri-trpc</code>, and <code className="font-mono text-[10px] px-1 rounded bg-muted">data-source-integration</code> skills all contain opportunistic remediation rules as of v2.2.0 / v1.1.0, added after the June 2026 lean code audit. The Skills registry on this hub shows the current version of each skill.
+              <span className="font-medium text-foreground">In practice:</span> the <code className="font-mono text-[10px] px-1 rounded bg-muted">eri-trpc</code> and <code className="font-mono text-[10px] px-1 rounded bg-muted">data-source-integration</code> skills contain opportunistic remediation rules added after the June 2026 lean code audit. The Skills registry on this hub shows the current version of each skill.
             </div>
           </div>
         </Section>
 
-        {/* Section 6 — Human-AI collaboration principles */}
+        {/* Section 9 — Human-AI collaboration principles */}
         <Section
           title="Human-AI collaboration principles"
           subtitle="The behavioural contract — how ERI and Manus work together"
@@ -738,7 +825,7 @@ export default function Philosophy() {
           </Link>
         </div>
 
-        {/* Section 7 — Further reading */}
+        {/* Section 10 — Further reading */}
         <Section
           title="Further reading"
           subtitle="The broader field of AI-native engineering governance — curated references"

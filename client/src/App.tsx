@@ -9,7 +9,7 @@ import AlignmentTracker from "./pages/AlignmentTracker";
 import NewProject from "./pages/NewProject";
 import TeamGuide from "./pages/TeamGuide";
 import Skills from "./pages/Skills";
-import Philosophy from "./pages/Philosophy";
+import Governance from "./pages/Governance";
 import ProjectInstructions from "./pages/ProjectInstructions";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
@@ -91,7 +91,7 @@ function Router() {
         <Route path={"/"} component={BrandDesignSystem} />
         <Route path={"/tracker"} component={AlignmentTracker} />
         <Route path={"/new-webproject"} component={NewProject} />
-        <Route path={"/governance"} component={Philosophy} />
+        <Route path={"/governance"} component={Governance} />
         <Route path={"/skills"} component={Skills} />
         <Route path={"/project-instructions"} component={ProjectInstructions} />
         <Route path={"/team-guide"} component={TeamGuide} />
