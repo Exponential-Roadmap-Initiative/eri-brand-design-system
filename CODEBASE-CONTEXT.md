@@ -939,3 +939,43 @@ The full 5×4 Exponential Framework matrix (previously lines 450–498 of the ol
 ### Archive note
 
 `CODEBASE-CONTEXT-archive.md` contains the full session history from project inception through v3.15.0. It is not read by agents — it is a historical record only. Do not delete it.
+
+---
+
+## v3.21.0 — 2026-06-11 — eri-skill-creator compliance pass on eri-bds-reference + eri-bds-components
+
+### What was done
+
+Retroactively applied the eri-skill-creator §2 writing principles and §4 tier rules to both skills written in v3.20.0.
+
+**`eri-bds-reference` v4.1.0** (445 → 260 lines, 23 KB → 15 KB):
+- Removed verbatim CSS token block (`:root` + `.dark`) — replaced with pointer to `bdsSpec.getSpec → semanticTokens.cssBlock`
+- Removed verbatim `@font-face` template — pointer to `bdsSpec.getSpec → typography.fontFaceTemplate` is sufficient
+- Removed GDPR font setup steps — moved to `eri-bds-components` new-app setup checklist
+- Removed BDS section index (25-row table) — low value, high token cost
+- Removed card accent rgba values — hex values in the table are sufficient
+
+**`eri-bds-components` v1.1.0** (627 → 399 lines, 28 KB → 19 KB):
+- Moved `NavDrawer.tsx` verbatim code block → `templates/NavDrawer.tsx`
+- Moved `ThemeContext.tsx` verbatim code block → `templates/ThemeContext.tsx`
+- Moved `bds-meta.json` full schema example → `references/bds-meta-template.json`
+- Moved manual hero fallback code block → `references/hero-fallback.jsx`
+- Moved footer standard code block → `references/footer-standard.jsx`
+- SKILL.md body now contains only instructional content (prop tables, rules, decision tables)
+
+**`SKILLS_METADATA` updated:** eri-bds-reference → v4.1.0, eri-bds-components → v1.1.0 (in `server/routers/skills.ts`)
+
+### Net context saving per compaction (cumulative from v3.19.0)
+
+| Asset | v3.19.0 | v3.21.0 | Saving |
+|---|---|---|---|
+| `eri-bds-reference` SKILL.md | 124 KB | 15 KB | −109 KB |
+| `CODEBASE-CONTEXT.md` | 104 KB | ~70 KB | −34 KB |
+| `eri-bds-components` (new) | — | 19 KB | +19 KB |
+| **Net** | **228 KB** | **104 KB** | **−124 KB** |
+
+### What to do next
+
+- **Publish updated project instructions** via `/project-instructions` page
+- **Sync skills to BDS API** via Skills page → "↻ Sync from skill files" (pushes v4.1.0 and v1.1.0 to `/api/skill/latest`)
+- **Log skill usage** for: `eri-skill-creator`, `eri-bds-reference`, `eri-bds-components`, `eri-skills-orchestrator`

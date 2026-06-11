@@ -1033,3 +1033,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Publish updated project instructions (eri-bds-components now in Tier 2)
 - [ ] Publish eri-bds-reference v4.0.0 skill via BDS Skills page "↻ Sync from skill files"
 - [ ] Register eri-bds-components on BDS Skills page
+
+## eri-skill-creator compliance pass — v3.21.0
+- [x] Audit eri-bds-reference v4.0.0 against §2 writing principles and §4 tier rules
+- [x] Audit eri-bds-components v1.0.0 against §2 writing principles and §4 tier rules
+- [x] Revise eri-bds-reference v4.1.0: strip CSS token block, @font-face template, GDPR setup steps, BDS section index, card accent rgba values (445 → 260 lines, 23 KB → 15 KB)
+- [x] Revise eri-bds-components v1.1.0: move NavDrawer.tsx, ThemeContext.tsx, bds-meta-template.json, hero-fallback.jsx, footer-standard.jsx to references/ and templates/ (627 → 399 lines, 28 KB → 19 KB)
+- [x] Run trigger test (10 prompts) for both skills — both pass
+- [x] Update SKILLS_METADATA: eri-bds-reference → v4.1.0, eri-bds-components → v1.1.0
+- [x] Update CODEBASE-CONTEXT.md with v3.21.0 session record
