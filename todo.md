@@ -1020,3 +1020,16 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Annotate step 8 in task lifecycle with phase-close rationale
 - [x] Add sticky anchor navigation bar with "Human operator guide" Essential pill
 - [x] Add remaining section ids (project-instructions, agent-bridge, technical-debt)
+
+## Context reduction — v3.20.0 (2026-06-11)
+- [x] Split eri-bds-reference (124 KB) into compact v4.0.0 (23 KB) + new eri-bds-components (28 KB)
+- [x] Prune Exponential Framework matrix from eri-bds-reference
+- [x] Remove duplicated implementation examples from eri-bds-reference
+- [x] Create /home/ubuntu/skills/eri-bds-components/SKILL.md (Tier 2)
+- [x] Update eri-skills-orchestrator: add T6b task type + eri-bds-components to Tier 2 index
+- [x] Update SKILLS_METADATA in server/routers/skills.ts (eri-bds-reference v4.0.0, new eri-bds-components)
+- [x] Update ProjectInstructions.tsx CURRENT_INSTRUCTIONS to include eri-bds-components in Tier 2
+- [x] Archive CODEBASE-CONTEXT.md sessions v2.15.0–v3.15.0 to CODEBASE-CONTEXT-archive.md
+- [ ] Publish updated project instructions (eri-bds-components now in Tier 2)
+- [ ] Publish eri-bds-reference v4.0.0 skill via BDS Skills page "↻ Sync from skill files"
+- [ ] Register eri-bds-components on BDS Skills page

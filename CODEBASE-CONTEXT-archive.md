@@ -526,416 +526,616 @@ Any agent reading the skill before starting work will now have everything needed
 
 ---
 
+## v2.15.0 — Hero image + light-mode header (2026-05-26)
 
-> **Session records v2.15.0 – v3.15.0 have been archived to `CODEBASE-CONTEXT-archive.md`** (2026-06-11). The archive contains 1,141 lines of historical session records. All decisions and known errors from those sessions are preserved in the static header sections above.
+### Hero image change
+- **New default hero:** `hero-scurve-dual-rich.webp` — dual S-curves (amber + lime) crossing on dark teal grid with particle bokeh. No human figures.
+- CDN URL: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/hero-scurve-dual-rich_775e47cf.webp`
+- `ERI_HERO_IMAGE_DEFAULT` is the new canonical export (points to the rich S-curve image)
+- `ERI_HERO_IMAGE_HANDS` is now a deprecated alias for `ERI_HERO_IMAGE_DEFAULT` — still works, but prefer `ERI_HERO_IMAGE_DEFAULT` for new code
+- Old hands image retained in CDN for backward compatibility
 
----
+### Light-mode header (headerTheme prop)
+- New prop `headerTheme?: 'dark' | 'auto'` added to `EriAppHeader` and `EriPageLayout`
+- Default: `'dark'` (always `#232323` — backward compatible, no breaking change)
+- `'auto'`: white (`#FFFFFF`) header in light mode, `#232323` in dark mode; logo switches between white wordmark (dark) and full-colour wordmark (light); all text/icons adapt
+- BDS site uses `headerTheme="auto"` — first adopter
+- Other projects should migrate to `'auto'` when they update to v2.15.0+
 
-## v3.16.0 — Skills Governance System: Usage Logging + Health Dashboard (2026-06-10)
+### ThemeContext sync fix
+- `EriAppHeader.applyTheme()` now dispatches `window.dispatchEvent(new CustomEvent('eri-theme-change', { detail: { theme } }))` after setting localStorage
+- `ThemeContext.tsx` listens for `eri-theme-change` CustomEvent in addition to `storage` event
+- This fixes same-tab theme sync (the `storage` event only fires in other tabs/windows)
 
-### Changes in this session
+### TabNav light-mode fix
+- `TabNav` in `App.tsx` updated from `bg-[#232323]` to `bg-white dark:bg-[#232323]` so it adapts to light mode
 
-**1. CODEBASE-CONTEXT.md migration guard (project instructions)**
-
-The project instructions Fixed Section "CODEBASE-CONTEXT.md guard" was updated to include a one-time self-healing migration step:
-
-> *"If it does not exist but PROJECT-CONTEXT.md does, rename it first: `mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md`"*
-
-This ensures existing projects with `PROJECT-CONTEXT.md` automatically migrate on the next task run — no manual intervention needed per project. Published to API at 5,488 chars (69% of 8,000 budget).
-
-**2. Version History refetch bug fixed**
-
-`saveVersionMutation.onSuccess` in `ProjectInstructions.tsx` was not calling `versionsQuery.refetch()` after saving. Fixed — Version History now updates immediately after clicking "Mark as Applied".
-
-**3. skill_usage_logs DB table**
-
-New table added to `drizzle/schema.ts`:
-```
-skill_usage_logs (id, logged_at, task_description, skills_read_json, agent_note)
-```
-- `skills_read_json`: JSON array of `{ skillId, verdict }` where verdict is `"helpful" | "stale" | "missing"`
-- Append-only, no foreign keys (skill IDs are strings, not DB rows)
-- Created via `webdev_execute_sql` (migration runner failed due to pre-existing tables; SQL applied directly)
-
-**4. New tRPC procedures in `server/routers/skills.ts`**
-
-- **`skills.logUsage`** (protectedProcedure) — any authenticated user can submit a post-task usage log
-- **`skills.listUsageLogs`** (protectedProcedure) — returns up to 100 logs, newest first
-
-**5. Skills page UI additions**
-
-- **Log Usage button** in admin toolbar — opens `LogUsageDialog` (multi-skill selector with verdict per skill)
-- **Skill Health section** at bottom of page — shows `HealthDashboard` component with:
-  - Summary row: skills used / flagged stale / never logged
-  - "Recently used" table: per-skill last-used date + helpful/stale/missing counts
-  - "Never logged" chip list: skills with no usage data yet
-  - Empty state when no logs exist yet
-
-**6. Test status**
-
-36/36 tests passing. TypeScript: 0 real errors (13 false positives from stale typescript@5.6.3 watcher).
-
-### DB mock pattern (important for future tests)
-
-The `insert().values()` mock in `skills.test.ts` now uses `Object.assign(Promise.resolve([{ insertId: 42 }]), { onDuplicateKeyUpdate: ... })` to support both:
-- `insert().values()` (direct await — used by `logUsage`)
-- `insert().values().onDuplicateKeyUpdate()` (chained — used by `saveProjectInstructions`)
-
-### Remaining pending work
-
-- [ ] Update Current tab by running sync prompt in a new task (eri-skills-orchestrator SKILL.md needs the post-task usage log instruction added to the task-type lookup table)
-- [ ] Rename PROJECT-CONTEXT.md → CODEBASE-CONTEXT.md in this repository (the file already exists as CODEBASE-CONTEXT.md — confirm the old file is gone)
+### Skill version
+- Skill bumped to v3.1.0 with all above changes documented
 
 ---
 
-## Session update — 2026-06-10 (continued)
+## v2.16.5 — Anti-AI Checklist A1–A5 complete + Trust Centre In the Wild (2026-05-27)
 
-### CODEBASE-CONTEXT.md migration — complete
+### Anti-AI Checklist A1–A5 — fully implemented
+- `bdsMetaTypes.ts` `AntiAiCompliance` interface: 5 fields (`noBlacklistedCopyWords`, `noPurpleGradientOrSparkles`, `ctasDescribeOutcome`, `statisticsAreReal`, `noIdenticalSectionSequence`)
+- `checklistScore()` in `AlignmentTracker.tsx` scores all 5 fields
+- A block UI table in `AlignmentTracker.tsx`: rows A1–A5 with check description and pass condition
+- Canonical template (visible + Copy button) updated to `schemaVersion: "1.3"` with `antiAi` block
+- BDS site `bds-meta.json` already had `antiAi` block with all 5 fields `true`
 
-All `PROJECT-CONTEXT.md` references have been updated across the ERI skills ecosystem:
+### Trust Centre added to In the Wild gallery
+- Screenshot captured from `trust.exponentialroadmap.org` and uploaded to CDN
+- CDN URL: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/trust-hero_61e9c5e5.png`
+- Gallery switched from 3-column to 2×2 grid to accommodate 4 cards
+- Trust Centre card: badge LIVE, tier "Tier B — App", description notes `ERI_HERO_IMAGE_TRUST`
 
-| Skill | Old version | New version | Change |
-|---|---|---|---|
-| `eri-bds-reference` | 3.11.0 | 3.11.1 | Step 1 now uses `CODEBASE-CONTEXT.md` with `mv` rename fallback; CDN updated |
-| `eri-trpc` | 3.0.0 | 3.0.1 | Section heading updated |
-| `data-source-integration` | 1.1.0 | 1.1.1 | Layer 10 note updated |
-| `eri-code-quality` | retired | — | Retired skill, not updated |
+### SKILL.md v3.6.0
+- Example `bds-meta.json` pin updated from `v2.15.3` to `v2.16.1`
+- `lastUpdated` updated to `2026-05-27`
+- Frontmatter description updated to mention A1–A5 Anti-AI checklist and Trust Centre
+- CDN URL: `https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/SKILL_31d5b90f.md`
+- `SKILL_LATEST_URL` in `server/_core/index.ts` updated to v3.6.0 CDN URL
+- `shared/eriVersion.ts` regenerated: `ERI_BDS_SKILL_VERSION = "v3.6.0"`
 
-- CDN URL for `eri-bds-reference` v3.11.1: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/zuJbeOCbKWpbbXcH.md`
-- `server/_core/index.ts` `SKILL_LATEST_URL` updated to point to v3.11.1
-- `SKILLS_METADATA` versions updated in `server/routers/skills.ts`
-- "Sync from skill files" run — 6 fields updated in DB
-
-### Version History bug — fixed
-
-`saveVersionMutation.onSuccess` now calls `versionsQuery.refetch()` so the Version History list updates immediately after clicking "Mark as Applied".
-
-### Usage logging + Health dashboard — complete
-
-- `skill_usage_logs` DB table created (id, userId, taskDescription, skillsRead JSON, verdict enum, improvementNote, loggedAt)
-- `logUsage` and `listUsageLogs` tRPC procedures added to `skills.ts`
-- `LogUsageDialog` component added to Skills page (admin toolbar button)
-- `HealthDashboard` section added at the bottom of Skills page (shows last-used, verdict breakdown, never-logged chips)
-- 36/36 tests passing
-
-### Remaining pending work
-
-None — all items from this session are complete.
+17. **`headerTheme="auto"` restriction was a prohibition, not a status note (2026-05-27)** — SKILL.md said "Only the BDS site currently uses `headerTheme='auto'`. All other ERI apps should use `headerTheme='dark'` unless explicitly required." This was written as a status note but read as a prohibition. Fixed in SKILL.md v3.7.0: the rule is now "Always pair `showThemeToggle={true}` with `headerTheme='auto'`". Without `headerTheme='auto'`, the header stays dark even in light mode. The canonical code examples, integration checklist step 6, and both props tables in SKILL.md and BrandDesignSystem.tsx have been updated to reflect this.
 
 ---
 
-## Session update — 2026-06-10 (workflow redesign)
+## SKILL.md v3.8.0 — Trust Centre feedback applied (2026-05-27)
 
-### Project Instructions page — workflow-based redesign
+Four gaps identified by the Trust Centre project after a failed implementation:
 
-The Project Instructions page (`/project-instructions`) was redesigned to be workflow-driven rather than tab-driven.
+1. **headerTheme contradiction** — already resolved in v3.7.0. Confirmed absent.
+2. **No browser verification step** — T6 row added to Project Alignment Checklist (T block): "Open the app in a browser. Click the theme toggle. Confirm: (1) header goes white; (2) page content goes light; (3) all text readable in both modes." Do not mark task complete until T6 passes.
+3. **Vite module cache not mentioned** — Setup Checklist step 1 now warns: after `pnpm add @eri/components`, restart the dev server and hard-reload the browser (`Cmd+Shift+R`). Vite pre-bundles on first start — old cache may be served otherwise.
+4. **returnUrl canonical value not stated** — `returnUrl` prop description in EriAppHeader, EriPageLayout, and the Contact Us props table now says "Always the hardcoded canonical production URL — never `window.location.origin`". A standalone callout added after the Contact Us props table. `window.location.origin` resolves to `http://localhost:3000` in development and breaks the Contact Us return flow in production.
 
-**PipelineStatus component** added above the Manager card:
-- 4-step horizontal bar: Generate → Apply to Manus → Publish to API → Agent Verified
-- Each step derives live status from existing queries (`versionsQuery`, `currentInstructionsQuery`)
-- Step 1: always green unless char count > 8,000
-- Step 2: green if any version applied; amber if no versions yet
-- Step 3: green if latest applied version has `publishedAt`; amber if not yet published
-- Step 4: green if `syncedAt` > latest `appliedAt`; amber if stale or no sync
-- Each step has an action button (jumps to relevant tab or triggers action directly)
-
-**Stale-sync audit issue** added as computed `useMemo`:
-- Compares `syncedRow.instructionsText` vs `CURRENT_INSTRUCTIONS`
-- If DB text differs: generates diff summary (added/removed lines, char delta, why it matters)
-- Integrated into `allIssues` array alongside static `KNOWN_ISSUES`
-
-**Tab reordering**: Generator → Status → History → Audit
-- "Current" renamed to "Status"
-- Generator moved first (starting point of workflow)
-
-**Issues banner**: green with ✅ when 0 issues, amber with ⚠️ when issues exist
-
-**Sync prompt redesigned**: agent now edits `CURRENT_INSTRUCTIONS` in source file directly (no auth needed) + optional DB sync
-
-### Known state after this session
-
-- DB-stored instructions text (3,435 chars) is stale vs `CURRENT_INSTRUCTIONS` (5,488 chars)
-- This shows as a Medium audit issue in the Status tab until sync prompt is run
-- **To fix**: click "Copy sync prompt" on the Status tab → paste into new ERI Shared Dev Assets task → run it
-- The agent will edit `CURRENT_INSTRUCTIONS` in `ProjectInstructions.tsx` with the live 5,488-char text
-
-### Checkpoint
-- `30e02ce2` — workflow redesign complete
+CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/XMkyuyXwCGcxKiHP.md`
 
 ---
 
-## Session update — 2026-06-10 (compact rewrite)
+## v2.16.9 — Version badge + Trust Centre patch document (2026-05-27)
 
-### Project Instructions compact rewrite — complete
+- `APP_VERSION` in `client/src/App.tsx` bumped from `V.2026.04.21` to `V.2026.05.27`.
+- `TRUST-CENTRE-PATCH.md` written in project root: exact three-fix patch (Fix A: `headerTheme="auto"`, Fix B: `returnUrl` hardcoded, Fix C: Vite cache restart + hard-reload), T6 browser verification table, and complete `bds-meta.json` template for the Trust Centre.
 
-The project instructions were compacted from 5,488 chars (68.6% of budget) to **3,427 chars (42.8% of budget)** — saving 2,061 chars.
+---
+
+## v3.3.0 — "Team Guide" tab (2026-06-04)
+
+### New page: /team-guide
+- `client/src/pages/TeamGuide.tsx` — Manus collaboration guide for non-technical ERI colleagues
+- Content ported from `eri-collaboration.manus.space` (prototype site — now consolidated here)
+- Four-tab navigation: Brand Design System / Project Alignment Tracker / Start a Project / **Team Guide**
+- Content: hero with three entry cards (I'm new / I need to share / I want the full picture), Getting Started (4 steps), ERI Pre-Prompt with Hard Stops table, ERI AI Stack (Perplexity vs Manus), Sharing (4 quick facts, 4 explanatory steps, sharing models table, team workflow)
+- `bdsSpec.ts` addition: `team_guide_url`
+- `BdsNavDrawer.tsx`: Team Guide link added to Other pages section
+- Decision: distinct standalone page with its own layout — not integrated into BDS sidebar sections
+
+---
+
+## v3.2.0 — "Start a Project" tab + Vite cache failure pattern (2026-06-04)
+
+### New page: /new-project
+- `client/src/pages/NewProject.tsx` — AI-agent-optimised onboarding page
+- Three-tab navigation: Brand Design System / Project Alignment Tracker / **Start a Project**
+- Content: mandatory setup steps (01–05), seven canonical components table, copy-paste project instructions (Track 1 + Track 2 toggle), quick links, Vite cache warning callout
+- `bdsSpec.ts` additions: `new_project_url`, `handoff_prompt_track1`, `handoff_prompt_track2`
+- `BdsNavDrawer.tsx`: "Other pages" section added with Start a Project + Tracker links
+
+### Confirmed failure pattern: Vite pre-bundle cache
+**Symptom:** Blank page after `webdev_add_feature` or major `pnpm add`. No JavaScript errors. Network log shows no requests for `/src/main.tsx`.
+**Root cause:** Stale `node_modules/.vite/` pre-bundle cache. New dependencies were installed but Vite's cache was not invalidated.
+**Fix:** `rm -rf node_modules/.vite` → restart dev server → hard-reload browser (`Cmd+Shift+R`).
+**Rule:** This must be the FIRST thing tried when a page goes blank after any dependency change. Do not spend time investigating script conflicts, CSP, or runtime errors before clearing the cache.
+**Added to:** SKILL.md (Setup Checklist step 1), NewProject.tsx (Vite cache warning callout), bdsSpec.ts `handoff_prompt_track1` Step 9, `handoff_prompt_track2` REMINDER section.
+
+---
+
+## v2.17.0 — Light-default theme (2026-06-03)
+
+**Decision:** Default theme changed from dark to light. Dark mode is now an active individual user preference, persisted in `localStorage` under `eri-theme`. Key stakeholders found the dark-by-default approach too heavy.
 
 **Changes made:**
+- `ThemeContext.tsx`: `DEFAULT_THEME` changed from `"dark"` to `"light"`
+- `client/index.html`: FOLC script updated — now only applies `.dark` class if `localStorage.getItem('eri-theme') === 'dark'` (not on first visit)
+- `client/src/index.css`: comments updated to reflect light-default
+- `BrandDesignSystem.tsx`: Surface Modes section fully updated (13 edits — section title, badges, descriptions, How it works table, "Light by Default" section replacing "Dark by Default", FOLC code example, Logo Switching description)
+- `SKILL.md v3.9.0`: `### Default: light (from v2.17.0)`, migration note for pre-v2.17.0 projects, updated FOLC script, `DEFAULT_THEME="light"` in ThemeContext code example, dark tokens comment updated
 
-1. **All 22 Tier 2 + Tier 3 `readWhen` values** in `SKILLS_METADATA` (`server/routers/skills.ts`) shortened to concise trigger phrases (e.g. `"New router, new procedure, procedure type decision, quality gate before writing code."` instead of the long sentence).
+**Migration for consuming projects (HAL, PSM, Trust, Taxonomy):**
+1. Update `DEFAULT_THEME` in `ThemeContext.tsx` from `"dark"` to `"light"`
+2. Update the FOLC script in `client/index.html`:
+   ```html
+   <script>
+     (function() {
+       try {
+         if (localStorage.getItem('eri-theme') === 'dark')
+           document.documentElement.classList.add('dark');
+       } catch(e) {}
+     })();
+   </script>
+   ```
+3. Run `pnpm update @eri/components` to pull in v2.17.x if needed
+4. Hard-reload browser to flush Vite cache
+5. Verify: first visit shows light mode; toggle to dark works; preference persists on reload
 
-2. **`FIXED_SECTIONS` array** in `ProjectInstructions.tsx` collapsed from 6 separate "Critical:" sections to a single `S_ERI_WORKFLOW` section (1,284 chars):
-   - Old: `S_BDS_UPDATE` (285) + `S_PROJECT_CONTEXT` (570) + `S_CHECKPOINT` (480) + `S_DEV_WORKFLOW` (257) + `S_INSTRUCTIONS_UPDATE` (220) = 1,812 chars in 5 sections
-   - New: single 8-step numbered workflow where step 1 = "Load current state" (all 4 startup actions combined)
-   - The optional `S_FRAMEWORK` section (530 chars, defaultOn: false) is unchanged
-
-3. **Generator assembly** updated: removed the redundant `skillsBlock` scan header (was `"Critical: At the start of every task, scan the skills..."`) since that instruction is now embedded in step 1 of the workflow. `skillsBlock` now emits just the tier blocks directly.
-
-4. **`CURRENT_INSTRUCTIONS` constant** updated to match the new Generator output exactly (verified ✅ MATCH at 3,427 chars).
-
-5. **`SYNC_PROMPT`** updated to reference the new `Critical: Follow this workflow...` starting text.
-
-### Known state after this session
-
-- `CURRENT_INSTRUCTIONS` in `ProjectInstructions.tsx` now matches the Generator output (3,427 chars)
-- DB-stored instructions text is still the old 5,488-char version (stale) — shows as Medium audit issue in Status tab
-- **To fix**: click "Copy sync prompt" on the Status tab → paste into new ERI Shared Dev Assets task → run it
-- After sync: the Status tab will show 0 issues and the stale-sync audit issue will clear
-- **Then**: click "Mark as Applied" in Generator tab (add change note "compact rewrite: 5488→3427 chars, workflow-first structure"), then click "Publish to API" in Version History
-
-### Checkpoint
-
-- `f5c74a04` — compact rewrite complete, 36/36 tests passing
+**SKILL.md v3.9.0 CDN:** `https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/bYsMBUbdpKgsycna.md`
 
 ---
 
-## v3.17.0 — Governance page upgrade (2026-06-11)
+## v3.4.0 — Skills tab (2026-06-04)
 
-### Changes in this session
+### New page: /skills
+- `client/src/pages/Skills.tsx` — self-improving skills registry for the ERI skill ecosystem
+- Fifth tab added to navigation: Brand Design System / Project Alignment Tracker / Start a Project / Team Guide / **Skills**
+- Database: `skills` table (id, name, description, tier, version, readWhen, createdAt, updatedAt) and `skill_improvements` table (id, skillId, version, summary, taskContext, loggedAt)
+- Router: `server/routers/skills.ts` — `publicProcedure` for reads (list, get), `adminProcedure` for writes (upsert, logImprovement, delete)
+- 22 skills seeded from `/home/ubuntu/skills/` directory (all current ERI skills, post-rename)
+- Seed script: `scripts/seed-skills.mjs` — idempotent, safe to re-run
+- Tests: `server/skills.test.ts` — 9 tests, all passing
+- `bdsSpec.ts` addition: `skills_url`
+- `BdsNavDrawer.tsx`: Skills link added to Other pages section
 
-**1. Renamed `Philosophy.tsx` → `Governance.tsx`**
+### Tier model (post-rename, 2026-06-04)
+- Tier 1 — Always-on (2 skills): eri-bds-reference, eri-human-ai-collaboration
+- Tier 2 — Per-action gate (4 skills): eri-skill-creator, eri-code-quality, eri-trpc, eri-decision
+- Tier 3 — Conditional (16 skills): eri-data-source, eri-widget, eri-database, eri-security, eri-rest-api, eri-earth-aligned-agent, eri-report-finder, eri-ueil-nav, eri-user-management, eri-bds-site, manus-api, manus-config, automation-and-scheduling, persistent-computing, imagegen, music-prompter
 
-- File: `client/src/pages/Philosophy.tsx` → `client/src/pages/Governance.tsx`
-- Route was already `/governance` and tab label was already "Governance" — only the filename and component name were stale.
-- `App.tsx` import and `<Route>` component prop updated accordingly.
-- `Philosophy.tsx` deleted.
-- Rationale: the old filename created naming ambiguity between "ERI philosophy" and the governance operating model. `Governance.tsx` is unambiguous.
+### Skill renaming/consolidation (2026-06-04)
+- All ERI-owned skills renamed with `eri-` prefix
+- Three explorer skills (data-source-integration, data-source-explorer, explorer-compare-view) consolidated into single `eri-data-source`
+- `skill-creator` → `eri-skill-creator` (ERI-adapted meta-skill with tier governance, BDS registry, project instructions management; renamed from eri-skill-manager 2026-06-05)
+- `exponential-human-ai-collaboration` → `eri-human-ai-collaboration`
+- `bgm-prompter` archived to `_archive/`
+- Skill directories at `/home/ubuntu/skills/eri-*/`; old directories remain for backward compat
+- DB cleaned: old IDs deleted, new IDs seeded via `scripts/seed-skills.mjs`
 
-**2. Fixed stale Tier 2 example in `TierModelCards`**
+### Admin note
+- `adminProcedure` throws `FORBIDDEN` (not `UNAUTHORIZED`) for null users — this is correct behaviour (admin gate checks role, not just auth)
+- Writes (upsert, logImprovement, delete) require admin role
+- Reads (list, get) are public — no login required
 
-- `eri-code-quality` (retired skill) → `eri-trpc` in the Tier 2 example field.
+### Current routes table
+| Route | Component | Status |
+|---|---|---|
+| `/` | BrandDesignSystem.tsx | Live |
+| `/tracker` | AlignmentTracker.tsx | Live |
+| `/new-webproject` | NewProject.tsx | Live |
+| `/team-guide` | TeamGuide.tsx | Live |
+| `/skills` | Skills.tsx | Live |
 
-**3. Added orchestrator explanation to the skill ecosystem section**
+---
 
-- New callout card below the tier model intro paragraph explaining that `eri-skills-orchestrator` is the Tier 1 skill whose sole job is to tell Manus which other skills to read for each task type.
+## v3.8.0 — Skills page BDS card violation fixes (2026-06-05)
 
-**4. Updated task lifecycle to show 8-step workflow**
+### What was fixed
 
-- `TaskLifecycleFlow` component updated from 6 nodes to 8 nodes.
-- The six development steps (Research → Design → Plan → Implement → Test → Iterate) are now steps 2–7 of the 8-step workflow.
-- Step 1: "Load state" (fetch BDS skill, read CODEBASE-CONTEXT.md, scan skills).
-- Step 8: "Close" (update CODEBASE-CONTEXT.md, log skill usage).
-- The eight step cards below the flow diagram now describe all 8 steps.
+All BDS compliance violations in `client/src/pages/Skills.tsx` were resolved. The page now exemplifies the system it documents.
 
-**5. Added "The three-layer governance model" section**
+**Card pattern violations fixed:**
+- `SkillRow` card: replaced full four-side teal outline with `border-l-4` left accent border + `tintBg` background (canonical BDS card pattern). Category `accentColor` used when available, tier `accentColor` as fallback.
+- `SystemOverview` tier model cards: replaced `cfg.border`/`cfg.bg` classes with `border-l-4` + inline `accentColor`/`tintBg`.
 
-- New Section 4 (inserted between "skill ecosystem" and "task lifecycle").
-- Explains the three layers from `eri-skills-orchestrator`:
-  - Layer 1 — Activation: orchestrator identifies which skills apply
-  - Layer 2 — Accountability: usage logs close the feedback loop
-  - Layer 3 — Curation: Health Dashboard surfaces what needs attention
-- Includes a callout: "The accountability layer matters most."
-- Links to `/skills` Health Dashboard.
+**Badge violations fixed:**
+- `TierBadge`: now transparent outlined pill — `border` with `accentColor` border colour, no filled background, no hardcoded colour class.
+- `CategoryBadge`: Lucide icon + `accentColor` border/bg (no emoji, uses six-slot BDS palette).
+- `RECOMMENDATION_CONFIG`: removed `badge`/`icon` fields; replaced with `accentColor`/`tintBg`. Audit section recommendation pills now use inline style (transparent outlined pill pattern).
 
-**6. Updated project instructions section**
+**Emoji violations fixed (all replaced with Lucide icons or text):**
+- `readWhen` callout: `⏰` → `<Clock size={12} />`
+- "no improvements logged": `⚠` → `<AlertTriangle size={11} />`
+- Hero stats warning: `⚠` → `<AlertTriangle size={14} />`
+- Filter bar missing-self-improvement button: `⚠` → `<AlertTriangle size={12} />`
+- View/Download buttons: emoji → `<Eye size={12} />` / `<Download size={12} />`
+- Folder path hint: `📁` → `/` text
+- Category select in `AddSkillDialog`: `cfg.icon` (emoji) → Lucide `CfgIcon` component
 
-- Bullet list updated to reflect the compact 8-step workflow-first format.
-- Link updated from `/skills` to `/project-instructions`.
+**Stale config class violations fixed:**
+- Filter bar tier chips: `cfg.badge` → inline `style` with `cfg.accentColor`/`cfg.tintBg`
+- Filter bar category chips: `catCfg.badge`/`catCfg.icon` → Lucide `CatIcon` + inline `style`
+- Tier group headings: `cfg.heading` class → inline `style={{ color: cfg.accentColor }}`
+- `SystemOverview` tier card heading: `cfg.heading` class → inline `style={{ color: cfg.accentColor }}`
+
+### Config objects after fix
+
+`TIER_CONFIG` fields: `label`, `shortLabel`, `accentColor`, `tintBg`, `when`, `constraint`, `example`
+- The `badge`, `border`, `bg`, `heading` fields have been **removed** — do not re-add them.
+
+`CATEGORY_CONFIG` fields: `label`, `Icon` (Lucide component), `accentColor`, `tintBg`
+- The `icon` (emoji string) and `badge` fields have been **removed** — do not re-add them.
+
+`RECOMMENDATION_CONFIG` fields: `label`, `accentColor`, `tintBg`
+- The `badge` and `icon` fields have been **removed** — do not re-add them.
+
+### Checkpoint
+- Version: `3810c562`
+- Tests: 14/14 passing (`server/skills.test.ts`)
+- TypeScript: 0 real errors (13 stale watcher noise — TS 5.6.3 vs 5.9.3 path mismatch, safe to ignore)
+
+---
+
+## v3.9.0 — Skills architecture migration: filesystem-first (2026-06-05)
+
+### Architecture decision
+
+The `skills` DB table was a stale copy of SKILL.md content. The new architecture:
+
+- **Filesystem = source of truth for skill content** (name, description, tier, category, version, readWhen, hasReferences)
+- **DB = source of truth for governance data** (improvement log, project instructions preamble, version snapshots, audit findings)
+
+### What changed
+
+**Schema (`drizzle/schema.ts`):**
+- `skills` table removed from schema (still exists in DB — `DROP TABLE` blocked by safety system; requires manual drop via Database panel)
+- `skillImprovements` table kept (no FK to `skills` — standalone improvement log keyed by `skillId` string)
+- `projectInstructionsVersions` table added (snapshots when "Mark as Applied" is clicked)
+- `projectInstructionsAudits` table added (agent-written audit findings from "Run Audit" workflow)
+
+**Router (`server/routers/skills.ts`):**
+- `SKILLS_METADATA` TypeScript constant added — 26 entries, one per skill directory, with all structured metadata
+- `skills.list` — now returns `SKILLS_METADATA` array (no DB query)
+- `skills.get` — returns one entry from `SKILLS_METADATA` + improvement log from DB
+- `skills.getContent` — new procedure; reads SKILL.md from filesystem at `/home/ubuntu/skills/{id}/SKILL.md`
+- `skills.upsert` — removed (skills are filesystem-only)
+- `skills.delete` — removed (skills are filesystem-only)
+- `skills.logImprovement` — kept (writes to `skillImprovements`)
+- `skills.saveInstructionsVersion` — new; writes snapshot to `projectInstructionsVersions`
+- `skills.listInstructionsVersions` — new; reads from `projectInstructionsVersions`
+- `skills.saveInstructionsAudit` — new; writes to `projectInstructionsAudits`
+- `skills.listInstructionsAudits` — new; reads from `projectInstructionsAudits`
+- `skills.getProjectInstructions` / `skills.saveProjectInstructions` — kept (preamble storage)
+
+**Frontend (`client/src/pages/Skills.tsx`):**
+- `AddSkillDialog` component removed
+- `DeleteSkillButton` component removed
+- `SkillRow` now lazy-loads improvements via `trpc.skills.get` when expanded
+- `FIXED_SECTIONS` constant added (5 toggleable blocks for Generator panel)
+- `generateSkillTriggers` updated to trigger-only format (strips "Read before/when" prefix)
+- `ProjectInstructions` rewritten with 3 panels:
+  - **Generator**: Fixed Sections toggles + trigger-only skills block + live budget bar (vs 8,000 chars) + "Copy all" + "Mark as Applied" button
+  - **Version History**: list of saved snapshots from `projectInstructionsVersions` DB table
+  - **Audit**: static analysis sections + "Run Audit" button (opens modal with copy-ready prompt for pasting into a new Manus task) + list of stored audit findings from `projectInstructionsAudits`
+
+**Tests (`server/skills.test.ts`):**
+- Rewritten for new architecture — 22/22 passing
+- Tests for `upsert` and `delete` removed
+- Tests added for `getContent`, `saveInstructionsAudit`, `saveInstructionsVersion`
+
+### Known issue: skills table still in DB
+
+The `skills` table still exists in the DB because `DROP TABLE` is blocked by the safety system. The data is stale seed data (22 rows from `scripts/seed-skills.mjs`). No real data is at risk. To drop it:
+1. Open the **Database panel** in the Management UI
+2. Select the `skills` table
+3. Delete all rows, then drop the table
+
+The `seed-skills.mjs` script has been deleted — it is superseded by the `SKILLS_METADATA` constant in the router.
+
+### Checkpoints
+- `79e39347` — after schema + router changes (22/22 tests passing)
+- `8252e07e` — after frontend changes (22/22 tests passing)
+
+### SKILLS_METADATA — how to add a new skill
+
+To add a new skill to the registry:
+1. Create the skill directory: `/home/ubuntu/skills/{id}/SKILL.md`
+2. Add an entry to `SKILLS_METADATA` in `server/routers/skills.ts` with the correct `id`, `name`, `description`, `tier`, `category`, `version`, `readWhen`, `hasReferences`
+3. No DB migration required — the list is a TypeScript constant
+
+### FIXED_SECTIONS — Project Instructions Generator
+
+The Generator panel has 5 toggleable Fixed Sections:
+1. **ERI workflow** — the 5-step ERI development workflow
+2. **Exponential Framework** — 5×4 matrix, pillar/horizontal names
+3. **Earth-Aligned AI Agent** — key files for the agent pipeline
+4. **BDS compliance** — pre-action checklist reference
+5. **Checkpoint discipline** — save-checkpoint rules
+
+These are rendered before the skill triggers block in the combined output. The budget bar shows used/8,000 characters.
+
+---
+
+## eri-bds-reference v3.11.0 — Option A targeted fixes (2026-06-05)
+
+### What changed
+
+Three targeted improvements applied to `eri-bds-reference` SKILL.md. No structural rewrite — Option A only.
+
+**1. Setup Checklist step 10 — self-contained dark mode checklist**
+- Replaced the single-line cross-reference ("read the Cross-Site Theme System section") with a numbered 6-step dark mode implementation checklist
+- Each step names the exact file, the exact action, and the failure mode if skipped
+- Steps: FOLC script → CSS tokens → ThemeContext.tsx → ThemeProvider wrapper → showThemeToggle → headerTheme="auto"
+- Steps 5 and 6 explicitly noted as always-paired
+
+**2. Canonical App.tsx pattern — three required files callout**
+- Added a blockquote above the code pattern listing the three required files (FOLC script, CSS tokens, ThemeContext.tsx) with section references
+- Added `ThemeProvider` import and wrapper to the pattern itself (was missing — the pattern was incomplete without it)
+
+**3. Prop table improvements**
+- `EriStatusBadge.theme`: improved description — now explains when to use `'dark'` vs `'light'` and notes that `EriPageLayout` handles this automatically
+- `EriHeroSection`: added a full dedicated prop table (was previously only an inline summary paragraph). All props have decision guidance:
+  - `backgroundImage`: per-project decision rule (omit for all standard apps, Trust Centre only, Crocodile Economics only)
+  - `overlayOpacity`: canonical value `0.82` with warning against changing it
+  - `showScrollIndicator`: instruction to pass `true` on all landing pages
+
+### What was NOT changed (deliberate)
+- No structural rewrite or progressive disclosure refactor (Option B deferred)
+- No decision-tree rewrite (Option C deferred)
+- The 1,918-line length is acknowledged but not addressed in this pass
+
+### SKILLS_METADATA
+- `eri-bds-reference` version updated to `3.11.0` in `server/routers/skills.ts`
+
+---
+
+## v3.10.0 — Dynamic skill metadata + Skills page UX improvements (2026-06-06)
+
+### Dynamic metadata (skills router)
+
+**Architecture change:** `skills.list` and `skills.get` now merge live frontmatter values over the hardcoded `SKILLS_METADATA` entries at request time.
+
+**What is live (from SKILL.md frontmatter):**
+- `name` — always overrides hardcoded value if frontmatter has it
+- `description` — always overrides hardcoded value if frontmatter has it
+- `version` — overrides hardcoded value only if `metadata.version` is present in frontmatter (only 4 skills currently have this: eri-code-quality, eri-decision, eri-rest-api, eri-trpc)
+
+**What stays hardcoded (governance decisions, not self-descriptions):**
+- `tier`, `category`, `readWhen`, `hasReferences`
+
+**New helpers in `server/routers/skills.ts`:**
+- `parseFrontmatterMeta(content)` — parses YAML frontmatter, handles quoted strings, block scalars (`>`), and `metadata.version` nested block
+- `enrichWithFrontmatter(meta)` — merges live values over hardcoded entry
+
+**How to add a new skill (updated):**
+1. Create `/home/ubuntu/skills/{id}/SKILL.md` with `name:` and `description:` in frontmatter
+2. Add an entry to `SKILLS_METADATA` with `id`, `tier`, `category`, `version`, `readWhen`, `hasReferences`
+3. `name` and `description` will be read live from frontmatter — no need to keep them in sync manually
+
+### Skills page UX improvements
+
+**Individual skill cards:**
+- Removed `</>` decorative icon — it signalled "code" but skills are knowledge modules
+- `description` margin adjusted (was `ml-7` to align with icon — now `mt-3` only)
+- `readWhen` callout now has accent-coloured left border + tinted background matching the card accent colour — makes the "When to read" signal visually prominent
+- `readWhen` "When:" label is now bold and in the accent colour
+- Expanded state now shows a **content preview** — first ~350 chars of SKILL.md body (after frontmatter), lazy-loaded via `trpc.skills.getContent`. Gives immediate value without requiring a download.
+- Empty improvement log: replaced `<AlertTriangle>` warning with an actionable message: "No improvements logged yet. After applying this skill in a task, expand this card and use Log Improvement to record what you learned."
+
+**Ecosystem framing (tier section headers):**
+- Each tier group heading now has a one-line plain-language description:
+  - Tier 1: "Read at the start of every task, without exception. These skills define how ERI work is done — collaboration principles, brand standards, and core operating procedures."
+  - Tier 2: "Read immediately before a specific action, even within the same task. These are gate skills — they prevent mistakes by ensuring the right pattern is applied at the right moment."
+  - Tier 3: "Read when the domain or trigger condition applies. These are reference skills — deep knowledge for specific areas of the platform, data sources, or tooling."
+
+### Tests
+- 22/22 passing (`server/skills.test.ts`)
+- TypeScript: 0 real errors (13 stale watcher noise — TS 5.6.3 vs 5.9.3 path mismatch, safe to ignore)
+
+---
+
+## v3.11.0 — Governance top-level page + Skills UX improvements (2026-06-07)
+
+### `/governance` — Governance & Methodology page
+
+The page lives at `/governance` (tab label: "Governance"), sixth tab in `App.tsx`. File: `client/src/pages/Governance.tsx`.
+
+> **Note:** The file was originally named `Philosophy.tsx` and the route was `/philosophy`. Both were renamed to `/governance` / `Governance.tsx` on 2026-06-11 to eliminate naming ambiguity between Manus projects and ERI web projects. `Philosophy.tsx` has been deleted.
+
+**Sections (all collapsible, first two open by default):**
+1. The big idea (always visible callout — not collapsible)
+2. The four governance layers (`GovernanceDiagram` component)
+3. The self-improving system (four-step loop + compounding callout)
+4. The skill ecosystem (tier model cards + orchestrator callout + link to /skills)
+5. The three-layer governance model (Activation → Accountability → Curation — NEW in v3.17.0)
+6. The task lifecycle (8-step workflow — updated from 6-step in v3.17.0)
+7. The project instructions system (what it controls + link to /project-instructions)
+8. The agent-bridge pattern
+9. Technical debt governance: prevention vs remediation
+10. Human–AI collaboration principles (six principle cards)
+11. Further reading (six curated external resources)
+
+**Further reading links (verified URLs):**
+- The Vibe Codex: https://thevibecodex.com/
+- AI's Quiet Elegance — The Vibe Codex (Eclipse AI): https://www.eclipseai.ai/insights/vibe-codex
+- Beyond Vibe Coding (Thoughtworks, March 2026): https://www.thoughtworks.com/en-us/insights/blog/generative-ai/beyond-vibe-coding-the-five-building-blocks-of-aI-native-engineering
+- The AI Coding Agent Manifesto (Wix Engineering): https://medium.com/wix-engineering/the-ai-coding-agent-manifesto-c8f61629d677
+- Vibe Coding: Don't Kill the Vibe, Govern It (IAPP): https://iapp.org/news/a/vibe-coding-don-t-kill-the-vibe-govern-it
+- The Vibe Engineering Manifesto (Feifan Wang): https://www.vibeengineering.ai/p/the-vibe-engineering-manifesto
+
+### Skills page changes
+
+- **Philosophy inner tab removed** from `/skills` — its content is now on the top-level Governance page. `activePageTab` state is now `"skills" | "projectInstructions"` only. The `SystemOverview` component remains in `Skills.tsx` but is no longer rendered (can be cleaned up in a future task).
+- **PageGuide text updated** to point users to the Governance tab instead of the removed Philosophy tab.
+
+### Skill card expand affordance
+
+- Added `ChevronDown`/`ChevronUp` icon to the top-right of the card header (rotates 180° when open) — the universal expand signal.
+- Changed "View" button label to "Details ↓" (collapsed) / "Close ↑" (expanded) — makes it a toggle, not a navigation action.
 
 ### Test status
 
-36/36 tests passing (no new server-side code added). TypeScript: 0 real errors (13 false positives from stale typescript@5.6.3 watcher).
-
-### Checkpoint
-
-`2f813fca` — Governance page upgrade complete.
+22/22 tests passing. TypeScript: 0 real errors.
 
 ---
 
-## v3.18.0 — External-facing landing page & site-wide readability (2026-06-11)
+## v2.17.0 — Governance rename + Project Instructions API (Jun 2026)
+
+### CODEBASE-CONTEXT.md rename
+- `PROJECT-CONTEXT.md` renamed to `CODEBASE-CONTEXT.md` across this entire codebase (global sed replace + git mv).
+- Rationale: the file sits at the **codebase layer** of the ERI governance model, not the project layer. All ERI codebases share one Manus project (ERI Shared Dev Assets). Calling it "PROJECT-CONTEXT" was a misnomer.
+- The eri-bds-reference skill has been updated to use `CODEBASE-CONTEXT.md` throughout.
+- **Action required:** Update the Manus project instructions (ERI Shared Dev Assets → Instructions) to replace `PROJECT-CONTEXT.md` with `CODEBASE-CONTEXT.md`. Use the Project Instructions generator on `/skills` to regenerate and copy-paste.
+
+### EriStatusBadge — LIVE removed
+- `LIVE` removed from `EriStatusValue` type. Rule: when a site goes live, remove the `status` prop entirely. No badge = live.
+- `status="BETA"` removed from `EriAppHeader` in `App.tsx` — the BDS site is now live.
+- All `LIVE` references removed from `BrandDesignSystem.tsx`, `AlignmentTracker.tsx`, `NavigationPatterns.tsx`, and `packages/eri-components/README.md`.
+
+### /api/project-instructions/latest endpoint
+- New Express endpoint: `GET /api/project-instructions/latest` returns the most recently published `generatedSnapshot` as `text/plain`.
+- New tRPC procedures: `skills.publishInstructions({ versionId })` and `skills.getPublishedInstructions`.
+- New DB column: `published_at` (nullable timestamp) on `project_instructions_versions`.
+- Version History tab: each card has "Publish to API" / "Re-publish" button. Published versions show green "Published" badge.
+- `S_INSTRUCTIONS_UPDATE` fixed section: now `defaultOn: true` (was `false`). The curl line is included in every generated output by default.
+
+### @eri/components version
+- Bumped to **v2.17.0**. `gen:version` run — `shared/eriVersion.ts` updated.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v3.12.0 — Project Instructions page: Current Instructions panel + issue highlights (2026-06-08)
+
+### Current Instructions panel
+- New `CurrentInstructionsPanel` component added above the Manager card on `/project-instructions`.
+- Fetches the live published instructions via `trpc.skills.getPublishedInstructions` (public query — no auth required).
+- Shows a collapsible read-only code block of the live text with known-issue patterns highlighted in amber.
+- Displays an amber warning banner listing all `KNOWN_ISSUES` with severity badges (High / Medium) and plain-language explanations.
+- Banner footer guides the user to use the Generator tab to produce corrected instructions and publish them.
+
+### KNOWN_ISSUES constant
+Four issues pre-loaded:
+1. **High** — Stale filename `PROJECT-CONTEXT.md` (should be `CODEBASE-CONTEXT.md`)
+2. **Medium** — Stale skill name `exponential-human-ai-collaboration` (should be `eri-human-ai-collaboration`)
+3. **Medium** — Framework described as "5 pillars × 4 horizontals matrix = 20 cells" (incorrect — H1/H2/H4 are company-wide)
+4. **Medium** — `S_INSTRUCTIONS_UPDATE` was disabled by default
+
+### S_INSTRUCTIONS_UPDATE defaultOn changed
+- `defaultOn: false` → `defaultOn: true` for the "Project instructions auto-update" Fixed Section.
+- The curl line is now included in every generated output by default.
+- Description updated: "Requires a version to have been published via the Publish to API button in Version History."
+
+### Tab order change (Jun 2026)
+- Team Guide moved to last tab in the main `TabNav` in `App.tsx` and `BdsNavDrawer.tsx`.
+- New tab order: Brand Design System → Project Alignment Tracker → Start a Project → Governance → Skills → Project Instructions → Team Guide
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v2.17.0 — Governance rename + Project Instructions API (Jun 2026)
+
+### CODEBASE-CONTEXT.md rename
+- `PROJECT-CONTEXT.md` renamed to `CODEBASE-CONTEXT.md` across this entire codebase (global sed replace + git mv).
+- Rationale: the file sits at the **codebase layer** of the ERI governance model, not the project layer. All ERI codebases share one Manus project (ERI Shared Dev Assets). Calling it "PROJECT-CONTEXT" was a misnomer.
+- The eri-bds-reference skill has been updated to use `CODEBASE-CONTEXT.md` throughout.
+- **Action required:** Update the Manus project instructions (ERI Shared Dev Assets) to replace `PROJECT-CONTEXT.md` with `CODEBASE-CONTEXT.md`. Use the Project Instructions generator on `/skills` to regenerate and copy-paste.
+
+### EriStatusBadge — LIVE removed
+- `LIVE` removed from `EriStatusValue` type. Rule: when a site goes live, remove the `status` prop entirely. No badge = live.
+- `status="BETA"` removed from `EriAppHeader` in `App.tsx` — the BDS site is now live.
+- All `LIVE` references removed from `BrandDesignSystem.tsx`, `AlignmentTracker.tsx`, `NavigationPatterns.tsx`, and `packages/eri-components/README.md`.
+
+### /api/project-instructions/latest endpoint
+- New Express endpoint: `GET /api/project-instructions/latest` returns the most recently published `generatedSnapshot` as `text/plain`.
+- New tRPC procedures: `skills.publishInstructions({ versionId })` and `skills.getPublishedInstructions`.
+- New DB column: `published_at` (nullable timestamp) on `project_instructions_versions`.
+- Version History tab: each card has "Publish to API" / "Re-publish" button. Published versions show green "Published" badge.
+- New fixed section `S_INSTRUCTIONS_UPDATE` (defaultOn: false): curl line that fetches from `/api/project-instructions/latest`. Enable once a version has been published.
+
+### @eri/components version
+- Bumped to **v2.17.0**. `gen:version` run — `shared/eriVersion.ts` updated.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v3.13.0 — Agent-bridge pattern: live project instructions sync (2026-06-08)
+
+### Core insight
+The Manus platform has no API to read project instructions from a web application. Only a Manus agent can read them (from its `<project_instructions>` context block). The **agent-bridge pattern** is the canonical solution: the web app provides a "Copy sync prompt" button; the user pastes it into a new Manus task; the agent reads its context and calls a tRPC mutation to write the text to the database; the web app fetches it on next load.
+
+### Changes
+- New DB table: `current_instructions_sync` (id=1 upsert row, `instructions_text TEXT`, `synced_at TIMESTAMP`, `agent_note VARCHAR(500)`)
+- New tRPC procedures:
+  - `skills.syncCurrentInstructions` (adminProcedure) — agent writes the live instructions text
+  - `skills.getCurrentInstructions` (publicProcedure) — web app reads the synced text
+- Current tab on `/project-instructions` now fetches from DB via `getCurrentInstructions`; falls back to hardcoded `CURRENT_INSTRUCTIONS` constant if no sync has been performed yet
+- "Copy sync prompt" button added to the Current tab — copies a ready-to-paste Manus task prompt
+- "Last synced" timestamp and agent note shown when a sync row exists
+- Agent-bridge pattern documented on `/governance` page as new Section 5b ("The agent-bridge pattern")
+- Agent-bridge pattern added to `eri-bds-site` skill under "The Agent-Bridge Pattern" section
+
+### Rule for future agents
+When a feature requires displaying data that only an agent can read, **propose the agent-bridge pattern before building a static fallback**. A hardcoded constant goes stale the moment the source changes. The agent-bridge keeps the UI accurate whenever the user chooses to sync.
+
+### Test status
+22/22 tests passing. TypeScript: 0 real errors.
+
+---
+
+## v3.14.0 — Skill updates from Lean Code Audit (2026-06-09)
 
 ### Context
+A lean code audit of the eri-playbook-team codebase identified 7 categories of technical debt. Three skills were updated to prevent recurrence and to enable opportunistic remediation of pre-existing debt.
 
-The site previously had no front door. An external visitor — a partner, collaborator, or member company sent the link — would land on the Brand Design System, a 96,000-pixel technical reference document with no explanation of what the site is, who built it, or what the seven tabs collectively represent. This session adds a proper landing page and makes every page readable to a non-technical external audience.
+### Skills updated
 
-### Route change — IMPORTANT
+**eri-trpc v2.1.0 → v2.2.0**
+- Added canonical `paginationSchema` in `shared/pagination.ts` — use instead of inline `z.number().int().min(1).max(...)` schemas (691+ inline instances exist in the codebase)
+- Added "Opportunistic Remediation" section: when touching a router file, also fix private `getDb()` definitions (85 instances), inline pagination schemas, and inline DB helpers
 
-The Brand Design System has moved from `/` to `/brand-design-system`. Any bookmarks or shared links to `/` now land on the Overview landing page, not the BDS reference. This was an intentional decision approved by the team.
+**eri-code-quality v2.1.0 → v2.2.0**
+- Gate 8 now has 5 checks (was 3): added "search first" (check `client/src/components/` before creating a new component — 15-20 duplicated badge/formatter components exist) and `useTabState` hook requirement for all tab state (141 inline `useState` tab instances exist)
+- Added Gate 10: file placement (`server/scripts/`, `shared/`, `server/db/<domain>.ts`) and `server/db.ts` size check (currently 2,512 lines — new functions go to domain modules if >500 lines)
+- Updated checklist format to include Gate 10 row
+- Description updated to "10 gates"
 
-| Old route | New route | Component |
-|---|---|---|
-| `/` | `/brand-design-system` | `BrandDesignSystem.tsx` |
-| (new) | `/` | `Overview.tsx` |
+**data-source-integration v1.0.0 → v1.1.0**
+- Added frontmatter `metadata.version: "1.1.0"` (was missing — skill was not self-versioning)
+- Added "Known Pre-Existing Debt — Workspace Shell Pages" section: names all 11 affected pages and provides the mechanical migration pattern to `WorkspaceDataSourcePage`
 
-### Changes in this session
+### Key insight: prevention vs remediation
+The skills library is a prevention-only system by default. The audit findings are pre-existing debt from before the skills existed. The fix is **opportunistic remediation rules** — when touching an affected file for any reason, apply the fix as a side effect. This transforms skills into a rolling debt-reduction system without requiring dedicated refactoring sprints.
 
-**1. New `Overview.tsx` landing page at `/`**
-
-- File: `client/src/pages/Overview.tsx` (new)
-- Partner-facing landing page. Tells the full story of the hub in plain language without assuming technical background.
-- Sections: Hero (ERI_HERO_IMAGE_DEFAULT, showScrollIndicator), "What this hub is" (52,000+ companies, self-improving, 5× advantage), "The story" (4-step compounding loop), "What is in this hub" (7-section card map), "About ERI", "Get started" CTA.
-- All seven hub sections are described with audience guidance ("Start here if you want to understand the system as a whole", etc.).
-- BDS compliant: semantic tokens, left-border accent cards, Accent Lime eyebrows, no emoji, British English.
-
-**2. `App.tsx` route wiring updated**
-
-- `Overview` added as import and `<Route path="/">` component.
-- `BrandDesignSystem` moved to `<Route path="/brand-design-system">`.
-- `TabNav` updated: "Overview" added as first tab; "Brand Design System" now links to `/brand-design-system`.
-
-**3. `BdsNavDrawer.tsx` updated**
-
-- "On this page" section anchor links remain (BDS-specific, still useful on `/brand-design-system`).
-- "Other pages" section renamed to "All pages" and now includes Overview (`/`) as the first link, with Brand Design System linking to `/brand-design-system`.
-- Page order: Overview → Brand Design System → Governance → Skills → Project Instructions → Team Guide → Project Alignment Tracker → New Web Project.
-
-**4. All page guides rewritten for external audience**
-
-| Page | Old guide | New guide |
-|---|---|---|
-| Governance | Internal instructions about reading sections | "This is how ERI ensures every task is executed with the same rigour… No technical background required." |
-| Skills | Internal filter instructions | "These 25 knowledge modules are ERI's accumulated expertise, encoded so it cannot be lost and improves automatically after every task." |
-| Project Instructions | Internal pipeline instructions | "The standing brief that every Manus AI agent reads before starting any ERI task." |
-| Brand Design System | Internal implementation instructions | "The single source of truth for all visual, verbal, and component decisions across ERI digital products." |
-
-**5. `index.html` meta description updated**
-
-- Old: "Design and Development Hub — brand reference, governance, skills registry, and project instructions for ERI AI-assisted development."
-- New: "The ERI Design and Development Hub — where ERI builds for climate accountability. Explore the governance model, skills registry, brand design system, and project instructions that power ERI's AI-native operations across a platform covering 52,000+ companies."
-
-**6. Stale internal links fixed**
-
-- `AlignmentTracker.tsx` line 986: `href="/"` → `href="/brand-design-system"` (BDS reference link).
-- `NewProject.tsx` line 82: `eri-code-quality` → `eri-trpc` (retired skill reference in TRACK2_INSTRUCTIONS).
+### Analysis document
+`/home/ubuntu/LeanAuditVsGovernanceAnalysis.md` — full cross-reference of the 7 audit findings against the skills library.
 
 ### Test status
-
-No new server-side code. TypeScript: 0 real errors (13 false positives from stale typescript@5.6.3 watcher).
-
-### Checkpoint
-
-`616476e6` — External-facing landing page and site-wide readability upgrade complete.
+22/22 tests passing. TypeScript: 0 real errors.
 
 ---
 
-## Session record — v3.19.0 (2026-06-11)
+## v3.15.0 — Cross-task SKILLS_METADATA sync (2026-06-09)
 
-### Framing corrections (checkpoint acd0c2b2)
+### Problem resolved
 
-Corrected framing across Overview.tsx and Governance.tsx. ERI is driven by climate science and planetary boundaries — but engages companies through the lens of business growth, resilience, and competitive advantage. "Climate accountability" framing was removed; it is for politicians, not companies. The 52,000+ companies figure refers to companies in the Exponential Platform data lake — a proof point of scale and business opportunity, not a compliance database.
+The eri-skill-creator Step 8 previously told agents to "update SKILLS_METADATA in server/routers/skills.ts" — which is only possible from the BDS task. Agents in other tasks (CPR, PSM, HAL, etc.) could not complete this step.
 
-### Post-mortem governance fixes (after context compaction event)
+### Key distinction (now documented in eri-skill-creator v2.3.0)
 
-Following a governance failure (context compaction mid-session causing the agent to answer from stale memory), four fixes were applied:
+- **SKILL.md files** live in `/home/ubuntu/skills/` — shared project files, editable from **any** task in the same Manus project
+- **SKILLS_METADATA** in `server/routers/skills.ts` lives in the BDS webdev project directory — only editable from the BDS task
 
-1. **eri-skills-orchestrator SKILL.md** bumped to v1.1.0: added `eri-report-finder` and `eri-pdf-pipeline` to the T4 signal set in the task-type table.
-2. **eri-report-finder SKILL.md** bumped to v4.1.0: added zero-results guardrail in Section 8 — if `corporateReportUrls` returns zero rows, assume the query is wrong before assuming no data exists.
-3. **eri-pdf-pipeline SKILL.md** bumped to v2.0.0: added zero-results guardrail in Anti-Patterns section (same logic as above).
-4. **ProjectInstructions.tsx** `CURRENT_INSTRUCTIONS` and `FIXED_SECTIONS`: added compaction re-read rule — if `<compacted_history>` appears in context, treat it as a session restart and re-read CODEBASE-CONTEXT.md before answering any system-state question.
-5. **server/routers/skills.ts** `SKILLS_METADATA`: bumped eri-skills-orchestrator to 1.1.0, eri-report-finder to 4.1.0.
+### New procedures added to `server/routers/skills.ts`
 
-### Governance page upgrade (checkpoint 3bc04c02)
+**`skills.syncMetadataFromFiles`** (adminProcedure, no input)
+- Reads the frontmatter from every registered skill's SKILL.md
+- Updates `version`, `name`, and `description` fields in SKILLS_METADATA in-place (regex replacement)
+- Fields left unchanged: `tier`, `category`, `readWhen`, `hasReferences`
+- Writes the updated source back to skills.ts
+- Returns `{ success, changesCount, changes: [{ id, field, from, to }], message }`
+- Triggered via "↻ Sync from skill files" button on /skills page (admin only)
+- Shows a diff table of what changed
 
-**Anchor navigation**
+**`skills.registerSkill`** (adminProcedure)
+- Manual fallback for registering brand-new skills not yet on the filesystem
+- Appends a new entry to SKILLS_METADATA before the closing `];`
+- Rejects if skill ID already exists (CONFLICT error)
+- Triggered via "+ Register Skill" form on /skills page (admin only)
 
-Added `GovernanceAnchorNav` component — a sticky pill nav bar that tracks the active section via `IntersectionObserver`. Eight anchors: How it works, System components, Self-improving, Skill ecosystem, How it improves, Task lifecycle, Human operator guide (marked Essential/lime), Collaboration principles, Further reading.
+### Workflow for non-BDS tasks (Path B in eri-skill-creator Step 8)
 
-**Plain-language opening frame**
-
-Added a "What this is — in plain language" block before the four system components section. Uses the employee handbook analogy: every task reads the handbook, every completed task makes the handbook better, the system compounds over time.
-
-**Section renames**
-
-- "Four governance layers" → "The four system components"
-- "Three-layer governance model" → "How the system improves"
-
-**Managing AI working memory section** (id="working-memory")
-
-New section between task lifecycle and project instructions. Three columns:
-
-| Risk | How the agent governs it | Human operator guide |
-|---|---|---|
-| Context compaction (working memory compressed mid-session) | Re-read CODEBASE-CONTEXT.md rule; phase-close discipline | One focused request per message; wait for phase-close signal |
-| Session reset (sandbox hibernates) | CODEBASE-CONTEXT.md persists; skills persist | Send screenshots instead of browser navigation |
-| Stale memory (answering from pre-compaction context) | Compaction re-read rule in project instructions | Paste text instead of asking agent to read files |
-
-The "Human operator guide" column is visually distinguished with lime accent and an "Essential" badge.
-
-**Step 8 annotation**
-
-Step 8 (Close) sub-text updated from "Update codebase memory, log skills" to "Update context memory, log skills. Makes the next session recoverable." — making the phase-close discipline rationale explicit in the task lifecycle diagram.
-
-**Section ids added**
-
-All 12 section ids are now present: `how-it-works`, `system-components`, `self-improving`, `skill-ecosystem`, `how-it-improves`, `task-lifecycle`, `working-memory`, `project-instructions`, `agent-bridge`, `technical-debt`, `collaboration`, `further-reading`.
-
-### Known issues
-
-- 13 TypeScript false positives from stale `typescript@5.6.3` watcher — confirmed not real errors.
-- ProjectInstructions.tsx parse error (line 63) was from an earlier session; file is now syntactically correct.
+1. Agent updates SKILL.md directly (shared project file — always accessible)
+2. Agent tells user: "I updated `eri-<skill-name>` to v1.2.0. Please click Sync from skill files on the BDS Skills page."
+3. User clicks the button on `/skills` (admin only)
+4. SKILLS_METADATA is updated automatically from the frontmatter
 
 ### Test status
+29/29 tests passing. TypeScript: 0 real errors.
 
-No new server-side code. TypeScript: 0 real errors (13 false positives from stale typescript@5.6.3 watcher).
-
-### Checkpoint
-
-`3bc04c02` — v3.19.0 Governance page upgrade complete.
-
----
-
-## v3.20.0 — eri-bds-reference split + context reduction (2026-06-11)
-
-### Changes in this session
-
-**1. `eri-bds-reference` split into two skills**
-
-The 124 KB / 1,887-line `eri-bds-reference` skill was split into:
-
-- **`eri-bds-reference` v4.0.0** (23 KB / 445 lines) — compact always-on Tier 1 skill. Contains: system operations checklist (Steps 0–2), pre-action decision table, canonical colour tokens, typography rules, navigation tier decision, hero layout rules, dark mode enforcement (CSS token block + semantic token table), CTA/language/anti-AI design patterns, project alignment checklist (S/T/B/C/A), bds-meta.json schema pointer, and BDS section index.
-
-- **`eri-bds-components` v1.0.0** (28 KB / 626 lines) — new Tier 2 skill. Contains: `@eri/components` install + version auto-sync, all six standard component prop tables (EriPageLayout, EriAppHeader, EriAppFooter, EriHeroSection, EriStatusBadge, EriContactUsButton), canonical App.tsx pattern, nav overlay/drawer implementation (NavDrawer.tsx verbatim), hero section manual fallback, web app header anatomy, favicon spec, hero images CDN table, key CDN asset URLs, footer standard, Contact Us integration, cross-site theme system (ThemeContext.tsx verbatim, FOLC script), layout wrapper pattern, and bds-meta.json full schema.
-
-**2. Exponential Framework matrix pruned from `eri-bds-reference`**
-
-The full 5×4 Exponential Framework matrix (previously lines 450–498 of the old skill) was removed entirely. It belongs in `eri-exponential-framework`, not in the brand reference skill.
-
-**3. `eri-skills-orchestrator` updated**
-
-- Added `eri-bds-components` to Tier 2 in the auto-generated skill index block
-- Added task type T6b: "ERI component or app build (using `@eri/components`)" with signals: EriPageLayout, EriHeroSection, EriAppHeader, EriAppFooter, nav overlay, nav drawer, hero section, contact us integration, bds-meta.json, new ERI app, ERI web app, @eri/components
-
-**4. `SKILLS_METADATA` in `server/routers/skills.ts` updated**
-
-- `eri-bds-reference` version bumped to `4.0.0` with updated description (compact, always-on)
-- New `eri-bds-components` entry added at Tier 2 (after `eri-bds-site`)
-
-**5. `ProjectInstructions.tsx` updated**
-
-- `CURRENT_INSTRUCTIONS` constant updated to include `eri-bds-components` in Tier 2
-- `generateSkillTriggers()` will automatically include it in generated instructions (reads from SKILLS_METADATA)
-
-**6. `CODEBASE-CONTEXT.md` archived**
-
-- Session records v2.15.0–v3.15.0 (1,141 lines) moved to `CODEBASE-CONTEXT-archive.md`
-- Main file reduced from 104 KB / 1,491 lines → 67 KB / 883 lines (36% reduction)
-
-### Context load reduction achieved
-
-| Asset | Before | After | Saving |
-|---|---|---|---|
-| `eri-bds-reference` SKILL.md | 124 KB | 23 KB | −101 KB |
-| `CODEBASE-CONTEXT.md` | 104 KB | 67 KB | −37 KB |
-| `eri-bds-components` SKILL.md (new) | — | 28 KB | +28 KB |
-| **Net saving per compaction** | **228 KB** | **118 KB** | **−110 KB** |
-
-### What to do next
-
-- **Publish the updated project instructions** via the `/project-instructions` page (the generator now includes `eri-bds-components` in Tier 2)
-- **Publish the updated `eri-bds-reference` v4.0.0 skill** via the BDS Skills page → "↻ Sync from skill files" button (admin only) — this pushes the compact skill to the `/api/skill/latest` endpoint that agents curl at task start
-- **Register `eri-bds-components`** on the BDS Skills page (it is in SKILLS_METADATA but not yet in the live skills registry)
-- **Log skill usage** on the BDS Skills page for: `eri-skill-creator`, `eri-bds-reference`, `eri-skills-orchestrator`
-
-### Archive note
-
-`CODEBASE-CONTEXT-archive.md` contains the full session history from project inception through v3.15.0. It is not read by agents — it is a historical record only. Do not delete it.

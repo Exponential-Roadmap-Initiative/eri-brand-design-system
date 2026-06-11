@@ -78,6 +78,7 @@ const CURRENT_INSTRUCTIONS = `Critical: Follow this workflow at the start of eve
 \u2022 eri-skill-creator: Writing any eri- skill file; post-task reflection loop.
 \u2022 eri-earth-aligned-agent: Any Earth-aligned agent task.
 \u2022 eri-bds-site: Building, rebuilding, or extending the ERI Brand Design System site.
+\u2022 eri-bds-components: Building or modifying any @eri/components component; new ERI web app; nav overlay, hero section, footer, Contact Us integration, or cross-site theme system.
 \u2022 eri-trpc: New router, new procedure, procedure type decision, quality gate before writing code.
 \u2022 eri-database: DB schema design, migrations, indexes, multi-tenant isolation.
 \u2022 eri-widget: New data source or analytical widget, Widget Hub page, widget registry.
