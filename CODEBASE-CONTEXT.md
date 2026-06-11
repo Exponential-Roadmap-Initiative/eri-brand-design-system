@@ -702,7 +702,7 @@ CDN URL: `https://files.manuscdn.com/user_upload_by_module/session_file/31051966
 |---|---|---|
 | `/` | BrandDesignSystem.tsx | Live |
 | `/tracker` | AlignmentTracker.tsx | Live |
-| `/new-project` | NewProject.tsx | Live |
+| `/new-webproject` | NewProject.tsx | Live |
 | `/team-guide` | TeamGuide.tsx | Live |
 | `/skills` | Skills.tsx | Live |
 
@@ -916,21 +916,24 @@ Three targeted improvements applied to `eri-bds-reference` SKILL.md. No structur
 
 ## v3.11.0 — Governance top-level page + Skills UX improvements (2026-06-07)
 
-### New: `/philosophy` — Governance & Methodology page
+### `/governance` — Governance & Methodology page
 
-A new top-level page at `/philosophy` (tab label: "Governance") has been added as the sixth tab in the main `TabNav` in `App.tsx`. It is also in `BdsNavDrawer.tsx`.
+The page lives at `/governance` (tab label: "Governance"), sixth tab in `App.tsx`. File: `client/src/pages/Governance.tsx`.
 
-**Route:** `/philosophy` → `client/src/pages/Philosophy.tsx`
+> **Note:** The file was originally named `Philosophy.tsx` and the route was `/philosophy`. Both were renamed to `/governance` / `Governance.tsx` on 2026-06-11 to eliminate naming ambiguity between Manus projects and ERI web projects. `Philosophy.tsx` has been deleted.
 
 **Sections (all collapsible, first two open by default):**
 1. The big idea (always visible callout — not collapsible)
-2. The four governance layers (`GovernanceDiagram` component — duplicated from Skills.tsx)
+2. The four governance layers (`GovernanceDiagram` component)
 3. The self-improving system (four-step loop + compounding callout)
-4. The skill ecosystem (tier model cards + link to /skills)
-5. The task lifecycle (horizontal flow + six-step ERI development workflow)
-6. The project instructions system (what it controls + link to /skills)
-7. Human–AI collaboration principles (six principle cards from eri-human-ai-collaboration skill)
-8. Further reading (six curated external resources with annotations)
+4. The skill ecosystem (tier model cards + orchestrator callout + link to /skills)
+5. The three-layer governance model (Activation → Accountability → Curation — NEW in v3.17.0)
+6. The task lifecycle (8-step workflow — updated from 6-step in v3.17.0)
+7. The project instructions system (what it controls + link to /project-instructions)
+8. The agent-bridge pattern
+9. Technical debt governance: prevention vs remediation
+10. Human–AI collaboration principles (six principle cards)
+11. Further reading (six curated external resources)
 
 **Further reading links (verified URLs):**
 - The Vibe Codex: https://thevibecodex.com/
@@ -1301,3 +1304,56 @@ The project instructions were compacted from 5,488 chars (68.6% of budget) to **
 ### Checkpoint
 
 - `f5c74a04` — compact rewrite complete, 36/36 tests passing
+
+---
+
+## v3.17.0 — Governance page upgrade (2026-06-11)
+
+### Changes in this session
+
+**1. Renamed `Philosophy.tsx` → `Governance.tsx`**
+
+- File: `client/src/pages/Philosophy.tsx` → `client/src/pages/Governance.tsx`
+- Route was already `/governance` and tab label was already "Governance" — only the filename and component name were stale.
+- `App.tsx` import and `<Route>` component prop updated accordingly.
+- `Philosophy.tsx` deleted.
+- Rationale: the old filename created naming ambiguity between "ERI philosophy" and the governance operating model. `Governance.tsx` is unambiguous.
+
+**2. Fixed stale Tier 2 example in `TierModelCards`**
+
+- `eri-code-quality` (retired skill) → `eri-trpc` in the Tier 2 example field.
+
+**3. Added orchestrator explanation to the skill ecosystem section**
+
+- New callout card below the tier model intro paragraph explaining that `eri-skills-orchestrator` is the Tier 1 skill whose sole job is to tell Manus which other skills to read for each task type.
+
+**4. Updated task lifecycle to show 8-step workflow**
+
+- `TaskLifecycleFlow` component updated from 6 nodes to 8 nodes.
+- The six development steps (Research → Design → Plan → Implement → Test → Iterate) are now steps 2–7 of the 8-step workflow.
+- Step 1: "Load state" (fetch BDS skill, read CODEBASE-CONTEXT.md, scan skills).
+- Step 8: "Close" (update CODEBASE-CONTEXT.md, log skill usage).
+- The eight step cards below the flow diagram now describe all 8 steps.
+
+**5. Added "The three-layer governance model" section**
+
+- New Section 4 (inserted between "skill ecosystem" and "task lifecycle").
+- Explains the three layers from `eri-skills-orchestrator`:
+  - Layer 1 — Activation: orchestrator identifies which skills apply
+  - Layer 2 — Accountability: usage logs close the feedback loop
+  - Layer 3 — Curation: Health Dashboard surfaces what needs attention
+- Includes a callout: "The accountability layer matters most."
+- Links to `/skills` Health Dashboard.
+
+**6. Updated project instructions section**
+
+- Bullet list updated to reflect the compact 8-step workflow-first format.
+- Link updated from `/skills` to `/project-instructions`.
+
+### Test status
+
+36/36 tests passing (no new server-side code added). TypeScript: 0 real errors (13 false positives from stale typescript@5.6.3 watcher).
+
+### Checkpoint
+
+`2f813fca` — Governance page upgrade complete.
