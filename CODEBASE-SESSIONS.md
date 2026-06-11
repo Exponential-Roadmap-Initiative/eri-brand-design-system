@@ -592,3 +592,33 @@ Calling http://localhost:3000/api/agent/skill-sync ...
 
 ### Files changed
 - client/src/App.tsx — tabs array reordered
+
+## v3.26.0 — Security & Integrity page (2026-06-11)
+
+**What was done:**
+Added a new /security page (SecurityIntegrity.tsx) to the BDS site, making the eri-security skill visible to human operators in the same way the Governance page makes the task lifecycle visible. Also added a Security and Integrity section to the /governance page.
+
+**Files changed:**
+- client/src/pages/SecurityIntegrity.tsx — new top-level page (created)
+- client/src/App.tsx — import + /security route + TabNav entry
+- client/src/components/BdsNavDrawer.tsx — Security and Integrity link in All pages section
+- client/src/pages/Overview.tsx — Security and Integrity card added to HUB_SECTIONS (red accent #ef4444)
+- client/src/pages/Governance.tsx — new Section 9 Security and Integrity + anchor nav entry (essential: true); also fixed pre-existing missing AnchorSection interface
+
+**SecurityIntegrity.tsx structure:**
+Eight collapsible sections mirroring the eight control domains in the eri-security skill:
+1. Why security is a governance domain (plain-language frame, always visible)
+2. The eight control domains + status model (defaultOpen)
+3. Authentication and session security (OAuth, JWT, TOTP)
+4. Workspace data isolation — four enforcement layers + stakeholder Q&A (defaultOpen)
+5. API security hardening (rate limiting, Helmet CSP dev/prod split, SSRF)
+6. Audit logging (minimum event set table, alert patterns, admin access)
+7. The eri-security skill (Tier 3 placement, nine sections, how to invoke)
+8. The Trust site (what it is/is not, customer conversation guide)
+
+**Governance assessment:**
+Security and Integrity is correctly surfaced in /governance as a new section (Section 9) with essential: true in the anchor nav. Rationale: security is a first-class governance domain. The section is a summary with a Read the full guide link to /security.
+
+**Accent colour:** #ef4444 (canonical for security category in Skills page).
+
+**TypeScript:** 0 errors introduced. Pre-existing AnchorSection interface missing in Governance.tsx was fixed as a side effect.

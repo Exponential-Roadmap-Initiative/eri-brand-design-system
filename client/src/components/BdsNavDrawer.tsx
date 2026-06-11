@@ -177,6 +177,13 @@ export default function BdsNavDrawer({ open, onClose }: BdsNavDrawerProps) {
             >
               New Web Project
             </a>
+            <a
+              href="/security"
+              onClick={onClose}
+              className="px-3 py-2 text-sm font-medium text-foreground hover:text-[#3ba559] hover:bg-muted rounded-md transition-colors"
+            >
+              Security &amp; Integrity
+            </a>
           </div>
           {/* External links */}
           <div className="mt-2 pt-2 border-t border-border">

@@ -31,6 +31,7 @@ import {
   FileText,
   Layers,
   ExternalLink,
+  Shield,
 } from "lucide-react";
 import { EriHeroSection, ERI_HERO_IMAGE_DEFAULT } from "@eri/components";
 import PublicLayout from "@/components/PublicLayout";
@@ -125,6 +126,17 @@ const HUB_SECTIONS: HubSection[] = [
     audience: "For ERI team members and close collaborators.",
     accentColor: "#17b7dd",
     accentTint: "rgba(23,183,221,0.08)",
+  },
+  {
+    href: "/security",
+    Icon: Shield,
+    label: "Security & Integrity",
+    eyebrow: "TRUST & CONTROLS",
+    description:
+      "The security governance model for every ERI application — workspace isolation, authentication patterns, API hardening, audit logging, and the eri-security skill that encodes these controls for every future task. Connects to the public Trust site.",
+    audience: "For developers, enterprise customers, and IT/legal teams.",
+    accentColor: "#ef4444",
+    accentTint: "rgba(239,68,68,0.08)",
   },
 ];
 

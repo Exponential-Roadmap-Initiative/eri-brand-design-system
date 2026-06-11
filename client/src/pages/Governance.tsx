@@ -268,6 +268,8 @@ function TierModelCards() {
 
 // -- Anchor navigation bar --
 
+interface AnchorSection { id: string; label: string; essential?: boolean }
+
 const ANCHOR_SECTIONS: AnchorSection[] = [
   { id: "how-it-works",        label: "How it works" },
   { id: "system-components",   label: "System components" },
@@ -276,6 +278,7 @@ const ANCHOR_SECTIONS: AnchorSection[] = [
   { id: "how-it-improves",     label: "How it improves" },
   { id: "task-lifecycle",      label: "Task lifecycle" },
   { id: "working-memory",      label: "Human operator guide", essential: true },
+  { id: "security-integrity",  label: "Security & Integrity", essential: true },
   { id: "collaboration",       label: "Collaboration principles" },
   { id: "further-reading",     label: "Further reading" },
 ];
@@ -950,7 +953,76 @@ export default function Governance() {
           </div>
         </Section>
 
-        {/* Section 9 — Human-AI collaboration principles */}
+        {/* Section 9 — Security & Integrity */}
+        <Section
+          id="security-integrity"
+          title="Security & Integrity"
+          subtitle="How security controls are governed — and why they are a governance concern, not just an engineering one"
+        >
+          <div className="space-y-5">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              When ERI builds a product that holds company data, the people whose data it holds need to trust that it is protected. That trust is not built by a single security review — it is built by consistent, repeatable practices encoded into every task from the start. Security is therefore a governance concern: it belongs in the same layer as the task lifecycle, the skill ecosystem, and the collaboration principles.
+            </p>
+
+            {/* The eri-security skill */}
+            <div className="rounded-lg border p-4" style={{ borderColor: "rgba(239,68,68,0.25)", backgroundColor: "rgba(239,68,68,0.06)" }}>
+              <div className="flex items-start gap-3">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                  style={{ backgroundColor: "rgba(239,68,68,0.15)", border: "1.5px solid rgba(239,68,68,0.40)" }}
+                >
+                  <Shield className="w-4 h-4" style={{ color: "#ef4444" }} />
+                </div>
+                <div>
+                  <div className="flex items-baseline gap-2 flex-wrap mb-1">
+                    <p className="text-sm font-semibold" style={{ color: "#ef4444" }}>Tier 3 — eri-security skill</p>
+                    <p className="text-xs text-foreground/70 font-medium">Read when the security domain applies</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    The <span className="font-medium text-foreground">eri-security skill</span> encodes the full security model — authentication patterns, workspace isolation rules, API hardening checklists, audit logging schemas — in a form that Manus reads and acts on before writing any code that touches user data. It is loaded automatically when the task involves authentication, workspace isolation, the Trust site, or a security audit.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Eight domains */}
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-foreground">The eight control domains — what every ERI application must address</p>
+              <div className="grid grid-cols-1 gap-2" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+                {[
+                  { n: "1", title: "Platform & Infrastructure",     desc: "Hosting certifications, redundancy, data residency" },
+                  { n: "2", title: "Encryption & Data Protection",  desc: "TLS, at-rest encryption, session tokens" },
+                  { n: "3", title: "Authentication & Identity",     desc: "OAuth, MFA, access whitelist, SSO" },
+                  { n: "4", title: "Access Control & Workspace Isolation", desc: "Multi-tenancy, RBAC, cross-workspace prevention" },
+                  { n: "5", title: "API Security & Input Validation", desc: "Rate limiting, CSP, Zod validation, SSRF" },
+                  { n: "6", title: "Data Handling & Retention",     desc: "Persistence model, backup, deletion" },
+                  { n: "7", title: "Monitoring, Logging & Incident Response", desc: "Audit logs, Dependabot, pen testing" },
+                  { n: "8", title: "Organisational & Compliance",   desc: "GDPR, data ownership, SLA, employee controls" },
+                ].map(item => (
+                  <div key={item.n} className="rounded border border-border/50 p-2.5 bg-background/50">
+                    <p className="text-[11px] font-semibold text-foreground mb-0.5">
+                      <span className="text-muted-foreground mr-1">{item.n}.</span>{item.title}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Workspace isolation callout */}
+            <div className="rounded-lg border border-dashed border-muted-foreground/30 p-3 text-xs text-muted-foreground leading-relaxed">
+              <span className="font-medium text-foreground">The most critical control: workspace data isolation.</span> All workspaces share one database. Every data table carries a <code className="font-mono text-[10px] px-1 rounded bg-muted">workspace_id</code> foreign key. Every query must include <code className="font-mono text-[10px] px-1 rounded bg-muted">WHERE workspace_id = ?</code>. A server-side membership guard must run on every request. An ownership check must precede every delete. Admin-only shared reference data must be write-protected. All four layers must be applied — missing any one creates an exploitable gap.
+            </div>
+
+            <div className="pt-1">
+              <Link href="/security" className="inline-flex items-center gap-1.5 text-sm font-medium hover:underline" style={{ color: "#ef4444" }}>
+                Read the full Security &amp; Integrity guide <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </Section>
+
+        {/* Section 10 — Human-AI collaboration principles */}
         <Section
           id="collaboration"
           title="Human-AI collaboration principles"

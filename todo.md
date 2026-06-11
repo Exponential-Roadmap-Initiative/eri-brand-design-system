@@ -1069,3 +1069,13 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update eri-skill-creator SKILL.md v2.6.0: Step 8 calls script, post-task reflection calls script
 - [x] Test endpoint and script end-to-end
 - [x] Update CODEBASE-CONTEXT.md with v3.23.0 session record
+
+## Security & Integrity page — v3.26.0
+
+- [x] Create client/src/pages/SecurityIntegrity.tsx — new top-level page
+- [x] Add /security route to App.tsx Switch
+- [x] Add "Security & Integrity" tab to TabNav in App.tsx
+- [x] Add "Security & Integrity" link to BdsNavDrawer.tsx All pages section
+- [x] Add Security & Integrity card to Overview.tsx HUB_SECTIONS array
+- [x] Add Security & Integrity section to Governance.tsx (new collapsible Section + anchor nav entry)
+- [x] Save checkpoint v3.26.0

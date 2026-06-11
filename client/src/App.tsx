@@ -11,6 +11,7 @@ import NewProject from "./pages/NewProject";
 import TeamGuide from "./pages/TeamGuide";
 import Skills from "./pages/Skills";
 import Governance from "./pages/Governance";
+import SecurityIntegrity from "./pages/SecurityIntegrity";
 import ProjectInstructions from "./pages/ProjectInstructions";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
@@ -33,6 +34,7 @@ function TabNav() {
     { href: "/tracker",               label: "Project Alignment Tracker" },
     { href: "/new-webproject",        label: "New Web Project" },
     { href: "/team-guide",            label: "Team Guide" },
+    { href: "/security",               label: "Security & Integrity" },
   ];
   return (
     <div
@@ -98,6 +100,7 @@ function Router() {
         <Route path={"/skills"} component={Skills} />
         <Route path={"/project-instructions"} component={ProjectInstructions} />
         <Route path={"/team-guide"} component={TeamGuide} />
+        <Route path={"/security"} component={SecurityIntegrity} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
