@@ -160,7 +160,7 @@ export default function Overview() {
       <EriHeroSection
         eyebrow="ERI DESIGN AND DEVELOPMENT HUB"
         titleLine1="Where ERI builds"
-        titleLine2="tools for exponential growth"
+        titleLine2="for exponential transformation"
         body="This hub is the operational centre of ERI's AI-native working model. It is where the team's institutional knowledge lives, where every product is built to the same standard, and where the system that makes that possible is documented and maintained."
         primaryCTA={{ label: "Understand the governance model", href: "/governance" }}
         secondaryCTA={{ label: "Browse the skills registry", href: "/skills" }}
@@ -208,10 +208,10 @@ export default function Overview() {
           <div className="grid gap-8 md:grid-cols-2">
             <div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                The fastest economic transition in history is underway. Proven solutions are scaling exponentially. Companies that act now can drive growth, build resilience, and shape the new economy — and those that do not will be left behind. ERI builds the intelligence and tools that help companies see and capture that opportunity.
+                ERI is driven by climate science and planetary boundaries. Its mission is to accelerate the transition to a world within those boundaries — and it pursues that mission through the lens of business. The fastest economic transition in history is underway, and companies that act now can drive growth, build resilience, and shape the new economy. Sustainability is not a cost of doing business. It is the source of exponential growth.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                ERI uses Manus — an AI agent — to build those tools faster and to a higher standard. The work spans business transformation data, company benchmarking platforms, strategic communications, and the Exponential Platform that maps 52,000+ companies and their growth trajectories.
+                ERI uses Manus — an AI agent — to build the intelligence and tools that make this possible: business transformation data, company benchmarking platforms, strategic communications, and the Exponential Platform that maps 52,000+ companies and their trajectories.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 What makes ERI's approach distinctive is not the use of AI — it is the governance model around it. Every task is guided by accumulated institutional knowledge. When a task is done, what was learned raises the baseline for the next one. The system compounds.
@@ -293,7 +293,7 @@ export default function Overview() {
           <div className="grid gap-8 md:grid-cols-2">
             <div>
               <p className="text-sm text-white/70 leading-relaxed mb-4">
-                The Exponential Roadmap Initiative (ERI) is a science-based organisation that helps companies identify and capture the growth opportunities created by the fastest economic transition in history. ERI works with leading businesses to scale proven solutions exponentially — using the Exponential Business Playbook as the framework for transformation.
+                The Exponential Roadmap Initiative (ERI) is a science-based organisation working to keep the world within planetary boundaries. ERI pursues that mission through the lens of business — helping companies grow faster, build resilience, and capture the exponential opportunities created by the sustainability transition. The Exponential Business Playbook is the framework for that transformation.
               </p>
               <p className="text-sm text-white/70 leading-relaxed">
                 The Exponential Platform is ERI's digital infrastructure for business transformation intelligence — a data lake covering more than 52,000 companies, with tools for benchmarking, member engagement, and strategic communications.
@@ -301,8 +301,8 @@ export default function Overview() {
             </div>
             <div className="space-y-3">
               {[
-                { label: "Mission", value: "Help companies capture exponential growth opportunities" },
-                { label: "Approach", value: "Science-based, business-first" },
+                { label: "Mission", value: "Keep the world within planetary boundaries" },
+                { label: "Approach", value: "Climate science, business lens" },
                 { label: "Platform scope", value: "52,000+ companies mapped" },
                 { label: "Framework", value: "Exponential Business Playbook v5.0" },
                 { label: "Human-AI model", value: "5× advantage through AI-native operations" },
