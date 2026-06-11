@@ -1357,3 +1357,69 @@ The project instructions were compacted from 5,488 chars (68.6% of budget) to **
 ### Checkpoint
 
 `2f813fca` — Governance page upgrade complete.
+
+---
+
+## v3.18.0 — External-facing landing page & site-wide readability (2026-06-11)
+
+### Context
+
+The site previously had no front door. An external visitor — a partner, collaborator, or member company sent the link — would land on the Brand Design System, a 96,000-pixel technical reference document with no explanation of what the site is, who built it, or what the seven tabs collectively represent. This session adds a proper landing page and makes every page readable to a non-technical external audience.
+
+### Route change — IMPORTANT
+
+The Brand Design System has moved from `/` to `/brand-design-system`. Any bookmarks or shared links to `/` now land on the Overview landing page, not the BDS reference. This was an intentional decision approved by the team.
+
+| Old route | New route | Component |
+|---|---|---|
+| `/` | `/brand-design-system` | `BrandDesignSystem.tsx` |
+| (new) | `/` | `Overview.tsx` |
+
+### Changes in this session
+
+**1. New `Overview.tsx` landing page at `/`**
+
+- File: `client/src/pages/Overview.tsx` (new)
+- Partner-facing landing page. Tells the full story of the hub in plain language without assuming technical background.
+- Sections: Hero (ERI_HERO_IMAGE_DEFAULT, showScrollIndicator), "What this hub is" (52,000+ companies, self-improving, 5× advantage), "The story" (4-step compounding loop), "What is in this hub" (7-section card map), "About ERI", "Get started" CTA.
+- All seven hub sections are described with audience guidance ("Start here if you want to understand the system as a whole", etc.).
+- BDS compliant: semantic tokens, left-border accent cards, Accent Lime eyebrows, no emoji, British English.
+
+**2. `App.tsx` route wiring updated**
+
+- `Overview` added as import and `<Route path="/">` component.
+- `BrandDesignSystem` moved to `<Route path="/brand-design-system">`.
+- `TabNav` updated: "Overview" added as first tab; "Brand Design System" now links to `/brand-design-system`.
+
+**3. `BdsNavDrawer.tsx` updated**
+
+- "On this page" section anchor links remain (BDS-specific, still useful on `/brand-design-system`).
+- "Other pages" section renamed to "All pages" and now includes Overview (`/`) as the first link, with Brand Design System linking to `/brand-design-system`.
+- Page order: Overview → Brand Design System → Governance → Skills → Project Instructions → Team Guide → Project Alignment Tracker → New Web Project.
+
+**4. All page guides rewritten for external audience**
+
+| Page | Old guide | New guide |
+|---|---|---|
+| Governance | Internal instructions about reading sections | "This is how ERI ensures every task is executed with the same rigour… No technical background required." |
+| Skills | Internal filter instructions | "These 25 knowledge modules are ERI's accumulated expertise, encoded so it cannot be lost and improves automatically after every task." |
+| Project Instructions | Internal pipeline instructions | "The standing brief that every Manus AI agent reads before starting any ERI task." |
+| Brand Design System | Internal implementation instructions | "The single source of truth for all visual, verbal, and component decisions across ERI digital products." |
+
+**5. `index.html` meta description updated**
+
+- Old: "Design and Development Hub — brand reference, governance, skills registry, and project instructions for ERI AI-assisted development."
+- New: "The ERI Design and Development Hub — where ERI builds for climate accountability. Explore the governance model, skills registry, brand design system, and project instructions that power ERI's AI-native operations across a platform covering 52,000+ companies."
+
+**6. Stale internal links fixed**
+
+- `AlignmentTracker.tsx` line 986: `href="/"` → `href="/brand-design-system"` (BDS reference link).
+- `NewProject.tsx` line 82: `eri-code-quality` → `eri-trpc` (retired skill reference in TRACK2_INSTRUCTIONS).
+
+### Test status
+
+No new server-side code. TypeScript: 0 real errors (13 false positives from stale typescript@5.6.3 watcher).
+
+### Checkpoint
+
+`616476e6` — External-facing landing page and site-wide readability upgrade complete.
