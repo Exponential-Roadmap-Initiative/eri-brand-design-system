@@ -979,3 +979,37 @@ Retroactively applied the eri-skill-creator §2 writing principles and §4 tier 
 - **Publish updated project instructions** via `/project-instructions` page
 - **Sync skills to BDS API** via Skills page → "↻ Sync from skill files" (pushes v4.1.0 and v1.1.0 to `/api/skill/latest`)
 - **Log skill usage** for: `eri-skill-creator`, `eri-bds-reference`, `eri-bds-components`, `eri-skills-orchestrator`
+
+---
+
+## v3.22.0 — 2026-06-11 — Full eri-skill-creator compliance: Steps 6–10 + Post-task Reflection
+
+### What was done
+
+Completed all remaining eri-skill-creator steps that were skipped in v3.20.0 and v3.21.0.
+
+**Step 6 — Evaluate:**
+- `eri-bds-reference`: description undertriggering on maintenance tasks ("fixes and audits" not just new builds); Project Alignment Checklist HARD STOP missing
+- `eri-bds-components`: `showThemeToggle`/`headerTheme` most-common-error callout buried in prop table; no pointer to New ERI App Setup Checklist at top
+
+**Step 7 — Improve:**
+- `eri-bds-reference` v4.1.0 → v4.2.0: updated description to include "fixes and audits"; added closing HARD STOP for Project Alignment Checklist
+- `eri-bds-components` v1.1.0 → v1.2.0: added blockquote most-common-error callout; added top-of-skill pointer to setup checklist
+
+**Step 8 — Register:** SKILLS_METADATA updated to v4.2.0 and v1.2.0 in `server/routers/skills.ts`
+
+**Step 9 — Sync project instructions:** `CURRENT_INSTRUCTIONS` in `ProjectInstructions.tsx` already correct (eri-bds-components at line 81). User completed publish workflow on `/project-instructions` page.
+
+**Step 10 — HARD STOP:** Both skill files sent as attachments. User confirmed both added to Manus platform and ERI Shared Dev Assets project.
+
+**Post-task Reflection:**
+- `eri-skill-creator` v2.4.0 → v2.5.0: added "Treating Step 10 as optional" to §10 Known Failure Patterns — encodes the real failure from this session (closing the task at Step 9 without sending the attachment)
+- SKILLS_METADATA updated: eri-skill-creator → v2.5.0
+
+### What to do next
+
+- **Sync skills to BDS API** via Skills page → "↻ Sync from skill files" (pushes v4.2.0, v1.2.0, v2.5.0)
+- **Log improvement** on BDS Skills page for `eri-skill-creator` v2.5.0: "Added 'Treating Step 10 as optional' to §10 Known Failure Patterns"
+- **Log improvement** on BDS Skills page for `eri-bds-reference` v4.2.0: "Added closing HARD STOP for Project Alignment Checklist; updated description to cover fixes and audits"
+- **Log improvement** on BDS Skills page for `eri-bds-components` v1.2.0: "Added most-common-error callout for showThemeToggle/headerTheme; added pointer to setup checklist at top"
+- **Send eri-skill-creator v2.5.0 as attachment** (Step 10 for the skill-creator improvement itself)

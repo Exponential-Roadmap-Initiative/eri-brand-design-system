@@ -1042,3 +1042,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Run trigger test (10 prompts) for both skills — both pass
 - [x] Update SKILLS_METADATA: eri-bds-reference → v4.1.0, eri-bds-components → v1.1.0
 - [x] Update CODEBASE-CONTEXT.md with v3.21.0 session record
+
+## eri-skill-creator Steps 6–10 + Post-task Reflection (v3.22.0)
+- [x] Step 6: Evaluate both skills against §2 writing principles and §4 tier rules
+- [x] Step 7: Improve — eri-bds-reference v4.2.0 (description + HARD STOP), eri-bds-components v1.2.0 (callout + nav pointer)
+- [x] Step 8: Update SKILLS_METADATA to v4.2.0 and v1.2.0
+- [x] Step 9: Verify CURRENT_INSTRUCTIONS in ProjectInstructions.tsx; user published project instructions
+- [x] Step 10: Delivered both skill files as attachments; user confirmed added to Manus platform
+- [x] Post-task Reflection: eri-skill-creator v2.5.0 — added "Treating Step 10 as optional" to §10
+- [x] Update CODEBASE-CONTEXT.md with v3.22.0 session record
