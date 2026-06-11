@@ -43,6 +43,8 @@ export interface ComponentStatus {
 export interface SystemOpsCompliance {
   /** CODEBASE-CONTEXT.md exists at project root and was read at task start */
   projectContextExists?: boolean;
+  /** CODEBASE-SESSIONS.md exists alongside CODEBASE-CONTEXT.md as the rolling session log */
+  sessionLogExists?: boolean;
   /** Manus platform project instructions were read before acting */
   manusPlatformInstructionsRead?: boolean;
 }

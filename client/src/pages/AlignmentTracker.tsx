@@ -209,6 +209,7 @@ function checklistScore(meta: BdsMeta | undefined): { score: number; total: numb
   if (!systemOps && !brand && !layout && !antiAi) return null;
   const fields = [
     systemOps?.projectContextExists,
+    systemOps?.sessionLogExists,
     systemOps?.manusPlatformInstructionsRead,
     brand?.hexTokensOnly,
     brand?.archivoHeadings,
@@ -614,6 +615,7 @@ export default function AlignmentTracker() {
                       },
                       systemOps: {
                         projectContextExists:          false,
+                        sessionLogExists:              false,
                         manusPlatformInstructionsRead: false,
                       },
                       brand: {
@@ -656,7 +658,7 @@ export default function AlignmentTracker() {
             </div>
             <div className="rounded-lg p-4 font-mono text-xs overflow-x-auto leading-relaxed" style={{ backgroundColor: T.dark, color: T.lime }}>
 {`{
-  "schemaVersion": "1.3",
+  "schemaVersion": "1.4",
   "project": "your-project-id",
   "displayName": "Your Project Name",
   "url": "https://your-project.exponentialroadmap.org",
@@ -672,6 +674,7 @@ export default function AlignmentTracker() {
   },
   "systemOps": {
     "projectContextExists":          false,
+    "sessionLogExists":              false,
     "manusPlatformInstructionsRead": false
   },
   "brand": {
@@ -715,7 +718,7 @@ export default function AlignmentTracker() {
               <h3 className="font-semibold mb-3 text-foreground">Field reference</h3>
               <div className="space-y-2">
                 {([
-                  ["schemaVersion", '"1.1"',                        'Current schema version. Fetch /bds-meta-changelog.json from bds.exponentialroadmap.org to check for new fields since your last update.'],
+                  ["schemaVersion", '"1.4"',                        'Current schema version. Fetch /bds-meta-changelog.json from bds.exponentialroadmap.org to check for new fields since your last update.'],
                   ["project",       '"hal"',                         'Short lowercase project code. Examples: hal, psm, playbook, taxonomy.'],
                   ["projectName",   '"Earth-Aligned AI Lab"',                'Full human-readable project name.'],
                   ["domain",        '"hal.exponentialroadmap.org"',  'Canonical deployed domain (no https://).'],
@@ -815,8 +818,8 @@ export default function AlignmentTracker() {
                 },
                 {
                   step: "Step 1",
-                  title: "Read or create CODEBASE-CONTEXT.md",
-                  body: "A CODEBASE-CONTEXT.md file at the project root is the persistent memory that survives context compaction. If it exists, read it first. If not, create it — seed it with canonical values from the eri-bds-reference skill. Update it after every task.",
+                  title: "Read CODEBASE-CONTEXT.md + CODEBASE-SESSIONS.md",
+                  body: "CODEBASE-CONTEXT.md is the static reference (canonical values, rules, component specs — never grows). CODEBASE-SESSIONS.md is the rolling session log (last 4–6 sessions, then archived). Read the static file first, then the session log for recent decisions. After compaction, re-read both before acting.",
                   color: T.lime,
                 },
                 {
@@ -858,7 +861,7 @@ export default function AlignmentTracker() {
               </li>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>2</span>
-                <span><strong>Create <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>CODEBASE-CONTEXT.md</code> at the project root.</strong> Seed it with: current <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>@eri/components</code> version pin, colour tokens, known errors, pending work, and any canonical decisions made for this project. Commit it to the repository.</span>
+                <span><strong>Create <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>CODEBASE-CONTEXT.md</code> and <code className="font-mono text-[11px] px-1 rounded" style={{ backgroundColor: "#f3f4f6" }}>CODEBASE-SESSIONS.md</code> at the project root.</strong> The static file holds canonical values, colour tokens, known errors, and component specs — it never grows. The session log holds the last 4–6 session records and is archived when it exceeds ~500 lines. Commit both to the repository.</span>
               </li>
               <li className="flex gap-3">
                 <span className="shrink-0 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded self-start mt-0.5" style={{ backgroundColor: T.dark, color: T.lime }}>3</span>
