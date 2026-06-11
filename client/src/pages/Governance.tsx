@@ -20,7 +20,7 @@
  * - Semantic tokens for structural surfaces (bg-card, bg-muted, border-border, text-foreground)
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import {
   ExternalLink, ChevronDown, ChevronUp, ArrowRight,
@@ -28,6 +28,7 @@ import {
   Wrench, BookOpen, Settings, ClipboardList, Brain, FolderOpen,
   FileText, CheckSquare, Layers, MessageSquare, Paperclip, RefreshCw,
   Plug, Database, Terminal, Copy, Activity, BarChart2,
+  AlertTriangle, Shield, User, ChevronRight, Bot, Users,
 } from "lucide-react";
 import PublicLayout from "@/components/PublicLayout";
 import { PageGuide } from "@/components/PageGuide";
@@ -176,7 +177,7 @@ function TaskLifecycleFlow() {
     { label: "Implement",         sub: "Execute the agreed plan",            color: "#6b7280" },
     { label: "Test",              sub: "Verify the output works",            color: "#6b7280" },
     { label: "Iterate",           sub: "Refine until the solution works",    color: "#6b7280" },
-    { label: "Close",             sub: "Update codebase memory, log skills", color: "#3ba559" },
+    { label: "Close",             sub: "Update context memory, log skills. Makes the next session recoverable.", color: "#3ba559" },
   ];
 
   return (
@@ -265,9 +266,87 @@ function TierModelCards() {
   );
 }
 
+// -- Anchor navigation bar --
+
+const ANCHOR_SECTIONS: AnchorSection[] = [
+  { id: "how-it-works",        label: "How it works" },
+  { id: "system-components",   label: "System components" },
+  { id: "self-improving",      label: "Self-improving" },
+  { id: "skill-ecosystem",     label: "Skill ecosystem" },
+  { id: "how-it-improves",     label: "How it improves" },
+  { id: "task-lifecycle",      label: "Task lifecycle" },
+  { id: "working-memory",      label: "Human operator guide", essential: true },
+  { id: "collaboration",       label: "Collaboration principles" },
+  { id: "further-reading",     label: "Further reading" },
+];
+
+function GovernanceAnchorNav() {
+  const [active, setActive] = useState<string>("how-it-works");
+
+  // Track active section via IntersectionObserver
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const intersecting = new Map<string, boolean>();
+
+    ANCHOR_SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          intersecting.set(id, entry.isIntersecting);
+          const first = ANCHOR_SECTIONS.find(s => intersecting.get(s.id));
+          if (first) setActive(first.id);
+        },
+        { rootMargin: "-20% 0px -60% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+    setActive(id);
+  };
+
+  return (
+    <div className="sticky top-16 z-30 bg-background/95 backdrop-blur border-b border-border/60 py-2 px-4">
+      <div className="max-w-4xl mx-auto overflow-x-auto">
+        <div className="flex items-center gap-1.5 min-w-max">
+          {ANCHOR_SECTIONS.map(s => (
+            <button
+              key={s.id}
+              onClick={() => scrollTo(s.id)}
+              className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                active === s.id
+                  ? "bg-[#3ba559] text-white"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+              } ${
+                s.essential ? "ring-1 ring-[#93E07D]/60" : ""
+              }`}
+            >
+              {s.essential && <Shield className="w-3 h-3 flex-shrink-0" />}
+              {s.label}
+              {s.essential && (
+                <span className="ml-1 text-[9px] font-bold uppercase tracking-wider text-[#93E07D]">Essential</span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Collapsible section wrapper ───────────────────────────────────────────────
 
-function Section({ title, subtitle, children, defaultOpen = false }: {
+function Section({ id, title, subtitle, children, defaultOpen = false }: {
+  id?: string;
   title: string;
   subtitle: string;
   children: React.ReactNode;
@@ -275,7 +354,7 @@ function Section({ title, subtitle, children, defaultOpen = false }: {
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border border-border rounded-xl overflow-hidden">
+    <div id={id} className="border border-border rounded-xl overflow-hidden">
       <button
         onClick={() => setOpen(v => !v)}
         className="w-full flex items-start justify-between px-6 py-5 text-left hover:bg-muted/20 transition-colors gap-4"
@@ -403,8 +482,25 @@ export default function Governance() {
         </div>
       </section>
 
+      {/* Sticky anchor navigation */}
+      <GovernanceAnchorNav />
+
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
+
+        {/* Plain-language frame */}
+        <div id="how-it-works" className="rounded-xl border border-border bg-muted/10 p-6 space-y-3">
+          <p className="text-xs font-semibold text-[#93E07D] uppercase tracking-widest">What this is — in plain language</p>
+          <p className="text-sm text-foreground/80 leading-relaxed">
+            Think of it like a new employee joining a company. When they start, they do not invent how the company works from scratch. They read the employee handbook, learn the processes, and understand the standards. The better that handbook is written, the faster they become effective — and the more consistently they do things the right way.
+          </p>
+          <p className="text-sm text-foreground/80 leading-relaxed">
+            Now imagine that every time an employee completes a task, the handbook automatically gets a little better. The lessons from that task — what worked, what did not, what the right approach is — get written back in. The next person who starts reads a better handbook. The one after that reads an even better one.
+          </p>
+          <p className="text-sm text-foreground/80 leading-relaxed">
+            <strong className="text-foreground">That is exactly what this governance system does — but for AI agents instead of human employees.</strong> Every time Manus works on an ERI task, it reads the handbook (the skills and project instructions). When the task is done, the handbook is updated with what was learned. The next task starts from a higher baseline. Over time, the system gets measurably more reliable, more consistent, and faster — without anyone having to manually manage it.
+          </p>
+        </div>
 
         {/* The big idea */}
         <div className="rounded-xl border border-l-4 border-border p-6" style={{ borderLeftColor: "#3ba559", backgroundColor: "rgba(59,165,89,0.06)" }}>
@@ -417,10 +513,11 @@ export default function Governance() {
           </p>
         </div>
 
-        {/* Section 1 — Four governance layers */}
+        {/* Section 1 — Four system components */}
         <Section
-          title="The four governance layers"
-          subtitle="The architecture of context — what Manus knows before it starts any task"
+          id="system-components"
+          title="The four system components"
+          subtitle="The architecture — what the system is made of"
           defaultOpen={true}
         >
           <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
@@ -431,6 +528,7 @@ export default function Governance() {
 
         {/* Section 2 — The self-improving system */}
         <Section
+          id="self-improving"
           title="The self-improving system"
           subtitle="The principle at the heart of the model — every task raises the baseline"
           defaultOpen={true}
@@ -475,6 +573,7 @@ export default function Governance() {
 
         {/* Section 3 — The skill ecosystem */}
         <Section
+          id="skill-ecosystem"
           title="The skill ecosystem"
           subtitle="How skills are the mechanism of self-improvement — and how they are prioritised"
         >
@@ -509,10 +608,11 @@ export default function Governance() {
           </div>
         </Section>
 
-        {/* Section 4 — The three-layer governance model */}
+        {/* Section 4 — How the system improves */}
         <Section
-          title="The three-layer governance model"
-          subtitle="How the system activates, holds itself accountable, and improves over time"
+          id="how-it-improves"
+          title="How the system improves"
+          subtitle="The lifecycle — how the system activates, holds itself accountable, and stays healthy over time"
         >
           <div className="space-y-5">
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -583,6 +683,7 @@ export default function Governance() {
 
         {/* Section 5 — Task lifecycle */}
         <Section
+          id="task-lifecycle"
           title="The task lifecycle"
           subtitle="The 8-step workflow every ERI task follows — from loading context to closing with updated memory"
         >
@@ -614,8 +715,71 @@ export default function Governance() {
           </div>
         </Section>
 
+        {/* Section 5b — Managing AI working memory */}
+        <Section
+          id="working-memory"
+          title="Managing AI working memory"
+          subtitle="The human operator guide — how ERI colleagues and Manus govern context together"
+        >
+          <div className="space-y-6">
+
+            {/* Plain-language frame */}
+            <div className="rounded-lg bg-muted/20 border border-border p-4 space-y-2">
+              <p className="text-xs font-semibold text-[#93E07D] uppercase tracking-widest">What this means in plain language</p>
+              <p className="text-sm text-foreground/80 leading-relaxed">
+                An AI agent has two kinds of memory. Its <strong className="text-foreground">long-term memory</strong> — skills, project instructions, CODEBASE-CONTEXT.md — persists across every task and improves over time. Its <strong className="text-foreground">working memory</strong> — everything it is actively holding in a single session — is limited. When a session runs long enough, the platform automatically compresses the oldest history to make room. The agent may continue with confidence, but with incomplete context.
+              </p>
+              <p className="text-sm text-foreground/80 leading-relaxed">
+                The dangerous part: <strong className="text-foreground">the agent does not know what it has forgotten.</strong> It continues working and may reach wrong conclusions based on incomplete information. This is the primary reliability risk in long AI work sessions.
+              </p>
+            </div>
+
+            {/* Three subsections */}
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="rounded-lg border border-border p-4 space-y-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <AlertTriangle className="w-4 h-4 text-amber-500" />
+                  <p className="text-xs font-semibold text-foreground uppercase tracking-widest">The risk</p>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Silent knowledge loss. A confirmed example: concluding a system has no data when it does, because the earlier evidence was compressed away. The agent returned zero results from a query, trusted the result, and reported the system was empty. The data existed.
+                </p>
+              </div>
+              <div className="rounded-lg border border-border p-4 space-y-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <Bot className="w-4 h-4 text-[#93E07D]" />
+                  <p className="text-xs font-semibold text-foreground uppercase tracking-widest">How the agent governs it</p>
+                </div>
+                <ul className="text-xs text-muted-foreground leading-relaxed space-y-1.5">
+                  <li><strong className="text-foreground">Detection:</strong> the compaction marker triggers a mandatory re-read of CODEBASE-CONTEXT.md before answering any system-state question.</li>
+                  <li><strong className="text-foreground">Phase-close discipline:</strong> every work phase ends with a checkpoint and CODEBASE-CONTEXT.md update before the next phase begins. Long-term memory is always current.</li>
+                  <li><strong className="text-foreground">One phase at a time:</strong> never run multiple phases back-to-back without closing each one first.</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border border-[#93E07D]/40 bg-[#93E07D]/5 p-4 space-y-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <Users className="w-4 h-4 text-[#93E07D]" />
+                  <p className="text-xs font-semibold text-[#93E07D] uppercase tracking-widest">Human operator guide</p>
+                </div>
+                <ul className="text-xs text-muted-foreground leading-relaxed space-y-1.5">
+                  <li><strong className="text-foreground">One focused request per message.</strong> One area of work at a time. Avoid bundling multiple unrelated changes in a single message.</li>
+                  <li><strong className="text-foreground">Wait for the phase-close signal</strong> before sending the next request. The agent will say when a phase is complete and CODEBASE-CONTEXT.md is updated.</li>
+                  <li><strong className="text-foreground">Send screenshots instead of asking for browser navigation.</strong> A screenshot in your message costs zero tool calls. Asking the agent to navigate costs context.</li>
+                  <li><strong className="text-foreground">Paste text instead of asking for file reads.</strong> If you have the relevant content, paste it directly. Every file read consumes working memory.</li>
+                  <li><strong className="text-foreground">Open-ended reviews at session start.</strong> Requests like “review the whole site” are high-context operations. Send them at the beginning of a session, not mid-way through a long task.</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground leading-relaxed border-t border-border pt-4">
+              This is not a workaround — it is the designed operating model. Long-term memory (CODEBASE-CONTEXT.md) is the continuity mechanism. Working memory (the context window) is the execution environment for one session. Keeping sessions focused and closing phases cleanly is how the system stays reliable at scale.
+            </p>
+          </div>
+        </Section>
+
         {/* Section 6 — Project instructions system */}
         <Section
+          id="project-instructions"
           title="The project instructions system"
           subtitle="How the skill ecosystem is compiled into a persistent governance layer"
         >
@@ -652,6 +816,7 @@ export default function Governance() {
 
         {/* Section 7 — The agent-bridge pattern */}
         <Section
+          id="agent-bridge"
           title="The agent-bridge pattern"
           subtitle="How to surface Manus system assets in a web application"
         >
@@ -727,6 +892,7 @@ export default function Governance() {
 
         {/* Section 8 — Technical debt governance */}
         <Section
+          id="technical-debt"
           title="Technical debt governance: prevention vs remediation"
           subtitle="Why skills prevent new debt but cannot fix existing debt — and how opportunistic remediation bridges the gap"
         >
@@ -786,6 +952,7 @@ export default function Governance() {
 
         {/* Section 9 — Human-AI collaboration principles */}
         <Section
+          id="collaboration"
           title="Human-AI collaboration principles"
           subtitle="The behavioural contract — how ERI and Manus work together"
         >
@@ -827,6 +994,7 @@ export default function Governance() {
 
         {/* Section 10 — Further reading */}
         <Section
+          id="further-reading"
           title="Further reading"
           subtitle="The broader field of AI-native engineering governance — curated references"
         >

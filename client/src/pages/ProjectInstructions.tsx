@@ -60,45 +60,45 @@ const CHAR_BUDGET = 8000;
 // ── Current live project instructions (hardcoded — Manus has no API to read them) ──
 
 const CURRENT_INSTRUCTIONS = `Critical: Follow this workflow at the start of every ERI task:
-1. Load current state: run \`curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"\`; run \`curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true\`; check whether CODEBASE-CONTEXT.md exists in the project root — if PROJECT-CONTEXT.md exists instead, run \`mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md\` first; then read CODEBASE-CONTEXT.md in full; scan the skills in the system prompt and read all relevant SKILL.md files before taking any action.
+1. Load current state: run \`curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"\`; run \`curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true\`; check whether CODEBASE-CONTEXT.md exists in the project root \u2014 if PROJECT-CONTEXT.md exists instead, run \`mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md\` first; then read CODEBASE-CONTEXT.md in full; scan the skills in the system prompt and read all relevant SKILL.md files before taking any action. Context compaction rule: if you see <compacted_history> in your context at any point during a task, treat it as a session restart — re-read CODEBASE-CONTEXT.md before answering any system-state question (what data exists, what the schema contains, what the current state of any system is). Do not answer from memory after compaction.
 2. Research: clarify purpose, understand current context and existing assets, explore possible solutions.
 3. Design.
 4. Plan and get acceptance before implementing.
-5. Implement: save a checkpoint after every 3–5 file changes. Never run \`pnpm test\` before a checkpoint — it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`.
+5. Implement: save a checkpoint after every 3\u20135 file changes. Never run \`pnpm test\` before a checkpoint \u2014 it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`.
 6. Test.
 7. Iterate until the solution works.
 8. Close: update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.
 
-## Tier 1 — Always-on (read at the start of every task)
-• eri-skills-orchestrator: every task.
-• eri-bds-reference: every task.
-• eri-human-ai-collaboration: every task.
+## Tier 1 \u2014 Always-on (read at the start of every task)
+\u2022 eri-skills-orchestrator: every task.
+\u2022 eri-bds-reference: every task.
+\u2022 eri-human-ai-collaboration: every task.
 
-## Tier 2 — Per-action (read immediately before the indicated action)
-• eri-skill-creator: Writing any eri- skill file; post-task reflection loop.
-• eri-earth-aligned-agent: Any Earth-aligned agent task.
-• eri-bds-site: Building, rebuilding, or extending the ERI Brand Design System site.
-• eri-trpc: New router, new procedure, procedure type decision, quality gate before writing code.
-• eri-database: DB schema design, migrations, indexes, multi-tenant isolation.
-• eri-widget: New data source or analytical widget, Widget Hub page, widget registry.
-• eri-user-management: ERI employee management, company workspaces, or workspace user features.
-• eri-rest-api: New REST endpoint, external partner access, API key auth.
-• automation-and-scheduling: Any automation, scheduled task, recurring workflow, or bot.
-• imagegen: Any image generation, editing, or visual deliverable.
-• skill-creator: Creating or modifying any SKILL.md file.
+## Tier 2 \u2014 Per-action (read immediately before the indicated action)
+\u2022 eri-skill-creator: Writing any eri- skill file; post-task reflection loop.
+\u2022 eri-earth-aligned-agent: Any Earth-aligned agent task.
+\u2022 eri-bds-site: Building, rebuilding, or extending the ERI Brand Design System site.
+\u2022 eri-trpc: New router, new procedure, procedure type decision, quality gate before writing code.
+\u2022 eri-database: DB schema design, migrations, indexes, multi-tenant isolation.
+\u2022 eri-widget: New data source or analytical widget, Widget Hub page, widget registry.
+\u2022 eri-user-management: ERI employee management, company workspaces, or workspace user features.
+\u2022 eri-rest-api: New REST endpoint, external partner access, API key auth.
+\u2022 automation-and-scheduling: Any automation, scheduled task, recurring workflow, or bot.
+\u2022 imagegen: Any image generation, editing, or visual deliverable.
+\u2022 skill-creator: Creating or modifying any SKILL.md file.
 
-## Tier 3 — Conditional (read when the domain applies)
-• eri-security: Trust & Security page, auth/MFA, workspace isolation audit, security review.
-• persistent-computing: Docker, fixed IP, persistent background services, heavy compute.
-• eri-exponential-framework: Exponential Framework data model, CPR pipeline, cpr_action_templates, cpr_data_source_mappings, Marketing EF pages, Earth-aligned agent framework cells.
-• data-source-integration: New data source integration end-to-end, or auditing an existing one.
-• eri-data-source-explorer: Data source explorer page, Browse + Compare tab, widget, workspace wrapper.
-• eri-report-finder: Corporate report discovery pipeline, pipeline violations.
-• eri-pdf-pipeline: Corporate report fetch, parse, page-select, extract, classify, cache, or query.
-• manus-api: Manus API integrations or automating Manus agents.
-• manus-config: Connectors, project-level config, scheduled tasks.
-• music-prompter: Any music generation task.
-• tts-prompter: Any text-to-speech or voice generation task.`;
+## Tier 3 \u2014 Conditional (read when the domain applies)
+\u2022 eri-security: Trust & Security page, auth/MFA, workspace isolation audit, security review.
+\u2022 persistent-computing: Docker, fixed IP, persistent background services, heavy compute.
+\u2022 eri-exponential-framework: Exponential Framework data model, CPR pipeline, cpr_action_templates, cpr_data_source_mappings, Marketing EF pages, Earth-aligned agent framework cells.
+\u2022 data-source-integration: New data source integration end-to-end, or auditing an existing one.
+\u2022 eri-data-source-explorer: Data source explorer page, Browse + Compare tab, widget, workspace wrapper.
+\u2022 eri-report-finder: Corporate report discovery pipeline, pipeline violations.
+\u2022 eri-pdf-pipeline: Corporate report fetch, parse, page-select, extract, classify, cache, or query.
+\u2022 manus-api: Manus API integrations or automating Manus agents.
+\u2022 manus-config: Connectors, project-level config, scheduled tasks.
+\u2022 music-prompter: Any music generation task.
+\u2022 tts-prompter: Any text-to-speech or voice generation task.`;
 
 // ── Known issues in the current live instructions ─────────────────────────────
 
@@ -127,10 +127,10 @@ const FIXED_SECTIONS: FixedSection[] = [
   {
     id: "S_ERI_WORKFLOW",
     label: "ERI task workflow (8 steps)",
-    chars: 1284,
+    chars: 1580,
     defaultOn: true,
     description: "Unified 8-step workflow: step 1 loads all current state (BDS skill, project instructions, CODEBASE-CONTEXT.md, skill scan); steps 2–7 are Research → Design → Plan → Implement → Test → Iterate; step 8 closes with CODEBASE-CONTEXT.md update.",
-    content: `Critical: Follow this workflow at the start of every ERI task:\n1. Load current state: run \`curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"\`; run \`curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true\`; check whether CODEBASE-CONTEXT.md exists in the project root — if PROJECT-CONTEXT.md exists instead, run \`mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md\` first; then read CODEBASE-CONTEXT.md in full; scan the skills in the system prompt and read all relevant SKILL.md files before taking any action.\n2. Research: clarify purpose, understand current context and existing assets, explore possible solutions.\n3. Design.\n4. Plan and get acceptance before implementing.\n5. Implement: save a checkpoint after every 3–5 file changes. Never run \`pnpm test\` before a checkpoint — it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`.\n6. Test.\n7. Iterate until the solution works.\n8. Close: update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
+    content: `Critical: Follow this workflow at the start of every ERI task:\n1. Load current state: run \`curl -sL https://bds.exponentialroadmap.org/api/skill/latest > /home/ubuntu/skills/eri-bds-reference/SKILL.md && echo "Skill updated"\`; run \`curl -sL https://bds.exponentialroadmap.org/api/project-instructions/latest > /tmp/eri-project-instructions.md 2>/dev/null && cat /tmp/eri-project-instructions.md || true\`; check whether CODEBASE-CONTEXT.md exists in the project root — if PROJECT-CONTEXT.md exists instead, run \`mv PROJECT-CONTEXT.md CODEBASE-CONTEXT.md\` first; then read CODEBASE-CONTEXT.md in full; scan the skills in the system prompt and read all relevant SKILL.md files before taking any action. Context compaction rule: if you see <compacted_history> in your context at any point during a task, treat it as a session restart — re-read CODEBASE-CONTEXT.md before answering any system-state question (what data exists, what the schema contains, what the current state of any system is). Do not answer from memory after compaction.\n2. Research: clarify purpose, understand current context and existing assets, explore possible solutions.\n3. Design.\n4. Plan and get acceptance before implementing.\n5. Implement: save a checkpoint after every 3–5 file changes. Never run \`pnpm test\` before a checkpoint — it takes 90+ seconds and triggers sandbox resets. Instead: save checkpoint first, then run only the specific test file with \`pnpm vitest run server/<file>.test.ts\`.\n6. Test.\n7. Iterate until the solution works.\n8. Close: update CODEBASE-CONTEXT.md with new decisions, corrected errors, or newly discovered issues.`,
   },
   // S_FRAMEWORK removed — Exponential Framework reference content belongs in the
   // eri-exponential-framework skill, not in project instructions. Agents read the skill.

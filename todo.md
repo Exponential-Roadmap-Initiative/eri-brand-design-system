@@ -1011,3 +1011,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update index.html meta description for external visitors
 - [x] Fix stale / link in AlignmentTracker.tsx (BDS reference link)
 - [x] Fix stale eri-code-quality reference in NewProject.tsx TRACK2_INSTRUCTIONS
+
+## Governance page — working memory + navigation upgrade
+- [x] Add plain-language opening frame (employee handbook analogy)
+- [x] Rename "Four governance layers" → "Four system components"
+- [x] Rename "Three-layer governance model" → "How the system improves"
+- [x] Add "Managing AI working memory" section with three subsections
+- [x] Annotate step 8 in task lifecycle with phase-close rationale
+- [x] Add sticky anchor navigation bar with "Human operator guide" Essential pill
+- [x] Add remaining section ids (project-instructions, agent-bridge, technical-debt)
