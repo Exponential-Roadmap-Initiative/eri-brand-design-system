@@ -673,6 +673,9 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
             Project <span style={{ color: "#93E07D" }}>Instructions</span>
           </h1>
           <PageGuide text="This page guides you through keeping the project instructions healthy. Click any step to see what needs to be done and how to do it. Green means complete; amber means action needed." />
+          <p className="text-sm mt-3 max-w-2xl" style={{ color: "rgba(255,255,255,0.6)", lineHeight: "1.6" }}>
+            Project instructions are the standing brief that every Manus agent reads before starting any ERI task. They encode the team's operating principles, quality standards, and governance rules — ensuring that work on a platform serving more than 52,000 companies is always executed to the same standard, regardless of who initiates the task.
+          </p>
           <div className="mt-3">
             <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.5)" }}>
               Understand the governance model behind project instructions <ArrowRight className="w-3 h-3" />

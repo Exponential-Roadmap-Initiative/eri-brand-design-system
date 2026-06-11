@@ -1213,6 +1213,9 @@ export default function Skills() {
           </p>
           <h1 className="text-3xl font-bold tracking-tight mb-4">Skills — Operational Knowledge System</h1>
           <PageGuide text="Skills encode how work is done well — not just how mistakes are avoided. Each skill is a living knowledge module built from real decisions, real deliverables, and real experience. Use the filter controls below to browse the registry by tier, category, or ecosystem." />
+          <p className="text-sm text-white/60 leading-relaxed mt-3 max-w-2xl">
+            The Exponential Platform covers more than 52,000 companies in its data lake. This skills ecosystem is the institutional knowledge layer that ensures every task — whether building a new data pipeline, drafting a member report, or extending the platform — is executed at the quality that mission demands.
+          </p>
           <div className="flex flex-wrap items-center gap-4 mt-3">
             <Link href="/governance" className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#93E07D] hover:text-white transition-colors">
               Understand the tier model and self-improvement loop <ArrowRight className="w-3 h-3" />
@@ -1220,7 +1223,7 @@ export default function Skills() {
             <Link href="/project-instructions" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/50 hover:text-white transition-colors">
               Generate or audit the project instructions block <ArrowRight className="w-3 h-3" />
             </Link>
-            <Link href="/new-project" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/50 hover:text-white transition-colors">
+            <Link href="/new-webproject" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/50 hover:text-white transition-colors">
               Start a new project <ArrowRight className="w-3 h-3" />
             </Link>
           </div>

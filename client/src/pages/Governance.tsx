@@ -467,7 +467,7 @@ export default function Governance() {
             <div className="rounded-lg border border-dashed border-[#3ba559]/40 bg-[#3ba559]/4 p-4">
               <p className="text-xs font-semibold text-[#93E07D] uppercase tracking-widest mb-1">Why compounding matters for ERI</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                ERI uses AI to accelerate its mission: halving global emissions by 2030. The work spans climate data infrastructure, corporate accountability tools, member engagement, and strategic communications. A system that gets measurably better with every task is not a productivity tool — it is a strategic asset. The Human-AI Lab's premise is that organisations pairing human judgement with AI-powered execution capture a 5× advantage over those that do not. The self-improving system is how ERI demonstrates that premise through its own work.
+                ERI uses AI to accelerate its mission: halving global emissions by 2030. The Exponential Platform already covers more than 52,000 companies in its data lake — the infrastructure exists to hold every major corporate emitter on the planet accountable. The work spans climate data infrastructure, corporate accountability tools, member engagement, and strategic communications. A system that gets measurably better with every task is not a productivity tool — it is a strategic asset at the scale ERI is building towards. The Human-AI Lab's premise is that organisations pairing human judgement with AI-powered execution capture a 5× advantage over those that do not. The self-improving system is how ERI demonstrates that premise through its own work.
               </p>
             </div>
           </div>
