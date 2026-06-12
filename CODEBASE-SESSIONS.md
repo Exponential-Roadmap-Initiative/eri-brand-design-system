@@ -622,3 +622,29 @@ Security and Integrity is correctly surfaced in /governance as a new section (Se
 **Accent colour:** #ef4444 (canonical for security category in Skills page).
 
 **TypeScript:** 0 errors introduced. Pre-existing AnchorSection interface missing in Governance.tsx was fixed as a side effect.
+
+## v3.27.0 — Bug fix: skill-sync HTTP 500 in production (2026-06-12)
+
+**Root cause:**
+syncMetadataFromFilesImpl() and the registerSkill tRPC procedure both used:
+  const filePath = path.resolve(import.meta.dirname, 'skills.ts');
+
+In development, import.meta.dirname = /home/ubuntu/eri-brand-design-system/server/routers/
+so the path resolved correctly to skills.ts.
+
+In production, esbuild bundles everything into dist/index.js, so import.meta.dirname = /usr/src/app/dist/
+The path resolved to /usr/src/app/dist/skills.ts which does not exist -> ENOENT -> HTTP 500.
+
+**Fix:**
+Replaced import.meta.dirname with process.cwd() in both locations:
+  const filePath = path.resolve(process.cwd(), 'server/routers/skills.ts');
+
+process.cwd() is always the project root (/home/ubuntu/eri-brand-design-system in dev, /usr/src/app in prod).
+The TypeScript source file server/routers/skills.ts is present in both environments.
+
+**Files changed:**
+- server/routers/skills.ts line 411 (syncMetadataFromFilesImpl)
+- server/routers/skills.ts line 903 (registerSkill procedure)
+
+**Verification:** TypeScript: 0 new errors. Local dev server responds correctly (401 on wrong secret, not 500).
+After checkpoint/redeploy, the skill-sync endpoint will work from external project tasks.

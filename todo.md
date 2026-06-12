@@ -1079,3 +1079,9 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add Security & Integrity card to Overview.tsx HUB_SECTIONS array
 - [x] Add Security & Integrity section to Governance.tsx (new collapsible Section + anchor nav entry)
 - [x] Save checkpoint v3.26.0
+
+## Bug fix — skill-sync HTTP 500 in production (v3.27.0)
+
+- [x] Fix import.meta.dirname path resolution bug in syncMetadataFromFilesImpl (skills.ts line 411)
+- [x] Fix same bug in registerSkill procedure (skills.ts line 903)
+- [ ] Save checkpoint v3.27.0

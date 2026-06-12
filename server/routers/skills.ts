@@ -408,7 +408,10 @@ function enrichWithFrontmatter(meta: SkillMeta): SkillMeta {
 // ─── Standalone sync implementation (exported for use by the agent REST endpoint) ─
 export async function syncMetadataFromFilesImpl() {
   const skillsDir = path.resolve("/home/ubuntu/skills");
-  const filePath = path.resolve(import.meta.dirname, "skills.ts");
+  // Use process.cwd() so this path works in both dev (cwd = project root) and
+  // production (cwd = /usr/src/app). import.meta.dirname points to dist/ in the
+  // compiled bundle and cannot be used to locate TypeScript source files.
+  const filePath = path.resolve(process.cwd(), "server/routers/skills.ts");
   let source = fs.readFileSync(filePath, "utf-8");
 
   type Change = { id: string; field: string; from: string; to: string };
@@ -898,9 +901,10 @@ export const skillsRouter = router({
         `  },`,
       ].join("\n");
 
-      // Read the current file, insert before the unique end-of-array marker
-      // import.meta.dirname resolves to server/routers/ at runtime
-      const filePath = path.resolve(import.meta.dirname, "skills.ts");
+      // Read the current file, insert before the unique end-of-array marker.
+      // Use process.cwd() so this path works in both dev and production.
+      // import.meta.dirname points to dist/ in the compiled bundle.
+      const filePath = path.resolve(process.cwd(), "server/routers/skills.ts");
       const source = fs.readFileSync(filePath, "utf-8");
       const insertMarker = "/* SKILLS_END */";
       const markerIdx = source.indexOf(insertMarker);
