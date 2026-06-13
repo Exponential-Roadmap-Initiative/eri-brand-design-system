@@ -1084,4 +1084,4 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 
 - [x] Fix import.meta.dirname path resolution bug in syncMetadataFromFilesImpl (skills.ts line 411)
 - [x] Fix same bug in registerSkill procedure (skills.ts line 903)
-- [ ] Save checkpoint v3.27.0
+- [x] Save checkpoint v3.27.0

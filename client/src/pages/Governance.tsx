@@ -279,6 +279,7 @@ const ANCHOR_SECTIONS: AnchorSection[] = [
   { id: "task-lifecycle",      label: "Task lifecycle" },
   { id: "working-memory",      label: "Human operator guide", essential: true },
   { id: "security-integrity",  label: "Security & Integrity", essential: true },
+  { id: "epistemic-trust",     label: "Epistemic trust", essential: true },
   { id: "collaboration",       label: "Collaboration principles" },
   { id: "further-reading",     label: "Further reading" },
 ];
@@ -1022,7 +1023,81 @@ export default function Governance() {
           </div>
         </Section>
 
-        {/* Section 10 — Human-AI collaboration principles */}
+        {/* Section 10 — Epistemic trust */}
+        <Section
+          id="epistemic-trust"
+          title="Epistemic trust"
+          subtitle="Can we rely on the AI's outputs and reasoning — not just its security controls?"
+        >
+          <div className="space-y-5">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Security & Integrity governs what happens when the <em>system</em> fails: data leaks, broken isolation, unauthorised access. Epistemic trust governs what happens when the <em>reasoning</em> fails silently: Manus reports a result that is wrong but plausible, the team acts on it, and the error compounds before anyone notices. Both are governance concerns. The difference is that security failures produce error messages; epistemic failures produce confident-sounding wrong answers.
+            </p>
+
+            {/* Two-column: data trust vs epistemic trust */}
+            <div className="grid grid-cols-1 gap-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
+              <div className="rounded-lg border p-4 space-y-2" style={{ borderColor: "rgba(239,68,68,0.25)", backgroundColor: "rgba(239,68,68,0.06)" }}>
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4" style={{ color: "#ef4444" }} />
+                  <p className="text-xs font-semibold" style={{ color: "#ef4444" }}>Data trust — Security & Integrity</p>
+                </div>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
+                  Is the system safe? Is company data protected from leaks, unauthorised access, and cross-workspace contamination? Governed by the <code className="font-mono text-[10px] px-1 rounded bg-muted">eri-security</code> skill and the eight control domains. Failure is detectable, auditable, and has legal consequences.
+                </p>
+              </div>
+              <div className="rounded-lg border p-4 space-y-2" style={{ borderColor: "rgba(147,224,125,0.30)", backgroundColor: "rgba(147,224,125,0.06)" }}>
+                <div className="flex items-center gap-2">
+                  <Bot className="w-4 h-4 text-[#93E07D]" />
+                  <p className="text-xs font-semibold text-[#93E07D]">Epistemic trust — Reasoning integrity</p>
+                </div>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
+                  Can we rely on the AI's outputs, reasoning, and self-reporting? Did it actually check, or did it hallucinate? When it says it is confident, what does that mean? Governed by the collaboration principles and the working memory model. Failure is silent — no error, just a wrong answer acted on.
+                </p>
+              </div>
+            </div>
+
+            {/* Four epistemic failure modes */}
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-foreground">The four epistemic failure modes — and how they are governed</p>
+              <div className="grid grid-cols-1 gap-2" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+                {[
+                  {
+                    title: "Silent knowledge loss",
+                    desc: "Context compaction causes the agent to forget earlier evidence and reach wrong conclusions. Governed by the compaction detection rule: re-read CODEBASE-CONTEXT.md on every session restart.",
+                    where: "Working memory section",
+                  },
+                  {
+                    title: "False confidence",
+                    desc: "The agent projects certainty it does not have. Governed by the calibrated confidence principle: admit ignorance, thin evidence, or questions outside competence — confidence calibration matters more than confidence.",
+                    where: "Collaboration principles",
+                  },
+                  {
+                    title: "Tunnel vision",
+                    desc: "The agent locks onto the first plausible solution and stops considering alternatives. Governed by the decision framework: stop and present options before any non-trivial implementation.",
+                    where: "Collaboration principles",
+                  },
+                  {
+                    title: "Sycophantic drift",
+                    desc: "Over a long session, the agent drifts toward agreement and flattery rather than honest assessment. Governed by the no-flattery rule and the instruction to start a new task when drift is detected.",
+                    where: "Collaboration principles",
+                  },
+                ].map(item => (
+                  <div key={item.title} className="rounded border border-border/50 p-2.5 bg-background/50">
+                    <p className="text-[11px] font-semibold text-foreground mb-0.5">{item.title}</p>
+                    <p className="text-[10px] text-muted-foreground leading-relaxed mb-1">{item.desc}</p>
+                    <p className="text-[9px] font-medium text-[#93E07D]/70 uppercase tracking-wider">→ {item.where}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-lg border border-dashed border-muted-foreground/30 p-3 text-xs text-muted-foreground leading-relaxed">
+              <span className="font-medium text-foreground">The governance instrument:</span> the <code className="font-mono text-[10px] px-1 rounded bg-muted">eri-human-ai-collaboration</code> skill is Tier 1 — always-on, read at the start of every ERI task. It encodes the peer-colleague contract, the calibrated confidence requirement, and the decision framework. It is the machine-readable version of epistemic trust governance.
+            </div>
+          </div>
+        </Section>
+
+        {/* Section 11 — Human-AI collaboration principles */}
         <Section
           id="collaboration"
           title="Human-AI collaboration principles"
