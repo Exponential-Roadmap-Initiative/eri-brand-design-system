@@ -1088,11 +1088,11 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 
 ## EriHeroSection heroVariant prop — v2.18.0 / BDS v3.29.0
 
-- [ ] Extend EriHeroSection with heroVariant prop (image | content) in packages/eri-components/src/EriHeroSection.tsx
-- [ ] Bump @eri/components version to 2.18.0 in packages/eri-components/package.json
-- [ ] Rebuild CSS: pnpm build:css in packages/eri-components
-- [ ] Update BDS documentation page (BrandDesignSystem.tsx) — hero section prop table + content variant example
-- [ ] Update eri-bds-reference SKILL.md — Hero variants subsection
-- [ ] Update eri-bds-components SKILL.md — EriHeroSection prop table
-- [ ] Save checkpoint v3.29.0
-- [ ] Tag release v2.18.0
+- [x] Extend EriHeroSection with heroVariant prop (image | content) in packages/eri-components/src/EriHeroSection.tsx
+- [x] Bump @eri/components version to 2.18.0 in packages/eri-components/package.json
+- [x] Rebuild CSS: pnpm build:css in packages/eri-components
+- [x] Update BDS documentation page (BrandDesignSystem.tsx) — hero section prop table + content variant example
+- [x] Update eri-bds-reference SKILL.md — Hero variants subsection
+- [x] Update eri-bds-components SKILL.md — EriHeroSection prop table
+- [x] Save checkpoint v3.29.0
+- [x] Tag release v2.18.0
