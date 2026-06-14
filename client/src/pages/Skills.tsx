@@ -1242,10 +1242,9 @@ export default function Skills() {
         <>
         {isAdmin && (
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements, register a new one, or sync metadata from skill files.</p>
+            <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements or sync metadata from skill files. New skills are registered automatically via the sync script.</p>
             <div className="flex items-center gap-2">
               <SyncMetadataButton onSuccess={refresh} />
-              <RegisterSkillDialog onSuccess={refresh} />
               {skillsList && <LogUsageDialog skills={skillsList} onSuccess={() => {}} />}
             </div>
           </div>

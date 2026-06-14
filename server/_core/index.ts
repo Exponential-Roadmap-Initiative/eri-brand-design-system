@@ -204,6 +204,27 @@ async function startServer() {
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
   });
+
+  // ── Skill auto-sync heartbeat ─────────────────────────────────────────────
+  // Runs syncMetadataFromFilesImpl on startup and every hour.
+  // Any new SKILL.md that lands in /home/ubuntu/skills/ (e.g. from another
+  // Manus task) is automatically registered in SKILLS_METADATA and visible
+  // on /skills without any manual BDS task intervention.
+  const runSkillSync = async () => {
+    try {
+      const { syncMetadataFromFilesImpl } = await import("../routers/skills");
+      const result = await syncMetadataFromFilesImpl();
+      if (result.changesCount > 0 || result.registeredCount > 0) {
+        console.log(`[skill-sync] ${result.message}`);
+      }
+    } catch (err) {
+      console.warn("[skill-sync] heartbeat error:", err instanceof Error ? err.message : String(err));
+    }
+  };
+  // Run once 5 s after startup (lets the server settle before touching skills.ts)
+  setTimeout(runSkillSync, 5_000);
+  // Then run every hour
+  setInterval(runSkillSync, 60 * 60 * 1_000);
 }
 
 startServer().catch(console.error);
