@@ -323,6 +323,17 @@ export const SKILLS_METADATA: SkillMeta[] = [
     readWhen: "When working on eri-job-status-modal-related tasks.",
     hasReferences: true,
   },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-06-14 --
+  {
+    id: "eri-emissions",
+    name: "eri-emissions",
+    description: "Canonical domain knowledge for GHG emissions data in the ERI platform. Tier 3 — conditional. Covers: GHG Protocol scope definitions and the 15 Scope 3 categories, source priority model (PDF → Klimatkollen → CDP for EF/CPR; Klimatkollen → CDP for workspace widget), the comparability problem and four main methodology change types, the MVP two-tier extraction schema (ghg_emissions_latest + ghg_methodology_flags), the image-table problem in PDF parsing, restatement detection patterns, base year r...",
+    tier: 3,
+    category: "data",
+    version: "1.0.0",
+    readWhen: "Implementing emissions extraction from corporate PDFs, designing the dl_emissions_data pipeline, reasoning about whether a historical time-series is comparable, building EF CO1/CO3 quantitative scoring, or auditing CPR criteria that depend on actual emissions numbers.",
+    hasReferences: true,
+  },
 /* SKILLS_END */
 ];
 
