@@ -1085,3 +1085,14 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Fix import.meta.dirname path resolution bug in syncMetadataFromFilesImpl (skills.ts line 411)
 - [x] Fix same bug in registerSkill procedure (skills.ts line 903)
 - [x] Save checkpoint v3.27.0
+
+## EriHeroSection heroVariant prop — v2.18.0 / BDS v3.29.0
+
+- [ ] Extend EriHeroSection with heroVariant prop (image | content) in packages/eri-components/src/EriHeroSection.tsx
+- [ ] Bump @eri/components version to 2.18.0 in packages/eri-components/package.json
+- [ ] Rebuild CSS: pnpm build:css in packages/eri-components
+- [ ] Update BDS documentation page (BrandDesignSystem.tsx) — hero section prop table + content variant example
+- [ ] Update eri-bds-reference SKILL.md — Hero variants subsection
+- [ ] Update eri-bds-components SKILL.md — EriHeroSection prop table
+- [ ] Save checkpoint v3.29.0
+- [ ] Tag release v2.18.0

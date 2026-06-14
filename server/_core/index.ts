@@ -48,14 +48,14 @@ async function startServer() {
   // Update SKILL_LATEST_URL when releasing a new skill version.
   // All ERI project instructions reference /api/skill/latest — this URL never changes.
   const SKILL_LATEST_URL =
-    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/zuJbeOCbKWpbbXcH.md"; // v3.11.1 — CODEBASE-CONTEXT.md migration guard: Step 1 now uses CODEBASE-CONTEXT.md with mv rename fallback
+    "https://files.manuscdn.com/user_upload_by_module/session_file/310519663319595517/qaxRMNSdRKxzjXmV.md"; // v3.12.0 — EriHeroSection heroVariant prop (image|content): Hero Variants section added to skill; content mode: solid #232323 background, two-column layout, contentSlot right column; sanctioned BDS pattern (no knownViolations needed)
   app.get("/api/skill/latest", (_req, res) => {
     res.redirect(302, SKILL_LATEST_URL);
   });
   // Also expose the current URL as JSON for programmatic discovery
   app.get("/api/skill/latest.json", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
-    res.json({ url: SKILL_LATEST_URL, version: "3.11.1" }); // v3.11.1 — CODEBASE-CONTEXT.md migration guard: Step 1 now uses CODEBASE-CONTEXT.md with mv rename fallback
+    res.json({ url: SKILL_LATEST_URL, version: "3.12.0" }); // v3.12.0 — EriHeroSection heroVariant prop (image|content): Hero Variants section added to skill; content mode: solid #232323 background, two-column layout, contentSlot right column; sanctioned BDS pattern (no knownViolations needed)
   });
   // ── Project instructions latest ─────────────────────────────────────────────
   // Returns the most recently published project instructions snapshot as plain text.

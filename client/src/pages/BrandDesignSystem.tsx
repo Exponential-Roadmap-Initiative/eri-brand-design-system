@@ -3951,14 +3951,26 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
           {/* ── Component 5: EriHeroSection ──────────────────────────── */}
           <h3 className="font-bold text-foreground mb-1 text-lg">5. EriHeroSection</h3>
           <p className="text-muted-foreground text-sm mb-4">
-            Canonical full-viewport hero section. Matches the live pattern on{" "}
-            <a href="https://earth-aligned-ai-lab.exponentialroadmap.org/" target="_blank" rel="noopener noreferrer" className="text-[#3ba559] underline">earth-aligned-ai-lab.exponentialroadmap.org</a>.{" "}
-            Text block is always left-aligned and vertically centred, anchored to{" "}
+            Canonical full-viewport hero section. Supports two layout variants via the{" "}
+            <code className="font-mono text-xs bg-gray-100 px-1 rounded">heroVariant</code> prop.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+            <div className="rounded-lg border border-border p-4" style={{ borderLeftWidth: '4px', borderLeftColor: '#17b7dd', backgroundColor: 'rgba(23,183,221,0.06)' }}>
+              <p className="text-[10px] font-semibold uppercase tracking-widest mb-1" style={{ color: '#93E07D' }}>heroVariant="image" (default)</p>
+              <p className="text-sm text-foreground font-semibold mb-1">Visual narrative hero</p>
+              <p className="text-xs text-muted-foreground">Full-viewport background image with dark overlay. Text block constrained to <code className="font-mono">max-w-xl</code> — right half reserved for the image composition. Use for: HAL, Trust, Crocodile Economics, and any app with a visual narrative hero.</p>
+            </div>
+            <div className="rounded-lg border border-border p-4" style={{ borderLeftWidth: '4px', borderLeftColor: '#3ba559', backgroundColor: 'rgba(59,165,89,0.06)' }}>
+              <p className="text-[10px] font-semibold uppercase tracking-widest mb-1" style={{ color: '#93E07D' }}>heroVariant="content"</p>
+              <p className="text-sm text-foreground font-semibold mb-1">Content-as-visual hero</p>
+              <p className="text-xs text-muted-foreground">Solid <code className="font-mono">#232323</code> background, two-column layout. Left: text block. Right: <code className="font-mono">contentSlot</code> — any React node (framework matrix, data viz, diagram). Use for: Exponential Framework, CPR tool, Taxonomy, and any data-dense landing page where the content itself is the visual.</p>
+            </div>
+          </div>
+          <p className="text-muted-foreground text-sm mb-4">
+            In both variants: text is always left-aligned and vertically centred, anchored to{" "}
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">--eri-content-inset</code> so it aligns with the header logotype.
-            The background image is centred (<code className="font-mono text-xs bg-gray-100 px-1 rounded">50% 50%</code>) — the S-curve composition is designed to be centred.
-            The overlay is always <code className="font-mono text-xs bg-gray-100 px-1 rounded">rgba(35,35,35,0.82)</code> — brand dark, not pure black.
             <code className="font-mono text-xs bg-gray-100 px-1 rounded">titleLine1</code> is in Accent Lime; <code className="font-mono text-xs bg-gray-100 px-1 rounded">titleLine2</code> is in white.
-            The canonical S-curve image (<code className="font-mono text-xs bg-gray-100 px-1 rounded">ERI_HERO_IMAGE_DEFAULT</code>) is baked in as the default — no need to pass <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code> for standard use.
+            For the image variant, the canonical S-curve image (<code className="font-mono text-xs bg-gray-100 px-1 rounded">ERI_HERO_IMAGE_DEFAULT</code>) is baked in — omit <code className="font-mono text-xs bg-gray-100 px-1 rounded">backgroundImage</code> for standard use.
           </p>
 
           {/* Live preview — real EriHeroSection component */}
@@ -4003,16 +4015,18 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                 <thead><tr className="border-b border-border"><th className="text-left py-1 font-semibold text-foreground pr-3">Prop</th><th className="text-left py-1 font-semibold text-foreground pr-3">Type</th><th className="text-left py-1 font-semibold text-foreground pr-3">Required</th><th className="text-left py-1 font-semibold text-foreground">Notes</th></tr></thead>
                 <tbody className="font-mono">
                   {[
+                    ["heroVariant",     "'image'|'content'", "No",  "Layout variant. 'image' (default): background image + overlay, text constrained to max-w-xl. 'content': solid #232323 background, two-column layout (text left, contentSlot right). backgroundImage and overlayOpacity are ignored in content mode."],
                     ["eyebrow",         "string",           "Yes",  "Full eyebrow string e.g. \"APP NAME ——— BETA\""],
                     ["titleLine1",      "string",           "Yes",  "First H1 line — displayed in Accent Lime (#93E07D)"],
                     ["titleLine2",      "string?",          "No",   "Second H1 line — displayed in white"],
                     ["body",            "string",           "Yes",  "Body paragraph text"],
                     ["primaryCTA",      "{ label, href }",  "Yes",  "Accent Lime filled button — rounded-lg always"],
                     ["secondaryCTA",    "{ label, href }?", "No",   "White outline button — rounded-lg always"],
-                    ["backgroundImage", "string?",          "No",   "Trust Centre MUST pass ERI_HERO_IMAGE_TRUST. All other ERI apps: omit (defaults to ERI_HERO_IMAGE_DEFAULT). Crocodile Economics: pass heroImages.crocodileDecoupling. Never use the trust image on any other app."],
-                    ["overlayOpacity",      "number?",   "No",   "0–1, defaults to 0.82. Overlay colour is always #232323"],
-                    ["showScrollIndicator", "boolean?",  "No",   "Renders a subtle animated scroll indicator at the bottom-centre of the hero: a short vertical line above a single open chevron. The whole element drifts gently up and down via an inlined CSS keyframe (no external dependency). Defaults to false."],
-                    ["children",            "ReactNode?", "No",   "Optional slot below CTAs — for stat counters, attribution lines, etc."],
+                    ["backgroundImage", "string?",          "No",   "image variant only. Trust Centre MUST pass ERI_HERO_IMAGE_TRUST. All other ERI apps: omit (defaults to ERI_HERO_IMAGE_DEFAULT). Crocodile Economics: pass heroImages.crocodileDecoupling. Ignored when heroVariant='content'."],
+                    ["overlayOpacity",  "number?",          "No",   "image variant only. 0–1, defaults to 0.82. Overlay colour is always #232323. Ignored when heroVariant='content'."],
+                    ["contentSlot",     "ReactNode?",       "No",   "content variant only. Any React node rendered in the right column: framework matrix, data viz, diagram, interactive widget. Ignored when heroVariant='image'."],
+                    ["showScrollIndicator", "boolean?",  "No",   "Both variants. Renders a subtle animated scroll indicator at the bottom-centre of the hero. Defaults to false."],
+                    ["children",            "ReactNode?", "No",   "Both variants. Optional slot below CTAs — for stat counters, attribution lines, etc."],
                   ].map(([prop, type, req, note]) => (
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
@@ -4034,7 +4048,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
               </div>
               <pre className="text-xs text-gray-300 overflow-x-auto p-4 leading-relaxed">{`import { EriHeroSection } from '@eri/components';
 
-{/* Standard usage with scroll indicator */}
+{/* ── heroVariant="image" (default) — visual narrative hero ── */}
 <EriHeroSection
   eyebrow="PROFESSIONAL SERVICES MATRIX ——— BETA"
   titleLine1="Professional"
@@ -4045,9 +4059,21 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
   showScrollIndicator
 />
 
-{/* Custom image (e.g. Crocodile Economics) */}
-import { EriHeroSection } from '@eri/components';
+{/* ── heroVariant="content" — content-as-visual hero ── */}
+{/* Use when the content itself is the visual (framework matrix, data viz, etc.) */}
+<EriHeroSection
+  heroVariant="content"
+  eyebrow="EXPONENTIAL FRAMEWORK ——— PREVIEW"
+  titleLine1="Exponential"
+  titleLine2="Framework"
+  body="The 20 solutions that halve emissions by 2030."
+  primaryCTA={{ label: "Explore the Framework", href: "/framework" }}
+  secondaryCTA={{ label: "Download the Playbook", href: "/playbook" }}
+  contentSlot={<FrameworkMatrix />}
+  showScrollIndicator
+/>
 
+{/* ── Custom image (e.g. Crocodile Economics) ── */}
 <EriHeroSection
   eyebrow="CROCODILE ECONOMICS ——— PROTOTYPE"
   titleLine1="Crocodile"
@@ -4058,17 +4084,14 @@ import { EriHeroSection } from '@eri/components';
   overlayOpacity={0.75}
 />
 
-{/* children slot — supplementary content below the CTAs */}
-{/* Use for: attribution lines, stat counters, scroll indicators */}
+{/* ── children slot — supplementary content below CTAs (both variants) ── */}
 <EriHeroSection
   eyebrow="HUMAN-AI LAB ——— EXPONENTIAL ROADMAP INITIATIVE"
   titleLine1="Human-AI"
   titleLine2="Collaboration"
   body="Exploring the frontier of human and AI working together."
   primaryCTA={{ label: "Explore the Lab", href: "/lab" }}
-  secondaryCTA={{ label: "Read the Research", href: "/research" }}
 >
-  {/* Attribution line — rendered below the CTA buttons */}
   <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '11px', marginTop: '1.5rem' }}>
     Data sourced from the ERI Exponential Framework v5.0
   </p>

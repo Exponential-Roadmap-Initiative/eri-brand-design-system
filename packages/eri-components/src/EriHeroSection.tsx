@@ -1,10 +1,14 @@
 /**
- * EriHeroSection — ERI Brand Design System v2.10.4
+ * EriHeroSection — ERI Brand Design System v2.18.0
  *
  * Canonical full-viewport hero section for all ERI public-facing applications.
  * Matches the live pattern on human-ai-lab.exponentialroadmap.org.
  *
- * USAGE:
+ * TWO VARIANTS — controlled by the `heroVariant` prop:
+ *
+ * heroVariant="image" (default)
+ *   Full-viewport hero with a background image and dark overlay.
+ *   Use for: HAL, Trust, Crocodile Economics, and any app with a visual narrative hero.
  *   <EriHeroSection
  *     eyebrow="EXPONENTIAL HUMAN-AI LAB ——— BETA"
  *     titleLine1="Exponential"
@@ -15,13 +19,32 @@
  *     showScrollIndicator
  *   />
  *
+ * heroVariant="content"
+ *   Full-viewport hero with a solid #232323 dark background and a two-column layout.
+ *   Left column: eyebrow, H1, body, CTAs (same as image variant).
+ *   Right column: `contentSlot` — pass any React node (framework matrix, data viz, diagram, etc.).
+ *   Use for: Exponential Framework, CPR tool, Taxonomy, and any app where the content IS the visual.
+ *   <EriHeroSection
+ *     heroVariant="content"
+ *     eyebrow="EXPONENTIAL FRAMEWORK ——— PREVIEW"
+ *     titleLine1="Exponential"
+ *     titleLine2="Framework"
+ *     body="The 20 solutions that halve emissions by 2030."
+ *     primaryCTA={{ label: "Explore the Framework", href: "/framework" }}
+ *     contentSlot={<FrameworkMatrix />}
+ *     showScrollIndicator
+ *   />
+ *
  * RULES (do not override):
  *   - Height: min-h-screen — the hero fills the viewport
  *   - Vertical alignment: flex flex-col justify-center — text block is always vertically centred
- *   - Background image: centred (50% 50%), cover — the hands image is designed to be centred
- *   - Overlay: rgba(35,35,35,0.82) — brand dark colour, NOT pure black, NOT 40% opacity
+ *   - image variant — Background image: centred (50% 50%), cover
+ *   - image variant — Overlay: rgba(35,35,35,0.82) — brand dark colour, NOT pure black
+ *   - content variant — Background: #232323 solid — no image, no overlay
+ *   - content variant — Layout: two columns (text left, contentSlot right) on md+; stacked on mobile
  *   - Left edge: var(--eri-content-inset) — aligned with the header logotype
- *   - Text block width: max-w-xl — right half of viewport is reserved for the image composition
+ *   - image variant — Text block width: max-w-xl — right half reserved for image composition
+ *   - content variant — Text column: flex-1, min-w-0; contentSlot column: flex-1, min-w-0
  *   - Text alignment: ALWAYS left — NEVER centred
  *   - Eyebrow: single string, uppercase, Accent Lime (#93E07D), tracking-widest
  *   - titleLine1: displayed in Accent Lime (#93E07D) — the accent line of the H1
@@ -29,7 +52,6 @@
  *   - Primary CTA: Accent Lime fill (#93E07D), #1a1a1a text, rounded-lg — NEVER rounded-full
  *   - Secondary CTA: transparent background, 2px white border, white text, rounded-lg
  *   - No icon prefix or suffix on any CTA button
- *   - Default backgroundImage: ERI_HERO_IMAGE_HANDS — no need to pass it for standard use
  *   - showScrollIndicator: renders a subtle animated chevron at the bottom-centre of the hero
  *
  * INTEGRATION NOTES (lessons from previous component iterations):
@@ -41,11 +63,16 @@
  *      clamp(1rem, 3vw, 2rem) if the variable is absent, so it works even without it.
  *   4. CSS import: ensure @import "@eri/components/dist/eri-components.css" is at the top of
  *      index.css (required since v2.9.1 to prevent Tailwind 4 from purging component classes).
- *   5. backgroundImage default: the canonical hands image is baked in. Only override for
- *      app-specific hero images (e.g. Crocodile Economics). Never regenerate the hands image.
+ *   5. backgroundImage default: the canonical S-curves image is baked in. Only override for
+ *      app-specific hero images (e.g. Crocodile Economics). Never regenerate the image.
  *   6. showScrollIndicator: the indicator is absolutely positioned at the bottom-centre of the
  *      section. It uses a self-contained <style> tag for the bounce keyframe — no external CSS
  *      dependency. Safe to use in any consuming project.
+ *   7. content variant: backgroundImage and overlayOpacity props are ignored when
+ *      heroVariant="content". Pass contentSlot to fill the right column.
+ *   8. content variant bds-meta.json: no knownViolations entry needed — this is a sanctioned
+ *      BDS variant, not a deviation. Record heroVariant: "content" in your project's bds-meta.json
+ *      layout section if you wish to document it.
  *
  * REQUIRED CSS VARIABLE (add to index.css :root):
  *   --eri-content-inset: clamp(1rem, 3vw, 2rem);
@@ -88,6 +115,22 @@ interface CtaButton {
 
 interface EriHeroSectionProps {
   /**
+   * Hero layout variant.
+   *
+   * "image" (default) — full-viewport hero with background image and dark overlay.
+   *   Use for: HAL, Trust, Crocodile Economics, and any app with a visual narrative hero.
+   *
+   * "content" — full-viewport hero with solid #232323 background and two-column layout.
+   *   Left column: eyebrow, H1, body, CTAs.
+   *   Right column: `contentSlot` — any React node (framework matrix, data viz, diagram).
+   *   Use for: Exponential Framework, CPR tool, Taxonomy, and any data-dense landing page
+   *   where the content itself is the visual. backgroundImage and overlayOpacity are ignored.
+   *
+   * @default "image"
+   */
+  heroVariant?: 'image' | 'content';
+
+  /**
    * Eyebrow label — full string displayed in uppercase Accent Lime above the H1.
    * Recommended format: "APP NAME ——— STATUS"
    * Example: "EXPONENTIAL HUMAN-AI LAB ——— BETA"
@@ -124,8 +167,9 @@ interface EriHeroSectionProps {
 
   /**
    * CDN URL for the hero background image.
-   * Defaults to ERI_HERO_IMAGE_HANDS (the canonical wireframe hands image).
-   * Only override for app-specific hero images. Never regenerate the hands image.
+   * Defaults to ERI_HERO_IMAGE_HANDS (the canonical S-curves image).
+   * Only override for app-specific hero images (e.g. Crocodile Economics, Trust).
+   * Ignored when heroVariant="content".
    */
   backgroundImage?: string;
 
@@ -133,6 +177,7 @@ interface EriHeroSectionProps {
    * Overlay opacity — 0 to 1. Defaults to 0.82.
    * The overlay colour is always #232323 (brand dark). Do not change the colour.
    * Increase toward 1.0 if text legibility is poor against a bright image.
+   * Ignored when heroVariant="content".
    */
   overlayOpacity?: number;
 
@@ -145,7 +190,16 @@ interface EriHeroSectionProps {
   showScrollIndicator?: boolean;
 
   /**
-   * Optional slot rendered below the CTA buttons.
+   * Content slot for the right column — heroVariant="content" only.
+   * Pass any React node: a framework matrix, data visualisation, diagram, or interactive widget.
+   * Rendered in the right half of the two-column layout on md+ screens.
+   * On mobile, rendered below the text column.
+   * Ignored when heroVariant="image".
+   */
+  contentSlot?: React.ReactNode;
+
+  /**
+   * Optional slot rendered below the CTA buttons (both variants).
    * Use for stat counters, attribution lines, or other supplementary content.
    * Note: for a scroll indicator, prefer the showScrollIndicator prop instead.
    */
@@ -153,6 +207,7 @@ interface EriHeroSectionProps {
 }
 
 export function EriHeroSection({
+  heroVariant = 'image',
   eyebrow,
   titleLine1,
   titleLine2,
@@ -162,8 +217,175 @@ export function EriHeroSection({
   backgroundImage = ERI_HERO_IMAGE_HANDS,
   overlayOpacity = 0.82,
   showScrollIndicator = false,
+  contentSlot,
   children,
 }: EriHeroSectionProps) {
+
+  /** Shared text block — identical in both variants */
+  const textBlock = (
+    <div className="text-left">
+      {/* Eyebrow — uppercase Accent Lime, tracking-widest */}
+      <p
+        className="text-[11px] font-semibold uppercase tracking-widest mb-5"
+        style={{ color: '#93E07D' }}
+      >
+        {eyebrow}
+      </p>
+
+      {/* H1 — titleLine1 in Accent Lime, titleLine2 in white */}
+      <h1
+        className="font-extrabold leading-tight mb-6"
+        style={{ fontSize: 'clamp(2.5rem, 5vw, 3.75rem)' }}
+      >
+        <span className="block" style={{ color: '#93E07D' }}>
+          {titleLine1}
+        </span>
+        {titleLine2 && (
+          <span className="block text-white">
+            {titleLine2}
+          </span>
+        )}
+      </h1>
+
+      {/* Body paragraph */}
+      <p
+        className="text-base md:text-lg leading-relaxed mb-8"
+        style={{ color: 'rgba(255, 255, 255, 0.85)' }}
+      >
+        {body}
+      </p>
+
+      {/* CTA buttons — side by side, flex-wrap for narrow viewports */}
+      <div className="flex flex-wrap gap-3">
+        {/* Primary — Accent Lime fill, dark text, rounded-lg */}
+        <a
+          href={primaryCTA.href}
+          className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90"
+          style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
+        >
+          {primaryCTA.label}
+        </a>
+
+        {/* Secondary — transparent, 2px white border, white text, rounded-lg */}
+        {secondaryCTA && (
+          <a
+            href={secondaryCTA.href}
+            className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-white bg-transparent transition-colors hover:bg-white/10"
+            style={{ border: '2px solid rgba(255, 255, 255, 0.9)' }}
+          >
+            {secondaryCTA.label}
+          </a>
+        )}
+      </div>
+
+      {/* Optional children slot — stat counters, attribution lines, etc. */}
+      {children && <div className="mt-8">{children}</div>}
+    </div>
+  );
+
+  /** Shared scroll indicator */
+  const scrollIndicator = showScrollIndicator && (
+    <>
+      {/*
+        Self-contained keyframes — no external CSS dependency.
+        Two animations:
+          eri-scroll-drift  — the whole indicator drifts 6px down and back, breathing slowly
+          eri-scroll-fadein — delays the indicator's appearance by 1.5s so it does not
+                              compete with the hero content on first impression
+      */}
+      <style>{`
+        @keyframes eri-scroll-drift {
+          0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.3; }
+          50%       { transform: translateX(-50%) translateY(6px); opacity: 0.8; }
+        }
+        @keyframes eri-scroll-fadein {
+          0%   { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        .eri-scroll-indicator-wrap {
+          animation:
+            eri-scroll-fadein 0.8s ease-out 1.5s both,
+            eri-scroll-drift  2.5s ease-in-out 2.3s infinite;
+        }
+      `}</style>
+      <div
+        className="eri-scroll-indicator-wrap absolute bottom-8 left-1/2 z-10 flex flex-col items-center"
+        style={{ transform: 'translateX(-50%)' }}
+        aria-hidden="true"
+      >
+        {/* Vertical line */}
+        <div
+          style={{
+            width: '1px',
+            height: '24px',
+            background: 'rgba(255,255,255,0.35)',
+            marginBottom: '6px',
+          }}
+        />
+        {/* Single open chevron */}
+        <svg
+          width="20"
+          height="12"
+          viewBox="0 0 20 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1 1L10 10L19 1"
+            stroke="rgba(255,255,255,0.7)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+    </>
+  );
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * heroVariant="content"
+   * Solid #232323 background, two-column layout (text left, contentSlot right).
+   * ───────────────────────────────────────────────────────────────────────── */
+  if (heroVariant === 'content') {
+    return (
+      <section
+        className="relative min-h-screen flex flex-col justify-center overflow-hidden w-full"
+        style={{
+          backgroundColor: '#232323',
+          paddingTop: '64px',
+        }}
+      >
+        {/*
+          Two-column content container.
+          On md+ screens: text left (flex-1), contentSlot right (flex-1).
+          On mobile: stacked — text on top, contentSlot below.
+        */}
+        <div
+          className="relative z-10 w-full max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12"
+          style={{ paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))' }}
+        >
+          {/* Left column — text block */}
+          <div className="flex-1 min-w-0">
+            {textBlock}
+          </div>
+
+          {/* Right column — contentSlot */}
+          {contentSlot && (
+            <div className="flex-1 min-w-0 w-full">
+              {contentSlot}
+            </div>
+          )}
+        </div>
+
+        {scrollIndicator}
+      </section>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * heroVariant="image" (default)
+   * Full-viewport background image with dark overlay, text constrained to max-w-xl.
+   * ───────────────────────────────────────────────────────────────────────── */
   return (
     <section
       className="relative min-h-screen flex flex-col justify-center overflow-hidden w-full"
@@ -193,126 +415,12 @@ export function EriHeroSection({
         style={{ paddingInline: 'var(--eri-content-inset, clamp(1rem, 3vw, 2rem))' }}
       >
         {/* Text block — max-w-xl keeps text in the left half; right half open for the image */}
-        <div className="max-w-xl text-left">
-
-          {/* Eyebrow — uppercase Accent Lime, tracking-widest */}
-          <p
-            className="text-[11px] font-semibold uppercase tracking-widest mb-5"
-            style={{ color: '#93E07D' }}
-          >
-            {eyebrow}
-          </p>
-
-          {/* H1 — titleLine1 in Accent Lime, titleLine2 in white */}
-          <h1
-            className="font-extrabold leading-tight mb-6"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 3.75rem)' }}
-          >
-            <span className="block" style={{ color: '#93E07D' }}>
-              {titleLine1}
-            </span>
-            {titleLine2 && (
-              <span className="block text-white">
-                {titleLine2}
-              </span>
-            )}
-          </h1>
-
-          {/* Body paragraph */}
-          <p
-            className="text-base md:text-lg leading-relaxed mb-8"
-            style={{ color: 'rgba(255, 255, 255, 0.85)' }}
-          >
-            {body}
-          </p>
-
-          {/* CTA buttons — side by side, flex-wrap for narrow viewports */}
-          <div className="flex flex-wrap gap-3">
-
-            {/* Primary — Accent Lime fill, dark text, rounded-lg */}
-            <a
-              href={primaryCTA.href}
-              className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90"
-              style={{ backgroundColor: '#93E07D', color: '#1a1a1a' }}
-            >
-              {primaryCTA.label}
-            </a>
-
-            {/* Secondary — transparent, 2px white border, white text, rounded-lg */}
-            {secondaryCTA && (
-              <a
-                href={secondaryCTA.href}
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-white bg-transparent transition-colors hover:bg-white/10"
-                style={{ border: '2px solid rgba(255, 255, 255, 0.9)' }}
-              >
-                {secondaryCTA.label}
-              </a>
-            )}
-          </div>
-
-          {/* Optional children slot — stat counters, attribution lines, etc. */}
-          {children && <div className="mt-8">{children}</div>}
+        <div className="max-w-xl">
+          {textBlock}
         </div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      {showScrollIndicator && (
-        <>
-          {/*
-            Self-contained keyframes — no external CSS dependency.
-            Two animations:
-              eri-scroll-drift  — the whole indicator drifts 6px down and back, breathing slowly
-              eri-scroll-fadein — delays the indicator's appearance by 1.5s so it does not
-                                  compete with the hero content on first impression
-          */}
-          <style>{`
-            @keyframes eri-scroll-drift {
-              0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.3; }
-              50%       { transform: translateX(-50%) translateY(6px); opacity: 0.8; }
-            }
-            @keyframes eri-scroll-fadein {
-              0%   { opacity: 0; }
-              100% { opacity: 1; }
-            }
-            .eri-scroll-indicator-wrap {
-              animation:
-                eri-scroll-fadein 0.8s ease-out 1.5s both,
-                eri-scroll-drift  2.5s ease-in-out 2.3s infinite;
-            }
-          `}</style>
-          <div
-            className="eri-scroll-indicator-wrap absolute bottom-8 left-1/2 z-10 flex flex-col items-center"
-            style={{ transform: 'translateX(-50%)' }}
-            aria-hidden="true"
-          >
-            {/* Vertical line */}
-            <div
-              style={{
-                width: '1px',
-                height: '24px',
-                background: 'rgba(255,255,255,0.35)',
-                marginBottom: '6px',
-              }}
-            />
-            {/* Single open chevron */}
-            <svg
-              width="20"
-              height="12"
-              viewBox="0 0 20 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 1L10 10L19 1"
-                stroke="rgba(255,255,255,0.7)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        </>
-      )}
+      {scrollIndicator}
     </section>
   );
 }
