@@ -1175,6 +1175,7 @@ export default function Skills() {
   const [ecosystemFilter, setEcosystemFilter] = useState<EcosystemFilter>("all");
   const [tierFilter, setTierFilter] = useState<number | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // ── Derived stats (improvements are NOT in the list response — lazy-loaded per row)
   const eriSkills = skillsList?.filter(s => s.id.startsWith("eri-")) ?? [];
@@ -1191,6 +1192,15 @@ export default function Skills() {
   const filteredSkills = ecosystemBase.filter(s => {
     if (tierFilter !== null && s.tier !== tierFilter) return false;
     if (categoryFilter !== null && s.category !== categoryFilter) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const inName = s.name?.toLowerCase().includes(q);
+      const inId = s.id?.toLowerCase().includes(q);
+      const inDesc = s.description?.toLowerCase().includes(q);
+      const inReadWhen = s.readWhen?.toLowerCase().includes(q);
+      const inCategory = s.category?.toLowerCase().includes(q);
+      if (!inName && !inId && !inDesc && !inReadWhen && !inCategory) return false;
+    }
     return true;
   });
 
@@ -1252,6 +1262,27 @@ export default function Skills() {
 
         {/* Filter bar */}
         <div className="mb-6 space-y-3">
+          {/* Search input */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search skills by name, description, or trigger condition…"
+              className="w-full pl-9 pr-9 py-2 text-sm bg-muted/40 border border-border rounded-lg placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring transition-colors"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Clear search"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+
           {/* Row 1: Ecosystem tabs */}
           <div className="flex items-center gap-1 border-b border-border pb-3 flex-wrap">
             {([
@@ -1314,10 +1345,10 @@ export default function Skills() {
           {/* Results count */}
           <p className="text-xs text-muted-foreground">
             Showing <span className="font-semibold text-foreground">{filteredSkills.length}</span> of {skillsList?.length ?? 0} skills
-            {(tierFilter !== null || categoryFilter !== null) && (
-              <button onClick={() => { setTierFilter(null); setCategoryFilter(null); }}
+            {(tierFilter !== null || categoryFilter !== null || searchQuery.trim()) && (
+              <button onClick={() => { setTierFilter(null); setCategoryFilter(null); setSearchQuery(""); }}
                 className="ml-2 text-muted-foreground/70 hover:text-foreground underline">
-                Clear filters
+                Clear all
               </button>
             )}
           </p>
