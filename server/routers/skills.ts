@@ -250,7 +250,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-report-finder",
     name: "eri-report-finder",
-    description: "Systematic methodology for finding, storing, and validating corporate reporting URLs across five types (Annual, Sustainability, Transition, Biodiversity, Social). Use for: implementing or extending the integrated 5-tier discovery pipeline (ESEF, Klimatkollen, SRN, SERP, Perplexity), adding new data source tiers, auditing pipeline violations, running coverage gap analysis across 29 ERI members, updating the corporateReportUrls or corporateReportCompanies schema, or debugging slot-key conflicts...",
+    description: "Systematic methodology for finding, storing, and validating corporate reporting URLs across five types (Annual, Sustainability, Transition, Biodiversity, Social). Use for: implementing or extending the integrated 5-tier discovery pipeline (ESEF, Klimatkollen, SRN, SERP, Perplexity), adding new data source tiers, auditing pipeline violations, running coverage gap analysis across 29 ERI members, updating the corporateReportUrls or corporateReportCompanies schema, debugging slot-key conflicts an...",
     tier: 3,
     category: "data",
     version: "4.1.0",
@@ -327,10 +327,10 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-emissions",
     name: "eri-emissions",
-    description: "Canonical domain knowledge for GHG emissions data in the ERI platform. Tier 3 — conditional. Covers: GHG Protocol scope definitions and the 15 Scope 3 categories, source priority model (PDF → Klimatkollen → CDP for EF/CPR; Klimatkollen → CDP for workspace widget), the comparability problem and four main methodology change types, the MVP two-tier extraction schema (ghg_emissions_latest + ghg_methodology_flags), the image-table problem in PDF parsing, restatement detection patterns, base year r...",
+    description: "Canonical domain knowledge for GHG emissions data in the ERI platform. Covers: GHG Protocol scope definitions, 15 Scope 3 categories, source priority model (PDF → Klimatkollen → CDP), the comparability problem, four methodology change types, multi-year table extraction (all year columns), target column extraction, three-tier schema (ghg_emissions_latest + ghg_methodology_flags + ghg_emissions_history/ghg_series_segments), image-table problem, restatement detection, base year rules, segmented ...",
     tier: 3,
     category: "data",
-    version: "1.0.0",
+    version: "2.0.0",
     readWhen: "Implementing emissions extraction from corporate PDFs, designing the dl_emissions_data pipeline, reasoning about whether a historical time-series is comparable, building EF CO1/CO3 quantitative scoring, or auditing CPR criteria that depend on actual emissions numbers.",
     hasReferences: true,
   },
@@ -390,8 +390,8 @@ function parseFrontmatterMeta(content: string): { name?: string; description?: s
     }
   }
 
-  // Parse metadata.version (nested block)
-  const versionMatch = fm.match(/^metadata:\s*\n\s+version:\s*["']?([\d.]+)["']?/m);
+  // Parse top-level version field (e.g. `version: 2.0.0` or `version: "2.0.0"`)
+  const versionMatch = fm.match(/^version:\s*["']?([\d.]+)["']?/m);
   const version = versionMatch ? versionMatch[1].trim() : undefined;
 
   return { name, description, version };
@@ -952,7 +952,10 @@ export const skillsRouter = router({
    */
   syncMetadataFromFiles: adminProcedure.mutation(async () => {
     const skillsDir = path.resolve("/home/ubuntu/skills");
-    const filePath = path.resolve(import.meta.dirname, "skills.ts");
+    // Use process.cwd() so this path works in both dev (cwd = project root) and
+    // production (cwd = /usr/src/app). import.meta.dirname points to dist/ in the
+    // compiled bundle and would cause ENOENT in production.
+    const filePath = path.resolve(process.cwd(), "server/routers/skills.ts");
     let source = fs.readFileSync(filePath, "utf-8");
 
     type Change = { id: string; field: string; from: string; to: string };
@@ -984,12 +987,21 @@ export const skillsRouter = router({
 
       const replaceField = (field: string, oldVal: string, newVal: string) => {
         const escaped = oldVal.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const re = new RegExp(
+        // Match both double-quoted and single-quoted field values so entries that
+        // use single quotes (e.g. eri-skill-creator) are updated correctly.
+        const reDouble = new RegExp(
           `(id: "${skill.id}"[\\s\\S]*?${field}: ")${escaped}(")`,
           "m"
         );
-        if (re.test(updatedSource)) {
-          updatedSource = updatedSource.replace(re, `$1${newVal}$2`);
+        const reSingle = new RegExp(
+          `(id: "${skill.id}"[\\s\\S]*?${field}: ')${escaped}(')`,
+          "m"
+        );
+        if (reDouble.test(updatedSource)) {
+          updatedSource = updatedSource.replace(reDouble, `$1${newVal}$2`);
+          changes.push({ id: skill.id, field, from: oldVal, to: newVal });
+        } else if (reSingle.test(updatedSource)) {
+          updatedSource = updatedSource.replace(reSingle, `$1${newVal}$2`);
           changes.push({ id: skill.id, field, from: oldVal, to: newVal });
         }
       };
