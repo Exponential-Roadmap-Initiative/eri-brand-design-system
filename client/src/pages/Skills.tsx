@@ -52,6 +52,7 @@ interface Skill {
   readWhen: string;
   category: string;
   hasReferences: boolean;
+  lastUpdated?: Date | null;
 }
 
 // ── Category config ───────────────────────────────────────────────────────────
@@ -818,8 +819,13 @@ function SkillRow({ skill, isAdmin, onRefresh }: SkillRowProps) {
 
           {/* Card footer — always visible */}
           <div className="px-5 py-3 border-t border-border flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-mono text-muted-foreground">v{skill.version}</span>
+              {skill.lastUpdated && (
+                <span className="text-xs text-muted-foreground">
+                  · updated {new Date(skill.lastUpdated).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                </span>
+              )}
               {isOpen && improvements.length > 0 && (
                 <span className="text-xs text-muted-foreground">· {improvements.length} improvement{improvements.length !== 1 ? 's' : ''}</span>
               )}

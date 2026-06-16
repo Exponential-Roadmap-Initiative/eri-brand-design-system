@@ -82,7 +82,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     description: "Full lifecycle governance for ERI skills. MUST read before writing any eri- skill — Tier 2 per-action gate. Use whenever: creating or improving an ERI skill, running the post-task reflection loop, a workflow keeps causing repeated mistakes, a user says 'turn this into a skill' or 'improve this skill', optimising a skill description, updating the BDS /skills improvement log, managing the project instructions budget, or registering a skill. HARD STOP: do not write SKILL.md content until Steps 1...",
     tier: 2,
     category: "process",
-    version: '2.8.0',
+    version: '2.9.0',
     readWhen: 'Writing any eri- skill file; post-task reflection loop.',
     hasReferences: true,
   },
@@ -408,10 +408,14 @@ function enrichWithFrontmatter(meta: SkillMeta): SkillMeta {
   const content = readSkillContent(meta.id);
   if (!content) return meta;
   const fm = parseFrontmatterMeta(content);
+  // Strip trailing " Version: X.Y.Z" or ". Version: X.Y.Z" from description —
+  // the version is already shown separately on the skill card.
+  const rawDesc = fm.description ?? meta.description;
+  const cleanDesc = rawDesc.replace(/[\s.]+Version:\s*[\d.]+\s*$/i, "").trim();
   return {
     ...meta,
     name: fm.name ?? meta.name,
-    description: fm.description ?? meta.description,
+    description: cleanDesc,
     version: fm.version ?? meta.version,
   };
 }
@@ -573,8 +577,26 @@ export const skillsRouter = router({
    * tier, category, readWhen, hasReferences come from SKILLS_METADATA (governance decisions).
    * Public.
    */
-  list: publicProcedure.query(() => {
-    return SKILLS_METADATA.map(enrichWithFrontmatter);
+  list: publicProcedure.query(async () => {
+    const db = await getDb();
+    // Fetch the most recent improvement loggedAt for every skill in one query
+    let latestMap: Record<string, Date> = {};
+    if (db) {
+      try {
+        // Get all improvements ordered by loggedAt desc, then deduplicate by skillId
+        const rows = await db
+          .select({ skillId: skillImprovements.skillId, loggedAt: skillImprovements.loggedAt })
+          .from(skillImprovements)
+          .orderBy(desc(skillImprovements.loggedAt));
+        for (const row of rows) {
+          if (!latestMap[row.skillId]) latestMap[row.skillId] = row.loggedAt;
+        }
+      } catch { /* non-fatal — degrade gracefully */ }
+    }
+    return SKILLS_METADATA.map((s) => ({
+      ...enrichWithFrontmatter(s),
+      lastUpdated: latestMap[s.id] ?? null,
+    }));
   }),
 
   /**
