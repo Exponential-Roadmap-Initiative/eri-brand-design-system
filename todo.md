@@ -1096,3 +1096,7 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Update eri-bds-components SKILL.md — EriHeroSection prop table
 - [x] Save checkpoint v3.29.0
 - [x] Tag release v2.18.0
+- [x] Post-mortem: add pkill tsc watcher + mandatory CODEBASE-CONTEXT.md read to project instructions Step 1
+- [x] Post-mortem: add compaction hard stop rule to project instructions (no code/DB action until CODEBASE-CONTEXT.md is re-read)
+- [x] Post-mortem: add "Current DB State" section to CODEBASE-CONTEXT.md template
+- [ ] Post-mortem: publish updated project instructions v3.37.0 via BDS admin UI (requires admin login)

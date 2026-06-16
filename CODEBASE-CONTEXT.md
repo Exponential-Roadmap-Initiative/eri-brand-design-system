@@ -6,6 +6,38 @@ Do not rely on memory of previous sessions — context compaction removes that h
 
 ---
 
+## Compaction recovery protocol
+
+**If you see `<compacted_history>` in your context, follow this sequence exactly — no exceptions:**
+
+1. The very next action MUST be `file read CODEBASE-CONTEXT.md` (this file). No shell command, no DB query, no code write, no assumption-based answer until this read is complete.
+2. After reading this file, read `CODEBASE-SESSIONS.md` for recent session decisions.
+3. Check the **Current state snapshot** section below to verify key identifiers without running queries.
+4. Only then resume work.
+
+This protocol exists because a compaction event in June 2026 caused an agent to overwrite correct production data and take other destructive actions based on stale in-memory assumptions. The session history was gone; the agent did not re-read context; it acted on guesses.
+
+---
+
+## Current state snapshot
+
+This section records key identifiers and version pins that any agent can verify in 5 seconds after compaction, without running a single query or shell command.
+
+**Update this section at the close of any session that changes these values.**
+
+| Item | Current value | Last updated |
+|---|---|---|
+| BDS app version | v3.37.0 | 2026-06-16 |
+| `@eri/components` package pin | v2.18.0 | 2026-06-11 |
+| Published project instructions version | To be set after v3.37.0 publish | — |
+| Skills registry entry count | 18 skills in SKILLS_METADATA | 2026-06-16 |
+| Heartbeat auto-sync | Active — runs 5s after startup + every hour | 2026-06-11 |
+| BDS_AGENT_SECRET | Embedded in eri-skill-creator SKILL.md Step 8 | 2026-06-11 |
+
+**For ERI projects with dev use-case data (PSM, ERI-playbook, etc.):** the owning project's `CODEBASE-CONTEXT.md` MUST record actual eriIds, document IDs, company record IDs, and any other identifiers that an agent might need to distinguish dev data from production data. A post-mortem in June 2026 showed that without this, a compacted agent will guess — and guess wrong.
+
+---
+
 ## What this project is
 
 The `eri-brand-design-system` project has two outputs:
