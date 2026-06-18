@@ -1100,3 +1100,8 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Post-mortem: add compaction hard stop rule to project instructions (no code/DB action until CODEBASE-CONTEXT.md is re-read)
 - [x] Post-mortem: add "Current DB State" section to CODEBASE-CONTEXT.md template
 - [ ] Post-mortem: publish updated project instructions v3.37.0 via BDS admin UI (requires admin login)
+
+## Skill sync fixes (2026-06-18)
+- [x] Skill sync fix 1: add deletion logic — remove SKILLS_METADATA entries whose skill directory is absent from /home/ubuntu/skills/
+- [x] Skill sync fix 2: hot-reload registry — SKILLS_METADATA served from re-read source after sync, no restart required
+- [x] Skill sync fix 3: sync result message reports removals (e.g. "Removed 1 skill: eri-exponential-framework")
