@@ -27,13 +27,15 @@ This section records key identifiers and version pins that any agent can verify 
 
 | Item | Current value | Last updated |
 |---|---|---|
-| BDS app version | v3.38.0 | 2026-06-18 |
+| BDS app version | v3.39.0 | 2026-06-18 |
 | `@eri/components` package pin | v2.18.0 | 2026-06-11 |
 | Published project instructions version | To be set after v3.37.0 publish | — |
 | Skills registry entry count | 30 skills in SKILLS_METADATA (includes eri-ef-app v2.0.0, eri-cpr-app v1.0.0) | 2026-06-18 |
 | Heartbeat auto-sync | Active — runs 5s after startup + every hour | 2026-06-11 |
 | BDS_AGENT_SECRET | Embedded in eri-skill-creator SKILL.md Step 8 | 2026-06-11 |
 | skills-registry.json | Runtime hot-reload artefact at project root — in .gitignore, written by syncMetadataFromFilesImpl() | 2026-06-18 |
+| skill_evolution_log table | DB table recording all skill add/update/remove events with syncRunId, triggerSource, taskName | 2026-06-18 |
+| /skills page | Two tabs: Skills Library (existing) + Skills Evolution (auto-generated audit trail) | 2026-06-18 |
 
 **For ERI projects with dev use-case data (PSM, ERI-playbook, etc.):** the owning project's `CODEBASE-CONTEXT.md` MUST record actual eriIds, document IDs, company record IDs, and any other identifiers that an agent might need to distinguish dev data from production data. A post-mortem in June 2026 showed that without this, a compacted agent will guess — and guess wrong.
 
