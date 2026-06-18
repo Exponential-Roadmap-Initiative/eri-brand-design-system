@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `skill_evolution_log` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `sync_run_id` varchar(36) NOT NULL,\n  `logged_at` timestamp NOT NULL DEFAULT (now()),\n  `trigger_source` varchar(32) NOT NULL,\n  `task_name` varchar(256),\n  `event_type` enum('added','updated','removed') NOT NULL,\n  `skill_id` varchar(64) NOT NULL,\n  `skill_name` varchar(256),\n  `tier` int,\n  `version_before` varchar(16),\n  `version_after` varchar(16),\n  `changed_fields` text,\n  `summary` varchar(512) NOT NULL,\n  CONSTRAINT `skill_evolution_log_id` PRIMARY KEY(`id`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4WhJDWPeZbqdee9.7c5ac343646b --database 5mtZtU66sMbsnmPoVbf6UJ --execute CREATE TABLE IF NOT EXISTS `skill_evolution_log` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `sync_run_id` varchar(36) NOT NULL,\n  `logged_at` timestamp NOT NULL DEFAULT (now()),\n  `trigger_source` varchar(32) NOT NULL,\n  `task_name` varchar(256),\n  `event_type` enum('added','updated','removed') NOT NULL,\n  `skill_id` varchar(64) NOT NULL,\n  `skill_name` varchar(256),\n  `tier` int,\n  `version_before` varchar(16),\n  `version_after` varchar(16),\n  `changed_fields` text,\n  `summary` varchar(512) NOT NULL,\n  CONSTRAINT `skill_evolution_log_id` PRIMARY KEY(`id`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 378
+}

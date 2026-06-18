@@ -140,8 +140,10 @@ async function startServer() {
         Array.isArray(req.body?.improvements) ? req.body.improvements : [];
 
       // ── 1. Sync metadata from SKILL.md files ──────────────────────────────
+      // Pass task context from the first improvement entry (all entries share the same task)
+      const taskContext = improvements.length > 0 ? (improvements[0].taskContext ?? undefined) : undefined;
       const { syncMetadataFromFilesImpl } = await import("../routers/skills");
-      const syncResult = await syncMetadataFromFilesImpl();
+      const syncResult = await syncMetadataFromFilesImpl("agent-sync", taskContext);
 
       // ── 2. Log each improvement ───────────────────────────────────────────
       const { getDb } = await import("../db");

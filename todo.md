@@ -1105,3 +1105,11 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Skill sync fix 1: add deletion logic — remove SKILLS_METADATA entries whose skill directory is absent from /home/ubuntu/skills/
 - [x] Skill sync fix 2: hot-reload registry — SKILLS_METADATA served from re-read source after sync, no restart required
 - [x] Skill sync fix 3: sync result message reports removals (e.g. "Removed 1 skill: eri-exponential-framework")
+
+## Skills Evolution Log (2026-06-18)
+- [x] Add skill_evolution_log DB table to drizzle/schema.ts and migrate
+- [x] Update syncMetadataFromFilesImpl() to write evolution log rows (added/updated/removed) with taskContext
+- [x] Pass taskContext from agent REST endpoint into syncMetadataFromFilesImpl()
+- [x] Add skills.getEvolutionLog tRPC procedure
+- [x] Update Skills.tsx: two tabs (Skills Library / Skills Evolution), Evolution tab shows reverse-chronological grouped log
+- [x] Remove or repurpose the Log Usage button (replaced by automated evolution log)

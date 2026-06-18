@@ -12,7 +12,8 @@
 
 import { useState } from "react";
 import { Link } from "wouter";
-import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, BarChart2, PlusCircle, X, Activity } from "lucide-react";
+import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, BarChart2, PlusCircle, X, Activity, GitBranch, Plus, Pencil, Trash2 } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
@@ -1165,7 +1166,121 @@ function HealthDashboard({ skills }: { skills: Skill[] }) {
   );
 }
 
-// ── Pagee ────────────────────────────────────────────────────────────────────────────────
+// ── Skills Evolution Log component ────────────────────────────────────────────────────────────────────────────────────────
+
+const EVENT_CONFIG = {
+  added:   { label: "Added",   color: "#3ba559", bg: "rgba(59,165,89,0.10)" },
+  updated: { label: "Updated", color: "#17b7dd", bg: "rgba(23,183,221,0.10)" },
+  removed: { label: "Removed", color: "#ef4444", bg: "rgba(239,68,68,0.10)" },
+} as const;
+
+const TRIGGER_LABEL: Record<string, string> = {
+  "heartbeat":    "Heartbeat auto-sync",
+  "agent-sync":   "Agent task sync",
+  "manual-sync":  "Manual sync (button)",
+};
+
+function EventBadge({ type }: { type: "added" | "updated" | "removed" }) {
+  const cfg = EVENT_CONFIG[type];
+  return (
+    <span
+      className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold tracking-wide border"
+      style={{ color: cfg.color, background: cfg.bg, borderColor: `${cfg.color}40` }}
+    >
+      {type === "added" && <Plus className="w-3 h-3" />}
+      {type === "updated" && <Pencil className="w-3 h-3" />}
+      {type === "removed" && <Trash2 className="w-3 h-3" />}
+      {cfg.label}
+    </span>
+  );
+}
+
+function EvolutionLog() {
+  const { data: groups, isLoading } = trpc.skills.getEvolutionLog.useQuery();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-2 py-12 text-muted-foreground text-sm">
+        <Activity className="w-4 h-4 animate-pulse" />
+        Loading evolution log…
+      </div>
+    );
+  }
+
+  if (!groups || groups.length === 0) {
+    return (
+      <div className="py-16 text-center">
+        <GitBranch className="w-8 h-8 mx-auto mb-3 text-muted-foreground/40" />
+        <p className="text-sm font-medium text-muted-foreground">No evolution events recorded yet.</p>
+        <p className="text-xs text-muted-foreground/60 mt-1 max-w-xs mx-auto">
+          Events are written automatically when skills are added, updated, or removed by the sync system.
+          Trigger a sync to generate the first entries.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {groups.map((group) => (
+        <div key={group.syncRunId} className="border border-border rounded-lg overflow-hidden">
+          {/* Group header */}
+          <div className="flex items-center justify-between px-4 py-3 bg-muted/30 border-b border-border">
+            <div className="flex items-center gap-3 flex-wrap">
+              <GitBranch className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+              <span className="text-xs font-semibold text-foreground">
+                {TRIGGER_LABEL[group.triggerSource] ?? group.triggerSource}
+              </span>
+              {group.taskName && (
+                <span className="text-xs text-muted-foreground italic">· {group.taskName}</span>
+              )}
+              <span className="text-xs text-muted-foreground">
+                {group.events.length} event{group.events.length !== 1 ? "s" : ""}
+              </span>
+            </div>
+            <span className="text-xs text-muted-foreground shrink-0">
+              {new Date(group.loggedAt).toLocaleString("en-GB", {
+                day: "2-digit", month: "short", year: "numeric",
+                hour: "2-digit", minute: "2-digit",
+              })}
+            </span>
+          </div>
+          {/* Events */}
+          <div className="divide-y divide-border">
+            {group.events.map((ev) => (
+              <div key={ev.id} className="flex items-start gap-3 px-4 py-3">
+                <EventBadge type={ev.eventType as "added" | "updated" | "removed"} />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-sm font-mono font-semibold text-foreground">{ev.skillId}</span>
+                    {ev.skillName && ev.skillName !== ev.skillId && (
+                      <span className="text-xs text-muted-foreground">{ev.skillName}</span>
+                    )}
+                    {ev.tier && (
+                      <span className="text-[11px] px-1.5 py-0.5 rounded bg-muted/50 border border-border text-muted-foreground font-medium">
+                        Tier {ev.tier}
+                      </span>
+                    )}
+                    {(ev.versionBefore || ev.versionAfter) && (
+                      <span className="text-[11px] text-muted-foreground font-mono">
+                        {ev.versionBefore && <span>v{ev.versionBefore}</span>}
+                        {ev.versionBefore && ev.versionAfter && <span className="mx-1">→</span>}
+                        {ev.versionAfter && <span className="text-[#3ba559]">v{ev.versionAfter}</span>}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{ev.summary}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Page ────────────────────────────────────────────────────────────────────────────────────────
 
 type EcosystemFilter = "eri" | "manus" | "all";
 
@@ -1255,14 +1370,28 @@ export default function Skills() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
+        <Tabs defaultValue="library">
+          <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
+            <TabsList className="h-9">
+              <TabsTrigger value="library" className="gap-1.5 text-sm">
+                <Layers className="w-3.5 h-3.5" /> Skills Library
+              </TabsTrigger>
+              <TabsTrigger value="evolution" className="gap-1.5 text-sm">
+                <GitBranch className="w-3.5 h-3.5" /> Skills Evolution
+              </TabsTrigger>
+            </TabsList>
+            {isAdmin && (
+              <div className="flex items-center gap-2">
+                <SyncMetadataButton onSuccess={refresh} />
+              </div>
+            )}
+          </div>
+
+          <TabsContent value="library">
         <>
         {isAdmin && (
-          <div className="flex items-center justify-between mb-4">
+          <div className="mb-4">
             <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements or sync metadata from skill files. New skills are registered automatically via the sync script.</p>
-            <div className="flex items-center gap-2">
-              <SyncMetadataButton onSuccess={refresh} />
-              {skillsList && <LogUsageDialog skills={skillsList} onSuccess={() => {}} />}
-            </div>
           </div>
         )}
 
@@ -1419,18 +1548,18 @@ export default function Skills() {
           </div>
         )}
 
-        {/* Health Dashboard — visible to authenticated users */}
-        {skillsList && skillsList.length > 0 && (
-          <div className="mt-10">
-            <div className="flex items-center gap-2 mb-1">
-              <BarChart2 size={15} className="text-muted-foreground" />
-              <h2 className="text-sm font-semibold text-foreground">Skill Health</h2>
-            </div>
-            <p className="text-xs text-muted-foreground mb-3">Usage statistics derived from post-task logs. Log Usage after each task to keep this data current.</p>
-            <HealthDashboard skills={skillsList} />
-          </div>
-        )}
          </>
+          </TabsContent>
+
+          <TabsContent value="evolution">
+            <div className="py-2">
+              <p className="text-xs text-muted-foreground mb-6 leading-relaxed">
+                A system-generated audit trail of every skill change. Entries are written automatically when the sync system adds, updates, or removes a skill — no manual input required.
+              </p>
+              <EvolutionLog />
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </PublicLayout>
   );

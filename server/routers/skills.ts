@@ -22,6 +22,7 @@ import {
   projectInstructions,
   projectInstructionsAudits,
   projectInstructionsVersions,
+  skillEvolutionLog,
   skillImprovements,
   skillUsageLogs,
 } from "../../drizzle/schema";
@@ -461,7 +462,10 @@ function getRegistry(): SkillMeta[] {
 }
 
 // ─── Standalone sync implementation (exported for use by the agent REST endpoint) ─
-export async function syncMetadataFromFilesImpl() {
+export async function syncMetadataFromFilesImpl(
+  triggerSource: "heartbeat" | "agent-sync" | "manual-sync" = "heartbeat",
+  taskName?: string
+) {
   const skillsDir = path.resolve("/home/ubuntu/skills");
   // Use process.cwd() so this path works in both dev (cwd = project root) and
   // production (cwd = /usr/src/app). import.meta.dirname points to dist/ in the
@@ -639,6 +643,83 @@ export async function syncMetadataFromFilesImpl() {
     }
     fs.writeFileSync(REGISTRY_JSON_PATH, JSON.stringify(finalRegistry, null, 2), "utf-8");
   } catch { /* non-fatal — registry JSON write failed */ }
+
+  // Write evolution log entries to DB for every change in this sync run
+  try {
+    const db = await getDb();
+    if (db && (changes.length > 0 || registered.length > 0 || removed.length > 0)) {
+      const syncRunId = crypto.randomUUID();
+      const now = new Date();
+      const rows: typeof skillEvolutionLog.$inferInsert[] = [];
+
+      // Updated fields — group by skillId
+      const changesBySkill: Record<string, { field: string; from: string; to: string }[]> = {};
+      for (const c of changes) {
+        if (!changesBySkill[c.id]) changesBySkill[c.id] = [];
+        changesBySkill[c.id].push({ field: c.field, from: c.from, to: c.to });
+      }
+      for (const [skillId, fieldChanges] of Object.entries(changesBySkill)) {
+        const meta = SKILLS_METADATA.find(s => s.id === skillId);
+        const versionChange = fieldChanges.find(c => c.field === "version");
+        rows.push({
+          syncRunId,
+          loggedAt: now,
+          triggerSource,
+          taskName: taskName ?? null,
+          eventType: "updated",
+          skillId,
+          skillName: meta?.name ?? skillId,
+          tier: meta?.tier ?? null,
+          versionBefore: versionChange?.from ?? null,
+          versionAfter: versionChange?.to ?? null,
+          changedFields: JSON.stringify(fieldChanges.map(c => c.field)),
+          summary: `${skillId} updated: ${fieldChanges.map(c => `${c.field} ${c.from}→${c.to}`).join(", ")}`,
+        });
+      }
+
+      // Newly registered skills
+      for (const skillId of registered) {
+        const meta = SKILLS_METADATA.find(s => s.id === skillId);
+        rows.push({
+          syncRunId,
+          loggedAt: now,
+          triggerSource,
+          taskName: taskName ?? null,
+          eventType: "added",
+          skillId,
+          skillName: meta?.name ?? skillId,
+          tier: meta?.tier ?? null,
+          versionBefore: null,
+          versionAfter: meta?.version ?? null,
+          changedFields: null,
+          summary: `${skillId} added (Tier ${meta?.tier ?? "?"}, v${meta?.version ?? "?"})`,
+        });
+      }
+
+      // Removed skills
+      for (const skillId of removed) {
+        const meta = SKILLS_METADATA.find(s => s.id === skillId);
+        rows.push({
+          syncRunId,
+          loggedAt: now,
+          triggerSource,
+          taskName: taskName ?? null,
+          eventType: "removed",
+          skillId,
+          skillName: meta?.name ?? skillId,
+          tier: meta?.tier ?? null,
+          versionBefore: meta?.version ?? null,
+          versionAfter: null,
+          changedFields: null,
+          summary: `${skillId} removed (directory absent or retired)`,
+        });
+      }
+
+      if (rows.length > 0) {
+        await db.insert(skillEvolutionLog).values(rows);
+      }
+    }
+  } catch { /* non-fatal — evolution log write failed */ }
 
   // Sync orchestrator skill index
   try {
@@ -1100,7 +1181,7 @@ export const skillsRouter = router({
     // Delegate to the shared implementation used by the agent REST endpoint.
     // This ensures the tRPC sync button and the agent skill-sync endpoint
     // always run identical logic (deletion, hot-reload JSON, orchestrator update).
-    return syncMetadataFromFilesImpl();
+    return syncMetadataFromFilesImpl("manual-sync", undefined);
   }),
 
   // ── Skill Usage Logging ──────────────────────────────────────────────────────
@@ -1153,5 +1234,49 @@ export const skillsRouter = router({
         .orderBy(desc(skillUsageLogs.loggedAt))
         .limit(input?.limit ?? 50);
       return rows;
+    }),
+
+  /**
+   * Return the skill evolution log, grouped by sync run.
+   * Each group contains the trigger source, optional task name, timestamp,
+   * and the list of add/update/remove events for that sync run.
+   * Public — the evolution log is not sensitive.
+   */
+  getEvolutionLog: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().int().min(1).max(200).default(100),
+      }).optional()
+    )
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) return [];
+      const rows = await db
+        .select()
+        .from(skillEvolutionLog)
+        .orderBy(desc(skillEvolutionLog.loggedAt))
+        .limit(input?.limit ?? 100);
+
+      // Group rows by syncRunId, preserving reverse-chronological order
+      const groups: Record<string, {
+        syncRunId: string;
+        loggedAt: Date;
+        triggerSource: string;
+        taskName: string | null;
+        events: typeof rows;
+      }> = {};
+      for (const row of rows) {
+        if (!groups[row.syncRunId]) {
+          groups[row.syncRunId] = {
+            syncRunId: row.syncRunId,
+            loggedAt: row.loggedAt,
+            triggerSource: row.triggerSource,
+            taskName: row.taskName,
+            events: [],
+          };
+        }
+        groups[row.syncRunId].events.push(row);
+      }
+      return Object.values(groups);
     }),
 });

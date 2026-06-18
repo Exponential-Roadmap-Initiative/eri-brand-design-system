@@ -117,3 +117,25 @@ export const skillUsageLogs = mysqlTable("skill_usage_logs", {
 });
 export type SkillUsageLog = typeof skillUsageLogs.$inferSelect;
 export type InsertSkillUsageLog = typeof skillUsageLogs.$inferInsert;
+
+// ─── Skill Evolution Log ─────────────────────────────────────────────────────
+// Append-only. One row per add/update/remove event produced by syncMetadataFromFilesImpl().
+// Written automatically — no human input required.
+// Groups of rows with the same syncRunId represent a single sync operation.
+export const skillEvolutionLog = mysqlTable("skill_evolution_log", {
+  id: int("id").primaryKey().autoincrement(),
+  syncRunId: varchar("sync_run_id", { length: 36 }).notNull(),  // UUID grouping rows from one sync call
+  loggedAt: timestamp("logged_at").notNull().defaultNow(),
+  triggerSource: varchar("trigger_source", { length: 32 }).notNull(), // 'heartbeat' | 'agent-sync' | 'manual-sync'
+  taskName: varchar("task_name", { length: 256 }),               // e.g. "Exponential Platform task" — from --task-context
+  eventType: mysqlEnum("event_type", ["added", "updated", "removed"]).notNull(),
+  skillId: varchar("skill_id", { length: 64 }).notNull(),
+  skillName: varchar("skill_name", { length: 256 }),
+  tier: int("tier"),
+  versionBefore: varchar("version_before", { length: 16 }),
+  versionAfter: varchar("version_after", { length: 16 }),
+  changedFields: text("changed_fields"),                         // JSON array of field names that changed
+  summary: varchar("summary", { length: 512 }).notNull(),        // auto-generated one-liner
+});
+export type SkillEvolutionEntry = typeof skillEvolutionLog.$inferSelect;
+export type InsertSkillEvolutionEntry = typeof skillEvolutionLog.$inferInsert;
