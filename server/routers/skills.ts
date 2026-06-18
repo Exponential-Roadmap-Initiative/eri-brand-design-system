@@ -210,7 +210,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "skill-creator",
     name: "skill-creator",
-    description: "Guide for creating or updating skills that extend Manus via specialized knowledge, workflows, or tool integrations. For any modification or improvement request, MUST first read this skill and follow its update workflow instead of editing files directly.",
+    description: ">-",
     tier: 2,
     category: "process",
     version: "1.0.0",

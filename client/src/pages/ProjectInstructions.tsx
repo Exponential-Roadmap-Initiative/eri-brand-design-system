@@ -92,7 +92,6 @@ Hard constraint: project instructions and SKILLS_METADATA are governed centrally
 ## Tier 3 \u2014 Conditional (read when the domain applies)
 \u2022 eri-security: Trust & Security page, auth/MFA, workspace isolation audit, security review.
 \u2022 persistent-computing: Docker, fixed IP, persistent background services, heavy compute.
-\u2022 eri-exponential-framework: Exponential Framework data model, CPR pipeline, cpr_action_templates, cpr_data_source_mappings, Marketing EF pages, Earth-aligned agent framework cells.
 \u2022 data-source-integration: New data source integration end-to-end, or auditing an existing one.
 \u2022 eri-data-source-explorer: Data source explorer page, Browse + Compare tab, widget, workspace wrapper.
 \u2022 eri-report-finder: Corporate report discovery pipeline, pipeline violations.
@@ -100,7 +99,11 @@ Hard constraint: project instructions and SKILLS_METADATA are governed centrally
 \u2022 manus-api: Manus API integrations or automating Manus agents.
 \u2022 manus-config: Connectors, project-level config, scheduled tasks.
 \u2022 music-prompter: Any music generation task.
-\u2022 tts-prompter: Any text-to-speech or voice generation task.`;
+\u2022 tts-prompter: Any text-to-speech or voice generation task.
+\u2022 eri-job-status-modal: working on eri-job-status-modal-related tasks.
+\u2022 eri-emissions: Implementing emissions extraction from corporate PDFs, designing the dl_emissions_data pipeline, reasoning about whether a historical time-series is comparable, building EF CO1/CO3 quantitative scoring, or auditing CPR criteria that depend on actual emissions numbers.
+\u2022 eri-cpr-app: working on CPR extraction, cpr_extracted_evidence, cpr_action_templates, cpr_data_source_mappings, BP v5.0 criteria, criterion scoring, or buildCprActionScorer.
+\u2022 eri-ef-app: working on anything touching the Exponential Framework \u2014 structure, data model, EF extraction pipeline, Earth-aligned AI Agent, framework cells, governance horizontals, GHG corroboration, or dual-source emissions handling. Also read before eri-cpr-app for the shared architectural boundary.`;
 
 // ── Known issues in the current live instructions ─────────────────────────────
 
@@ -627,8 +630,8 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     },
     {
       id: 2,
-      label: "2. Compose",
-      sublabel: "Build the latest version in the Generator",
+      label: "2. Review & copy",
+      sublabel: "Copy the assembled output to clipboard",
       status: step2Status,
       statusText: step2StatusText,
       actionLabel: undefined,
@@ -894,9 +897,9 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
             <div className="px-5 py-6 space-y-6">
 
               <div>
-                <p className="text-sm font-semibold text-foreground mb-1">Compose the instructions</p>
+                <p className="text-sm font-semibold text-foreground mb-1">Review &amp; copy to clipboard</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Review the output below, then copy it and paste it into the Manus project settings. This is what every ERI agent will read at the start of each task.
+                  This is a <strong>read-only assembled output</strong> — nothing here is editable. The workflow steps come from the BDS site code; the skill triggers are auto-generated from the Skills registry. Copy the full output and paste it into the Manus project settings.
                 </p>
               </div>
 

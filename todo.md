@@ -1113,3 +1113,9 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Add skills.getEvolutionLog tRPC procedure
 - [x] Update Skills.tsx: two tabs (Skills Library / Skills Evolution), Evolution tab shows reverse-chronological grouped log
 - [x] Remove or repurpose the Log Usage button (replaced by automated evolution log)
+
+## Project Instructions page redesign (2026-06-18)
+- [x] Remove "Compose the instructions" heading and editing affordances from ProjectInstructions.tsx
+- [x] Replace with clear read-only preview: "Review & Copy" heading, two labelled read-only sections
+- [x] Update CURRENT_INSTRUCTIONS Tier 3: remove eri-exponential-framework, add eri-job-status-modal, eri-emissions, eri-ef-app, eri-cpr-app
+- [x] Save checkpoint v3.40.0
