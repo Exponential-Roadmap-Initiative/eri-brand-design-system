@@ -648,3 +648,47 @@ The TypeScript source file server/routers/skills.ts is present in both environme
 
 **Verification:** TypeScript: 0 new errors. Local dev server responds correctly (401 on wrong secret, not 500).
 After checkpoint/redeploy, the skill-sync endpoint will work from external project tasks.
+
+---
+
+## v3.38.0 — Skill sync fixes: deletion, hot-reload, unified implementation (2026-06-18)
+
+### Context
+
+Three gaps were discovered in the skill sync system:
+1. Deleted skills stayed in `SKILLS_METADATA` forever — the sync had no removal logic.
+2. After every sync, the server had to be restarted before changes were visible in the running process.
+3. The tRPC `syncMetadataFromFiles` procedure and the agent REST endpoint (`/api/agent/skill-sync`) had duplicate implementations that had diverged.
+
+Additionally, `eri-ef-app` and `eri-cpr-app` were registered by the heartbeat auto-sync (which ran at 09:10 on 2026-06-18) but `eri-exponential-framework` (the renamed/replaced skill) was not removed because the deletion logic did not exist yet.
+
+### Changes in this session
+
+**1. Deletion logic (Pass 3 in `syncMetadataFromFilesImpl()`)**
+
+A new Pass 3 was added after the existing Pass 1 (update) and Pass 2 (register new). Pass 3 iterates `SKILLS_METADATA` and removes any entry whose skill directory is absent from `/home/ubuntu/skills/` or whose `SKILL.md` has `retired: true` in its frontmatter. Removal writes back to `skills.ts` and to `skills-registry.json`. The result message now includes "Removed N skill(s): id1, id2".
+
+**2. Hot-reload registry via `skills-registry.json`**
+
+After every sync, `syncMetadataFromFilesImpl()` writes the updated registry to `skills-registry.json` at the project root. A new `getRegistry()` helper reads from this file at request time (falling back to the hardcoded `SKILLS_METADATA` constant if the file does not exist). All `list`, `get`, `getContent`, and `logImprovement` procedures now call `getRegistry()` instead of reading `SKILLS_METADATA` directly. This means sync changes are visible immediately without any server restart. `skills-registry.json` is added to `.gitignore` (runtime artefact, not source).
+
+**3. Unified tRPC procedure**
+
+The tRPC `syncMetadataFromFiles` adminProcedure previously contained a full duplicate of the sync logic (200+ lines) that had not received the deletion or hot-reload fixes. It now delegates entirely to `syncMetadataFromFilesImpl()` — one line. Both the sync button on `/skills` and the agent REST endpoint now run identical code.
+
+**4. Result message updated**
+
+The "Restart the dev server for changes to take effect" message is replaced with "Reloading registry — changes will be visible immediately." The result now includes a `removedCount` and `removed` array alongside the existing `changesCount` and `registeredCount`.
+
+### Architecture note — why `eri-exponential-framework` is still visible
+
+At checkpoint time, the `eri-exponential-framework` directory still exists in `/home/ubuntu/skills/` in this sandbox. The Manus platform removes deleted project skills from sandboxes on hibernation/resume, not immediately. Once the sandbox hibernates and resumes (or a new task starts), the directory will be gone and the next sync will remove the entry from `SKILLS_METADATA` and `skills-registry.json` automatically.
+
+### Test status
+
+Server running cleanly. 13 TypeScript errors are pre-existing false positives from the stale `typescript@5.6.3` watcher (missing `lib.esnext.d.ts`) — not introduced by this session. The sync endpoint returns `{"success":true}` with correct counts.
+
+### Checkpoint
+
+`f4f9f6bf` — Skill sync fixes complete.
+
