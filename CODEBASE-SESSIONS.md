@@ -692,3 +692,31 @@ Server running cleanly. 13 TypeScript errors are pre-existing false positives fr
 
 `f4f9f6bf` — Skill sync fixes complete.
 
+
+---
+
+## v3.40.2 — sync_skills.sh localhost routing fix (2026-06-22)
+
+**Trigger:** Screenshot from exponential platform task showed two errors: (1) "sync script returned HTML instead of JSON", (2) "Invalid agent secret".
+
+**Root cause analysis:**
+
+Issue 1 — HTML instead of JSON: `sync_skills.sh` had an auto-detect block that checked if `localhost:3000` was reachable and, if so, used `http://127.0.0.1:3000` as the BDS API URL. Every ERI project sandbox runs its own dev server on `:3000`. The script was therefore sending the POST to the project's own server (e.g. the exponential platform app), which returned its index HTML page instead of a JSON API response.
+
+Issue 2 — Invalid agent secret: The secret in the skill (`407421fe...`) matches the current environment value exactly. The "Invalid agent secret" error was a downstream consequence of Issue 1 — the HTML response was being parsed as a failed API call, not an authentication failure. The secret was never actually wrong.
+
+**Fix applied:**
+
+- Removed the auto-detect block from `sync_skills.sh`. The script now always uses `https://bds.exponentialroadmap.org` unless `BDS_API_URL` is explicitly set in the environment.
+- Bumped `eri-skill-creator` to v2.11.0.
+- Updated description to document the fix.
+- Ran sync — confirmed `✓ Improvements logged: 1`.
+
+**Files changed:**
+- `/home/ubuntu/skills/eri-skill-creator/scripts/sync_skills.sh` — removed localhost auto-detect
+- `/home/ubuntu/skills/eri-skill-creator/SKILL.md` — version 2.10.0 → 2.11.0, description updated
+
+**Pending:**
+- Checkpoint + publish to deploy to bds.exponentialroadmap.org
+- User must click "Add to My Skills" on the eri-skill-creator card to update the Manus platform registry
+

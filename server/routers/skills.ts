@@ -210,7 +210,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "skill-creator",
     name: "skill-creator",
-    description: ">-",
+    description: "Guide for creating or updating skills that extend Manus via specialized knowledge, workflows, or tool integrations. For any modification or improvement request, MUST first read this skill and follow its update workflow instead of editing files directly.",
     tier: 2,
     category: "process",
     version: "1.0.0",
@@ -339,7 +339,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-cpr-app",
     name: "eri-cpr-app",
-    description: "Implementation reference for the CPR (Climate Performance Review) extraction and assessment system in eri-playbook-team. Covers: full 68 BP v5.0 criteria with correct section counts (CO×16, P1×10, P2×9, P3×7, P4×4, P5×8, RE×14), grading model (binary Yes/No for CO+RE, maturity 1–5 for P1–P5), allowable additional structured sources per criterion, cpr_extracted_evidence schema, cpr_action_templates and cpr_data_source_mappings tables, buildCprActionScorer usage, and CDP data lake coverage per ...",
+    description: "CPR extraction and assessment reference for eri-playbook-team. Covers: 68 BP v5.0 criteria, grading model (binary Yes/No/Contradicted/N/A; maturity -1 to 4), cpr_extracted_evidence schema, cpr_action_templates, cpr_data_source_mappings, canonical keyword sets (fix-all-cpr-keywords.ts is SSOT; DB is runtime), getCriterionCalibrationNote() for 6 criteria (CO4/CO9/RE3/CO10/RE8/RE13), Scope 3 category trend scorer, CDP data lake, extraction gaps, design decisions (counter-acting, RE3 equivalents,...",
     tier: 3,
     category: "data",
     version: "1.0.0",
