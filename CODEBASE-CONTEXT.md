@@ -29,7 +29,7 @@ This section records key identifiers and version pins that any agent can verify 
 |---|---|---|
 | BDS app version | v3.40.0 | 2026-06-18 |
 | `@eri/components` package pin | v2.18.0 | 2026-06-11 |
-| Published project instructions version | To be set after v3.37.0 publish | — |
+| Published project instructions version | v2026.06.22 (id=120001, 5410 chars) — pkill, compaction hard stop, eri-cpr-app/eri-ef-app/eri-emissions/eri-job-status-modal in Tier 3 | 2026-06-22 |
 | Skills registry entry count | 30 skills in SKILLS_METADATA (includes eri-ef-app v2.0.0, eri-cpr-app v1.0.0) | 2026-06-18 |
 | Heartbeat auto-sync | Active — runs 5s after startup + every hour | 2026-06-11 |
 | BDS_AGENT_SECRET | Embedded in eri-skill-creator SKILL.md Step 8 | 2026-06-11 |

@@ -339,7 +339,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-cpr-app",
     name: "eri-cpr-app",
-    description: "CPR extraction and assessment reference for eri-playbook-team. Covers: 68 BP v5.0 criteria, grading model (binary Yes/No/Contradicted/N/A; maturity -1 to 4), cpr_extracted_evidence schema, cpr_action_templates, cpr_data_source_mappings, canonical keyword sets (fix-all-cpr-keywords.ts is SSOT; DB is runtime), getCriterionCalibrationNote() for 6 criteria (CO4/CO9/RE3/CO10/RE8/RE13), Scope 3 category trend scorer, CDP data lake, extraction gaps, design decisions (counter-acting, RE3 equivalents,...",
+    description: "CPR extraction and assessment reference for eri-playbook-team. Covers: 68 BP v5.0 criteria, grading model (binary Yes/No/Contradicted/N/A; maturity -1 to 4), cpr_extracted_evidence schema, cpr_action_templates, cpr_data_source_mappings, canonical keyword sets (fix-all-cpr-keywords.ts is SSOT; DB is runtime), getCriterionCalibrationNote() for 17 criteria (CO1/CO3/CO4/CO5/CO6/CO8/CO9/RE3/RE5/RE7/RE8/RE9/RE13/CO10/RE6/P1:8/CO11), Scope 3 category trend scorer, CDP data lake, extraction gaps, des...",
     tier: 3,
     category: "data",
     version: "1.0.0",

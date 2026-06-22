@@ -720,3 +720,39 @@ Issue 2 — Invalid agent secret: The secret in the skill (`407421fe...`) matche
 - Checkpoint + publish to deploy to bds.exponentialroadmap.org
 - User must click "Add to My Skills" on the eri-skill-creator card to update the Manus platform registry
 
+
+---
+
+## v3.40.3 — CDN bootstrap for sync_skills.sh + publish updated project instructions (2026-06-22)
+
+**Trigger:** Parallel task continued reporting "Invalid agent secret" even after eri-skill-creator v2.11.0 was published. Root cause: the parallel task sandbox had the old skill bundle (with the localhost auto-detect bug) and could not self-heal because the Manus platform delivers a snapshot of the skill at install time, not a live fetch.
+
+**Fix 1 — CDN bootstrap step added to eri-skill-creator Step 8:**
+
+Step 8 now always bootstraps the latest `sync_skills.sh` from CDN before running it:
+
+```bash
+curl -sL https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/sync_skills_cdfa4082.sh \
+  -o /home/ubuntu/skills/eri-skill-creator/scripts/sync_skills.sh && chmod +x ...
+```
+
+This means even a sandbox with a stale skill bundle will always run the correct script. `eri-skill-creator` bumped to v2.12.0. BDS sync confirmed: `✓ Improvements logged: 1`.
+
+**Fix 2 — Published project instructions updated:**
+
+The live API (`/api/project-instructions/latest`) was serving v2026.06.11 (4,048 chars, id=90001) — missing `pkill`, `CODEBASE-SESSIONS.md`, and the new Tier 3 skills. New version v2026.06.22 (5,410 chars, id=120001) inserted and published directly via DB script. Verified:
+
+- `pkill`: ✓
+- `compacted_history`: ✓
+- `eri-cpr-app`: ✓
+- `CODEBASE-SESSIONS`: ✓
+
+**Files changed:**
+- `/home/ubuntu/skills/eri-skill-creator/SKILL.md` — v2.11.0 → v2.12.0, CDN bootstrap added to Step 8
+- `/home/ubuntu/skills/eri-skill-creator/scripts/sync_skills.sh` — uploaded to CDN (stable webdev URL)
+- `CODEBASE-CONTEXT.md` — Published project instructions version updated to v2026.06.22
+
+**Pending:**
+- Checkpoint + publish BDS site
+- User must click "Add to My Skills" on the eri-skill-creator v2.12.0 card
+
