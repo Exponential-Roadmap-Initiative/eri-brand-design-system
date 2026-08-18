@@ -8,6 +8,18 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 
+const ALLOWED_BDS_META_HOSTS = new Set([
+  "earth-aligned-ai-lab.exponentialroadmap.org",
+  "contact-us.exponentialroadmap.org",
+  "psm.exponentialroadmap.org",
+  "taxonomy.exponentialroadmap.org",
+  "framework.exponentialroadmap.org",
+  "crocodile.exponentialroadmap.org",
+  "platform.exponentialroadmap.org",
+  "methodology.exponentialroadmap.org",
+  "trust.exponentialroadmap.org",
+]);
+
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
     const server = net.createServer();
@@ -95,17 +107,47 @@ async function startServer() {
   // Registered before setupVite so Express handles /api/* before Vite.
   app.get("/api/fetch-bds-meta", async (req, res) => {
     const raw = req.query.url;
-    if (typeof raw !== "string" || !raw.startsWith("https://")) {
+    if (typeof raw !== "string") {
       res.status(400).json({ error: "Missing or invalid url parameter" });
       return;
     }
+
+    let target: URL;
     try {
-      const upstream = await fetch(raw, {
+      target = new URL(raw);
+    } catch {
+      res.status(400).json({ error: "Missing or invalid url parameter" });
+      return;
+    }
+
+    const isRegisteredMetadataFile =
+      target.protocol === "https:" &&
+      target.port === "" &&
+      target.username === "" &&
+      target.password === "" &&
+      target.pathname === "/bds-meta.json" &&
+      target.search === "" &&
+      target.hash === "" &&
+      ALLOWED_BDS_META_HOSTS.has(target.hostname);
+
+    if (!isRegisteredMetadataFile) {
+      res.status(403).json({ error: "Only registered ERI bds-meta.json endpoints may be fetched" });
+      return;
+    }
+
+    try {
+      const upstream = await fetch(target, {
         headers: { "User-Agent": "ERI-BDS-Tracker/1.0" },
         signal: AbortSignal.timeout(8000),
+        redirect: "error",
       });
       if (!upstream.ok) {
         res.status(upstream.status).json({ error: `Upstream HTTP ${upstream.status}` });
+        return;
+      }
+      const contentType = upstream.headers.get("content-type") ?? "";
+      if (!contentType.includes("application/json")) {
+        res.status(502).json({ error: "Upstream did not return JSON metadata" });
         return;
       }
       const data = await upstream.json();

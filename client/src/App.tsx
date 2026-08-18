@@ -15,9 +15,20 @@ import SecurityIntegrity from "./pages/SecurityIntegrity";
 import ProjectInstructions from "./pages/ProjectInstructions";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const APP_VERSION = "V.2026.06.08";
+const PAGE_TITLES: Record<string, string> = {
+  "/": "Overview",
+  "/governance": "Governance",
+  "/skills": "Skills",
+  "/project-instructions": "Project Instructions",
+  "/brand-design-system": "Brand Design System",
+  "/tracker": "Project Alignment Tracker",
+  "/new-webproject": "New Web Project",
+  "/team-guide": "Team Guide",
+  "/security": "Security & Integrity",
+};
 
 // ── Tab navigation bar ────────────────────────────────────────────────────────
 // Positioned directly below the standard 64px EriAppHeader.
@@ -68,9 +79,21 @@ function TabNav() {
 
 function Router() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [location] = useLocation();
+
+  useEffect(() => {
+    const pageTitle = PAGE_TITLES[location] ?? "Page not found";
+    document.title = `${pageTitle} | ERI Design and Development Hub`;
+  }, [location]);
 
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-[#93E07D] focus:px-4 focus:py-2 focus:font-semibold focus:text-[#232323]"
+      >
+        Skip to main content
+      </a>
       {/* Standard ERI header — #232323 background, dark-mode SVG logo, no status badge (live) */}
       <EriAppHeader
         appName="Design and Development Hub"
@@ -91,19 +114,21 @@ function Router() {
       {/* Mobile navigation drawer — triggered by EriAppHeader hamburger */}
       <BdsNavDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      <Switch>
-        <Route path={"/"} component={Overview} />
-        <Route path={"/brand-design-system"} component={BrandDesignSystem} />
-        <Route path={"/tracker"} component={AlignmentTracker} />
-        <Route path={"/new-webproject"} component={NewProject} />
-        <Route path={"/governance"} component={Governance} />
-        <Route path={"/skills"} component={Skills} />
-        <Route path={"/project-instructions"} component={ProjectInstructions} />
-        <Route path={"/team-guide"} component={TeamGuide} />
-        <Route path={"/security"} component={SecurityIntegrity} />
-        <Route path={"/404"} component={NotFound} />
-        <Route component={NotFound} />
-      </Switch>
+      <main id="main-content" tabIndex={-1}>
+        <Switch>
+          <Route path={"/"} component={Overview} />
+          <Route path={"/brand-design-system"} component={BrandDesignSystem} />
+          <Route path={"/tracker"} component={AlignmentTracker} />
+          <Route path={"/new-webproject"} component={NewProject} />
+          <Route path={"/governance"} component={Governance} />
+          <Route path={"/skills"} component={Skills} />
+          <Route path={"/project-instructions"} component={ProjectInstructions} />
+          <Route path={"/team-guide"} component={TeamGuide} />
+          <Route path={"/security"} component={SecurityIntegrity} />
+          <Route path={"/404"} component={NotFound} />
+          <Route component={NotFound} />
+        </Switch>
+      </main>
     </>
   );
 }
