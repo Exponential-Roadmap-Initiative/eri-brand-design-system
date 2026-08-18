@@ -22,12 +22,12 @@
 - [ ] Publish BDS site (click Publish button)
 - [ ] Add bds-meta.json to Trust site
 - [ ] Update HAL's bds-meta.json to canonical object format
-- [ ] Contain the BDS agent-secret exposure without removing the public Skills preview experience
+- [x] Contain the BDS agent-secret exposure without removing the public Skills preview experience
 - [ ] Replace body-carried shared-secret agent-sync access with a controlled, revocable authentication path
 - [ ] Make skill synchronisation fail closed, preview-first, and non-destructive; remove unattended source rewrites
-- [ ] Restrict the BDS metadata proxy to registered ERI domains and safe response types
-- [ ] Correct immediate accessibility template defects: zoom, route titles, skip link, and reduced-motion support
-- [ ] Add focused regression tests for skill-sync safety, agent-sync authentication, and proxy allowlisting
+- [x] Restrict the BDS metadata proxy to registered ERI domains and safe response types
+- [x] Correct immediate accessibility template defects: zoom, route titles, skip link, and reduced-motion support
+- [x] Add focused regression tests for skill-sync safety, agent-sync authentication, and proxy allowlisting
 - [ ] Verify public Skills, tracker, and project-instruction behaviours; save a containment checkpoint
 - [ ] Coordinate rotation of BDS and database credentials, remove tracked database artefacts, and complete release-governance follow-up
 - [x] Add heroImages.trust to assets.ts and Surface Modes gallery
