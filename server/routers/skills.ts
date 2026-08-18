@@ -14,7 +14,7 @@
 import fs from "fs";
 import path from "path";
 import { TRPCError } from "@trpc/server";
-import { desc, eq, isNotNull, ne } from "drizzle-orm";
+import { and, desc, eq, isNotNull, ne } from "drizzle-orm";
 import { z } from "zod";
 import { getDb } from "../db";
 import {
@@ -24,6 +24,7 @@ import {
   projectInstructionsVersions,
   skillEvolutionLog,
   skillImprovements,
+  skillReleaseProposals,
   skillUsageLogs,
 } from "../../drizzle/schema";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "../_core/trpc";
@@ -1252,9 +1253,18 @@ export const skillsRouter = router({
    */
   getContent: publicProcedure
     .input(z.object({ id: z.string().min(1).max(64) }))
-    .query(({ input }) => {
+    .query(async ({ input }) => {
       const meta = getRegistry().find((s) => s.id === input.id);
       if (!meta) return null;
+      const db = await getDb();
+      if (db) {
+        const [released] = await db.select({ content: skillReleaseProposals.proposedContent })
+          .from(skillReleaseProposals)
+          .where(and(eq(skillReleaseProposals.skillId, input.id), eq(skillReleaseProposals.status, "released")))
+          .orderBy(desc(skillReleaseProposals.updatedAt))
+          .limit(1);
+        if (released?.content) return released.content;
+      }
       const content = readSkillContent(input.id);
       return content ?? null;
     }),

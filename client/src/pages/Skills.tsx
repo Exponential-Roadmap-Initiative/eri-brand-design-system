@@ -10,9 +10,9 @@
  *   3. Add / Log Improvement dialogs (admin only)
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, BarChart2, PlusCircle, X, Activity, GitBranch, Plus, Pencil, Trash2 } from "lucide-react";
+import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, BarChart2, PlusCircle, X, Activity, GitBranch, Plus, Pencil, Trash2, FileCheck2, Send, Rocket, XCircle } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -1284,6 +1284,103 @@ function EvolutionLog() {
 
 type EcosystemFilter = "eri" | "manus" | "all";
 
+type ReleaseStatus = "submitted" | "approved" | "rejected" | "released";
+
+const RELEASE_STATUS: Record<ReleaseStatus, { label: string; colour: string; background: string }> = {
+  submitted: { label: "Awaiting review", colour: "#d97706", background: "rgba(217,119,6,0.10)" },
+  approved: { label: "Approved", colour: "#3ba559", background: "rgba(59,165,89,0.10)" },
+  rejected: { label: "Rejected", colour: "#dc2626", background: "rgba(220,38,38,0.10)" },
+  released: { label: "Released", colour: "#17b7dd", background: "rgba(23,183,221,0.10)" },
+};
+
+function ReleaseStatusBadge({ status }: { status: ReleaseStatus }) {
+  const config = RELEASE_STATUS[status];
+  return <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold" style={{ color: config.colour, borderColor: `${config.colour}70`, backgroundColor: config.background }}>{config.label}</span>;
+}
+
+function SkillReleaseQueue({ skills, onReleased }: { skills: Skill[]; onReleased: () => void }) {
+  const utils = trpc.useUtils();
+  const [selectedProposalId, setSelectedProposalId] = useState<number | null>(null);
+  const [showCreate, setShowCreate] = useState(false);
+  const [decisionNote, setDecisionNote] = useState("");
+  const [form, setForm] = useState({
+    skillId: "", name: "", description: "", tier: 3 as 1 | 2 | 3, category: "process", version: "0.1.0", readWhen: "", hasReferences: false, proposedContent: "", changeSummary: "", taskContext: "",
+  });
+  const { data: proposals = [], isLoading } = trpc.skillReleases.listProposals.useQuery({ limit: 50, offset: 0 });
+  const selectedId = selectedProposalId ?? proposals[0]?.id ?? null;
+  const selectedQuery = trpc.skillReleases.getProposal.useQuery({ proposalId: selectedId ?? 0 }, { enabled: selectedId !== null });
+  const selected = selectedQuery.data?.proposal;
+  const currentContentQuery = trpc.skills.getContent.useQuery({ id: selected?.skillId ?? "" }, { enabled: Boolean(selected?.skillId) });
+
+  const refresh = () => {
+    utils.skillReleases.listProposals.invalidate();
+    if (selectedId) utils.skillReleases.getProposal.invalidate({ proposalId: selectedId });
+  };
+  const createMutation = trpc.skillReleases.createProposal.useMutation({
+    onSuccess: (result) => { toast.success(`Proposal #${result.proposalId} submitted for review`); setShowCreate(false); setSelectedProposalId(result.proposalId); refresh(); },
+    onError: (error) => toast.error(error.message),
+  });
+  const reviewMutation = trpc.skillReleases.reviewProposal.useMutation({ onSuccess: () => { toast.success("Review decision recorded"); setDecisionNote(""); refresh(); }, onError: (error) => toast.error(error.message) });
+  const releaseMutation = trpc.skillReleases.releaseProposal.useMutation({ onSuccess: () => { toast.success("Skill revision released to the runtime registry"); refresh(); onReleased(); }, onError: (error) => toast.error(error.message) });
+
+  const chooseExistingSkill = (id: string) => {
+    const skill = skills.find((entry) => entry.id === id);
+    if (!skill) return;
+    setForm({
+      skillId: skill.id, name: skill.name, description: skill.description, tier: skill.tier, category: skill.category, version: skill.version, readWhen: skill.readWhen, hasReferences: skill.hasReferences,
+      proposedContent: currentContentQuery.data ?? "", changeSummary: "", taskContext: "",
+    });
+  };
+  useEffect(() => {
+    if (showCreate && form.skillId) {
+      const skill = skills.find((entry) => entry.id === form.skillId);
+      if (skill && !form.proposedContent) setForm((value) => ({ ...value, proposedContent: currentContentQuery.data ?? "" }));
+    }
+  }, [currentContentQuery.data, form.proposedContent, form.skillId, showCreate, skills]);
+
+  return (
+    <div className="space-y-5">
+      <div className="rounded-lg border border-border bg-muted/10 p-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <div className="flex items-center gap-2"><FileCheck2 className="h-4 w-4 text-[#3ba559]" /><h2 className="text-sm font-semibold text-foreground">Controlled skill releases</h2></div>
+          <p className="mt-1 max-w-2xl text-xs leading-relaxed text-muted-foreground">A proposed revision is stored immutably, reviewed by an administrator, then promoted with an auditable registry snapshot. External task agents cannot write to this queue.</p>
+        </div>
+        <Button size="sm" className="bg-[#93E07D] text-[#232323] hover:bg-[#82cf6d]" onClick={() => setShowCreate(true)}><Plus className="mr-1 h-3.5 w-3.5" /> New proposal</Button>
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+        <div className="rounded-lg border border-border overflow-hidden">
+          <div className="border-b border-border px-4 py-3"><p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Release queue</p></div>
+          {isLoading ? <p className="p-4 text-sm text-muted-foreground">Loading proposals…</p> : proposals.length === 0 ? <p className="p-4 text-sm text-muted-foreground">No proposed skill revisions. Create a proposal to begin the reviewed release process.</p> : (
+            <div className="divide-y divide-border">
+              {proposals.map((proposal) => <button key={proposal.id} onClick={() => setSelectedProposalId(proposal.id)} className={`w-full px-4 py-3 text-left transition-colors hover:bg-muted/30 ${selectedId === proposal.id ? "bg-muted/40" : ""}`}>
+                <div className="flex items-center justify-between gap-2"><span className="font-mono text-xs font-semibold text-foreground">{proposal.skillId}</span><ReleaseStatusBadge status={proposal.status as ReleaseStatus} /></div>
+                <p className="mt-1 truncate text-xs text-muted-foreground">v{proposal.version} · {proposal.proposalType} · {new Date(proposal.createdAt).toLocaleString("en-GB")}</p>
+              </button>)}
+            </div>
+          )}
+        </div>
+
+        <div className="rounded-lg border border-border p-4">
+          {!selected ? <p className="text-sm text-muted-foreground">Select a proposal to inspect its revision and record a decision.</p> : <>
+            <div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-mono text-sm font-semibold text-foreground">{selected.skillId}</h3><p className="mt-1 text-xs text-muted-foreground">{selected.proposalType === "create" ? "New skill" : "Revision"} · v{selected.version} · submitted {new Date(selected.createdAt).toLocaleString("en-GB")}</p></div><ReleaseStatusBadge status={selected.status as ReleaseStatus} /></div>
+            <p className="mt-4 text-sm leading-relaxed text-foreground/80">{selected.changeSummary}</p>
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              <div><p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Current released content</p><pre className="max-h-72 overflow-auto rounded-md border border-border bg-muted/20 p-3 text-[11px] leading-relaxed text-muted-foreground whitespace-pre-wrap">{currentContentQuery.data ?? "New skill — no released content yet."}</pre></div>
+              <div><p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Proposed revision</p><pre className="max-h-72 overflow-auto rounded-md border border-[#3ba559]/30 bg-[#3ba559]/5 p-3 text-[11px] leading-relaxed text-foreground whitespace-pre-wrap">{selected.proposedContent}</pre></div>
+            </div>
+            <div className="mt-4 rounded-md border border-border bg-muted/10 p-3"><p className="text-xs font-semibold text-foreground">Review history</p><div className="mt-2 space-y-2">{selectedQuery.data?.events.map((event) => <p key={event.id} className="text-xs text-muted-foreground"><span className="font-semibold text-foreground">{event.eventType}</span> · {new Date(event.createdAt).toLocaleString("en-GB")}{event.note ? ` — ${event.note}` : ""}</p>)}</div></div>
+            {selected.status === "submitted" && <div className="mt-4 space-y-2"><Textarea value={decisionNote} onChange={(event) => setDecisionNote(event.target.value)} placeholder="Review note (required if rejecting)" className="min-h-20 text-xs" /><div className="flex flex-wrap gap-2"><Button size="sm" variant="outline" onClick={() => reviewMutation.mutate({ proposalId: selected.id, decision: "rejected", reviewNote: decisionNote })} disabled={reviewMutation.isPending}><XCircle className="mr-1 h-3.5 w-3.5" /> Reject</Button><Button size="sm" className="bg-[#3ba559] hover:bg-[#2f8c4d]" onClick={() => reviewMutation.mutate({ proposalId: selected.id, decision: "approved", reviewNote: decisionNote || undefined })} disabled={reviewMutation.isPending}><CheckCircle2 className="mr-1 h-3.5 w-3.5" /> Approve</Button></div></div>}
+            {selected.status === "approved" && <div className="mt-4 flex items-center justify-between gap-3 rounded-md border border-[#3ba559]/40 bg-[#3ba559]/5 p-3"><p className="text-xs text-foreground/80">Approval is recorded. Promotion will create an immutable release snapshot and update the runtime registry.</p><Button size="sm" className="shrink-0 bg-[#93E07D] text-[#232323] hover:bg-[#82cf6d]" onClick={() => releaseMutation.mutate({ proposalId: selected.id })} disabled={releaseMutation.isPending}><Rocket className="mr-1 h-3.5 w-3.5" /> Release</Button></div>}
+          </>}
+        </div>
+      </div>
+
+      <Dialog open={showCreate} onOpenChange={setShowCreate}><DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto"><DialogHeader><DialogTitle>Submit a skill revision for review</DialogTitle></DialogHeader><div className="grid gap-3 md:grid-cols-2"><div className="space-y-1.5 md:col-span-2"><Label>Start from an existing skill (optional)</Label><select className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm" value={skills.some((skill) => skill.id === form.skillId) ? form.skillId : ""} onChange={(event) => chooseExistingSkill(event.target.value)}><option value="">New skill</option>{skills.map((skill) => <option key={skill.id} value={skill.id}>{skill.id} · v{skill.version}</option>)}</select></div><div className="space-y-1.5"><Label>Skill ID</Label><Input value={form.skillId} onChange={(event) => setForm({ ...form, skillId: event.target.value })} placeholder="eri-example-skill" /></div><div className="space-y-1.5"><Label>Version</Label><Input value={form.version} onChange={(event) => setForm({ ...form, version: event.target.value })} placeholder="1.0.0" /></div><div className="space-y-1.5"><Label>Name</Label><Input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} /></div><div className="space-y-1.5"><Label>Category</Label><Input value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value })} /></div><div className="space-y-1.5"><Label>Tier</Label><select className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm" value={form.tier} onChange={(event) => setForm({ ...form, tier: Number(event.target.value) as 1 | 2 | 3 })}><option value={1}>Tier 1</option><option value={2}>Tier 2</option><option value={3}>Tier 3</option></select></div><label className="flex items-center gap-2 pt-7 text-sm text-foreground"><input type="checkbox" checked={form.hasReferences} onChange={(event) => setForm({ ...form, hasReferences: event.target.checked })} /> Has references</label><div className="space-y-1.5 md:col-span-2"><Label>Description</Label><Textarea value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} className="min-h-20" /></div><div className="space-y-1.5 md:col-span-2"><Label>When should this be read?</Label><Textarea value={form.readWhen} onChange={(event) => setForm({ ...form, readWhen: event.target.value })} className="min-h-16" /></div><div className="space-y-1.5 md:col-span-2"><Label>Full proposed SKILL.md content</Label><Textarea value={form.proposedContent} onChange={(event) => setForm({ ...form, proposedContent: event.target.value })} className="min-h-64 font-mono text-xs" /></div><div className="space-y-1.5 md:col-span-2"><Label>Change summary</Label><Textarea value={form.changeSummary} onChange={(event) => setForm({ ...form, changeSummary: event.target.value })} className="min-h-20" /></div><div className="space-y-1.5 md:col-span-2"><Label>Task context (optional)</Label><Input value={form.taskContext} onChange={(event) => setForm({ ...form, taskContext: event.target.value })} placeholder="e.g. Exponential Platform — August release" /></div></div><div className="mt-2 flex justify-end gap-2"><Button variant="outline" onClick={() => setShowCreate(false)}>Cancel</Button><Button className="bg-[#3ba559] hover:bg-[#2f8c4d]" disabled={createMutation.isPending} onClick={() => createMutation.mutate({ ...form, taskContext: form.taskContext || undefined })}><Send className="mr-1 h-3.5 w-3.5" /> Submit for review</Button></div></DialogContent></Dialog>
+    </div>
+  );
+}
+
 export default function Skills() {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
@@ -1379,6 +1476,7 @@ export default function Skills() {
               <TabsTrigger value="evolution" className="gap-1.5 text-sm">
                 <GitBranch className="w-3.5 h-3.5" /> Skills Evolution
               </TabsTrigger>
+              {isAdmin && <TabsTrigger value="releases" className="gap-1.5 text-sm"><FileCheck2 className="w-3.5 h-3.5" /> Release queue</TabsTrigger>}
             </TabsList>
             {isAdmin && (
               <div className="flex items-center gap-2">
@@ -1550,6 +1648,8 @@ export default function Skills() {
 
          </>
           </TabsContent>
+
+          {isAdmin && <TabsContent value="releases"><SkillReleaseQueue skills={skillsList ?? []} onReleased={refresh} /></TabsContent>}
 
           <TabsContent value="evolution">
             <div className="py-2">

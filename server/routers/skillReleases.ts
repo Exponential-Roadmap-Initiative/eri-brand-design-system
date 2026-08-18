@@ -8,6 +8,7 @@ import {
   skillReleaseEvents,
   skillReleaseProposals,
 } from "../../drizzle/schema";
+import { canTransitionSkillRelease } from "../_core/skillReleasePolicy";
 import { adminProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
 import { SKILLS_METADATA, type SkillMeta } from "./skills";
@@ -144,7 +145,7 @@ export const skillReleasesRouter = router({
       await db.transaction(async (tx) => {
         const [proposal] = await tx.select().from(skillReleaseProposals).where(eq(skillReleaseProposals.id, input.proposalId)).limit(1);
         if (!proposal) throw new TRPCError({ code: "NOT_FOUND", message: "Skill proposal not found" });
-        if (proposal.status !== "submitted") throw new TRPCError({ code: "CONFLICT", message: "Only submitted proposals can be reviewed" });
+        if (!canTransitionSkillRelease(proposal.status, input.decision)) throw new TRPCError({ code: "CONFLICT", message: "Only submitted proposals can be reviewed" });
         await tx.update(skillReleaseProposals).set({ status: input.decision, reviewedByUserId: ctx.user.id, reviewNote: input.reviewNote?.trim() ?? null, reviewedAt: now, updatedAt: now })
           .where(and(eq(skillReleaseProposals.id, input.proposalId), eq(skillReleaseProposals.status, "submitted")));
         await tx.insert(skillReleaseEvents).values({ proposalId: input.proposalId, eventType: input.decision, actorUserId: ctx.user.id, note: input.reviewNote?.trim() ?? null, createdAt: now });
@@ -160,7 +161,7 @@ export const skillReleasesRouter = router({
       const now = Date.now();
       const [proposal] = await db.select().from(skillReleaseProposals).where(eq(skillReleaseProposals.id, input.proposalId)).limit(1);
       if (!proposal) throw new TRPCError({ code: "NOT_FOUND", message: "Skill proposal not found" });
-      if (proposal.status !== "approved") throw new TRPCError({ code: "CONFLICT", message: "Only approved proposals can be released" });
+      if (!canTransitionSkillRelease(proposal.status, "released")) throw new TRPCError({ code: "CONFLICT", message: "Only approved proposals can be released" });
 
       const nextRegistry = [...loadRuntimeRegistry()];
       const nextMetadata = proposalToMetadata(proposal);
