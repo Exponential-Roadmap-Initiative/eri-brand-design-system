@@ -31,6 +31,7 @@
 - [ ] Build the BDS administrator review queue with proposal details and readable revision diffs
 - [ ] Promote approved proposals into the runtime registry through a controlled, auditable release action
 - [ ] Add tests for proposal permissions, status transitions, immutable audit history, and controlled promotion
+- [ ] Update eri-skill-creator Step 8 to replace the paused shared-secret sync with the reviewed BDS release-queue hand-off
 - [x] Restrict the BDS metadata proxy to registered ERI domains and safe response types
 - [x] Correct immediate accessibility template defects: zoom, route titles, skip link, and reduced-motion support
 - [x] Add focused regression tests for skill-sync safety, agent-sync authentication, and proxy allowlisting

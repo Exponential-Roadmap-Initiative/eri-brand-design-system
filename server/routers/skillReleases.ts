@@ -49,6 +49,27 @@ function writeRuntimeRegistry(registry: SkillMeta[]) {
   fs.renameSync(temporaryPath, REGISTRY_JSON_PATH);
 }
 
+export async function hydrateRuntimeRegistryFromLatestRelease(): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  const [latestRelease] = await db.select({ registrySnapshot: skillRegistryReleases.registrySnapshot })
+    .from(skillRegistryReleases)
+    .orderBy(desc(skillRegistryReleases.releasedAt))
+    .limit(1);
+  if (!latestRelease) return;
+
+  try {
+    const registry = JSON.parse(latestRelease.registrySnapshot) as SkillMeta[];
+    if (!Array.isArray(registry) || registry.length === 0 || registry.some((skill) => !skill.id || !skill.version)) {
+      throw new Error("latest release snapshot has an invalid registry shape");
+    }
+    writeRuntimeRegistry(registry);
+    console.info(`[skill-release] hydrated ${registry.length} skills from the latest approved release`);
+  } catch (error) {
+    console.error("[skill-release] failed to hydrate the runtime registry; retaining the shipped registry", error);
+  }
+}
+
 function proposalToMetadata(proposal: {
   skillId: string;
   name: string;

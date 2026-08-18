@@ -1311,6 +1311,7 @@ function SkillReleaseQueue({ skills, onReleased }: { skills: Skill[]; onReleased
   const selectedQuery = trpc.skillReleases.getProposal.useQuery({ proposalId: selectedId ?? 0 }, { enabled: selectedId !== null });
   const selected = selectedQuery.data?.proposal;
   const currentContentQuery = trpc.skills.getContent.useQuery({ id: selected?.skillId ?? "" }, { enabled: Boolean(selected?.skillId) });
+  const formContentQuery = trpc.skills.getContent.useQuery({ id: form.skillId }, { enabled: showCreate && Boolean(form.skillId) });
 
   const refresh = () => {
     utils.skillReleases.listProposals.invalidate();
@@ -1328,15 +1329,15 @@ function SkillReleaseQueue({ skills, onReleased }: { skills: Skill[]; onReleased
     if (!skill) return;
     setForm({
       skillId: skill.id, name: skill.name, description: skill.description, tier: skill.tier, category: skill.category, version: skill.version, readWhen: skill.readWhen, hasReferences: skill.hasReferences,
-      proposedContent: currentContentQuery.data ?? "", changeSummary: "", taskContext: "",
+      proposedContent: "", changeSummary: "", taskContext: "",
     });
   };
   useEffect(() => {
     if (showCreate && form.skillId) {
       const skill = skills.find((entry) => entry.id === form.skillId);
-      if (skill && !form.proposedContent) setForm((value) => ({ ...value, proposedContent: currentContentQuery.data ?? "" }));
+      if (skill && !form.proposedContent && formContentQuery.data) setForm((value) => ({ ...value, proposedContent: formContentQuery.data ?? "" }));
     }
-  }, [currentContentQuery.data, form.proposedContent, form.skillId, showCreate, skills]);
+  }, [form.proposedContent, form.skillId, formContentQuery.data, showCreate, skills]);
 
   return (
     <div className="space-y-5">

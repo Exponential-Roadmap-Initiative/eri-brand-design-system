@@ -9,6 +9,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { AGENT_SYNC_PAUSED_RESPONSE } from "./agentSyncPolicy";
 import { getAllowedBdsMetaTarget } from "./bdsMetaGuard";
+import { hydrateRuntimeRegistryFromLatestRelease } from "../routers/skillReleases";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -30,6 +31,7 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  await hydrateRuntimeRegistryFromLatestRelease();
   const app = express();
   const server = createServer(app);
   // Configure body parser with larger size limit for file uploads
