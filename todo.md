@@ -42,7 +42,8 @@
 - [x] Verify `/project-instructions` renders with the new title and keyboard skip target without a UI regression
 - [x] Fix stale "Compose" wording on `/project-instructions` so the read-only review workflow is labelled consistently
 - [x] Save the final containment checkpoint after route verification and wording correction
-- [ ] Coordinate rotation of BDS and database credentials, remove tracked database artefacts, and complete release-governance follow-up
+- [x] Rotate the BDS agent credential, remove tracked database artefacts, and complete the release-governance follow-up
+- [ ] Coordinate a separate controlled rotation of the platform-managed database credential
 - [x] Add heroImages.trust to assets.ts and Surface Modes gallery
 - [x] Audit all Standard Components prop descriptions against source code
 - [x] Add live showScrollIndicator toggle to EriHeroSection preview
