@@ -88,16 +88,6 @@ export const SKILLS_METADATA: SkillMeta[] = [
     hasReferences: true,
   },
   {
-    id: "eri-earth-aligned-agent",
-    name: "eri-earth-aligned-agent",
-    description: ">-",
-    tier: 2,
-    category: "platform",
-    version: "1.0.0",
-    readWhen: "Any Earth-aligned agent task.",
-    hasReferences: true,
-  },
-  {
     id: "eri-bds-site",
     name: "eri-bds-site",
     description: "Build or update the standalone ERI Brand Design System website from the brand package zip. Use when asked to build, rebuild, update, or extend the ERI Brand Design System site — including adding new logo variants, sections, or design tokens. Covers the full workflow: package inspection, asset upload, component porting, logo rendering fixes, and deployment.",
@@ -120,7 +110,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-trpc",
     name: "eri-trpc",
-    description: "Canonical patterns for writing, structuring, and testing tRPC routers in the ERI eri-playbook-team codebase. Includes the 10-gate Code Quality pre-implementation checklist (formerly eri-code-quality). Use when: creating a new router file, adding a procedure to an existing router, deciding between publicProcedure / protectedProcedure / adminProcedure, writing a custom middleware procedure, splitting an oversized router (over 150 lines), registering a new router in routers.ts, writing a vitest ...",
+    description: "Canonical patterns for writing, structuring, and testing tRPC routers in the ERI eri-playbook-team codebase. Includes the 10-gate Code Quality pre-implementation checklist (formerly eri-code-quality) and a multi-file pipeline done checklist. Use when: creating a new router file, adding a procedure to an existing router, deciding between publicProcedure / protectedProcedure / adminProcedure, writing a custom middleware procedure, splitting an oversized router (over 150 lines), registering a ne...",
     tier: 2,
     category: "platform",
     version: "3.0.1",
@@ -135,16 +125,6 @@ export const SKILLS_METADATA: SkillMeta[] = [
     category: "platform",
     version: "2.0.0",
     readWhen: "DB schema design, migrations, indexes, multi-tenant isolation.",
-    hasReferences: true,
-  },
-  {
-    id: "eri-widget",
-    name: "eri-widget",
-    description: "Standard widget component design and implementation for the ERI Exponential Platform. Use when: creating a new data source or analytical widget (Widget.tsx + Card.tsx), building a Widget Hub demo page, registering a widget in widgetRegistry.ts, wiring a widget into a workspace tab page, choosing between live DB / static registry / external API data paths, or auditing an existing widget for conformance with the DataWidgetCard pattern.",
-    tier: 2,
-    category: "platform",
-    version: "1.0.0",
-    readWhen: "New data source or analytical widget, Widget Hub page, widget registry.",
     hasReferences: true,
   },
   {
@@ -219,16 +199,6 @@ export const SKILLS_METADATA: SkillMeta[] = [
   },
   // ── Tier 3: Reference ──────────────────────────────────────────────────────
   {
-    id: "eri-exponential-framework",
-    name: "eri-exponential-framework",
-    description: "Canonical knowledge base for the ERI Exponential Framework data model, CPR data pipeline, and three-application architecture (CPR tool, Marketing EF app, Earth-aligned AI Agent). Use whenever: designing or extending the Exponential Framework data model, working on the CPR evidence pipeline, adding or updating cpr_action_templates or cpr_data_source_mappings, building the Marketing EF application pages, working on the Earth-aligned AI Agent framework cells, reasoning about primary vs secondary...",
-    tier: 3,
-    category: "data",
-    version: "1.0.0",
-    readWhen: "Exponential Framework data model, CPR pipeline, cpr_action_templates, cpr_data_source_mappings, Marketing EF pages, Earth-aligned agent framework cells.",
-    hasReferences: true,
-  },
-  {
     id: "data-source-integration",
     name: "data-source-integration",
     description: ">",
@@ -264,7 +234,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
     description: "PDF ingestion, extraction, storage, and multi-consumer access patterns for ERI full-stack applications. Use whenever: designing or modifying how corporate reports (annual, sustainability, transition plan) are fetched, parsed, cached, or served to consumers; deciding between parser options (unpdf vs file_url vs third-party); building a document registry or extract store; enabling the Earth-aligned Agent, CPR tool, or any other application to query PDF content without re-parsing; or investigati...",
     tier: 3,
     category: "data",
-    version: "2.0.0",
+    version: "1.0.0",
     readWhen: "Corporate report fetch, parse, page-select, extract, classify, cache, or query.",
     hasReferences: true,
   },
@@ -275,7 +245,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "manus-api",
     name: "manus-api",
-    description: "Manage tasks, projects, and other data in Manus via API, build OAuth2 third-party integrations, or create Manus tasks programmatically to build services or workflows that need agentic capabilities.",
+    description: "Manage tasks, projects, and other data through the Manus API; build OAuth2 Open Apps and third-party integrations; or create Manus tasks programmatically for services and workflows that need agentic capabilities.",
     tier: 3,
     category: "platform",
     version: "1.0.0",
@@ -285,7 +255,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "manus-config",
     name: "manus-config",
-    description: "Manage connectors (App, Custom API, Custom MCP), project instructions and shared files, and scheduled task execution with manus-config. Use when the user asks to enable, inspect, or modify integrations; manage project-level configuration or shared project files; or create, update, inspect, pause, expire, or troubleshoot scheduled tasks using cron, intervals, connector UIDs, or run-as-new behavior.",
+    description: "Manage connectors (App, Custom API, Custom MCP), project instructions and shared files, and scheduled task execution with manus-config. Use when the user asks to enable, inspect, or modify integrations; create a new connector from an MCP server URL/command or an API key the user provides; inspect, update, or delete the user's own custom connectors; manage project-level configuration or shared project files; explicitly add, update, or remove shared project web links; or create, update, inspect...",
     tier: 3,
     category: "platform",
     version: "1.0.0",
@@ -328,7 +298,7 @@ export const SKILLS_METADATA: SkillMeta[] = [
   {
     id: "eri-emissions",
     name: "eri-emissions",
-    description: "Canonical domain knowledge for GHG emissions data in the ERI platform. Covers: GHG Protocol scope definitions, 15 Scope 3 categories, source priority model (PDF → Klimatkollen → CDP), the comparability problem, four methodology change types, multi-year table extraction (all year columns), target column extraction, three-tier schema (ghg_emissions_latest + ghg_methodology_flags + ghg_emissions_history/ghg_series_segments), image-table problem, restatement detection, base year rules, segmented ...",
+    description: "Canonical domain knowledge for GHG emissions data in the ERI platform. Tier 3 — conditional. Covers: GHG Protocol scope definitions, 15 Scope 3 categories, source priority model (PDF → Klimatkollen → CDP), the comparability problem, four methodology change types, multi-year table extraction (all year columns), target column extraction, three-tier schema (ghg_emissions_latest + ghg_methodology_flags + ghg_emissions_history/ghg_series_segments), image-table problem, restatement detection, base ...",
     tier: 3,
     category: "data",
     version: "2.0.0",
@@ -353,8 +323,437 @@ export const SKILLS_METADATA: SkillMeta[] = [
     description: "Canonical knowledge base for the ERI Exponential Framework in eri-playbook-team. Covers: 5-pillar × 4-horizontal structure with all 21 sub-sections, architectural boundary (cpr_assessments and cprActionScores are out of scope), source priority model, Earth-aligned AI Agent modes, framework cells schema (24 rows per company), H3 sub-section extraction via selectSubSectionPages and documentPageScorer, H1/H2/H4 governance horizontal extraction, GHG corroboration injection via applyCorroboration(...",
     tier: 3,
     category: "data",
-    version: "2.0.0",
+    version: "2.3.0",
     readWhen: "When working on anything touching the Exponential Framework — structure, data model, EF extraction pipeline, Earth-aligned AI Agent, framework cells, governance horizontals, GHG corroboration, or dual-source emissions handling. Also read before eri-cpr-app for the shared architectural boundary.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "builtin-llm-models",
+    name: "builtin-llm-models",
+    description: ">",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on builtin-llm-models-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "code-quality-gate",
+    name: "code-quality-gate",
+    description: "Pre-implementation checklist (7 gates) for the eri-playbook-team codebase. Prevents new technical debt. Run before writing any code. Results must be pasted into the response — not mentally ticked. Covers: no as-any, no unauthenticated mutations, mandatory pagination, transactions for multi-write ops, tests for new routers, no hardcoded secrets, Drizzle array-destructure.",
+    tier: 3,
+    category: "process",
+    version: "2.0.0",
+    readWhen: "When working on code-quality-gate-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "corporate-report-finder",
+    name: "corporate-report-finder",
+    description: "Systematic methodology for finding, storing, and validating corporate reporting URLs across five types (Annual, Sustainability, Transition, Biodiversity, Social). Use for: implementing or extending the integrated 5-tier discovery pipeline (ESEF, Klimatkollen, SRN, SERP, Perplexity), adding new data source tiers, auditing pipeline violations, running coverage gap analysis across 29 ERI members, updating the corporateReportUrls or corporateReportCompanies schema, or debugging slot-key conflicts...",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on corporate-report-finder-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "data-source-explorer",
+    name: "data-source-explorer",
+    description: "Replication playbook for adding or upgrading a climate/ESG data source in the ERI Exponential Framework (eri-playbook-team project). Use when implementing a new data source explorer page, upgrading an existing explorer to match the SBTi reference pattern, adding a widget tab to an existing explorer, aligning LobbyMap/TPI/NZT/CDP with the canonical SBTi stack, or auditing/improving widget data coverage.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on data-source-explorer-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "database-design",
+    name: "database-design",
+    description: ">",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on database-design-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "decision-framework",
+    name: "decision-framework",
+    description: "Framework for preventing tunnel vision when implementing solutions. Use when starting any non-trivial implementation, user says 'think about this first', or user references this skill to remind you to present options before coding.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on decision-framework-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "earth-aligned-agent",
+    name: "earth-aligned-agent",
+    description: ">-",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on earth-aligned-agent-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "eri-brand-design-system-site",
+    name: "eri-brand-design-system-site",
+    description: "Build or update the standalone ERI Brand Design System website from the brand package zip. Use when asked to build, rebuild, update, or extend the ERI Brand Design System site — including adding new logo variants, sections, or design tokens. Covers the full workflow: package inspection, asset upload, component porting, logo rendering fixes, and deployment.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on eri-brand-design-system-site-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "explorer-compare-view",
+    name: "explorer-compare-view",
+    description: "Design and implement the Browse + Compare tab pattern for ERI data-source explorer pages (SBTi, TPI, CDP, NZT, LobbyMap, B Corp, etc.). Use when adding a Sector filter dropdown, a checkbox-selection column, or a Compare tab to any DataExplorer page; when wiring a workspace wrapper to pre-select the company's sector and pin it in the Compare tab; or when auditing an existing explorer for conformance with the canonical Browse + Compare pattern.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on explorer-compare-view-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "exponential-human-ai-collaboration",
+    name: "exponential-human-ai-collaboration",
+    description: ">-",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on exponential-human-ai-collaboration-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "finance-pro-playbooks",
+    name: "finance-pro-playbooks",
+    description: "Comprehensive workflow guide for ANY finance, investing, or company analysis task. MUST read for: (1) General investment research — analyzing stocks/companies, reading earnings/filings, fetching financial data, or researching industries; (2) Professional IB/PE/VC tasks — valuation & modeling (DCF/LBO/comps), deal structuring, due diligence, M&A materials (teaser/CIM), and IC memos. Encodes professional data-sourcing rules (source hierarchy, fiscal-period discipline), silent industry defaults,...",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on finance-pro-playbooks-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "gws-best-practices",
+    name: "gws-best-practices",
+    description: "Best practices for using the gws CLI with supported Google Workspace services (Drive, Docs, Sheets, Slides). Use when performing any operation with the gws CLI.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on gws-best-practices-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "manus-pptx",
+    name: "manus-pptx",
+    description: "Write slides using Manus's PPTX-specific XML syntax (a project-custom markup language, authored by AI and losslessly exportable to pptx). This document contains syntax information only, so do not read it until you are ready to start editing (e.g. not at session start or during the research phase).",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on manus-pptx-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "read-special-images",
+    name: "read-special-images",
+    description: "Read and OCR unusually tall, wide, high-resolution, or text-dense images without hallucinating content lost to inline vision scaling. Use for long screenshots, panoramic images, large diagrams, dense documents, tiny unreadable text, or any image whose whole-image preview is not reliable; keep ordinary readable images unsplit.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on read-special-images-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "rest-api-creator",
+    name: "rest-api-creator",
+    description: "Design and implement production-ready REST APIs on the ERI Platform (Express + TypeScript + Drizzle + MySQL). Use when: designing a new REST endpoint or API surface, adding external partner access to ERI data, implementing API key authentication, writing REST route files, designing response envelopes or error formats, reviewing an existing REST API for correctness and security, building the admin UI surface for API management, or building the public API documentation page. Covers the full lif...",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on rest-api-creator-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "trpc-router-patterns",
+    name: "trpc-router-patterns",
+    description: ">-",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on trpc-router-patterns-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "trust-security",
+    name: "trust-security",
+    description: ">",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on trust-security-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "ueil-inline-widget-navigation",
+    name: "ueil-inline-widget-navigation",
+    description: "Pattern for adding per-row inline widget navigation to the UEIL Company Data Lookup table (UeilDataCoverageWidget.tsx) in the eri-playbook-team project. Use when implementing or extending the 'click a linked source row → view its widget inline' feature for any of the 14 data sources (SBTi, CDP, TPI, NZT, LobbyMap, SME, SRN, B-Corp, Wikidata, GLEIF, LinkedIn, Klimatkollen, Bolagsverket, ESEF). Covers state management, widget map, back-navigation, and the exact source-name cell change.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on ueil-inline-widget-navigation-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-custom-dockerfile",
+    name: "webdev-custom-dockerfile",
+    description: "Manus webdev fullstack (web-db-user) projects — the deploy contract for a custom root Dockerfile (build context, secrets injection, build budget, runtime limits, base-image choice, worked examples). Read BEFORE writing or editing a Dockerfile; needed only when production requires an extra system binary (ffmpeg, chromium, fonts...) or another language runtime (Python, Ruby, Java, Go...).",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-custom-dockerfile-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-data-api",
+    name: "webdev-data-api",
+    description: "Manus webdev fullstack (web-db-user) & mobile-app (Expo) projects — fetching external data via the Manus API Hub.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-data-api-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-file-storage",
+    name: "webdev-file-storage",
+    description: "Manus webdev fullstack (web-db-user) & mobile-app (Expo) projects — uploading and serving user files, images, documents via the built-in S3 storage helpers.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-file-storage-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-image-generation",
+    name: "webdev-image-generation",
+    description: "Manus webdev fullstack (web-db-user) & mobile-app (Expo) projects — AI image creation or editing, model listing/selection.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-image-generation-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-llm-integration",
+    name: "webdev-llm-integration",
+    description: "Manus webdev fullstack (web-db-user) & mobile-app (Expo) projects — built-in LLM integration for AI features, chat completions, structured JSON responses, model listing/selection, streaming, thinking/reasoning.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-llm-integration-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-manus-oauth",
+    name: "webdev-manus-oauth",
+    description: "Manus webdev fullstack (web-db-user) projects — Manus OAuth redirect URL handling, invite and magic links.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-manus-oauth-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-maps-integration",
+    name: "webdev-maps-integration",
+    description: "Manus webdev fullstack (web-db-user) projects — Google Maps integration for maps, geocoding, directions, places.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-maps-integration-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-owner-notifications",
+    name: "webdev-owner-notifications",
+    description: "Manus webdev fullstack (web-db-user) & mobile-app (Expo) projects — pushing alert notifications to the project owner.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-owner-notifications-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-periodic-updates",
+    name: "webdev-periodic-updates",
+    description: "Manus webdev fullstack (web-db-user) & mobile-app (Expo) projects — scheduled work reference (Heartbeat) for recurring jobs, daily/hourly tasks, end-user-scheduled cron, periodic notifications. Read FIRST before planning or coding anything that runs on a schedule.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-periodic-updates-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-readme-fullstack",
+    name: "webdev-readme-fullstack",
+    description: "Manus webdev fullstack (web-db-user) projects — the complete development guide for the template that fullstack webdev projects are built on. Covers what ships out of the box (user auth, database, file storage, backend API, external integrations), coding conventions, file layout, and the map of per-integration skill docs. The same guide arrives auto-injected in webdev_init_project / webdev_add_feature results.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-readme-fullstack-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-readme-mobile",
+    name: "webdev-readme-mobile",
+    description: "Manus webdev mobile-app (Expo) projects — the complete development guide for the Expo template that mobile-app projects are built on. Covers what ships out of the box, Expo conventions, design and branding rules, file layout, and where the backend guide lives. The same guide arrives auto-injected in webdev_init_project / webdev_add_feature results.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-readme-mobile-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-readme-mobile-backend",
+    name: "webdev-readme-mobile-backend",
+    description: "Manus webdev mobile-app (Expo) projects — backend development guide (Manus auth, database/Drizzle, tRPC API, env, testing, integrations). MUST read BEFORE using any backend/server/database features in a mobile-app project.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-readme-mobile-backend-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-readme-static",
+    name: "webdev-readme-static",
+    description: "Manus webdev static (web-static) projects — the complete development guide for the template that static webdev sites are built on. Covers what ships out of the box, coding conventions, and file layout. The same guide arrives auto-injected in webdev_init_project / webdev_add_feature results.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-readme-static-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-ssr-conversion",
+    name: "webdev-ssr-conversion",
+    description: "Convert a client-only React 19 + Vite + Express + tRPC 11 SPA (the Manus 'web-db-user' full-stack template) into a Server-Side Rendered (SSR) app so crawlers and social scrapers receive fully-populated first-paint HTML with correct per-route title and meta tags. Use when a project built on this template needs SEO, link-preview cards, or crawler-visible content, or when asked to 'make the site SSR', 'server-render', 'fix SEO / prerender', or 'make Googlebot see the content'. Only for projects ...",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-ssr-conversion-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "webdev-voice-transcription",
+    name: "webdev-voice-transcription",
+    description: "Manus webdev fullstack (web-db-user) & mobile-app (Expo) projects — speech-to-text via the built-in Whisper API.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on webdev-voice-transcription-related tasks.",
+    hasReferences: false,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-04 --
+  {
+    id: "widget-component-standard",
+    name: "widget-component-standard",
+    description: "Standard widget component design and implementation for the ERI Exponential Platform. Use when: creating a new data source or analytical widget (Widget.tsx + Card.tsx), building a Widget Hub demo page, registering a widget in widgetRegistry.ts, wiring a widget into a workspace tab page, choosing between live DB / static registry / external API data paths, or auditing an existing widget for conformance with the DataWidgetCard pattern.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on widget-component-standard-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-17 --
+  {
+    id: "data-backup-restoration",
+    name: "data-backup-restoration",
+    description: "Official guidance for the August 2026 Manus data backup and restoration service change, including websites and mobile apps. Use when users ask whether they are affected, what will happen to their data or services, or how to back up or restore.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on data-backup-restoration-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-17 --
+  {
+    id: "game-dev",
+    name: "game-dev",
+    description: "Build playable browser games (Babylon.js) end-to-end using the godogen production pipeline adapted to Manus. Use when the user wants to make, generate, rebuild, or substantially extend a web/browser game from a natural-language brief. Runs godogen's staged workflow (visual target, risk decomposition, scaffold, architecture, asset generation, implementation, visual verification) but hosts the game in a Manus WebDev project, replaces godogen's paid art CLIs (Gemini/Grok/Tripo3D) with Manus buil...",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on game-dev-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-17 --
+  {
+    id: "typst-pdf-maker",
+    name: "typst-pdf-maker",
+    description: "Generate professional, high-quality PDF documents with Typst. Use for reports, academic papers, resumes, structured documents, mathematical typesetting, code-rich documents, precise layouts, and CJK typography when Markdown-to-PDF is insufficient. Select one skill-owned asset or compatible Typst Universe base before adding packages. Route ordinary presentation requests to Manus Slides/PPTX unless the user explicitly requires Typst-generated PDF slides.",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on typst-pdf-maker-related tasks.",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-18 --
+  {
+    id: "eri-cdp-data",
+    name: "eri-cdp-data",
+    description: "Canonical knowledge base for the CDP (Carbon Disclosure Project) data layer in the ERI platform. Covers: database schema (cdpCompanies, cdpQuestions, cdpResponses, cdp_questionnaire_versions), the multi-year disclosure model (disclosureYear vs reportingYear), the 2025 dataset coverage limitation (sections Q7 and Q20 only), correct query patterns for the REST API and tRPC endpoints, sectionName population rules, and known pitfalls. Use whenever: querying CDP data, debugging CDP API responses, ...",
+    tier: 3,
+    category: "data",
+    version: "1.1.0",
+    readWhen: "Before querying, importing, or reasoning about CDP questionnaire data in the ERI platform",
+    hasReferences: true,
+  },
+  // -- Auto-registered by syncMetadataFromFiles on 2026-08-18 --
+  {
+    id: "eri-energy",
+    name: "eri-energy",
+    description: "Canonical knowledge base for the ERI energy data pipeline. Covers: three-table schema (dl_energy_data + dl_energy_history + dl_energy_fossil_breakdown), ESRS E1-5 row mapping, GRI 302 appendix format, page scorer (ENERGY_DATA_SCORER), extraction service architecture (one-pass LLM, multimodal fallback, context cap), prompt version history and known failure modes, CPR criterion mapping (8 implemented criteria, CO5/P1:1–P1:4/P1:9–P1:10/P3:5), gap analysis (comparability flags, percentage-only pr...",
+    tier: 3,
+    category: "process",
+    version: "1.0.0",
+    readWhen: "When working on eri-energy-related tasks.",
     hasReferences: true,
   },
 /* SKILLS_END */
@@ -461,8 +860,28 @@ function getRegistry(): SkillMeta[] {
   return SKILLS_METADATA;
 }
 
-// ─── Standalone sync implementation (exported for use by the agent REST endpoint) ─
+// ─── Safe sync facade ──────────────────────────────────────────────────────────
+// Registry source mutation is paused until a preview-first, fail-closed release
+// workflow replaces the legacy implementation below. This preserves public reads
+// while preventing filesystem or network state from changing published metadata.
 export async function syncMetadataFromFilesImpl(
+  _triggerSource: "heartbeat" | "agent-sync" | "manual-sync" = "manual-sync",
+  _taskName?: string
+) {
+  return {
+    success: false,
+    changesCount: 0,
+    registeredCount: 0,
+    removedCount: 0,
+    changes: [],
+    registered: [],
+    removed: [],
+    message: "Skill synchronisation is paused during the BDS security upgrade. No registry or source files were changed.",
+  };
+}
+
+// ─── Legacy mutation implementation (quarantined; not exported or invoked) ─────
+async function legacySyncMetadataFromFilesImpl(
   triggerSource: "heartbeat" | "agent-sync" | "manual-sync" = "heartbeat",
   taskName?: string
 ) {

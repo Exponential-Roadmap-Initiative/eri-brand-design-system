@@ -544,10 +544,10 @@ function SyncMetadataButton({ onSuccess }: { onSuccess: () => void }) {
         variant="outline"
         size="sm"
         className="gap-1.5"
-        onClick={() => syncMutation.mutate()}
-        disabled={syncMutation.isPending}
+        disabled
+        title="Skill synchronisation is temporarily paused during the BDS security upgrade"
       >
-        {syncMutation.isPending ? "Syncing…" : "↻ Sync from skill files"}
+        Sync paused for security upgrade
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>

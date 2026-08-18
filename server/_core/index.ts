@@ -118,75 +118,15 @@ async function startServer() {
   });
 
   // ── Agent skill-sync endpoint ────────────────────────────────────────────
-  // Allows Manus agents to call syncMetadataFromFiles and logImprovement
-  // without a session cookie. Authenticated via BDS_AGENT_SECRET header.
-  // POST /api/agent/skill-sync
-  // Body: { secret: string, improvements?: Array<{ skillId, version, summary, taskContext? }> }
-  // Returns: { success, syncResult, logged: number, errors: string[] }
-  app.post("/api/agent/skill-sync", async (req, res) => {
-    try {
-      const { ENV } = await import("./env");
-      const secret = ENV.agentSecret;
-      if (!secret) {
-        res.status(503).json({ error: "BDS_AGENT_SECRET not configured on this server" });
-        return;
-      }
-      if (req.body?.secret !== secret) {
-        res.status(401).json({ error: "Invalid agent secret" });
-        return;
-      }
-
-      const improvements: Array<{ skillId: string; version: string; summary: string; taskContext?: string }> =
-        Array.isArray(req.body?.improvements) ? req.body.improvements : [];
-
-      // ── 1. Sync metadata from SKILL.md files ──────────────────────────────
-      // Pass task context from the first improvement entry (all entries share the same task)
-      const taskContext = improvements.length > 0 ? (improvements[0].taskContext ?? undefined) : undefined;
-      const { syncMetadataFromFilesImpl } = await import("../routers/skills");
-      const syncResult = await syncMetadataFromFilesImpl("agent-sync", taskContext);
-
-      // ── 2. Log each improvement ───────────────────────────────────────────
-      const { getDb } = await import("../db");
-      const { skillImprovements } = await import("../../drizzle/schema");
-      const { SKILLS_METADATA } = await import("../routers/skills");
-      const db = await getDb();
-      const logged: string[] = [];
-      const errors: string[] = [];
-
-      for (const imp of improvements) {
-        if (!imp.skillId || !imp.version || !imp.summary) {
-          errors.push(`Skipped malformed entry: ${JSON.stringify(imp)}`);
-          continue;
-        }
-        const known = SKILLS_METADATA.find((s) => s.id === imp.skillId);
-        if (!known) {
-          errors.push(`Skill '${imp.skillId}' not found in SKILLS_METADATA — log skipped`);
-          continue;
-        }
-        if (db) {
-          await db.insert(skillImprovements).values({
-            skillId: imp.skillId,
-            version: imp.version,
-            summary: imp.summary,
-            taskContext: imp.taskContext ?? null,
-          });
-          logged.push(imp.skillId);
-        } else {
-          errors.push("DB unavailable — improvement log skipped");
-        }
-      }
-
-      res.json({
-        success: true,
-        syncResult,
-        logged: logged.length,
-        loggedSkills: logged,
-        errors,
-      });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      res.status(500).json({ error: msg });
-    }
+  // External agent-driven writes are deliberately paused while the previous
+  // shared-secret workflow is replaced with a controlled approval path. The
+  // endpoint remains explicit so callers receive a clear response rather than
+  // mistaking an HTML fallback page for an authentication failure.
+  app.post("/api/agent/skill-sync", (_req, res) => {
+    res.status(410).json({
+      error: "Agent-driven skill synchronisation is temporarily disabled during the BDS security upgrade.",
+      code: "SKILL_SYNC_PAUSED",
+    });
   });
 
   // development mode uses Vite, production mode uses static files
@@ -207,26 +147,10 @@ async function startServer() {
     console.log(`Server running on http://localhost:${port}/`);
   });
 
-  // ── Skill auto-sync heartbeat ─────────────────────────────────────────────
-  // Runs syncMetadataFromFilesImpl on startup and every hour.
-  // Any new SKILL.md that lands in /home/ubuntu/skills/ (e.g. from another
-  // Manus task) is automatically registered in SKILLS_METADATA and visible
-  // on /skills without any manual BDS task intervention.
-  const runSkillSync = async () => {
-    try {
-      const { syncMetadataFromFilesImpl } = await import("../routers/skills");
-      const result = await syncMetadataFromFilesImpl();
-      if (result.changesCount > 0 || result.registeredCount > 0) {
-        console.log(`[skill-sync] ${result.message}`);
-      }
-    } catch (err) {
-      console.warn("[skill-sync] heartbeat error:", err instanceof Error ? err.message : String(err));
-    }
-  };
-  // Run once 5 s after startup (lets the server settle before touching skills.ts)
-  setTimeout(runSkillSync, 5_000);
-  // Then run every hour
-  setInterval(runSkillSync, 60 * 60 * 1_000);
+  // Skill registry changes are temporarily manual and administrator-approved.
+  // Do not restore an unattended mutation heartbeat without a fail-closed,
+  // preview-first synchronisation design and an audited release workflow.
+  console.info("[skill-sync] unattended synchronisation disabled during security upgrade");
 }
 
 startServer().catch(console.error);
