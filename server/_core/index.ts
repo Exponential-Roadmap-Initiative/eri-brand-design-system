@@ -7,18 +7,8 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
-
-const ALLOWED_BDS_META_HOSTS = new Set([
-  "earth-aligned-ai-lab.exponentialroadmap.org",
-  "contact-us.exponentialroadmap.org",
-  "psm.exponentialroadmap.org",
-  "taxonomy.exponentialroadmap.org",
-  "framework.exponentialroadmap.org",
-  "crocodile.exponentialroadmap.org",
-  "platform.exponentialroadmap.org",
-  "methodology.exponentialroadmap.org",
-  "trust.exponentialroadmap.org",
-]);
+import { AGENT_SYNC_PAUSED_RESPONSE } from "./agentSyncPolicy";
+import { getAllowedBdsMetaTarget } from "./bdsMetaGuard";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -112,25 +102,8 @@ async function startServer() {
       return;
     }
 
-    let target: URL;
-    try {
-      target = new URL(raw);
-    } catch {
-      res.status(400).json({ error: "Missing or invalid url parameter" });
-      return;
-    }
-
-    const isRegisteredMetadataFile =
-      target.protocol === "https:" &&
-      target.port === "" &&
-      target.username === "" &&
-      target.password === "" &&
-      target.pathname === "/bds-meta.json" &&
-      target.search === "" &&
-      target.hash === "" &&
-      ALLOWED_BDS_META_HOSTS.has(target.hostname);
-
-    if (!isRegisteredMetadataFile) {
+    const target = getAllowedBdsMetaTarget(raw);
+    if (!target) {
       res.status(403).json({ error: "Only registered ERI bds-meta.json endpoints may be fetched" });
       return;
     }
@@ -165,10 +138,7 @@ async function startServer() {
   // endpoint remains explicit so callers receive a clear response rather than
   // mistaking an HTML fallback page for an authentication failure.
   app.post("/api/agent/skill-sync", (_req, res) => {
-    res.status(410).json({
-      error: "Agent-driven skill synchronisation is temporarily disabled during the BDS security upgrade.",
-      code: "SKILL_SYNC_PAUSED",
-    });
+    res.status(410).json(AGENT_SYNC_PAUSED_RESPONSE);
   });
 
   // development mode uses Vite, production mode uses static files
