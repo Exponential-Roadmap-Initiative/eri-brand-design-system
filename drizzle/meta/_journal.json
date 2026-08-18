@@ -64,6 +64,13 @@
       "when": 1781787413971,
       "tag": "0008_wild_punisher",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1787055606055,
+      "tag": "0009_curious_valeria_richards",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { bigint, index, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -139,3 +139,60 @@ export const skillEvolutionLog = mysqlTable("skill_evolution_log", {
 });
 export type SkillEvolutionEntry = typeof skillEvolutionLog.$inferSelect;
 export type InsertSkillEvolutionEntry = typeof skillEvolutionLog.$inferInsert;
+
+// ─── Skill Release Proposals ─────────────────────────────────────────────────
+// A submitted revision is immutable. Administrators review it, then either reject
+// it or promote it as a controlled release. Skill content is retained here so the
+// public skill reader never depends on an external task sandbox after promotion.
+export const skillReleaseProposals = mysqlTable("skill_release_proposals", {
+  id: int("id").primaryKey().autoincrement(),
+  skillId: varchar("skill_id", { length: 64 }).notNull(),
+  proposalType: mysqlEnum("proposal_type", ["create", "update"]).notNull(),
+  status: mysqlEnum("status", ["submitted", "approved", "rejected", "released"]).notNull().default("submitted"),
+  name: varchar("name", { length: 256 }).notNull(),
+  description: text("description").notNull(),
+  tier: int("tier").notNull(),
+  category: varchar("category", { length: 64 }).notNull(),
+  version: varchar("version", { length: 16 }).notNull(),
+  readWhen: text("read_when").notNull(),
+  hasReferences: mysqlEnum("has_references", ["true", "false"]).notNull(),
+  proposedContent: text("proposed_content").notNull(),
+  changeSummary: text("change_summary").notNull(),
+  taskContext: varchar("task_context", { length: 256 }),
+  submittedByUserId: int("submitted_by_user_id").notNull().references(() => users.id),
+  reviewedByUserId: int("reviewed_by_user_id").references(() => users.id),
+  reviewNote: varchar("review_note", { length: 1000 }),
+  createdAt: bigint("created_at", { mode: "number" }).notNull(),
+  updatedAt: bigint("updated_at", { mode: "number" }).notNull(),
+  reviewedAt: bigint("reviewed_at", { mode: "number" }),
+}, (table) => [
+  index("idx_skill_release_proposals_status_created").on(table.status, table.createdAt),
+  index("idx_skill_release_proposals_skill_created").on(table.skillId, table.createdAt),
+]);
+export type SkillReleaseProposal = typeof skillReleaseProposals.$inferSelect;
+
+// ─── Skill Release Events ────────────────────────────────────────────────────
+// Append-only audit trail. Events are never edited or deleted after creation.
+export const skillReleaseEvents = mysqlTable("skill_release_events", {
+  id: int("id").primaryKey().autoincrement(),
+  proposalId: int("proposal_id").notNull().references(() => skillReleaseProposals.id),
+  eventType: mysqlEnum("event_type", ["submitted", "approved", "rejected", "released"]).notNull(),
+  actorUserId: int("actor_user_id").notNull().references(() => users.id),
+  note: varchar("note", { length: 1000 }),
+  createdAt: bigint("created_at", { mode: "number" }).notNull(),
+}, (table) => [
+  index("idx_skill_release_events_proposal_created").on(table.proposalId, table.createdAt),
+]);
+export type SkillReleaseEvent = typeof skillReleaseEvents.$inferSelect;
+
+// ─── Skill Registry Releases ─────────────────────────────────────────────────
+// One immutable registry snapshot per released proposal. This is the durable
+// release record behind the runtime skills-registry.json cache.
+export const skillRegistryReleases = mysqlTable("skill_registry_releases", {
+  id: int("id").primaryKey().autoincrement(),
+  proposalId: int("proposal_id").notNull().unique().references(() => skillReleaseProposals.id),
+  registrySnapshot: text("registry_snapshot").notNull(),
+  releasedByUserId: int("released_by_user_id").notNull().references(() => users.id),
+  releasedAt: bigint("released_at", { mode: "number" }).notNull(),
+});
+export type SkillRegistryRelease = typeof skillRegistryReleases.$inferSelect;

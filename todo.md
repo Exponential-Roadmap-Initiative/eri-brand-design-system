@@ -25,14 +25,20 @@
 - [x] Contain the BDS agent-secret exposure without removing the public Skills preview experience
 - [ ] Replace body-carried shared-secret agent-sync access with a controlled, revocable authentication path
 - [ ] Make skill synchronisation fail closed, preview-first, and non-destructive; remove unattended source rewrites
+- [ ] Define a versioned skill proposal lifecycle with immutable reviewer and release audit records
+- [ ] Add database tables and migration for proposed skill revisions, proposal status, reviewer decisions, and release snapshots
+- [ ] Add administrator-only procedures to create, list, review, reject, and approve skill proposals
+- [ ] Build the BDS administrator review queue with proposal details and readable revision diffs
+- [ ] Promote approved proposals into the runtime registry through a controlled, auditable release action
+- [ ] Add tests for proposal permissions, status transitions, immutable audit history, and controlled promotion
 - [x] Restrict the BDS metadata proxy to registered ERI domains and safe response types
 - [x] Correct immediate accessibility template defects: zoom, route titles, skip link, and reduced-motion support
 - [x] Add focused regression tests for skill-sync safety, agent-sync authentication, and proxy allowlisting
-- [ ] Verify public Skills, tracker, and project-instruction behaviours; save a containment checkpoint
+- [x] Verify public Skills, tracker, and project-instruction behaviours; save a containment checkpoint
 - [x] Verify `/tracker` accepts registered ERI metadata and rejects unregistered proxy targets without a UI regression
 - [x] Verify `/project-instructions` renders with the new title and keyboard skip target without a UI regression
 - [x] Fix stale "Compose" wording on `/project-instructions` so the read-only review workflow is labelled consistently
-- [ ] Save the final containment checkpoint after route verification and wording correction
+- [x] Save the final containment checkpoint after route verification and wording correction
 - [ ] Coordinate rotation of BDS and database credentials, remove tracked database artefacts, and complete release-governance follow-up
 - [x] Add heroImages.trust to assets.ts and Surface Modes gallery
 - [x] Audit all Standard Components prop descriptions against source code
