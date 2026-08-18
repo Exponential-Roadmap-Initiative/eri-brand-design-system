@@ -197,5 +197,5 @@ The live API (`/api/project-instructions/latest`) was serving v2026.06.11 (4,048
 
 ### Remaining operator action
 
-- Publish the latest checkpoint before relying on the containment and release workflow in production.
+- BDS production deployment verified on 2026-08-18. Live `/skills` exposes the controlled Release queue, the legacy agent-sync endpoint returns `410 SKILL_SYNC_PAUSED`, and an unregistered metadata target returns `403`.
 - Rotate the database credential as a separate, controlled maintenance action; the agent credential is already rotated. Do not restore the legacy external synchronisation route.
