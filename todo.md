@@ -29,6 +29,10 @@
 - [x] Correct immediate accessibility template defects: zoom, route titles, skip link, and reduced-motion support
 - [x] Add focused regression tests for skill-sync safety, agent-sync authentication, and proxy allowlisting
 - [ ] Verify public Skills, tracker, and project-instruction behaviours; save a containment checkpoint
+- [x] Verify `/tracker` accepts registered ERI metadata and rejects unregistered proxy targets without a UI regression
+- [x] Verify `/project-instructions` renders with the new title and keyboard skip target without a UI regression
+- [x] Fix stale "Compose" wording on `/project-instructions` so the read-only review workflow is labelled consistently
+- [ ] Save the final containment checkpoint after route verification and wording correction
 - [ ] Coordinate rotation of BDS and database credentials, remove tracked database artefacts, and complete release-governance follow-up
 - [x] Add heroImages.trust to assets.ts and Surface Modes gallery
 - [x] Audit all Standard Components prop descriptions against source code

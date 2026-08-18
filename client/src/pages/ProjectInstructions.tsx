@@ -581,7 +581,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     ? `Instructions updated — action needed in Step 2`
     : `All good — ${charCount.toLocaleString()} chars, no issues`;
 
-  // Step 2: Compose — has the Generator output been recorded as a version?
+  // Step 2: Review & copy — has the assembled output been recorded as a version?
   // Amber when: (a) there are known issues, OR (b) no version exists, OR
   // (c) the current Generator output (charCount) differs from the last recorded version by >100 chars.
   // Case (c) is the key signal: the instructions have been updated in code but not yet recorded/applied.
@@ -591,14 +591,14 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
     : step2Drifted
     ? `Generator output (${charCount.toLocaleString()} chars) differs from last recorded version (${(latestVersion?.charCount ?? 0).toLocaleString()} chars) — record a new version`
     : latestVersion
-    ? `Last composed ${new Date(latestVersion.appliedAt).toLocaleDateString()} · ${latestVersion.charCount?.toLocaleString() ?? "?"} chars`
-    : "No version composed yet";
+    ? `Last recorded ${new Date(latestVersion.appliedAt).toLocaleDateString()} · ${latestVersion.charCount?.toLocaleString() ?? "?"} chars`
+    : "No version recorded yet";
 
   // Step 3: Apply to Manus — has the latest version been pasted into project settings?
   // Cascades from Step 2: if Step 2 needs action, Step 3 is also stale.
   const step3Status = step2NeedsAction ? "action" : latestVersion ? "done" : "action";
   const step3StatusText = step2NeedsAction
-    ? "Apply the new version after composing in Step 2"
+    ? "Apply the new version after reviewing and copying Step 2 output"
     : latestVersion
     ? `Applied ${new Date(latestVersion.appliedAt).toLocaleDateString()}`
     : "Not yet applied";
@@ -807,13 +807,13 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                       </div>
                     ))}
                     <p className="text-xs text-amber-700 dark:text-amber-400 pt-2 border-t border-amber-200 dark:border-amber-800">
-                      Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2 — Compose</button> to generate a corrected version.
+                      Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2 — Review &amp; copy</button> to review the corrected version.
                     </p>
                   </div>
                 )}
                 {allIssues.length === 0 && step2NeedsAction && (
                   <p className="text-xs text-amber-700 dark:text-amber-400">
-                    Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2 — Compose</button> to record and apply the updated version.
+                    Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2 — Review &amp; copy</button> to record and apply the updated version.
                   </p>
                 )}
                 {allIssues.length === 0 && !step2NeedsAction && (
@@ -885,14 +885,14 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
               {allIssues.length === 0 && !latestPublished && (
                 <div className="rounded-md border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 px-4 py-3">
                   <p className="text-xs text-amber-700 dark:text-amber-400">
-                    No version has been published yet. Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2</button> to compose and publish the first version.
+                    No version has been published yet. Go to <button onClick={() => setActiveStep(2)} className="font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity">Step 2</button> to review and publish the first version.
                   </p>
                 </div>
               )}
             </div>
           )}
 
-          {/* ── Step 2: Compose ── */}
+          {/* ── Step 2: Review & copy ── */}
           {activeStep === 2 && (
             <div className="px-5 py-6 space-y-6">
 
@@ -1204,7 +1204,7 @@ Do not create a plan or ask for confirmation — execute all steps immediately.`
                         {[
                           { id: "skill-update",      title: "BDS skill auto-update",            chars: 285, recommendation: "keep"     as const, reason: "Essential — fetches the latest BDS skill before every task." },
                           { id: "project-context",   title: "CODEBASE-CONTEXT.md guard",        chars: 448, recommendation: "keep"     as const, reason: "Essential — context compaction erases session memory." },
-                          { id: "skill-scan",        title: "Skill scan instruction",           chars: 340, recommendation: "replace"  as const, reason: "Superseded by the auto-generated trigger block in the Compose step." },
+                          { id: "skill-scan",        title: "Skill scan instruction",           chars: 340, recommendation: "replace"  as const, reason: "Superseded by the auto-generated trigger block in the Review & copy step." },
                           { id: "skill-update-post", title: "Post-task skill update",           chars: 440, recommendation: "compress" as const, reason: "Valuable but verbose — core directive is 60 chars." },
                           { id: "dev-workflow",      title: "ERI development workflow",         chars: 257, recommendation: "evaluate" as const, reason: "May be redundant if Manus already follows this loop by default." },
                           { id: "collab-skill",      title: "Apply exponential-human-ai-collaboration", chars: 91, recommendation: "replace" as const, reason: "Redundant once this skill is in Tier 1." },

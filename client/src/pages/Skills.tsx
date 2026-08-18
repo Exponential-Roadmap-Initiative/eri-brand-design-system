@@ -1391,7 +1391,7 @@ export default function Skills() {
         <>
         {isAdmin && (
           <div className="mb-4">
-            <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements or sync metadata from skill files. New skills are registered automatically via the sync script.</p>
+            <p className="text-xs text-muted-foreground">Logged in as admin — expand any skill to log improvements. Skill registry changes are temporarily subject to controlled BDS review during the security upgrade.</p>
           </div>
         )}
 
