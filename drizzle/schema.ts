@@ -1,4 +1,4 @@
-import { bigint, index, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { bigint, foreignKey, index, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -159,8 +159,8 @@ export const skillReleaseProposals = mysqlTable("skill_release_proposals", {
   proposedContent: text("proposed_content").notNull(),
   changeSummary: text("change_summary").notNull(),
   taskContext: varchar("task_context", { length: 256 }),
-  submittedByUserId: int("submitted_by_user_id").notNull().references(() => users.id),
-  reviewedByUserId: int("reviewed_by_user_id").references(() => users.id),
+  submittedByUserId: int("submitted_by_user_id").notNull(),
+  reviewedByUserId: int("reviewed_by_user_id"),
   reviewNote: varchar("review_note", { length: 1000 }),
   createdAt: bigint("created_at", { mode: "number" }).notNull(),
   updatedAt: bigint("updated_at", { mode: "number" }).notNull(),
@@ -168,6 +168,8 @@ export const skillReleaseProposals = mysqlTable("skill_release_proposals", {
 }, (table) => [
   index("idx_skill_release_proposals_status_created").on(table.status, table.createdAt),
   index("idx_skill_release_proposals_skill_created").on(table.skillId, table.createdAt),
+  foreignKey({ columns: [table.submittedByUserId], foreignColumns: [users.id], name: "fk_skill_proposal_submitter" }),
+  foreignKey({ columns: [table.reviewedByUserId], foreignColumns: [users.id], name: "fk_skill_proposal_reviewer" }),
 ]);
 export type SkillReleaseProposal = typeof skillReleaseProposals.$inferSelect;
 
@@ -175,13 +177,15 @@ export type SkillReleaseProposal = typeof skillReleaseProposals.$inferSelect;
 // Append-only audit trail. Events are never edited or deleted after creation.
 export const skillReleaseEvents = mysqlTable("skill_release_events", {
   id: int("id").primaryKey().autoincrement(),
-  proposalId: int("proposal_id").notNull().references(() => skillReleaseProposals.id),
+  proposalId: int("proposal_id").notNull(),
   eventType: mysqlEnum("event_type", ["submitted", "approved", "rejected", "released"]).notNull(),
-  actorUserId: int("actor_user_id").notNull().references(() => users.id),
+  actorUserId: int("actor_user_id").notNull(),
   note: varchar("note", { length: 1000 }),
   createdAt: bigint("created_at", { mode: "number" }).notNull(),
 }, (table) => [
   index("idx_skill_release_events_proposal_created").on(table.proposalId, table.createdAt),
+  foreignKey({ columns: [table.proposalId], foreignColumns: [skillReleaseProposals.id], name: "fk_skill_event_proposal" }),
+  foreignKey({ columns: [table.actorUserId], foreignColumns: [users.id], name: "fk_skill_event_actor" }),
 ]);
 export type SkillReleaseEvent = typeof skillReleaseEvents.$inferSelect;
 
@@ -190,9 +194,12 @@ export type SkillReleaseEvent = typeof skillReleaseEvents.$inferSelect;
 // release record behind the runtime skills-registry.json cache.
 export const skillRegistryReleases = mysqlTable("skill_registry_releases", {
   id: int("id").primaryKey().autoincrement(),
-  proposalId: int("proposal_id").notNull().unique().references(() => skillReleaseProposals.id),
+  proposalId: int("proposal_id").notNull().unique(),
   registrySnapshot: text("registry_snapshot").notNull(),
-  releasedByUserId: int("released_by_user_id").notNull().references(() => users.id),
+  releasedByUserId: int("released_by_user_id").notNull(),
   releasedAt: bigint("released_at", { mode: "number" }).notNull(),
-});
+}, (table) => [
+  foreignKey({ columns: [table.proposalId], foreignColumns: [skillReleaseProposals.id], name: "fk_skill_registry_proposal" }),
+  foreignKey({ columns: [table.releasedByUserId], foreignColumns: [users.id], name: "fk_skill_registry_releaser" }),
+]);
 export type SkillRegistryRelease = typeof skillRegistryReleases.$inferSelect;

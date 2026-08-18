@@ -42,12 +42,12 @@ CREATE TABLE `skill_release_proposals` (
 	CONSTRAINT `skill_release_proposals_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
-ALTER TABLE `skill_registry_releases` ADD CONSTRAINT `skill_registry_releases_proposal_id_skill_release_proposals_id_fk` FOREIGN KEY (`proposal_id`) REFERENCES `skill_release_proposals`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `skill_registry_releases` ADD CONSTRAINT `skill_registry_releases_released_by_user_id_users_id_fk` FOREIGN KEY (`released_by_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `skill_release_events` ADD CONSTRAINT `skill_release_events_proposal_id_skill_release_proposals_id_fk` FOREIGN KEY (`proposal_id`) REFERENCES `skill_release_proposals`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `skill_release_events` ADD CONSTRAINT `skill_release_events_actor_user_id_users_id_fk` FOREIGN KEY (`actor_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `skill_release_proposals` ADD CONSTRAINT `skill_release_proposals_submitted_by_user_id_users_id_fk` FOREIGN KEY (`submitted_by_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `skill_release_proposals` ADD CONSTRAINT `skill_release_proposals_reviewed_by_user_id_users_id_fk` FOREIGN KEY (`reviewed_by_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `skill_registry_releases` ADD CONSTRAINT `fk_skill_registry_proposal` FOREIGN KEY (`proposal_id`) REFERENCES `skill_release_proposals`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `skill_registry_releases` ADD CONSTRAINT `fk_skill_registry_releaser` FOREIGN KEY (`released_by_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `skill_release_events` ADD CONSTRAINT `fk_skill_event_proposal` FOREIGN KEY (`proposal_id`) REFERENCES `skill_release_proposals`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `skill_release_events` ADD CONSTRAINT `fk_skill_event_actor` FOREIGN KEY (`actor_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `skill_release_proposals` ADD CONSTRAINT `fk_skill_proposal_submitter` FOREIGN KEY (`submitted_by_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `skill_release_proposals` ADD CONSTRAINT `fk_skill_proposal_reviewer` FOREIGN KEY (`reviewed_by_user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX `idx_skill_release_events_proposal_created` ON `skill_release_events` (`proposal_id`,`created_at`);--> statement-breakpoint
 CREATE INDEX `idx_skill_release_proposals_status_created` ON `skill_release_proposals` (`status`,`created_at`);--> statement-breakpoint
 CREATE INDEX `idx_skill_release_proposals_skill_created` ON `skill_release_proposals` (`skill_id`,`created_at`);
