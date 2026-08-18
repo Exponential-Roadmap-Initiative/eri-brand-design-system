@@ -10,7 +10,7 @@
  *   3. Add / Log Improvement dialogs (admin only)
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Layers, Clock, Download, Code2, BookOpen, Palette, Shield, Search, Settings, Cloud, Music, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, BarChart2, PlusCircle, X, Activity, GitBranch, Plus, Pencil, Trash2, FileCheck2, Send, Rocket, XCircle } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -1298,6 +1298,36 @@ function ReleaseStatusBadge({ status }: { status: ReleaseStatus }) {
   return <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold" style={{ color: config.colour, borderColor: `${config.colour}70`, backgroundColor: config.background }}>{config.label}</span>;
 }
 
+type RevisionDiffLine = { kind: "same" | "added" | "removed"; text: string };
+
+function buildRevisionDiff(before: string, after: string): RevisionDiffLine[] {
+  const left = before.split("\n");
+  const right = after.split("\n");
+  const lcs = Array.from({ length: left.length + 1 }, () => Array<number>(right.length + 1).fill(0));
+  for (let leftIndex = left.length - 1; leftIndex >= 0; leftIndex -= 1) {
+    for (let rightIndex = right.length - 1; rightIndex >= 0; rightIndex -= 1) {
+      lcs[leftIndex][rightIndex] = left[leftIndex] === right[rightIndex]
+        ? lcs[leftIndex + 1][rightIndex + 1] + 1
+        : Math.max(lcs[leftIndex + 1][rightIndex], lcs[leftIndex][rightIndex + 1]);
+    }
+  }
+  const result: RevisionDiffLine[] = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] === right[rightIndex]) {
+      result.push({ kind: "same", text: left[leftIndex] }); leftIndex += 1; rightIndex += 1;
+    } else if (lcs[leftIndex + 1][rightIndex] >= lcs[leftIndex][rightIndex + 1]) {
+      result.push({ kind: "removed", text: left[leftIndex] }); leftIndex += 1;
+    } else {
+      result.push({ kind: "added", text: right[rightIndex] }); rightIndex += 1;
+    }
+  }
+  while (leftIndex < left.length) { result.push({ kind: "removed", text: left[leftIndex] }); leftIndex += 1; }
+  while (rightIndex < right.length) { result.push({ kind: "added", text: right[rightIndex] }); rightIndex += 1; }
+  return result;
+}
+
 function SkillReleaseQueue({ skills, onReleased }: { skills: Skill[]; onReleased: () => void }) {
   const utils = trpc.useUtils();
   const [selectedProposalId, setSelectedProposalId] = useState<number | null>(null);
@@ -1312,6 +1342,7 @@ function SkillReleaseQueue({ skills, onReleased }: { skills: Skill[]; onReleased
   const selected = selectedQuery.data?.proposal;
   const currentContentQuery = trpc.skills.getContent.useQuery({ id: selected?.skillId ?? "" }, { enabled: Boolean(selected?.skillId) });
   const formContentQuery = trpc.skills.getContent.useQuery({ id: form.skillId }, { enabled: showCreate && Boolean(form.skillId) });
+  const revisionDiff = useMemo(() => selected ? buildRevisionDiff(currentContentQuery.data ?? "", selected.proposedContent) : [], [currentContentQuery.data, selected]);
 
   const refresh = () => {
     utils.skillReleases.listProposals.invalidate();
@@ -1370,6 +1401,7 @@ function SkillReleaseQueue({ skills, onReleased }: { skills: Skill[]; onReleased
               <div><p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Current released content</p><pre className="max-h-72 overflow-auto rounded-md border border-border bg-muted/20 p-3 text-[11px] leading-relaxed text-muted-foreground whitespace-pre-wrap">{currentContentQuery.data ?? "New skill — no released content yet."}</pre></div>
               <div><p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Proposed revision</p><pre className="max-h-72 overflow-auto rounded-md border border-[#3ba559]/30 bg-[#3ba559]/5 p-3 text-[11px] leading-relaxed text-foreground whitespace-pre-wrap">{selected.proposedContent}</pre></div>
             </div>
+            <div className="mt-4 overflow-hidden rounded-md border border-border"><div className="flex items-center justify-between border-b border-border bg-muted/10 px-3 py-2"><p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Line-by-line revision diff</p><span className="text-[11px] text-muted-foreground"><span className="text-[#3ba559]">+ added</span> · <span className="text-[#dc2626]">− removed</span></span></div><pre className="max-h-80 overflow-auto p-2 text-[11px] leading-relaxed whitespace-pre-wrap">{revisionDiff.map((line, index) => <span key={`${line.kind}-${index}`} className={`block px-1 ${line.kind === "added" ? "bg-[#3ba559]/10 text-[#257a3a] dark:text-[#93E07D]" : line.kind === "removed" ? "bg-[#dc2626]/10 text-[#b91c1c] dark:text-[#fca5a5]" : "text-muted-foreground"}`}><span className="mr-2 inline-block w-3 select-none">{line.kind === "added" ? "+" : line.kind === "removed" ? "−" : " "}</span>{line.text || " "}</span>)}</pre></div>
             <div className="mt-4 rounded-md border border-border bg-muted/10 p-3"><p className="text-xs font-semibold text-foreground">Review history</p><div className="mt-2 space-y-2">{selectedQuery.data?.events.map((event) => <p key={event.id} className="text-xs text-muted-foreground"><span className="font-semibold text-foreground">{event.eventType}</span> · {new Date(event.createdAt).toLocaleString("en-GB")}{event.note ? ` — ${event.note}` : ""}</p>)}</div></div>
             {selected.status === "submitted" && <div className="mt-4 space-y-2"><Textarea value={decisionNote} onChange={(event) => setDecisionNote(event.target.value)} placeholder="Review note (required if rejecting)" className="min-h-20 text-xs" /><div className="flex flex-wrap gap-2"><Button size="sm" variant="outline" onClick={() => reviewMutation.mutate({ proposalId: selected.id, decision: "rejected", reviewNote: decisionNote })} disabled={reviewMutation.isPending}><XCircle className="mr-1 h-3.5 w-3.5" /> Reject</Button><Button size="sm" className="bg-[#3ba559] hover:bg-[#2f8c4d]" onClick={() => reviewMutation.mutate({ proposalId: selected.id, decision: "approved", reviewNote: decisionNote || undefined })} disabled={reviewMutation.isPending}><CheckCircle2 className="mr-1 h-3.5 w-3.5" /> Approve</Button></div></div>}
             {selected.status === "approved" && <div className="mt-4 flex items-center justify-between gap-3 rounded-md border border-[#3ba559]/40 bg-[#3ba559]/5 p-3"><p className="text-xs text-foreground/80">Approval is recorded. Promotion will create an immutable release snapshot and update the runtime registry.</p><Button size="sm" className="shrink-0 bg-[#93E07D] text-[#232323] hover:bg-[#82cf6d]" onClick={() => releaseMutation.mutate({ proposalId: selected.id })} disabled={releaseMutation.isPending}><Rocket className="mr-1 h-3.5 w-3.5" /> Release</Button></div>}

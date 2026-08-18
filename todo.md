@@ -23,15 +23,17 @@
 - [ ] Add bds-meta.json to Trust site
 - [ ] Update HAL's bds-meta.json to canonical object format
 - [x] Contain the BDS agent-secret exposure without removing the public Skills preview experience
-- [ ] Replace body-carried shared-secret agent-sync access with a controlled, revocable authentication path
-- [ ] Make skill synchronisation fail closed, preview-first, and non-destructive; remove unattended source rewrites
-- [ ] Define a versioned skill proposal lifecycle with immutable reviewer and release audit records
-- [ ] Add database tables and migration for proposed skill revisions, proposal status, reviewer decisions, and release snapshots
-- [ ] Add administrator-only procedures to create, list, review, reject, and approve skill proposals
+- [x] Replace body-carried shared-secret agent-sync access with a controlled, revocable authentication path
+- [x] Make skill synchronisation fail closed, preview-first, and non-destructive; remove unattended source rewrites
+- [x] Define a versioned skill proposal lifecycle with immutable reviewer and release audit records
+- [x] Add database tables and migration for proposed skill revisions, proposal status, reviewer decisions, and release snapshots
+- [x] Add administrator-only procedures to create, list, review, reject, and approve skill proposals
 - [ ] Build the BDS administrator review queue with proposal details and readable revision diffs
-- [ ] Promote approved proposals into the runtime registry through a controlled, auditable release action
+- [x] Promote approved proposals into the runtime registry through a controlled, auditable release action
 - [ ] Add tests for proposal permissions, status transitions, immutable audit history, and controlled promotion
-- [ ] Update eri-skill-creator Step 8 to replace the paused shared-secret sync with the reviewed BDS release-queue hand-off
+- [x] Update eri-skill-creator Step 8 to replace the paused shared-secret sync with the reviewed BDS release-queue hand-off
+- [ ] Add line-level added/removed revision highlighting to the administrator proposal review view
+- [ ] Add release-promotion regression coverage for approved-only promotion, immutable snapshot creation, and runtime registry persistence
 - [x] Restrict the BDS metadata proxy to registered ERI domains and safe response types
 - [x] Correct immediate accessibility template defects: zoom, route titles, skip link, and reduced-motion support
 - [x] Add focused regression tests for skill-sync safety, agent-sync authentication, and proxy allowlisting
