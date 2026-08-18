@@ -31,11 +31,12 @@ This section records key identifiers and version pins that any agent can verify 
 | `@eri/components` package pin | v2.18.0 | 2026-06-11 |
 | Published project instructions version | v2026.06.22 (id=120001, 5410 chars) — pkill, compaction hard stop, eri-cpr-app/eri-ef-app/eri-emissions/eri-job-status-modal in Tier 3 | 2026-06-22 |
 | Skills registry entry count | 30 skills in SKILLS_METADATA (includes eri-ef-app v2.0.0, eri-cpr-app v1.0.0) | 2026-06-18 |
-| Heartbeat auto-sync | Active — runs 5s after startup + every hour | 2026-06-11 |
-| BDS_AGENT_SECRET | Embedded in eri-skill-creator SKILL.md Step 8 | 2026-06-11 |
-| skills-registry.json | Runtime hot-reload artefact at project root — in .gitignore, written by syncMetadataFromFilesImpl() | 2026-06-18 |
+| Heartbeat auto-sync | Disabled — unattended registry mutation is replaced by administrator-approved skill releases | 2026-08-18 |
+| BDS_AGENT_SECRET | Managed BDS environment secret; never embed, distribute, or use it for agent-originated writes | 2026-08-18 |
+| skills-registry.json | Runtime cache at project root — in .gitignore, written only on approved release and hydrated from the latest immutable DB snapshot at startup | 2026-08-18 |
 | skill_evolution_log table | DB table recording all skill add/update/remove events with syncRunId, triggerSource, taskName | 2026-06-18 |
-| /skills page | Two tabs: Skills Library (existing) + Skills Evolution (auto-generated audit trail) | 2026-06-18 |
+| skill release storage | `skill_release_proposals`, append-only `skill_release_events`, and immutable `skill_registry_releases` snapshots | 2026-08-18 |
+| /skills page | Skills Library, Skills Evolution, and administrator-only Release queue with line-level revision diff | 2026-08-18 |
 | /project-instructions Step 2 | Redesigned as read-only "Review & copy" — no editing affordances | 2026-06-18 |
 | CURRENT_INSTRUCTIONS Tier 3 | eri-exponential-framework removed; eri-job-status-modal, eri-emissions, eri-cpr-app, eri-ef-app added | 2026-06-18 |
 
