@@ -43,6 +43,7 @@
 - [x] Add unit coverage confirming floating component pins are not treated as current releases
 - [x] Rename antiAi.noBlacklistedCopyWords to noAiTellWords with a backward-compatible metadata migration and changelog
 - [ ] Reconcile the visible BDS release label `V.2026.06.08` with the current deployed governance release
+- [ ] Add regression coverage for the canonical BDS release label
 - [x] Add line-level added/removed revision highlighting to the administrator proposal review view
 - [x] Add release-promotion regression coverage for approved-only promotion, immutable snapshot creation, and runtime registry persistence
 - [x] Restrict the BDS metadata proxy to registered ERI domains and safe response types

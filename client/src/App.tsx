@@ -16,8 +16,9 @@ import ProjectInstructions from "./pages/ProjectInstructions";
 import BdsNavDrawer from "./components/BdsNavDrawer";
 import { EriAppHeader } from "@eri/components";
 import { useEffect, useState } from "react";
+import { BDS_RELEASE_LABEL } from "@shared/bdsRelease";
 
-const APP_VERSION = "V.2026.06.08";
+const APP_VERSION = BDS_RELEASE_LABEL;
 const PAGE_TITLES: Record<string, string> = {
   "/": "Overview",
   "/governance": "Governance",
