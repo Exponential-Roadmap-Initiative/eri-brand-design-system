@@ -40,6 +40,7 @@
 - [x] Correct the semantic-surface guidance: bg-background for page shells and bg-card for contained surfaces
 - [ ] Bump and validate the updated eri-bds-site skill, then submit it through the Release queue when administrator access is restored
 - [ ] Treat floating @eri/components pins such as main as amber/unpinned in the Alignment Tracker
+- [ ] Add unit coverage confirming floating component pins are not treated as current releases
 - [ ] Rename antiAi.noBlacklistedCopyWords to noAiTellWords with a backward-compatible metadata migration and changelog
 - [x] Add line-level added/removed revision highlighting to the administrator proposal review view
 - [x] Add release-promotion regression coverage for approved-only promotion, immutable snapshot creation, and runtime registry persistence

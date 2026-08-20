@@ -12,6 +12,7 @@ import { useEffect, useState, useCallback } from "react";
 import { PageGuide } from "@/components/PageGuide";
 import { PROJECT_REGISTRY, getBdsMetaUrl } from "@/data/projectRegistry";
 import type { BdsMeta, ProjectFetchResult, ComponentName } from "@/data/bdsMetaTypes";
+import { isCurrentReleasedComponentPin } from "@/lib/componentPin";
 import { ERI_COMPONENTS_VERSION } from "@shared/eriVersion";
 
 // ── Constants ─────────────────────────────────────────────────────────────────────────────────
@@ -161,7 +162,7 @@ function ComponentCell({ used, compliant }: { used?: boolean; compliant?: boolea
 
 function VersionBadge({ pin }: { pin?: string }) {
   if (!pin) return <Dash />;
-  const latest = pin === LATEST_VERSION;
+  const latest = isCurrentReleasedComponentPin(pin, LATEST_VERSION);
   const behind = !latest;
   return (
     <span
