@@ -117,7 +117,7 @@ export interface BdsMeta {
   displayName: string;
   /** Canonical deployed URL */
   url: string;
-  /** Current @eri/components pin, e.g. "v2.11.1" or "main" */
+  /** Current immutable @eri/components release pin, e.g. "v2.11.1". Floating values such as "main" are reported as amber/unpinned. */
   eriComponentsPin: string;
   /** How the pre-built CSS is imported */
   cssImportMethod: CssImportMethod;

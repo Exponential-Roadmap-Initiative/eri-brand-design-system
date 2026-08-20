@@ -34,10 +34,11 @@
 - [x] Update eri-skill-creator Step 8 to replace the paused shared-secret sync with the reviewed BDS release-queue hand-off
 - [ ] Submit, review, and promote eri-skill-creator v2.15.0 as the first live controlled BDS skill release
 - [ ] Remove the obsolete secret-dependent sync script from the eri-skill-creator package before its v2.15.0 release
-- [ ] Gate Manus runtime and debug Vite plugins to development mode and verify the production build output
-- [ ] Replace stale Google Fonts CDN guidance with the canonical self-hosted WOFF2 and GDPR rule
+- [x] Gate Manus runtime and debug Vite plugins to development mode and verify the production build output
+- [x] Replace stale Google Fonts CDN guidance with the canonical self-hosted WOFF2 and GDPR rule
 - [ ] Align the eri-bds-site skill’s stale font and colour instructions with the canonical BDS rules
-- [ ] Correct the semantic-surface guidance: bg-background for page shells and bg-card for contained surfaces
+- [x] Correct the semantic-surface guidance: bg-background for page shells and bg-card for contained surfaces
+- [ ] Bump and validate the updated eri-bds-site skill, then submit it through the Release queue when administrator access is restored
 - [ ] Treat floating @eri/components pins such as main as amber/unpinned in the Alignment Tracker
 - [ ] Rename antiAi.noBlacklistedCopyWords to noAiTellWords with a backward-compatible metadata migration and changelog
 - [x] Add line-level added/removed revision highlighting to the administrator proposal review view

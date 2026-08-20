@@ -76,7 +76,7 @@ static file serving.
 | `project` | string | Short project code, e.g. `"hal"`, `"psm"`, `"taxonomy"` |
 | `displayName` | string | Full human-readable project name |
 | `url` | string | Canonical deployed URL |
-| `eriComponentsPin` | string | Current `@eri/components` pin, e.g. `"v2.15.3"` |
+| `eriComponentsPin` | string | Immutable `@eri/components` release pin, e.g. `"v2.15.3"`. Floating values such as `"main"` are shown as amber/unpinned by the tracker and must not be used for a production compliance claim. |
 | `cssImportMethod` | string | `"dist"` (correct) or `"source-workaround"` (legacy) or `"none"` |
 | `components` | object | One entry per standard component — see Component fields below |
 | `knownViolations` | array | Known non-conformant patterns for `used: true` components only |

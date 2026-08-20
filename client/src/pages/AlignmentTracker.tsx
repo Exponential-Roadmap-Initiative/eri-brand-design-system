@@ -161,7 +161,7 @@ function ComponentCell({ used, compliant }: { used?: boolean; compliant?: boolea
 
 function VersionBadge({ pin }: { pin?: string }) {
   if (!pin) return <Dash />;
-  const latest = pin === LATEST_VERSION || pin === "main";
+  const latest = pin === LATEST_VERSION;
   const behind = !latest;
   return (
     <span

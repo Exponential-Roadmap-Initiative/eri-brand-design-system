@@ -150,11 +150,11 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ command }) => ({
   plugins: [
     react(),
     tailwindcss(),
-    ...(mode === "development"
+    ...(command === "serve"
       ? [jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()]
       : []),
   ],
