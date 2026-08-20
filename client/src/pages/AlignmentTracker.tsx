@@ -94,11 +94,11 @@ function StatusDot({ status }: { status: RowStatus }) {
  * Rules (in priority order):
  *   red   — any component with used:true AND compliant:false, OR any knownViolations
  *           entry whose component key maps to a used:true component
- *   amber — cssImportMethod is "source-workaround", OR eriComponentsPin is more than
- *           one minor version behind LATEST_VERSION
+ *   amber — cssImportMethod is "source-workaround", OR eriComponentsPin is missing,
+ *           floating/unparseable, or more than one minor version behind LATEST_VERSION
  *   green — everything else (including used:false components with knownViolations notes)
  */
-function deriveStatus(meta: BdsMeta | undefined): RowStatus {
+export function deriveStatus(meta: BdsMeta | undefined): RowStatus {
   if (!meta) return "unknown";
 
   // Build a set of component keys that are actively used
@@ -137,12 +137,13 @@ function deriveStatus(meta: BdsMeta | undefined): RowStatus {
   // Amber: package pin is more than one minor version behind
   const pinMatch    = (meta.eriComponentsPin ?? "").match(/v?(\d+)\.(\d+)/);
   const latestMatch = LATEST_VERSION.match(/v?(\d+)\.(\d+)/);
-  if (pinMatch && latestMatch) {
-    const pinMinor    = parseInt(pinMatch[2], 10);
-    const latestMinor = parseInt(latestMatch[2], 10);
-    if (parseInt(pinMatch[1], 10) < parseInt(latestMatch[1], 10)) return "amber";
-    if (latestMinor - pinMinor > 1) return "amber";
-  }
+  // Missing and floating pins (for example `main` or `github:org/repo#main`)
+  // are not reproducible releases and must never receive a green overall status.
+  if (!pinMatch || !latestMatch) return "amber";
+  const pinMinor    = parseInt(pinMatch[2], 10);
+  const latestMinor = parseInt(latestMatch[2], 10);
+  if (parseInt(pinMatch[1], 10) < parseInt(latestMatch[1], 10)) return "amber";
+  if (latestMinor - pinMinor > 1) return "amber";
 
   return "green";
 }

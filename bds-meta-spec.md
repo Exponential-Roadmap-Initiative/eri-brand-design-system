@@ -1,5 +1,5 @@
 
-# Version: 1.3 | 2026-05-26
+# Version: 1.4 | 2026-08-20
 
 ## Purpose
 Each ERI project publishes a static `bds-meta.json` file at the root of its deployed site
@@ -12,11 +12,11 @@ fetches this file from all known projects and renders a live compliance dashboar
 This file is served at `https://{project-domain}/bds-meta.json` automatically by Vite's
 static file serving.
 
-## Schema (v1.3)
+## Schema (v1.4)
 
 ```json
 {
-  "schemaVersion": "1.3",
+  "schemaVersion": "1.4",
   "project": "hal",
   "displayName": "Human-AI Lab",
   "url": "https://human-ai-lab.exponentialroadmap.org",
@@ -53,7 +53,7 @@ static file serving.
     "overlayBackground":     true
   },
   "antiAi": {
-    "noBlacklistedCopyWords":     true,
+    "noAiTellWords":              true,
     "noPurpleGradientOrSparkles": true,
     "ctasDescribeOutcome":        true,
     "statisticsAreReal":          true,
