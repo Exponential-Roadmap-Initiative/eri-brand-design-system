@@ -199,3 +199,26 @@ The live API (`/api/project-instructions/latest`) was serving v2026.06.11 (4,048
 
 - BDS production deployment verified on 2026-08-18. Live `/skills` exposes the controlled Release queue, the legacy agent-sync endpoint returns `410 SKILL_SYNC_PAUSED`, and an unregistered metadata target returns `403`.
 - Rotate the database credential as a separate, controlled maintenance action; the agent credential is already rotated. Do not restore the legacy external synchronisation route.
+
+---
+
+## Pre-launch guidance and reproducibility corrections (2026-08-20)
+
+### Completed
+
+- Gated the Manus runtime, JSX-location, and debug-collector Vite plugins to the development server while retaining the object-form configuration required by the custom Vite middleware. An explicit production build produced a 2.41 kB HTML entrypoint instead of the prior 369 kB development-instrumented output; the restarted development server again serves `/src/main.tsx` as JavaScript.
+- Replaced stale Google Fonts CDN instructions with the canonical self-hosted WOFF2/GDPR guidance in BDS documentation and the `eri-bds-site` skill. Corrected semantic surface guidance: `bg-background` for page shells and `bg-card` for contained surfaces.
+- Changed Alignment Tracker pin classification so only the exact generated `@eri/components` release is current. `main`, `latest`, absent, and older pins are amber/unpinned. Added a focused five-case Vitest regression test.
+- Released schema v1.4 guidance: `antiAi.noAiTellWords` is canonical; legacy `antiAi.noBlacklistedCopyWords` remains readable in the tracker for v1.3 compatibility. Updated the type, templates, BDS metadata, specification and public changelog.
+
+### Verification
+
+- Explicit production build: passed; 1,797 modules transformed and 2.41 kB `dist/public/index.html`.
+- Focused regression suite: 7 files / 17 tests passed.
+- Preview verified: `/tracker` renders, its template emits schema v1.4 and `noAiTellWords`, and Vite now serves the client entrypoint as JavaScript.
+
+### Pending
+
+- `eri-bds-site` v1.0.1 is corrected and structurally checked locally, but must be submitted through the administrator Release queue when BDS admin access is restored.
+- The same access blocker prevents the first live `eri-skill-creator` v2.15.0 controlled release.
+- The visible BDS version label still reads `V.2026.06.08` and requires release-coherency cleanup.

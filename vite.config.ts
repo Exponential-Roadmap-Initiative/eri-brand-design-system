@@ -150,11 +150,13 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-export default defineConfig(({ command }) => ({
+const isDevelopmentServer = process.env.NODE_ENV === "development";
+
+export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    ...(command === "serve"
+    ...(isDevelopmentServer
       ? [jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()]
       : []),
   ],
@@ -188,4 +190,4 @@ export default defineConfig(({ command }) => ({
       deny: ["**/.*"],
     },
   },
-}));
+});

@@ -39,9 +39,10 @@
 - [ ] Align the eri-bds-site skill’s stale font and colour instructions with the canonical BDS rules
 - [x] Correct the semantic-surface guidance: bg-background for page shells and bg-card for contained surfaces
 - [ ] Bump and validate the updated eri-bds-site skill, then submit it through the Release queue when administrator access is restored
-- [ ] Treat floating @eri/components pins such as main as amber/unpinned in the Alignment Tracker
-- [ ] Add unit coverage confirming floating component pins are not treated as current releases
-- [ ] Rename antiAi.noBlacklistedCopyWords to noAiTellWords with a backward-compatible metadata migration and changelog
+- [x] Treat floating @eri/components pins such as main as amber/unpinned in the Alignment Tracker
+- [x] Add unit coverage confirming floating component pins are not treated as current releases
+- [x] Rename antiAi.noBlacklistedCopyWords to noAiTellWords with a backward-compatible metadata migration and changelog
+- [ ] Reconcile the visible BDS release label `V.2026.06.08` with the current deployed governance release
 - [x] Add line-level added/removed revision highlighting to the administrator proposal review view
 - [x] Add release-promotion regression coverage for approved-only promotion, immutable snapshot creation, and runtime registry persistence
 - [x] Restrict the BDS metadata proxy to registered ERI domains and safe response types
