@@ -225,7 +225,7 @@ function checklistScore(meta: BdsMeta | undefined): { score: number; total: numb
     layout?.sourcePropsPresent,
     layout?.noStaleComponentNames,
     layout?.overlayBackground,
-    antiAi?.noBlacklistedCopyWords,
+    antiAi?.noAiTellWords ?? antiAi?.noBlacklistedCopyWords,
     antiAi?.noPurpleGradientOrSparkles,
     antiAi?.ctasDescribeOutcome,
     antiAi?.statisticsAreReal,
@@ -637,7 +637,7 @@ export default function AlignmentTracker() {
                         overlayBackground:     false,
                       },
                       antiAi: {
-                        noBlacklistedCopyWords:     false,
+                        noAiTellWords:               false,
                         noPurpleGradientOrSparkles: false,
                         ctasDescribeOutcome:        false,
                         statisticsAreReal:          false,
@@ -696,7 +696,7 @@ export default function AlignmentTracker() {
     "overlayBackground":     false
   },
   "antiAi": {
-    "noBlacklistedCopyWords":     false,
+    "noAiTellWords":               false,
     "noPurpleGradientOrSparkles": false,
     "ctasDescribeOutcome":        false,
     "statisticsAreReal":          false,

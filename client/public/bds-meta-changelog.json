@@ -108,6 +108,18 @@
         }
       },
       "migrationNote": "Add the antiAi block with all values set to false. Run the A1 grep command (see https://bds.exponentialroadmap.org/tracker Quick Verification Commands) to check for blacklisted words. Set each field to true when the condition is genuinely met. Full checklist definitions: https://bds.exponentialroadmap.org/tracker#checklist"
+    },
+    {
+      "version": "1.4",
+      "date": "2026-08-20",
+      "description": "Renamed antiAi.noBlacklistedCopyWords to antiAi.noAiTellWords. The new name describes the design objective without spreading the legacy blacklist terminology.",
+      "fieldsAdded": [
+        "antiAi.noAiTellWords"
+      ],
+      "fieldsDeprecated": [
+        "antiAi.noBlacklistedCopyWords"
+      ],
+      "migrationNote": "Rename antiAi.noBlacklistedCopyWords to antiAi.noAiTellWords without changing its boolean value. The tracker reads the legacy field for schema v1.3 compatibility, but all new and updated metadata must use noAiTellWords."
     }
   ]
 }

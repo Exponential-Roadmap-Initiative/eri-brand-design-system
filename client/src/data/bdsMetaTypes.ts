@@ -80,7 +80,9 @@ export interface BrandCompliance {
  * These checks guard against the most common AI-generated UI tells.
  */
 export interface AntiAiCompliance {
-  /** No blacklisted AI copy words (Unlock, Empower, Seamless, Leverage, Holistic, etc.) in any user-visible text */
+  /** No common AI-tell copy words in any user-visible text. Canonical from schema v1.4. */
+  noAiTellWords?: boolean;
+  /** @deprecated Schema v1.3 compatibility only. Migrate to noAiTellWords. */
   noBlacklistedCopyWords?: boolean;
   /** No purple/indigo gradient hero and no decorative emoji (✨ etc.) in headings */
   noPurpleGradientOrSparkles?: boolean;
@@ -110,7 +112,7 @@ export interface LayoutCompliance {
 }
 
 export interface BdsMeta {
-  schemaVersion: "1.0" | "1.1" | "1.2" | "1.3";
+  schemaVersion: "1.0" | "1.1" | "1.2" | "1.3" | "1.4";
   /** Short project code matching PROJECT_REGISTRY id */
   project: string;
   /** Full human-readable project name */

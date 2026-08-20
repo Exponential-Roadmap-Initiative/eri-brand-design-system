@@ -72,7 +72,7 @@ static file serving.
 
 | Field | Type | Description |
 |---|---|---|
-| `schemaVersion` | string | Current schema version (`"1.3"`). Check `https://bds.exponentialroadmap.org/bds-meta-changelog.json` for the latest version. |
+| `schemaVersion` | string | Current schema version (`"1.4"`). Check `https://bds.exponentialroadmap.org/bds-meta-changelog.json` for the latest version. |
 | `project` | string | Short project code, e.g. `"hal"`, `"psm"`, `"taxonomy"` |
 | `displayName` | string | Full human-readable project name |
 | `url` | string | Canonical deployed URL |
@@ -133,11 +133,13 @@ These fields guard against the most common AI-generated UI and copy tells.
 
 | Field | Type | Pass condition |
 |---|---|---|
-| `antiAi.noBlacklistedCopyWords` | boolean | No blacklisted AI copy words (Unlock, Empower, Seamless, Leverage, Holistic, Transformative, Cutting-edge, Delve, Elevate, Revolutionise) in any user-visible text |
+| `antiAi.noAiTellWords` | boolean | No common AI-tell copy words (Unlock, Empower, Seamless, Leverage, Holistic, Transformative, Cutting-edge, Delve, Elevate, Revolutionise) in any user-visible text. Canonical from schema v1.4. |
 | `antiAi.noPurpleGradientOrSparkles` | boolean | No purple/indigo gradient hero; no decorative emoji (✨🚀💡) in headings |
 | `antiAi.ctasDescribeOutcome` | boolean | Primary CTAs describe the action and outcome — not generic verbs (Unlock, Discover, Explore, Get Started, Learn More) without a specific object |
 | `antiAi.statisticsAreReal` | boolean | All statistics shown are real and specific — no round-number invented figures (100+, 500+, 1,000+) |
 | `antiAi.noIdenticalSectionSequence` | boolean | Page structure avoids the identical AI section sequence (Hero → 3 cards → testimonials → CTA → footer) without deliberate variation |
+
+> **Schema v1.3 compatibility:** the tracker continues to read `antiAi.noBlacklistedCopyWords` from older metadata files. New or updated files must use `antiAi.noAiTellWords`; the legacy field is deprecated and will be removed in a future schema version.
 
 **Quick A1 verification command:**
 ```bash
