@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isCurrentReleasedComponentPin } from "./componentPin";
+import { isCurrentReleasedComponentPin } from "../client/src/lib/componentPin";
 
 describe("isCurrentReleasedComponentPin", () => {
   const latest = "v2.18.0";
