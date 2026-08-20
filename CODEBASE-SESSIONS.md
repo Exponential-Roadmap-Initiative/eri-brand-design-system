@@ -222,3 +222,20 @@ The live API (`/api/project-instructions/latest`) was serving v2026.06.11 (4,048
 - `eri-bds-site` v1.0.1 is corrected and structurally checked locally, but must be submitted through the administrator Release queue when BDS admin access is restored.
 - The same access blocker prevents the first live `eri-skill-creator` v2.15.0 controlled release.
 - The visible BDS version label still reads `V.2026.06.08` and requires release-coherency cleanup.
+
+---
+
+## Post-review residual correction (2026-08-20)
+
+An independent Git review correctly found that the first floating-pin correction only affected the badge, not `deriveStatus()`: a missing or branch-based `eriComponentsPin` could bypass the version check and incorrectly return green.
+
+### Completed
+
+- `deriveStatus()` now returns amber for absent, `main`, `latest`, and Git branch pins before it can return green. The tracker documentation now states this rule explicitly.
+- Added `server/bdsMetaStatus.test.ts`, covering the exact release plus four missing/floating pin forms. All five assertions passed.
+- Corrected the top-level `bds-meta-spec.md` copy-paste example to schema v1.4 and `antiAi.noAiTellWords`; it was the final public generator surface still emitting `noBlacklistedCopyWords`.
+- Production build passed after the correction: 1,798 modules transformed; 2.41 kB HTML entrypoint.
+
+### Pending
+
+- Publish the residual correction checkpoint and verify the live tracker. The post-review version-label correction is included separately in the same pending publication sequence.
