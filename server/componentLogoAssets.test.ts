@@ -33,6 +33,9 @@ describe("packaged ERI logo assets", () => {
     expect(header).toContain("ERI_LOGO_DARK_SRC");
     expect(header).toContain("ERI_LOGO_LIGHT_SRC");
     expect(footer).toContain("ERI_LOGO_DARK_SRC");
-    expect(`${header}\n${footer}`).not.toContain("eri-logo-dark-mode.svg");
+    expect(header).toMatch(
+      /const logoSrc = isHeaderDark \? ERI_LOGO_DARK_SRC : ERI_LOGO_LIGHT_SRC;/,
+    );
+    expect(footer).toMatch(/src=\{ERI_LOGO_DARK_SRC\}/);
   });
 });
