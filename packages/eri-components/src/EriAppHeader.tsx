@@ -87,14 +87,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { EriStatusBadge, EriStatusValue } from './EriStatusBadge';
 import { EriContactUsButton } from './EriContactUsButton';
-
-const CDN = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ';
-
-// ERI wordmark — dark-mode SVG variant (white text + green X). Used on dark (#232323) backgrounds.
-const ERI_LOGO_DARK = `${CDN}/eri-logo-dark-mode.svg`;
-
-// ERI wordmark — full-colour SVG variant (dark text + green X). Used on light (#FFFFFF) backgrounds.
-const ERI_LOGO_LIGHT = `${CDN}/eri-logo-full-color.svg`;
+import { ERI_LOGO_DARK_SRC, ERI_LOGO_LIGHT_SRC } from './eriLogoAssets';
 
 const STORAGE_KEY = 'eri-theme';
 
@@ -235,7 +228,7 @@ export function EriAppHeader({
   // Resolve header appearance based on headerTheme prop and active theme
   const isHeaderDark = headerTheme === 'dark' || isDark;
   const headerBg = isHeaderDark ? '#232323' : '#FFFFFF';
-  const logoSrc = isHeaderDark ? ERI_LOGO_DARK : ERI_LOGO_LIGHT;
+  const logoSrc = isHeaderDark ? ERI_LOGO_DARK_SRC : ERI_LOGO_LIGHT_SRC;
   const appNameColor = isHeaderDark ? '#FFFFFF' : '#1A1A1A';
   const pipeDividerColor = isHeaderDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)';
   const versionColor = isHeaderDark ? '#9ca3af' : '#6b7280';

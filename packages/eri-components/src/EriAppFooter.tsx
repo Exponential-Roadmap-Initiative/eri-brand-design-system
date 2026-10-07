@@ -32,6 +32,7 @@
  * BDS reference: https://bds.exponentialroadmap.org/#standard-components
  */
 import React from 'react';
+import { ERI_LOGO_DARK_SRC } from './eriLogoAssets';
 
 export interface AppLink {
   /** Display label for the app-specific link in the About column */
@@ -172,7 +173,7 @@ export function EriAppFooter({ appName, tagline, attribution, appLink }: EriAppF
           style={{ display: 'inline-block' }}
         >
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663319595517/5mtZtU66sMbsnmPoVbf6UJ/eri-logo-dark-mode.svg"
+            src={ERI_LOGO_DARK_SRC}
             alt="Exponential Roadmap Initiative"
             style={{ height: '28px', width: 'auto' }}
           />

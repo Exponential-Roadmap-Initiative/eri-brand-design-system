@@ -1156,3 +1156,31 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [x] Replace with clear read-only preview: "Review & Copy" heading, two labelled read-only sections
 - [x] Update CURRENT_INSTRUCTIONS Tier 3: remove eri-exponential-framework, add eri-job-status-modal, eri-emissions, eri-ef-app, eri-cpr-app
 - [x] Save checkpoint v3.40.0
+
+
+## Active investigation — shared ERI logotype failure (2026-10-07)
+
+- [x] Trace the canonical `EriAppHeader` logo source, package version, and asset URL response.
+- [x] Compare the BDS header with representative consuming-site header implementations to distinguish a shared asset failure from BDS-local rendering.
+- [x] Verify browser-visible request, MIME type, cache headers, and SVG content at the affected logo URL.
+- [x] Identify the lowest-risk remediation, document scope across sites, and obtain implementation acceptance before changing shared production behavior.
+
+### Shared ERI logotype diagnosis — findings (2026-10-07)
+
+- [x] Confirmed the shared header uses the BDS-managed `eri-logo-dark-mode.svg` object for every dark header.
+- [x] Confirmed the BDS and Earth-Aligned AI Lab headers both fail with the same source URL and a zero-size decoded image.
+- [x] Identified the delivery fault: all audited shared SVG wordmarks/icon marks return `Content-Type: application/octet-stream` with `X-Content-Type-Options: nosniff`; browsers reject the valid SVG payloads as images.
+- [x] Confirmed working raster alternatives (`eri-logo-full-color.webp` and the PNG) load normally, isolating the fault to shared SVG response metadata rather than site code or layout.
+- [x] Obtain acceptance for the recommended zero-code remediation: restore `image/svg+xml` metadata for the three existing stable SVG asset URLs (`eri-logo-dark-mode.svg`, `eri-logo-full-color.svg`, `eri-icon-mark-dark-mode.svg`) and verify all live headers.
+- [ ] If storage metadata cannot be corrected in place, design and implement a versioned raster/fallback component release, then coordinate consuming-site upgrades.
+- [x] Establish that Option A cannot be completed through the available BDS/WebDev credentials. The standard uploader produces a new managed-storage key with correct `image/svg+xml` metadata, but cannot replace the existing public CloudFront object or alter its metadata. No AWS/S3 credential or authorised asset-metadata control is present. The uploaded verification object is unreferenced and has no production effect.
+- [x] Use the ERI administrator mandate to locate an authorised BDS object-metadata update path. The BDS storage interface and administrator browser session expose no direct object-metadata control, so an in-place Manus delivery-layer escalation is active; no source fallback will be started unless that repair path fails.
+- [x] Submitted an authorised in-place repair escalation to Manus API Support from the ERI administrator mailbox, specifying the three public URLs, required `image/svg+xml` response type, inline rendering, and CDN invalidation if required (2026-10-07).
+- [ ] On confirmation from Manus, verify MIME headers and rendered dimensions for BDS plus representative consuming sites; if the repair is declined or cannot preserve stable URLs, activate the separately planned versioned component fallback.
+
+### ERI-controlled shared-logo recovery (2026-10-07)
+
+- [ ] Validate a self-contained `@eri/components` logo fallback that does not depend on the misconfigured SVG object.
+- [ ] Identify which deployed ERI sites can be directly rebuilt from the administrator workspace and whether their component dependency is auto-updated or pinned.
+- [ ] Present recovery options separating immediate global repair (delivery-layer only) from an ERI-controlled central component release plus coordinated redeployments.
+- [ ] Implement only the accepted recovery path, preserving the canonical white wordmark and green mark without the deprecated CSS inversion filter.
