@@ -1184,3 +1184,12 @@ Source ID: keep as "hal" (stable internal ID — do not change)
 - [ ] Identify which deployed ERI sites can be directly rebuilt from the administrator workspace and whether their component dependency is auto-updated or pinned.
 - [ ] Present recovery options separating immediate global repair (delivery-layer only) from an ERI-controlled central component release plus coordinated redeployments.
 - [ ] Implement only the accepted recovery path, preserving the canonical white wordmark and green mark without the deprecated CSS inversion filter.
+
+### Self-contained shared-header logo release — v2.18.1 (2026-10-07)
+
+- [x] Package the canonical dark and full-colour ERI wordmarks as immutable SVG data URIs within `@eri/components`.
+- [x] Switch `EriAppHeader` and `EriAppFooter` to the package-owned assets, removing runtime dependency on the misconfigured public SVG objects.
+- [x] Add focused regression coverage; build component CSS; validate the production bundle and confirm the development header renders the data URI at a 576×106 intrinsic size.
+- [x] Create and push the immutable Git tag `v2.18.1`.
+- [ ] Publish the tested BDS checkpoint `9c1624b7`; production remains on the preceding bundle and therefore still requests the broken SVGs.
+- [ ] Rebuild each consuming ERI project against `@eri/components` v2.18.1 (or update its pin then rebuild); deployed bundles cannot receive a package change retroactively.
