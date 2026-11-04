@@ -52,8 +52,8 @@
 .eri-details--card { background: var(--card); color: var(--foreground); border: 1px solid var(--border); border-radius: var(--radius-lg, 8px); box-shadow: var(--shadow-sm); padding: var(--space-4, 16px) var(--space-5, 20px); }
 .eri-details__summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3, 12px); font: 700 16px/24px var(--font-archivo); color: var(--foreground); }
 .eri-details__summary::-webkit-details-marker { display: none; }
-.eri-details__summary::after { content: "+"; flex: none; color: var(--muted-foreground); font-weight: 400; }
-.eri-details[open] > .eri-details__summary::after { content: "\2212"; }
+.eri-details__summary::after { content: "+" / ""; flex: none; color: var(--muted-foreground); font-weight: 400; }
+.eri-details[open] > .eri-details__summary::after { content: "\2212" / ""; }
 .eri-details__summary:focus-visible { outline: 2px solid var(--ring, var(--primary)); outline-offset: 2px; border-radius: var(--radius-sm, 4px); }
 .eri-details__body { display: flex; flex-direction: column; gap: var(--space-3, 12px); margin-top: var(--space-4, 16px); }
 
@@ -75,6 +75,6 @@
 .bds-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .bds-field label, .bds-field__label { font: 500 14px/20px var(--font-archivo); color: var(--foreground); }
 .bds-field input, .bds-field select { height: 36px; padding: 4px 12px; border: 1px solid var(--input); border-radius: var(--radius-md, 6px); background: transparent; font: 400 14px/20px var(--font-archivo); color: var(--foreground); box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--foreground) 5%, transparent); }
-.bds-field input:focus-visible, .bds-field select:focus-visible { outline: 3px solid color-mix(in oklab, var(--ring) 50%, transparent); outline-offset: 1px; }
+.bds-field input:focus-visible, .bds-field select:focus-visible { outline: 2px solid var(--ring, var(--primary)); outline-offset: 2px; }
 .bds-field--error input, .bds-field--error select { border-color: var(--danger); }
 .bds-field__error { font: 400 12px/16px var(--font-archivo); color: var(--danger); }
