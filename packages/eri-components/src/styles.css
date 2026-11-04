@@ -2,3 +2,39 @@
 
 /* Scan all component source files to include their utility classes */
 @source "./**/*.tsx";
+
+/* EriFigureList and EriBarChart — append to packages/eri-components/src/styles.css.
+   Tokens only: the shared semantic names that both the BDS tokens and the platform define. */
+.eri-figlist { display: flex; flex-direction: column; gap: var(--space-2, 8px); padding: var(--space-5, 20px); background: var(--card); color: var(--foreground); border: 1px solid var(--border); border-radius: var(--radius-lg, 8px); }
+.eri-figlist h3 { margin: 0; font: 700 18px/24px var(--font-archivo, Archivo, system-ui, sans-serif); }
+.eri-figlist__note { margin: 0; font-size: 12px; color: var(--muted-foreground); }
+.eri-figlist dl { margin: 0; display: grid; }
+.eri-figlist__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); gap: var(--space-1, 4px) var(--space-3, 12px); align-items: baseline; padding: var(--space-2, 8px) 0; border-top: 1px solid var(--border); }
+.eri-figlist__row:first-child { border-top: 0; }
+.eri-figlist dt { overflow-wrap: anywhere; }
+.eri-figlist dd { margin: 0; display: grid; justify-items: end; gap: var(--space-1, 4px); text-align: right; }
+.eri-figlist__value { font-weight: 700; white-space: nowrap; }
+.eri-figlist__value[data-empty] { font-weight: 400; color: var(--muted-foreground); }
+.eri-figlist small { color: var(--muted-foreground); }
+.eri-figlist__badge { display: inline-flex; padding: 1px 8px; border: 1px solid currentColor; border-radius: 9999px; font-size: 12px; font-weight: 600; }
+.eri-figlist__badge--ok { color: var(--primary); }
+.eri-figlist__badge--warn { color: var(--warning); }
+.eri-figlist__badge--fail { color: var(--destructive); }
+
+.eri-bars { --eri-bars-height: 140px; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--space-2, 8px); font-size: 12px; color: var(--muted-foreground); }
+.eri-bars__axis { display: flex; flex-direction: column; justify-content: space-between; height: var(--eri-bars-height); text-align: right; line-height: 1; }
+.eri-bars__plot { position: relative; display: flex; align-items: flex-end; gap: 2px; height: var(--eri-bars-height); border-bottom: 1px solid var(--muted-foreground); background: linear-gradient(var(--border), var(--border)) 0 0 / 100% 1px no-repeat, linear-gradient(var(--border), var(--border)) 0 50% / 100% 1px no-repeat; }
+.eri-bars__slot { flex: 1 1 0; min-width: 1px; height: 100%; display: flex; align-items: flex-end; }
+.eri-bars__bar { display: block; width: 100%; min-height: 1px; background: var(--primary); border-radius: 4px 4px 0 0; }
+.eri-bars__bar--light { opacity: 0.45; }
+.eri-bars__bar--over { background: var(--destructive); }
+.eri-bars__limit { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--foreground); pointer-events: none; }
+.eri-bars__limit small { position: absolute; right: 0; bottom: 2px; padding: 0 var(--space-1, 4px); background: var(--card); color: var(--foreground); font-weight: 600; }
+.eri-bars__ticks { grid-column: 2; display: flex; gap: 2px; min-height: 1.5em; padding-top: var(--space-1, 4px); }
+.eri-bars__ticks > span { position: relative; flex: 1 1 0; min-width: 1px; }
+.eri-bars__ticks small { position: absolute; left: 0; white-space: nowrap; }
+
+/* EriTabs: the BDS bds-tabs rules, verbatim from the BDS bundle. */
+.bds-tabs { display: inline-flex; gap: 2px; padding: 3px; background: var(--muted); border-radius: 8px; }
+.bds-tabs button { height: 29px; padding: 4px 8px; border-radius: 6px; border: 1px solid transparent; background: transparent; font: 500 14px/20px var(--font-archivo); color: var(--foreground); cursor: pointer; }
+.bds-tabs button[aria-selected="true"] { background: var(--background); box-shadow: var(--shadow-sm); }

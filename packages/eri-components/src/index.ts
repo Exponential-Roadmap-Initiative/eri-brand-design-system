@@ -12,5 +12,12 @@ export { default as EriPageLayout } from './EriPageLayout';
 export { default as EriCrocodileChart } from './EriCrocodileChart';
 export type { EriCrocodileChartProps, CrocodileDataPoint } from './EriCrocodileChart';
 
+export { default as EriBarChart } from './EriBarChart';
+export type { EriBar, EriBarChartProps } from './EriBarChart';
+export { default as EriFigureList } from './EriFigureList';
+export type { EriFigureRow, EriFigureListProps } from './EriFigureList';
+export { default as EriTabs } from './EriTabs';
+export type { EriTabsProps } from './EriTabs';
+
 // Also export the status type
 export type { EriStatusValue } from './EriStatusBadge';

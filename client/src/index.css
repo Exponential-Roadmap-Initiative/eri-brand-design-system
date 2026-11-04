@@ -91,6 +91,8 @@
   --accent-foreground: oklch(0.24 0.005 285);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
+  /* Warning: text and outline for "near the limit" and partial states. #92400e = 7.09:1 on white, 6.37:1 on the partial background (WCAG AA). */
+  --warning: #92400e;
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.59 0.14 145);
@@ -127,6 +129,7 @@
   --accent-foreground: oklch(0.94 0.005 247);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
+  --warning: #fcd34d;                      /* above 12:1 on the dark card */
   --border: oklch(0.28 0 0);              /* #3d3d3d — raised for visible borders */
   --input: oklch(0.22 0 0);
   --ring: oklch(0.59 0.14 145);            /* ERI green focus ring */
