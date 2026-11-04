@@ -44,3 +44,37 @@
 .bds-tabs button { height: 29px; padding: 4px 8px; border-radius: 6px; border: 1px solid transparent; background: transparent; font: 500 14px/20px var(--font-archivo); color: var(--foreground); cursor: pointer; }
 .bds-tabs button[aria-selected="true"] { background: var(--background); box-shadow: var(--shadow-sm); }
 .bds-tabs button:focus-visible { outline: 2px solid var(--ring, var(--primary)); outline-offset: 2px; }
+
+/* 2.20.0: EriDetails, and the BDS table, field and subtle-card classes, shipped in the package so apps stop copying them.
+   Tokens only. Where the BDS bundle uses a raw colour or a token that fails in dark mode, the token named in the comment replaces it. */
+
+/* EriDetails */
+.eri-details--card { background: var(--card); color: var(--foreground); border: 1px solid var(--border); border-radius: var(--radius-lg, 8px); box-shadow: var(--shadow-sm); padding: var(--space-4, 16px) var(--space-5, 20px); }
+.eri-details__summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3, 12px); font: 700 16px/24px var(--font-archivo); color: var(--foreground); }
+.eri-details__summary::-webkit-details-marker { display: none; }
+.eri-details__summary::after { content: "+"; flex: none; color: var(--muted-foreground); font-weight: 400; }
+.eri-details[open] > .eri-details__summary::after { content: "\2212"; }
+.eri-details__summary:focus-visible { outline: 2px solid var(--ring, var(--primary)); outline-offset: 2px; border-radius: var(--radius-sm, 4px); }
+.eri-details__body { display: flex; flex-direction: column; gap: var(--space-3, 12px); margin-top: var(--space-4, 16px); }
+
+/* bds-card--subtle: the BDS modifier (bds-card itself stays the app's BDS kit class). */
+.bds-card--subtle { background: var(--muted); }
+
+/* bds-table and bds-table-card: the BDS rules. th and the first column use var(--foreground), not
+   var(--eri-primary-dark), which has no dark value and would vanish on a dark card. */
+.bds-table-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg, 8px); box-shadow: var(--shadow-sm); overflow-x: auto; }
+.bds-table { width: 100%; border-collapse: collapse; font: 400 14px/20px var(--font-archivo); }
+.bds-table caption { caption-side: top; text-align: left; padding: var(--space-4, 16px); font: 700 16px/24px var(--font-archivo); color: var(--foreground); }
+.bds-table th { text-align: left; vertical-align: top; padding: var(--space-4, 16px); font-weight: 700; color: var(--foreground); background: var(--muted); }
+.bds-table td { vertical-align: top; padding: var(--space-4, 16px); color: var(--foreground); border-top: 1px solid var(--border); }
+.bds-table td:first-child { font-weight: 500; }
+.bds-table tbody tr:nth-child(even) { background: var(--muted); }
+
+/* bds-field: the BDS rules. The error colours use var(--danger) (the BDS bundle has two raw reds here),
+   the inset shadow is drawn from var(--foreground). */
+.bds-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.bds-field label, .bds-field__label { font: 500 14px/20px var(--font-archivo); color: var(--foreground); }
+.bds-field input, .bds-field select { height: 36px; padding: 4px 12px; border: 1px solid var(--input); border-radius: var(--radius-md, 6px); background: transparent; font: 400 14px/20px var(--font-archivo); color: var(--foreground); box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--foreground) 5%, transparent); }
+.bds-field input:focus-visible, .bds-field select:focus-visible { outline: 3px solid color-mix(in oklab, var(--ring) 50%, transparent); outline-offset: 1px; }
+.bds-field--error input, .bds-field--error select { border-color: var(--danger); }
+.bds-field__error { font: 400 12px/16px var(--font-archivo); color: var(--danger); }
