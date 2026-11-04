@@ -1,5 +1,5 @@
 /**
- * EriBarChart — ERI Brand Design System (proposed for @eri/components 2.19.0)
+ * EriBarChart — ERI Brand Design System
  *
  * One series of bars over periods (days or months), on a scale from 0 to `max`.
  * Zero external dependencies; tokens only (no hex values).
@@ -21,8 +21,6 @@
  *     limit={{ value: 150, label: "Limit 150 a month" }}
  *     bars={[{ key: "2026-10", value: 107.17, tip: "Oct 2026 · USD 107.17", tick: "Oct" },
  *            { key: "2026-11", value: 49.69, tip: "Nov 2026 so far · USD 49.69", tick: "Nov", light: true }]} />
- *
- * Same API as eri-platform's local BarChart (#1406), so the platform swaps the import only.
  */
 import type { CSSProperties } from 'react';
 
@@ -43,7 +41,7 @@ export interface EriBarChartProps {
 }
 
 export function EriBarChart({ label, bars, max, format, limit, height = 140 }: EriBarChartProps) {
-  const share = (value: number) => `${Math.min(100, Math.max(0, (value / max) * 100))}%`;
+  const share = (value: number) => `${max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0}%`;
   return (
     <div className="eri-bars" role="img" aria-label={label} style={{ '--eri-bars-height': `${height}px` } as CSSProperties}>
       <div className="eri-bars__axis" aria-hidden="true"><span>{format(max)}</span><span>{format(max / 2)}</span><span>{format(0)}</span></div>
