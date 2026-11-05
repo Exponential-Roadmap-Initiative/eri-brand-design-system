@@ -524,6 +524,7 @@ export default function BrandDesignSystem() {
                 ["EriBarChart",        "One series of bars over days or months, shared scale, optional limit line — zero deps"],
                 ["EriFigureList",      "Card of key figures: value, limit, date and a standing word; folds on phones"],
                 ["EriTabs",            "The small pill switch for a choice inside a page tab"],
+                ["EriDetails",         "A fold-out: a summary line that opens to show more"],
               ].map(([name, desc]) => (
                 <div key={name} className="flex gap-2 items-start">
                   <span className="text-[#3ba559] font-mono text-[10px] shrink-0 mt-0.5">{name}</span>

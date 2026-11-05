@@ -18,6 +18,8 @@ export { default as EriFigureList } from './EriFigureList';
 export type { EriFigureRow, EriFigureListProps } from './EriFigureList';
 export { default as EriTabs } from './EriTabs';
 export type { EriTabsProps } from './EriTabs';
+export { default as EriDetails } from './EriDetails';
+export type { EriDetailsProps } from './EriDetails';
 
 // Also export the status type
 export type { EriStatusValue } from './EriStatusBadge';
