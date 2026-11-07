@@ -44,3 +44,125 @@
 .bds-tabs button { height: 29px; padding: 4px 8px; border-radius: 6px; border: 1px solid transparent; background: transparent; font: 500 14px/20px var(--font-archivo); color: var(--foreground); cursor: pointer; }
 .bds-tabs button[aria-selected="true"] { background: var(--background); box-shadow: var(--shadow-sm); }
 .bds-tabs button:focus-visible { outline: 2px solid var(--ring, var(--primary)); outline-offset: 2px; }
+
+/* EriDataTable and EriStateMessage (2.21.0). Moved from the ERI Platform's design-system/eri-data-table.css and the data explorer's styles
+   (data-sources.css, explorer-layout.css, company-explorer.css), which drew the table there; the values are the same, now from tokens.
+   Tokens only: the table reads its own --eri-dt-* names. Each defaults to the ERI token the platform renders with (--eri-*, as in the
+   platform's design-system/tokens.css), then to the shared semantic name (BDS) for an app without the --eri-* tokens, so no app has to map
+   them. The selectors are scoped to .eri-dt and specific enough that an app's generic element rules (button, td, summary) do not restyle the table. */
+.eri-dt, .eri-state {
+  --eri-dt-ink: var(--eri-ink, var(--foreground));
+  --eri-dt-muted: var(--eri-muted, var(--muted-foreground));
+  --eri-dt-surface: var(--eri-surface, var(--card));
+  --eri-dt-surface-soft: var(--eri-surface-soft, var(--muted));
+  --eri-dt-border: var(--eri-border, var(--border));
+  --eri-dt-border-strong: var(--eri-border-strong, var(--input));
+  --eri-dt-action: var(--eri-action, var(--primary));
+  --eri-dt-action-hover: var(--eri-action-hover, color-mix(in srgb, var(--primary) 80%, var(--foreground)));
+  --eri-dt-action-soft: var(--eri-action-soft, var(--accent));
+  --eri-dt-on-action: var(--eri-surface, var(--primary-foreground));
+  --eri-dt-focus: var(--eri-focus, var(--ring, var(--primary)));
+  --eri-dt-error: var(--eri-error, var(--danger));
+  --eri-dt-error-soft: var(--eri-error-soft, color-mix(in srgb, var(--danger) 10%, var(--card)));
+  --eri-dt-warning: var(--eri-warning, var(--warning));
+  --eri-dt-warning-soft: var(--eri-warning-soft, color-mix(in srgb, var(--warning) 10%, var(--card)));
+  --eri-dt-font: var(--eri-font-body, inherit);
+  --eri-dt-font-heading: var(--eri-font-heading, var(--font-archivo, inherit));
+  --eri-dt-radius: var(--eri-radius-sm, var(--radius-sm, 4px));
+  --eri-dt-control-height: var(--eri-control-height, 36px);
+  --eri-dt-shadow: 0 5px 15px color-mix(in srgb, var(--eri-dt-ink) 13%, transparent);
+}
+.eri-dt { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--eri-space-2, var(--space-2, 8px)); min-width: 0; min-height: 0; background: transparent; color: var(--eri-dt-ink); font: 14px/1.5 var(--eri-dt-font); }
+.eri-dt, .eri-dt *, .eri-dt *::before, .eri-dt *::after { box-sizing: border-box; }
+.eri-dt input, .eri-dt select { font: inherit; }
+/* Every part shrinks to the table's container, however narrow (a table nested in cards on a phone). */
+.eri-dt > * { min-width: 0; }
+.eri-dt .eri-dt__sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* Buttons: the table's own, the chips and the paging. */
+.eri-dt .eri-dt__button, .eri-dt .eri-dt__chips button { min-height: 33px; padding: 6px 11px; border: 1px solid var(--eri-dt-border-strong); border-radius: var(--eri-dt-radius); background: var(--eri-dt-surface); color: var(--eri-dt-action); font: inherit; font-size: 12px; cursor: pointer; }
+.eri-dt .eri-dt__toolbar .eri-dt__button { white-space: nowrap; }
+.eri-dt .eri-dt__button:hover, .eri-dt .eri-dt__chips button:hover { background: var(--eri-dt-action-soft); }
+.eri-dt .eri-dt__button:disabled, .eri-dt .eri-dt__button:disabled:hover { background: var(--eri-dt-surface); opacity: 0.45; cursor: default; }
+.eri-dt .eri-dt__button:focus-visible, .eri-dt .eri-dt__chips button:focus-visible, .eri-dt .eri-dt__sort:focus-visible, .eri-dt .eri-dt__quick > summary:focus-visible, .eri-dt .eri-dt__first a:focus-visible, .eri-dt .eri-dt__scroll:focus-visible { outline: 3px solid var(--eri-dt-focus); outline-offset: 3px; }
+.eri-dt .eri-dt__button--primary { padding: 10px 23px; border-color: var(--eri-dt-action); background: var(--eri-dt-action); color: var(--eri-dt-on-action); font-weight: 600; }
+.eri-dt .eri-dt__button--primary:hover { background: var(--eri-dt-action-hover); color: var(--eri-dt-on-action); }
+
+/* Toolbar: search, Columns, Export. */
+.eri-dt .eri-dt__toolbar { display: flex; flex-wrap: wrap; gap: var(--eri-space-2, var(--space-2, 8px)); align-items: center; }
+.eri-dt .eri-dt__search { display: flex; flex: 1 1 0%; gap: var(--eri-space-2, var(--space-2, 8px)); min-width: min(250px, 100%); max-width: 600px; margin: 0; }
+.eri-dt .eri-dt__search input { flex: 1 1 0%; min-width: 0; padding: 10px 13px; border: 1px solid var(--eri-dt-border-strong); border-radius: 7px; background: var(--eri-dt-surface); color: var(--eri-dt-ink); font: inherit; font-size: 14px; }
+
+/* Filters: the page's own (the toolbar slot), each column's quick filter and the "only" toggles. */
+.eri-dt .eri-dt__filters { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin: 0; }
+.eri-dt .eri-dt__quick { position: relative; min-width: min(127px, 100%); max-width: 100%; margin: 0; padding: 0; border: 1px solid var(--eri-dt-border); border-radius: 4px; background: var(--eri-dt-surface); }
+.eri-dt .eri-dt__quick > summary { overflow-wrap: anywhere; padding: 7px 11px; color: var(--eri-dt-action); font-size: 12px; cursor: pointer; }
+.eri-dt .eri-dt__quick-options { position: absolute; top: 100%; left: 0; z-index: 8; width: 280px; max-width: calc(100vw - 45px); padding: 12px; border: 1px solid var(--eri-dt-border); border-radius: 4px; background: var(--eri-dt-surface); box-shadow: var(--eri-dt-shadow); }
+.eri-dt .eri-dt__quick-options > input { width: 100%; padding: 7px; border: 1px solid var(--eri-dt-border); border-radius: 4px; font: inherit; font-size: 13px; }
+.eri-dt .eri-dt__quick-values { display: grid; gap: var(--eri-space-2, var(--space-2, 8px)); max-height: 230px; overflow: auto; padding: var(--eri-space-2, var(--space-2, 8px)) 0; }
+.eri-dt .eri-dt__quick-values label { display: flex; gap: var(--eri-space-2, var(--space-2, 8px)); align-items: start; font-size: 13px; }
+.eri-dt .eri-dt__quick-values input { margin-top: 4px; accent-color: var(--eri-dt-action); }
+.eri-dt .eri-dt__toggle { display: inline-flex; max-width: 100%; align-items: center; gap: var(--eri-space-2, var(--space-2, 8px)); min-height: var(--eri-dt-control-height); padding: 0 var(--eri-space-3, var(--space-3, 12px)); border: 1px solid var(--eri-dt-border-strong); border-radius: var(--eri-dt-radius); background: var(--eri-dt-surface); font-size: 12px; cursor: pointer; }
+.eri-dt .eri-dt__columns { display: flex; flex-wrap: wrap; gap: var(--eri-space-3, var(--space-3, 12px)); margin: 0; padding: var(--eri-space-3, var(--space-3, 12px)); border: 1px solid var(--eri-dt-border); border-radius: var(--eri-dt-radius); background: var(--eri-dt-surface); }
+.eri-dt .eri-dt__columns legend { color: var(--eri-dt-muted); font-size: 12px; }
+.eri-dt .eri-dt__columns label { display: flex; align-items: center; gap: var(--eri-space-2, var(--space-2, 8px)); font-size: 12px; }
+.eri-dt .eri-dt__chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.eri-dt .eri-dt__chips button { max-width: 100%; padding: 4px 8px; overflow-wrap: anywhere; text-align: left; }
+
+/* The count line, the empty view and paging. */
+.eri-dt .eri-dt__count { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: var(--eri-space-2, var(--space-2, 8px)) 0; font-size: 12px; }
+.eri-dt .eri-dt__count > span { margin-right: auto; }
+.eri-dt .eri-dt__empty { padding: var(--eri-space-6, var(--space-6, 24px)); border: 1px dashed var(--eri-dt-border-strong); border-radius: var(--eri-dt-radius); text-align: center; }
+.eri-dt .eri-dt__empty p { margin: 0 0 var(--eri-space-2, var(--space-2, 8px)); }
+.eri-dt .eri-dt__paging { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; margin: var(--eri-space-2, var(--space-2, 8px)) 0 18px; font-size: 12px; }
+.eri-dt .eri-dt__paging > span:first-child { margin-right: auto; color: var(--eri-dt-muted); }
+
+/* The table: sticky first column, an arrow at the right edge while there is more to scroll, row groups, a row that opens. */
+.eri-dt .eri-dt__area { position: relative; min-width: 0; }
+.eri-dt .eri-dt__area[aria-busy="true"] { opacity: 0.6; }
+.eri-dt .eri-dt__area[data-scroll-right="true"]::after { content: "\2192"; position: absolute; top: 0; right: 0; z-index: 7; display: grid; place-items: center; width: 24px; height: 52px; background: linear-gradient(90deg, transparent, var(--eri-dt-surface-soft) 45%); color: var(--eri-dt-action); font-weight: 700; pointer-events: none; }
+.eri-dt .eri-dt__scroll { overflow: auto; }
+.eri-dt table.eri-dt__table { min-width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; border: 1px solid var(--eri-dt-border); background: var(--eri-dt-surface); text-align: left; white-space: normal; }
+.eri-dt table.eri-dt__table th { min-width: 150px; padding: 10px 12px; border: 0; border-block: 1px solid; border-color: var(--eri-dt-border); background: var(--eri-dt-surface-soft); color: var(--eri-dt-muted); font-size: 11px; font-weight: 600; text-align: left; vertical-align: bottom; }
+.eri-dt table.eri-dt__table td { min-width: 0; max-width: none; padding: 14px 12px; border: 0; border-bottom: 1px solid; border-color: var(--eri-dt-border); font-size: 12px; vertical-align: top; overflow-wrap: anywhere; white-space: normal; }
+.eri-dt table.eri-dt__table td.eri-dt__first { position: sticky; left: 0; z-index: 1; border-right: 1px solid var(--eri-dt-border); background: var(--eri-dt-surface); }
+.eri-dt table.eri-dt__table td.eri-dt__first a { color: var(--eri-dt-action); font-weight: 600; text-decoration: none; }
+.eri-dt table.eri-dt__table td.eri-dt__first a:hover { text-decoration: underline; }
+.eri-dt table.eri-dt__table td.eri-dt__masked { color: var(--eri-dt-muted); font-size: 12px; }
+.eri-dt .eri-dt__sort, .eri-dt .eri-dt__sort:hover { min-height: 33px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--eri-dt-action); font: inherit; font-size: 12px; font-weight: 600; text-align: left; cursor: pointer; }
+/* A column that does not sort: the same height, size and weight as a sort button beside it, in ink, with no arrow. */
+.eri-dt .eri-dt__head { display: inline-flex; align-items: center; min-height: 33px; color: var(--eri-dt-ink); font-size: 12px; font-weight: 600; }
+.eri-dt table.eri-dt__table tr.eri-dt__group th { background: var(--eri-dt-surface-soft); font-family: var(--eri-dt-font-heading); font-size: 13px; font-weight: 800; text-align: left; }
+.eri-dt tr.eri-dt__group small { margin-left: var(--eri-space-2, var(--space-2, 8px)); color: var(--eri-dt-muted); font-weight: 400; }
+.eri-dt tr.eri-dt__row--link { cursor: pointer; }
+.eri-dt table.eri-dt__table tr.eri-dt__row--link:hover td { background: var(--eri-dt-action-soft); }
+.eri-dt table.eri-dt__table tr.eri-dt__row--link:hover td.eri-dt__first { background: var(--eri-dt-surface); }
+
+/* Phone layout: a "low" column's label and value, folded under the first cell (EriDataTable draws them only at 40rem and narrower). The table
+   then fills the width and sizes its columns to their content, so the first cell has the room. */
+.eri-dt table.eri-dt__table--fold { width: 100%; table-layout: auto; }
+.eri-dt table.eri-dt__table--fold th { min-width: 0; }
+.eri-dt table.eri-dt__table--fold td:not(.eri-dt__first) { width: 1%; }
+.eri-dt table.eri-dt__table--fold th:not(:first-child), .eri-dt table.eri-dt__table--fold td:not(.eri-dt__first) { padding-inline: var(--eri-space-2, var(--space-2, 8px)); }
+.eri-dt .eri-dt__fold { display: grid; gap: var(--eri-space-1, var(--space-1, 4px)); margin: var(--eri-space-2, var(--space-2, 8px)) 0 0; font-weight: 400; }
+.eri-dt .eri-dt__fold > div { min-width: 0; }
+.eri-dt .eri-dt__fold dt { display: inline; color: var(--eri-dt-muted); }
+.eri-dt .eri-dt__fold dt::after { content: ": "; }
+.eri-dt .eri-dt__fold dd { display: inline; margin: 0; }
+.eri-dt p.eri-dt__fold.eri-dt__masked { display: block; color: var(--eri-dt-muted); }
+
+@media (max-width: 760px) {
+  .eri-dt .eri-dt__search { flex-basis: 100%; max-width: 100%; }
+  .eri-dt .eri-dt__toolbar .eri-dt__button { min-height: 40px; }
+  .eri-dt .eri-dt__count > span { flex-basis: 100%; }
+  .eri-dt .eri-dt__filters > .eri-dt__quick { flex: 1 1 0%; min-width: min(135px, 100%); }
+  .eri-dt .eri-dt__filters > .eri-dt__quick:nth-child(2n) .eri-dt__quick-options { left: auto; right: 0; }
+  .eri-dt .eri-dt__paging { flex-wrap: wrap; gap: var(--eri-space-2, var(--space-2, 8px)); }
+  .eri-dt .eri-dt__paging > span:first-child { flex-basis: 100%; }
+}
+
+/* EriStateMessage: loading, empty, error and restricted. */
+.eri-state { margin: var(--eri-space-3, var(--space-3, 12px)) 0; padding: var(--eri-space-4, var(--space-4, 16px)); border: 1px solid var(--eri-dt-border-strong); border-radius: var(--eri-dt-radius); background: var(--eri-dt-surface-soft); }
+.eri-state p { margin: var(--eri-space-2, var(--space-2, 8px)) 0 0; }
+.eri-state--error { color: var(--eri-dt-error); background: var(--eri-dt-error-soft); }
+.eri-state--restricted { color: var(--eri-dt-warning); background: var(--eri-dt-warning-soft); }
