@@ -19,5 +19,12 @@ export type { EriFigureRow, EriFigureListProps } from './EriFigureList';
 export { default as EriTabs } from './EriTabs';
 export type { EriTabsProps } from './EriTabs';
 
+export { default as EriDataTable, setEriTableFilter, useEriTableFilter, setEriTableParam, useEriTableParam } from './EriDataTable';
+export type { EriDataTableProps } from './EriDataTable';
+export { buildView, emptyState, filterOptions, GRADE_RANK, isFiltered, nextSort, PAGE_SIZE, parseState, serverView, writeState } from './eriDataTableModel';
+export type { Cell, ColumnSpec, ColumnType, FilterKind, GroupSpec, Sort, View, ViewState } from './eriDataTableModel';
+export { default as EriStateMessage, StateMessage } from './EriStateMessage';
+export type { EriStateKind, EriStateMessageProps } from './EriStateMessage';
+
 // Also export the status type
 export type { EriStatusValue } from './EriStatusBadge';
