@@ -130,6 +130,8 @@
 .eri-dt table.eri-dt__table td.eri-dt__first a:hover { text-decoration: underline; }
 .eri-dt table.eri-dt__table td.eri-dt__masked { color: var(--eri-dt-muted); font-size: 12px; }
 .eri-dt .eri-dt__sort, .eri-dt .eri-dt__sort:hover { min-height: 33px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--eri-dt-action); font: inherit; font-size: 12px; font-weight: 600; text-align: left; cursor: pointer; }
+/* A column that does not sort: the same height, size and weight as a sort button beside it, in ink, with no arrow. */
+.eri-dt .eri-dt__head { display: inline-flex; align-items: center; min-height: 33px; color: var(--eri-dt-ink); font-size: 12px; font-weight: 600; }
 .eri-dt table.eri-dt__table tr.eri-dt__group th { background: var(--eri-dt-surface-soft); font-family: var(--eri-dt-font-heading); font-size: 13px; font-weight: 800; text-align: left; }
 .eri-dt tr.eri-dt__group small { margin-left: var(--eri-space-2, var(--space-2, 8px)); color: var(--eri-dt-muted); font-weight: 400; }
 .eri-dt tr.eri-dt__row--link { cursor: pointer; }

@@ -173,7 +173,7 @@ export function EriDataTable<R>({ columns, rows, rowKey, rowHref, onNavigate, gr
     const url = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
     const a = document.createElement('a'); a.href = url; a.download = `${exportName ?? urlKey}.csv`; a.click(); URL.revokeObjectURL(url);
   };
-  const head = (c: ColumnSpec<R>) => c.sortable === false ? c.label : <button type="button" className="eri-dt__sort" title={`Sort by ${c.label.toLowerCase()}`}
+  const head = (c: ColumnSpec<R>) => c.sortable === false ? <span className="eri-dt__head">{c.label}</span> : <button type="button" className="eri-dt__sort" title={`Sort by ${c.label.toLowerCase()}`}
     onClick={() => update({ sort: nextSort(state.sort, c.key), page: state.page })}>{c.label}{state.sort?.key === c.key ? (state.sort.dir === 'asc' ? ' ↑' : ' ↓') : ' ↕'}</button>;
   const cell = (c: ColumnSpec<R>, row: R) => c.render ? c.render(row) : (c.text ? c.text(row) : String(c.value(row) ?? ''));
   const name = (n: number) => n === 1 ? (singular ?? noun) : noun;
