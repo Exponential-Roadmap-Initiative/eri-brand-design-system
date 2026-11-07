@@ -178,7 +178,7 @@ export function EriDataTable<R>({ columns, rows, rowKey, rowHref, onNavigate, gr
   const cell = (c: ColumnSpec<R>, row: R) => c.render ? c.render(row) : (c.text ? c.text(row) : String(c.value(row) ?? ''));
   const name = (n: number) => n === 1 ? (singular ?? noun) : noun;
   const waiting = loading && rows.length === 0 && !error;
-  const count = error ? '' : waiting ? `Loading ${noun}…` : `${filtered ? `${view.shown} ${name(view.shown)} matching this view` : `${view.total} ${name(view.total)}`}${loading ? ' · updating' : ''}`;
+  const count = error || waiting ? '' : `${filtered ? `${view.shown} ${name(view.shown)} matching this view` : `${view.total} ${name(view.total)}`}${loading ? ' · updating' : ''}`;
   const showExport = exportable && (!server || !!onExport);
   return (
     <div className="eri-dt eri-data-table">
