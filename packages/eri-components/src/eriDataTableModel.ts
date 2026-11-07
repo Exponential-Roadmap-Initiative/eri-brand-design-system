@@ -169,6 +169,17 @@ export function parseState<R>(search: string, urlKey: string, columns: ColumnSpe
   return { q: p.get(`${urlKey}.q`) ?? "", filters, ...(cols.length ? { cols } : {}), ...(Object.keys(params).length ? { params } : {}), ...(sortable && (dir === "asc" || dir === "desc") ? { sort: { key, dir } } : {}), page: Number.isInteger(page) && page > 1 ? page : 1 }
 }
 
+/** The query string with one column's filter set to `values` and the table back on its first page. Every other parameter (search, the other
+ *  filters, sort, columns, page-level filters, other tables') stays as it is. Used by setEriTableFilter (a chart that filters its table). */
+export function withFilter(search: string, urlKey: string, column: string, values: string[]): string {
+  const p = new URLSearchParams(search)
+  p.delete(`${urlKey}.f.${column}`)
+  for (const v of values) if (v) p.append(`${urlKey}.f.${column}`, v)
+  p.delete(`${urlKey}.page`)
+  const s = p.toString()
+  return s ? `?${s}` : ""
+}
+
 /** The query string (with its "?", or "" when empty) for `state`, keeping every parameter that is not this table's. */
 export function writeState(search: string, urlKey: string, state: ViewState): string {
   const p = new URLSearchParams(search)

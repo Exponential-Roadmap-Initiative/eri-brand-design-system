@@ -2,7 +2,7 @@ import assert from "node:assert/strict"
 import test from "node:test"
 // Moved with the table from the ERI Platform (design-system/eriDataTable.test.mjs), unchanged; the last four tests are new in 2.21.0.
 // Run: node --test packages/eri-components/test/
-import { buildView, filterOptions, nextSort, parseState, serverView, writeState, emptyState, PAGE_SIZE } from "../src/eriDataTableModel.ts"
+import { buildView, filterOptions, nextSort, parseState, serverView, withFilter, writeState, emptyState, PAGE_SIZE } from "../src/eriDataTableModel.ts"
 
 const columns = [
   { key: "code", label: "Code", value: r => r.code, filter: "search" },
@@ -100,4 +100,15 @@ test("the 2.21.0 additions leave the old state unchanged: no params, no priority
   const old = { q: "board", filters: { grade: ["yes"] }, sort: { key: "n", dir: "asc" }, page: 2, cols: ["code"] }
   assert.deepEqual(parseState(writeState("", "actions", old), "actions", columns), old)
   assert.equal(writeState("", "actions", old), "?actions.q=board&actions.f.grade=yes&actions.sort=n%3Aasc&actions.page=2&actions.cols=code")
+})
+
+test("setting one filter from outside keeps the reader's other filters, sort, columns and search, and goes back to page 1", () => {
+  const before = "?t.q=energy&t.f.grade=yes&t.f.block=A&t.sort=n:desc&t.cols=code,n&t.page=3&t.p.portfolio=p1&other=1"
+  const after = new URLSearchParams(withFilter(before, "t", "status", ["open", "closed"]))
+  assert.deepEqual(after.getAll("t.f.status"), ["open", "closed"])
+  assert.equal(after.get("t.f.grade"), "yes"); assert.equal(after.get("t.f.block"), "A")
+  assert.equal(after.get("t.sort"), "n:desc"); assert.equal(after.get("t.cols"), "code,n"); assert.equal(after.get("t.q"), "energy")
+  assert.equal(after.get("t.p.portfolio"), "p1"); assert.equal(after.get("other"), "1"); assert.equal(after.get("t.page"), null)
+  assert.equal(new URLSearchParams(withFilter("?t.f.status=open&t.f.grade=yes", "t", "status", [])).get("t.f.status"), null)
+  assert.equal(withFilter("?t.f.status=open", "t", "status", []), "")
 })

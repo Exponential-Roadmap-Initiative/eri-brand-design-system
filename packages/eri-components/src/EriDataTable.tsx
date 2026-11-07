@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import EriStateMessage from './EriStateMessage';
-import { buildView, type ColumnSpec, emptyState, filterOptions, type GroupSpec, nextSort, parseState, PAGE_SIZE, serverView, type ViewState, writeState } from './eriDataTableModel';
+import { buildView, type ColumnSpec, emptyState, filterOptions, type GroupSpec, nextSort, parseState, PAGE_SIZE, serverView, type ViewState, withFilter, writeState } from './eriDataTableModel';
 
 export type { ColumnSpec, GroupSpec, ViewState } from './eriDataTableModel';
 
@@ -23,10 +23,8 @@ const push = (search: string) => window.history.pushState(window.history.state, 
 
 /** Set one filter of the table `urlKey` from outside it (a chart that filters its table). The address is the one state; the table follows it. Each change is a history entry, so Back undoes it. */
 export function setEriTableFilter(urlKey: string, column: string, values: string[]) {
-  const search = window.location.search;
-  const columns = [{ key: column, label: column, value: () => null, filter: 'select' as const }];
-  const state = parseState(search, urlKey, columns);
-  push(writeState(search, urlKey, { ...state, filters: { ...state.filters, [column]: values }, page: 1 }));
+  // Only this column's filter and the page change: the reader's search, other filters, sort and columns stay as they are.
+  push(withFilter(window.location.search, urlKey, column, values));
   notify();
 }
 /** The values chosen for one filter of the table `urlKey`, read from the address and kept current. */
@@ -128,8 +126,10 @@ export function EriDataTable<R>({ columns, rows, rowKey, rowHref, onNavigate, gr
   }, [urlKey]);
   const changed = useRef(onViewChange);
   changed.current = onViewChange;
-  const stateKey = JSON.stringify(state);
-  useEffect(() => { changed.current?.(state); }, [stateKey]);
+  // The view the server serves: everything but the chosen columns, which only change what is drawn and need no new fetch.
+  const { cols: _cols, ...served } = state;
+  const servedKey = JSON.stringify(served);
+  useEffect(() => { changed.current?.(served); }, [servedKey]);
   const update = (patch: Partial<ViewState>) => {
     const next = { ...state, page: 1, ...patch };
     setState(next);
@@ -263,8 +263,16 @@ function QuickFilter({ id, name, options, values, onChange }: { id: string; name
     return () => { document.removeEventListener('pointerdown', outside); document.removeEventListener('keydown', escape); };
   }, []);
   const shown = options.filter(v => v !== 'NA' && v.toLowerCase().includes(query.toLowerCase()));
+  // The pop-up opens to the right of its filter, or to the left when it would run past the screen's right edge and there is more room on that side.
+  const [side, setSide] = useState<'start' | 'end'>('start');
+  const place = () => {
+    const box = root.current; if (!box?.open) return;
+    const r = box.getBoundingClientRect(); const pop = box.querySelector<HTMLElement>('.eri-dt__quick-options')?.offsetWidth ?? 0;
+    const fits = r.left + pop <= window.innerWidth;
+    setSide(!fits && r.right > window.innerWidth - r.left ? 'end' : 'start');
+  };
   return (
-    <details className="eri-dt__quick" ref={root}>
+    <details className="eri-dt__quick" ref={root} data-side={side} onToggle={place}>
       <summary>{name}{values.length ? ` (${values.length})` : ''}</summary>
       <div className="eri-dt__quick-options">
         <label className="eri-dt__sr" htmlFor={`quick-${id}`}>Find {name.toLowerCase()}</label>

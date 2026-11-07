@@ -98,6 +98,7 @@
 .eri-dt .eri-dt__quick { position: relative; min-width: min(127px, 100%); max-width: 100%; margin: 0; padding: 0; border: 1px solid var(--eri-dt-border); border-radius: 4px; background: var(--eri-dt-surface); }
 .eri-dt .eri-dt__quick > summary { overflow-wrap: anywhere; padding: 7px 11px; color: var(--eri-dt-action); font-size: 12px; cursor: pointer; }
 .eri-dt .eri-dt__quick-options { position: absolute; top: 100%; left: 0; z-index: 8; width: 280px; max-width: calc(100vw - 45px); padding: 12px; border: 1px solid var(--eri-dt-border); border-radius: 4px; background: var(--eri-dt-surface); box-shadow: var(--eri-dt-shadow); }
+.eri-dt .eri-dt__quick[data-side="end"] .eri-dt__quick-options { left: auto; right: 0; }
 .eri-dt .eri-dt__quick-options > input { width: 100%; padding: 7px; border: 1px solid var(--eri-dt-border); border-radius: 4px; font: inherit; font-size: 13px; }
 .eri-dt .eri-dt__quick-values { display: grid; gap: var(--eri-space-2, var(--space-2, 8px)); max-height: 230px; overflow: auto; padding: var(--eri-space-2, var(--space-2, 8px)) 0; }
 .eri-dt .eri-dt__quick-values label { display: flex; gap: var(--eri-space-2, var(--space-2, 8px)); align-items: start; font-size: 13px; }
@@ -156,7 +157,6 @@
   .eri-dt .eri-dt__toolbar .eri-dt__button { min-height: 40px; }
   .eri-dt .eri-dt__count > span { flex-basis: 100%; }
   .eri-dt .eri-dt__filters > .eri-dt__quick { flex: 1 1 0%; min-width: min(135px, 100%); }
-  .eri-dt .eri-dt__filters > .eri-dt__quick:nth-child(2n) .eri-dt__quick-options { left: auto; right: 0; }
   .eri-dt .eri-dt__paging { flex-wrap: wrap; gap: var(--eri-space-2, var(--space-2, 8px)); }
   .eri-dt .eri-dt__paging > span:first-child { flex-basis: 100%; }
 }
