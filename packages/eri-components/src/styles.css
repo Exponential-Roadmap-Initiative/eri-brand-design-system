@@ -141,6 +141,7 @@
 .eri-dt table.eri-dt__table--fold { width: 100%; table-layout: auto; }
 .eri-dt table.eri-dt__table--fold th { min-width: 0; }
 .eri-dt table.eri-dt__table--fold td:not(.eri-dt__first) { width: 1%; }
+.eri-dt table.eri-dt__table--fold th:not(:first-child), .eri-dt table.eri-dt__table--fold td:not(.eri-dt__first) { padding-inline: var(--eri-space-2, var(--space-2, 8px)); }
 .eri-dt .eri-dt__fold { display: grid; gap: var(--eri-space-1, var(--space-1, 4px)); margin: var(--eri-space-2, var(--space-2, 8px)) 0 0; font-weight: 400; }
 .eri-dt .eri-dt__fold > div { min-width: 0; }
 .eri-dt .eri-dt__fold dt { display: inline; color: var(--eri-dt-muted); }
