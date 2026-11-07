@@ -24,6 +24,7 @@
 - **States compared:** the default view, an open filter, the Columns panel, chips, empty, hover and sorted, each at 1440 and 390.
 - **Default view:** 0 pixels differ (`before-1440.png` and `after-1440.png`; `before-390.png` and `after-390.png`).
 - **Inside the CPR shell** (the real header, sidebar and page frame), with no token mapping in the platform: 0 pixels differ at 1440 and 390 (`before-shell-*.png`, `after-shell-*.png`). The column header keeps its soft green surface and muted text.
+- **In a narrow container** (a table nested in cards, 216 px wide on a 320 px phone): every part of the table stays inside it; the search, filters, chips and paging shrink or wrap, and only the rows scroll sideways (`after-narrow-216-*.png`). Before, the toolbar and filters ran 62 px past it.
 - **In an app without the ERI tokens** (the BDS site's semantic tokens only), the table takes those (`after-package-demo-*.png`).
 - **Three colours were literals and are now the nearest token:**
   - the paging range ("1–70 of 70") is in muted text;

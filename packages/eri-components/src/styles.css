@@ -72,9 +72,11 @@
   --eri-dt-control-height: var(--eri-control-height, 36px);
   --eri-dt-shadow: 0 5px 15px color-mix(in srgb, var(--eri-dt-ink) 13%, transparent);
 }
-.eri-dt { display: grid; gap: var(--eri-space-2, var(--space-2, 8px)); min-width: 0; min-height: 0; background: transparent; color: var(--eri-dt-ink); font: 14px/1.5 var(--eri-dt-font); }
+.eri-dt { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--eri-space-2, var(--space-2, 8px)); min-width: 0; min-height: 0; background: transparent; color: var(--eri-dt-ink); font: 14px/1.5 var(--eri-dt-font); }
 .eri-dt, .eri-dt *, .eri-dt *::before, .eri-dt *::after { box-sizing: border-box; }
 .eri-dt input, .eri-dt select { font: inherit; }
+/* Every part shrinks to the table's container, however narrow (a table nested in cards on a phone). */
+.eri-dt > * { min-width: 0; }
 .eri-dt .eri-dt__sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 /* Buttons: the table's own, the chips and the paging. */
@@ -88,31 +90,31 @@
 
 /* Toolbar: search, Columns, Export. */
 .eri-dt .eri-dt__toolbar { display: flex; flex-wrap: wrap; gap: var(--eri-space-2, var(--space-2, 8px)); align-items: center; }
-.eri-dt .eri-dt__search { display: flex; flex: 1 1 0%; gap: var(--eri-space-2, var(--space-2, 8px)); min-width: 250px; max-width: 600px; margin: 0; }
+.eri-dt .eri-dt__search { display: flex; flex: 1 1 0%; gap: var(--eri-space-2, var(--space-2, 8px)); min-width: min(250px, 100%); max-width: 600px; margin: 0; }
 .eri-dt .eri-dt__search input { flex: 1 1 0%; min-width: 0; padding: 10px 13px; border: 1px solid var(--eri-dt-border-strong); border-radius: 7px; background: var(--eri-dt-surface); color: var(--eri-dt-ink); font: inherit; font-size: 14px; }
 
 /* Filters: the page's own (the toolbar slot), each column's quick filter and the "only" toggles. */
 .eri-dt .eri-dt__filters { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin: 0; }
-.eri-dt .eri-dt__quick { position: relative; margin: 0; padding: 0; border: 1px solid var(--eri-dt-border); border-radius: 4px; background: var(--eri-dt-surface); }
-.eri-dt .eri-dt__quick > summary { min-width: 125px; padding: 7px 11px; color: var(--eri-dt-action); font-size: 12px; cursor: pointer; }
+.eri-dt .eri-dt__quick { position: relative; min-width: min(127px, 100%); max-width: 100%; margin: 0; padding: 0; border: 1px solid var(--eri-dt-border); border-radius: 4px; background: var(--eri-dt-surface); }
+.eri-dt .eri-dt__quick > summary { overflow-wrap: anywhere; padding: 7px 11px; color: var(--eri-dt-action); font-size: 12px; cursor: pointer; }
 .eri-dt .eri-dt__quick-options { position: absolute; top: 100%; left: 0; z-index: 8; width: 280px; max-width: calc(100vw - 45px); padding: 12px; border: 1px solid var(--eri-dt-border); border-radius: 4px; background: var(--eri-dt-surface); box-shadow: var(--eri-dt-shadow); }
 .eri-dt .eri-dt__quick-options > input { width: 100%; padding: 7px; border: 1px solid var(--eri-dt-border); border-radius: 4px; font: inherit; font-size: 13px; }
 .eri-dt .eri-dt__quick-values { display: grid; gap: var(--eri-space-2, var(--space-2, 8px)); max-height: 230px; overflow: auto; padding: var(--eri-space-2, var(--space-2, 8px)) 0; }
 .eri-dt .eri-dt__quick-values label { display: flex; gap: var(--eri-space-2, var(--space-2, 8px)); align-items: start; font-size: 13px; }
 .eri-dt .eri-dt__quick-values input { margin-top: 4px; accent-color: var(--eri-dt-action); }
-.eri-dt .eri-dt__toggle { display: inline-flex; align-items: center; gap: var(--eri-space-2, var(--space-2, 8px)); min-height: var(--eri-dt-control-height); padding: 0 var(--eri-space-3, var(--space-3, 12px)); border: 1px solid var(--eri-dt-border-strong); border-radius: var(--eri-dt-radius); background: var(--eri-dt-surface); font-size: 12px; cursor: pointer; }
+.eri-dt .eri-dt__toggle { display: inline-flex; max-width: 100%; align-items: center; gap: var(--eri-space-2, var(--space-2, 8px)); min-height: var(--eri-dt-control-height); padding: 0 var(--eri-space-3, var(--space-3, 12px)); border: 1px solid var(--eri-dt-border-strong); border-radius: var(--eri-dt-radius); background: var(--eri-dt-surface); font-size: 12px; cursor: pointer; }
 .eri-dt .eri-dt__columns { display: flex; flex-wrap: wrap; gap: var(--eri-space-3, var(--space-3, 12px)); margin: 0; padding: var(--eri-space-3, var(--space-3, 12px)); border: 1px solid var(--eri-dt-border); border-radius: var(--eri-dt-radius); background: var(--eri-dt-surface); }
 .eri-dt .eri-dt__columns legend { color: var(--eri-dt-muted); font-size: 12px; }
 .eri-dt .eri-dt__columns label { display: flex; align-items: center; gap: var(--eri-space-2, var(--space-2, 8px)); font-size: 12px; }
 .eri-dt .eri-dt__chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
-.eri-dt .eri-dt__chips button { padding: 4px 8px; }
+.eri-dt .eri-dt__chips button { max-width: 100%; padding: 4px 8px; overflow-wrap: anywhere; text-align: left; }
 
 /* The count line, the empty view and paging. */
 .eri-dt .eri-dt__count { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: var(--eri-space-2, var(--space-2, 8px)) 0; font-size: 12px; }
 .eri-dt .eri-dt__count > span { margin-right: auto; }
 .eri-dt .eri-dt__empty { padding: var(--eri-space-6, var(--space-6, 24px)); border: 1px dashed var(--eri-dt-border-strong); border-radius: var(--eri-dt-radius); text-align: center; }
 .eri-dt .eri-dt__empty p { margin: 0 0 var(--eri-space-2, var(--space-2, 8px)); }
-.eri-dt .eri-dt__paging { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin: var(--eri-space-2, var(--space-2, 8px)) 0 18px; font-size: 12px; }
+.eri-dt .eri-dt__paging { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; margin: var(--eri-space-2, var(--space-2, 8px)) 0 18px; font-size: 12px; }
 .eri-dt .eri-dt__paging > span:first-child { margin-right: auto; color: var(--eri-dt-muted); }
 
 /* The table: sticky first column, an arrow at the right edge while there is more to scroll, row groups, a row that opens. */
@@ -150,7 +152,7 @@
   .eri-dt .eri-dt__search { flex-basis: 100%; max-width: 100%; }
   .eri-dt .eri-dt__toolbar .eri-dt__button { min-height: 40px; }
   .eri-dt .eri-dt__count > span { flex-basis: 100%; }
-  .eri-dt .eri-dt__filters > .eri-dt__quick { flex: 1 1 0%; min-width: 135px; }
+  .eri-dt .eri-dt__filters > .eri-dt__quick { flex: 1 1 0%; min-width: min(135px, 100%); }
   .eri-dt .eri-dt__filters > .eri-dt__quick:nth-child(2n) .eri-dt__quick-options { left: auto; right: 0; }
   .eri-dt .eri-dt__paging { flex-wrap: wrap; gap: var(--eri-space-2, var(--space-2, 8px)); }
   .eri-dt .eri-dt__paging > span:first-child { flex-basis: 100%; }
