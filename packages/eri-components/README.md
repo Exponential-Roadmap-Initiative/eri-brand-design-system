@@ -101,8 +101,8 @@ const columns: ColumnSpec<Row>[] = [
 - **Phone layout:** at 40rem and narrower, a column with `priority: "low"` is not drawn as a column; its label and value fold into one line
   under the first cell. A table with no low column looks the same at every width.
 - **Filters from outside:** `setEriTableFilter(urlKey, column, values)` and `useEriTableFilter(urlKey, column)` (a chart that filters its table).
-- **Tokens:** the table reads `--eri-dt-*` names, which default to the shared semantic tokens (`--foreground`, `--card`, `--border`, `--primary`…).
-  An app with its own token names maps them once on `.eri-dt, .eri-state`.
+- **Tokens:** the table reads `--eri-dt-*` names. Each defaults to the ERI token (`--eri-ink`, `--eri-surface`, `--eri-surface-soft`, `--eri-border`, `--eri-action`…),
+  then to the shared semantic token (`--foreground`, `--card`, `--muted`, `--border`, `--primary`…), so an app needs no mapping.
 
 ---
 

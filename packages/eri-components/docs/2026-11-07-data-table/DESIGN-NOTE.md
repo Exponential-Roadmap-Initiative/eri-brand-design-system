@@ -17,12 +17,14 @@
 | `eriDataTableModel.ts` and its 7 tests | the same model, the same 7 tests, plus 4 new ones |
 | `setEriTableFilter`, `useEriTableFilter` | the same |
 | `StateMessage` (loading, empty, error, restricted) | `EriStateMessage`, also exported as `StateMessage` |
-| `eri-data-table.css` and the explorer rules the table used | the `.eri-dt` rules in `styles.css`, with tokens only (`--eri-dt-*`, which default to the BDS semantic tokens) |
+| `eri-data-table.css` and the explorer rules the table used | the `.eri-dt` rules in `styles.css`, with tokens only (`--eri-dt-*`, which default to the ERI tokens the platform renders with, then to the BDS semantic tokens) |
 
 **Checked: the same look.**
 - **Method:** a harness draws the old platform table and the new package table with 70 real-length CPR actions (codebook titles, long reasons, two hidden rows, the seven groups). It compares every element's computed style and box.
 - **States compared:** the default view, an open filter, the Columns panel, chips, empty, hover and sorted, each at 1440 and 390.
 - **Default view:** 0 pixels differ (`before-1440.png` and `after-1440.png`; `before-390.png` and `after-390.png`).
+- **Inside the CPR shell** (the real header, sidebar and page frame), with no token mapping in the platform: 0 pixels differ at 1440 and 390 (`before-shell-*.png`, `after-shell-*.png`). The column header keeps its soft green surface and muted text.
+- **In an app without the ERI tokens** (the BDS site's semantic tokens only), the table takes those (`after-package-demo-*.png`).
 - **Three colours were literals and are now the nearest token:**
   - the paging range ("1–70 of 70") is in muted text;
   - the search box's typed text is in ink;
@@ -43,7 +45,7 @@
 ## For the platform (Frontend's pin PR, after this merges)
 
 1. Point the 6 imports at `@eri/components` (`actionTable`, `actionTableModel`, `calibration`, `company`, `portfolio`, `portfolioModel`). A trial compile of the CPR pages against this branch passes with only those lines changed.
-2. Map the table's tokens once in `design-system/tokens.css` on `.eri-dt, .eri-state` (the block is in the PR description). Then delete the platform's copy and `eri-data-table.css`.
+2. No token mapping is needed: the table's defaults read the platform's `--eri-*` tokens (`--eri-ink`, `--eri-surface-soft`, `--eri-border`, `--eri-action`…) and its `--eri-space-*`. Delete the platform's copy and `eri-data-table.css`.
 3. Change `cpr.css`'s `.eri-data-table code` only if it is renamed. The package keeps the `eri-data-table` class on the root, so that rule still applies.
 4. Shoot the 4 pages at 1440 and 390 for the UX lead.
 
