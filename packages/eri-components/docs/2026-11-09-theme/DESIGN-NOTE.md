@@ -1,6 +1,6 @@
 # Design note: ERI pages follow the device (9 Nov 2026)
 
-**Decision:** Nicklas, 9 Nov 2026, asked "When someone opens an ERI page, should it start in light or follow their device's setting?", answered **"Follow the device"**. Every ERI app and site starts in the device's light or dark setting and has a Light / Dark / System switch.
+**Decision:** Nicklas, 9 Nov 2026, asked "When someone opens an ERI page, should it start in light or follow their device's setting?", answered **"Follow the device"**. Every ERI app and site is to start in the device's light or dark setting; the switch (Light / Dark / System) comes with `showThemeToggle` or an app's own switch through `useEriTheme()`.
 
 **Use case:** a reader whose device is set to dark gets ERI pages in the brand's dark colours without doing anything; anyone can still choose Light or Dark.
 

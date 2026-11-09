@@ -4733,7 +4733,7 @@ const tabs: TabConfig[] = [
             Surface Modes
           </h2>
           <p className="text-muted-foreground mb-8 max-w-3xl">
-            ERI products use two named surface modes, <strong>Light</strong> and <strong>Dark</strong>. They are not competing themes; they are two contexts within the same brand. With no choice made, every ERI app follows the device's light or dark setting (System); the reader can choose Light, Dark or System.</p>
+            ERI products use two named surface modes, <strong>Light</strong> and <strong>Dark</strong>. They are not competing themes; they are two contexts within the same brand. The ERI rule: with no choice made, every app follows the device's light or dark setting (System); the reader can choose Light, Dark or System.</p>
 
           {/* Mode comparison table */}
           <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -4826,12 +4826,12 @@ const tabs: TabConfig[] = [
                   <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3ba559]/20 text-[#93cda3] border border-[#3ba559]/30">9 Nov 2026</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4 max-w-2xl leading-relaxed">
-                  From 9 Nov 2026, <strong className="text-white">every ERI app follows the device's light or dark setting</strong> until the reader chooses Light, Dark or System (Nicklas, 9 Nov 2026: "Follow the device"). The choice is kept in localStorage and applied before the first paint.</p>
+                  From 9 Nov 2026, <strong className="text-white">the ERI rule is that every app follows the device's light or dark setting</strong> until the reader chooses Light, Dark or System (Nicklas, 9 Nov 2026: "Follow the device"). The choice is kept in localStorage and applied before the first paint.</p>
                 {/* Placeholder energy stat — will be updated with specific figures from updated research */}
                 <div className="bg-[#1a1a1a] border border-[#2e2e2e] rounded-lg p-4 mb-4">
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     <span className="text-[#93E07D] font-semibold">Energy note (OLED screens):</span>{" "}
-                    Dark pixels on OLED displays require near-zero power compared to light pixels.
+                    Darker pixels use less power on OLED displays than light pixels.
                     Users who choose dark mode still benefit from reduced display energy on OLED devices.
                     The Light / Dark / System switch is in the header; the choice is kept in this browser.
                   </p>
