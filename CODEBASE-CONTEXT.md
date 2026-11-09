@@ -56,6 +56,20 @@ The `@eri/components` package (`packages/eri-components/`) is the component libr
 
 ---
 
+## Design tokens — 9 Nov 2026 (design-system step 1)
+
+| | |
+|---|---|
+| Source | `packages/eri-components/tokens/tokens.json`: primitive, semantic and component layers, light and dark |
+| Built | `dist/tokens.css`, `dist/tokens.ts`, `dist/token-names.json`, by `scripts/build-tokens.mjs`; checked by `scripts/check-tokens.mjs` and `.github/workflows/eri-components.yml` |
+| Site | `client/src/index.css` imports `@eri/components/tokens.css`; it keeps no colour values of its own |
+| Fonts | `--font-body` is Open Sans and `--font-heading` is Archivo; Tailwind's `font-sans` is Open Sans |
+| Rule | A value changes only in `tokens.json`; a brand value change needs Nicklas's approval in his words |
+
+The tables below give the values in words; where they disagree with `tokens.json`, `tokens.json` is what renders.
+
+---
+
 ## Canonical colour values — non-negotiable
 
 These are the ground-truth values. If any document, skill, or code contradicts these, the document is wrong.

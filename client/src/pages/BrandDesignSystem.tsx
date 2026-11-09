@@ -1133,7 +1133,7 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
           <p className="text-muted-foreground mb-8 max-w-3xl">
             ERI uses a two-font system. <strong>Archivo</strong> is the heading and display typeface — used at weight 700–800 for all H1–H3 and marketing hero text.{" "}
             <strong>Open Sans</strong> is the body typeface — used for all paragraph text, UI labels, navigation, and captions. Both fonts are self-hosted as WOFF2 files to avoid third-party font requests and support GDPR-compliant delivery.
-            The web applications map <code className="font-mono text-xs bg-gray-100 px-1 rounded">font-sans</code> to Archivo for consistency with the design system.
+            In code, <code className="font-mono text-xs bg-gray-100 px-1 rounded">font-sans</code> is Open Sans and <code className="font-mono text-xs bg-gray-100 px-1 rounded">font-archivo</code> is Archivo. Both come from the <code className="font-mono text-xs bg-gray-100 px-1 rounded">@eri/components</code> tokens (<code className="font-mono text-xs bg-gray-100 px-1 rounded">--font-body</code>, <code className="font-mono text-xs bg-gray-100 px-1 rounded">--font-heading</code>).
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -1147,7 +1147,7 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
                 </p>
                 <div className="space-y-1">
                   <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-archivo → headings, display, hero text</code>
-                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-sans → Archivo (Tailwind default alias)</code>
+                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">--font-heading → the same font, from the tokens</code>
                 </div>
               </CardContent>
             </Card>
@@ -1160,7 +1160,7 @@ const logoSrc = theme === "dark" ? logos.eriLogoDarkMode : logos.eriLogoFullColo
                   Weights: 400, 500, 600, 700. Self-hosted as WOFF2 in <code className="font-mono text-xs bg-muted px-1 rounded">client/public/fonts/</code>.
                 </p>
                 <div className="space-y-1">
-                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-['Open_Sans'] → body, UI, captions</code>
+                  <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">font-sans → body, UI, captions (--font-body)</code>
                   <code className="block text-xs font-mono text-[#3ba559] bg-green-50 px-2 py-1 rounded">Standard body font for all ERI web applications</code>
                 </div>
               </CardContent>

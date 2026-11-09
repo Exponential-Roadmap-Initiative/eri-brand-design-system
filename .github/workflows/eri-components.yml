@@ -1,0 +1,35 @@
+# ERI design tokens and the @eri/components public surface (design-system step 1).
+# No install: the checks use Node's standard library only.
+name: eri-components
+
+on:
+  pull_request:
+    paths:
+      - "packages/eri-components/**"
+      - "client/src/index.css"
+      - ".github/workflows/eri-components.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  tokens:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch the base branch and tags
+        run: git fetch --no-tags origin "${{ github.base_ref }}" && git fetch --tags origin
+      - name: Tokens, built files, contrast and public surface
+        working-directory: packages/eri-components
+        env:
+          ERI_BASE_REF: origin/${{ github.base_ref }}
+        run: node scripts/check-tokens.mjs
+      - name: Package tests
+        working-directory: packages/eri-components
+        run: node --test test/
