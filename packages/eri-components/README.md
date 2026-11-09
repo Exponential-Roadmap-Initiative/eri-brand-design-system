@@ -36,7 +36,7 @@ This is required for all ERI projects using Tailwind 4. Without it, the `EriAppH
 
 ## Design tokens
 
-Every ERI colour, font, space, radius, shadow and motion value lives in one file, `tokens/tokens.json`, in three layers:
+ERI's colour, font, space, radius, shadow and motion values are defined in one file, `tokens/tokens.json` (the components' own remaining colours move in at step 3), in three layers:
 - **primitive**: the raw brand values, named `--eri-<kind>-<name>` (for example `--eri-green-59`, `--eri-font-body`, `--eri-space-4`);
 - **semantic**: what a value is for, such as `--background`, `--foreground`, `--primary`, `--border` and `--space-1…6`; each refers to a primitive and has a light and a dark value;
 - **component**: a value one component needs, named `--eri-<component>-<part>`; each refers to a semantic token.
@@ -54,7 +54,7 @@ import { eriTokens } from "@eri/components/tokens"; // resolved values, for char
 
 Change a value only in `tokens/tokens.json`, then run `node scripts/build-tokens.mjs` and commit the built files.
 `node scripts/check-tokens.mjs` fails on a raw value in a semantic or component token, a built file that differs from
-the source, a contrast pair below its minimum (4.5:1 for text, 3:1 for focus and control edges) in light or dark, and a
+the source, a contrast pair below its minimum (4.5:1 for text, 3:1 for focus and control edges) in light or dark, unless it is a listed known gap that has not got worse, and a
 public name added or removed without the matching version bump. A brand value change needs Nicklas's approval in his words.
 
 ---
