@@ -1014,7 +1014,7 @@ export default function BrandDesignSystem() {
                 <h3 className="font-bold text-foreground text-base">Theme-Aware Logo Switching</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
-                ERI apps default to light mode. The header logo must switch between the full-colour wordmark (light mode) and the dedicated dark-mode SVG (dark mode). Use the <code className="bg-muted px-1 rounded text-xs">useTheme()</code> hook — never a CSS filter.
+                ERI apps follow the device's light or dark setting until the reader chooses. The header logo must switch between the full-colour wordmark (light mode) and the dedicated dark-mode SVG (dark mode). Use the <code className="bg-muted px-1 rounded text-xs">useTheme()</code> hook — never a CSS filter.
               </p>
               <pre className="bg-gray-900 text-green-400 text-xs rounded-md p-4 overflow-x-auto leading-relaxed mb-4">{`import { useTheme } from "@/contexts/ThemeContext";
 import { logos } from "@/lib/assets";
@@ -4733,15 +4733,14 @@ const tabs: TabConfig[] = [
             Surface Modes
           </h2>
           <p className="text-muted-foreground mb-8 max-w-3xl">
-            ERI products use two named surface modes — <strong>Light</strong> (the ERI default) and <strong>Dark</strong> (active user preference). These are not competing themes; they are two contexts within the same brand. Light mode is the default for all ERI applications — accessible to all users without any action. Dark mode is available to users who prefer it, and their preference persists across the entire ERI ecosystem via a shared <code className="text-sm font-mono">localStorage</code> key.
-          </p>
+            ERI products use two named surface modes, <strong>Light</strong> and <strong>Dark</strong>. They are not competing themes; they are two contexts within the same brand. With no choice made, every ERI app follows the device's light or dark setting (System); the reader can choose Light, Dark or System.</p>
 
           {/* Mode comparison table */}
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             {[
               {
                 mode: "Light Mode",
-                badge: "Default",
+                badge: "Device set to light",
                 badgeColor: "bg-[#3ba559] text-white",
                 bg: "bg-card border border-border",
                 tokens: [
@@ -4752,11 +4751,11 @@ const tabs: TabConfig[] = [
                   { name: "Border",          value: "#E5E7EB",  swatch: "#E5E7EB",  border: true },
                   { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
                 ],
-                use: "The ERI default for all applications. All new users see light mode first.",
+                use: "Shown when the device is set to light, or when the reader chooses Light.",
               },
               {
                 mode: "Dark Mode",
-                badge: "User preference",
+                badge: "Device set to dark",
                 badgeColor: "bg-[#6b7280] text-white",
                 bg: "bg-[#111111] border border-[#2e2e2e]",
                 tokens: [
@@ -4767,7 +4766,7 @@ const tabs: TabConfig[] = [
                   { name: "Accent text",     value: "#93E07D",  swatch: "#93E07D" },
                   { name: "CTA button",      value: "#93E07D",  swatch: "#93E07D" },
                 ],
-                use: "Active user preference. Selected via the toggle in the header; persists across all ERI apps via localStorage.",
+                use: "Shown when the device is set to dark, or when the reader chooses Dark.",
               },
             ].map((m) => (
               <div key={m.mode} className={`rounded-xl p-6 ${m.bg}`}>
@@ -4799,9 +4798,9 @@ const tabs: TabConfig[] = [
             <h3 className="font-semibold text-foreground mb-3">How the mode system works</h3>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               {[
-                { q: "What is the default?", a: "Light — always, for all apps" },
-                { q: "How does a user change it?", a: "Toggle in the header (sun/moon icon)" },
-                { q: "Does it persist across apps?", a: "Yes — shared localStorage key eri-theme" },
+                { q: "What is the default?", a: "System: the device's light or dark setting" },
+                { q: "How does a reader change it?", a: "The Light / Dark / System switch in the header" },
+                { q: "Is the choice kept?", a: "Yes, in this browser for this app: localStorage eri-theme-preference" },
               ].map((r) => (
                 <div key={r.q} className="bg-card rounded-lg p-4 border border-[#d1fae5]">
                   <p className="text-muted-foreground mb-2">{r.q}</p>
@@ -4823,51 +4822,43 @@ const tabs: TabConfig[] = [
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="font-archivo font-bold text-white text-lg">Light by Default, Dark by Choice</h3>
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3ba559]/20 text-[#93cda3] border border-[#3ba559]/30">v2.17.0</span>
+                  <h3 className="font-archivo font-bold text-white text-lg">Follow the Device, Choose if You Like</h3>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#3ba559]/20 text-[#93cda3] border border-[#3ba559]/30">9 Nov 2026</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4 max-w-2xl leading-relaxed">
-                  From v2.17.0, <strong className="text-white">light mode is the ERI default</strong> for all applications. Dark mode is an active individual user preference — selected via the toggle and persisted in localStorage. Users who prefer dark mode are never more than one click away from it, and their choice is remembered across all ERI apps.
-                </p>
+                  From 9 Nov 2026, <strong className="text-white">every ERI app follows the device's light or dark setting</strong> until the reader chooses Light, Dark or System (Nicklas, 9 Nov 2026: "Follow the device"). The choice is kept in localStorage and applied before the first paint.</p>
                 {/* Placeholder energy stat — will be updated with specific figures from updated research */}
                 <div className="bg-[#1a1a1a] border border-[#2e2e2e] rounded-lg p-4 mb-4">
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     <span className="text-[#93E07D] font-semibold">Energy note (OLED screens):</span>{" "}
                     Dark pixels on OLED displays require near-zero power compared to light pixels.
                     Users who choose dark mode still benefit from reduced display energy on OLED devices.
-                    The toggle is in the header — one click to switch, preference persists across all ERI apps.
+                    The Light / Dark / System switch is in the header; the choice is kept in this browser.
                   </p>
                 </div>
                 <h4 className="text-sm font-semibold text-white mb-3">Implementation</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-xs">
                   <div className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
-                    <p className="text-[#93E07D] font-semibold mb-2">1. FODC prevention script (index.html)</p>
-                    <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<script>
-(function() {
-  try {
-    if (localStorage.getItem('eri-theme') === 'dark')
-      document.documentElement.classList.add('dark');
-  } catch(e) {}
-})();
-</script>`}</pre>
-                    <p className="text-muted-foreground mt-2">Add to {'<head>'} before any CSS. Prevents flash of dark content for returning dark-mode users. Light is the default so no script is needed for first-time visitors.</p>
+                    <p className="text-[#93E07D] font-semibold mb-2">1. Theme script (index.html)</p>
+                    <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<script>(function(){try{var p=localStorage.getItem('eri-theme-preference');if(p!=='light'&&p!=='dark')p='system';var d=p==='dark'||(p==='system'&&!!window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);var c=document.documentElement.classList;c.toggle('dark',d);c.toggle('light',!d);localStorage.setItem('eri-theme',d?'dark':'light');}catch(e){}})();</script>`}</pre>
+                    <p className="text-muted-foreground mt-2">Add to {'<head>'} before any CSS or JS, exactly as ERI_THEME_SCRIPT in @eri/components. It applies the stored choice, or the device's setting, before the first paint, so no reader sees a flash of the other theme.</p>
                   </div>
                   <div className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
                     <p className="text-[#93E07D] font-semibold mb-2">2. EriPageLayout prop</p>
                     <pre className="text-gray-300 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`<EriPageLayout
   appName="Your App"
-  showThemeToggle={true}  {/* shows the toggle button */}
+  showThemeToggle={true}  {/* shows the Light / Dark / System switch */}
   headerTheme="auto"       {/* REQUIRED — makes header respond to theme */}
   ...
 />`}</pre>
-                    <p className="text-muted-foreground mt-2">The toggle reads/writes <code className="text-muted-foreground">localStorage</code> key <code className="text-muted-foreground">eri-theme</code> and applies the <code className="text-muted-foreground">dark</code> class to <code className="text-muted-foreground">&lt;html&gt;</code>. <strong className="text-white">Always pair with <code className="text-muted-foreground">headerTheme="auto"</code></strong> — without it the header stays dark even in light mode.</p>
+                    <p className="text-muted-foreground mt-2">The switch stores the choice in <code className="text-muted-foreground">eri-theme-preference</code>, writes the theme in use to <code className="text-muted-foreground">eri-theme</code> and sets the <code className="text-muted-foreground">dark</code> class on {'<html>'}. An app with its own switch uses <code className="text-muted-foreground">useEriTheme()</code>.</p>
                   </div>
                 </div>
                 <div className="mt-4 grid md:grid-cols-3 gap-3 text-xs">
                   {[
-                    { q: "Default theme?", a: "Light — always" },
-                    { q: "Storage?",       a: "localStorage key eri-theme" },
-                    { q: "OS preference?", a: "Ignored — light is the ERI default" },
+                    { q: "Default theme?", a: "System (follows the device)" },
+                    { q: "Storage?",       a: "eri-theme-preference (choice), eri-theme (in use)" },
+                    { q: "Device setting?", a: "Followed until the reader chooses" },
                   ].map((r) => (
                     <div key={r.q} className="bg-[#111111] border border-[#2e2e2e] rounded-lg p-3">
                       <p className="text-muted-foreground mb-1">{r.q}</p>
@@ -4877,17 +4868,16 @@ const tabs: TabConfig[] = [
                 </div>
                 {/* Cross-site persistence callout */}
                 <div className="mt-4 bg-[#111111] border border-[#2e2e2e] rounded-lg p-4">
-                  <p className="text-xs font-semibold text-[#93E07D] mb-2">Cross-site persistence — why the localStorage key matters</p>
+                  <p className="text-xs font-semibold text-[#93E07D] mb-2">The same keys in every ERI app</p>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-                    The ERI website ecosystem is designed to feel like a single product. When a user selects light mode on HAL,
-                    that preference carries over automatically to PSM, Taxonomy, Framework, and every other ERI app — without any
-                    login or sync mechanism. This works because every ERI app reads from and writes to the same{' '}
-                    <code className="text-muted-foreground">localStorage</code> key: <code className="text-[#93E07D] font-mono">&quot;eri-theme&quot;</code>.
+                    Every ERI app uses the same two <code className="text-muted-foreground">localStorage</code> keys, so the switch behaves the same everywhere and
+                    a choice holds across an app's pages and tabs. Browsers keep <code className="text-muted-foreground">localStorage</code> per web address, so an app on another
+                    address keeps its own choice; with no choice, every app follows the device, which looks the same to the reader.
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    <span className="text-white font-semibold">Rule:</span> Never use a different key name (<code className="text-muted-foreground">&quot;theme&quot;</code>,{' '}
-                    <code className="text-muted-foreground">&quot;hal-theme&quot;</code>, <code className="text-muted-foreground">&quot;app-theme&quot;</code>).
-                    Changing the key silently breaks cross-site persistence for every user who has already set their preference.
+                    <span className="text-white font-semibold">Rule:</span> use <code className="text-[#93E07D] font-mono">&quot;eri-theme-preference&quot;</code> and{' '}
+                    <code className="text-[#93E07D] font-mono">&quot;eri-theme&quot;</code> through @eri/components; never a key of your own (<code className="text-muted-foreground">&quot;theme&quot;</code>,{' '}
+                    <code className="text-muted-foreground">&quot;hal-theme&quot;</code>), and never write <code className="text-muted-foreground">&quot;eri-theme&quot;</code> directly.
                   </p>
                 </div>
               </div>

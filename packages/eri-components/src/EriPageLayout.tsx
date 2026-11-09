@@ -45,17 +45,18 @@
  *     sets #232323 on the outer shell; pages must override this for their own content area
  *   - EriPageLayout does NOT add pt-16 — pages must clear the fixed 64px header themselves
  *
- * THEME TOGGLE (showThemeToggle):
- *   - Dark mode is the ERI default — it saves display energy on OLED screens
- *   - Set showThemeToggle={true} to let users opt in to light mode
- *   - Add the FOLC-prevention script to index.html <head> to avoid flash of light content:
+ * THEME (showThemeToggle), the one ERI rule (Nicklas, 9 Nov 2026: "Follow the device"):
+ *   - With no choice stored, the page follows the device's light/dark setting (System).
+ *   - showThemeToggle={true} shows a Light / Dark / System switch (a radio group, "Appearance").
+ *   - The choice is kept in localStorage "eri-theme-preference" (light | dark | system), the theme in use in
+ *     "eri-theme" (light | dark) and as the "dark" class on <html>; tabs stay in step.
+ *   - Every app puts ERI_THEME_SCRIPT (exported from @eri/components) inline in index.html's <head>,
+ *     before any CSS or JS, so the first paint is already in the right theme:
  *
- *     <script>
- *       (function() {
- *         var t = localStorage.getItem('eri-theme');
- *         if (!t || t === 'dark') document.documentElement.classList.add('dark');
- *       })();
- *     </script>
+ *     <script>/* the exact text of ERI_THEME_SCRIPT *\/</script>
+ *
+ *   - An app with its own switch uses useEriTheme() or setEriThemePreference(); it never writes "eri-theme" itself.
+ *   - Tailwind dark: variants in the consuming app respond automatically.
  *
  * HEADER THEMING (headerTheme):
  *   - 'dark' (default): header is always #232323 — the ERI standard.
@@ -117,11 +118,8 @@ interface EriPageLayoutProps {
   /** Logo href — defaults to "/" */
   logoHref?: string;
   /**
-   * Show the dark/light mode toggle button in the header.
-   * Dark mode is the ERI default — it saves display energy on OLED screens.
-   * Set to true to let users opt in to light mode.
-   * Add the FOLC-prevention script to index.html <head> (see component JSDoc above).
-   * Defaults to false.
+   * Show the Light / Dark / System switch in the header. With no choice stored, pages follow the device.
+   * Put ERI_THEME_SCRIPT inline in index.html's <head> (see the component JSDoc above). Defaults to false.
    */
   showThemeToggle?: boolean;
   /**
