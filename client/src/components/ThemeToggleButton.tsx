@@ -1,7 +1,8 @@
 /**
  * ERI Brand Design System — ThemeToggleButton
  *
- * A small icon button that toggles between dark (default) and light mode.
+ * A small icon button that switches between light and dark as a stored choice. (Not used on the site;
+ * the header's Light / Dark / System switch is. With no choice, pages follow the device: see eriTheme.ts.)
  * Follows the ERI convention:
  *   - In dark mode: shows a sun icon (action = switch to light)
  *   - In light mode: shows a moon icon (action = switch to dark)

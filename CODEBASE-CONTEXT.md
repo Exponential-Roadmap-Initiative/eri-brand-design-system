@@ -466,6 +466,20 @@ Defined in `client/src/index.css`:
 
 ---
 
+## Theme — 9 Nov 2026 decision (replaces the default, persistence and OS rows of the older tables below)
+
+Nicklas, 9 Nov 2026, asked "When someone opens an ERI page, should it start in light or follow their device's setting?": **"Follow the device"**.
+
+| Decision | Value |
+|---|---|
+| Default | System: the device's light/dark setting (`prefers-color-scheme`), followed live |
+| Choices | Light, Dark, System, in EriAppHeader's switch (`showThemeToggle`) or an app's own switch via `useEriTheme()` |
+| Choice stored | `localStorage` `eri-theme-preference` (`light` \| `dark` \| `system`) |
+| Theme in use | `localStorage` `eri-theme` (`light` \| `dark`) and the `dark`/`light` class on `<html>` |
+| Before first paint | `ERI_THEME_SCRIPT` from `@eri/components`, inline in `<head>`; the BDS site's copy is checked by a test |
+| Older `eri-theme` values | not read as a choice (older code wrote them automatically), so every reader starts on System once |
+| Source | `packages/eri-components/src/eriTheme.ts` (the one rule); `client/src/contexts/ThemeContext.tsx` passes it on |
+
 ## Dark Mode — v2.12.0 decisions
 
 | Decision | Value |

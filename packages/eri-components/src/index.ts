@@ -19,5 +19,8 @@ export type { EriFigureRow, EriFigureListProps } from './EriFigureList';
 export { default as EriTabs } from './EriTabs';
 export type { EriTabsProps } from './EriTabs';
 
+export { ERI_THEME_DEFAULT, ERI_THEME_EVENT, ERI_THEME_KEY, ERI_THEME_PREFERENCE_KEY, ERI_THEME_SCRIPT, currentEriTheme, parseThemePreference, readEriThemePreference, setEriThemePreference, themeFor, useEriTheme } from './eriTheme';
+export type { EriTheme, EriThemePreference } from './eriTheme';
+
 // Also export the status type
 export type { EriStatusValue } from './EriStatusBadge';

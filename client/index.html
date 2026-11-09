@@ -15,19 +15,10 @@
     <!-- Fonts: Archivo (headings) + Open Sans (body)
          Self-hosted WOFF2 via @font-face in index.css (GDPR-compliant — no external font requests)
          Font files: /fonts/Archivo-{400-800}.woff2, /fonts/OpenSans-{400,600,700}.woff2 -->
-    <!-- FODC prevention: apply dark class synchronously before any JS loads.
-         Light is the ERI default; dark is an active user preference stored in
-         localStorage under the key "eri-theme". Without this script, returning
-         dark-mode users would see a brief light flash on every page load. -->
-    <script>
-      (function () {
-        try {
-          if (localStorage.getItem('eri-theme') === 'dark') {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (e) {}
-      })();
-    </script>
+    <!-- ERI theme, before any CSS or JS: with no choice stored the page follows the device's light/dark setting;
+         a choice (Light / Dark / System) is kept in localStorage "eri-theme-preference". The theme in use goes to
+         "eri-theme" and the "dark" class on <html>. Keep this identical to ERI_THEME_SCRIPT in @eri/components (a test checks it). -->
+    <script>(function(){try{var p=localStorage.getItem('eri-theme-preference');if(p!=='light'&&p!=='dark')p='system';var d=p==='dark'||(p==='system'&&!!window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);var c=document.documentElement.classList;c.toggle('dark',d);c.toggle('light',!d);localStorage.setItem('eri-theme',d?'dark':'light');}catch(e){}})();</script>
   </head>
   <body>
     <div id="root"></div>
