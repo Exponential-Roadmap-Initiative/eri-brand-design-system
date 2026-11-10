@@ -78,14 +78,15 @@ export function EriPartBar({ label, segments, size = 'default', legend = true, l
         ))}
       </div>
       {legend && named.length > 0 && (
-        <ul className="eri-partbar__legend" aria-labelledby={labelledBy}>
+        <ul className="eri-partbar__legend" role="list" aria-labelledby={labelledBy}>
           {named.map(s => (
-            <li key={s.key}>
+            <li key={s.key} role="listitem">
               <EriPartSwatch tone={s.tone} hatched={s.hatched} className={s.className} />
               <span className="eri-partbar__name">{s.name}</span>
-              {s.value && <span className="eri-partbar__num">{s.value}</span>}
-              {s.share && <span className="eri-partbar__share">({s.share})</span>}
-              {s.description && <span className="eri-partbar__what">{s.description}</span>}
+              {/* All five cells are always drawn (empty when a field is missing): the legend is one grid, and a missing cell would move every later cell one column left. */}
+              <span className="eri-partbar__num">{s.value}</span>
+              <span className="eri-partbar__share">{s.share ? `(${s.share})` : null}</span>
+              <span className="eri-partbar__what">{s.description}</span>
             </li>
           ))}
         </ul>

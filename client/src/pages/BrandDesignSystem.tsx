@@ -4262,7 +4262,7 @@ function App() {
                     ["version",           "string",            'e.g. "V.2026.04.29" — format V.YYYY.MM.DD'],
                     ["status",            "EriStatusValue?",   "Omit to hide the status badge"],
                     ["showCTA",           "boolean?",          "Defaults to true. Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools."],
-                    ["showFooterContact", "boolean?",          "Defaults to true. Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026) to leave out the footer's Contact us column; showCTA only controls the header button."],
+                    ["showFooterContact", "boolean?",          "Defaults to true. Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026) to leave out the footer's Contact us column; showCTA only controls the header button and the menu panel's button."],
                     ["source",            "string?",           'Required if showCTA is true (e.g. "psm", "hal")'],
                     ["sourceLabel",       "string?",           "Human-readable app name for the contact service — required if showCTA is true"],
                     ["returnUrl",         "string?",           "Return URL after form submission — required if showCTA is true"],

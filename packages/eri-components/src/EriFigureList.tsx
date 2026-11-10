@@ -79,8 +79,10 @@ export function EriFigureList({ title, note, rows, missing = 'Not measured yet',
             <div className={`eri-figlist__tile${row.tone === 'attention' ? ' eri-figlist__tile--attention' : ''}`} key={row.key}>
               <dt>{row.label}</dt>
               <dd>
-                <span className="eri-figlist__big" data-empty={row.value === null ? '' : undefined}>{row.value ?? missing}</span>
-                {row.value !== null && row.of && <span className="eri-figlist__of">{row.of}</span>}
+                <span className="eri-figlist__fig">
+                  <span className="eri-figlist__big" data-empty={row.value === null ? '' : undefined}>{row.value ?? missing}</span>
+                  {row.value !== null && row.of && <span className="eri-figlist__of">{row.of}</span>}
+                </span>
                 {row.value !== null && row.share && <span className="eri-figlist__share">{row.share}</span>}
                 {row.line && <span className="eri-figlist__line">{row.line}</span>}
               </dd>

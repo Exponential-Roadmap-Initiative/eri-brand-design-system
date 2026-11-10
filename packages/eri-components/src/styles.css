@@ -27,11 +27,12 @@
 .eri-figlist__tile { display: grid; gap: var(--space-1, 4px); align-content: start; padding: var(--space-4, 16px); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg, 8px); min-width: 0; }
 .eri-figlist__tile dt { font-weight: 600; overflow-wrap: anywhere; }
 .eri-figlist__tiles dd { justify-items: start; text-align: left; }
+.eri-figlist__fig { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1, 4px) 6px; }
 .eri-figlist__big { font: 800 32px/1.1 var(--font-archivo, Archivo, system-ui, sans-serif); }
 .eri-figlist__big[data-empty] { font-size: 16px; font-weight: 400; color: var(--muted-foreground); }
 .eri-figlist__of { font-size: 15px; color: var(--muted-foreground); }
 .eri-figlist__share, .eri-figlist__line { color: var(--muted-foreground); }
-.eri-figlist__tile--attention { border-color: var(--warning); background: color-mix(in srgb, var(--warning) 8%, var(--card)); }
+.eri-figlist__tile--attention { border-color: var(--warning); background: var(--card); background: color-mix(in srgb, var(--warning) 8%, var(--card)); }
 .eri-figlist__tile--attention .eri-figlist__big { color: var(--warning); }
 @media (max-width: 1100px) { .eri-figlist__tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .eri-figlist__tiles { gap: var(--space-3, 12px); } .eri-figlist__tile { padding: var(--space-3, 12px); } .eri-figlist__big { font-size: 26px; } }
@@ -54,7 +55,7 @@
 .eri-partbar__num { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
 .eri-partbar__share { color: var(--muted-foreground); text-align: right; font-variant-numeric: tabular-nums; }
 .eri-partbar__what { color: var(--muted-foreground); }
-@media (max-width: 640px) { .eri-partbar__legend { grid-template-columns: 16px max-content max-content minmax(0, 1fr); } .eri-partbar__what { grid-column: 2 / -1; margin-top: -6px; } .eri-partbar__share { text-align: left; } }
+@media (max-width: 640px) { .eri-partbar__legend { grid-template-columns: 16px max-content max-content minmax(0, 1fr); } .eri-partbar__what { grid-column: 2 / -1; margin-top: -6px; } .eri-partbar__what:empty { display: none; } .eri-partbar__share { text-align: left; } }
 .eri-figlist--fold > summary { list-style: none; cursor: pointer; display: grid; gap: var(--space-1, 4px); }
 .eri-figlist--fold > summary::-webkit-details-marker { display: none; }
 .eri-figlist--fold > summary h3::after { content: "+"; float: right; color: var(--muted-foreground); }

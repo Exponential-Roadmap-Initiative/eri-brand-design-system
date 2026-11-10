@@ -103,7 +103,7 @@ interface EriPageLayoutProps {
   /**
    * Show the "Contact us" column of the footer. Defaults to true; public pages keep it.
    * Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026: "contact us - do not include this yet"),
-   * together with showCTA={false}. It only affects the footer; showCTA only the header and panel.
+   * together with showCTA={false}. It only affects the footer; showCTA only the header button and the menu panel's button.
    */
   showFooterContact?: boolean;
   /** Source ID for the contact service — required if showCTA is true (e.g. "taxonomy") */
