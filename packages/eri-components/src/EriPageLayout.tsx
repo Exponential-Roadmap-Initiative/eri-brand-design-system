@@ -1,5 +1,5 @@
 /**
- * EriPageLayout — ERI Brand Design System v2.15.0
+ * EriPageLayout — ERI Brand Design System v2.20.0
  *
  * Canonical layout wrapper for all ERI applications.
  * Renders EriAppHeader and EriAppFooter ONCE, wrapping all page content.
@@ -39,11 +39,19 @@
  *     (e.g. a purely internal admin tool). Do NOT use showCTA={!isAuthenticated}.
  *   - showCTA requires source + sourceLabel + returnUrl — all three must be provided for CTA to render
  *   - onMenuClick defaults to no-op — hamburger is always visible; wire to () => setMenuOpen(true)
- *   - EriPageLayout does NOT render a drawer — your app owns the drawer as a child of EriPageLayout
+ *   - Menu panel: pass `menu` (see EriMenu in EriNav.tsx) and EriPageLayout owns the panel — the hamburger opens it from the
+ *     right, with your platform links, your app's own sections on narrow screens, and your account slot at the foot. Without
+ *     `menu`, EriPageLayout draws no panel and your app owns the drawer as a child, as before.
+ *   - App sidebar: `menu.appSections` also draws EriAppSidebar (224px, left, sticky) beside the page on desktop. At 800px and
+ *     below it is hidden and the same sections are the first block of the panel.
+ *   - clearHeader: adds padding-top: var(--eri-header-height) so the page starts under the fixed header. It defaults to true when
+ *     `menu` is given and to false otherwise (existing apps clear the header themselves).
+ *   - mainId: sets the id of the <main> element EriPageLayout draws, for a skip link. A page inside the layout draws no <main> of its own.
  *   - The --eri-content-inset CSS variable must be defined in index.css (see below)
  *   - Each page's outermost div must set its own background (e.g. bg-[#F9FAFB]) — the layout wrapper
- *     sets #232323 on the outer shell; pages must override this for their own content area
- *   - EriPageLayout does NOT add pt-16 — pages must clear the fixed 64px header themselves
+ *     sets var(--eri-header-bg) (default #232323) on the outer shell; pages must override this for their own content area
+ *     (with `menu`, the layout paints the content area with var(--background))
+ *   - Without `menu` or clearHeader, EriPageLayout does NOT add padding — pages must clear the fixed header themselves
  *
  * THEME TOGGLE (showThemeToggle):
  *   - Dark mode is the ERI default — it saves display energy on OLED screens
@@ -70,10 +78,14 @@
  * BDS reference: https://eri-brand-design-system.manus.space/#standard-components
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { EriAppHeader } from './EriAppHeader';
 import { EriAppFooter, AppLink } from './EriAppFooter';
 import { EriStatusValue } from './EriStatusBadge';
+import { EriContactUsButton } from './EriContactUsButton';
+import { EriNavDrawer } from './EriNavDrawer';
+import { EriAppSidebar } from './EriAppSidebar';
+import type { EriMenu } from './EriNav';
 
 interface EriPageLayoutProps {
   /** App display name shown in header and footer copyright */
@@ -132,7 +144,19 @@ interface EriPageLayoutProps {
    * Defaults to 'dark'.
    */
   headerTheme?: 'dark' | 'auto';
-  /** Page content — include your drawer component here as a sibling to Router */
+  /**
+   * The menu panel and the app sidebar. When given, EriPageLayout draws EriNavDrawer (opened by the hamburger) and, if
+   * `menu.appSections` is set, EriAppSidebar beside the page. See EriMenu.
+   */
+  menu?: EriMenu;
+  /**
+   * Start the page under the fixed header (padding-top: var(--eri-header-height)).
+   * Defaults to true when `menu` is given, false otherwise.
+   */
+  clearHeader?: boolean;
+  /** id for the <main> element EriPageLayout draws (a skip link's target). */
+  mainId?: string;
+  /** Page content — without `menu`, include your own drawer here as a sibling to Router */
   children: React.ReactNode;
 }
 
@@ -152,15 +176,23 @@ export function EriPageLayout({
   logoHref = '/',
   showThemeToggle = false,
   headerTheme = 'dark',
+  menu,
+  clearHeader,
+  mainId,
   children,
 }: EriPageLayoutProps) {
-  // Clean delegation — no internal menuOpen state (that belongs to the consuming app)
+  // The panel's open state belongs to the layout only when it draws the panel (`menu`); otherwise the app owns it.
+  const [menuOpen, setMenuOpen] = useState(false);
   const handleMenuClick = () => {
     onMenuClick?.();
+    if (menu) setMenuOpen(true);
   };
+  const clear = clearHeader ?? !!menu;
+  const showCtaButton = showCTA && !!source && !!sourceLabel && !!returnUrl;
+  const hasSidebar = !!menu?.appSections && menu.appSections.length > 0;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#232323' }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--eri-header-bg, #232323)' }}>
       <EriAppHeader
         appName={appName}
         status={status}
@@ -171,15 +203,50 @@ export function EriPageLayout({
         returnUrl={returnUrl}
         contactSubject={contactSubject}
         onMenuClick={handleMenuClick}
+        menuOpen={menu ? menuOpen : undefined}
         logoHref={logoHref}
         showThemeToggle={showThemeToggle}
         headerTheme={headerTheme}
       />
 
       {/* Page content — each page must add its own top padding to clear the fixed 64px header */}
-      <main className="flex-1">
-        {children}
+      <main
+        id={mainId}
+        className={`flex-1${menu ? ' eri-page-body' : ''}`}
+        style={clear ? { paddingTop: 'var(--eri-header-height, 64px)' } : undefined}
+      >
+        {hasSidebar ? (
+          <div className="eri-app-body">
+            <EriAppSidebar
+              sections={menu!.appSections!}
+              label={menu!.sidebarLabel ?? menu!.appTitle ?? 'Application sections'}
+              linkComponent={menu!.linkComponent}
+            />
+            <div className="eri-app-main">{children}</div>
+          </div>
+        ) : (
+          children
+        )}
       </main>
+
+      {menu && (
+        <EriNavDrawer
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          menu={menu}
+          status={status}
+          version={version}
+          cta={showCtaButton ? (
+            <EriContactUsButton
+              source={source!}
+              sourceLabel={sourceLabel!}
+              returnUrl={returnUrl!}
+              subject={contactSubject}
+              size="sm"
+            />
+          ) : undefined}
+        />
+      )}
 
       <EriAppFooter
         appName={appName}

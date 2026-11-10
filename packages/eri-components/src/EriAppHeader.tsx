@@ -1,5 +1,5 @@
 /**
- * EriAppHeader — ERI Brand Design System v2.15.3
+ * EriAppHeader — ERI Brand Design System v2.20.0
  *
  * Canonical header for all ERI applications.
  * Renders once in EriPageLayout — never duplicated across page files.
@@ -25,14 +25,18 @@
  *   />
  *
  * RULES (do not override):
- *   - Background: #232323 always in dark mode; #FFFFFF in light mode when headerTheme="auto"
+ *   - Background: var(--eri-header-bg) (default #232323) always in dark mode; var(--eri-header-bg-light) (default #FFFFFF) in light mode
+ *     when headerTheme="auto". Ink and muted text use --eri-header-ink / --eri-header-muted (and the -light pair). Defaults are the
+ *     ERI standard, so an app that defines none of them sees no change.
  *   - Desktop height: 64px (h-16) always — single row
- *   - Mobile height: ~80px — two rows (logo+controls row 1, app name row 2)
+ *   - Mobile height: 73px — two rows (logo+controls row 1 at 48px, app name row 2 at 25px)
+ *   - The height is published as --eri-header-height (64px from 640px up, 73px below), so a page can clear the fixed header
+ *     exactly: padding-top: var(--eri-header-height). EriPageLayout does it for you with clearHeader.
  *   - Left zone: ERI logo → pipe divider → app name
  *   - Right zone: status badge → version string → theme toggle (if showThemeToggle) → CTA (if showCTA) → hamburger
- *   - showCTA: always pass true — the Contact Us CTA is visible on ALL surfaces (public and authenticated).
- *     Only pass showCTA={false} if the specific app explicitly has no Contact Us entry point
- *     (e.g. a purely internal admin tool). Do NOT use showCTA={!isAuthenticated}.
+ *   - showCTA: pass true — the Contact Us CTA is visible on ALL surfaces (public and authenticated).
+ *     Pass showCTA={false} only where ERI has decided the app has no Contact Us entry point (a purely internal admin tool; the
+ *     ERI Platform and CPR, decided 10 Nov 2026). Do NOT use showCTA={!isAuthenticated}.
  *   - CTA requires source + sourceLabel + returnUrl — all three must be provided
  *   - onMenuClick: provide () => setMenuOpen(true) — defaults to no-op (hamburger always visible)
  *   - Horizontal padding: var(--eri-content-inset) — aligns with hero text block
@@ -154,6 +158,8 @@ interface EriAppHeaderProps {
    * Defaults to a no-op — hamburger is always visible regardless.
    */
   onMenuClick?: () => void;
+  /** True while the menu panel is open; sets aria-expanded on the hamburger. */
+  menuOpen?: boolean;
   /** Logo href — defaults to "/" */
   logoHref?: string;
   /**
@@ -188,6 +194,7 @@ export function EriAppHeader({
   returnUrl,
   contactSubject,
   onMenuClick = () => {},
+  menuOpen,
   logoHref = '/',
   showThemeToggle = false,
   headerTheme = 'dark',
@@ -225,20 +232,23 @@ export function EriAppHeader({
 
   const isDark = theme === 'dark';
 
-  // Resolve header appearance based on headerTheme prop and active theme
+  // Resolve header appearance based on headerTheme prop and active theme.
+  // Colours come from the header tokens (see styles.css); the second value of each var() is the ERI standard.
   const isHeaderDark = headerTheme === 'dark' || isDark;
-  const headerBg = isHeaderDark ? '#232323' : '#FFFFFF';
+  const headerBg = isHeaderDark ? 'var(--eri-header-bg, #232323)' : 'var(--eri-header-bg-light, #FFFFFF)';
+  const inkVar = isHeaderDark ? 'var(--eri-header-ink, #FFFFFF)' : 'var(--eri-header-ink-light, #1A1A1A)';
+  const mutedVar = isHeaderDark ? 'var(--eri-header-muted, #9ca3af)' : 'var(--eri-header-muted-light, #6b7280)';
   const logoSrc = isHeaderDark ? ERI_LOGO_DARK_SRC : ERI_LOGO_LIGHT_SRC;
-  const appNameColor = isHeaderDark ? '#FFFFFF' : '#1A1A1A';
-  const pipeDividerColor = isHeaderDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)';
-  const versionColor = isHeaderDark ? '#9ca3af' : '#6b7280';
-  const hamburgerColor = isHeaderDark ? '#FFFFFF' : '#1A1A1A';
+  const appNameColor = inkVar;
+  const pipeDividerColor = `color-mix(in srgb, ${inkVar} ${isHeaderDark ? 20 : 15}%, transparent)`;
+  const versionColor = mutedVar;
+  const hamburgerColor = inkVar;
   // Theme toggle icon colours
-  const toggleIconColor = isHeaderDark ? '#9ca3af' : '#6b7280';
-  const toggleHoverColor = isHeaderDark ? '#ffffff' : '#1A1A1A';
-  const toggleHoverBg = isHeaderDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+  const toggleIconColor = mutedVar;
+  const toggleHoverColor = inkVar;
+  const toggleHoverBg = `color-mix(in srgb, ${inkVar} ${isHeaderDark ? 8 : 6}%, transparent)`;
   // Bottom border in light mode to separate header from content
-  const headerBorderBottom = isHeaderDark ? 'none' : '1px solid rgba(0,0,0,0.08)';
+  const headerBorderBottom = isHeaderDark ? 'none' : `1px solid color-mix(in srgb, ${inkVar} 8%, transparent)`;
 
   // Unique scope ID for scoped styles
   const scopeId = 'eri-app-header';
@@ -254,7 +264,10 @@ export function EriAppHeader({
     </svg>
   );
 
-  const HamburgerButton = ({ extraStyle = {} }: { extraStyle?: React.CSSProperties }) => (
+  // A function that returns the element, called as {hamburgerButton()} — not a component: a component declared inside this function
+  // is a new type on every render, so React would replace the button each time the header renders and a closing menu panel could not
+  // return focus to it.
+  const hamburgerButton = (extraStyle: React.CSSProperties = {}) => (
     <button
       onClick={onMenuClick}
       style={{
@@ -263,6 +276,8 @@ export function EriAppHeader({
         cursor: 'pointer', color: hamburgerColor, ...extraStyle,
       }}
       aria-label="Open menu"
+      aria-haspopup="dialog"
+      aria-expanded={menuOpen === undefined ? undefined : menuOpen}
     >
       <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: 'currentColor' }} />
       <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: 'currentColor' }} />
@@ -285,9 +300,11 @@ export function EriAppHeader({
         source, so sm:hidden / sm:flex classes would not be generated.
       */}
       <style>{`
+        :root { --eri-header-height: 73px; }
         #${scopeId} .eri-header-desktop { display: none; }
         #${scopeId} .eri-header-mobile  { display: flex;  }
         @media (min-width: 640px) {
+          :root { --eri-header-height: 64px; }
           #${scopeId} .eri-header-desktop { display: flex;  }
           #${scopeId} .eri-header-mobile  { display: none; }
         }
@@ -384,7 +401,7 @@ export function EriAppHeader({
                 size="sm"
               />
             )}
-            <HamburgerButton />
+            {hamburgerButton()}
           </div>
         </div>
 
@@ -425,13 +442,13 @@ export function EriAppHeader({
                   <ThemeToggleIcon />
                 </button>
               )}
-              <HamburgerButton />
+              {hamburgerButton()}
             </div>
           </div>
           {/* Row 2: app name only */}
           <div
             style={{
-              paddingBottom: '8px',
+              paddingBottom: '8px', lineHeight: '17px',
               fontSize: '12px', fontWeight: 500,
               color: appNameColor, opacity: 0.85,
               transition: 'color 0.2s ease',
