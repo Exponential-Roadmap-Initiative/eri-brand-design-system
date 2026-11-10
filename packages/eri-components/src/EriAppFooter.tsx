@@ -24,7 +24,9 @@
  *   - Background: #232323 always — never dark green, white, or any other colour
  *   - Border: border-t border-gray-700 at the top
  *   - Logo: ERI dark-mode wordmark SVG (h-7), links to exponentialroadmap.org
- *   - Four columns are fixed — do not add, remove, or reorder them
+ *   - Four columns are fixed — do not add, remove, or reorder them. The one exception is
+ *     showContact={false} (ERI Platform and CPR, Nicklas, 10 Nov 2026): the Contact us column is left out
+ *     and the other three stay in their order. Everywhere else the column stays.
  *   - Social icons use exact brand colours: LinkedIn #007BB6, X #1D1D1D, YouTube #A82400
  *   - Contact us link uses Accent Lime #93E07D — links to contact-us.exponentialroadmap.org
  *   - Horizontal padding: var(--eri-content-inset) — aligns with header logo
@@ -66,6 +68,12 @@ interface EriAppFooterProps {
    * The four-column layout is now fixed per the official ERI website.
    */
   footerLinks?: FooterLink[];
+  /**
+   * Show the "Contact us" column. Defaults to true; public pages keep it.
+   * Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026: "contact us - do not include this yet").
+   * Same decision as showCTA={false} on EriPageLayout, which hides the header button.
+   */
+  showContact?: boolean;
 }
 
 // ── Social icon SVGs ─────────────────────────────────────────────────────────
@@ -150,7 +158,7 @@ const SocialButton = ({ href, label, bgColor, children }: { href: string; label:
 
 // ── Main component ───────────────────────────────────────────────────────────
 
-export function EriAppFooter({ appName, tagline, attribution, appLink }: EriAppFooterProps) {
+export function EriAppFooter({ appName, tagline, attribution, appLink, showContact = true }: EriAppFooterProps) {
   const year = new Date().getFullYear();
 
   return (
@@ -197,10 +205,13 @@ export function EriAppFooter({ appName, tagline, attribution, appLink }: EriAppF
             grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
           }
+          .eri-footer-grid--three {
+            grid-template-columns: repeat(3, 1fr);
+          }
         }
       `}</style>
 
-      <div className="eri-footer-grid" style={{ marginBottom: '2rem' }}>
+      <div className={showContact ? "eri-footer-grid" : "eri-footer-grid eri-footer-grid--three"} style={{ marginBottom: '2rem' }}>
 
         {/* Column 1 — About */}
         <div>
@@ -254,13 +265,15 @@ export function EriAppFooter({ appName, tagline, attribution, appLink }: EriAppF
           </div>
         </div>
 
-        {/* Column 4 — Contact us */}
-        <div>
-          <ColumnHeading>Contact us</ColumnHeading>
-          <FooterTextLink href="https://contact-us.exponentialroadmap.org/" accent>
-            Contact us
-          </FooterTextLink>
-        </div>
+        {/* Column 4 — Contact us (left out with showContact={false}) */}
+        {showContact && (
+          <div>
+            <ColumnHeading>Contact us</ColumnHeading>
+            <FooterTextLink href="https://contact-us.exponentialroadmap.org/" accent>
+              Contact us
+            </FooterTextLink>
+          </div>
+        )}
 
       </div>
 

@@ -17,6 +17,8 @@ export type { EriMenu, EriNavLink, EriNavSection, EriLinkProps } from './EriNav'
 export { default as EriCrocodileChart } from './EriCrocodileChart';
 export type { EriCrocodileChartProps, CrocodileDataPoint } from './EriCrocodileChart';
 
+export { default as EriPartBar, EriPartSwatch } from './EriPartBar';
+export type { EriPartSegment, EriPartTone, EriPartBarProps } from './EriPartBar';
 export { default as EriBarChart } from './EriBarChart';
 export type { EriBar, EriBarChartProps } from './EriBarChart';
 export { default as EriFigureList } from './EriFigureList';

@@ -509,7 +509,7 @@ export default function BrandDesignSystem() {
           <div className="rounded-lg p-6 mb-6 border-l-4 bg-card" style={{ borderLeftColor: '#3ba559' }}>
             <p className="text-sm font-bold text-foreground mb-1">Building an ERI app? Start with Standard Components.</p>
             <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships thirteen canonical components that every ERI public-facing application must use verbatim.
+              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships fourteen canonical components that every ERI public-facing application must use verbatim.
               Install once, import, and the layout, header, hero, footer, status badges, contact button, and Crocodile Economy charts are all handled.
             </p>
             <div className="grid sm:grid-cols-2 gap-2 mb-4">
@@ -522,7 +522,8 @@ export default function BrandDesignSystem() {
                 ["EriContactUsButton", "Standalone Contact Us CTA linking to the shared service"],
                 ["EriCrocodileChart",  "Crocodile Economy decoupling chart — pure SVG, zero deps"],
                 ["EriBarChart",        "One series of bars over days or months, shared scale, optional limit line — zero deps"],
-                ["EriFigureList",      "Card of key figures: value, limit, date and a standing word; folds on phones"],
+                ["EriFigureList",      "Key figures: a card of rows (value, limit, date, a standing word; folds on phones) or, with layout=\"tiles\", tiles with an \"of N\" and one card-level as-of line"],
+                ["EriPartBar",         "A part-of-whole bar with its legend attached (name, count, share, meaning), plus EriPartSwatch for matching table headers"],
                 ["EriTabs",            "The small pill switch for a choice inside a page tab"],
                 ["EriNavDrawer",       "The one menu panel, opened from the right by the header's hamburger; carries the app sections on narrow screens"],
                 ["EriAppSidebar",      "An app's own sections: 224px left sidebar, hidden at 800px and below (the panel carries them)"],
@@ -3876,6 +3877,7 @@ export function EriStatusBadge({ status, theme = 'dark', className = '' }) {
                     ["tagline",     "string?",        "Optional one-line tagline shown below the ERI logo in the footer logo row. Keep to one sentence."],
                     ["attribution", "string?",        "Optional right-aligned attribution string in the footer bottom bar."],
                     ["appLink",     "AppLink?",        "Optional single app-specific link in the About column, below Members and partners and Privacy policy. Provide { label, href }."],
+                    ["showContact", "boolean?",       "Defaults to true. Pass false to leave out the Contact us column (ERI Platform and CPR, Nicklas, 10 Nov 2026); the other three columns stay. Via EriPageLayout: showFooterContact."],
                   ].map(([prop, type, note]) => (
                     <tr key={prop} className="border-b border-border/50">
                       <td className="py-1.5 pr-3 text-[#3ba559]">{prop}</td>
@@ -4260,6 +4262,7 @@ function App() {
                     ["version",           "string",            'e.g. "V.2026.04.29" — format V.YYYY.MM.DD'],
                     ["status",            "EriStatusValue?",   "Omit to hide the status badge"],
                     ["showCTA",           "boolean?",          "Defaults to true. Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools."],
+                    ["showFooterContact", "boolean?",          "Defaults to true. Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026) to leave out the footer's Contact us column; showCTA only controls the header button and the menu panel's button."],
                     ["source",            "string?",           'Required if showCTA is true (e.g. "psm", "hal")'],
                     ["sourceLabel",       "string?",           "Human-readable app name for the contact service — required if showCTA is true"],
                     ["returnUrl",         "string?",           "Return URL after form submission — required if showCTA is true"],
@@ -4290,7 +4293,7 @@ function App() {
               <li><strong>Your app owns the drawer — render it as a child of <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code></strong> — <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code> fires <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">onMenuClick</code> but never renders a drawer itself. Your app must manage <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">menuOpen</code> state and render its own <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">&lt;NavDrawer&gt;</code> or <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">&lt;Sheet&gt;</code> as a sibling to <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">&lt;Router /&gt;</code> inside the layout children.</li>
               <li><strong>Outer background is <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#232323</code></strong> — the layout wrapper sets a dark background on the outermost div. Each page component must use <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">bg-background</code> for its outer page surface (resolving to <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#111111</code> in dark mode and <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">#F9FAFB</code> in light mode). Use the semantic <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">bg-card</code> token for contained cards and panels; it adapts correctly to each colour mode.</li>
               <li><strong>No automatic top padding</strong> — <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">EriPageLayout</code> does not add <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">pt-16</code> to the content area. The header is <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">fixed</code> at 64px — each page's first section must add enough top padding to clear it (e.g. <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">pt-16</code> or <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">pt-24</code> for hero sections).</li>
-              <li><strong>showCTA — public pages true; Platform and CPR false</strong> — pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{true}'}</code> on public pages. Pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{false}'}</code> on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools. <strong>Do not use <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{!isAuthenticated}'}</code>.</strong></li>
+              <li><strong>showCTA — public pages true; Platform and CPR false</strong> — pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{true}'}</code> on public pages. Pass <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{false}'}</code> on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools. <strong>Do not use <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showCTA={'{!isAuthenticated}'}</code>.</strong> The footer's Contact us column has its own switch: <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">showFooterContact={'{false}'}</code> on the ERI Platform and CPR; public pages keep it.</li>
               <li><strong>Contact Us button — three source props all required</strong> — the CTA renders only when <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">source</code>, <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">sourceLabel</code>, <em>and</em> <code className="font-mono bg-amber-100 dark:bg-amber-900/40 px-1 rounded">returnUrl</code> are all provided. Omitting any of the three source props silently hides the button with a dev-mode console warning.</li>
             </ul>
           </div>

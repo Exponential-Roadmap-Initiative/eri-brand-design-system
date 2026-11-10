@@ -28,7 +28,7 @@ This section records key identifiers and version pins that any agent can verify 
 | Item | Current value | Last updated |
 |---|---|---|
 | BDS app version | v3.41.0 — controlled release workflow deployed | 2026-08-18 |
-| `@eri/components` package pin | v2.20.0 — adds EriNavDrawer, EriAppSidebar, EriBreadcrumbBar, header colour tokens and the `menu` prop on EriPageLayout | 2026-11-10 |
+| `@eri/components` package pin | v2.21.0 — adds EriPartBar and EriPartSwatch, and the "tiles" layout and card-level as-of line on EriFigureList (2.20.0 added EriNavDrawer, EriAppSidebar, EriBreadcrumbBar, header colour tokens and the `menu` prop on EriPageLayout) | 2026-11-10 |
 | Published project instructions version | v2026.06.22 (id=120001, 5410 chars) — pkill, compaction hard stop, eri-cpr-app/eri-ef-app/eri-emissions/eri-job-status-modal in Tier 3 | 2026-06-22 |
 | Skills registry entry count | 30 skills in SKILLS_METADATA (includes eri-ef-app v2.0.0, eri-cpr-app v1.0.0) | 2026-06-18 |
 | Heartbeat auto-sync | Disabled — unattended registry mutation is replaced by administrator-approved skill releases | 2026-08-18 |
@@ -143,6 +143,7 @@ The six canonical component names are:
 - Pass `showCTA={true}` on public pages (with `source`, `sourceLabel` and `returnUrl`).
 - Pass `showCTA={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools.
 - Never use `showCTA={!isAuthenticated}`.
+- Pass `showFooterContact={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026: "contact us - do not include this yet"); it hides only the footer's "Contact us" column. Default true: public pages keep it.
 
 ### Contact Us CTA
 - Three props are all required when `showCTA={true}`: `source`, `sourceLabel`, `returnUrl`.

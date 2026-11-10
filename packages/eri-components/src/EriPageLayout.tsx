@@ -100,6 +100,12 @@ interface EriPageLayoutProps {
    * Also requires source + sourceLabel + returnUrl — all three must be provided.
    */
   showCTA?: boolean;
+  /**
+   * Show the "Contact us" column of the footer. Defaults to true; public pages keep it.
+   * Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026: "contact us - do not include this yet"),
+   * together with showCTA={false}. It only affects the footer; showCTA only the header button and the menu panel's button.
+   */
+  showFooterContact?: boolean;
   /** Source ID for the contact service — required if showCTA is true (e.g. "taxonomy") */
   source?: string;
   /** Human-readable app name for the contact service — required if showCTA is true */
@@ -170,6 +176,7 @@ export function EriPageLayout({
   footerTagline,
   footerAttribution,
   footerAppLink,
+  showFooterContact,
   onMenuClick,
   logoHref = '/',
   showThemeToggle = false,
@@ -251,6 +258,7 @@ export function EriPageLayout({
         tagline={footerTagline}
         attribution={footerAttribution}
         appLink={footerAppLink}
+        showContact={showFooterContact}
       />
     </div>
   );
