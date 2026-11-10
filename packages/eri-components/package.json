@@ -6,14 +6,23 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens": "./dist/tokens.ts",
     "./dist/eri-components.css": "./dist/eri-components.css"
   },
   "scripts": {
-    "build:css": "tailwindcss --input src/styles.css --output dist/eri-components.css --minify"
+    "build:css": "tailwindcss --input src/styles.css --output dist/eri-components.css --minify",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "check": "node scripts/check-tokens.mjs"
   },
   "files": [
     "src",
-    "dist/eri-components.css"
+    "tokens",
+    "scripts",
+    "dist/eri-components.css",
+    "dist/tokens.css",
+    "dist/tokens.ts",
+    "dist/token-names.json"
   ],
   "keywords": [
     "eri",

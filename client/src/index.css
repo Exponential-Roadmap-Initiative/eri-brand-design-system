@@ -5,6 +5,8 @@
  * Primary green: #3ba559 | Dark heading: #232323 | Body text: #383838 | Page bg: #F9FAFB
  */
 
+/* Every colour, font, space, shadow and radius value comes from the package's tokens (packages/eri-components/tokens/tokens.json). */
+@import "@eri/components/tokens.css";
 @import "@eri/components/dist/eri-components.css";
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -33,9 +35,9 @@
    TAILWIND THEME — ERI brand tokens
    ============================================================ */
 @theme inline {
-  --font-sans: 'Archivo', system-ui, -apple-system, sans-serif;
-  --font-archivo: 'Archivo', system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  --font-sans: var(--font-body);
+  --font-archivo: var(--font-heading);
+  --font-mono: var(--eri-font-mono);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -62,82 +64,19 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* ERI brand colour aliases */
-  --color-eri-green: #3ba559;
-  --color-eri-dark-green: #1a3c2a;
-  --color-eri-dark-green-alt: #1a2e1a;
-  --color-eri-blue: #00B8D4;
-  --color-eri-heading: #232323;
-  --color-eri-page-bg: #F9FAFB;
-}
-
-:root {
-  /* ERI brand primary green */
-  --primary: oklch(0.59 0.14 145);
-  --primary-foreground: oklch(1 0 0);
-
-  --radius: 0.5rem;
-  --background: oklch(0.984 0.002 247.839);  /* #F9FAFB */
-  --foreground: oklch(0.24 0.005 285);        /* #383838 — ERI body text on light backgrounds */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.24 0.005 285);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.24 0.005 285);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.24 0.005 285);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  /* Warning: text and outline for "near the limit" and partial states. #92400e = 7.09:1 on white, 6.37:1 on the partial background (WCAG AA). */
-  --success: #166534;                       /* text and outline for a state within its limit: 7.13:1 on white */
-  --danger: #b91c1c;                        /* text and outline for a state over its limit: 6.47:1 on white */
-  --warning: #92400e;
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.59 0.14 145);
+  /* ERI brand colour aliases (light and dark from the tokens) */
+  --color-eri-green: var(--brand-green);
+  --color-eri-dark-green: var(--brand-dark-green);
+  --color-eri-dark-green-alt: var(--brand-dark-green-alt);
+  --color-eri-blue: var(--brand-blue);
+  --color-eri-heading: var(--brand-heading);
+  --color-eri-page-bg: var(--brand-page-bg);
 }
 
 /*
- * ERI DARK MODE TOKENS
- * html.dark is set by ThemeContext when theme === 'dark'.
- * Dark is an active user preference — these values are the canonical dark surface colours.
- * The :root block above defines light mode (the ERI default).
- *
- * Surface hierarchy:
- *   --background:  #111111  (page canvas — true near-black for OLED efficiency)
- *   --card:        #1a1a1a  (card / panel surface)
- *   --popover:     #1a1a1a  (popover / dropdown surface)
- *   --border:      #2e2e2e  (subtle separator)
- *   --muted:       #1f1f1f  (muted section background)
- *   --accent:      #1f2e23  (accent surface — dark green tint)
+ * Light values sit on :root and dark values on .dark, both in @eri/components/tokens.css.
+ * html.dark is set by the head script (ERI_THEME_SCRIPT) and ThemeContext.
  */
-.dark {
-  --background: oklch(0.09 0 0);           /* #111111 — near-black, OLED-efficient */
-  --foreground: oklch(0.94 0.005 247);     /* #ECEEF2 — off-white body text */
-  --card: oklch(0.13 0 0);                 /* #1a1a1a — card surface */
-  --card-foreground: oklch(0.94 0.005 247);
-  --popover: oklch(0.13 0 0);
-  --popover-foreground: oklch(0.94 0.005 247);
-  --primary: oklch(0.59 0.14 145);         /* ERI green — unchanged */
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.16 0 0);            /* #282828 */
-  --secondary-foreground: oklch(0.85 0.005 247);
-  --muted: oklch(0.14 0 0);               /* #1f1f1f */
-  --muted-foreground: oklch(0.65 0.01 247); /* subdued text — raised for WCAG AA (7.05:1 on bg, 6.50:1 on card) */
-  --accent: oklch(0.17 0.03 145);          /* dark green tint */
-  --accent-foreground: oklch(0.94 0.005 247);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --success: #4ade80;                      /* 9.99:1 on the dark card */
-  --danger: #f87171;                       /* 6.29:1 on the dark card */
-  --warning: #fcd34d;                      /* above 12:1 on the dark card */
-  --border: oklch(0.28 0 0);              /* #3d3d3d — raised for visible borders */
-  --input: oklch(0.22 0 0);
-  --ring: oklch(0.59 0.14 145);            /* ERI green focus ring */
-}
 
 @layer base {
   * {
@@ -145,11 +84,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-body);
   }
   /* All headings default to Archivo 800 */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-heading);
     font-weight: 800;
   }
   button:not(:disabled),
@@ -196,7 +135,7 @@
 
   /* ERI-specific utility: font-archivo */
   .font-archivo {
-    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-heading);
   }
 
   /* ERI colour swatches copy button */
