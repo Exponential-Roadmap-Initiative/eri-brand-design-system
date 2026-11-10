@@ -509,7 +509,7 @@ export default function BrandDesignSystem() {
           <div className="rounded-lg p-6 mb-6 border-l-4 bg-card" style={{ borderLeftColor: '#3ba559' }}>
             <p className="text-sm font-bold text-foreground mb-1">Building an ERI app? Start with Standard Components.</p>
             <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships thirteen canonical components that every ERI public-facing application must use verbatim.
+              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships fourteen canonical components that every ERI public-facing application must use verbatim.
               Install once, import, and the layout, header, hero, footer, status badges, contact button, and Crocodile Economy charts are all handled.
             </p>
             <div className="grid sm:grid-cols-2 gap-2 mb-4">
@@ -522,7 +522,8 @@ export default function BrandDesignSystem() {
                 ["EriContactUsButton", "Standalone Contact Us CTA linking to the shared service"],
                 ["EriCrocodileChart",  "Crocodile Economy decoupling chart — pure SVG, zero deps"],
                 ["EriBarChart",        "One series of bars over days or months, shared scale, optional limit line — zero deps"],
-                ["EriFigureList",      "Card of key figures: value, limit, date and a standing word; folds on phones"],
+                ["EriFigureList",      "Key figures: a card of rows (value, limit, date, a standing word; folds on phones) or, with layout=\"tiles\", tiles with an \"of N\" and one card-level as-of line"],
+                ["EriPartBar",         "A part-of-whole bar with its legend attached (name, count, share, meaning), plus EriPartSwatch for matching table headers"],
                 ["EriTabs",            "The small pill switch for a choice inside a page tab"],
                 ["EriNavDrawer",       "The one menu panel, opened from the right by the header's hamburger; carries the app sections on narrow screens"],
                 ["EriAppSidebar",      "An app's own sections: 224px left sidebar, hidden at 800px and below (the panel carries them)"],
