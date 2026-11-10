@@ -509,7 +509,7 @@ export default function BrandDesignSystem() {
           <div className="rounded-lg p-6 mb-6 border-l-4 bg-card" style={{ borderLeftColor: '#3ba559' }}>
             <p className="text-sm font-bold text-foreground mb-1">Building an ERI app? Start with Standard Components.</p>
             <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships ten canonical components that every ERI public-facing application must use verbatim.
+              The <code className="font-mono bg-green-100 dark:bg-green-900/40 px-1 rounded">@eri/components</code> package ships thirteen canonical components that every ERI public-facing application must use verbatim.
               Install once, import, and the layout, header, hero, footer, status badges, contact button, and Crocodile Economy charts are all handled.
             </p>
             <div className="grid sm:grid-cols-2 gap-2 mb-4">
@@ -524,6 +524,9 @@ export default function BrandDesignSystem() {
                 ["EriBarChart",        "One series of bars over days or months, shared scale, optional limit line — zero deps"],
                 ["EriFigureList",      "Card of key figures: value, limit, date and a standing word; folds on phones"],
                 ["EriTabs",            "The small pill switch for a choice inside a page tab"],
+                ["EriNavDrawer",       "The one menu panel, opened from the right by the header's hamburger; carries the app sections on narrow screens"],
+                ["EriAppSidebar",      "An app's own sections: 224px left sidebar, hidden at 800px and below (the panel carries them)"],
+                ["EriBreadcrumbBar",   "One breadcrumb position for every page: 16px under the header, at the content inset"],
               ].map(([name, desc]) => (
                 <div key={name} className="flex gap-2 items-start">
                   <span className="text-[#3ba559] font-mono text-[10px] shrink-0 mt-0.5">{name}</span>
