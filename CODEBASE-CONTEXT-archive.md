@@ -102,7 +102,7 @@ The six canonical component names are:
 - `ERI_HERO_IMAGE_DEFAULT` and `ERI_HERO_IMAGE_TRUST` are named exports from `@eri/components`. `ERI_HERO_IMAGE_HANDS` is a deprecated alias for `ERI_HERO_IMAGE_DEFAULT` — do not use in new code.
 
 ### showCTA rule
-- Always pass `showCTA={true}`. The Contact Us CTA must be visible on all surfaces (public and authenticated).
+- (Superseded 10 Nov 2026: see CODEBASE-CONTEXT.md.) Pass `showCTA={true}` on public pages; `showCTA={false}` on the ERI Platform and CPR and in internal admin tools.
 - Only pass `showCTA={false}` for purely internal admin tools with no contact entry point.
 - Never use `showCTA={!isAuthenticated}` — this incorrectly hides the CTA from logged-in users.
 

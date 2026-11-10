@@ -137,9 +137,8 @@ interface EriAppHeaderProps {
   version: string;
   /**
    * Show the Contact Us CTA.
-   * Always pass true — the CTA is visible on ALL surfaces (public and authenticated).
-   * Only pass false if the app has no Contact Us entry point (e.g. a purely internal admin tool).
-   * Do NOT use !isAuthenticated. Defaults to true.
+   * Pass true on public pages. Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools.
+   * Never !isAuthenticated. Defaults to true.
    * All three source props (source, sourceLabel, returnUrl) must be provided.
    */
   showCTA?: boolean;
