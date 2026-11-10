@@ -57,7 +57,7 @@ Wrap your router in `EriPageLayout` in `App.tsx`:
 </EriPageLayout>
 ```
 
-Pass `showCTA` on public pages. Pass `showCTA={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools. **Never** pass `showCTA={!isAuthenticated}`.
+Pass `showCTA` on public pages. Pass `showCTA={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools. **Never** pass `showCTA={!isAuthenticated}`. The footer has its own switch (2.21.0): `showFooterContact={false}` leaves out the footer's "Contact us" column and keeps the other three in order (ERI Platform and CPR, Nicklas, 10 Nov 2026: "contact us - do not include this yet"). It defaults to true, so public pages keep the column; `EriAppFooter` takes the same switch as `showContact`.
 
 ### The menu panel, the app sidebar and the breadcrumb (2.20.0)
 
@@ -69,6 +69,7 @@ Pass `menu` and the layout draws the one menu panel — a bare ☰ at the far ri
   status="BETA"
   version="V.2026.11.10"
   showCTA={false}
+  showFooterContact={false}
   showThemeToggle
   headerTheme="auto"
   mainId="main"

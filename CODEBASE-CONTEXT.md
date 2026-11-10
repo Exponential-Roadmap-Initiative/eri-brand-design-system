@@ -143,6 +143,7 @@ The six canonical component names are:
 - Pass `showCTA={true}` on public pages (with `source`, `sourceLabel` and `returnUrl`).
 - Pass `showCTA={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools.
 - Never use `showCTA={!isAuthenticated}`.
+- Pass `showFooterContact={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026: "contact us - do not include this yet"); it hides only the footer's "Contact us" column. Default true: public pages keep it.
 
 ### Contact Us CTA
 - Three props are all required when `showCTA={true}`: `source`, `sourceLabel`, `returnUrl`.
