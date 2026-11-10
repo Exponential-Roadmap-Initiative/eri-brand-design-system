@@ -34,9 +34,8 @@
  * RULES (do not override):
  *   - This component is the ONLY place EriAppHeader and EriAppFooter are rendered
  *   - Never import EriAppHeader or EriAppFooter directly in page files
- *   - showCTA: always pass true — the Contact Us CTA is visible on ALL surfaces (public and authenticated).
- *     Only pass showCTA={false} if the app explicitly has no Contact Us entry point
- *     (e.g. a purely internal admin tool). Do NOT use showCTA={!isAuthenticated}.
+ *   - showCTA: pass true on public pages. Pass showCTA={false} on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in
+ *     internal admin tools. Never showCTA={!isAuthenticated}.
  *   - showCTA requires source + sourceLabel + returnUrl — all three must be provided for CTA to render
  *   - onMenuClick defaults to no-op — hamburger is always visible; wire to () => setMenuOpen(true)
  *   - Menu panel: pass `menu` (see EriMenu in EriNav.tsx) and EriPageLayout owns the panel — the hamburger opens it from the
@@ -96,9 +95,8 @@ interface EriPageLayoutProps {
   version: string;
   /**
    * Show the Contact Us CTA.
-   * Always pass true — the CTA is visible on ALL surfaces (public and authenticated).
-   * Only pass false if the app has no Contact Us entry point (e.g. a purely internal admin tool).
-   * Do NOT use !isAuthenticated. Defaults to true.
+   * Pass true on public pages. Pass false on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools.
+   * Never !isAuthenticated. Defaults to true.
    * Also requires source + sourceLabel + returnUrl — all three must be provided.
    */
   showCTA?: boolean;

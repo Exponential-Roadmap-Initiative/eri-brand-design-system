@@ -46,9 +46,10 @@ export interface EriMenu {
   sidebarLabel?: string;
   /**
    * The sign-in / account slot, drawn at the foot of the menu panel (e.g. "Your access" and "Sign in").
-   * The package has no sign-in of its own: the app passes its own control.
+   * The package has no sign-in of its own: the app passes its own control. The panel is a modal <dialog>: an overlay mounted
+   * in document.body (dropdown, dialog, popover) would sit under it, so pass a function and call `close` before opening one.
    */
-  account?: React.ReactNode;
+  account?: React.ReactNode | ((close: () => void) => React.ReactNode);
   /**
    * Renders a link. Pass your router's link so a click navigates inside the app; the default is a plain <a>.
    * It receives the props of an <a> (href, className, aria-current, children). The panel closes on any link click by itself.

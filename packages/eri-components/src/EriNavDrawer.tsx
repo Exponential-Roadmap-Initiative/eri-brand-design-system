@@ -7,7 +7,10 @@
  * WHAT IT HOLDS (top to bottom):
  *   1. On narrow screens (800px and below) the app's own sections (`menu.appSections`), because EriAppSidebar is hidden there.
  *   2. The platform areas (`menu.platformLinks`) under `menu.platformTitle`.
- *   3. The account slot (`menu.account`): the app's own sign-in / "Your access" control. The package has no sign-in of its own.
+ *   3. The account slot (`menu.account`), pinned to the foot of the panel: the app's own sign-in / "Your access" control. The
+ *      package has no sign-in of its own. The panel is a modal <dialog>, so a control that opens a portaled overlay (a dropdown,
+ *      dialog or popover mounted in document.body) must close the panel first: pass `account` as a function and call the
+ *      `close` it receives before opening the overlay.
  *   4. On phones (below 640px, where the header carries no badge, version or Contact Us) the status badge, the version and, if
  *      the app shows it, the Contact Us button.
  *
@@ -20,7 +23,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { EriNavAnchor, EriMenu } from './EriNav';
-import { EriStatusBadge, EriStatusValue } from './EriStatusBadge';
+import { EriStatusValue } from './EriStatusBadge';
 
 interface EriNavDrawerProps {
   open: boolean;
@@ -90,12 +93,12 @@ export function EriNavDrawer({ open, onClose, menu, status, version, cta }: EriN
           ))}
         </nav>
 
-        {menu.account && <div className="eri-nav-account">{menu.account}</div>}
+        {menu.account && <div className="eri-nav-account">{typeof menu.account === 'function' ? menu.account(onClose) : menu.account}</div>}
 
         {(status || version || cta) && (
           <div className="eri-nav-meta">
             <div className="eri-nav-meta__row">
-              {status && <EriStatusBadge status={status} theme="light" />}
+              {status && <span className="eri-nav-badge">{status}</span>}
               {version && <span className="eri-nav-meta__version">{version}</span>}
             </div>
             {cta}

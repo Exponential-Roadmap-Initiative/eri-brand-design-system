@@ -27,6 +27,17 @@ interface EriBreadcrumbBarProps {
   linkComponent?: React.ComponentType<EriLinkProps>;
 }
 
+/** A plain left click runs the crumb's own handler; modified clicks keep the browser's open-in-new-tab behaviour. */
+function plainClick(handler?: () => void) {
+  if (!handler) return undefined;
+  return (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      handler();
+    }
+  };
+}
+
 export function EriBreadcrumbBar({ items, linkComponent: LinkComponent }: EriBreadcrumbBarProps) {
   return (
     <nav className="eri-breadcrumb-bar" aria-label="Breadcrumb">
@@ -37,17 +48,9 @@ export function EriBreadcrumbBar({ items, linkComponent: LinkComponent }: EriBre
             <li key={`${item.label}-${index}`}>
               {item.href && !current ? (
                 LinkComponent ? (
-                  <LinkComponent href={item.href}>{item.label}</LinkComponent>
+                  <LinkComponent href={item.href} onClick={plainClick(item.onClick)}>{item.label}</LinkComponent>
                 ) : (
-                  <a
-                    href={item.href}
-                    onClick={item.onClick ? (event) => {
-                      if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
-                        event.preventDefault();
-                        item.onClick!();
-                      }
-                    } : undefined}
-                  >
+                  <a href={item.href} onClick={plainClick(item.onClick)}>
                     {item.label}
                   </a>
                 )

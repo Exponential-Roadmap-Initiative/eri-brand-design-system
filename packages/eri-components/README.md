@@ -57,7 +57,7 @@ Wrap your router in `EriPageLayout` in `App.tsx`:
 </EriPageLayout>
 ```
 
-`showCTA` is always `true` — the Contact Us button is visible on public and signed-in pages alike. **Never** pass `showCTA={!isAuthenticated}`. Pass `showCTA={false}` only where ERI has decided the app has no Contact Us entry point (a purely internal admin tool; the ERI Platform and CPR, decided 10 Nov 2026).
+Pass `showCTA` on public pages. Pass `showCTA={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools. **Never** pass `showCTA={!isAuthenticated}`.
 
 ### The menu panel, the app sidebar and the breadcrumb (2.20.0)
 

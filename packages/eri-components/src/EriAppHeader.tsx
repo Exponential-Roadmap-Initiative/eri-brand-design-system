@@ -34,9 +34,8 @@
  *     exactly: padding-top: var(--eri-header-height). EriPageLayout does it for you with clearHeader.
  *   - Left zone: ERI logo → pipe divider → app name
  *   - Right zone: status badge → version string → theme toggle (if showThemeToggle) → CTA (if showCTA) → hamburger
- *   - showCTA: pass true — the Contact Us CTA is visible on ALL surfaces (public and authenticated).
- *     Pass showCTA={false} only where ERI has decided the app has no Contact Us entry point (a purely internal admin tool; the
- *     ERI Platform and CPR, decided 10 Nov 2026). Do NOT use showCTA={!isAuthenticated}.
+ *   - showCTA: pass true on public pages. Pass showCTA={false} on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in
+ *     internal admin tools. Never showCTA={!isAuthenticated}.
  *   - CTA requires source + sourceLabel + returnUrl — all three must be provided
  *   - onMenuClick: provide () => setMenuOpen(true) — defaults to no-op (hamburger always visible)
  *   - Horizontal padding: var(--eri-content-inset) — aligns with hero text block
@@ -75,11 +74,11 @@
  *   generated and both blocks would render simultaneously. All responsive behaviour is
  *   therefore handled via a scoped <style> block present on first render.
  *
- *   The Contact Us button is structurally absent from the mobile layout (not just CSS-hidden)
+ *   The Contact Us button is structurally absent from the mobile header (not just CSS-hidden; the menu panel carries it)
  *   to prevent any risk of it bleeding through if the scoped CSS fails to apply.
  *
  * COMMON MISTAKES:
- *   - Passing showCTA={!isAuthenticated}: incorrect — CTA should be visible on authenticated surfaces too.
+ *   - Passing showCTA={!isAuthenticated}: incorrect — show it on public pages, hide it on the ERI Platform and CPR.
  *   - Omitting source/sourceLabel/returnUrl with showCTA=true: CTA will be hidden. All three required.
  *   - Omitting onMenuClick: hamburger renders but does nothing. Always wire to your drawer open handler.
  *   - Using headerTheme="auto" without showThemeToggle={true}: the header will be stuck in dark mode

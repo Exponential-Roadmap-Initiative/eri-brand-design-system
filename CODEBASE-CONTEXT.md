@@ -140,9 +140,9 @@ The six canonical component names are:
 - `ERI_HERO_IMAGE_DEFAULT` and `ERI_HERO_IMAGE_TRUST` are named exports from `@eri/components`. `ERI_HERO_IMAGE_HANDS` is a deprecated alias for `ERI_HERO_IMAGE_DEFAULT` — do not use in new code.
 
 ### showCTA rule
-- Always pass `showCTA={true}`. The Contact Us CTA must be visible on all surfaces (public and authenticated).
-- Only pass `showCTA={false}` for purely internal admin tools with no contact entry point.
-- Never use `showCTA={!isAuthenticated}` — this incorrectly hides the CTA from logged-in users.
+- Pass `showCTA={true}` on public pages (with `source`, `sourceLabel` and `returnUrl`).
+- Pass `showCTA={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools.
+- Never use `showCTA={!isAuthenticated}`.
 
 ### Contact Us CTA
 - Three props are all required when `showCTA={true}`: `source`, `sourceLabel`, `returnUrl`.
@@ -493,7 +493,7 @@ The old `SiteHeader` component (custom header in `App.tsx`) was replaced.
 
 | Zone | Component | Notes |
 |---|---|---|
-| Header | `EriAppHeader` from `@eri/components` | Fixed 64px, `#232323`, dark-mode SVG logo, BETA badge, theme toggle, Contact Us CTA, hamburger |
+| Header | `EriAppHeader` from `@eri/components` | Fixed 64px (73px on phones, `--eri-header-height`), `#232323`, dark-mode SVG logo, BETA badge, theme toggle, Contact Us CTA, hamburger |
 | Tab bar | `TabNav` (local, in `App.tsx`) | BDS-specific — sits at `top: 64px`, height 40px, `#232323` background |
 | Mobile drawer | `BdsNavDrawer` (local) | Triggered by `onMenuClick` from `EriAppHeader` |
 | Content | `PublicLayout.tsx` | Adds `paddingTop: 104px` (64px header + 40px TabNav) |

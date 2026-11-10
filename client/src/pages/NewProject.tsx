@@ -138,7 +138,7 @@ const TRACK1_STEPS = [
     number: "06",
     icon: Rocket,
     title: "Wrap App.tsx in EriPageLayout",
-    description: "Use EriPageLayout as the top-level wrapper. Pass headerTheme=\"auto\", showThemeToggle={true}, showCTA={true}. See the Standard Components section for full props.",
+    description: "Use EriPageLayout as the top-level wrapper. Pass headerTheme=\"auto\", showThemeToggle={true}, and showCTA={true} on public pages (false on the ERI Platform and CPR). See the Standard Components section for full props.",
     code: null,
     codeId: null,
   },
