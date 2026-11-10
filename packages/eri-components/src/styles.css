@@ -44,3 +44,64 @@
 .bds-tabs button { height: 29px; padding: 4px 8px; border-radius: 6px; border: 1px solid transparent; background: transparent; font: 500 14px/20px var(--font-archivo); color: var(--foreground); cursor: pointer; }
 .bds-tabs button[aria-selected="true"] { background: var(--background); box-shadow: var(--shadow-sm); }
 .bds-tabs button:focus-visible { outline: 2px solid var(--ring, var(--primary)); outline-offset: 2px; }
+
+/* ---- 2.20.0: header tokens, EriNavDrawer, EriAppSidebar, EriBreadcrumbBar and the layout's content area. ----
+   Tokens only (the shared semantic names), so each app's own mapping decides the colours. The header tokens have one low-specificity default
+   (:where) that an app overrides by defining them anywhere. Responsive rules live here, not in Tailwind classes, because a consuming app's
+   Tailwind never scans this package. */
+:where(:root) {
+  --eri-header-bg: #232323;
+  --eri-header-ink: #ffffff;
+  --eri-header-muted: #9ca3af;
+  --eri-header-bg-light: #ffffff;
+  --eri-header-ink-light: #1a1a1a;
+  --eri-header-muted-light: #6b7280;
+}
+
+/* The layout's content area when it draws the menu: the page's own background and ink, from the header down to the footer. */
+.eri-page-body { background: var(--background); color: var(--foreground); min-height: calc(100vh - var(--eri-header-height, 64px)); }
+.eri-app-body { display: flex; align-items: flex-start; }
+.eri-app-main { flex: 1 1 0; min-width: 0; }
+
+/* EriAppSidebar: 224px, sticky under the fixed header; hidden at 800px and below (its sections are then in the menu panel). */
+.eri-app-sidebar { flex: 0 0 224px; width: 224px; box-sizing: border-box; position: sticky; top: var(--eri-header-height, 64px); align-self: flex-start; height: calc(100vh - var(--eri-header-height, 64px)); overflow-y: auto; padding: var(--space-4, 16px) 0; background: var(--card); color: var(--foreground); border-right: 1px solid var(--border); }
+.eri-app-sidebar__group + .eri-app-sidebar__group { margin-top: var(--space-3, 12px); padding-top: var(--space-3, 12px); border-top: 1px solid var(--border); }
+.eri-app-sidebar__title { margin: 0; padding: var(--space-2, 8px) var(--space-3, 12px) var(--space-1, 4px); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground); }
+.eri-app-sidebar__link { display: flex; align-items: center; gap: var(--space-3, 12px); margin: 0 var(--space-2, 8px); padding: 10px var(--space-3, 12px); border-radius: 5px; color: var(--foreground); text-decoration: none; font-size: 14px; line-height: 21px; }
+.eri-app-sidebar__link:hover { background: color-mix(in srgb, var(--primary) 8%, var(--card)); color: var(--primary); }
+.eri-app-sidebar__link[aria-current="page"] { background: color-mix(in srgb, var(--primary) 8%, var(--card)); color: var(--primary); font-weight: 600; }
+.eri-app-sidebar__link:focus-visible, .eri-nav-link:focus-visible, .eri-nav-drawer__close:focus-visible, .eri-breadcrumb-bar a:focus-visible { outline: 2px solid var(--ring, var(--primary)); outline-offset: 2px; }
+.eri-nav-icon { display: inline-flex; flex: 0 0 auto; color: var(--primary); }
+@media (max-width: 800px) { .eri-app-sidebar { display: none; } }
+
+/* EriNavDrawer: a native <dialog> opened from the right. */
+.eri-nav-drawer { position: fixed; inset: 0 0 0 auto; margin: 0; padding: 0; width: min(360px, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; box-sizing: border-box; border: 0; border-left: 1px solid var(--border); background: var(--card); color: var(--foreground); box-shadow: var(--shadow-sm, 0 1px 3px color-mix(in srgb, var(--foreground) 22%, transparent)); }
+.eri-nav-drawer[open] { display: flex; flex-direction: column; }
+.eri-nav-drawer::backdrop { background: color-mix(in srgb, var(--foreground) 45%, transparent); }
+.eri-nav-drawer__head { flex: none; display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 var(--space-4, 16px); border-bottom: 1px solid var(--border); }
+.eri-nav-drawer__title { font-size: 16px; font-weight: 600; }
+.eri-nav-drawer__close { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 5px; background: transparent; color: var(--foreground); cursor: pointer; }
+.eri-nav-drawer__close:hover { background: color-mix(in srgb, var(--primary) 8%, var(--card)); }
+.eri-nav-drawer__body { flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; padding-bottom: var(--space-4, 16px); }
+.eri-nav-heading { margin: 0; padding: var(--space-4, 16px) var(--space-4, 16px) var(--space-1, 4px); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground); }
+.eri-nav-group { margin: 0; padding: var(--space-2, 8px) var(--space-4, 16px) 0; font-size: 12px; font-weight: 600; color: var(--muted-foreground); }
+.eri-nav-link { display: flex; align-items: center; gap: var(--space-3, 12px); min-height: 44px; margin: 0 var(--space-2, 8px); padding: 0 var(--space-4, 16px); border-radius: 5px; color: var(--foreground); text-decoration: none; font-size: 14px; }
+.eri-nav-link:hover { background: color-mix(in srgb, var(--primary) 8%, var(--card)); color: var(--primary); }
+.eri-nav-link[aria-current="page"] { background: color-mix(in srgb, var(--primary) 8%, var(--card)); color: var(--primary); font-weight: 600; }
+.eri-nav-app { display: none; padding-bottom: var(--space-2, 8px); border-bottom: 1px solid var(--border); }
+@media (max-width: 800px) { .eri-nav-app { display: block; } }
+.eri-nav-account { margin-top: auto; padding-top: var(--space-2, 8px); border-top: 1px solid var(--border); }
+.eri-nav-badge { display: inline-flex; align-items: center; border: 1px solid var(--muted-foreground); border-radius: 9999px; padding: 2px 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--foreground); }
+.eri-nav-meta { display: none; padding: var(--space-3, 12px) var(--space-4, 16px) 0; }
+.eri-nav-meta__row { display: flex; align-items: center; gap: var(--space-3, 12px); }
+.eri-nav-meta__version { font: 12px/1 ui-monospace, Menlo, monospace; color: var(--muted-foreground); }
+.eri-nav-meta a { display: block; margin-top: var(--space-3, 12px); text-align: center; }
+@media (max-width: 639px) { .eri-nav-drawer { width: 100vw; } .eri-nav-drawer__head { height: 48px; } .eri-nav-meta { display: block; } }
+
+/* EriBreadcrumbBar: one position for every page. */
+.eri-breadcrumb-bar { padding: var(--space-4, 16px) var(--eri-content-inset, clamp(1rem, 3vw, 2rem)) 0; font-size: 13px; color: var(--foreground); }
+.eri-breadcrumb-bar ol { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; }
+.eri-breadcrumb-bar li + li::before { content: "\203A"; margin: 0 4px; color: var(--muted-foreground); }
+.eri-breadcrumb-bar a { color: var(--primary); text-decoration: none; }
+.eri-breadcrumb-bar a:hover { text-decoration: underline; }
+.eri-breadcrumb-bar [aria-current="page"] { font-weight: 600; }

@@ -245,7 +245,7 @@ function App() {
 | `appName` | `"Trust Centre"` | Exact canonical name — do not change |
 | `status` | `"LIVE"` | Trust Centre is live |
 | `version` | `"V.YYYY.MM.DD"` | Update to today's date on each release |
-| `showCTA` | `{true}` | Always true — Contact Us must be visible on all surfaces |
+| `showCTA` | `{true}` | True here: the Trust Centre is a public page (false only on the ERI Platform and CPR and in internal admin tools, Nicklas, 10 Nov 2026) |
 | `showThemeToggle` | `{true}` | Always true — users must be able to switch themes |
 | `headerTheme` | `"auto"` | **Required with `showThemeToggle={true}`.** Without this, the header stays dark even when the user switches to light mode. `"auto"` = `#232323` in dark mode, `#FFFFFF` in light mode. |
 | `source` | `"trust"` | Canonical stable ID — never change |

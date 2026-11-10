@@ -28,7 +28,7 @@ This section records key identifiers and version pins that any agent can verify 
 | Item | Current value | Last updated |
 |---|---|---|
 | BDS app version | v3.41.0 — controlled release workflow deployed | 2026-08-18 |
-| `@eri/components` package pin | v2.19.0 — adds EriBarChart, EriFigureList, EriTabs | 2026-11-04 |
+| `@eri/components` package pin | v2.20.0 — adds EriNavDrawer, EriAppSidebar, EriBreadcrumbBar, header colour tokens and the `menu` prop on EriPageLayout | 2026-11-10 |
 | Published project instructions version | v2026.06.22 (id=120001, 5410 chars) — pkill, compaction hard stop, eri-cpr-app/eri-ef-app/eri-emissions/eri-job-status-modal in Tier 3 | 2026-06-22 |
 | Skills registry entry count | 30 skills in SKILLS_METADATA (includes eri-ef-app v2.0.0, eri-cpr-app v1.0.0) | 2026-06-18 |
 | Heartbeat auto-sync | Disabled — unattended registry mutation is replaced by administrator-approved skill releases | 2026-08-18 |
@@ -106,7 +106,7 @@ These are the ground-truth values. If any document, skill, or code contradicts t
 
 ## Standard components — canonical names and current version
 
-Package: `@eri/components` — current pin: **v2.19.0**
+Package: `@eri/components` — current pin: **v2.20.0**
 
 The six canonical component names are:
 
@@ -140,9 +140,9 @@ The six canonical component names are:
 - `ERI_HERO_IMAGE_DEFAULT` and `ERI_HERO_IMAGE_TRUST` are named exports from `@eri/components`. `ERI_HERO_IMAGE_HANDS` is a deprecated alias for `ERI_HERO_IMAGE_DEFAULT` — do not use in new code.
 
 ### showCTA rule
-- Always pass `showCTA={true}`. The Contact Us CTA must be visible on all surfaces (public and authenticated).
-- Only pass `showCTA={false}` for purely internal admin tools with no contact entry point.
-- Never use `showCTA={!isAuthenticated}` — this incorrectly hides the CTA from logged-in users.
+- Pass `showCTA={true}` on public pages (with `source`, `sourceLabel` and `returnUrl`).
+- Pass `showCTA={false}` on the ERI Platform and CPR (Nicklas, 10 Nov 2026) and in internal admin tools.
+- Never use `showCTA={!isAuthenticated}`.
 
 ### Contact Us CTA
 - Three props are all required when `showCTA={true}`: `source`, `sourceLabel`, `returnUrl`.
@@ -493,7 +493,7 @@ The old `SiteHeader` component (custom header in `App.tsx`) was replaced.
 
 | Zone | Component | Notes |
 |---|---|---|
-| Header | `EriAppHeader` from `@eri/components` | Fixed 64px, `#232323`, dark-mode SVG logo, BETA badge, theme toggle, Contact Us CTA, hamburger |
+| Header | `EriAppHeader` from `@eri/components` | Fixed 64px (73px on phones, `--eri-header-height`), `#232323`, dark-mode SVG logo, BETA badge, theme toggle, Contact Us CTA, hamburger |
 | Tab bar | `TabNav` (local, in `App.tsx`) | BDS-specific — sits at `top: 64px`, height 40px, `#232323` background |
 | Mobile drawer | `BdsNavDrawer` (local) | Triggered by `onMenuClick` from `EriAppHeader` |
 | Content | `PublicLayout.tsx` | Adds `paddingTop: 104px` (64px header + 40px TabNav) |

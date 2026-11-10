@@ -8,6 +8,11 @@ export { default as EriAppHeader } from './EriAppHeader';
 export { default as EriAppFooter } from './EriAppFooter';
 export { default as EriHeroSection, ERI_HERO_IMAGE_HANDS, ERI_HERO_IMAGE_DEFAULT, ERI_HERO_IMAGE_TRUST } from './EriHeroSection';
 export { default as EriPageLayout } from './EriPageLayout';
+export { default as EriNavDrawer } from './EriNavDrawer';
+export { default as EriAppSidebar } from './EriAppSidebar';
+export { default as EriBreadcrumbBar } from './EriBreadcrumbBar';
+export type { EriBreadcrumbItem } from './EriBreadcrumbBar';
+export type { EriMenu, EriNavLink, EriNavSection, EriLinkProps } from './EriNav';
 
 export { default as EriCrocodileChart } from './EriCrocodileChart';
 export type { EriCrocodileChartProps, CrocodileDataPoint } from './EriCrocodileChart';

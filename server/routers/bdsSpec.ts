@@ -49,7 +49,7 @@ STEP 3b — Add the CSS import (FIRST line in client/src/index.css)
   @import "@eri/components/dist/eri-components.css";
 
 STEP 4 — Use EriPageLayout as the top-level wrapper in App.tsx
-  Required props: appName, appId, showCTA={true}, showThemeToggle={true},
+  Required props: appName, appId, showCTA (true on public pages; false on the ERI Platform and CPR), showThemeToggle={true},
                   headerTheme="auto", returnUrl (hardcoded production URL — never window.location.origin)
 
 STEP 5 — Copy the canonical CSS token block into client/src/index.css
@@ -135,7 +135,7 @@ without ERI styles. Verify it is present before proceeding.
 
 STEP 4 — Use EriPageLayout as the top-level wrapper in App.tsx
 Import: import { EriPageLayout } from '@eri/components';
-Required props: appName, appId, showCTA={true}, showThemeToggle={true}
+Required props: appName, appId, showCTA (true on public pages; false on the ERI Platform and CPR), showThemeToggle={true}
 
 STEP 5 — Copy the canonical CSS token block into client/src/index.css
 Fetch from: https://bds.exponentialroadmap.org/api/trpc/bdsSpec.getSpec
@@ -314,7 +314,7 @@ See https://bds.exponentialroadmap.org/tracker for the full checklist.`,
         latestVersion: "v2.17.0",
         available: ["EriPageLayout", "EriHeroSection", "EriAppHeader", "EriAppFooter", "EriStatusBadge", "EriContactUsButton"],
         requiredProps: {
-          EriPageLayout: ["appName (string)", "appId (string)", "showCTA={true}", "showThemeToggle={true}"],
+          EriPageLayout: ["appName (string)", "appId (string)", "showCTA (true on public pages; false on the ERI Platform and CPR)", "showThemeToggle={true}"],
         },
         cssImport: "@import \"@eri/components/dist/eri-components.css\"; /* Add to top of index.css */",
         scope: "Public-facing ERI apps only (Taxonomy, PSM, HAL, Trust, future apps). BDS site is exempt.",
